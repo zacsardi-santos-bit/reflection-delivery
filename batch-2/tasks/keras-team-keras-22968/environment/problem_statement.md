@@ -1,5 +1,12 @@
-I'm hitting confusing errors with multi-input models and I want to fix the messaging. So I've got models where the inputs get passed as a dictionary with named keys, and if I accidentally hand it a plain tensor instead, the error I get is just some generic thing about the wrong number of inputs. It doesn't tell me anything useful, like that the model actually wants a dict, or which keys it's expecting. That's rough because then I'm digging through docs trying to figure out the input format when the error could've just told me.
+## Description
 
-What I want is, when a model that was built expecting named (dictionary) inputs gets the wrong kind of input, the error should clearly say it expects named inputs and list out the specific key names it's looking for, so I immediately know I need to pass a dictionary with those keys. And separately, for models that expect a certain number of positional inputs, when the count is wrong the message shouldn't just be a bare number, it should be more descriptive about what kind of inputs are actually expected.
+When a model that expects named (dictionary) inputs receives the wrong type of input, the error message it shows is too generic and doesn't tell the user what named keys are expected. Similarly, models expecting a specific number of positional inputs could give more descriptive error messages.
 
-Better errors here save a ton of debugging time, oh and the fix is really about the input validation path where these messages get raised, so track down wherever the model checks incoming inputs against its expected signature and improve both branches (the named-key case and the positional-count case) accordingly.
+## Expected Behavior
+
+- When a model built with named/dictionary inputs receives the wrong kind of input, the error message should clearly indicate that named inputs with specific keys are expected, helping the user understand they need to pass a dictionary.
+- When a model expecting a specific number of positional inputs receives the wrong count, the error message should be more descriptive about what kind of inputs are expected (not just a bare count).
+
+## Why This Matters
+
+Better error messages reduce debugging time significantly. A developer who accidentally passes a single tensor to a model expecting a dictionary of named tensors should immediately understand from the error what they need to fix, rather than having to dig through documentation to understand the input format.

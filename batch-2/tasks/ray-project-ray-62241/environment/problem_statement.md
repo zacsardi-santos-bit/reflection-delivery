@@ -1,7 +1,16 @@
-I'm working in the LLM module in Ray and I need a validated config model for resource placement bundles because right now there's no formal structure for per-bundle resource requirements, so GPU can get implicitly tacked onto bundles even for workloads running custom accelerators like TPUs, which is just wrong. GPU should default to zero unless someone explicitly asks for it.
+## Description
 
-I want a placement bundle config type with CPU and GPU fields that both default to zero, and it should accept fractional GPU values too. It also needs to allow arbitrary extra named resources beyond CPU and GPU. All resource values, whether CPU, GPU, or the custom ones, should be stored and returned as floats even when integers come in. Negative values for any resource should be rejected with a clear error message, and non-numeric values should also get rejected clearly.
+The LLM module currently lacks a formal, validated data model for specifying resource bundles and placement group configurations. When setting up distributed workloads — especially those using custom hardware accelerators — the system can implicitly add GPU resources to placement bundles even when the user did not request them. This leads to incorrect resource allocation for hardware like TPUs or other non-GPU accelerators, where GPU should default to zero unless explicitly specified.
 
-On top of that I need a placement group config type that wraps these bundles. It should accept either a list of explicit bundles, or a single per-worker bundle spec that gets replicated per worker, but not both at once, and at least one has to be there, so providing neither is an error and providing both is also an error, both with clear validation errors. It should also validate the placement strategy against an allowed set of values and reject anything invalid. Oh and raw dict input for the bundle fields should get auto-coerced into the proper bundle type so resource values are reachable as typed attributes.
+## Expected Behavior
 
-Both of these config types should live together in a shared common module for placement utilities within the LLM package.
+- There should be a structured configuration model for resource bundles that supports standard CPU and GPU fields (defaulting to zero) as well as arbitrary additional resource types.
+- CPU and GPU values should always be stored and returned as floats, even when integers are supplied.
+- Arbitrary additional resources should be accepted but validated: negative values should be rejected, and non-numeric values should be rejected with clear error messages.
+- There should be a placement group configuration model that accepts either a list of bundles or a single per-worker bundle specification — but not both, and not neither. Both cases should produce clear validation errors.
+- The placement group strategy should be validated against an allowed set of values, with invalid strategies rejected.
+- Raw dictionary input for bundle fields should be automatically coerced into the proper bundle model type.
+
+## Why This Matters
+
+Without this structured model, resource requirements for distributed placement groups are error-prone and inconsistent. Custom accelerator workloads silently received unwanted GPU resource requests. Providing a validated, explicit configuration model makes resource allocation correct and predictable across all accelerator types.

@@ -1,5 +1,15 @@
-I'm chasing a nasty pagination bug in the DAG Runs endpoint. We do cursor-based pagination and support sorting by aliased column names, where the user-facing sort field is different from the actual database column underneath. Works fine on page one, but the moment I try to go past it the cursor tokens come back corrupt or null and pagination just silently dies. Tracked it down to the cursor encoder reading sort-key values off the result rows using the alias name directly, but the row only exposes the underlying column name, so that lookup quietly returns nothing and we ship a broken token.
+## Description
 
-What I want is a method on the sort parameter helper that resolves an alias to the real row attribute when we read sort-key values for cursor encoding. If the alias maps to a plain string column name, follow that mapping and grab the right value from the row. But if the alias maps to a SQL column expression instead of a simple string, don't just return null, raise an explicit clear error so some future endpoint doesn't accidentally ship broken cursor tokens without anyone noticing.
+Cursor-based pagination for DAG Runs silently breaks when the sort field is specified by an aliased name — a user-facing name that maps to a different underlying database column. When the system encodes cursor tokens for pagination, it reads sort-key values directly from the result row using the alias name. Because the result row only contains the underlying column name (not the alias), the read silently returns null, producing an invalid cursor token and breaking pagination after the first page.
 
-Oh and there's a related thing while you're in here: when a sort alias maps to the primary key column, the pk ends up getting appended twice to the resolved sort column list, so we get duplicate ordering columns in the generated SQL. Any alias that already points to the primary key should stop the primary key from being appended again. Both of these fail silently right now which is why they were such a pain to find, so I'd rather have loud errors than quiet corruption.
+There is also a related bug: when a sort alias maps to the primary key column, the primary key gets appended a second time to the resolved sort column list. This produces duplicate ordering columns in the generated SQL query.
+
+## Expected Behavior
+
+- When a sort alias maps to a plain string column name, reading the sort value for cursor encoding should follow the alias mapping and retrieve the correct value from the result row.
+- When a sort alias maps to a SQL expression (rather than a simple column name string), the system should raise a clear, explicit error rather than silently returning null.
+- When a sort alias already maps to the primary key column, the primary key must not be appended again to the sort column list.
+
+## Why This Matters
+
+Without these fixes, any endpoint that uses cursor-based pagination with aliased sort fields will silently produce corrupted cursor tokens. Clients will receive tokens that appear valid but cause the second (and subsequent) pages to return wrong or empty results. The duplicate primary-key bug could also produce malformed SQL. These are hard to debug because the failures are silent rather than loud errors.

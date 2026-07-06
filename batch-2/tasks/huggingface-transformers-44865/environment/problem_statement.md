@@ -1,3 +1,20 @@
-I'm dealing with a crash in our pipeline-parallel models and I want a static check to catch it before it ever gets merged. Quick context: some architectures split the forward pass across devices, and any submodule not assigned to a given device gets swapped out for a plain identity module that just returns its input untouched. The trouble is when a forward method reads a custom attribute off one of those submodules, like querying a layer's attention type to pick the right mask, it blows up with an attribute error on whatever device doesn't own that submodule. The right pattern is to pull per-layer metadata from the model config by index instead of off the submodule, but nothing flags the bad pattern today so it silently compiles and then crashes at runtime in distributed training, which is miserable to debug.
+## Description
 
-So I want a new rule added to the modeling structure checker (the thing that lints our modeling code structure). It should detect attribute accesses on submodules that are tracked by the pipeline parallelism plan, both direct access where you read an attribute off a named submodule, and indirect access through a loop variable that iterates over such a submodule, in cases where that attribute wouldn't exist on a plain identity module. When it finds one it should emit a violation whose message clearly names the unsafe access expression so it's obvious what needs changing. Some important carve-outs: skip models that haven't opted into pipeline parallelism at all (no plan registered, nothing to check), don't flag attributes that exist on any standard nn module like the training flag, and don't flag reads that go through the model configuration object since reading layer type from config is exactly the correct fix. Oh and it needs an inline comment escape hatch so when the access is genuinely intentional we can suppress the warning on that line.
+Some model architectures in this library support distributing the forward pass across multiple compute devices using pipeline parallelism. In this setup, submodules that are not assigned to a particular device are replaced with identity operations — they receive input and return it unchanged. If model forward methods read custom attributes from those submodules (for example, querying a layer's attention type to select the right mask), the code will raise an attribute error at runtime on any device where the submodule has been swapped out.
+
+The correct pattern is to read per-layer metadata from the model configuration object using an index rather than from the submodule itself. However, there is currently nothing to detect and flag the unsafe pattern at code-review time.
+
+## Expected Behavior
+
+A new automated code quality rule should be added to the modeling structure checker that:
+
+- Detects attribute accesses on submodules that are tracked by the pipeline parallelism plan — both direct accesses and accesses through loop variables — when the attribute would not exist on a plain identity module.
+- Produces a violation with a message that names the unsafe access expression.
+- Skips models that have not registered for pipeline parallelism.
+- Allows access to attributes that exist on any standard neural network module (such as the training flag).
+- Allows access via the model configuration object (e.g., reading layer type from the config).
+- Supports suppression via an inline comment for cases where the access is known to be intentional.
+
+## Why This Matters
+
+Without this check, pipeline-parallel models silently compile with code that will crash on non-owning devices. Catching the pattern statically — before code is merged — prevents hard-to-debug runtime failures in distributed training setups.

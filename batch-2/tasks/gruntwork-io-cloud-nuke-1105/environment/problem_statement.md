@@ -1,5 +1,25 @@
-I'm hitting a gap in cloud-nuke where tag-based inclusion filters just silently do nothing for a bunch of AWS resource types. Like when I set up a config that says only include resources tagged with a particular environment label, I'd expect only those to show up (and be eligible for deletion), but instead everything gets listed regardless of tags. That's dangerous because operators lean on tag policies to scope cleanup to specific environments, teams, or apps, so ignoring the filter means we might nuke stuff that was supposed to be protected, or blow past our tagging conventions entirely.
+## Description
 
-The resource types where this is broken: certificate management resources (both the standard ACM certs and the private certificate authorities), content delivery distributions (CloudFront), application hosting services, security monitoring detectors (GuardDuty), cloud configuration rules (Config), data pipeline stuff plus the data synchronization tasks and locations, application platform resources, and the machine learning notebook instances and studio domains.
+Tag-based resource filtering is not applied when listing several AWS resource types. When users configure inclusion rules based on resource tags (e.g., only include resources with a specific environment tag), those tag filters are silently ignored for many resource types, causing all matching resources to be included regardless of their tags.
 
-For each of these the listing logic needs to actually retrieve and check resource tags before applying the inclusion filter. Some already hand back tags right in the list response, others need a separate API call to fetch them, either way the tags have to get threaded through to the filtering logic so only resources matching the configured tag patterns come back and anything that doesn't match gets excluded. I just want these to respect tag filters the same consistent way the already-supported resource types do.
+This affects resource types including:
+- Certificate management resources (both standard and private CA)
+- Content delivery distributions
+- Application hosting services
+- Security monitoring detectors
+- Cloud configuration rules
+- Data pipeline and synchronization resources (tasks and locations)
+- Application platform resources
+- Machine learning notebook instances and studio domains
+
+## Expected Behavior
+
+When a tag-based inclusion filter is configured (for example, "only include resources tagged with a specific environment label"), the listing functions for these resource types should:
+
+- Look up the actual tags for each resource (either from the list response or by querying the tags API)
+- Apply the tag filter so only matching resources are returned
+- Exclude resources whose tags do not match the configured filter
+
+## Why This Matters
+
+Operators use tag-based policies to identify resources that belong to specific environments, teams, or applications. If cloud-nuke ignores those tag filters, it may select resources for deletion that should be protected, or fail to respect organizational tagging conventions used to scope cleanup operations. Consistent tag filtering across all resource types is essential for predictable and safe operation.

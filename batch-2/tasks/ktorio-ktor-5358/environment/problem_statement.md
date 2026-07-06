@@ -1,3 +1,18 @@
-I'm on a Ktor server app using server-side sessions and I've hit two walls I need cleared up. First one is session ID generation. Right now when I configure a session (cookie or header) the only knob I get for IDs is a plain no-arg function returning a string, so every device looks identical from the session system's point of view. I want to pass the current request into that generator so I can factor in headers, user agent, device fingerprints, whatever, and return a string to use as the session ID. The built-in random generator is fine as a default but I need the request-aware variant to be first-class.
+## Description
 
-Second thing, I need to invalidate a session by its ID even when that session isn't the one active in the current request. Today I can only clear the session tied to the incoming request, which makes "log out all devices" or revoking a specific session impossible without reaching into internals, and that's not acceptable. I've got the other devices' IDs from a database and I just want a proper API to remove any session from server-side storage by its ID string. That clear-by-ID op needs to be async since it's doing storage I/O, it should be scoped to a specific session type, and it can't disturb any other active sessions. Oh and if the session provider doesn't actually use server-side storage, clearing by ID should fail with a clear error rather than silently doing nothing. Both of these should be properly supported, not workarounds.
+The server-side session system currently does not support two important capabilities that are commonly needed in production applications:
+
+1. **Custom session ID generation based on request context**: Session IDs are always generated using a built-in random generator. There is no way to incorporate request-specific information — such as device fingerprints, user agent strings, or other headers — into the session ID generation logic.
+
+2. **Clearing a session by ID without an active request**: Developers can only clear the session that is currently associated with the incoming request. There is no way to programmatically invalidate a specific session by its identifier. This makes it impossible to implement patterns like "sign out from all devices" or "revoke a specific session," which require removing sessions that belong to other requests or devices.
+
+## Expected Behavior
+
+- When configuring a session cookie or header, developers should be able to provide a custom ID generation function that receives the current request and returns a string to use as the session ID.
+- There should be a way to remove any session from server-side storage by providing its ID string, regardless of which session is currently active in the request.
+- Clearing one session by ID must not affect any other active sessions.
+- Attempting to clear a session by ID for a provider that does not use server-side storage should result in a clear error.
+
+## Why This Matters
+
+These features are essential for multi-device authentication flows. Without request-aware ID generation, each device looks identical from the session system's perspective. Without the ability to revoke sessions by ID, there is no safe way to implement exclusive login (logging in from a new device logs out all other devices) or administrative session management.

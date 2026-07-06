@@ -1,9 +1,24 @@
-I'm building out a vector store library and right now it only does similarity search, which is killing me because there's no way to filter results by document metadata like category, status, or priority. I want to build a filter query like "top 5 most similar docs where category is 'feature' and priority greater than 1" without post-processing everything in app code.
+# Vector Store: Add Filtering, CRUD Operations, and Timestamp Explosion
 
-So I need a composable filter expression system where I can express conditions on named fields, equality and inequality, range comparisons (greater-than, less-than, and the rest), and membership in a list, then combine them with AND, OR, and NOT logic. The chaining should produce flat expressions, not nested ones. These filters need to evaluate client-side against a plain record dict, and they've gotta survive JSON serialization and back so I can store or transmit them. Then I want to pass a filter as an optional param into the similarity search methods so only matching docs come back, with similarity ordering preserved.
+## Description
 
-Also on search, two more optional params: one for field projection to limit which metadata fields come back per document, and one to omit the vector from results when I don't need it.
+The current vector store abstraction only supports basic similarity search. There is no way to filter results by document metadata, no support for inserting, updating, or removing individual documents, and no structured handling of date/time fields. This makes it impossible to build queries like "find the top 5 most similar documents where the category is 'feature' and the priority is greater than 1" without post-processing in application code.
 
-Beyond batch loading I need individual doc lifecycle ops: insert a single document, update its fields (with the modification timestamp set automatically), remove by id, and count total documents. Oh and right now searching for an id that doesn't exist returns a silent placeholder, that's bad, it should raise an error instead.
+We also need a composable, serializable filter expression system — one that can be built programmatically and passed to search calls — rather than raw query strings tied to a specific backend.
 
-Last thing, date fields including the built-in creation and modification timestamps should get auto-decomposed into components (year, month, month name, day, day of week, hour, quarter) and stored alongside the document so I can filter by calendar quarter or day of week without parsing dates myself. Those built-in timestamps should get populated automatically too.
+## Expected Behavior
+
+- A filter expression system that supports equality, inequality, range comparisons (greater-than, less-than, etc.), and membership checks on named fields
+- Logical combinations of filters using AND, OR, and NOT, with chaining that produces flat (not nested) expressions
+- Filter expressions must support client-side evaluation against a record dict and must survive JSON serialization/deserialization round-trips
+- Vector store implementations must accept a filter expression as an optional parameter on similarity search methods, restricting results to matching documents while preserving similarity ordering
+- A field projection option on search methods to limit which metadata fields are returned per document
+- An option to omit vectors from search results when they are not needed
+- Individual document lifecycle operations: single-document insert, update, remove by id, and total document count
+- Searching for a non-existent document by id must raise an error rather than returning a silent placeholder
+- Date fields must be automatically decomposed into structured components (year, month, month name, day, day of week, hour, quarter) and stored alongside the document so they can be used in filter expressions
+- The built-in creation and modification timestamp fields should be automatically populated and also decomposed into filterable components
+
+## Why This Matters
+
+Without metadata filtering, every vector search returns results that must be manually post-filtered in application code. A proper filter system, combined with structured timestamp decomposition, enables rich time-aware, metadata-scoped vector queries directly in the store layer. The added CRUD operations make it feasible to maintain document collections incrementally without workarounds.

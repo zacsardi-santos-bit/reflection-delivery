@@ -1,5 +1,16 @@
-I'm modernizing how our app talks to the cloud auth service and I keep hitting failures because we're still using the old object-method style where we call sign-in and user-creation as methods on a shared auth object. The newer version of the library wants those same operations imported as standalone functions that take the auth instance as their first arg, so I need the user store's login and registration flows switched over. For login, call the sign-in function as a standalone imported function with the auth instance first, then email and password. For registration, do the same thing, standalone imported functions from the auth module for creating the user and then updating the user profile. And the auth instance itself shouldn't be some shared singleton we reach into anymore, it needs to come from the modular getter function the auth library gives us.
+## Description
 
-Also, while I'm in here, our sign-up component has hardcoded error strings which is annoying. I want the sign-up failure messages pulled from our centralized shared message dictionary instead. Specifically the case where someone tries to register with an email that's already in use, that message has to live in the shared messages mapping and get sourced from there, not baked into the component.
+Our app uses a cloud authentication service, and we need to upgrade how we interact with it. Currently, authentication operations are invoked as methods on a shared auth object. The newer version of the library requires these operations to be standalone functions that accept the auth instance as their first parameter rather than being called as methods on that instance.
 
-The whole reason for this is the auth library dropped the old object-method API, so without the update both the app and the tests break since the mocked auth module now targets standalone functions rather than methods on a shared object. Centralizing the messages just keeps things consistent and easier to maintain later too.
+This means that the user store's login and registration flows need to be updated to follow the standalone function calling pattern instead of the object-method pattern.
+
+## Expected Behavior
+
+- The user login flow should call the sign-in function as a standalone imported function, with the auth instance passed as the first argument followed by email and password
+- The user registration flow should similarly use standalone imported functions from the auth module for creating users and updating user profiles
+- The auth instance itself must be retrieved using the modular getter function from the auth library
+- Error messages displayed on sign-up failures should be sourced from the shared message dictionary rather than being hardcoded in the component. Specifically, the message for when a user tries to sign up with an email address that is already in use must be defined in the shared messages mapping
+
+## Why This Matters
+
+The authentication library has moved away from the older object-method API style. Without this update, the app and its tests fail because the mocked authentication module now targets standalone functions rather than methods on a shared object. Centralizing error messages in a shared dictionary also ensures consistency and easier future maintenance.

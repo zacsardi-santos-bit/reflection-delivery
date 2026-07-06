@@ -1,5 +1,17 @@
-I'm tightening up the side-effect analysis for built-in constructor calls in our JS minifier and the current logic is too loose. Right now a bunch of built-in constructors get treated as unconditionally side-effect-free, but that's wrong for the ones that coerce their arguments to a primitive. The minifier uses this analysis to decide what it can drop during dead-code elimination, so if we're too conservative we keep dead code and if we're too permissive we delete things that actually run user code. I need both directions correct.
+## Description
 
-Here's the split I want. For constructors that coerce args (the string wrapper and numeric wrapper, plus Date, Buffer, and the typed array constructors), safety depends on the argument. If it's a known primitive like a number or string literal, or a plain object literal with no custom conversion methods, it's safe. But an unknown variable, or an object defining custom coercion (a custom toString/valueOf style converter, a numeric converter, or an iterator), can invoke user code so it's a side effect. String and numeric wrappers: safe only with a known primitive or plain object with no custom coercion, unsafe with an unknown var or an object with a custom conversion method. Date and Buffer: safe with no args or primitive literals, unsafe with unknown variables. Typed arrays: safe with numeric args or plain object literals, unsafe with unknown vars or objects defining a custom iterator.
+The side-effect analysis for built-in constructor calls is not precise enough, leading to incorrect results when constructors are passed arguments that could trigger user-defined coercion code.
 
-The other group is genuinely safe with any argument, even an unknown variable, because they don't invoke user-defined coercion: the boolean wrapper, the generic object wrapper, and the error constructors. Those should always come back side-effect-free no matter what's passed. Basically plain object literals with no custom methods are safe, objects with custom conversion or iteration methods are unsafe.
+Currently, certain built-in constructors are treated as always side-effect-free regardless of what arguments they receive. This is wrong for constructors that coerce their arguments to a primitive type — if the argument is an unknown variable or an object with custom coercion methods, user code could be invoked as part of the coercion, which is a side effect. On the other hand, some constructors are being treated inconsistently even though they are genuinely safe with any argument.
+
+## Expected Behavior
+
+- Primitive wrapper constructors for strings and numbers should only be considered safe when their argument is a known primitive or a plain object with no custom coercion methods. An unknown variable or an object with a custom conversion method should be flagged as potentially having side effects.
+- Date/time and buffer constructors follow similar rules: safe with no args or primitive literals, unsafe with unknown variables.
+- Typed array constructors should be considered safe with numeric arguments or plain object literals, but unsafe with unknown variables or objects that define a custom iterator.
+- The generic object wrapper and boolean wrapper constructors should always be considered safe, regardless of the argument, since they do not invoke user-defined coercion logic.
+- Constructors for error objects should always be considered safe regardless of the argument passed.
+
+## Why This Matters
+
+Minifiers use side-effect analysis to determine which expressions can be eliminated during dead-code removal. Overly conservative analysis keeps code that could safely be removed; overly permissive analysis removes code that should be preserved. This fix ensures both directions are correct for a wide class of common constructor patterns.

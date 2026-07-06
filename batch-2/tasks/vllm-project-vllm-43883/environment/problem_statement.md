@@ -1,3 +1,15 @@
-I'm working on the vllm Rust server and want to bring it up to parity with the Python server on request tracking, right now there's no way for clients or API gateways to get a per-request identifier echoed back on the HTTP response, which makes distributed tracing and log correlation a pain. So I'd like an opt-in feature where, when it's turned on, the server attaches a tracking identifier (think an X-Request-Id style header) to every single HTTP response. The logic should be: if the incoming request already carries that tracking identifier header, echo it back unchanged on the response, and if it doesn't have one, generate a fresh unique identifier automatically (a UUID is fine) and attach that instead. Important bit, when the feature isn't enabled the default behavior stays exactly as it is today, no such header on responses at all, so I don't break anyone relying on the current output.
+## Description
 
-I want this wired up two ways. First, as a command-line flag on the serve subcommand so folks can flip it on when launching. Second, as a JSON configuration field for when the frontend subcommand is used, so it can be set declaratively too. Both paths need to actually propagate the setting through to the server config so the middleware or response handling picks it up correctly, don't just parse the flag and drop it on the floor. Load balancers and observability tools lean on this standard header to associate outgoing requests with responses, so getting the echo-vs-generate behavior right matters. Also make sure the off-by-default case is genuinely untouched.
+The vllm Rust server does not currently support attaching a request tracking identifier to HTTP responses, even though the Python-based vllm server already supports this capability. Many API clients, load balancers, and observability tools rely on a standard response header to associate outgoing requests with the responses they receive. Without this, users of the Rust server have no built-in way to track a specific request through the system.
+
+## Expected Behavior
+
+- An opt-in flag should be available so that when enabled, the server attaches a tracking identifier to every HTTP response.
+- If a client includes a tracking identifier on the incoming request, the server should echo that same value on the response.
+- If the client provides no tracking identifier, the server should generate a fresh unique identifier and include it in the response.
+- By default (when the feature is not explicitly enabled), no tracking identifier header should be present on responses.
+- The opt-in flag should be expressible both as a command-line argument to the serve subcommand and as a field in the JSON configuration passed to the frontend subcommand.
+
+## Why This Matters
+
+Clients, API gateways, and distributed tracing systems commonly rely on per-request identifiers to correlate logs, metrics, and traces across services. Bringing the Rust server to parity with the Python server on this point ensures users can adopt it without losing observability.

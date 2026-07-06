@@ -1,5 +1,20 @@
-I'm hitting a weird Vite glob import bug and could use help closing the gap. My setup has the app root pointed at a subdirectory (think a folder literally called `root`), and I've got some JS files sitting in a sibling directory outside that root (call it `external`). What I want is to glob-import those external files from inside the app using a relative pattern that traverses up out of the root into that sibling dir to match all the JS there, and I'm passing an absolute `base` option along with eager loading turned on. Right now that combo just doesn't work, the module map comes back empty or wrong, or the import fails entirely.
+## Description
 
-What I expect: this should work fine. The module map should be keyed by the relative path from the importing file to each matched file (so keys that traverse upward into the external directory), and I should be able to read each module's exports through that map normally.
+When a Vite project is configured so that the application root is a subdirectory, developers sometimes need to glob-import files from directories that sit outside that root (e.g., a sibling or parent directory). Combining an absolute base path setting with a glob pattern that traverses outside the root currently doesn't work correctly — the imports either fail or produce an incorrect/empty module map.
 
-I also want a playground test to lock this down. That means creating two small fixture JS files in an external directory outside the root, then updating the playground's HTML page to add a section that runs this glob import pattern and renders the matched results into a DOM element so the page shows the right data. Vite needs to actually resolve and serve those external modules correctly so the rendered output reflects them. This matters because plenty of projects spread source across multiple dirs where the Vite root isn't the top level, and referencing files outside the root via glob imports is a legit pattern that should just work.
+## Expected Behavior
+
+- Glob imports with a pattern that points to files outside the project root should work correctly when using an absolute base path option together with eager loading.
+- The resulting module map should be keyed by the relative path from the importing file to each matched file (e.g., a path that traverses upward into the external directory).
+- The exported values from those external files should be accessible via the module map.
+
+## Steps to Reproduce
+
+1. Set up a Vite project where the root is a subdirectory (e.g., a folder called "root").
+2. Place some JavaScript files in a sibling directory outside the root (e.g., a folder called "external").
+3. In the app, use a glob import with a pattern pointing outside the root directory (traversing up to the sibling directory to match all JS files) and pass an absolute base option.
+4. Observe that the resulting module map is empty or the import fails entirely.
+
+## Why This Matters
+
+Projects that structure their source files across multiple directories — where the Vite root is not the top-level directory — need to be able to reference files outside the root via glob imports. This is a valid and useful pattern that should work reliably.

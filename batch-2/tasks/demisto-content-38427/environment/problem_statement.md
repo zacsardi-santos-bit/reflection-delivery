@@ -1,13 +1,17 @@
-I'm updating our Absolute security integration to talk to the provider's v3 API instead of v2, and it touches a bunch of stuff so bear with me. Right now everything hits v2 endpoints with the old request scheme, and v3 changes endpoint paths, payload field names, and response shapes. I want all the freeze message operations (list, create, update, delete) pointed at the updated v3 paths.
+## Description
 
-The device freeze payload field names need fixing to match the new contract: the scheduled date field and the request name field both got renamed, one now-obsolete field should be dropped entirely, and for device freeze type values I want the case-sensitive strings forwarded exactly as provided, no normalizing.
+The Absolute integration needs to be updated to work with the provider's third-generation API. Currently the integration communicates with v2 endpoints using an older request scheme. The newer API version changes endpoint paths, payload field names, and the structure of responses for several operations.
 
-The device unenroll flow needs a redesign. Instead of just returning a list of devices it should do a multi-step thing: first submit the unenroll request, then fetch a summary of the overall request status including counts of devices in the various states (pending, processing, completed, canceled, failed), and then grab the detailed per-device action records. Combine all of that into a single structured output object.
+## Expected Behavior
 
-Also I need a brand new command for removing an existing freeze request from devices, it takes a list of device IDs and returns a readable confirmation message that names the affected device IDs.
+- All freeze message operations (list, create, update, delete) should use the updated API paths.
+- The device freeze payload should use updated field names required by the new API contract (the scheduled date field and the request name field have been renamed, and an obsolete field should be removed). The case-sensitive format of freeze type values should be accepted as-is and forwarded to the API.
+- The device unenrollment operation should be redesigned for the new API: it should perform a multi-step flow that first submits the unenroll request, then retrieves a summary of the overall request status (including counts of devices in various states such as pending, processing, completed, canceled, and failed), and finally retrieves the list of per-device action records. The combined result should be returned as a single structured output object.
+- A new operation should be available for removing an existing device freeze request, producing a confirmation message that includes the affected device IDs.
+- Pagination should support token-based navigation (a "next page" token alongside a page size limit) rather than the older offset-based approach.
+- The request preparation logic should be updated to accept a request body parameter, wrapping non-empty bodies in a data envelope before signing.
+- The custom device field listing operation should look up the device identifier from the command arguments rather than from the API response.
 
-Pagination should move to token-based navigation instead of the old offset approach, so when a next-page token is present include it in the query string alongside the page size, and when it's absent just send the page size.
+## Why This Matters
 
-The request preparation method needs to accept a request body param now, oh and an empty body gets signed as-is while a non-empty body should be wrapped in a data envelope before signing. Also the custom device field listing command should pull the device identifier from the command's input arguments, not from the API response, when building its output.
-
-And any commands that used the old event-fetching method should switch over to the new unified request method. Without this, remote freeze/unfreeze/unenroll and event fetching all break for the security teams relying on it.
+Without these updates, all device management operations that rely on the newer API will fail. Security teams using this integration to remotely freeze, unfreeze, and unenroll devices will be unable to perform those actions, and event fetching will also break.

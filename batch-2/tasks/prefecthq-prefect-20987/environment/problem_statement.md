@@ -1,7 +1,16 @@
-I'm writing automation scripts around Prefect's CLI and I keep hitting a wall with the config view command and the profile listing command, they only spit out human-readable text so there's no clean way to parse them in a script. I want both of those commands to grow an output flag, both a long form (something like `--output`) and a short form, that flips them into a structured, machine-readable format like JSON.
+## Description
 
-For the config view command, when I ask for structured output I want it to include the active profile name plus a list of settings where each entry carries the setting's name, its current value, and the source it came from, like whether it was pulled from an environment variable or set in a profile. Secrets should still be obfuscated in that output, don't leak them. Oh and this needs to play nice with the existing flag that hides source info, in which case each setting in the structured output just shouldn't have a source field at all (omit it rather than leaving it null or empty).
+The Prefect CLI commands for viewing configuration settings and listing profiles currently only produce human-readable text output. This makes it very hard to use these commands in scripts, automation, or tooling that needs to parse the output reliably. There is no structured output option available.
 
-For the profile listing command, the structured output should be a list of all profiles where each one has its name and a boolean saying whether it's the currently active profile.
+## Expected Behavior
 
-Also if someone passes an output format that isn't supported, I don't want garbled output, both commands should fail gracefully with a clear error message telling them the format isn't valid. This all matters because operators running automated deployments or CI/CD pipelines shouldn't have to fragilely scrape text to inspect settings or profiles.
+- The command to view current configuration settings should support a flag to output results as structured data (machine-readable format).
+- When structured output is requested, each setting should include its name, current value, and the source it came from (e.g., environment variable, active profile). Secrets should be obfuscated.
+- When structured output is requested alongside the option to hide sources, the source field should be omitted from the output.
+- The command to list profiles should also support a flag to output results as structured data, where each profile entry indicates its name and whether it is currently active.
+- Both commands should accept both a long-form and a short-form version of the output flag.
+- If an unsupported output format is requested, both commands should fail with a clear error message.
+
+## Why This Matters
+
+Operators running automated deployments or writing shell scripts around Prefect often need to inspect settings or profile lists programmatically. Without a machine-readable output option, they are forced to parse fragile human-readable text. Adding structured output support makes these commands much more useful in CI/CD pipelines and scripting contexts.

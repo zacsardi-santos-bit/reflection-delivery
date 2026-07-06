@@ -1,5 +1,13 @@
-I'm hardening Airflow against path traversal and right now there's nothing stopping someone from sticking consecutive dots into a DAG run ID or a task/XCom key. Since these identifiers end up in file paths and URLs, a crafted one with a directory traversal sequence (think `..` chained together) could escape its intended directory and expose sensitive files or system paths when we later use the identifier in file operations. I want this closed by default so operators don't have to configure anything.
+## Description
 
-So two places need the guard. The key validation utility that checks task state and XCom keys should reject any key containing consecutive dots, raising with a message that clearly says consecutive dots aren't allowed and that this is to prevent path traversal. And the DAG run creation logic should reject any run ID with consecutive dots too, raising an appropriate error whose message makes the reason obvious.
+Airflow currently allows DAG run IDs and task/XCom keys to contain consecutive dots. Because these identifiers are used in file paths and URLs, an attacker or misconfigured workflow could craft an identifier that traverses directory boundaries — for example, encoding a directory traversal sequence in a run ID. This is a security vulnerability that should be closed by default.
 
-The check's gotta catch every variant, not just the obvious one. So a plain `..`, a run ID that's entirely consecutive dots, and the sneaky case where the consecutive dots sit in the middle of other characters (including alongside URL-encoded separators) all need to blow up. Basically if two dots ever touch anywhere in the identifier, it's rejected.
+## Expected Behavior
+
+- Attempting to create a DAG run whose run ID contains consecutive dots should be rejected with a clear error indicating that consecutive dots are not allowed.
+- Attempting to use a key (e.g., for task state or XCom) that contains consecutive dots should be rejected with a clear error indicating that consecutive dots are not allowed to prevent path traversal.
+- The rejection should cover all forms: plain consecutive dots, run IDs that are only consecutive dots, and run IDs where the consecutive dots appear alongside other characters (including URL-encoded separators).
+
+## Why This Matters
+
+Without this protection, identifiers accepted by Airflow could be used to construct directory traversal sequences, potentially exposing sensitive files or system paths when those identifiers are used in file operations. Blocking consecutive dots in identifiers by default prevents this class of attack without requiring operators to configure anything.

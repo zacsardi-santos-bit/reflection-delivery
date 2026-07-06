@@ -1,9 +1,21 @@
-I've been chasing a handful of bugs in the sandboxed filesystem layer of our CLI and could use a hand landing all the fixes together. The nastiest one is a command injection on Windows: when a sandboxed command reads or writes a file we're interpolating the file path straight into the shell command string, so a path with quotes or semicolons can break out and run arbitrary code. I want the path passed safely through an environment variable instead of embedded in the command args directly.
+## Description
 
-Also the sandboxed file service isn't sending any access policy when it asks the sandbox to read or write, so the sandbox has no idea which paths to allow. For reads it should grant read access to the target path, and for writes it should grant both read and write access to that path.
+The sandboxed file I/O system has several correctness and security issues that need to be fixed.
 
-Then there's the error handling, when a sandboxed read fails because the file doesn't exist the thrown error has no code on it, so callers can't tell "file not found" apart from anything else. It needs to carry the standard not-found code, and that applies to both the Linux/macOS message and the Windows equivalent.
+**Security: Command injection on Windows**
+When writing or reading files through the sandbox on Windows, file paths are being interpolated directly into shell command strings. A path containing special characters (like quotes or semicolons) can break out of the intended command and execute arbitrary shell code. File paths must be passed safely via environment variables, not interpolated into command arguments.
 
-On Linux, if a sandbox policy allows a path that doesn't exist yet, we currently skip granting it entirely, which makes creating new files impossible. Instead when the target doesn't exist we should grant access to the parent directory so new files can land there. Oh and the macOS sandbox is defaulting to write access across the whole workspace even when no write perms were requested, that default should be read-only unless the request explicitly includes write.
+**Missing access policies on file operations**
+When the sandboxed file service reads or writes a file, it currently does not communicate any access policy to the sandbox. This means the sandbox may deny the operation or grant incorrect permissions. The file service should include an explicit policy granting read access (for reads) and both read and write access (for writes) to the target file path.
 
-Last thing, when entering plan mode the tool assumes the plans directory already exists, which blows up in fresh or sandboxed workspaces since nothing created it yet, so any plan file write fails. Just create the directory if it's missing before writing.
+**File-not-found errors not propagated correctly**
+When a sandboxed read fails because the file does not exist, the thrown error currently has no error code attached to it. Callers need to distinguish "file not found" from other failures. The error should carry the standard not-found code so callers can handle it appropriately.
+
+**Non-existent path handling on Linux**
+When a sandbox policy allows a path that does not yet exist on the filesystem, the Linux sandbox skips it entirely. This prevents creating new files through the sandbox. Instead, the sandbox should grant access to the parent directory when the target path doesn't exist yet.
+
+**macOS workspace write default too permissive**
+The macOS sandbox is granting write access to the entire workspace by default, even when no write permissions are requested. The default should be read-only unless write permissions are explicitly included in the request.
+
+**Plans directory not created on demand**
+When entering plan mode, the tool assumes the plans directory already exists. In fresh workspaces or sandboxed environments, this directory may not have been created yet, causing subsequent plan file writes to fail. The tool should create the directory if it is missing.

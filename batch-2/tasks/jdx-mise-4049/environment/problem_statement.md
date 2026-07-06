@@ -1,1 +1,12 @@
-We upgraded our KDL document language version and it changed how boolean literals get written, they now want a hash prefix so `#true` and `#false` instead of the old bare `true`/`false` keywords. Problem is we've got an embedded usage spec file that still uses the old-style boolean notation, and now it's out of sync with everything else and won't pass format validation against the newer parser. Can you go through that embedded usage specification file and update every boolean value so it uses the modern hash-prefixed syntax? I just need the bare keyword booleans swapped over to the `#`-prefixed form so the whole file parses cleanly under the current KDL version and stays compatible with the tools that expect the updated format. Nothing else should change, just the boolean notation.
+## Description
+
+The embedded usage specification file used by the tool contains boolean values in an older format that is no longer compatible with the current version of the document language specification being used. The newer version of this specification requires boolean values to be written with a hash prefix rather than as bare keywords.
+
+## Expected Behavior
+
+- Boolean values in the embedded usage specification file should use the current format required by the newer document language version
+- The file should contain the updated boolean notation so that it is compatible with current parsers and tooling that rely on the modern specification
+
+## Why This Matters
+
+The project has upgraded to a newer version of the KDL document language, which changed how boolean literals are represented. If the embedded specification file is not updated to match, it will be out of sync with the rest of the codebase and may cause compatibility issues with tools that expect the updated format. Keeping this file current ensures the usage specification is valid and parseable by modern tooling.

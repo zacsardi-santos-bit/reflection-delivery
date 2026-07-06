@@ -1,13 +1,19 @@
-I'm deep in the live VM migration subsystem and I keep hitting a cluster of related bugs that I want fixed together, they all touch the migration lifecycle so it makes sense to do them in one pass.
+## Description
 
-First thing, when a migration fails we record a failure end time but sometimes we clobber the start time that was already set. Don't do that, the start timestamp needs to be preserved through failure handling so we don't lose that timing data.
+Several edge cases in the live VM migration lifecycle are not handled correctly, leading to incorrect state transitions, lost timing data, and incorrect cleanup behavior for migration target instances.
 
-Second, cleanup for VMs that got created specifically as migration targets on the destination node is wrong right now, we do the same cleanup on both success and failure. On failure I want to keep the annotation that marks the VM as having been a migration target so the rest of the system knows to treat it differently, but on success that marker should be fully removed.
+## Expected Behavior
 
-Third, I need a function that figures out the right proxy key to use for a given VM during migration. For decentralized migrations (source and target are separate VM instances) and specifically when a UNIX-socket transport is in play, use the source VM's identity as the key. Every other case uses the local VM's own identity, that includes when there's no migration state at all, when a different transport is being used, or when the source identity info just isn't available.
+- When a migration fails, the system should record the failure end time while preserving any previously recorded start time. Currently, the start timestamp can be overwritten or lost during failure handling.
 
-Fourth, the migration transport type needs to be included when we sync migration status from the source node over to the target node, it's missing from that status info today.
+- For virtual machines created specifically as migration targets on the destination node, cleanup should be context-aware: if the migration failed, the VM should retain a marker indicating it was created as a migration target (so it can be handled appropriately); if the migration succeeded, all migration-related markers should be fully removed.
 
-And finally the VM lifecycle controller mishandles migration targets in a transitional state. A migration target VM sitting in the "scheduled" phase with a failed or completed (terminated) pod, or whose migration has already been marked failed, should move into a waiting-for-sync state instead of getting treated like a crashed regular VM. Right now these can wrongly flip to Failed which cascades badly.
+- When establishing a migration proxy connection, the system needs to correctly determine which identity (source or target) to use as the lookup key. For decentralized migrations using a UNIX-socket transport, the source VM's identity should be used; for all other cases, the local VM's identity should be used.
 
-Why this matters: these edge cases cause migration targets to incorrectly land in Failed, corrupt migration history by overwriting timestamps, leave stale annotations lying around that mess up future reconciliation, or set up proxy connections with the wrong identity so the migration hangs or fails outright. Getting them right improves the reliability and observability of live migration.
+- The migration transport configuration should be included in the status information synchronized from source to target nodes.
+
+- Migration target VMs that are in a transitional "scheduled" state with a failed or terminated pod, or whose underlying migration has already been marked as failed, should move to a stable waiting state — rather than being treated as crashed non-target VMs.
+
+## Why This Matters
+
+These issues can cause cascading failures: a migration target VM may incorrectly transition to a Failed state, migration history data gets corrupted by overwriting timestamps, cleanup leaves behind stale annotations that interfere with future reconciliation, or proxy connections are established using the wrong identity causing the migration to hang or fail. Fixing these edge cases improves the overall reliability and observability of VM live migration.

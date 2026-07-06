@@ -1,5 +1,13 @@
-I'm hitting a bug with the OTEL telemetry exporter config in Airflow where IPv6 hosts produce a broken endpoint URL. When I set the OTEL host to an IPv6 address (loopback, or a full IPv6 literal, whatever), the endpoint that gets built drops the address in bare, no square brackets, so all the colons in the IPv6 address collide with the colon that's supposed to separate host from port. Per the URL spec IPv6 literals have to be wrapped in square brackets, and without that the URL is just unparseable, so anything trying to connect to my metrics or traces collector silently ends up with a garbage connection string.
+## Description
 
-What I want is for the endpoint-building logic to automatically wrap a bare IPv6 address (something that's got colons in it but isn't already bracketed) in square brackets when it constructs the endpoint URL. Handle the edge cases too though, so if the address already comes in surrounded by square brackets, keep them exactly as-is, don't double them up or otherwise mangle them. And obviously regular IPv4 addresses and plain hostnames should pass straight through untouched, no brackets, no changes.
+When the OTEL (telemetry) exporter is configured with an IPv6 host address, the generated endpoint URL is malformed. IPv6 addresses contain colons, which conflict with the colon delimiter used to separate the host from the port in a URL. According to the URL standard, IPv6 literal addresses used in a URL must be enclosed in square brackets. Without this bracketing, the generated URL is unparseable, meaning any deployment that uses an IPv6 address for its metrics or traces collector endpoint will silently use an invalid connection URL.
 
-This matters because folks deploying on IPv6 infrastructure right now get a malformed metrics/traces endpoint and their telemetry just fails to connect, so getting the bracketing right makes IPv6 deployments work correctly out of the box.
+## Expected Behavior
+
+- When a bare IPv6 address (one containing colons but not already wrapped in brackets) is provided as the OTEL host, the system should automatically wrap it in square brackets when constructing the endpoint URL.
+- When an IPv6 address is already enclosed in square brackets, the brackets should be preserved as-is — they must not be doubled or altered.
+- When an IPv4 address is provided, it should be passed through to the URL without modification.
+
+## Why This Matters
+
+Users deploying Airflow with IPv6 infrastructure will find that the metrics/traces endpoint URL is generated incorrectly, causing connectivity failures to their telemetry collector. The fix ensures compliance with URL formatting standards so that IPv6-based deployments work correctly out of the box.

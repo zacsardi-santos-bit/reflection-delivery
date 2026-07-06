@@ -1,5 +1,17 @@
-I'm working on the LaTeX conversion pipeline and TikZ figures just get dropped right now, no image rendering at all, so a bunch of diagram content is lost on conversion. I want to add support for rendering TikZ into actual images via Tectonic, an external typesetting engine, so let's build a new engine wrapper for it.
+## Description
 
-At init time the wrapper should check whether the tectonic binary is on the system path, and when it isn't there it logs a helpful installation hint instead of blowing up. It exposes a render method that shells out to the engine as a subprocess with a configurable timeout. That render call takes the TikZ code, an optional preamble, and an optional source root directory. When a source root is given, any locally referenced files from the preamble or the diagram code that actually exist inside that directory get staged into the rendering workspace, but anything outside the source root must not be reachable, so block path traversal past that boundary. Oh and the preamble needs sanitizing too, strip out any assignments to PDF-specific directives that Tectonic doesn't support and replace each with an explanatory inline comment, while leaving other non-assignment references to those same directives untouched.
+The LaTeX document conversion backend currently has no way to render TikZ figures into actual images. When a LaTeX document contains TikZ diagrams, the converter either ignores them or handles them in a limited way. We should add support for using an external typesetting engine (Tectonic) to render TikZ code into images during conversion.
 
-On the backend side I want this engine wired into the LaTeX backend options so it can be picked by name. When a TikZ picture gets processed and the engine returns nothing or throws, the backend should fall back to preserving the raw TikZ source as structured code on the picture item (with the right language tag) rather than losing it. Also when the document's loaded from a file on disk rather than a stream, the engine should automatically get the document's directory as the source root so it can find locally referenced assets. And the shell-escape feature should be configurable, only pass the shell-escape flag to the engine when it's explicitly enabled. The security bits around staging and traversal matter, the sandbox can't become a way to read files outside the doc root.
+## Expected Behavior
+
+- When the external typesetting engine is installed and available on the system path, the LaTeX backend should use it to render TikZ pictures into images.
+- When the engine is unavailable, the backend should log a helpful installation hint.
+- When rendering fails (timeout, runtime error, or the engine returns nothing), the backend should fall back gracefully by preserving the original TikZ markup as structured source code on the picture item, with the appropriate language tag.
+- When the source document is file-backed (loaded from disk rather than a stream), the render engine should know the document's directory so it can locate locally referenced files.
+- The render engine should handle incompatible PDF-specific directives in the document preamble by silently removing the problematic assignments and replacing them with explanatory comments, while leaving non-assignment uses of those directives intact.
+- File dependencies referenced in the preamble or diagram code should be staged into the rendering sandbox, but only if they reside within the document's root directory — path traversal to files outside that boundary must be blocked.
+- Shell escape behavior should be configurable; disabling it should prevent the shell-escape flag from being passed to the typesetting engine.
+
+## Why This Matters
+
+Without this feature, TikZ diagrams in LaTeX documents are lost during conversion. Supporting rendering (with a safe, graceful fallback) dramatically improves the fidelity of LaTeX document conversion, and the security constraints around file staging and path traversal ensure the rendering sandbox cannot be exploited to access files outside the document root.

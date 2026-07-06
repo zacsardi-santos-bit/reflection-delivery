@@ -1,7 +1,20 @@
-I'm optimizing the Big Number with Trendline chart plugin and its aggregation flow is wasteful. Right now every time an aggregation method is set it fires two queries at the server, one for the trendline time series and a second for the aggregated headline number, but for most methods (sum, average, median, minimum, maximum, and last value) that second query is pointless because I already have the trendline data in the browser and can just compute the headline from it. I want to rework the query building so a second server query only goes out when the aggregation mode genuinely needs server-side computation (the overall/server-side value), and for everything else a single query is enough with the aggregated value computed client-side.
+## Description
 
-To make this reusable, I want the available aggregation methods and their computation functions defined in one shared spot in the chart-controls package so both the query builder and the rendering logic can pull from the same place instead of duplicating logic. Oh and there's a casing bug: the aggregation key for sum is inconsistently cased in some spots, it should be lowercase everywhere. Also when the headline number gets successfully computed from the aggregation (non-null result), the fallback value should be null rather than pointing at a fallback data point.
+The Big Number with Trendline chart currently sends two separate queries to the server every time an aggregation method is configured: one query fetches the time series data for the trendline, and a second query fetches the aggregated value displayed as the headline number. For most aggregation methods — such as sum, average, median, minimum, maximum, and last value — this second query is entirely unnecessary because the aggregated value can be calculated directly in the browser from the trendline data that has already been retrieved.
 
-One more small thing while I'm in here: the SQL viewer's format toggle currently shows a static label ("Show original SQL") no matter the state, which is confusing. I want the toggle to say "formatted" when it's displaying formatted SQL and "original" when it's showing the raw SQL so the current mode is obvious at a glance, which also helps folks on screen readers.
+There is also no shared definition of the available aggregation methods and their computation logic, making it difficult to reuse that logic between the query-building and rendering stages of the chart.
 
-Why it matters: dropping the redundant query speeds up chart load, centralizing the aggregation logic cuts duplication and makes adding or changing methods easier later, and the clearer toggle label is better for everyone.
+Finally, the SQL viewer's format toggle switch displays a static label ("Show original SQL") regardless of the current display mode, making it unclear whether the SQL is currently shown in formatted or original form.
+
+## Expected Behavior
+
+- For most aggregation methods, the chart should send only one query to the server and compute the headline number client-side from the trendline data.
+- Only one specific aggregation mode (server-side/overall value) should require a second server query.
+- The available aggregation methods and their computation functions should be defined in a single shared location within the chart-controls package so they can be used both during query building and during rendering.
+- The aggregation method keys should be consistently cased (lowercase) across the codebase.
+- When a valid aggregated value is successfully computed from the trendline data, the fallback value field should be null rather than set to a non-null fallback.
+- The SQL viewer format toggle should display "formatted" when showing formatted SQL and "original" when showing the raw SQL, making the current state clear to users.
+
+## Why This Matters
+
+Eliminating redundant server queries improves chart load performance. Centralizing aggregation logic reduces duplication and makes it easier to add or modify aggregation methods in the future. The accessible toggle label improvement benefits all users, especially those relying on screen readers or other assistive tools.

@@ -1,7 +1,15 @@
-I'm reworking how loop detection behaves in the agent runtime and the current one-strike policy is way too aggressive. Right now the moment any repetitive behavior gets flagged the session just terminates, no chance for the agent to fix itself, and that kills sessions that could've self-corrected with a nudge. I want a two-strike policy instead.
+## Description
 
-So on the first detection, don't stop. Inject a warning message back to the agent telling it there's a potential loop, and include a description of what was actually detected, then keep the conversation going so it has a shot at recovering. Only if it keeps looping after that recovery turn should we forcibly stop and emit the loop-detected signal back to the caller.
+The agent loop detection system currently terminates a session the moment any repetitive behavior is detected. This "one-strike" policy is too aggressive: it aborts sessions even in cases where the agent could self-correct if simply given a warning.
 
-For any of this to work the loop detection service has to return a numeric count of how many times looping's been detected instead of a plain yes/no, so callers can escalate (recover on the first, terminate on the second). It also needs a method to clear the active detection state so the recovery turn can proceed without instantly re-triggering, while still remembering that one loop already happened so a second detection does terminate.
+## Expected Behavior
 
-Couple more things: skip recovery entirely when there aren't enough remaining turns to fit it, and recovery should still proceed even if the type of loop changes between the first and second detection (like it's a different kind of loop the second time, doesn't matter, still counts). Oh and drop the threshold that triggers the LLM-based loop analysis so it kicks in earlier on long sessions, and the interval formula that schedules follow-up checks should use a lower minimum value. Premature terminations from transient or false-positive signals waste user time and block legit task completion, so this graduated approach gives one clean recovery attempt before the hard stop.
+- When repetitive behavior is first detected, the system should attempt a recovery by alerting the agent about the potential loop and continuing the conversation — rather than immediately stopping.
+- If the agent continues to loop after this initial warning and recovery attempt, the session should then be forcibly terminated.
+- The loop detection result should carry a numeric count of how many times looping has been detected (not just a yes/no signal), so callers can apply escalating responses: attempt recovery on the first detection, terminate on the second.
+- A new method should be available to clear the active detection state (allowing a recovery turn to proceed) while preserving the running count of prior detections.
+- The threshold at which the LLM-based loop analysis is triggered should be reduced so that longer-running sessions begin monitoring earlier.
+
+## Why This Matters
+
+Premature session terminations due to transient or false-positive loop signals waste user time and prevent legitimate task completion. A graduated two-strike approach gives agents one opportunity to recover gracefully before a hard stop is enforced.

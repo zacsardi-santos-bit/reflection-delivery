@@ -1,7 +1,21 @@
-I'm cleaning up some inline name-editing logic in the Appsmith IDE and I want to pull it out of the component it's stuck in. Right now the whole flow (tracking the edited name, running validation, wiring up Enter and Escape, and figuring out whether to save or cancel on blur) lives inline in one editable name component, which makes it impossible to test in isolation or reuse anywhere else.
+## Description
 
-What I want is a dedicated hook in the design system package, living with the entity explorer templates, that takes the current editing state, the initial name, an exit-editing callback, a validation function, and a save callback. It should hand back a ref to attach to the input, the current name value, the current validation error, a key-up handler, and a change handler. And it needs to be exported from the design system's public surface so the IDE component can import it directly.
+The inline text editing behavior in the entity explorer is currently embedded directly inside a UI component, making it difficult to test in isolation or reuse elsewhere. The logic for handling keyboard shortcuts, validation, and deciding whether to save or discard a name change should be extracted into a standalone, reusable hook that lives in the design system package.
 
-The rules matter here so let me be precise: pressing Enter with a valid changed name calls save and exits, Enter with an invalid name exits without saving, Escape always exits without saving no matter what, losing focus on the input with a valid changed name saves and exits, and pressing Enter when the name hasn't actually changed just exits without saving. Once that's extracted, update the existing editable name component in the IDE so it delegates its editing state management to this hook instead of doing it all inline.
+Additionally, the data source list in the IDE's left panel does not render entries with proper semantic list item roles, which makes it harder to reliably query items by position and harder for accessibility tools to interpret the list structure.
 
-Also, separate thing but related cleanup, the datasource list in the IDE's left panel should render each entry as a proper semantic list item so I can query the list reliably by position and screen readers can actually parse it. Each entry needs both the datasource name and its usage description in its content, and they should show up in a consistent sorted order. This all helps testability and reuse, and gives us one well-tested implementation instead of duplicated editing logic scattered around.
+## Expected Behavior
+
+- A standalone, reusable hook should exist in the design system package that manages the full lifecycle of inline name editing: tracking the current text value, running name validation, handling Enter and Escape keyboard shortcuts, and responding to focus loss.
+- When the user presses Enter with a valid name change, the save callback should be invoked and editing should exit.
+- When the user presses Enter with an invalid name, editing should exit without saving.
+- When the user presses Escape, editing should exit without saving regardless of the current name.
+- When the input loses focus with a valid name change, the save callback should be invoked and editing should exit.
+- When the name is unchanged and Enter is pressed, editing should exit without saving.
+- The hook should be part of the design system's public export surface so components outside the design system can use it.
+- The component that handles editable names in the IDE should delegate its editing logic to this shared hook.
+- Each datasource entry in the data source list panel should be rendered as a proper semantic list item so the list structure is predictable and accessible.
+
+## Why This Matters
+
+Extracting the editing logic into a dedicated hook improves testability and reusability across the application. Teams working on different parts of the IDE can rely on a single, well-tested implementation of inline editing behavior rather than duplicating logic. Proper list item semantics for the data source panel also improve accessibility and make automated testing more reliable.

@@ -1,7 +1,14 @@
-I want to add a new Spring Security tutorial module showing how to catch compromised passwords during user registration, since we don't have anything in the tutorials repo demonstrating this and a lot of apps happily accept previously-leaked passwords which just sets users up for credential-stuffing attacks. I want a real copy-paste-ready reference pattern at both the REST layer and the validation layer.
+## Description
 
-It should be a standalone Spring Boot app with an in-memory database exposing a user creation endpoint. When someone posts a registration request with an email and password, the app checks whether that password is compromised. If it is, reject with a 400 Bad Request whose body is the standard problem-detail format, so a numeric status field set to 400 and a detail field carrying a message saying the password is compromised and can't be used. If the password's fine, create the user and return 200 OK.
+We need a new Spring Security module that demonstrates how to detect and reject passwords that are known to be compromised. Currently there is no example module in the tutorials repository showing how to integrate compromised-password checking into a real user-registration flow.
 
-Beyond the endpoint I also want the same check wired up as a reusable bean-validation constraint I can slap directly on the password field of a request DTO. When that constraint's violated (password is compromised) validation should produce a constraint violation with a message saying the password is compromised and can't be used, same idea as the endpoint.
+## Expected Behavior
 
-Oh and the endpoint itself needs to be publicly accessible, no auth required to call it, and use stateless session management with CSRF disabled. Also make sure the module gets wired into the existing parent build so it compiles and tests as part of the repo.
+- A user registration endpoint should accept a new user's email address and password.
+- If the submitted password has been flagged as compromised, the registration must be rejected with a 400 Bad Request response. The response body should clearly communicate that the password is compromised and cannot be used.
+- If the password is not compromised, the user should be created successfully and the endpoint should return a 200 OK response.
+- The same compromised-password check should also be available as a reusable bean-validation constraint that developers can apply directly to their request data objects. When that constraint is violated, it must produce a human-readable validation message indicating that the password is compromised and cannot be used.
+
+## Why This Matters
+
+Many applications accept weak or previously-leaked passwords during registration, exposing users to credential-stuffing attacks. Providing a working reference implementation — at both the REST layer and the validation-constraint layer — gives developers a clear, copy-paste-ready pattern for integrating compromised-password detection into their own Spring Boot applications.

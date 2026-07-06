@@ -1,5 +1,18 @@
-I'm working on the Qualys v2 integration and need to extend how we pull vulnerabilities and ship them off to XSIAM. Right now the code in the integration can only grab vulnerability knowledge base data by a "last modified since" date, but I need it to also fetch vulnerabilities by a specific list of vulnerability identifiers (QIDs) that come from asset detections, so we're not dragging in every recently-changed vuln when only a small subset actually matters to the assets we're processing (that's killing perf and costs right now). Oh and when neither a date nor a list of QIDs is passed, the fetch function should raise an error telling the caller at least one of the two has to be specified.
+## Description
 
-Beyond that I want a new coordinated fetch flow that pulls both assets and their associated vulnerabilities together and sends them to XSIAM in one synchronized operation, tagged with the right vendor and product labels so XSIAM can understand the asset/vuln relationship. It needs to track cumulative asset and vulnerability counts across multiple fetch cycles using a snapshot identifier. While a cycle's still going (more pages remain), the reported count should use a sentinel value of "1" to signal to XSIAM that more data's coming, and once the full cycle wraps up we report the actual cumulative count.
+The Qualys v2 integration can fetch vulnerability knowledge base data based on a modification date, but it currently has no way to fetch vulnerabilities targeted by specific identifiers associated with asset detections. This forces the integration to pull all recently-changed vulnerabilities even when only a small subset is relevant to the assets currently being processed.
 
-I also need a two-stage date-based fetch variant that fetches assets first, advances to a vulnerability stage once assets are done, then fetches vulnerabilities, and resets back to the default starting state when the whole cycle completes. In both fetch modes the date used for filtering should be 90 days before the current date. Also the integration needs to expose a vendor constant plus a default last-run state constant representing that reset state for a new cycle. Everything lives in the Qualys v2 integration code, btw.
+In addition, there is no coordinated flow for fetching both assets and their associated vulnerabilities together and sending them to the XSIAM platform in a synchronized way. Assets and vulnerabilities need to be paired so that XSIAM can understand their relationship, and progress across multiple fetch cycles must be tracked with cumulative counts and snapshot identifiers.
+
+## Expected Behavior
+
+- The integration should support fetching vulnerability data either by date range or by a list of specific vulnerability identifiers.
+- A validation error should be returned if neither a date nor a list of identifiers is provided when fetching vulnerabilities.
+- A new fetch mode should coordinate fetching assets and vulnerabilities together, sending both to XSIAM with the correct vendor and product labels, cumulative counts, and a snapshot identifier.
+- While a multi-page fetch cycle is still in progress, the reported item count should signal that more data is coming. When the cycle finishes, the actual cumulative count should be reported.
+- After a complete fetch cycle ends, the integration state should reset to its default starting configuration automatically.
+- The date used for fetching should be calculated as 90 days before the current date.
+
+## Why This Matters
+
+Without targeted vulnerability fetching, every sync pulls far more data than necessary, degrading performance and increasing costs. The new coordinated fetch flow enables XSIAM to receive a complete, consistent snapshot of assets and vulnerabilities together, with proper tracking across paginated results.

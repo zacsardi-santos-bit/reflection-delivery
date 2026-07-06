@@ -1,3 +1,17 @@
-I'm building out this eval inventory tool that scans our evaluation test files in the repo and spits out a report, and right now it only knows how to produce a human-readable text report, but I need it to also emit a structured JSON format so CI pipelines and dashboards can consume the inventory data without fragile text parsing. The JSON should be versioned (some kind of format version marker so we can diff across commits safely) and carry a generation timestamp plus a summary with file counts and case counts broken down by policy, and then full details for every case along with any diagnostics we collected. Big thing: all file paths in the JSON need to be relative, not absolute, so the output is actually portable between environments, which means I need the repo root tracked on the inventory result itself so relative paths can be computed correctly throughout. Oh and the timestamp should be overridable via an env var so reproducible builds can pin it and get deterministic output instead of a fresh clock read every time.
+## Description
 
-Also I keep hitting this issue where cases with a policy value that isn't in our predefined list just vanish silently, I want unknown or future policies to still show up in both the text report and the JSON, don't drop them. And when inventory collection runs against a path where the expected evaluation directory doesn't exist, it should fail loudly with a clear descriptive error rather than quietly returning empty results, that one bit me during a misconfigured path. Same relative-path treatment for the diagnostic messages in the text report, they should show relative file paths too, not absolute ones.
+The eval inventory tooling currently only produces a human-readable text report when scanning evaluation test cases in the repository. There is no structured, machine-readable output format, making it difficult for automated tooling, dashboards, or CI pipelines to consume and process inventory data programmatically.
+
+## Expected Behavior
+
+- A new JSON output mode should be available for the eval inventory feature, producing a structured, versioned, and deterministic representation of the inventory.
+- The JSON output should include a format version marker, a generation timestamp, a summary with file and case counts broken down by policy, full case details, and diagnostic information.
+- All file paths in the JSON output should be relative rather than absolute so the output is portable across different environments.
+- The generation timestamp should be overridable via environment variables to support reproducible builds where deterministic output is required.
+- Cases with any policy value (including unrecognized or future policies) should appear in both the text report and the JSON output.
+- When the expected evaluation directory does not exist under the given repository root, inventory collection should fail with a clear, descriptive error message instead of silently returning empty results.
+- The repository root should be tracked in the inventory result so that relative paths can be computed correctly throughout the tool.
+
+## Why This Matters
+
+Without a structured JSON format, integrating eval inventory data into automated workflows requires fragile text parsing. A deterministic, versioned JSON output makes it straightforward to diff inventory changes across commits, feed data into dashboards, and verify inventory contents in automated checks. The improved error message for missing evaluation directories also helps developers quickly diagnose misconfigured repository paths.

@@ -1,5 +1,15 @@
-I'm hitting a caching bug in our Nx monorepo where the Playwright e2e targets keep using stale cached results after I touch our shared TypeScript configs. We've got a bunch of Playwright projects that extend tsconfig files living at the workspace root, and when those shared configs change the Playwright targets don't invalidate because those external tsconfig files aren't being tracked as inputs. So tests skip re-running even though the config they depend on actually changed, which is a real problem for incremental builds at our scale (false cache hits basically undermine the whole thing).
+## Description
 
-What I want is for the Playwright plugin to walk the chain of TypeScript config files a project inherits from (following the extends references up the tree) and automatically add any of them that live outside the project directory as cache inputs. Couple of nuances though. The single native root tsconfig, the one Nx's built-in file hasher already tracks, should be excluded so we don't double-count it, but the workspace root tsconfig when it isn't that already-hashed file should still get included as an input. And any tsconfig files that live inside the project's own directory don't need to be added since existing inputs already cover those.
+In an Nx monorepo, Playwright end-to-end test targets do not currently track workspace-level TypeScript configuration files as build inputs. When a project's tsconfig inherits from shared configs that live outside the project directory (for example, at the workspace root), changes to those shared configs do not invalidate the Playwright target's cache. This means tests may skip re-running even when the TypeScript configuration they depend on has changed.
 
-Oh and one more thing, if a workspace has a distributed CI target set up alongside the regular test target, both targets should end up with the same set of tsconfig inputs so caching stays consistent across them. This all lives in the Playwright plugin inference logic, so wire the external-config detection into wherever the target inputs get computed.
+## Expected Behavior
+
+- When a project's TypeScript config file references parent configs outside the project directory, those external configs should be listed as inputs to the Playwright target.
+- The workspace root tsconfig (when it is not the file already tracked by the native hasher) should be included as an input.
+- The native root tsconfig — the one already handled by Nx's built-in file hasher — should be excluded to avoid redundant tracking.
+- Tsconfig files that live inside the project's own directory should not be added (they are already covered by existing inputs).
+- When a distributed CI target is configured alongside the primary target, both should receive the same set of tsconfig inputs.
+
+## Why This Matters
+
+Without this, developers relying on shared TypeScript configurations across their monorepo can encounter false cache hits where Playwright tests use stale cached results after a shared config change. This undermines the reliability of incremental builds in large workspaces.

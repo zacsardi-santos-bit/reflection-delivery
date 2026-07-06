@@ -1,9 +1,20 @@
-I'm using prettier to format Angular HTML templates and I noticed arrow function expressions inside templates just don't get formatted at all. If I write an arrow function in a variable binding, inside an interpolation, or in an event handler, prettier leaves it completely untouched, so extra spaces, weirdly spaced arrow tokens, odd indentation, redundant parens, all of it stays exactly how I typed it. I'd expect it to normalize the whitespace in those arrow functions the same way it does for any other expression.
+## Description
 
-Also the option that controls whether single-parameter arrow functions keep or drop their parentheses doesn't take effect inside Angular templates. When that option says to omit parens around a single param, it should be respected in templates too, and when the default parens style is in effect, bare single-param arrow functions in event bindings should get parentheses added. And when a parameter list is long enough to exceed the print width, it should split across lines one parameter per line just like regular JavaScript does, which currently doesn't happen either.
+Prettier does not format arrow function expressions inside Angular HTML templates. When an Angular template contains an arrow function — whether in a variable binding, an interpolation expression, or an event handler — the formatter leaves it completely untouched rather than normalizing whitespace and applying the configured style.
 
-Oh and there's a trailing comma thing: even when I've got the "add trailing commas everywhere possible" option enabled globally, arrow function parameter lists in Angular templates should not get a trailing comma added since that syntax isn't supported there.
+This means extra spaces, inconsistently spaced arrow tokens, and redundant parentheses are all preserved as-is. It also means that the option controlling whether to always include or optionally omit parentheses around single-parameter arrow functions has no effect inside Angular templates.
 
-Separately, the type-check operator ($any-style) in Angular interpolations doesn't get cleaned up either, redundant nested parentheses around the operands are left in place and extra internal whitespace isn't removed. It should strip the redundant parens and normalize the whitespace.
+Similarly, the type-check operator used in Angular interpolations is not properly formatted — unnecessary parentheses are kept and extra internal whitespace is not cleaned up.
 
-So basically I want you to add proper formatting for arrow functions and the type-check operator in the Angular template formatter, respecting the relevant parens and trailing-comma options. Angular templates increasingly use arrow functions in variable declarations, event handlers, and computed expressions, and right now prettier silently skips them so I can't trust it for modern Angular syntax.
+## Expected Behavior
+
+- Arrow functions anywhere in an Angular template should be formatted consistently, with extra whitespace removed.
+- The option to omit parentheses around single-parameter arrow functions should be respected inside Angular templates.
+- When the default parentheses style is in effect, bare single-parameter arrow functions in event bindings should have parentheses added.
+- When content is too wide, arrow function parameter lists should be split to multiple lines, one parameter per line.
+- Even when the "add trailing commas everywhere possible" option is enabled, arrow function parameters in Angular templates should not receive a trailing comma.
+- The type-check operator in Angular interpolations should have redundant parentheses removed and whitespace normalized.
+
+## Why This Matters
+
+Angular templates increasingly use arrow functions in variable declarations, event handlers, and computed expressions. Without proper formatter support, prettier silently skips these constructs, leaving them inconsistently formatted even when the rest of the template is cleaned up. Developers relying on prettier for consistent Angular template formatting cannot trust it to handle modern Angular syntax.

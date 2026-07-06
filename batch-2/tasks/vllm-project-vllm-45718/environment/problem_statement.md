@@ -1,5 +1,17 @@
-I'm dealing with a streaming reasoning parser for the MiniMax M3 models and it keeps mishandling the reasoning block boundaries. The parser marks the start and end of reasoning using special delimiter strings, but right now it detects those boundaries by checking for one specific individual token ID. Turns out the tokenizer sometimes encodes those delimiter strings as a sequence of multiple smaller tokens (character-level or subword bits) instead of a single atomic vocabulary token, even when the markers do exist as single vocab entries, and sometimes the delimiter text gets split across two consecutive streaming chunks too.
+## Description
 
-When that happens everything goes sideways: reasoning content leaks into the regular content field, the end state gets set at the wrong time, and content that follows the reasoning block gets misattributed. What I want is for the parser to detect the start and end markers off the full accumulated text rather than matching a single token ID, so it works no matter how the tokenizer splits the marker text. If a marker arrives split across chunks it should hold off on emitting reasoning or content until the marker's complete, and it shouldn't set the end state prematurely. Once the end marker's fully received, set the end state and attribute the following content correctly. Oh and a leading end marker that's split across chunks should still do the right thing, meaning no reasoning output and the following text treated as content.
+The streaming reasoning parser for MiniMax M3 models fails to correctly detect reasoning block boundaries when the delimiter tokens are split into multiple smaller tokens rather than appearing as a single atomic vocabulary token. This can happen when the model's tokenizer encodes the special marker strings as character-level or subword tokens at runtime, even if the markers exist as single vocabulary entries.
 
-Also the helper methods that inspect token sequences need the same treatment, so checking whether reasoning has ended, counting reasoning tokens, and extracting the content token IDs all need to use multi-token sequence matching instead of single-token lookups. The assumption that markers always map to one token is just too brittle across different models and tokenization setups, and I need reasoning/content separation to stay correct across all of them.
+The parser was originally written to match boundaries by checking for a single specific token ID. When the tokenizer produces the same marker text as a sequence of multiple tokens instead, the parser does not recognize that a reasoning block has started or ended. This results in incorrect streaming output — reasoning content leaking into the content field, end states not being set at the right time, or content being misidentified as reasoning.
+
+## Expected Behavior
+
+- The parser must detect start and end markers using the full accumulated text rather than by matching a single token ID.
+- When a marker string is split across multiple streaming chunks, the parser should correctly hold off on emitting reasoning or content until the marker is complete.
+- After the end marker is fully received, the end state should be set and subsequent content should be attributed correctly.
+- Helper methods that inspect token sequences (checking whether reasoning has ended, counting reasoning tokens, extracting content tokens) must also use multi-token sequence matching rather than single-token lookups.
+- A leading end marker that is split across chunks should still result in the correct behavior: no reasoning output, with the following text treated as content.
+
+## Why This Matters
+
+Models and tokenization configurations may vary, and assuming markers always map to a single token is brittle. Fixing the parser to work from text-level detection ensures that reasoning/content separation is correct across all tokenization scenarios.

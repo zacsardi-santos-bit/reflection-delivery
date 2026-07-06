@@ -1,5 +1,21 @@
-I'm hitting a bunch of complex-dtype problems in pandas and want to get proper support wired into both the arithmetic system and the extension array layer. The core bug is that when I do arithmetic on complex-valued data (addition, subtraction, multiplication, division) or run math functions like square root on a Series or Index holding complex numbers, the result dtype comes back as some floating-point type instead of staying complex. I'd expect any arithmetic or ufunc result on a complex array to preserve the complex dtype all the way through, whether it's a binary op or a numpy ufunc.
+## Description
 
-The extension array wrapper that bridges plain numeric arrays into the extension array interface (the one in the numpy-backed extension array code under `@pandas/core/arrays/`) also doesn't really handle complex dtype. Duplicate detection on a complex-typed array doesn't work right, and setitem/item assignment for complex arrays is basically untested and broken, so I want both working correctly. Oh and operations that are mathematically undefined for complex numbers, floor division and modulo, currently don't raise like they should, they should throw a TypeError instead of silently doing something weird.
+Pandas currently lacks proper support for complex number arrays within its extension array infrastructure and arithmetic system. When working with complex-typed data in Series, DataFrames, or Index objects, several issues arise.
 
-Also there are known limitations I just want handled gracefully rather than blowing up unpredictably. There's no low-level fill routine for complex types, and one of the CSV parsing backends (the low-level C-style parser engine used by the extension array csv path) can't parse complex types, so that should fail predictably. It'd be good to get the extension array test coverage extended to cover complex dtype including those limitations. Basically people doing signal processing or scientific computing expect complex to get the same treatment as int and float dtypes, correct dtype preservation through arithmetic plus working extension array ops.
+## Current Behavior
+
+- Arithmetic operations (addition, subtraction, multiplication, division) and mathematical functions (like square root) performed on complex-typed arrays incorrectly coerce the result dtype to a floating-point type instead of preserving the complex type.
+- The extension array wrapper (which bridges plain numeric arrays into the extension array interface) has no test coverage for complex dtype, leaving behaviors like duplicate detection and item assignment untested and broken.
+- Operations that are mathematically undefined for complex numbers (floor division and modulo) do not properly raise errors; this should produce a type error instead of silently succeeding or failing in unexpected ways.
+- The CSV parsing engine for complex-typed extension arrays should be handled gracefully rather than failing unexpectedly.
+
+## Expected Behavior
+
+- Arithmetic on complex-typed arrays should preserve the complex dtype throughout.
+- Duplicate detection on complex arrays should work correctly.
+- Floor division and modulo on complex-typed arrays should raise an appropriate error.
+- The extension array test suite should cover complex dtype, including known limitations (such as the absence of a low-level fill routine for complex types and CSV parsing with certain parser engines).
+
+## Why This Matters
+
+Users who work with complex-valued data (e.g., signal processing, scientific computing) expect pandas to correctly handle the complex dtype with the same level of support as integer and floating-point types, including correct dtype preservation through arithmetic and extension array operations.

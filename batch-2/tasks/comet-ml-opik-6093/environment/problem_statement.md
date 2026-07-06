@@ -1,7 +1,18 @@
-I'm poking at the Opik SDK config setup and there's a gap that's been bugging me. The setup flow handles API key, workspace, and server URL just fine, but there's no way to lock in a default project name for trace logging as part of that same call. Right now when I hit the configure function I can pass the other connection params, but project name is either silently ignored or not accepted at all, and worse, the success message at the end shows the project name from the old config file rather than anything I actually picked.
+## Description
 
-I want project name treated as a first-class config param right next to the other three. So I should be able to pass it explicitly when I already know it, or have the wizard prompt me to pick or confirm a default when I don't. If there's already a project name in the config file and I don't override it, reuse that. When running in auto-approve or non-interactive mode it should quietly fall back to the default project name without prompting me.
+The SDK's setup wizard allows users to configure their API key, workspace, and server URL, but does not let them specify which project traces should be sent to as part of that process. The success message shown at the end of setup references a project name from the stored configuration rather than any project the user actually chose during setup — and there is no way to choose one.
 
-Whatever I end up choosing needs to get saved to the config file, written into the session state, and set as an environment variable just like the rest, so third-party integrations that read the environment can figure out where to send traces. Oh and validation matters here: if I'm in the prompt flow and submit an empty project name, don't save a blank value, raise a configuration error instead. And the final success log line should reflect the project name that was actually selected, not whatever was sitting in the config beforehand.
+Users who want to direct their traces to a specific project currently have to do so after configuration, through a separate step. This means the configuration tool does not cover all four of the essential connection parameters it should.
 
-The relevant logic lives in the configuration code under the Opik Python SDK (roughly `@sdks/python/src/opik/configurator/configure.py`), so that's where the project name handling, prompting, validation, and success message need to change.
+## Expected Behavior
+
+- When setting up the SDK, users should be able to specify a project name alongside the API key, workspace, and URL.
+- If no project name is given, the setup wizard should prompt the user (or fall back to a default silently when running in non-interactive or auto-approve mode).
+- An existing project name in the configuration file should be reused when not explicitly overridden.
+- If the user is prompted and provides an empty project name, the setup should fail with a clear error.
+- The chosen project name should be saved to the configuration file, reflected in the session, and set in the environment so that downstream integrations can read it.
+- The completion message should display the actual project name that was selected, not one pulled from the pre-existing config.
+
+## Why This Matters
+
+Without this, users have no way to lock in a target project during initial setup. Third-party integrations that rely on the configured environment to determine where to send traces cannot pick up the project name from the environment after running the setup wizard. Making project name a first-class part of the configuration process brings it in line with the other three core settings and reduces the need for post-setup manual steps.

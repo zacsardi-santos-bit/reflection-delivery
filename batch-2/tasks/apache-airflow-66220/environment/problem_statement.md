@@ -1,7 +1,16 @@
-I'm working on the Elasticsearch provider in Apache Airflow and I want to add Polars DataFrame support for Elasticsearch SQL queries. Right now if you try to pull query results as a Polars DataFrame through the database hook it immediately blows up with a not-implemented error saying Polars isn't supported, which has been a known limitation for a while. The root issue is that Elasticsearch's query interface doesn't fully conform to the standard database adapter protocol that the existing Polars integration leans on, so I need a custom utility to work around it.
+## Description
 
-What I want is a helper that queries Elasticsearch using its native SQL API with cursor-based pagination, accumulating rows across multiple pages into a final Polars DataFrame. It should live in a new utils submodule of the Elasticsearch provider and accept the client, the SQL query, optional query parameters, a configurable batch size, and an optional row limit. When a row limit is given, results should get truncated to that count.
+Attempting to retrieve Elasticsearch SQL query results as a Polars DataFrame currently fails immediately with a not-implemented error. The Elasticsearch provider's database hook does not support Polars because the standard database adapter interface is not fully compatible with Elasticsearch's query execution model.
 
-Cleanup matters here too, so when cursor-based pagination actually happened, the cursor should be cleared exactly once after all the data is retrieved, but when everything fits in a single page without a cursor (or when the row limit is hit before pagination even begins), don't make any cleanup call since there's nothing to clean up.
+## Expected Behavior
 
-Then once that utility exists, the hook's method for returning Polars DataFrames should just delegate to it, passing along the Elasticsearch client, the SQL query, query parameters, and any extra keyword arguments, instead of raising the not-implemented error it does today. The point is Polars is a popular high-performance DataFrame library and other Airflow database backends already support it, so this brings Elasticsearch up to parity for Polars retrieval.
+- Querying Elasticsearch using SQL and requesting results in Polars DataFrame format should succeed instead of raising an error.
+- The implementation should use Elasticsearch's native cursor-based pagination to retrieve results in batches, handling large result sets efficiently.
+- Users should be able to optionally limit the total number of rows returned.
+- After retrieving paginated results, any open cursor resources should be properly cleaned up.
+- When results fit on a single page and no cursor is used, no cleanup call should be made (since there is nothing to clean up).
+- When a row limit is satisfied within the first page before pagination begins, cursor cleanup should likewise be skipped.
+
+## Why This Matters
+
+Polars is a popular high-performance DataFrame library, and other database backends in Airflow already support it. Elasticsearch is currently a second-class citizen in this regard — developers who want to work with Elasticsearch SQL results in Polars are forced to use workarounds. This change brings Elasticsearch up to parity with other supported databases for Polars DataFrame retrieval.

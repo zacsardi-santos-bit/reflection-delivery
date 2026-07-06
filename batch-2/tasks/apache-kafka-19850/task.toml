@@ -32,9 +32,9 @@ timeout_sec = 3000
 [solution]
 
 [metadata]
-difficulty = "hard"
-difficulty_explanation = "medium: solvable by a frontier model (opus-4.8 pass@8>0)"
-pass_at_k_opus_4_8 = "2/13"
+difficulty = "medium"
+difficulty_explanation = "medium: solvable by a frontier model (opus-4.8 pass@8 > 0)"
+pass_at_k_opus_4_8 = "2/8"
 category = "Systems, Infrastructure, and Operations"
 subcategory = "Networking configuration"
 objective_labels = ["Implement", "Configure"]

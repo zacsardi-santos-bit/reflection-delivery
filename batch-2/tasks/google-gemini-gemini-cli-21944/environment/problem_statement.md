@@ -1,7 +1,17 @@
-I'm cleaning up the execution context in our core scheduling pipeline and it's a mess right now. The scheduler, tool executor, and policy components each take config-related data as a grab bag of separate args, sometimes a config object, sometimes a message bus, sometimes both bundled into some ad hoc wrapper. On top of that the tool registry only comes through a method call and the current prompt identifier gets fetched from an indirect async storage thing instead of just being there on a context object. It's verbose and inconsistent and annoying to maintain.
+## Description
 
-What I want is one unified context interface that carries the configuration, the tool registry, the message bus, and the prompt identifier all together. Then I want to thread that single context through everywhere so it's the one consistent argument. On the scheduler constructor it should replace what used to be the config field (same named-field slot, just the new context). The tool executor constructor should take this context as a single argument instead of the current two-argument form. And the policy update function should take the context directly rather than the config-and-message-bus wrapper object it gets today.
+The core execution pipeline passes configuration context to the scheduler, tool executor, and policy components as a mix of separate arguments — a configuration object here, a message bus there, with the tool registry accessed via a method call and the current prompt identifier retrieved from an indirect storage mechanism. This fragmentation makes the interfaces inconsistent, verbose, and harder to maintain.
 
-Also the tool registry needs to become a direct property on the context, no more method call, and same deal for the current prompt identifier, direct property instead of the storage lookup. Oh and don't forget sub-agent schedulers, they should get the right agent-specific context through this same interface, including the overridden tool registry for that agent.
+## Expected Behavior
 
-The whole point is making it obvious what each component actually depends on, fewer args flying around together, and uniform access so nobody's reaching for a method call or async local storage just to read the prompt id or the registry.
+- A single unified context interface should consolidate configuration, tool registry, message bus, and prompt identity into one object.
+- The scheduler should accept this unified context as a named field (replacing the previously named config field).
+- The tool executor should accept this unified context as a single argument instead of multiple separate ones.
+- The policy update function should accept this unified context directly, rather than receiving a separate config-and-message-bus wrapper object.
+- The tool registry should be accessible as a direct property on the context rather than through a method call.
+- The current prompt identifier should be accessible as a direct property on the context rather than retrieved from an indirect storage mechanism.
+- Sub-agent schedulers should receive the appropriate agent-specific context, including the overridden tool registry, through this unified interface.
+
+## Why This Matters
+
+This change makes it easier to understand what dependencies each component requires, reduces the number of separate arguments that must be passed together, and ensures consistent access patterns across the codebase. It also makes the current prompt identifier and tool registry available uniformly without relying on separate method calls or async local storage.

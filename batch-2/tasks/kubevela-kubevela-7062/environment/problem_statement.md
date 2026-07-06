@@ -1,7 +1,20 @@
-I'm hitting two separate issues with component definitions that carry custom health checks and status display templates, and I could use help fixing both.
+## Description
 
-First one's a panic. The health status evaluation blows up entirely when a health or status template uses certain valid template-language features. Specifically if I define a named type constraint (a named schema) and use it as a field type, or if I use private/hidden fields, or include a pattern-match constraint, the whole evaluation panics instead of handling it. These are all perfectly legal constructs in the template language so processing them shouldn't crash, it should just work (or at worst return an actionable error, never panic).
+When authoring component definitions that include custom health checks or status display templates, users encounter two distinct failure modes.
 
-Second is the metadata encoding validator that checks status sub-fields, the details, health policy, and custom status sections. It only allows simple static expression types and rejects anything dynamic. So if I write a status field that loops over a list of sub-resources and emits a distinct entry per item, like extracting every hostname from an ingress resource's rules, it gets rejected with no escape hatch. I want a field-level annotation to opt an individual status sub-field out of structural validation, basically telling it "skip this one, the expression is complex but I know it's valid."
+**Panics in health evaluation:** The health status evaluation system crashes with an unhandled panic when a component's health or status template contains certain valid language constructs — specifically, type-constraint declarations (e.g. defining a named schema and using it as a type), private/hidden fields, and pattern-match constraints. Rather than returning a meaningful error, the system crashes entirely. Well-formed templates using these constructs are not supposed to cause panics.
 
-Here's the tricky part: the storage layer strips field-level attributes, so the annotation has to survive the full round-trip (encode, persist to YAML, reload/decode). When the annotation's present, store the field content as-is (stringified) and embed the annotation intent inside the stored string using a special comment sentinel, then have the decoder recognize that sentinel and restore the annotation on reload. If a field has multiple annotations, embed and restore all of them. Re-encoding an already-encoded field needs to be idempotent so the sentinel doesn't get duplicated. And when a looping expression in a status field uses a nested structure as its value type (which is invalid), the error message should clearly name the dynamic label that caused it. Relevant code lives around the health evaluation and the component definition metadata encode/decode paths.
+**Overly strict validation with no escape hatch:** The validator that processes individual status sub-fields (such as the details, health policy, or custom status sections) is too restrictive. It only permits a narrow set of expression types and rejects complex dynamic expressions — for example, a loop that iterates over a list of sub-resources (like ingress rules) and generates a distinct status entry for each one. There is no way for a component author to declare "skip validation for this field; I know this expression is valid but complex," so entire categories of useful dynamic status templates are impossible to define.
+
+## Expected Behavior
+
+- Health and status template processing must never panic due to type-constraint declarations, hidden/private fields, or pattern-match constraints in the template.
+- A field-level annotation mechanism should allow component authors to mark individual status sub-fields as exempt from structural validation.
+- The validation-exempt annotation must survive the full storage lifecycle: encoding → YAML persistence → reload/decode must all succeed without losing the exemption intent, even when the storage layer strips field-level attributes.
+- Multiple annotations on the same field must all be individually preserved and restored.
+- Re-encoding an already-annotated field must be safe (idempotent — the annotation marker must not be duplicated).
+- When a loop-generated status field uses an invalid value type (a nested structure instead of a scalar), the resulting error message must clearly identify the problematic dynamic label.
+
+## Why This Matters
+
+Component authors who write expressive, data-driven status templates — for example, generating one status entry per hostname in an ingress resource — are currently completely blocked. The strict validator rejects their templates, and there is no opt-out path. Separately, templates using otherwise-valid language features like type constraints or hidden fields can trigger crashes rather than returning actionable errors.

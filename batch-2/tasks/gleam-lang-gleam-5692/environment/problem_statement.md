@@ -1,5 +1,13 @@
-I've been staring at the JavaScript that Gleam spits out when it destructures values through pattern matching, and it's way more verbose than it needs to be. Whenever the compiler binds variables from a pattern, even when that pattern is irrefutable (the type system guarantees it always matches), it still emits a bare variable declaration on one line and then a separate assignment on the next line, for every single bound variable. That's twice the statements needed and it makes the compiled output noisy to read and debug, doesn't look like what a JS dev would actually write.
+## Description
 
-What I want is for the code generation to be smarter: if a pattern is guaranteed to always succeed and needs no conditional checks, emit a single combined declaration-and-initialization for each variable instead of splitting the declaration from the assignment. This should kick in everywhere these irrefutable bindings show up, so direct destructuring assignments, use-expression callback bindings, extracting fields out of custom types, and pattern bindings inside blocks all get the cleaner one-line form.
+When Gleam compiles pattern destructuring assignments to JavaScript, it currently generates two separate statements for every bound variable: first a bare variable declaration, then a separate assignment. This happens even when the pattern is guaranteed to always succeed — where the type system guarantees no other case is possible — so there is no conditional logic involved.
 
-The one case where the split form has to stay is when a pattern assertion could actually fail at runtime, like when only one of several possible variants is being matched. There the variable still needs to be declared before the conditional block so it's in scope outside it, so keep the hoisted bare declaration followed by the conditional assignment, and keep generating the error-throwing logic on mismatch. The relevant JS codegen lives around the pattern and expression emitting code, oh and make sure the exhaustive vs refutable distinction is what drives which form you pick.
+## Expected Behavior
+
+- When a pattern match is exhaustive and can never fail at runtime, the compiler should produce a single combined declaration-and-initialization statement for each bound variable, rather than splitting them across two statements.
+- This cleaner output should apply in all places where patterns are irrefutable: direct destructuring assignments, use-expression bindings, custom type field extractions, and pattern bindings inside blocks.
+- When a pattern assertion *can* fail at runtime (because only one of several possible variants is matched), the compiler must continue generating the split form with a hoisted bare declaration and a conditional assignment with error throwing, since the variable needs to be in scope outside the conditional.
+
+## Why This Matters
+
+The current split form makes the generated JavaScript unnecessarily verbose and less idiomatic. Developers reading the compiled output or debugging it face more noise than necessary. Eliminating the redundant bare declarations makes the output easier to follow and matches what a JavaScript developer would naturally write.

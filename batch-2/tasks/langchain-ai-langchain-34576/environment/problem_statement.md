@@ -1,7 +1,20 @@
-I'm extending the conversation history summarization middleware and I need its trigger config to support combining multiple conditions. Right now I can only set a single condition like "trigger when tokens exceed X," but I want to say "trigger only when tokens exceed X AND message count exceeds Y." I also want multiple independent condition groups where meeting any one group is enough to fire summarization.
+## Description
 
-So the middleware should accept a compound AND-condition group where every entry has to be satisfied at the same time, plus ordered collections that can hold either individual conditions or these multi-condition groups, with OR semantics across the items in the collection. A list of groups can mix AND-style groups and plain single-condition entries. The big thing is no breaking change: existing setups using a single condition, or a list of individual conditions, need to keep working exactly like before.
+The conversation history summarization middleware currently only supports triggering on a single condition at a time — either a token threshold or a message count threshold. There is no way to require that multiple conditions all be satisfied simultaneously before summarization kicks in.
 
-I also want real validation at construction time with descriptive errors, so unknown condition types, out-of-range threshold values, non-numeric threshold values, and unsupported/invalid configuration types all get rejected up front, and invalid metric names too. An empty AND-condition group should be rejected since a group with no conditions would vacuously match on every invocation. An empty list of trigger conditions is fine though, it just means summarization never triggers.
+This is limiting because users often want to avoid unnecessary summarization when only one signal fires. For example, a developer might want summarization to occur only when the conversation is both very long in tokens AND has a large number of messages. Currently, this kind of composite logic cannot be expressed, and users must pick a single condition.
 
-Oh and one more thing about token checks inside these combined groups: when I'm evaluating whether the token threshold is met within an AND group, the provider-reported token usage from the last model response should be honored as a fallback source, not just for the single-condition token trigger path. Same deal for the fraction-based token triggers, they should respect that provider usage fallback inside combined groups too. The point of all this is precise control, avoiding summarizing when only one signal fires, so users don't get too-frequent or too-infrequent condensing.
+## Expected Behavior
+
+- Users should be able to specify multiple conditions that must all be satisfied simultaneously (AND logic) before summarization triggers.
+- Users should be able to specify multiple independent condition groups, where meeting any single group is sufficient (OR across groups).
+- A list of groups may mix AND-style groups and single-condition entries.
+- Existing single-condition configurations (both single conditions and lists of independent conditions) must continue to work exactly as before.
+- An empty list of trigger conditions should result in summarization never being triggered.
+- An empty AND-condition group should be rejected at configuration time, since it would vacuously match on every invocation.
+- Invalid condition types, invalid metric names, out-of-range values, and non-numeric values for thresholds should be rejected at configuration time with clear error messages.
+- Provider-reported token usage from the model should be honored as a source for satisfying token-based conditions within AND-style groups, not just for single-condition triggers.
+
+## Why This Matters
+
+Without the ability to combine conditions, users cannot fine-tune when summarization occurs and may experience either too-frequent or too-infrequent summarization. The AND/OR trigger logic gives users precise control over the conditions under which conversation history gets condensed.

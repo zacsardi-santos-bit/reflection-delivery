@@ -1,5 +1,15 @@
-I've been digging into how our Python parser handles f-strings whose replacement fields (the interpolated expression parts between braces) span multiple lines, and there's a gap. When you've got a non-triple-quoted f-string and the replacement field itself contains a line break, that's actually invalid syntax on Python 3.11 and earlier, since multiline replacement fields only landed in Python 3.12. Right now the parser just sails past it silently, no error at all, which means folks targeting an older Python can ship code that won't run on their declared target.
+## Description
 
-What I want is for the parser to catch this and report it through the same unsupported-syntax-error mechanism we already use for other version-gated f-string features, the ones that explain a given bit of syntax was added in Python 3.12. The diagnostic should point at the opening brace of the offending multiline replacement field. Triple-quoted f-strings are exempt, they've always allowed multiline content so don't flag those on any version. And on Python 3.12+ targets this stays perfectly valid with zero errors.
+The Python parser does not detect or report an error when a non-triple-quoted f-string contains a line break inside its replacement field (the interpolated expression part) when targeting Python versions older than 3.12. Python 3.12 introduced support for this syntax, but on Python 3.11 and earlier it was always invalid. The parser currently passes silently over this case rather than flagging it as unsupported syntax for the target version.
 
-One dedup detail: if a replacement field already has a backslash or comment error reported against it, don't pile on the line-break error for that same field too. And this same detection needs to fire when the formatter runs against these older target versions, not just the linter.
+## Expected Behavior
+
+- When targeting Python < 3.12, a non-triple-quoted f-string with a line break in a replacement field should produce an unsupported syntax error, pointing to the opening brace of the affected field.
+- The error message should follow the same pattern used for other version-gated f-string features and should explain that the syntax was added in Python 3.12.
+- Triple-quoted f-strings with multiline replacement fields should **not** trigger this error on any Python version, since they have always supported multiline content.
+- When targeting Python 3.12 or later, this syntax should be accepted as valid with no errors.
+- If a replacement field already has a backslash or comment error, the line-break error should not additionally be reported for the same field.
+
+## Why This Matters
+
+Users who run the linter or formatter targeting Python < 3.12 should get accurate feedback when their code uses syntax that is only valid on newer Python versions. The current silent acceptance of multiline replacement fields in non-triple-quoted f-strings means that version-specific syntax errors go undetected, potentially shipping code that is incompatible with the declared target Python version.

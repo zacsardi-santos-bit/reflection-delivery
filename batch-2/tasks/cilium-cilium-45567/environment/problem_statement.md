@@ -1,5 +1,14 @@
-I'm chasing a bug in the ingress controller's route translation layer and it's a nasty one. When we deploy behind a load balancer or reverse proxy that terminates TLS and sets a forwarding header to signal the original protocol (marking traffic as already HTTPS), our HTTPS redirect rules turn into infinite redirect loops. The client hits the LB over HTTPS, the proxy forwards to the ingress with the header already saying "https", but the ingress still fires the redirect to HTTPS anyway, so the browser just loops forever and the site becomes unreachable, which is really bad for anyone enforcing HTTPS this way.
+## Description
 
-The root cause is that redirect routes get generated unconditionally, they fire no matter what the forwarding header says. What I want is for the route generation to be smarter about this: when a redirect route targets a specific scheme, its match conditions should include a check of the forwarding header that inverts the match on the target scheme, so the redirect only triggers when that header does not already indicate the connection is using the target protocol. If the proxy already marked it as HTTPS, don't redirect again.
+When an ingress controller is deployed behind a load balancer or reverse proxy that sets a forwarding header to indicate the original protocol (e.g., marking traffic as already coming from HTTPS), redirect rules intended to enforce HTTPS can cause infinite redirect loops.
 
-Key constraint, this only applies to redirect routes. Backend routes that forward traffic to actual services need to stay exactly as they are, no forwarding header condition added to them at all, otherwise we'd break normal traffic routing. So make sure the header-inverting match logic is scoped only to the redirect path in the translation code and leave the service-forwarding routes untouched.
+The problem occurs because redirect routes are generated unconditionally: when a route is configured to redirect from HTTP to HTTPS, the redirect fires regardless of whether the forwarding header already indicates that the request was received over HTTPS. A client hitting the load balancer over HTTPS gets forwarded to the ingress with the header already set to "https", but the ingress still issues a redirect response — causing the browser to loop.
+
+## Expected Behavior
+
+- When generating an HTTPS redirect route, the route's match conditions should include a check of the forwarding header that inverts the match on the target scheme. The redirect should only be triggered when the forwarding header does **not** already indicate that the connection is using the target protocol.
+- Backend routes (routes that forward traffic to services) should not be affected by this change — no forwarding header check should be added to them.
+
+## Why This Matters
+
+This change prevents infinite redirect loops for users who deploy behind TLS-terminating proxies or load balancers that set forwarding headers. Without this fix, any site enforcing HTTPS via redirects may become unreachable when placed behind such infrastructure.

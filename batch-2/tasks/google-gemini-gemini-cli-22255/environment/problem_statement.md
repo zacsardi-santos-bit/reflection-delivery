@@ -1,3 +1,16 @@
-I'm digging into the tool confirmation and policy system in our AI agent framework, the part that handles external tool integrations, and I hit two things I want fixed in the scheduler's policy module. First bug: when someone approves a tool request and picks "always allow all tools from this server," we publish a policy update that carries a wildcard tool name pattern scoped to that server. Trouble is the pattern we're emitting doesn't line up with the actual naming convention the rest of the system uses to identify MCP tools from a given server, so the wildcard doesn't actually match anything on future calls. That means the "always allow this server" approval basically doesn't stick, and the user keeps getting prompted for confirmation on subsequent invocations from a server they already trusted. I need the server-scope always-allow path to build the tool name pattern using the correct MCP naming format so it matches how those tools are identified everywhere else.
+## Description
 
-Second thing, more of a cleanup, the function that handles these policy updates currently pulls the message bus (which it uses to broadcast the update) out of a shared context object it gets passed. I'd rather the message bus be passed in explicitly as its own separate parameter so the function's dependencies are obvious, and the context object shouldn't need to carry the bus inside it anymore. Please update the callers accordingly too so everything still wires up.
+There are two related issues with the policy update mechanism in the tool confirmation flow:
+
+1. **Incorrect MCP server tool name pattern**: When a user selects "always allow for this server" for an MCP tool, the system broadcasts a policy update that should match all tools from that server using a wildcard. However, the tool name pattern currently used does not match the actual naming convention for MCP tools in the rest of the system. This mismatch means the saved policy may not correctly apply to future tool invocations from that server.
+
+2. **Implicit message bus dependency**: The function responsible for updating policy currently receives the message bus through a shared context object rather than as a direct, explicit parameter. This makes the dependency implicit and harder to reason about. The message bus should be passed directly as its own argument.
+
+## Expected Behavior
+
+- When a server-scope "always allow" policy is recorded for an MCP server, the tool name pattern in the published message must use the correct naming format that matches how MCP tools are identified throughout the system.
+- The policy update function should accept the message bus as an explicit, separate parameter rather than expecting it to be embedded inside a broader context object.
+
+## Why This Matters
+
+These issues affect reliability of the "always allow" approval mode for MCP server tools. If the tool name pattern is wrong, previously approved servers may still prompt for confirmation on subsequent calls. The refactoring also improves code clarity by making function dependencies explicit.

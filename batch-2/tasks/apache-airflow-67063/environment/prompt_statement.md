@@ -1,0 +1,7 @@
+I'm hitting a bug in the Airflow CLI where connection operations aren't sending the database schema field correctly to the API server. The connection data model has a schema field that uses an internal Python attribute name, but that internal name differs from what the API actually expects, and when the CLI serializes a connection into the HTTP request body it's sending the raw Python name instead of the API-facing alias. So the server never gets the schema value. This bites on create, update, bulk-manage, and test operations, all of them serialize the connection the same broken way.
+
+I need the serialization step to always apply the proper alias mapping so the outgoing request body uses the API field name for schema, not the internal Python attribute name, across create, update, bulk, and test.
+
+Oh and there's a related problem on the import path too. When I import connections from a JSON file and one of them includes a schema value, that value gets silently dropped and never reaches the API. I want the import command to forward the schema field from the JSON through to the outgoing API request so it's preserved.
+
+This matters because folks using the schema field on database connections (Postgres, Snowflake, that kind of thing) are silently losing config through the CLI, and it's especially painful for bulk workflows where you export connections and re-import them only to find schema quietly disappeared.

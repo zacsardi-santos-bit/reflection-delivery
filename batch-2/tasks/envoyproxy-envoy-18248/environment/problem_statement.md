@@ -1,7 +1,13 @@
-I'm working on the Kafka mesh proxy filter and just found out message headers are getting silently dropped when produce requests get forwarded upstream. Clients can send messages with keys, values, and headers, but consumers on the other side only ever see the key and value, the headers never make it through. Lots of Kafka apps lean on headers for distributed tracing, routing metadata, or custom app attributes, so dropping them breaks anything that expects that stuff at the consumer, and the proxy is supposed to be transparent so this really needs fixing end-to-end.
+## Description
 
-What I want is for headers to be propagated all the way through so consumers get the exact same complete message that was originally sent, same key, same value, and all the headers too. The internal component that sends records to the upstream broker needs to carry headers as part of each outbound record, and then the low-level send logic has to pass those headers through into the underlying producer call.
+The Kafka mesh proxy filter only forwards message keys and values when routing produce requests to upstream Kafka brokers. Any headers included in the original messages are silently dropped and never reach the target cluster's consumers.
 
-Oh and error handling matters here. If the step that prepares/converts headers for the underlying producer fails for any reason, I want the operation to stop right there and report the failure back to the caller immediately, don't attempt the send and don't leak any resources that got allocated. Also if the underlying produce call itself fails after the headers have already been prepared, any resources allocated for those headers need to get cleaned up too.
+## Expected Behavior
 
-While you're at it, the record struct's header currently lives under the `command_handlers/` subdirectory; please relocate it so the struct is defined in `contrib/kafka/filters/network/source/mesh/outbound_record.h` (updating any includes/build targets that referenced the old location).
+- When a client sends a Kafka message that includes headers through the mesh proxy, those headers must be preserved and forwarded to the upstream Kafka cluster.
+- Consumers reading messages from the upstream cluster should receive the same key, value, and headers as originally sent by the producer.
+- If the internal header conversion step fails for any reason, the send operation should be aborted and the caller notified of the failure immediately — rather than proceeding with an incomplete message or leaking resources.
+
+## Why This Matters
+
+Many Kafka applications use message headers for cross-cutting concerns such as distributed tracing, routing metadata, or custom application attributes. Silently dropping these headers when traffic passes through the proxy breaks any application that relies on this metadata being present at the consumer side. Properly propagating headers end-to-end is required for the proxy to be transparent to the applications using it.

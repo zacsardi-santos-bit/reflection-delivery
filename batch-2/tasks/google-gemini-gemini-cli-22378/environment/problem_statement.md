@@ -1,5 +1,12 @@
-I'm hitting a wall with the Gemini CLI when I try to pass the current Flash preview model through the model selection flag on the command line. The model's identifier has "preview" baked into the name and the CLI just refuses it, throws an error saying it's invalid and telling me to pick from some fixed set of model names, but the one I actually need isn't on that list even though it's a real, currently available model. It really looks like there's an internal allowlist of valid models somewhere that hasn't kept up with the naming updates.
+## Description
 
-What I want is simple: whatever model name I explicitly hand it via the command-line model option should just be accepted as-is, no second-guessing whether it's on some hardcoded list. That strict allowlist validation is overly restrictive and blocks perfectly valid models whose identifiers got renamed or bumped to a new preview, and honestly it gives no real safety benefit, it's just misleading and unhelpful.
+The Gemini CLI rejects certain valid model identifiers when users try to specify them via the model selection option on the command line. The current Flash preview model has an identifier that includes "preview" as part of its name, but the CLI's internal model validation does not recognize this identifier. When users pass this updated identifier on the command line, the CLI throws an error claiming the model is invalid, even though it is a legitimate and currently available model.
 
-Oh and one more thing while you're in there, when I specify a model explicitly on the command line it should always win over whatever's configured in settings. So the CLI needs to accept the current Flash preview identifier (the one with "preview" in it) without erroring, and treat the explicit command-line choice as the priority.
+## Expected Behavior
+
+- The model selection option should accept the current Flash preview model identifier (which includes "preview" in the name) without errors
+- When a model is explicitly specified via the command-line model option, it should be used as provided and take priority over any model configured in settings
+
+## Why This Matters
+
+Users who want to use the latest preview models are blocked from doing so. The hardcoded allowlist of valid model names does not keep pace with model naming updates, causing the validation to be both unhelpful and misleading. The validation provides no real safety benefit while actively preventing users from accessing valid models.

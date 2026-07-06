@@ -1,5 +1,19 @@
-I'm building out release tooling for a big pnpm monorepo and I need a new utility module that handles all the changeset bookkeeping we do during a release. Right now there's nothing tracking which changesets have already been published per branch, and no way to temporarily hide or clean up changeset files while a release is in flight, which means we risk double-releasing or reprocessing stuff that's already out.
+## Description
 
-A few things I need this module to do. First, I want to turn a git branch name into a safe flat filename since branch names can have slashes like "release/10.0" or "feature/foo/bar", so replace every slash with a dash and tack on a `.txt` extension. Second, I need to read a directory full of per-branch tracking files and collect every changeset ID that's been recorded as released, merging them all into one deduplicated set across branches, skipping comment lines and blank lines, ignoring files that aren't the right type, and just returning an empty result (no error) if the directory doesn't exist yet. Third, a function to append newly released IDs into the right per-branch file, deduping against whatever's already on disk, keeping the file sorted, creating the directory if it's missing, and doing absolutely nothing if the passed-in list of IDs is empty (don't even create the file).
+The pnpm release tooling needs a set of utility functions for managing changeset files across branches. Currently there is no module handling the bookkeeping of which changesets have already been released, nor any mechanism to temporarily hide or permanently remove those changeset files during the release process.
 
-Then there's the hide/restore/delete trio for the changeset markdown files. One function renames matching changeset files to a hidden form and returns a record of what got hidden, and this is the important bit, if any rename fails partway through it has to roll back all the earlier renames so the directory is left consistent. A second restores the hidden files back to their original names, reversing that. A third permanently deletes the hidden files once the release is finalized. Oh and last thing, I want a function that lists all pending changeset IDs in a directory as a sorted array, excluding the readme file and any non-changeset files. This all lives in the release tooling side, so put the module wherever that pnpm release utility code belongs.
+## Expected Behavior
+
+A new utility module should be introduced that provides the following capabilities:
+
+- **Branch-to-filename conversion**: Given a git branch name (which may contain slashes), produce a safe, flat filename for use on disk by substituting slashes with dashes and appending a `.txt` extension.
+- **Reading released IDs**: Given a directory containing per-branch tracking files, read all the changeset IDs that have been recorded as released across all branches, merging them into a single deduplicated collection. Lines that are comments or empty should be ignored. If the directory does not exist, return an empty result without error.
+- **Appending released IDs**: Record newly released changeset IDs into the appropriate per-branch tracking file, deduplicating against any IDs already on disk and keeping the file sorted. If no IDs are provided, the file should not be created. The target directory should be created automatically if it is missing.
+- **Hiding released changeset files**: Temporarily rename released changeset markdown files in a directory so that release tooling skips them. If any rename fails partway through, all previous renames in the same operation must be rolled back so the directory is left in a consistent state.
+- **Restoring hidden changesets**: Rename the hidden files back to their original names (reversing the hide operation).
+- **Deleting hidden changesets**: Permanently remove the hidden files once a release is confirmed.
+- **Listing pending changeset IDs**: Return a sorted list of changeset IDs present in a directory, excluding the standard readme file and any non-changeset files.
+
+## Why This Matters
+
+Without this utility, the release pipeline has no reliable way to track which changesets have been published on a given branch, leading to potential double-releases or incorrect processing of already-released changesets. The hide/restore/delete mechanism also allows the release tooling to operate on an isolated view of the pending changesets without permanently modifying the repository until the release is confirmed.

@@ -1,7 +1,24 @@
-I'm cleaning up Authelia's subpath deployment support (deploying under something like `https://example.com/auth` instead of root) and I've hit two bugs I want fixed.
+## Description
 
-First one's in the server address validation. When someone configures a listen path with more than a single segment, say `/auth/` with a trailing slash or `/auth/admin` with multiple segments, we correctly reject it, but the error message is useless. Right now it basically just says the path must not have a path with a forward slash, which doesn't tell anyone what good looks like. I want the message to show a concrete example of a valid single-segment path alongside the problematic value they actually configured, so it's obvious what to change and why theirs is wrong.
+Authelia supports being deployed at a URL subpath (e.g., `https://example.com/auth`) rather than at the root. There are two issues with the current implementation of this feature that need to be fixed.
 
-Second one's nastier. The middleware that strips the configured base path prefix off incoming requests uses a plain string prefix check, so a configured path like `/a` accidentally matches requests for `/api/example` since they share the same leading chars. I want the match to be exact at the segment boundary, meaning a URI only matches when it's exactly the configured path, or the path immediately followed by a slash, a query string (`?`), or the end of the URI. Short paths must not swallow longer unrelated ones. Oh and the edge cases: if no meaningful path is configured (empty string or just a bare slash) the middleware should be a no-op and not strip anything, and a path given without a leading slash should get normalized to include one so it behaves the same either way.
+### Issue 1: Unhelpful validation error message
 
-This all lives in the config validation and server middleware code, so the strip-prefix logic and the address validation error need updating together.
+When a user configures the server to listen on a path that contains multiple segments (e.g., `/auth/` or `/auth/admin`), a validation error is produced. However, the current error message is vague — it only says the path "must not have a path with a forward slash" without showing what the correct format looks like or why the configured value is wrong.
+
+The error message should be improved to show the user both a concrete example of the correct single-segment format and the problematic value that was configured, so it is immediately clear what needs to be changed.
+
+### Issue 2: Path-stripping middleware matches too broadly
+
+The middleware that strips the configured base path from incoming requests currently uses a plain string prefix match. This means a configured subpath like `/a` could incorrectly match and process requests intended for paths like `/api/example`, because `/api/example` starts with the characters `/a`.
+
+The middleware should only match requests where the URI genuinely begins with the configured subpath as a complete segment — that is, the URI must be exactly the path, or the path followed by a path separator, query string, or end of string. Short paths must not accidentally match longer unrelated paths.
+
+Additionally, the middleware should handle edge cases: when no meaningful path is configured (empty or just a slash), it should be a no-op, and paths without a leading slash should be normalized automatically.
+
+## Expected Behavior
+
+- When an invalid multi-segment path is configured, the error message should include an example of the correct single-segment format alongside the problematic value.
+- A configured subpath of `/a` must not match request URIs like `/api/example`.
+- Configuring no subpath or a root path should result in no path-stripping behavior.
+- Paths provided without a leading slash should be handled the same as those with one.

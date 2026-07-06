@@ -1,5 +1,13 @@
-Digging into our WASI filesystem layer and I think we've got a real security hole. When a guest opens a file with the truncation flag set, the host just goes ahead and truncates without ever checking that the guest has write permission to files in that preopened dir. So if I preopen a directory with read-only file perms (read but no write), a guest can still blow away file contents just by passing the truncate-on-open flag. That silently bypasses the whole permission boundary, which is bad because operators lean on those file perm settings to enforce security, and this means read-only files aren't actually safe from a guest destroying data.
+## Description
 
-What I want is for requesting truncation to count as a write operation when we do permission checks. If the guest doesn't have write access to files in the preopened directory, the truncation attempt should fail with a "not permitted" error and, importantly, the file's contents need to be left completely intact, no partial damage. Basically opening for truncate without write perms should error out before touching anything.
+There is a security bug in the WASI filesystem implementation: when a WebAssembly guest opens a file using the truncation open flag, the host does not check whether the guest actually has write permission before allowing the operation. This means an operator who configures a preopened directory with read-only file access cannot trust that restriction — a guest program can silently destroy file contents by requesting truncation even when only granted read access.
 
-Oh and this needs to hold consistently across both WASI generations, the older Preview 1 API and the newer Preview 2 one, so no matter which spec version a guest program targets it can't sneak past read-only file restrictions through truncation.
+## Expected Behavior
+
+- When the host configures a preopened directory with read-only file permissions (no write), a guest that opens a file requesting truncation should receive a "not permitted" error.
+- The file's contents should remain completely unchanged after the rejected truncation attempt.
+- The same enforcement should apply under both WASI Preview 1 and WASI Preview 2 APIs.
+
+## Why This Matters
+
+Host operators use file permission settings to enforce security boundaries. If those restrictions can be bypassed simply by setting a truncation flag, data loss can occur within ostensibly read-protected directories. This is a correctness and security issue that breaks the fundamental guarantee that read-only preopened files cannot be modified by a guest.

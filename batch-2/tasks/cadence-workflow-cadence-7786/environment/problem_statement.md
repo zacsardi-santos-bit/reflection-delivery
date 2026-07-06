@@ -1,5 +1,26 @@
-I'm cleaning up our type mapper fuzz tests in the workflow engine and they're driving me nuts, every single test file for the schedule-related mapper types re-implements the exact same fuzzer setup with custom time and enum fuzzers, the iteration loop, the nil/empty/filled classification, and the round-trip assertions. I want to pull all that boilerplate into one shared, reusable test utility in the testutils package so an individual mapper test can express a round-trip check in just a few lines. It should take pluggable fuzzer functions so we can wire in domain-specific enum types per mapper.
+## Description
 
-Part of this is a helper that zeroes out protobuf-internal metadata fields before we compare values (those internal fields don't round-trip cleanly), and it's got a few real bugs I need fixed. First, when it clears fields across a slice of value-type struct elements it's currently working on copies of each element instead of the actual element, so nothing gets cleared, need it to modify in place. Second, when the arg comes in as a pointer-to-pointer, which happens naturally when the caller takes the address of a pointer variable, it doesn't walk through the pointer levels and silently does nothing, so it should dereference through arbitrary indirection depth. Third, it's way too aggressive right now, it clears any field literally named "State" even when that's a legit business field, so instead only clear fields that follow the protobuf internal naming convention (the standard internal prefix) or fields the caller explicitly lists for exclusion, and otherwise leave things like "State" alone.
+The type mapper fuzz tests for schedule-related types are verbose and repetitive. Every test manually sets up its own fuzzer with the same boilerplate: custom time and enum fuzzers, iteration logic, nil/empty/filled classification, and round-trip assertions. This makes the tests harder to maintain and inconsistent across files.
 
-So please build the shared utility with those fixes so the clearing logic correctly handles nested structs, slices with value-type elements, slices with pointer-type elements, and multiple levels of pointer indirection, and round-trip tests stop silently passing because something got left uncleared.
+We need a shared, reusable test utility for mapper round-trip fuzz testing that encapsulates all this boilerplate. The utility should allow a test to express a round-trip check in just a few lines.
+
+## Known Bugs to Fix
+
+The existing field-clearing logic (which zeroes out protobuf-internal metadata fields before comparing values) has several bugs that must be addressed:
+
+1. **Slice elements are not modified in place**: When clearing fields in slices of value-type structs, the current code operates on copies of elements rather than the originals, so the clearing has no effect.
+
+2. **Pointer indirection is not handled correctly**: When the input to the field-clearing function is a pointer-to-pointer (which is the natural usage when holding a variable reference to a pointer type), the function silently does nothing rather than dereferencing through to the underlying struct.
+
+3. **Overly aggressive field clearing**: A field named "State" was previously always cleared, even when it is a legitimate business logic field. Only fields with protobuf-internal naming conventions or that are explicitly listed by the caller should be cleared.
+
+## Expected Behavior
+
+- A single utility function enables concise round-trip fuzz testing across all mapper types
+- The field-clearing utility correctly handles nested structs, slices of value-type structs, slices of pointer-type structs, and multiple levels of pointer indirection
+- Legitimate fields (e.g., named "State") are preserved unless explicitly listed for exclusion
+- Protobuf-internal fields (those following the standard internal naming prefix) are always cleared
+
+## Why This Matters
+
+Fixing these bugs ensures that round-trip tests give correct results and don't silently pass due to fields being left uncleared when they should be zeroed out.

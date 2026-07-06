@@ -1,5 +1,28 @@
-I've been going through the diagnostic output for a handful of our lint rules and a lot of them are pretty useless honestly. They tell you what not to do but never explain why the thing is bad or how to actually fix it, which is rough for anyone who doesn't already know the pitfall. I want to rework the messages for five rules: the CSS one that flags a shorthand property overriding earlier longhand declarations, the GraphQL rule for disallowed root types, the HTML rule about misuse of the autofocus attribute, the JS/TS self-comparison rule, and the one that catches objects, classes, and module exports exposing a property or export named "then".
+## Description
 
-For each of these the primary error message should describe what was actually found in a factual, declarative way instead of a vague imperative like "don't do X". So the self-comparison one shouldn't just say the comparison is pointless, it should say the same expression shows up on both sides. On top of the main message each rule needs two supplementary note messages, one explaining why the flagged pattern is harmful and one giving concrete actionable guidance on how to resolve it. For self-comparison that fix note should suggest comparing two different values, or point to the proper NaN-checking utility if detecting NaN was the actual goal.
+Several lint rules in Biome produce diagnostic messages that are terse and unhelpful. The error messages tell developers what not to do but don't explain why the pattern is problematic or what they should do instead. This makes the diagnostics less useful, especially for developers who are unfamiliar with the specific pitfall being flagged.
 
-Good messages cut friction so folks don't have to go hunt external docs to figure out what went wrong, it makes the linter more of a teaching tool too. Can you update the diagnostics for all five rules with the improved descriptive text plus those two explanatory notes each?
+## Affected Rules
+
+The following rules have inadequate diagnostic messages:
+
+- The rule detecting CSS shorthand properties that override earlier longhand declarations
+- The rule detecting disallowed GraphQL root types
+- The rule detecting misuse of the autofocus attribute in HTML
+- The rule detecting self-comparisons in JavaScript/TypeScript
+- The rule detecting objects, classes, and exports that expose a property named "then"
+
+## Expected Behavior
+
+Each of these rules should:
+
+- Use a primary error message that **describes what was found** (factual, declarative), rather than an imperative command like "don't do X"
+- Include additional note messages that:
+  1. Explain **why** the flagged pattern is harmful
+  2. Give **actionable guidance** on how to resolve the issue
+
+For example, a rule about self-comparisons should not just say "this comparison is pointless" — it should explain that the same expression appears on both sides, explain that this is usually a mistake or sign that the wrong variable is being compared, and suggest concrete alternatives such as comparing two different values or using the appropriate NaN-checking utility if NaN detection is the goal.
+
+## Why This Matters
+
+Good diagnostic messages reduce friction when fixing lint violations. When the message explains the reason and suggests a fix, developers don't need to look up external documentation to understand what went wrong. Improving these messages makes the linter a better educational and productivity tool.

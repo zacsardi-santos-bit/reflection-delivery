@@ -1,5 +1,13 @@
-I'm hitting a confusing failure with the agent's tool prep callbacks, the ones that let me filter or modify the tool list before each model request. If my prepare callback accidentally returns nothing (a bare `return` or falling off the end so it hands back `None`) instead of an explicit empty list, what I get is some low-level type error deep in the framework that doesn't tell me anything useful. It doesn't name the callback that broke, doesn't tell me what I did wrong, so I'm left guessing which of my prepare functions is the culprit.
+## Description
 
-What I want is a proper user-facing error raised whenever a prepare callback returns `None`, and it should include the offending callback's function name right in the message so I can find it instantly. It should also make clear that returning nothing isn't allowed and that if I actually want to disable all tools I should return an empty list instead.
+When a tool preparation callback accidentally returns nothing instead of an explicit empty list, the framework currently raises a confusing low-level error that doesn't identify which callback caused the problem. The error message gives no useful context to the developer — it doesn't say which prepare function was at fault or what they should do to fix it.
 
-Oh and while you're in there, the type annotations for these prepare callbacks currently allow returning `None`, which they shouldn't. Please narrow the declared return type to only a list, not list-or-`None`, so static type checkers flag callbacks that say they might return nothing before the code ever runs. Both the runtime error and the tightened signature matter here.
+## Expected Behavior
+
+- When a tool preparation callback returns nothing, a clear user-facing error should be raised that includes the name of the offending callback function.
+- The error should make it obvious that returning nothing is not allowed — developers should return an empty list if they want to disable all tools.
+- Type checkers should be able to catch this mistake at development time: the type signature for prepare callbacks should not allow returning nothing, so that tools producing static type annotations flag it immediately.
+
+## Why This Matters
+
+Developers using prepare callbacks to filter or modify tools at runtime can easily make this mistake. A clear, named error dramatically reduces debugging time. Tightening the type annotation means the issue can be caught before the code even runs, improving the development experience.

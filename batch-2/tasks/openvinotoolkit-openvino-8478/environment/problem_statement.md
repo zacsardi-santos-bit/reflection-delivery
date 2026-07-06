@@ -1,7 +1,14 @@
-I'm hacking on a model optimizer that runs shape inference over neural net graph ops, and two ops are botching dynamic (unknown at compile time) dimensions. This matters because models with variable-length or partially-known input shapes show up all over production (think variable sequence lengths), and if the optimizer can't propagate shapes through those graphs it just can't compile them, plus good validation errors help catch misconfigured graphs early.
+## Description
 
-First one gathers elements from a data tensor using an index tensor along some axis. Fully static shapes work fine, but if any dim of the indices tensor is dynamic the output shape comes out wrong: along the gather axis I want the indices dim, and for every other position I want whichever of data or indices actually has a concrete (non-dynamic) value, instead it just passes through the dynamic marker. Also when both shapes are statically known but differ at a non-axis position (clearly incompatible) it's raising the wrong exception type, so fix that to raise a proper error.
+The model optimizer's shape inference for two tensor operations — element gathering and sparse tensor reshaping — does not correctly handle cases where some tensor dimensions are dynamic (unknown at compile time). When optimizing models that have variable-length or partially-unknown input shapes, the optimizer currently produces incorrect output shapes or fails entirely.
 
-Second one reshapes a sparse tensor from one dense shape to another. Right now it only handles fully-known dims, but I need it to deal with dynamic dims in both the current shape and the desired new shape too. When a new-shape dim is unknown (either explicitly dynamic or given as -1) infer it from the total element count, but only when the input shape is fully known and exactly one dim is unknown, oh and if there are multiple unknowns or the input itself has dynamic dims then leave those output dims dynamic. When the shapes are provably incompatible (known element counts don't match) raise an error indicating shape propagation was stopped.
+## Expected Behavior
 
-Basically I want both routines fixed so they propagate shape info correctly through partially-unknown graphs. The gather and sparse-reshape shape inference logic lives with the rest of the optimizer's op handling, so wire the fixes in there.
+- When performing shape inference on an element-gathering operation with dynamic dimensions in the indices tensor, the output shape should be computed correctly: for dimensions along the gather axis, use the indices dimension; for all other dimensions, use whichever of data or indices provides the concrete (non-dynamic) value.
+- When performing shape inference on a sparse tensor reshape operation where some dimensions in the input shape or desired output shape are dynamic, the output shape should be inferred as precisely as possible — resolving any inferrable dimensions from the total element count when feasible, and leaving truly ambiguous dimensions as dynamic.
+- When an element-gathering operation is given data and indices tensors with incompatible shapes at non-axis positions (both statically known but different), the optimizer should raise an error.
+- When a sparse tensor reshape operation receives shapes with provably incompatible element counts, the optimizer should raise an error indicating that shape propagation was stopped.
+
+## Why This Matters
+
+Models with dynamic or partially-known shapes are common in production, particularly when input sequences have variable lengths. Without correct dynamic shape inference, the optimizer cannot process these models, preventing compilation. Proper validation errors also help developers identify misconfigured model graphs early.

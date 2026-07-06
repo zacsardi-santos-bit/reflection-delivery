@@ -1,5 +1,16 @@
-I'm hacking on the Gleam compiler and I want to add a new warning for a JavaScript-specific gotcha in bit array pattern matching. Here's the deal: JS numbers can only safely represent integers up to 52 bits, so when someone writes a bit array pattern that matches an integer segment bigger than 52 bits, the value gets silently truncated at runtime on the JS target. Right now the compiler says nothing about this, so the resulting bugs are brutal to track down.
+## Description
 
-What I want is for the compiler to detect this and emit a clear warning on the JavaScript target whenever an integer segment in a bit array pattern has a compile-time-known size greater than 52 bits (whether that's a direct literal size or via the size option syntax). The warning needs to tell the developer the exact bit size of the segment, explain that JavaScript numbers max out at 52 bits, note the value would be truncated, and suggest using the bytes segment option as an alternative. It should only fire on the JavaScript target, only when the size is known at compile time, and only when it actually exceeds 52 bits, so segments at or below 52 bits stay quiet.
+When writing Gleam code that targets JavaScript, bit array patterns matching on large integer segments can silently produce incorrect results at runtime. JavaScript numbers can only accurately represent integers up to 52 bits, so if a developer writes a pattern that matches an integer segment larger than 52 bits, the matched value will be quietly truncated without any compile-time indication that something is wrong.
 
-Also while I'm in there, I noticed a few existing warnings have an ugly extra blank line between the main body text and the hint line, and I want the hint to sit right after the body with no gap. This hits the warnings about incomplete placeholder (todo) code, panicking expressions used as functions, and inefficient list length checks. Oh and the list length warning text needs reflowing too so the lines wrap more consistently.
+## Expected Behavior
+
+- When a bit array pattern specifies an integer segment with a size greater than 52 bits (either as a direct literal size or via the size option syntax), the compiler should emit a warning targeted at the JavaScript platform
+- The warning should clearly state the bit size of the segment, explain that JavaScript numbers are limited to 52 bits, and note that the value would be truncated
+- The warning should suggest using the bytes segment option as an alternative
+- Integer segments at or below 52 bits should not trigger this warning
+
+Additionally, several existing warning messages have extra blank lines between the warning body text and the hint line that should be removed, and some existing warning body texts should be reflowed to better fit standard line widths.
+
+## Why This Matters
+
+Developers relying on large integer values in bit array destructuring on the JavaScript target can end up with silently wrong values that are extremely difficult to debug. Early detection at compile time with a clear, actionable warning saves significant debugging effort and prevents hard-to-trace runtime errors.

@@ -1,5 +1,13 @@
-I'm hitting a rough edge with the CTC loss when I run it in padded sequence mode, you know the path where I hand it explicit length tensors alongside the log-probs and labels. The thing is if I accidentally pass a labels tensor or one of the length tensors with the wrong batch size, like an empty tensor with zero sequences, it just doesn't complain. It either silently accepts the mismatched shapes or blows up later with some confusing low-level error that's a pain to trace back to the actual mistake.
+## Description
 
-What I want is for the function to actually check the batch dimension up front. The log-probs tensor is the source of truth for how many sequences there are, so the labels, the per-sequence input lengths, and the per-sequence label lengths all need to match that batch size. If any one of them has a different size at the batch dim, I want a descriptive error that says which input is the wrong one, what size was expected, and what size it actually got, so I can immediately see whether it's the labels or the input-lengths or the label-lengths that's off.
+When computing CTC loss using padded sequences — where the caller provides explicit per-sequence length tensors for both the input log-probabilities and the labels — there is currently no validation that the batch dimensions are consistent across all inputs. This means that if a labels tensor, an input-length tensor, or a label-length tensor has a different number of sequences than the log-probabilities tensor, the computation silently proceeds rather than reporting an error.
 
-Right now none of those three inputs gets validated against the batch count derived from the log-probs, and that's the gap. Mismatched batch dims quietly lead to wrong results or cryptic failures instead of a clear actionable message. So please add that validation so each of the three (labels, input lengths, label lengths) is checked separately and the message points right at the offending one with the expected vs actual size spelled out.
+## Expected Behavior
+
+- If the labels tensor has a different batch size than the log-probabilities, the operation should raise an error clearly stating which input is mismatched, what size was expected, and what size was actually provided.
+- The same validation should apply to the per-sequence input-length tensor and the per-sequence label-length tensor — each must match the batch size derived from the log-probabilities tensor.
+- The error messages should be descriptive enough for users to immediately identify which input is wrong and what the correct size should be.
+
+## Why This Matters
+
+Without this validation, mismatched batch dimensions can lead to silent incorrect results or cryptic low-level errors that are hard to debug. Users who accidentally pass a labels or length tensor with the wrong number of sequences should receive a clear, actionable error message identifying the source of the problem.

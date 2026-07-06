@@ -1,5 +1,20 @@
-I'm dealing with a DOM testing library that has a snapshot comparison assertion, and right now all the snapshot tests in the web test runner suite are skipped with a "TODO: skipped until web test runner supports snapshots" comment. The web test runner finally supports snapshots through an async API, so I want to unskip those and actually make the assertion work there. Because the web test runner reads and writes snapshot files asynchronously, the snapshot assertion needs to return an awaitable result so test functions can await it, oh and it has to detect which runner it's in, using the web test runner's async commands when running there and keeping the existing Karma-based approach when under Karma. If it can't detect either environment it should throw an informative error rather than silently doing nothing.
+## Support snapshot testing with Web Test Runner
 
-The assertion should keep working with both assertion styles the library supports and support DOM accessor chaining for light DOM and shadow DOM, plus it needs to accept options for ignoring certain attributes or tags during comparison. When a snapshot doesn't match, the thrown error has to carry both the actual rendered HTML and the expected stored snapshot so a diff can be shown to the developer. Negation matters too, asserting that content doesn't match a stored snapshot should just succeed without throwing.
+### Description
 
-Also I need a pre-populated snapshot file sitting there so the tests that check snapshot mismatch errors have something stored to compare against and can actually trigger the expected mismatch error. Without a pre-existing snapshot those tests would just save a fresh snapshot on first run instead of failing, which defeats the point. The whole reason this matters is developers who moved to the web test runner can't use snapshot testing for their web components at all right now since it's silently skipped, and fixing it gives them regression testing in both Karma and web test runner environments.
+The snapshot comparison feature in the DOM testing library currently only works when using Karma as the test runner. All snapshot tests in the web test runner test suite are explicitly skipped with a comment: "TODO: skipped until web test runner supports snapshots."
+
+The Web Test Runner now has snapshot support via an asynchronous API. The library should be updated to detect the test runner environment and use the appropriate snapshot mechanism. Since the Web Test Runner reads and writes snapshot files asynchronously, the snapshot assertion needs to return an awaitable result so test authors can await it.
+
+### Expected Behavior
+
+- Snapshot assertions should work in the Web Test Runner environment, not just Karma
+- The assertion should return an awaitable result so test functions can await it
+- When a snapshot doesn't match, the assertion should throw an error with both the actual and expected HTML values so developers can see a diff
+- Negation (asserting that content does NOT match a stored snapshot) should also work
+- Options for ignoring certain attributes or tags during comparison should continue to be supported
+- Both assertion styles supported by the library should work, including chained DOM accessors for light DOM and shadow DOM
+
+### Why This Matters
+
+Developers who have migrated to the Web Test Runner cannot use snapshot testing for their web components at all — the tests are silently skipped. Fixing this allows snapshot-based regression testing to work in both Karma and Web Test Runner environments, giving developers confidence that their component rendering hasn't changed unexpectedly.

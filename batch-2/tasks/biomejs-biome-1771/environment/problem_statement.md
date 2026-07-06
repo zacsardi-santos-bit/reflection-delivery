@@ -1,5 +1,17 @@
-I want to add a new lint rule to the nursery group that disallows any usage of the global console object. Right now the linter only has a narrow rule that catches one specific method call on console, but I need something broader that flags any call made on the console object no matter which method is used, so common ones like log, warn, error, and table but also any other method that exists or might get added later. The reason is any console call can leak debug output or sensitive info to end users in production, and teams that want a strict zero-console policy can't get there with the existing narrower rule.
+## Description
 
-Couple of things this rule needs to handle. It should be smart about scope, so if someone defines their own local variable called "console" (say a custom logger or a mock in tests) that shadows the global, those calls shouldn't be flagged, only calls to the true global console should produce a diagnostic. It also needs to catch cases where console is accessed indirectly through the global object rather than referenced directly.
+The linter currently has a narrow rule that only flags one specific method call on the console object. Many teams want to disallow all console usage in production code — not just one particular method — because any console call can leak debug output or sensitive information to end users.
 
-When it finds a violation the diagnostic should say the console usage isn't allowed, and there should be an unsafe automatic fix available that removes the offending statement entirely. Oh and the rule should be off by default (not recommended) so teams opt in when they want the strict policy.
+We need a new, more comprehensive lint rule in the nursery group that flags any method call made on the global console object, regardless of which method is used. This includes common methods like logging, warnings, errors, and tables, as well as any other methods that may exist or be added in the future.
+
+## Expected Behavior
+
+- Any method call on the global console object should be flagged with a warning.
+- Calls that access console through the global object indirectly should also be flagged.
+- When code defines its own local variable named "console" (shadowing the global), the rule should recognize this as valid and not produce a diagnostic.
+- The rule should offer an automatic unsafe fix that removes the offending statement entirely.
+- The rule should not be enabled by default (not recommended), so teams can opt in.
+
+## Why This Matters
+
+The existing narrower rule was insufficient for teams that want a zero-console policy. A comprehensive rule covering all console access — with local-scope awareness — removes friction for these teams and avoids the false positives that come from shadowing the global console with a custom logger or mock.

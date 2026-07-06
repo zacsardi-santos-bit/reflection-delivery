@@ -1,5 +1,16 @@
-I'm cleaning up the Postgres connector in our semantic-kernel project and there's this SQL generation helper that's bugging me. It's the internal class that builds all the SQL commands the connector needs, creating tables and indexes, upserting records, querying, deleting, all that. Problem is it's set up as an instantiable class that implements a separate interface, even though none of its methods actually use instance state. They're all pure functions really, take some params and hand back a SQL command, no fields, no setup, nothing.
+## Description
 
-So it makes zero sense to force callers to new up an object just to call stateless functions, and maintaining the interface on top of that is just noise for something purely functional. I want to refactor it into a static class with static methods so nobody has to instantiate it, and drop the interface it used to implement entirely. Then go through all the internal call sites in the connector that currently create an instance and call methods on it, and switch those to call the static methods directly instead.
+The Postgres connector includes a SQL generation helper class that builds all the SQL commands needed to interact with the database (creating tables, indexes, querying, upserting, deleting records, etc.). Currently, this helper is implemented as an instantiable class that also implements a separate interface. However, none of its methods use any instance state — they are all purely functional utilities that take inputs and produce SQL commands.
 
-Oh and rename the class from its old name to something cleaner that reflects what it actually does (pure SQL generation, no side effects). Btw all the existing Postgres connector unit tests need to keep passing after this, that means the property mapping, record mapping, collection operations, DI registration, and vector store behavior tests. Keeping a stateless utility as an instance class with an interface is just maintenance burden with no payoff, making it static matches the nature of the code and simplifies the connector's internals.
+This design forces callers to create an object solely to call stateless functions, and it requires maintaining an interface that provides no real benefit for a stateless utility. The result is extra complexity that serves no purpose.
+
+## Expected Behavior
+
+- The SQL generation helper should be refactored into a static class with static methods, removing the need to instantiate it.
+- The associated interface that the class previously implemented should be removed.
+- All internal call sites that previously created an instance of the helper and called its methods should be updated to call the static methods directly.
+- All existing Postgres connector unit tests (property mapping, record mapping, collection operations, DI registration, vector store behavior) must continue to pass.
+
+## Why This Matters
+
+Keeping a stateless utility as an instance class with an interface adds maintenance burden without benefit. Making it static better reflects the nature of the code — pure SQL generation functions with no side effects — and simplifies the connector's internal design.

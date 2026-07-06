@@ -1,5 +1,18 @@
-I'm working with the load balancing exporter and I want to route metrics by the values of specific attributes instead of by service name or metric name. It already does attribute-based routing for traces where you list one or more attribute keys and it uses those values as the routing key to spread signals consistently across collector backends, but when I try the same thing for metrics it just doesn't work, the routing mode isn't handled at all for the metrics pipeline. Right now metrics can route by service name, metric name, resource identity, and stream ID, but there's no way to split on arbitrary user-defined attributes, and that feature parity gap between traces and metrics forces annoying workarounds.
+## Description
 
-What I need is for attribute-based routing to work for metrics, looking up the attribute values from the resource level first, then scope, then datapoint (in that order) to build the routing key. So if someone lists a couple attribute keys, the exporter grabs whatever values exist at those levels and uses them to pick a backend, same behavior traces already have.
+The load balancing exporter for metrics supports several routing strategies — by service name, metric name, resource identity, and stream ID — but it does not support routing by arbitrary user-defined attributes. Attribute-based routing already exists for trace data, where operators can list one or more attribute keys and the exporter uses the values of those attributes as the routing key, distributing signals consistently across collector backends. Metrics should have the same capability, allowing operators to split metric traffic based on attributes present at the resource, scope, or datapoint level.
 
-Also I need the config validation to be right for this mode so misconfigured exporters fail at startup rather than silently routing to unexpected backends. If the attribute routing mode is enabled but no attribute keys are given, reject it with a clear error. And the other direction too, if attribute keys are provided but the routing mode isn't the attribute one, reject that with an error explaining what to change. A valid combo (attribute routing mode plus at least one attribute key) should just succeed.
+In addition to supporting the new routing mode, the exporter should validate its configuration when this mode is selected:
+- If the attribute routing mode is enabled but no attribute keys are provided, the exporter must reject the configuration with a clear error.
+- If attribute keys are provided but the routing mode is not set to use them, the exporter must also reject the configuration with a clear error explaining what to change.
+
+## Expected Behavior
+
+- Attribute-based routing works for metrics, looking up attribute values from the resource, scope, and datapoint levels (in that order) to form the routing key.
+- Configuration is validated: attribute routing without any specified attribute keys is rejected.
+- Configuration is validated: specifying attribute keys without enabling attribute routing mode is rejected.
+- A valid combination (attribute routing mode + at least one attribute key) succeeds.
+
+## Why This Matters
+
+Without this feature, operators cannot split high-volume metric streams across multiple collector backends using custom labels or attributes. The feature parity gap between traces and metrics forces users to work around the limitation. Proper configuration validation ensures misconfigured exporters fail at startup rather than routing metrics silently to unexpected backends.

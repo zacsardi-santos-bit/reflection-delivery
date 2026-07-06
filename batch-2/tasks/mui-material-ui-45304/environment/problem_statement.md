@@ -1,5 +1,17 @@
-So I'm cleaning up the migration story from our old Grid to the new one in the UI library, and the annoying thing right now is that the new Grid just silently swallows props that got removed in the redesign. If someone passes the old prop that marked a child as an item, or the one that toggled minimum-width behavior, or any of the per-breakpoint size props (the ones named after theme breakpoints like xs, sm, md, lg, xl), nothing happens at all, no feedback, and people waste ages wondering why their layout is off, especially mid-migration on an existing codebase.
+## Description
 
-What I want is for the new Grid to emit a console warning whenever it sees one of these legacy props. For the ones that are just gone and no longer needed (the item marker, the min-width toggle), the warning should say the prop has been removed and can safely be deleted from the code. For the breakpoint-based size props, the warning should say the prop's been removed and point them to the migration guide for how to update. Oh and important, each prop's warning should only fire once, not on every re-render, otherwise it'll spam the console into oblivion. So track which ones already warned.
+The newer Grid component silently accepts props that were removed when the component was redesigned. When developers accidentally pass legacy props — such as the prop that designated a grid child as an item, the prop that controlled minimum width behaviour, or the per-breakpoint size props — the component renders without any warning. This makes it very difficult to understand why the layout is not working as expected, especially when migrating an existing codebase from the older Grid to the newer one.
 
-Also, separate but related, the Grid migration guide page got reorganized and now lives at a new URL path. There's a utility in the docs build tooling that rewrites internal doc links, and it needs updating so it maps the old path reference to the new one instead of the stale one. Please handle both bits.
+## Expected Behavior
+
+- When a developer passes a legacy prop that has been completely removed and is no longer necessary (such as the item marker or the minimum-width toggle), the newer Grid component should emit a clear console warning explaining that the prop has been removed and that it can be safely deleted from the code.
+- When a developer passes a legacy breakpoint-based size prop (one named after a theme breakpoint), the newer Grid component should warn that the prop has been removed and direct them to the migration guide for instructions on how to update their code.
+- The warning for each prop should only appear once — not on every render — to avoid flooding the developer console.
+
+## Related Changes
+
+The Grid migration guide page has been reorganized and is now located at a new URL path. Any internal tooling that rewrites documentation links must be updated to map references to the new path rather than the old one.
+
+## Why This Matters
+
+Without these warnings, developers migrating from the legacy Grid to the newer Grid component have no way of knowing that certain props they are passing are being silently ignored. The warnings provide immediate, actionable feedback that speeds up migration and reduces confusion.

@@ -1,7 +1,19 @@
-I'm building a little internal Python library under `dev/pypi/` so our dev scripts stop hand-rolling HTTP calls against the Python package index JSON API. Right now every script that needs version data (latest stable release, when a version was uploaded, whether something got yanked, what Python versions it supports) either reimplements the requests logic or drags in some heavy dependency, and I want one clean typed thing to import instead.
+## Description
 
-I want a synchronous fetch-by-name function plus an async variant, and a batch async one that takes multiple package names and returns results in the same order as the input. Results should cache in memory so repeat lookups for the same name don't fire redundant HTTP requests, and there needs to be a function to clear that cache when I want fresh data. The base URL should be overridable via an environment variable so I can point it at a private mirror when the public index isn't reachable.
+Development scripts in the repository frequently need to look up version information for packages on the Python package index — for example, to find the latest stable release, check when a version was uploaded, or determine whether a release has been yanked or what Python versions it supports. Currently, there is no shared internal library for this purpose, so each script either reimplements the HTTP calls ad hoc or pulls in heavy external dependencies.
 
-On retries: it should auto-retry on transient stuff, meaning rate-limit and server-error responses plus low-level network errors, capped at 3 total attempts. Permanent errors like a missing package fail immediately, no retry. Exhausted retries, missing packages, non-retryable HTTP errors, and malformed responses all raise one dedicated exception type, and the messages need to be self-explanatory: missing-package clearly says the package wasn't found, a non-retryable HTTP error names the status code, retry exhaustion reports how many attempts were made, and a valid-but-structurally-weird response describes what was unexpected.
+We need a small, self-contained internal library that development scripts can import to query the package index's JSON API in a clean, typed way.
 
-The data model parses the raw JSON and exposes a sorted collection of valid versions, the latest stable version (skip pre-release, dev, and yanked releases), and a lookup by version string or version object. Each release exposes the earliest upload timestamp across its distributions, a yanked flag that's true only when every distribution is yanked, and the Python version compatibility specifier (first non-empty valid value across distributions, or nothing if they're all absent, empty, or unparseable). Oh and releases with no distributions, no parseable upload timestamp, or an invalid version string should just get silently dropped.
+## Expected Behavior
+
+- Provide a synchronous function to fetch package metadata by name, returning a typed object that exposes the list of versions, the latest stable version, and per-release details (upload timestamp, yanked status, Python version compatibility).
+- Results must be cached in memory so that looking up the same package more than once does not make redundant network calls.
+- Provide an explicit way to clear the cache when fresh data is needed.
+- Support pointing the client at a private mirror of the package index via an environment variable, in case the public index is not reachable.
+- Retry automatically on transient network failures and rate-limit responses (up to 3 total attempts), but fail immediately on permanent errors like a missing package.
+- Provide both synchronous and asynchronous entry points so the library is usable in both scripting and async contexts.
+- Raise a dedicated error type for all unrecoverable fetch failures so callers can handle them uniformly.
+
+## Why This Matters
+
+Without a shared library, every development script that needs package version data has to handle HTTP errors, retries, caching, and JSON parsing on its own. A single, well-tested internal library removes that duplication and ensures consistent, reliable behavior across all scripts.

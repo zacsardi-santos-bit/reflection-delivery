@@ -1,5 +1,16 @@
-I'm working with DataFusion's SQL unparser and I keep hitting a wall generating SQL for BigQuery. The issue is column aliases with special characters in them, stuff like parentheses around function args baked into alias names, plus asterisks, at-signs, and similar punctuation. BigQuery has strict rules about which characters are allowed in column identifiers, so a lot of aliases that are totally fine in generic SQL get rejected, and right now the unparser just emits them verbatim which produces SQL BigQuery refuses to parse or run.
+## Description
 
-What I want is a BigQuery-specific dialect for the unparser (living alongside the other dialects in the unparser code under `@datafusion/sql/src/unparser`) so I can target BigQuery directly. When that dialect is used it should automatically convert any special characters in a column alias to a safe encoded form using the character's decimal Unicode code point preceded by an underscore, so an opening paren becomes underscore-40, a closing paren becomes underscore-41, an asterisk becomes underscore-42, an at-sign becomes underscore-64, and so on for anything else that's not allowed.
+When generating SQL output targeting BigQuery from a DataFusion logical plan, column aliases that contain special characters (such as parentheses, asterisks, at-signs, and similar punctuation) result in invalid SQL. BigQuery has strict rules about which characters are allowed in column identifiers, and many characters that are perfectly valid in generic SQL aliases are rejected.
 
-The encoding has to be consistent everywhere the alias shows up, both where it's defined in the SELECT and anywhere it's referenced later like in a WHERE condition, otherwise the references won't line up with the definitions and the query breaks. Oh and this dialect should use BigQuery's backtick quoting style for identifiers too. Also important: when I'm using a non-BigQuery dialect, the original aliases with special characters should still come through as-is, don't touch them there. This matters because folks generating SQL for BigQuery pipelines often have plans whose computed expression aliases include characters BigQuery doesn't support, and without this there's no automated way to sanitize them short of manual post-processing or just failing at execution time.
+Currently, the unparser has no way to produce BigQuery-compatible SQL — it will emit aliases verbatim, which can produce SQL that BigQuery will refuse to parse or execute.
+
+## Expected Behavior
+
+- A BigQuery-specific SQL dialect should be available in the unparser so that SQL can be generated specifically for BigQuery targets.
+- When this dialect is used, any special characters in column aliases should be automatically converted to a safe encoded representation using the character's decimal Unicode code point preceded by an underscore — for example, an opening parenthesis becomes underscore-40, a closing parenthesis becomes underscore-41, an asterisk becomes underscore-42, and an at-sign becomes underscore-64.
+- This encoding should apply both to alias definitions in SELECT clauses and to any references to those aliases elsewhere in the query (such as in WHERE conditions), so the encoded form is consistent throughout the generated SQL.
+- The dialect should also use BigQuery's preferred backtick quoting style for identifiers.
+
+## Why This Matters
+
+Developers using DataFusion to generate SQL for BigQuery pipelines may have logical plans whose column names or computed expression aliases include characters that BigQuery does not support. Without a BigQuery-aware dialect, there is no automated way to sanitize these names, forcing manual post-processing of generated SQL or causing failures at query execution time.

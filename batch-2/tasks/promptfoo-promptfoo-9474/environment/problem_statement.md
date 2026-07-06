@@ -1,5 +1,14 @@
-I'm working in the promptfoo codebase and want to start identifying our client on outgoing OpenAI requests. OpenAI has a mechanism where client apps can tag themselves in requests (helps with support, usage analytics, attribution), and right now we send nothing, so OpenAI can't tell promptfoo traffic apart. I want us to attach an identification header automatically on every call we make to the standard OpenAI endpoint, and I mean every path: chat completions, text completions, embeddings, image generation, moderation, the responses API, transcription, video generation, real-time WebSocket connections, assistant runs, and the ChatKit provider too.
+## Description
 
-Default value should be a fixed string identifying the tool as "promptfoo". The catch is custom base URLs. When someone points at a proxy or a third-party compatible service by configuring a custom API base URL, I don't want to leak this metadata, so by default the header should be omitted in that case. But if a user explicitly passes a value for the header, that explicit value wins in all cases, custom endpoint or not.
+When promptfoo makes API calls to OpenAI services, it doesn't currently include any identification header to indicate that requests are originating from promptfoo. OpenAI supports a mechanism for client applications to identify themselves in requests, which helps with support, usage analytics, and attribution. Promptfoo should send this identification on all requests to the standard OpenAI API endpoint.
 
-Please export the header name and the default identification value as named constants from the OpenAI provider's index module (`@src/providers/openai/index.ts`) so everything references them consistently, and update the method that builds request headers to apply all these rules automatically.
+## Expected Behavior
+
+- All requests to the standard OpenAI API (chat completions, completions, embeddings, image generation, moderation, responses, transcription, video generation, real-time WebSocket connections, assistant runs, and ChatKit calls) should include a header identifying the client as promptfoo.
+- When a user configures a custom API endpoint (e.g., pointing to a proxy or a compatible third-party service), the identification header should **not** be sent by default, to avoid sending unexpected metadata to non-OpenAI services.
+- Users should be able to explicitly override the identification value if needed, and that override should take effect regardless of whether a custom or default endpoint is used.
+- The header name and default identification value should be exported as named constants so they can be referenced consistently across the codebase.
+
+## Why This Matters
+
+Without this identification, OpenAI cannot distinguish promptfoo traffic for support purposes. Omitting the header on custom endpoints avoids leaking promptfoo-specific metadata to third-party or proxy services that users may have configured.

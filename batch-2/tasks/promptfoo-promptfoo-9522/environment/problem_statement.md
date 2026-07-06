@@ -1,7 +1,18 @@
-I'm hitting a reproducibility wall with the random sample filter. Every time I run an eval it picks a different subset of my test cases, so I can't rerun the same selection, can't compare outputs between runs, and can't hand a colleague a repeatable benchmark. What I want is a numeric seed that pins the selection: same seed, same tests chosen, every single time no matter how many runs.
+## Description
 
-The seed needs to be available both as a command-line option next to the sample filter and as a setting in the config file. Oh and config files are often YAML, so if someone quotes the seed as a string it should get coerced to a number automatically (normalized on load). Invalid seeds should blow up the config load, so a non-numeric string, a fractional value, or a number outside the safe integer range all need to reject the config with a clear descriptive error that names which config file is the bad one.
+When using the random sample filter to run a subset of test cases, every run selects a different subset of tests. This makes it impossible to reproduce a specific evaluation, compare outputs between runs, or share a reproducible benchmark with a colleague.
 
-Also, for scenario-based configs, each scenario should independently derive its own sampling stream from that seed so different scenarios don't accidentally end up selecting identical test subsets. And importantly the sampling must not mutate the original config objects. Like if a scenario references an external test file by path, that original reference should still be intact after the config is resolved, it shouldn't get swapped out with the loaded-in data. Basically resolution and sampling are read-only over the source config.
+We need a way to "pin" the random selection so that the same subset of tests is always chosen when the same seed is provided. This would allow teams to lock down a repeatable sample for CI runs, regression testing, or side-by-side comparisons.
 
-This matters because reproducible sampling is what makes CI workflows, benchmarking, and regression debugging actually work. Without a seed there's no way to isolate a regression or confirm a fix against the exact same slice of tests.
+## Expected Behavior
+
+- A numeric seed option should be available alongside the sample filter, both on the command line and in configuration files.
+- When the same seed is provided, the exact same tests are selected on every run, regardless of how many times the evaluation is run.
+- The seed can be specified in a configuration file and should be normalized automatically — for example, if a YAML file quotes the seed as a string, it should be coerced to a number.
+- Configuration files with invalid seed values (non-numeric strings, fractional values, or out-of-range numbers) should be rejected with a clear error message indicating which config file is invalid.
+- When scenario-based configs are used, each scenario should independently derive its own sampling stream from the seed, so different scenarios don't end up picking identical test subsets.
+- The original configuration objects should not be mutated during sampling — a scenario's original test reference (such as an external file path) should remain unchanged after resolution.
+
+## Why This Matters
+
+Reproducible sampling is critical for CI workflows, benchmarking, and debugging. Without a seed option, it's impossible to rerun the exact same subset of tests, making it hard to isolate regressions or confirm fixes.

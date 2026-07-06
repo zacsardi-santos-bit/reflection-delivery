@@ -1,5 +1,24 @@
-I'm building out the Airflow dev tooling and the PR inspection paths keep hammering the GitHub API, author contribution history, CI check results, workflow run statuses, all of it goes back to the API every single time which is slow and eats rate limits, so I want a persistent disk-based cache to store and reuse this stuff. Different data has different lifetimes though, so contributor/author profile info should stay fresh for about a week, general PR metadata and state for a few hours, workflow run results for roughly ten minutes, and commit-level CI check statuses should never expire since the same commit always produces the same results, so those are effectively immutable.
+## Description
 
-Oh and here's the important bit, when a PR gets a new commit push I need one call that scans across all the cached stores and deletes any entries tied to the old commit SHA, returning a count of how many entries it removed. That same invalidation pass should also handle corrupt or unreadable cache files by just removing them and counting appropriately, don't blow up on bad data.
+The Airflow development tooling makes repeated calls to the GitHub API when inspecting pull requests — fetching contributor profiles, CI check results, and workflow run statuses each time they are needed. This is slow and burns through API rate limits. We need a persistent, disk-based caching layer for these different types of PR data so that the tooling can serve repeated lookups quickly from local storage.
 
-Separately I want a utility that takes a PR's diff and returns a list of review concerns. It should flag diffs that are very large (lots of added lines), changes that don't touch any test files (missing test coverage), additions of version annotation markers, and newly added lines that introduce breaking changes or mark things deprecated, but only added lines, not removed lines carrying those same markers. Also flag inconsistent exception handling when a high number of different exception types get added. And a clean small PR that already has tests and hits none of these signals should just return an empty list, no false positives.
+Each data category has different freshness requirements:
+- Contributor/author profile information stays valid for about a week
+- PR metadata and state is useful for a few hours
+- Workflow run results are relevant for roughly 10 minutes
+- CI check statuses for a given commit are immutable — they never need to expire
+
+When a PR receives a new commit, all cached data for that PR (across all caches) should be invalidatable in a single call that reports how many entries were removed. The invalidation logic should also cleanly handle corrupt cache files by removing them.
+
+We also need a utility that inspects a PR's diff and generates a list of review concerns automatically. It should flag potential issues such as:
+- Very large diffs (many added lines)
+- Missing test coverage (no test files changed)
+- Addition of version annotations
+- Lines that introduce breaking changes or mark functionality as deprecated
+- Inconsistent exception handling patterns (many different exception types added)
+
+A clean, small PR with tests present and none of the above signals should produce no concerns.
+
+## Why This Matters
+
+Without caching, the tooling is unnecessarily slow and API-rate-limited. Without SHA-based invalidation, reviewers could be shown stale data after a PR is updated. The diff analysis utility ensures reviewers are prompted to check important aspects of a PR without manual inspection.

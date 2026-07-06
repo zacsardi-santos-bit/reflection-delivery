@@ -1,9 +1,15 @@
-I'm hitting a mess with how MLflow's tracing system serializes and exports traces. When a trace gets captured during model serving or LangChain inference, the buffered trace dict comes out in this flat ad-hoc shape where span attributes are JSON-encoded strings instead of real dictionaries, and the overall structure doesn't line up with what the high-level trace entity expects, so I literally can't reconstruct a proper trace object from the exported dict using the standard deserialization methods.
+## Description
 
-What I want is consistent serialization end-to-end. Converting a trace to a dict or JSON and back should give me an identical trace with every span field preserved: names, timing, status, parent relationships, attributes, and events. The dict returned from the inference table buffer needs to use the standard trace layout, meaning a trace info section with millisecond timestamps and a trace data section holding the spans, all typed fields, not embedded JSON strings. Oh and the schema version stored in the trace info tags should be a string, not an integer.
+MLflow's tracing system currently stores and exports trace data in an inconsistent format that doesn't align with the high-level trace entity model. When traces are captured during model serving or LangChain inference, the buffered trace dictionary uses a flat structure where span attributes are JSON-encoded strings rather than proper dictionaries, and the overall layout doesn't match what standard trace deserialization expects. This makes it impossible to round-trip a trace through serialization and reconstruct a full, typed trace object with all its spans and metadata.
 
-There's a related thing too. When span attributes include values that got set directly through the lower-level telemetry layer using an unsupported type (like an int), accessing those attributes currently fails silently. Instead I want accessing them to log a clear warning that identifies which key caused the problem.
+## Expected Behavior
 
-Also the LangChain tracer integration needs to be implemented or updated so it produces properly structured traces for LLM calls, retriever calls, chains, and tools, with correct span types, parent-child relationships, and error handling. And when a span can't be found for a given run id during callback processing, it should raise an error with a message that clearly names the missing run identifier.
+- A trace should be convertible to a plain dictionary or JSON string and reconstructed back into a full trace object, with all span fields preserved exactly (including name, timing, status, attributes, and events).
+- The trace dictionary returned from the inference table buffer should use the standard trace entity layout, with a trace info section containing millisecond timestamps and a trace data section containing the spans.
+- Span attributes in serialized form should be proper dictionaries, not JSON-encoded strings.
+- The schema version tag in trace info should be stored as a string value.
+- When span attributes include values that were set directly via the lower-level telemetry API using an unsupported type, accessing those attributes should log a warning identifying the problematic key, rather than silently failing.
 
-The point of all this is that downstream consumers (serving endpoints, LangChain integrations, eval pipelines) currently can't reliably deserialize or inspect traces, and fixing the format lets the whole capture, buffer, export, reconstruct lifecycle work with one structured data model.
+## Why This Matters
+
+Without consistent serialization, downstream consumers of trace data (such as model serving endpoints, LangChain integrations, and evaluation pipelines) cannot reliably deserialize or inspect traces. Fixing the serialization format allows the full trace lifecycle — capture, buffer, export, and reconstruction — to work end-to-end with the same structured data model.

@@ -1,7 +1,16 @@
-I'm working on the terminal UI for our AI coding assistant and the status command has this really annoying rendering bug I want to fix. Right now when you run status and it needs to go fetch fresh rate-limit data in the background, it drops a card into the terminal history saying something like "refreshing limits" and then mutates that same card in place once the data lands. Terminals are append-only so this looks totally broken when you scroll back, the card appears to have changed retroactively and it reads like a bug.
+## Description
 
-What I want instead is for any status card written into terminal history to be final and static from the moment it renders, no "refreshing" notice should ever show up in a history card. The background rate-limit fetch should still fire, but when it completes we cache the result so the next time someone runs status it picks up the freshest available data, rather than trying to reach back and update an already-rendered card.
+The status command in the terminal UI has an awkward behavior where the status card written into terminal history shows a "refreshing" notice while a background rate-limit request is in progress, and then silently updates itself once the data arrives. Terminals are append-only by nature, so cards that appear to change retroactively after scrolling look broken and confusing.
 
-There's also a wording thing that's tangled up with this. When the rate-limit API comes back empty (a response with no displayable usage info), the card currently says something like "data not available yet" which sounds temporary. For accounts that just don't have this kind of rate limit data at all it's structurally absent, so I want the copy to make clear the limits aren't available for that account type, not that they're temporarily missing. Show that same message whether or not a background refresh is in flight, since the distinction doesn't matter when the data's genuinely absent.
+Additionally, when the status command is run and the rate-limit API returns an empty or non-displayable result, the card shows a message like "data not available yet" — implying the data might appear soon. For accounts that simply don't have rate limit information, this is misleading.
 
-Oh and one more piece: the event type that signals a rate-limit refresh needs to carry enough context to tell apart a startup background prefetch from a refresh the user kicked off by running the status command, because those two completion paths get handled differently. Also make sure concurrent status commands each track their own background refresh independently and that the refresh tracking state gets cleaned up properly as each request finishes.
+## Expected Behavior
+
+- Status cards written into terminal history should be permanently static — no "refreshing" notice should ever appear in a history card
+- When a background refresh completes, the cached data should be stored and used the next time the user runs the status command (rather than updating the existing card)
+- When the rate-limit API returns a response with no displayable data, the card should clearly say the limits are not available for that account type, regardless of whether a refresh is currently in progress
+- Concurrent status commands each track their own background refresh independently, and the refresh tracking state is correctly cleaned up as each request completes
+
+## Why This Matters
+
+Users scrolling back through terminal history should see clean, complete output — not cards that appear to have changed since they were first written. The current behavior can make users think there is a bug or that the terminal is behaving unexpectedly. Accurate messaging for accounts without rate limit data also removes a source of confusion.

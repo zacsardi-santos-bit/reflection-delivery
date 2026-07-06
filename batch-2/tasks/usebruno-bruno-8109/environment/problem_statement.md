@@ -1,5 +1,19 @@
-I'm working on Bruno's API spec panel, the "try it out" thing that lets people fire requests straight from a Swagger/OpenAPI doc, and right now those requests go out from the frontend directly which means they skip the user's configured proxy, TLS cert settings, and our normal error handling. I need two pieces.
+## Description
 
-First, a backend proxy function that routes spec panel HTTP requests through the Electron main process so they get the same infra as regular Bruno requests. It takes a request descriptor with a url, method, headers, and an optional body string. On a successful response, and I mean regardless of HTTP status code, it returns a structured object with the status, status text, headers as a plain object, and the response body encoded in base64. For network or TLS failures it returns a structured error object carrying a machine-readable code plus a message. If it's called with no argument at all or without a url, it bails immediately with a structured validation error (specific validation error code) and makes zero network calls. Also it needs to normalize response headers so they're safe across process boundaries, so if the headers object has a serialization method (like toJSON), call it and only return the plain result.
+Bruno's API spec panel includes a "try it out" feature that lets users send requests directly from a Swagger or OpenAPI document. Two gaps need to be addressed:
 
-Second, a body serialization utility for the same panel. It returns nothing for absent or omitted bodies, passes string bodies through unchanged, converts URL-encoded param objects to their string form, and throws a descriptive typed error for body types we don't support yet, specifically binary data, file uploads, and multipart form data. Each thrown error carries a machine-readable error code constant (export that constant separately too) and a label saying which body type got rejected so callers can branch on it. The messages should be friendly and make clear this is a Bruno limitation, not a Swagger standard thing, and they should point at what does work today (JSON, URL-encoded forms, plain text). Without this, the panel can't reach endpoints needing proxy or custom certs, and people hit confusing silent failures on multipart/binary bodies.
+1. **No backend proxy for Swagger requests** — currently, requests made from the spec panel go out directly from the frontend, which means they bypass the user's configured proxy, TLS certificate settings, and consistent error handling. The requests need to be routed through the Electron main process so they benefit from the same infrastructure as regular Bruno requests.
+
+2. **Silent or incorrect behavior for unsupported body types** — when the spec panel tries to serialize a request body that contains binary data, a file, or multipart form data, there is no clear handling. The app should detect these cases and provide a user-friendly message explaining that the body type isn't supported yet in Bruno and suggest alternatives (JSON, URL-encoded forms, plain text), rather than failing silently or crashing.
+
+## Expected Behavior
+
+- A backend proxy function should accept a request descriptor (URL, method, headers, body) and return either a normalized response object (with status, headers, and a base64-encoded body) or a structured error object with a machine-readable error code.
+- The proxy should return a structured validation failure error when called without a URL, without making any network call.
+- The proxy should surface network and TLS failures as structured error objects containing the error code and message.
+- The proxy should normalize response headers to a plain object before returning (to ensure safe transmission across process boundaries).
+- A body serialization utility should gracefully handle strings and URL-encoded parameters, return nothing for absent bodies, and throw an informative, typed error for unsupported binary body types (with an attached body-type label and machine-readable error code).
+
+## Why This Matters
+
+Without this proxy, the spec panel cannot reliably reach endpoints that require proxy settings or custom TLS certificates. And without proper body serialization error handling, users get confusing failures when trying to send multipart or binary requests through the panel.

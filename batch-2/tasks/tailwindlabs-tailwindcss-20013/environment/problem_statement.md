@@ -1,5 +1,18 @@
-I'm cleaning up how our test utilities format generated CSS for snapshot comparisons and it's bugging me. Right now the shared helpers trim the CSS string before returning it, so every snapshot starts immediately with CSS content, like `.foo {` sitting right on the same line as the opening quote. When something changes at the very start of a block the diff is a pain to read.
+# Improve CSS Snapshot Readability in Test Utilities
 
-What I want is a small formatting helper in our shared test utility module that wraps non-empty CSS output with a leading newline and a trailing newline, so each snapshot has a clear boundary at both the top and bottom. The one special case: if the CSS output is empty or only whitespace, the formatter needs to return an exact empty string, not a newline-wrapped blank or any leftover whitespace. That empty case actually matters because it lets tests do a plain equality check ("no output") instead of a snapshot comparison, and it keeps "no output" distinct from "whitespace-only output."
+## Description
 
-Then I need all the existing CSS output helpers in that module (the ones currently calling trim on their return value) updated to run their output through this formatter instead. And export the formatter from the module too, so individual tests that process CSS outside those helpers can import and use it directly. Basically consistent formatting everywhere so diffs are cleaner and reviews are less confusing.
+The shared test utilities that generate CSS output for snapshot comparisons currently trim the result before returning it. This causes snapshot values to start immediately with CSS content — for example, a snapshot might begin with `.foo {` on the same line as the opening quote. When a CSS block changes at the beginning, this format makes the diff harder to read.
+
+Additionally, when the output is empty, the utilities return the raw (whitespace-trimmed) value, which makes it slightly ambiguous in snapshot format.
+
+## Expected Behavior
+
+- All CSS generation helpers in the shared test utility module should pass their output through a consistent formatter before returning.
+- The formatter should produce a string that begins with a newline and ends with a newline when the CSS is non-empty, so snapshot comparisons have a clear boundary at both ends.
+- When the CSS output is empty or contains only whitespace, the formatter should return an exact empty string so that empty-output checks can use a simple equality assertion.
+- The formatter should be exported from the test utility module so individual tests can use it directly when they process CSS output outside of the shared helpers.
+
+## Why This Matters
+
+Consistent formatting of snapshot values makes it easier for developers to read and review test output. A leading newline ensures the first line of CSS appears on its own line in the snapshot, making diffs cleaner and reducing confusion when the start of the CSS block changes. Explicit empty-string output for empty CSS makes it easy to distinguish "no output" from "some whitespace-only output" in test assertions.

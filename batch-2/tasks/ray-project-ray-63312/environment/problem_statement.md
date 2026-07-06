@@ -1,5 +1,18 @@
-I'm chasing a nasty startup stall on some of our GPU nodes in the Ray cluster, and it traces back to the GPU profiling manager. Turns out the GPU detection step shells out to a system utility in its default mode, which ends up talking to NVIDIA's FabricManager service, and when that service isn't responding right the call just blocks forever and hangs the whole node process. So there are two things I want fixed here.
+## Description
 
-First, the GPU detection needs to stop touching FabricManager at all. Instead of running the utility (nvidia-smi) in its default mode, it should use a targeted query that only pulls GPU names in a simple parseable form, so basically query for the name field in CSV format so it never contacts FabricManager.
+The GPU profiling manager can stall indefinitely when checking whether a node has GPUs, and it performs this potentially-stalling check even when the GPU profiling tool is not installed.
 
-Second, and this is the one that actually bites us, we're doing that GPU detection even on nodes where the required GPU profiling tool isn't installed. Since the profiling manager can't do anything useful without those binaries anyway, running the detection there is pure waste and it risks triggering the hang on nodes that don't even need it. So the manager's enabled check should first look at whether its required binaries are present, and if they're missing it should short-circuit and just report itself as disabled without ever running the GPU detection. Only when the binaries are there do we bother querying for GPUs. Basically fix both the query flags and the evaluation order so the profiling setup can't stall a node during startup.
+Two related issues exist:
+
+1. **FabricManager hang**: When detecting GPU presence, the code invokes a system utility in a way that triggers communication with NVIDIA's FabricManager service. On nodes where FabricManager is not responding properly, this call can block indefinitely — stalling the entire node process. The fix is to use a more targeted query mode of the utility that avoids contacting FabricManager.
+
+2. **Unnecessary GPU check when profiling tool is absent**: The GPU detection runs even when the required GPU profiling tool is not installed. Since the profiling manager cannot do anything useful without it, this unnecessary call risks triggering the FabricManager hang on nodes that are missing the tool — which is wasteful and potentially harmful.
+
+## Expected Behavior
+
+- The GPU detection command must use targeted flags that query only GPU names in a simple, parseable format, avoiding any interaction with FabricManager.
+- When the required GPU profiling tool binaries are absent, the profiling manager's enabled check must short-circuit and return disabled without ever running the GPU detection step.
+
+## Why This Matters
+
+Nodes in GPU clusters can become unresponsive during startup because of the hanging GPU detection call. Fixing the query flags and the evaluation order ensures that the profiling setup does not cause node stalls.

@@ -1,5 +1,18 @@
-I'm poking at kubeadm and want to change where we get the CRI socket (container runtime socket) from when we pull node registration state. Right now we read it off a node annotation in the API, which honestly is annoying because it couples something inherently local to the node to a live API connection, and the annotation can be stale or just missing. The real source of truth is the kubelet's own instance config file on disk, so I want to read the CRI socket from there instead.
+## Description
 
-While I'm at it, the function that retrieves node registration info takes a single file path today, and that doesn't cut it when the kubelet kubeconfig and the instance config live in different directories. I want it to take two separate directory paths, one for the directory holding the kubelet kubeconfig and one for the directory with the instance configuration file, so each can be located independently. The internal helper that builds the full init configuration from the cluster needs the same treatment so it threads both directory paths through.
+Kubeadm currently stores the container runtime socket (CRI socket) path as an annotation on the Kubernetes node object. When node registration state needs to be retrieved (e.g., during upgrade or re-join scenarios), the code reads this annotation off the node to learn which container runtime socket was used. This approach tightly couples CRI socket information to the Kubernetes API, requiring a live connection to read something that is inherently local to the node.
 
-Since the CRI socket isn't coming from annotations anymore, rip out the code that annotates nodes with the CRI socket path, that's dead weight now. Also the kubelet argument builder shouldn't accept or use a CRI socket input at all anymore since that's handled through the instance config file. Oh and one more thing, when we write kubelet config files during an upgrade, I want it to return an error if the required instance configuration file is missing, so we catch that early instead of failing weirdly later. This all lives in the kubeadm bits under `@cmd/kubeadm`, roughly the config retrieval and upgrade paths plus the kubelet arg building. Net effect: CRI socket reads from actual kubelet config, node registration retrieval is simpler, and the upgrade path is more predictable.
+## Problem
+
+The correct source of truth for the container runtime endpoint on a node is the kubelet's own instance configuration file, which already stores this information on disk. Reading it from a node annotation is redundant and fragile. Additionally, the function that retrieves node registration information currently accepts a single file path, making it difficult to independently locate the kubelet kubeconfig and the kubelet instance configuration file when they live in different directories.
+
+## Expected Behavior
+
+- Functions that retrieve node registration configuration should accept separate directory paths: one for the kubelet kubeconfig directory and one for the instance configuration directory, so each can be located independently.
+- The container runtime socket should be read from the local kubelet instance configuration file rather than from a node annotation.
+- The mechanism that annotates nodes with the CRI socket path should be removed, since this information is no longer sourced from node annotations.
+- When writing kubelet configuration files during an upgrade, the operation should validate that the instance configuration file is present and return an error if it is missing.
+
+## Why This Matters
+
+Removing the dependency on node annotations for CRI socket information makes kubeadm more resilient and accurate: the CRI socket is read from the actual configuration that governs how the kubelet is running, rather than from a potentially stale or missing node annotation. It also simplifies the node registration retrieval flow and makes the upgrade path more predictable by catching a missing instance config early.

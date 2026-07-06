@@ -1,5 +1,15 @@
-I'm hitting rough edges with the image padding and cropping ops in Keras, specifically `pad_images` and `crop_images` over in the image utils (the `keras/src/ops/image.py` area plus wherever the backend numpy/tf implementations live). The problem is they barely validate their inputs, so when I fat-finger a negative padding offset or a negative target dimension I don't get anything useful back, the op either blows up somewhere deep in the stack or, worse, silently gives me wrong output. Same deal when I hand it an image tensor with a weird rank, the error doesn't actually tell me the shape was the issue.
+## Description
 
-What I want is upfront argument checking that raises descriptive errors. So if I pass an image whose rank isn't 3 or 4, it should immediately flag that the images must have 3 or 4 dimensions rather than letting it fail later. If I give a negative top_padding (or bottom_padding, left, right, and the crop equivalents like top_cropping etc), it should tell me that specific named parameter must be non-negative. If target_height or target_width comes in negative, the error should name that parameter too. And there's this constraint where for a given axis only two of the three (top offset, bottom offset, target dimension) should be set, so if I accidentally specify all three at once it needs to say exactly two of those three must be provided, and call that out clearly.
+The image padding and cropping operations lack sufficient input validation, leading to confusing or unhelpful errors when users pass invalid arguments. Currently, passing negative values for padding amounts, cropping amounts, or target dimensions — or providing image inputs with the wrong number of dimensions — does not produce clear, early error messages. Users see low-level failures or unexpected behavior instead of being told precisely what was wrong with their input.
 
-Oh and this has to behave the same whether I'm building a model symbolically (so the validation fires on symbolic tensors during graph construction) or running eagerly on real image arrays. Both paths need to catch these cases early with the same clear messages.
+## Expected Behavior
+
+- When an image with an incorrect number of dimensions (not 3 or 4) is passed to the padding or cropping operation, a clear error should be raised immediately.
+- When the combination of padding/cropping parameters is invalid (e.g., all three of the top offset, bottom offset, and target dimension are all specified at once), the error message should clearly state that exactly two of those three values must be provided.
+- When any padding or cropping offset parameter is negative, the operation should raise an informative error naming the specific parameter and indicating it must be non-negative.
+- When a target height or target width dimension is negative, the operation should raise an informative error naming the specific parameter.
+- These validations should apply consistently both when working with symbolic computation graphs (e.g., during model building) and during eager execution with real image data.
+
+## Why This Matters
+
+Without these validations, users debugging image preprocessing pipelines have to trace through internal logic to understand why padding or cropping failed. With clear, early validation and descriptive error messages, users can immediately identify and correct the problematic argument.

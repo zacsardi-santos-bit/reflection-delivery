@@ -1,5 +1,17 @@
-I'm working on a data validation library and the lazy-mode error reporting is driving me nuts. Right now when validation fails in lazy mode all I get is a flat count summary like "A total of N schema errors were found." with zero structure. I can't tell which failures are about the shape or type of the data (wrong column types, missing or extra columns, null violations in columns that shouldn't have them) versus which are about the actual values violating checks like range constraints. I want the error object from lazy validation to expose a structured report that groups failures into two clearly labeled categories, one for schema-level (structural) errors and one for data-level (check) errors.
+## Description
 
-Also I want to configure validation to run only one category, so I can do schema-only checks, data-only checks, or both. When I restrict to one category the report should only contain that section with no entries leaking in from the excluded one, e.g. skip data checks during schema evolution or skip structural checks when I already trust the schema and just want data quality.
+When schema validation fails in lazy mode, the error report is a flat count-based summary message with no structure distinguishing between different categories of violation. It's impossible to tell at a glance which errors are about the shape or type of the data (structural schema violations) versus which are about the actual values in the data (check failures). There is also no way to restrict validation to run only one of these categories.
 
-Couple more things while I'm here. The error count summary should use plain string keys instead of internal enum objects so it's easy to inspect programmatically. And the individual check failure messages need to be more informative, they should consistently name the column that failed, which check failed, and what the offending values were, all in one human-readable format. Oh and when columns or indices are out of order in an ordered schema the message should explicitly say they're out of order, don't just bury it. Finally, when a required column is missing from the data I want a specific well-typed schema error raised rather than some generic exception bubbling up. This structured format makes it way easier to filter, display, or act on failures, and the better messages make debugging faster since I can see what went wrong and where.
+## Expected Behavior
+
+- The error object produced by lazy validation should expose a structured report that groups failures into two distinct categories: schema-level errors (wrong types, missing or extra columns, null violations) and data-level errors (values failing checks).
+- It should be possible to configure the validation system to run only schema-level checks, only data-level checks, or both.
+- When validation is restricted to one category, the error report should contain only the relevant section — with no entries from the excluded category.
+- The error count summary should use plain string keys rather than internal enum objects, making it easy to inspect programmatically.
+- Individual check failure messages should clearly identify the column, the check, and the offending values in a consistent human-readable format.
+- When columns or indices are out of order in an ordered schema, the error message should explicitly state that they are out of order.
+- Missing required columns should raise a specific, well-typed schema error rather than a generic exception.
+
+## Why This Matters
+
+This structured error format makes it much easier to programmatically filter, display, or act on validation failures. Users who only care about structural problems (e.g., during schema evolution) can skip data checks entirely. Users who only care about data quality can skip structural checks. The improved error messages also make debugging faster by clearly describing what went wrong and where.

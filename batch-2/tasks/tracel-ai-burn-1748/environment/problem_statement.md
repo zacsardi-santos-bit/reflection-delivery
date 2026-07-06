@@ -1,5 +1,13 @@
-I'm hitting a build failure trying to run the no-std integration tests in this Rust workspace and it's a version mismatch thing. The no-std compat test package got bumped to depend on the upcoming release of the core libraries, but the actual library crates and all their siblings across the workspace still carry the old version number, so cargo blows up during dependency resolution before a single test even gets to run. It's a workspace-wide version bump that never got applied uniformly, basically.
+## Description
 
-What I want is every crate in the workspace to have its version updated consistently to the new release so everything lines up. The test package is already pointing at the newer version, so the fix is on the library side, oh and it has to be all of them, not just the core crate, because the siblings reference each other and any straggler on the old number will keep the resolver unhappy. Once the versions are aligned across the board the no-std integration tests should compile and pass with no dependency resolution errors about mismatched workspace crate versions.
+The no-std compatibility test suite in this workspace is currently failing to compile because it references a newer release version of the core libraries than what is actually declared across the workspace. The test package was updated to depend on the upcoming release, but the actual library crates and all their siblings in the workspace still carry the old release version number. This version mismatch causes the build system to fail during dependency resolution before any tests can run.
 
-This matters because inconsistent versions inside a workspace block compilation entirely, which means all testing and release workflows are stuck until it's sorted. I just want a clean uniform bump so the library can actually be released at its new version and the integration tests can verify it works.
+## Expected Behavior
+
+- All crates in the workspace should have their version numbers updated consistently to reflect the new release
+- The no-std integration tests should compile and pass once all crate versions are aligned
+- There should be no dependency resolution errors related to version mismatches between workspace crates
+
+## Why This Matters
+
+Having inconsistent version numbers within a workspace prevents compilation entirely, blocking all testing and release workflows. A uniform version bump across all workspace crates is required so that the library can be properly released at its new version and the integration tests can validate its correctness.

@@ -1,3 +1,17 @@
-I want to clean up the diagnostic messages on a few of our nursery lint rules because right now they feel abrupt, they jump straight to "prefer X over Y" without first telling the developer what their code is actually doing, so it's hard to understand why the linter even fired. What I want instead is a consistent three-part message structure: first a note describing what the flagged expression does (something like "This expression uses ... and then checks whether the result is empty."), then a note explaining why the suggested alternative better communicates that intent (focused on intent and correctness), and finally, only when there's no automatic fix available, a direct call-to-action note telling the developer exactly what to use instead.
+## Description
 
-This hits three rules. There's the one that flags filtering an array and then testing it for emptiness (filter-then-emptiness-check), the one that flags using filter to grab a single element (filter-then-index-access), and the one that flags a string search method where the regex-side equivalent would express intent more directly. For all three the rule is the same: when there's an autofix action present, only the first two notes should show up since the fix already handles the how-to, and when there's no autofix, include that third suggestion note too. So the emptiness-check rule emits just problem plus reason when it can autofix, and all three parts when it can't, and the same logic applies to the filter-single-element and string-vs-regex rules. Keep the messages consistent across all three so the linter output reads cleanly.
+Several lint rules in the nursery group currently emit diagnostic messages that tell developers what to prefer without clearly explaining what the flagged code is actually doing wrong. The messages jump straight to a recommendation ("Prefer X over Y") without first describing the problem with the current pattern, making it harder for developers to understand *why* their code is being flagged.
+
+## Expected Behavior
+
+The diagnostics for these rules should follow a clearer three-part structure:
+
+- **Describe the problem**: Explain what the flagged expression is doing (e.g., "This expression uses ... and then checks whether the result is empty.")
+- **Explain why the alternative is better**: Give a concrete reason for the suggested change, focused on intent and correctness
+- **Provide a direct suggestion**: When no automatic fix is available, include a short, actionable note telling the developer what to use instead
+
+The rule that detects unnecessary filter-then-emptiness-check patterns, the rule that detects filter-then-index-access patterns, and the rule that detects string method usage instead of the equivalent regex method should all be updated to follow this structure.
+
+## Why This Matters
+
+When the linter fires, developers benefit from understanding what their code is doing before being told what to do instead. Clear, structured diagnostic messages reduce confusion and help developers make informed decisions. Consistent message structure across related rules also improves the overall quality of the linter output.

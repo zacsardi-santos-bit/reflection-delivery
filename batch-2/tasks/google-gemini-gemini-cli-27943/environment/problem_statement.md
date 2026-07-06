@@ -1,7 +1,15 @@
-I keep hitting a nasty path bug in the file tools. When the model generates a workspace-relative path with an at-sign reference prefix (that convention we use for workspace file refs) and hands it to the read, write, or edit tools, the tools treat the at-sign as a literal part of the directory name, so files get created or read from inside some bogus directory whose name starts with an at-sign instead of the actual workspace spot. AI-generated paths carry these prefixes all the time and they're supposed to be transparent to the underlying tools, so this leaves junk directories in weird places that are annoying to clean up.
+## Description
 
-What I want is defensive stripping before we resolve paths. If a path starts with an at-sign immediately followed by a path separator (forward slash or backslash), always strip the at-sign plus the separator and treat the rest as a normal workspace-relative path. If it's just an at-sign with no separator right after it, only strip the at-sign when the first directory segment of the resulting path already exists in the workspace. That way if someone genuinely wants a directory whose name begins with an at-sign, that still works when neither the literal at-sign name nor the stripped version exists.
+When a language model generates file paths using an "at-sign" reference prefix (a convention for workspace-relative file references), those paths can end up being passed directly to the file reading, writing, and editing tools. The tools currently interpret the at-sign character literally as part of the directory name, which means files get created or read from the wrong location — inside a directory whose name starts with an at-sign — instead of the intended workspace directory.
 
-Also two safety things while I'm in here. Path traversal, so anything that resolves outside the allowed workspace boundaries, should get caught and return a clear error saying the path is outside the workspace. And circular symlink chains should be detected and reported with a descriptive error instead of hanging or crashing, something indicating the path couldn't be resolved.
+## Expected Behavior
 
-Oh and this all needs to be consistent across file reading, writing, and editing, plus the path correction utility that maps relative paths to absolute workspace paths, that one should apply the same at-sign stripping when it computes the corrected absolute path.
+- When a tool receives a file path that begins with the at-sign reference prefix pattern (at-sign followed by a separator, e.g., at-sign followed by a forward slash or backslash), the prefix should always be stripped and the path treated as a normal workspace-relative path.
+- When a file path begins with just an at-sign (no separator), the at-sign should be stripped only if the first directory segment of the resulting path already exists in the workspace. This preserves the ability to intentionally create directories named with at-signs.
+- Path resolution should guard against security issues: if a resolved path falls outside the allowed workspace boundaries, the operation should fail with a clear error message indicating the path is not within the workspace.
+- Circular symbolic link chains should be detected and reported with a descriptive error rather than causing a hang or unhandled crash.
+- File path correction utilities should correctly apply this same at-sign stripping logic when computing the corrected absolute path.
+
+## Why This Matters
+
+AI-generated file paths often carry reference prefixes that should be transparent to the underlying tools. Without defensive stripping, users end up with incorrectly named directories and files in unexpected locations, which is confusing and hard to clean up. Adding security boundaries (workspace enforcement and symlink loop detection) prevents potential abuse of path traversal.

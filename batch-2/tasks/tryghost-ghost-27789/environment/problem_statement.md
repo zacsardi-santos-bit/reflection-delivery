@@ -1,5 +1,18 @@
-I'm hitting a crash when I save a member that's got labels attached. If one of the labels in the payload is missing its name (say it only has an id and nothing else), the whole save blows up with an uncaught runtime error instead of just skipping the bad entry. The problem is the label normalization step that runs before saving, it assumes every label object has a name and immediately does a string operation on it, so when the name field isn't there it throws. I want it to just ignore any label that doesn't have a valid name and keep going.
+# Bug: Saving a member crashes when a label is missing its name
 
-While you're in there, a few more things I'd expect from that normalization: labels whose name is entirely whitespace should get discarded the same way, and case-insensitive duplicates should be deduplicated so I don't end up storing the same label twice just because the capitalization differs (keep the first occurrence, drop the later ones). Basically the step should be defensive about what it accepts and only keep labels that are clearly valid and unique.
+## Description
 
-The reason this matters is the API doesn't always guarantee every incoming label object includes a name, and right now a single malformed label in an otherwise fine request takes down the entire member save. That's a data-integrity and reliability thing. So the end state I'm after: a save with a mix of valid, nameless, whitespace-only, and case-duplicate labels should succeed and end up storing only the valid, unique labels, no crash.
+When saving a member through the API and one of the labels in the payload is missing its name field (for example, an object that only contains an id), the save operation throws an uncaught error instead of handling the invalid label gracefully.
+
+This happens because the code that normalizes labels before saving assumes every label object has a name, and immediately attempts a string operation on it. If the name is absent, that operation fails at runtime.
+
+## Expected Behavior
+
+- Labels with no name should be silently skipped and not included in the saved set.
+- Labels whose name consists entirely of whitespace should also be discarded.
+- Labels that are case-insensitive duplicates of an already-accepted label should be deduplicated — only the first occurrence is kept.
+- A member save with a mix of valid, nameless, whitespace-only, and case-duplicate labels should succeed and result in only the valid, unique labels being stored.
+
+## Why This Matters
+
+The API does not always guarantee that every label object in an incoming request includes a name. When this happens today, the entire member save silently fails with a crash. This is a data-integrity and reliability issue — a single malformed label in an otherwise valid request should not bring down the whole operation. The system should be resilient to these edge cases and simply ignore the bad label entries.

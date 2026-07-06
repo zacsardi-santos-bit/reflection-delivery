@@ -1,5 +1,15 @@
-I want to actually implement the `ping` command in pnpm since right now it's just sitting there as a known-but-not-implemented command that pnpm rejects if you try to run it. This is annoying because testing connectivity to a registry before you do installs or publishes is such a common thing, whether you're debugging flaky network stuff or just verifying auth is set up right, and other package managers already do this natively so people expect pnpm to as well. Without it there's no easy way to check registry connectivity from inside the pnpm toolchain, which makes troubleshooting slow or failing installs a pain, especially behind custom registries or proxies.
+## Description
 
-So what I want: running ping should hit the registry's ping endpoint with a simple request and print the registry URL along with how long the round trip took in milliseconds. If the registry sends back meaningful data in the response body, show that too alongside the timing. When nobody specifies a registry explicitly it should fall back to the default registry from the user's config. Oh and if the registry URL has a path prefix (even without a trailing slash), the request needs to go to the correct endpoint under that prefix, don't mangle it.
+pnpm currently treats "ping" as a not-yet-implemented command and will reject attempts to use it. However, testing connectivity to a registry before performing installs or publishes is a common need — both for debugging network issues and for verifying that authentication is set up correctly. Other package managers provide this functionality natively, and users expect pnpm to do the same.
 
-For failures, if the registry can't be reached, either because the server returned an error status code or because of a plain network failure, throw an error whose message clearly says the registry couldn't be reached. Also it needs the standard command metadata that other pnpm commands expose, so a command name, a help description that mentions connectivity testing and the usage pattern, and option type definitions including support for passing a custom registry URL.
+## Expected Behavior
+
+- Running the ping command against a registry should display the registry URL and the round-trip response time in milliseconds.
+- If the registry returns additional data in its response, that data should be shown alongside the timing output.
+- If no specific registry is given, the command should fall back to the configured default registry.
+- Registry URLs that include a path prefix (but no trailing slash) must be handled correctly — the connectivity check must be sent to the right endpoint under that prefix.
+- If the registry cannot be reached — whether due to a network failure or an unexpected HTTP response code — the command must report a clear error indicating the registry was unreachable.
+
+## Why This Matters
+
+Without a native ping command, users have no easy way to verify connectivity to their registry from within the pnpm toolchain. This makes troubleshooting slow or failing installs harder, especially in environments behind custom registries or proxies.

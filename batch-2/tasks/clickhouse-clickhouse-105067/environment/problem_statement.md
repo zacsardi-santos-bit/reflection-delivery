@@ -1,5 +1,19 @@
-I'm hitting a frustrating gap with the standalone ClickHouse query utility (the LocalConnection path in clickhouse-local basically). I've got verbose logging turned on, and when a query fails I only ever see the exception. None of the log messages that got generated before the failure show up at all. It looks like the buffered log queue just never gets flushed when an exception happens, so all the diagnostic stuff produced during query analysis and setup, access checks, query parsing steps, all of it, is silently thrown away.
+## Description
 
-What I'd expect is that when logging's enabled and a query throws, every log message accumulated up to that point still gets printed before or alongside the exception. Right now the exception delivery path skips the log flush step entirely, so the log queue stays non-empty and unprinted, and I'm left with just the error and zero context about what led up to it. This is a regression, the exception delivery used to (or should) drain the log buffer first.
+When running the standalone query utility with verbose logging enabled, if a query fails, the log messages that were buffered before the failure are silently discarded. Only the exception is shown to the user — all the diagnostic context that was generated during query analysis and setup is lost.
 
-Can you fix it so buffered log messages always get delivered before the exception is reported? Concretely, when the connection sends an exception packet back to the client, it should flush the accumulated logs first so both the buffered output and the failing error make it through together. Losing the logs silently makes troubleshooting way harder than it needs to be, so I want to see both when things go wrong.
+## Expected Behavior
+
+- When logging is enabled and a query fails, all log messages produced before the failure should appear in the output alongside the exception.
+- Users should be able to see both the buffered log output (e.g., access checks, query parsing steps) and the error that caused the failure.
+
+## Current Behavior
+
+- When a query throws an exception, the exception is delivered immediately without first flushing the accumulated log buffer.
+- This means any log messages generated before the failure — which could include valuable diagnostic information — are never printed.
+
+## Why This Matters
+
+Without the log output, it's very difficult to diagnose why a query failed. The log messages produced during query analysis and access checks provide important context. Losing them silently makes troubleshooting significantly harder.
+
+This is a regression where the exception delivery path bypasses the log flush step, leaving the log queue non-empty and unprinted.

@@ -1,7 +1,22 @@
-I'm in the Linux sandbox subsystem and want to clean up how paths get fed into the argument builder. Right now the builder takes a bunch of separate inputs (allowed paths, forbidden paths, extra include dirs, a write-permissions object) and then resolves symlinks itself, which mixes two concerns: figuring out real paths and actually building the sandbox args. It's annoying to reason about and test.
+## Description
 
-What I want is to move all the symlink resolution upstream so it happens once, before the builder runs, and then hand the builder a single consolidated pre-resolved structure. That structure should carry the workspace as both its original path and its real resolved path, plus forbidden paths, globally-included directories, policy-allowed paths, policy-read paths, and policy-write paths. The builder should just use those directly and not do any of its own symlink following anymore.
+The Linux sandbox argument builder currently handles path resolution internally — it receives raw paths and resolves symlinks itself (for workspace, allowed paths, forbidden paths, and include directories). This responsibility should be moved upstream so that the builder receives pre-resolved paths instead. Additionally, extra tool directories configured for inclusion in the sandbox are not currently scanned for sensitive credential files, meaning those files could be inadvertently exposed inside the sandbox.
 
-A few behaviors need to keep working (or start working) with this new shape. When the workspace itself lives at a symlinked location, governance files like version-control ignore files should be reachable from both the original workspace path and the real resolved path, so we don't end up with an incomplete config. Also, when extra tool directories get included globally in the sandbox, those dirs need to be scanned for sensitive credential/secret files, and anything found should be explicitly protected inside the sandbox instead of left exposed to sandboxed processes, that's the security gap I'm trying to close. And lastly, virtual read commands that target files inside those globally-included tool directories should be allowed through rather than rejected, since we intentionally included those dirs anyway.
+## Problems
 
-The relevant code lives in the Linux sandbox argument builder path. Keep the resolution-vs-construction split clean so each piece is testable on its own.
+- The sandbox argument builder conflates two concerns: resolving paths (following symlinks to their real locations) and using those paths to build sandbox arguments. This makes it harder to reason about and test each concern independently.
+- When the workspace directory itself is a symlink, governance files (like version-control ignore files) may not be accessible from both the original workspace path and the real path, leading to incomplete sandbox configuration.
+- When extra tool directories are included in the sandbox, any sensitive credential files inside them are not explicitly protected, potentially leaking them to sandboxed processes.
+- Virtual read commands targeting files in those extra tool directories are not properly allowed, even though those directories are intentionally included in the sandbox.
+
+## Expected Behavior
+
+- Path resolution (symlink following) should happen once, before the sandbox argument builder runs, and the builder should receive a consolidated, pre-resolved path structure.
+- The pre-resolved structure should carry: the workspace with both its original and real path, forbidden paths, globally-included directories, policy-allowed paths, policy-read paths, and policy-write paths.
+- When the workspace lives at a symlinked location, governance files should be exposed from both the original workspace path and the resolved real path.
+- Directories included globally in the sandbox should be scanned for secret/credential files, which should then be explicitly protected inside the sandbox.
+- Virtual read commands that target files within globally-included directories should be permitted.
+
+## Why This Matters
+
+Separating path resolution from argument construction makes the sandbox easier to reason about, test, and maintain. It also closes a security gap where credential files in included tool directories could be exposed, and fixes a correctness issue where symlinked workspaces did not have all governance files properly accessible.

@@ -1,11 +1,16 @@
-I'm adding some security and normalization helpers to our agent utilities module (the one that handles connecting out to external agents over the network) and I want to get these right because there's a real SSRF hole here. Right now nothing stops a malicious agent from pointing its DNS at some internal service and getting us to hammer our own infrastructure.
+## Description
 
-So first thing, I need a DNS-pinning function that takes a URL plus an agent name, resolves the hostname to its actual IP, and hands back both the original hostname and a rebuilt URL with the IP swapped in. The security bit: if the resolved IP lands in a private network range it should reject the connection by throwing an error that includes the agent name. Only exception is localhost and loopback addresses, those are fine for local dev. If DNS resolution itself blows up, throw too, again with the agent name in the message. Oh and it has to cope with raw `host:port` strings that have no URL scheme (we use those for some lower-level protocols), and in that case the pinned address it returns should also leave the scheme off.
+When the system connects to external agents over the network, there is no protection against a scenario where an agent's hostname resolves to a private or internal IP address. An attacker could configure a malicious agent whose DNS entry points to an internal service, causing the system to make requests to infrastructure it should never reach. This is a class of server-side request forgery vulnerability that should be addressed.
 
-Second, a small credential helper that takes a URL and returns the right connection security credentials depending on whether it's a secure or plain/insecure protocol.
+Additionally, the system receives agent configuration objects that describe how to connect to agents. These configuration objects can arrive in various inconsistent formats: some use one field name for protocol information, others use a different legacy field name; some URLs include a proper scheme, others are bare host:port strings. There is no central normalization step to resolve these inconsistencies before using the configuration.
 
-Third, an agent card normalizer. These cards come from all over and don't agree on conventions: sometimes one field name for protocol info, sometimes an older legacy name, sometimes URLs are bare IP:port with no scheme, sometimes fields are just missing. It should take any unknown input, throw a clear error if it isn't an object, fill safe defaults for required fields, unify the protocol field names (newer name wins if both show up), make sure non-low-level-protocol URLs get a scheme when one's absent, and write the normalized interfaces to both the current and the legacy interface list fields so whichever one downstream reads still works. If the top-level URL is missing, fall back to the first interface's URL.
+## Expected Behavior
 
-Last, a URL splitting helper that checks if a URL already ends with the standard agent discovery path and if so strips that suffix and returns just the base URL, otherwise (or if it can't parse) returns the URL unchanged.
+- Before connecting to an agent, the system should resolve the agent's hostname to its IP address via DNS and refuse connections when the resolved address falls within a private network range. An exception should be made for localhost and loopback addresses, which are commonly used during local development.
+- The system should be able to produce the appropriate connection security credentials based on whether the agent URL uses a secure or plain protocol.
+- A utility should be available to normalize incoming agent configuration objects into a consistent, predictable shape — filling in missing fields with safe defaults, unifying inconsistent protocol field names, and ensuring URLs are properly formed based on the protocol type.
+- A utility should be available to cleanly separate an agent's base address from a well-known discovery path, so callers can work with the base URL independently.
 
-These all live in the agent utilities module. Thanks!
+## Why This Matters
+
+Without hostname pinning and private IP validation, the system is vulnerable to being directed toward internal services. Without agent card normalization, subtle differences in agent configuration formats can cause silent failures or unexpected behavior when connecting to agents that follow different conventions.

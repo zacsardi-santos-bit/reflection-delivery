@@ -1,5 +1,16 @@
-I'm working in the Artemis course messaging system on the message pinning feature, and there's a gap I keep hitting: instructors can pin important messages to highlight announcements or deadlines, but there's no way to actually filter a conversation down to just the pinned ones. So if a conversation has a ton of messages, you're stuck scrolling to find them, which makes pinning way less useful than it should be. I want to add a "show pinned only" toggle so people can flip to just the pinned messages and flip back to see everything again.
+## Description
 
-The conversation header should show a count of how many pinned messages exist whenever there's at least one, and that count is also the thing users click to toggle the filter on or off. The messaging component needs to track pinned posts separately from all posts and apply the filter only when the toggle is active. Oh and it all has to stay live: when a message gets pinned, unpinned, or deleted, the count and the filtered list both update in real time through the existing live-update mechanism, no page reload. Also if the pinned count drops to zero, the filter should automatically turn itself off so the full conversation shows again.
+In our course messaging system, instructors can pin important messages to highlight them for students. However, while pinned status is tracked and displayed, there is currently no way for users to filter a conversation to view only its pinned messages. Users who want to quickly review pinned content must scroll through an entire conversation manually.
 
-On the backend side the message retrieval endpoint needs to support filtering to return only the pinned messages for a given conversation, so the frontend can efficiently load just those when someone switches conversations instead of pulling everything down and filtering client-side.
+## Expected Behavior
+
+- Each conversation header should show a count of pinned messages when one or more exist.
+- Users should be able to toggle a "show pinned only" mode to filter the conversation view to display only pinned messages.
+- When toggling back, all messages should be displayed again.
+- The pinned message count should update automatically in real time: when a message is pinned, unpinned, or deleted, the count and filtered view should reflect the change immediately without a page reload.
+- If all pinned messages are removed (count drops to zero), the filter mode should automatically turn off so the full conversation is shown.
+- The server should support querying for only pinned messages in a given conversation, enabling efficient retrieval without loading all messages.
+
+## Why This Matters
+
+Students and instructors often rely on pinned messages to track key announcements, deadlines, or important information. Without a way to view only pinned messages, pinning becomes less useful in active conversations with many messages. This feature makes pinned messages much more accessible.

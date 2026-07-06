@@ -1,5 +1,14 @@
-I'm poking at the Redis provider hook in Airflow, over in `@airflow/providers/redis/hooks/redis.py`, and the annoying thing is when we open a connection to Redis we don't tell the server anything about who's connecting. So on the server side there's no way to know a given connection came from the Airflow Redis provider vs some random other client, which makes tracking, debugging, and monitoring way harder when you've got a bunch of services all hitting the same Redis instance.
+## Description
 
-I want the hook to identify itself as the Airflow Redis provider when it establishes connections, and it needs to be adaptive about how, since the installed redis library version might support different things. If the library has the structured driver-info mechanism (redis's DriverInfo class), use that and register the provider name as an upstream driver. If that's not there but the lib supports the simpler library-name field, pass that instead. And if neither is supported, don't add any identification, just connect like before.
+When the Airflow Redis provider hook opens a connection to Redis, it does not identify itself to the server. This means that on the Redis server side, there is no way to tell that a connection was established by the Airflow Redis provider rather than some other client. In environments with multiple services connecting to the same Redis instance, this makes connection tracking, debugging, and monitoring significantly harder.
 
-To make this testable the module should expose two attributes: a reference to the driver info class (or None if it's unavailable), and a boolean flag saying whether the simpler library-name approach is supported. The connection method checks these at runtime to decide which path to take. Oh and all the existing connection params (credentials, SSL settings, db, etc.) need to keep working exactly as they do now, this is purely additive. The identification metadata should carry the provider's name so admins can attribute Airflow connections properly.
+## Expected Behavior
+
+- When establishing a Redis connection, the hook should pass client identification metadata so the Redis server can attribute the connection to the Airflow Redis provider.
+- The hook should use the most capable client identification method available in the installed Redis client library. If a structured driver-info object is available, it should be used. If that is not available but the library supports a simpler name-based identification, that should be used instead. If neither is supported, no identification metadata should be sent.
+- The identification metadata should include the name of the Airflow Redis provider.
+- Existing connection parameters (credentials, SSL settings, etc.) must not be affected by this change.
+
+## Why This Matters
+
+Without client identification, Redis server administrators cannot distinguish Airflow-originated connections from connections made by other services or libraries. This feature makes it easier to audit, trace, and debug Redis usage in multi-tenant environments where multiple applications share the same Redis server.

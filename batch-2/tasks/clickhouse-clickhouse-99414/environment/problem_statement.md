@@ -1,5 +1,19 @@
-I hit a server crash in ClickHouse coming from the UTF-8 string reversal function (the reverseUTF8 built-in), and our fuzzer is what surfaced it. Turns out if you feed it strings with incomplete multi-byte UTF-8 sequences, where a leading byte says "hey I'm the start of a multi-byte character" but the expected continuation bytes just aren't there, the thing reads past the end of the available data and crashes the whole server. Not great, database servers really shouldn't fall over on malformed input, and since byte-level ops and external data sources can easily hand us broken UTF-8, we need this to degrade gracefully.
+## Description
 
-The fix I want: when the function walks a string and sees a leading byte indicating a multi-byte char but the buffer doesn't actually contain enough bytes to finish it, treat that orphaned leading byte as a single byte instead of trying to grab continuation bytes that don't exist. So the reversal completes without crashing on any truncation pattern, and I mean all of them: a 2-byte sequence with only the leading byte, a 3-byte sequence with only 1 or 2 bytes present, and a 4-byte sequence with only 1, 2, or 3 bytes present. The fuzzer reproduced it by building data from raw hex bytes representing these truncated sequences and running the UTF-8 reversal over it.
+The built-in function for reversing UTF-8 encoded strings crashes when the input contains truncated or incomplete multi-byte character sequences. This was discovered by a fuzzer — passing certain byte sequences that look like the start of a multi-byte UTF-8 character but are cut short (e.g., only the leading byte is present without the expected continuation bytes) causes the server to crash instead of handling the malformed data gracefully.
 
-Also, don't break the happy path. Valid UTF-8 strings still need to reverse correctly at the character level, so each Unicode character (including legit multi-byte ones) stays intact as a unit rather than getting split into bytes. So basically: robust against truncation, correct on valid input.
+## Expected Behavior
+
+- When given a string with incomplete multi-byte UTF-8 sequences, the function should complete without crashing. It should treat the orphaned leading byte(s) as individual single bytes.
+- Valid UTF-8 strings should continue to be reversed correctly, with each Unicode character (including multi-byte ones) treated as a unit.
+
+## Reproduction
+
+The fuzzer produced a query involving the UTF-8 reversal function applied to data constructed from raw hex bytes representing truncated multi-byte sequences. Various truncation patterns trigger the crash:
+- A 2-byte sequence with only the leading byte present
+- A 3-byte sequence with only 1 or 2 bytes present
+- A 4-byte sequence with only 1, 2, or 3 bytes present
+
+## Why This Matters
+
+Database servers should never crash on unexpected or malformed input data. Graceful handling of invalid UTF-8 is important for reliability, especially since byte-level operations and external data sources can produce malformed strings.

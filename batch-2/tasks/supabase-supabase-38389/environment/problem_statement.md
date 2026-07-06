@@ -1,7 +1,28 @@
-I'm building a shared filter bar for our UI library and want to write it from scratch, and I keep hitting the same thing where every product team rolls their own one-off filtering against tabular data, so I want one reusable component everyone can adopt. The idea is a free-text search input that's always visible with a placeholder that hints it does both search and filtering, and when I click into it a popover pops up listing the properties I can filter by. Picking a property adds a filter condition and shows a value input for it, and that value input needs an accessible label naming the property it belongs to.
+## Description
 
-There are a few value modes. Some properties have a fixed list of string options that show up in a dropdown when the value field is focused, others have a fully custom picker component that renders right in the filter area with no intermediate menu. Clicking anywhere outside the bar should close any open popover.
+We need a new reusable filter bar component in our shared UI package. Right now there is no standard way for product teams to let users build structured queries against tabular data — developers have to implement custom one-off solutions every time they need filtering.
 
-It also takes an existing filter state via props, and any conditions already there should render immediately on first paint. Oh and it handles nested filter groups, rendering conditions at any depth recursively. Logical operators between conditions are hidden by default with an opt-in prop to show them.
+The component should combine a free-text search input with a structured filter builder. When a user clicks into the search field, they should see a list of filterable properties. Selecting a property should add a new filter condition and let the user enter or pick a value. The bar should support:
 
-Alongside the component I need utility functions for immutable state mutations, traversing a filter tree by numeric path to find a group or condition, adding a new condition or group at a given path, removing an item, updating a condition's value or operator, and toggling a group's logical operator. Also a pair of hooks, one managing the bar's overall UI state (visibility flags, active input tracking, loading and error states, plus a reset function), and one caching asynchronously loaded options per property, where that cache hook is a no-op for properties whose options are already a plain array instead of an async loader.
+- A list of predefined options (shown as a dropdown when the user focuses the value field)
+- Custom value-picker components that render directly in the filter area
+- Nested filter groups that can combine conditions with logical operators
+- Clean rendering where logical operators between conditions are hidden by default
+
+The component should also ship with well-tested utility functions for all the common immutable state mutations — adding/removing conditions, updating values and operators, toggling logical operators, navigating filter group trees by path — as well as hooks that manage the UI state of the bar (popover visibility, active inputs, loading and error states for async options).
+
+## Expected Behavior
+
+- A search input is always visible with a clear placeholder indicating it supports both search and filtering
+- Clicking into the search input opens a popover listing available properties to filter by
+- Selecting a property adds a new filter condition and shows an accessible value input for that property
+- Properties with a fixed list of options show those options when the value input is focused
+- Properties with a custom picker component render that UI directly when the value input is focused
+- Clicking anywhere outside the filter bar closes any open popover
+- Pre-existing filter conditions passed via props are displayed immediately on render
+- Nested filter groups are rendered recursively, showing all conditions regardless of nesting depth
+- Logical operator labels are hidden by default; a prop controls whether they are shown
+
+## Why This Matters
+
+This provides a shared, well-tested filter bar that all product surfaces can adopt consistently, reducing duplication and making it easier to ship sophisticated filtering experiences without reinventing the wheel each time.

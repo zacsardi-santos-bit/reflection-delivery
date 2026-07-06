@@ -1,3 +1,16 @@
-I'm adding retention utilization metrics to Kafka's remote log management and honestly it's overdue, because right now when tiered storage is on there's no clean way to see how full a partition is relative to its retention limits, operators are stuck manually computing ratios from raw byte counters which is error prone and easy to get wrong. I want two new per-partition percentage metrics exposed over JMX: one showing total storage usage (local plus remote combined) as a percentage of the total configured retention size, and a second showing just local log storage as a percentage of the configured local retention limit, so you can glance at it and know how close a partition is to its cap across both tiers.
+## Description
 
-The method that builds retention size data needs to take the extra params to compute these, specifically the total local log size and the local retention limit in bytes. The metrics should get updated every time that method runs, and they need to be registered properly before use. Also they've gotta be cleaned up cleanly, reset to zero and deregistered, when the task managing a partition gets cancelled so we don't leak stale gauges. Couple edge cases matter: when retention is disabled (signalled by a negative value) the method should just return an empty result and not touch the metrics at all, and when retention's configured as zero, both percentage metrics should report zero rather than blowing up on a divide. This all lives in the remote log expiration / retention path so wire the new gauges in there per partition, register on setup, update on each run, tear down on cancel.
+When using tiered (remote) storage for Kafka topics, operators currently have no direct metric that shows how much of the configured retention capacity is actually being consumed. To understand utilization, they must manually compute ratios from raw byte counters, which is error-prone and inconvenient. There should be dedicated percentage-based metrics that make it easy to see at a glance how close a partition is to its retention limits.
+
+## Expected Behavior
+
+- A new metric should report the percentage of the total configured retention size that is currently being used, accounting for both local and remote log storage combined.
+- A second new metric should report the percentage of the local-only retention limit that is being consumed by local log segments.
+- Both metrics should be exposed via standard monitoring (JMX) on a per-partition basis.
+- Metrics must be properly cleaned up (deregistered and reset to zero) when a partition is no longer being managed by the remote log expiration task.
+- When retention is disabled (set to a negative value), the expiration method should return no result and the metrics should not be updated.
+- When retention limits are configured as zero, both percentage metrics should report zero.
+
+## Why This Matters
+
+Without these metrics, it is difficult to detect when a partition is approaching or exceeding its retention capacity, especially when data is spread across both local and remote storage tiers. Percentage-based metrics provide immediate, intuitive visibility into retention utilization, enabling operators to take proactive action before issues arise.

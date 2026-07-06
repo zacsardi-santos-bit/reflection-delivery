@@ -1,7 +1,15 @@
-I'm working on Flutter's desktop plugin support for the Linux and Windows targets and there's a gap I keep hitting: when a project pulls in Linux or Windows plugins, nothing creates filesystem symlinks from the platform project dir over to each plugin's package, so the desktop build system can't reliably find them. I want to add symlink management for this.
+## Description
 
-Basically I need a function that creates these symlinks inside a dedicated directory within each desktop platform's project structure, and each link should be named after its corresponding plugin package. It should take a "force" flag. When force is on, wipe the whole symlink directory first and then recreate all the links fresh, which is handy when plugins got removed or swapped out. When force is off, be conservative about it: if all the links are already there, do nothing, but if some are missing just repair those (add the missing ones) without disturbing any existing content. So don't clobber, just patch the gaps.
+Flutter's desktop plugin support for Linux and Windows is missing a mechanism to make installed plugins discoverable on the filesystem via symbolic links. The build system for these desktop targets needs to locate plugin packages through a predictable directory structure, but right now there is no way to create or manage those symlinks as part of normal plugin management.
 
-Also, refreshing the project's plugin list should automatically kick off a symlink update, so stale links from plugins that got removed get cleaned up and links for newly added plugins show up, all as part of normal plugin refresh, no manual maintenance. Oh and both the Linux and the Windows platform project types should expose a property that points at the directory where their plugin symlinks live.
+## Expected Behavior
 
-Why it matters: without these links the desktop build pipeline on Linux and Windows can't locate plugin packages, so the whole plugin story breaks for those targets. Wiring it into the refresh flow means devs don't have to babysit the links themselves.
+- When a project's plugin list is refreshed and Linux or Windows desktop support is enabled, symlinks pointing to each plugin package should be automatically created inside a dedicated directory within the platform project.
+- Symlinks should be named after their corresponding plugin package.
+- There should be a way to force a full recreation of all symlinks, which clears out any stale entries before creating fresh ones.
+- When symlinks are recreated without the force option, existing content should not be disturbed — only missing symlinks should be added (repair behavior).
+- When the plugin list is refreshed and plugins are removed or changed, the old symlinks should be cleaned up automatically.
+
+## Why This Matters
+
+Without these symlinks, the Linux and Windows desktop build systems cannot reliably locate plugin packages, which breaks the plugin pipeline for desktop targets. Having this managed automatically as part of plugin list refresh means developers do not need to manually maintain these links.

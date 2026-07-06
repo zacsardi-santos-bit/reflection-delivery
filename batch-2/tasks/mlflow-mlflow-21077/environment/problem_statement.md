@@ -1,5 +1,17 @@
-I'm working on the AI gateway's endpoint usage modal and want to make it more useful. Right now it only shows static code snippets (cURL, Python) that people copy and run elsewhere, and there's no way to actually hit the endpoint from the UI. I'd like to add an interactive "Try it" panel and make it the default view so folks can fire off a real test request from the browser and see the response inline without leaving the page.
+## Description
 
-The panel needs a request body editor, a "Send request" button, and a dedicated response area that shows either the successful response or a clear error message. It should handle invalid request bodies gracefully by showing an error instead of sending anything, include any available authentication headers automatically, and when an HTTP error comes back it should surface the server's actual error response body rather than something generic. Keep the code-example views (cURL, Python) reachable through view mode selectors too. When users switch between the unified API and passthrough API tabs, or between providers, reset the request body to a sensible default for whatever's selected and clear any previous response or error. Closing and reopening the modal should also clear that state, and there should be a "Reset example" button that restores the default body and clears any displayed response or error.
+The AI gateway's endpoint usage modal currently only shows static code examples (in different languages) for how to call a gateway endpoint. There's no way to actually test the endpoint from the UI — users have to copy the code and run it externally. Additionally, the backend has a compatibility issue where outgoing HTTP requests to AI providers can fail if the provider responds with Brotli compression, which the HTTP client library cannot decode without an optional dependency.
 
-Also there's a backend thing I need fixed. When our gateway makes outgoing HTTP requests to AI provider APIs we need to explicitly control which response compression formats we advertise, because some providers respond with Brotli and our HTTP client can't decode that without an optional dependency, so it fails in confusing ways. The fix should strip whatever incoming compression preference is on the headers and replace it with a fixed list of formats our client can actually decode. Export that constant list of supported encodings from the provider utilities module so it can be verified on its own.
+## Expected Behavior
+
+- The usage modal should default to an interactive "Try it" view where users can send a real request directly from the browser, see the response immediately, and inspect any errors — all without leaving the UI.
+- The "Try it" view should show a request body editor, a "Send request" button, and a dedicated response area.
+- Users should still be able to switch to code-example views (cURL, Python) via view mode selectors.
+- Switching between API types (unified vs. passthrough) or providers should reset the request body to an appropriate default and clear any previous response or error.
+- Closing and reopening the modal should clear the previous response and error state.
+- A "Reset example" button should restore the default request body and clear any displayed response or error.
+- On the backend, when making HTTP requests to AI provider APIs, the server should explicitly advertise only compression formats it can decode, preventing failures caused by unsupported compression in responses.
+
+## Why This Matters
+
+Without an interactive test panel, developers must copy and paste code examples into their terminal just to verify an endpoint works, which is slow and error-prone. The compression issue on the backend can cause silent or confusing failures when certain providers are used, and fixing it improves reliability across all gateway providers.

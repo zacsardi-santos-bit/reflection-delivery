@@ -1,3 +1,12 @@
-I'm chasing a bug in the chat widget's message submission path where the permission profile gets silently dropped. When a session's set up with the older "external sandbox" sandbox policy variant plus an explicit permission profile, submitting a user message discards the profile entirely, so the submitted turn goes out with no permission profile attached even though one was clearly configured for that session. That basically bypasses the access control settings we wanted, and any downstream consumer that reads the permission profile off the submitted user turn for authorization or sandbox enforcement ends up seeing a missing value instead of the configured one, which means unpredictable or overly permissive behavior for those sessions.
+## Description
 
-What I want is for the permission profile from the session config to always ride along on the submitted user turn no matter which sandbox policy variant the session's using. The other variants already handle this correctly, it's just the legacy external sandbox one that loses it, so sessions on external sandbox should propagate the permission profile on submission exactly like every other variant does. So please dig into the widget's submit logic where the user turn gets assembled and make sure the profile carries through in the external sandbox branch too. Don't regress the paths that already work, just close this one gap.
+When a session is configured with an explicit permission profile alongside a specific older sandbox policy variant, submitting a user message discards the configured permission profile entirely. The submitted message then goes out without any permission profile attached, which bypasses the intended access control settings for that session.
+
+## Expected Behavior
+
+- When a session has a permission profile configured, that profile should be included in every user turn submission, regardless of which sandbox policy variant the session uses.
+- In particular, sessions using the legacy "external sandbox" policy variant should still propagate the permission profile on submission, just like sessions using any other policy variant.
+
+## Why This Matters
+
+This bug causes a subtle mismatch: the session is configured with a permission profile, but user messages are submitted as if no profile exists. Any consumer of the submitted user turn that relies on the permission profile for authorization or sandbox enforcement will see a missing value instead of the configured one. The result is unpredictable or overly permissive behavior for sessions that use the older external sandbox policy alongside a managed permission profile.

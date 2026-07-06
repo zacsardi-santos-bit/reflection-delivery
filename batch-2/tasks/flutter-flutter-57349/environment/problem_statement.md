@@ -1,5 +1,14 @@
-I'm poking at Flutter's device targeting and hitting an annoyance: when I run a command without `-d` and I've got multiple devices connected, the tool doesn't help me pick. Right now it'll auto-select if there's exactly one ephemeral device (like a single plugged-in phone) among a bunch, which is great and I want that behavior kept exactly as is. But the moment I've got multiple ephemeral devices, or multiple non-ephemeral ones, or some mix that can't be narrowed to a single target, the tool just returns all of them or bails, and I'm stuck.
+## Description
 
-What I want is for the tool to prompt me interactively when automatic selection can't decide. So it should print a numbered list of the available devices and let me type the number of the one I want, then proceed targeting only that chosen device. Basically after the normal auto-select attempt runs and still leaves more than one device on the table, that's when the prompt kicks in.
+When a developer runs a Flutter command without specifying a target device and multiple connected devices are available, the tool should help them choose which device to use. Currently, the tool automatically picks the single ephemeral device (such as a connected phone) when it is the only one of that kind among multiple devices. However, when there are multiple ephemeral devices, multiple non-ephemeral devices, or a mix that can't be automatically narrowed down to one, there is no mechanism to ask the user for their preference — the tool either returns all of them or fails.
 
-Big caveat though, this can only happen in interactive terminal sessions. I don't want it blocking anything in CI or other non-interactive environments (no hanging waiting on stdin), so gate it on whether we're actually attached to a terminal. Oh and to be clear, the single-ephemeral-device auto-selection path shouldn't change at all, it should still just work without asking me anything.
+## Expected Behavior
+
+- When exactly one ephemeral device exists among multiple devices, it is automatically selected (existing behavior preserved).
+- When multiple devices remain after the auto-selection attempt, the tool should display a numbered list of the available devices and prompt the user to pick one by entering the corresponding number.
+- The user selection prompt should only appear in interactive terminal sessions, not in CI or non-interactive environments.
+- After the user makes a selection, the command proceeds targeting only that chosen device.
+
+## Why This Matters
+
+Developers who have multiple Android devices connected simultaneously, or who run multiple emulators or desktop targets at once, currently have no streamlined way to choose a target device without always passing an explicit flag. An interactive prompt makes the workflow significantly smoother for everyday use.

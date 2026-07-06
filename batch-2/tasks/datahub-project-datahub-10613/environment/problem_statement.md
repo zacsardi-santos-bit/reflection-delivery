@@ -1,7 +1,16 @@
-I'm poking at the DataHub Airflow integration plugin, the bit that captures lineage by tracking which datasets each task reads and writes. Right now when the plugin hits a dataset as an inlet or outlet it emits this low-value "this entity exists and isn't deleted" status signal, which is basically a no-op for anyone using the catalog. It doesn't tell you anything.
+## Description
 
-What I want instead is for it to emit the dataset's actual key identity metadata, the structural info that's already fully baked into the dataset's identifier so there's no extra network lookup or config needed. That means for each dataset I want the data platform, the name, and the environment/origin (the thing sometimes called origin) coming through as proper key aspect metadata rather than the existence flag.
+When the Airflow integration plugin captures lineage for datasets used in tasks (as inputs or outputs), it currently emits a generic existence signal for each dataset — essentially recording that the dataset is present and not deleted. This is a low-value side effect that doesn't add meaningful information to the data catalog.
 
-This needs to apply everywhere the plugin processes datasets as task inputs or outputs, so both the regular lineage path and the path where task execution capture is turned on, they should behave the same way. And it should hold for all the supported platforms, the various cloud data warehouses as well as local databases, not just one of them.
+A better approach would be to emit the dataset's structural identity information — its platform, name, and environment — which is already fully known from the dataset's identifier. This eliminates the superfluous existence flag in favor of more informative key metadata that downstream consumers can actually use.
 
-So basically, drop the superfluous existence signal in @metadata-ingestion-modules/airflow-plugin and replace it with the platform, name, and env identity aspect for every inlet and outlet dataset. Same output whether or not execution capture is enabled.
+## Expected Behavior
+
+- When the plugin processes a dataset as a task inlet or outlet, it should emit structural identity metadata (key information) for that dataset, not an existence flag.
+- The identity metadata should include the dataset's data platform, its name, and its environment/origin.
+- This should work consistently whether or not task execution capture is enabled.
+- The behavior should apply for all supported platforms (e.g., different cloud data warehouses and local databases).
+
+## Why This Matters
+
+This change makes the metadata emitted for datasets richer and more useful out-of-the-box, without requiring any additional network lookups or configuration changes. Consumers of the metadata catalog receive structured identity information about each dataset referenced in Airflow tasks, rather than just a flag indicating the entity is not deleted.

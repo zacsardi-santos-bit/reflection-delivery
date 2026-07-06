@@ -1,5 +1,18 @@
-I'm cleaning up the Growatt Server integration because it's rolling its own way of controlling decimal places on sensor readings and it bugs me. Right now the sensor description objects carry a custom precision field and the entity manually rounds the raw numeric values before reporting them, which loses precision in the underlying data and doesn't match how the platform wants us to do this. I want to switch everything over to the standard suggested display precision mechanism so the raw values pass through untouched and only the display layer formats them.
+## Description
 
-So concretely, kill the custom precision field and drop the rounding logic entirely from the sensor entity so raw values flow through unchanged, and set suggested_display_precision on the sensor definitions instead. For most sensors across the inverter, TLX, and min device types (energy, power, current, voltage, frequency readings) that should be 1 decimal place. For the storage-specific sensors it's 2 decimal places, that's battery voltage, AC input and output frequencies, AC input voltage, output voltage, and the PV charging voltages, since those sensors actually report finer precision. Oh and the storage "load percentage" sensor currently has no precision set at all, give it 2 decimal places too. One weird exception: the first voltage input sensor in the inverter device type should be 2 decimal places, not 1.
+The Growatt Server integration is using a non-standard approach to control the number of decimal places displayed for sensor readings. Currently, the integration defines a custom field on its sensor description objects and applies rounding directly to raw numeric values before reporting them. This design causes precision loss in the underlying data and does not align with the platform's built-in mechanism for controlling display precision.
 
-Point of all this is data integrity (full-precision values kept for history and automations) and getting the integration lined up with Home Assistant quality guidelines and the rest of the platform's sensor behavior. The relevant sensor definitions and entity logic live under the growatt_server integration, around `@homeassistant/components/growatt_server/sensor/`, so update the device-type sensor type lists (inverter, tlx, min, storage) and the sensor entity that does the rounding.
+The correct approach is to use the platform's standard "suggested display precision" feature, which tells the display layer how many decimal places to show without modifying the raw data. This preserves full data granularity while still presenting values in a user-friendly format.
+
+## Expected Behavior
+
+- The custom precision field and manual rounding logic should be removed from the sensor implementation
+- The platform-standard suggested display precision mechanism should be used instead across all Growatt sensor types
+- Most measurement sensors (energy, power, current, voltage, frequency) should suggest 1 decimal place for inverter, TLX, and min device types
+- Storage-specific measurements such as battery voltage, AC voltages, and AC frequencies should suggest 2 decimal places, reflecting the higher precision those sensors provide
+- The "load percentage" sensor in the storage device type should also have a suggested display precision of 2 decimal places
+- One exception: the first voltage input sensor in the inverter device type should suggest 2 decimal places rather than 1
+
+## Why This Matters
+
+Using the standard display precision mechanism instead of manual rounding improves data integrity (full-precision values are stored and available for automations/history), brings the integration in line with Home Assistant quality guidelines, and ensures consistent behavior with the rest of the platform's sensor ecosystem.

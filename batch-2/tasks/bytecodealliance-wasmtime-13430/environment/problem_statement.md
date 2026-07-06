@@ -1,5 +1,14 @@
-I'm hitting a permissions hole in our WASI filesystem layer where truncation slips past read-only enforcement. When the host preopens a directory granting the guest only read access to files inside, a guest module can still truncate those files (resize them down to zero or smaller) and that actually modifies the content on the host disk, which totally breaks the sandbox boundary. Host apps expose read-only views of directories precisely because they trust the runtime to hold that line, so if truncate bypasses the write-permission check a sandboxed guest can corrupt files the host meant to keep immutable.
+## Description
 
-What I want: any truncate attempt against a file in a read-only preopened dir gets rejected by the runtime, the guest gets back a proper error instead of silently succeeding or hitting some unrecoverable trap, and the file's original bytes stay completely intact on the host afterward. This needs fixing across both the older module-based WASI interface and the newer component-based one, since they share the same underlying gap.
+There is a bug in the WASI filesystem implementation where file truncation is not correctly blocked when a guest WebAssembly module opens a file that has been preopened with read-only file access. When a host application grants a guest only read permissions on files in a preopened directory, the guest should not be able to truncate (resize to zero or smaller) those files. Currently, truncation can succeed even when write permissions were never granted.
 
-Also I need test guest programs added that demonstrate the right behavior, basically a guest that opens a file in a read-only preopened directory, tries to truncate it, catches the failure gracefully without panicking, and lets the host verify afterward the file wasn't changed. Oh and the new test programs have to be wired into the test artifact registration system so the existing test infrastructure can discover and run them, otherwise they won't get picked up.
+## Expected Behavior
+
+- When a directory is preopened with read-only file permissions, any attempt by a guest module to truncate files in that directory should be rejected by the runtime.
+- After a guest module attempts and fails to truncate a read-only file, the file's original contents must remain completely intact on the host.
+- The guest module should receive an appropriate error from the failed truncation attempt, rather than silently succeeding or triggering an unrecoverable trap.
+- This protection should apply to both the legacy module-based and newer component-based WASI interfaces.
+
+## Why This Matters
+
+Host applications that expose read-only views of directories to guest WebAssembly modules rely on the WASI runtime to enforce those access restrictions. If truncation bypasses permission checks, a sandboxed guest could corrupt files that the host intended to be immutable. Fixing this ensures that read-only file permissions are actually enforced, making the WASI sandbox boundary reliable for filesystem access control.

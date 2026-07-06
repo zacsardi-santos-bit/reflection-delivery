@@ -1,7 +1,17 @@
-I'm digging into the database layer's checkpoint path and the way it reports results back to callers is too thin. Right now a checkpoint hands back just a byte count and an error, which tells me it finished without throwing but not whether it actually did the full job, specifically whether the write-ahead log got fully flushed and truncated. That gap matters because the higher-level snapshotting logic needs to know a checkpoint truly completed before it proceeds, otherwise a partially-done checkpoint can quietly produce a corrupted or incomplete snapshot.
+## Description
 
-So I want checkpoint to return richer result metadata alongside the existing byte count and error. That metadata should expose a method callers can query to learn whether the checkpoint fully succeeded (meaning the WAL was truncated), and it should be printable/loggable so it can show up cleanly in error messages.
+The database checkpoint operation currently returns only a byte count and an error value to its callers. This is insufficient for higher-level code that needs to know *whether the checkpoint actually completed its work* — for example, whether the write-ahead log was fully flushed and truncated — as opposed to merely whether it finished without throwing an error.
 
-Also the contention case, when a checkpoint gets blocked by a concurrent reader, callers currently can't tell that failure is transient. I want that error explicitly tagged as retryable, with a method on the error type that lets callers ask whether it's safe to retry, so temporary contention is distinguishable from a permanent error that should be escalated.
+Additionally, when a checkpoint is blocked by a concurrent reader, callers have no way to know the failure is transient. This makes it impossible for the caller to distinguish between a temporary contention failure (which should be retried) and a permanent error (which should be escalated).
 
-Oh and the already-empty WAL case, repeated checkpoint calls when there's nothing left to truncate should just succeed and report success rather than failing or handing back ambiguous metadata. And since the return signature is changing, every existing call site in the codebase that calls checkpoint and unpacks the old byte-count-plus-error values needs updating to handle the new shape.
+## Expected Behavior
+
+- The checkpoint operation should return richer result metadata alongside the existing byte count and error values.
+- The result metadata should expose a method indicating whether the checkpoint fully succeeded (i.e., the WAL was truncated).
+- The result metadata should be loggable/printable in error messages.
+- When a checkpoint is blocked by a concurrent reader, the returned error should be explicitly tagged as retryable so callers can differentiate transient from permanent failures.
+- Repeated checkpoint calls against an already-empty write-ahead log should succeed and report success, not fail or return ambiguous results.
+
+## Why This Matters
+
+Higher-level systems that orchestrate checkpointing (e.g., snapshotting logic) need to know whether a checkpoint truly succeeded before proceeding. Without this information, a partially-completed checkpoint can silently lead to corrupted or incomplete snapshots.

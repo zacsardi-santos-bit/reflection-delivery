@@ -1,5 +1,23 @@
-I keep hitting spurious validation errors on my Bamboo pipeline YAML files. I maintain a bunch of these CI/CD definitions as code and rely on the bamboo-spec JSON schema for editor autocomplete and linting, but a ton of perfectly valid configs get rejected, or worse, some features get no validation at all. It erodes my trust in the tooling and forces me to work blind for whole sections. Can you update the bamboo-spec JSON schema so it actually accepts the full range of valid Bamboo YAML spec configurations?
+## Description
 
-I need it to cover everything from basic plan definitions through to deployment project configs. On the plan side that means run control settings (enabled/disabled plus rerun capability), plan dependency declarations, branch override rules, and job artifact subscriptions. For repositories it should handle all the supported source types (git, GitHub, Bitbucket Cloud, Bitbucket Server, Subversion) including fine-grained change detection with quiet period thresholds, oh and polling triggers with conditional rules and scoped repository references. It needs all the commonly used task types across both plan jobs and deployment environments, so source checkout, version control operations, test result parsing, variable injection, and custom plugin tasks. Also handle the various shorthand notations some fields allow, like specifying a task or trigger as a plain string vs a full object.
+The bamboo-spec JSON schema — which validates YAML-based CI/CD pipeline definitions for Atlassian Bamboo — is incomplete and fails to validate many real-world pipeline configurations. Users relying on schema-aware editors or CI linting tools see spurious validation errors on perfectly valid configuration files, or get no validation at all for certain features.
 
-On deployments I want full environment definitions with triggers, notifications, and docker configs, plus checkout operations inside deployment environments. Notifications should support the complete set of events and recipient types. And I need all the permission sections working, deployment project permissions, environment-level permissions, and plan-level permissions. There's also a server-name filter at the spec document level that should validate. Basically all the config patterns across Bamboo's version history so anyone on a supported version gets clean validation with no false errors.
+## Expected Behavior
+
+The schema should successfully validate a broad range of Bamboo YAML spec configurations, including:
+
+- Plan configurations with run control settings (enabled/disabled, rerun capability)
+- Repository integrations for all supported source types (git, GitHub, Bitbucket Cloud, Bitbucket Server, Subversion), including fine-grained change detection with quiet period thresholds
+- Polling triggers with conditional rules and scoped repository references
+- Plan dependency declarations and branch override rules
+- Job artifact subscription configurations
+- All commonly used task types across both plan jobs and deployment environments (including source checkout, version control operations, test parsing, variable injection, and custom plugin tasks)
+- Deployment project permissions, environment-level permissions, and plan-level permissions
+- Deployment projects with full environment definitions including triggers, notifications, and docker configurations
+- A server-name filter at the spec document level
+
+## Why This Matters
+
+Teams writing Bamboo pipeline files as code need reliable schema validation so their editors can catch mistakes early and offer accurate autocomplete. When valid configurations fail schema validation, it erodes trust in the tooling and forces users to work without schema assistance for entire sections of their configuration.
+
+The schema should cover all major configuration patterns introduced across the Bamboo product version history so that teams on any supported version can benefit from validation.

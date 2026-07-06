@@ -1,3 +1,15 @@
-I'm hitting a nasty bug in the REST API plugin where the JSON body I configure for a request gets modified before it actually goes out to the upstream server. Like if I set a body with a specific key ordering for an API that does body-based auth (think AWS Sig v4 or some custom HMAC scheme that signs the request body), the outgoing request has the keys in a different order and the signature validation blows up. Same deal with numbers, integers in my arrays or even a top-level number value are getting turned into floats, and some APIs flat out reject that. It's brutal to debug because the configured body looks totally correct but the actual payload on the wire is different.
+## Description
 
-The root cause is the plugin always re-parses and re-serializes the JSON body, which corrupts valid input by reordering keys and reformatting numbers. What I want is: when the configured body is already valid JSON, send it verbatim, byte for byte, no parse-and-reserialize step at all, so key order and value types (ints stay ints, decimals stay decimals) are preserved exactly. The plugin should detect that the body is already valid JSON and skip the normalization in that case. Now if the body isn't strictly valid JSON, say it's got a trailing comma or whatever, then it's fine to re-parse and normalize it, but the result still needs to be functionally correct JSON. Basically only touch the body when I actually gave you something that needs fixing, otherwise leave my payload alone.
+When a REST API action is configured with a JSON body, the plugin is re-serializing the body before sending it to the upstream server. This causes the transmitted body to differ from what was configured — keys may be reordered, and number representations may change (e.g., integers becoming floating-point numbers).
+
+This is particularly problematic for APIs that require a specific key ordering for authentication (e.g., those using body-derived HMAC signatures) or that are sensitive to exact number types. The user configures a body expecting it to be sent verbatim, but the actual request carries a different payload.
+
+## Expected Behavior
+
+- If the configured body is already valid JSON, it should be transmitted to the upstream server exactly as-is, without any parse-and-re-serialize step. Key order and value types must be preserved.
+- If the configured body contains numbers (whether in arrays or as the top-level value), they should be preserved with their original representation — integers stay integers, decimals stay decimals.
+- If the configured body is not strictly valid JSON (e.g., contains a trailing comma), it is acceptable to re-parse and normalize it; however, the result should still be functionally correct JSON.
+
+## Why This Matters
+
+APIs using request body signing (e.g., AWS Signature v4, custom HMAC schemes) will reject requests if the body is modified after signing. Even small changes such as key reordering or number reformatting can cause signature mismatches, leading to authentication failures that are very difficult to diagnose.

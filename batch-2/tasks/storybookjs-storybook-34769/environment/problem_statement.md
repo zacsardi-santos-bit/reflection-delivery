@@ -1,7 +1,27 @@
-I'm dealing with package managers that enforce a minimum release age policy, basically they block packages that were published too recently, and when Storybook trips over that wall the errors are cryptic and give users nothing actionable to do. I want to centralize a bunch of shared helpers in the existing package manager utilities file (over in `@code/core/src/common/utils/package-manager.ts` or wherever the common package manager utils live) so every integration doesn't reinvent this logic.
+# Add Utility Functions for Package Manager Minimum-Release-Age Handling
 
-Here's what I need. First, parsing threshold config values that come out of package manager output, where a valid positive integer (with optional surrounding whitespace) should parse and return as a number, but zero, boolean false, null, undefined, or empty should be treated as unconfigured/disabled. Then parsing and validating release timestamps from registry responses into Date objects, returning null on invalid values. I also want a helper to compute how long ago a package was released in minutes. And one that finds the most recent stable release satisfying a minimum age gate, skipping pre-release versions and returning the newest stable one that passes.
+## Description
 
-Also need an exclusion check that tells me whether the project's current exclusion list already covers the core Storybook packages, and it's gotta be smart about glob-style wildcard patterns so a wildcard matching storybook-related names counts as covering them all. Oh and generating user-facing rerun instructions plus a version-pinned command telling users how to retry with a compatible older release, where creation/initial-setup flows and upgrade flows produce different messages and different commands.
+Some modern JavaScript package managers support a "minimum release age" policy — a security feature that blocks packages released too recently from being installed. When this is configured on a project, it can silently prevent new Storybook releases from being installed, often resulting in confusing error messages with no clear guidance.
 
-Last thing, a utility to pull readable log text out of structured error objects by joining relevant fields like the short message, stderr, and the full message together. Centralizing all this keeps behavior consistent and maintainable across every supported package manager.
+We need a set of shared utility functions that the package manager integration layer can use to detect, reason about, and respond to minimum-release-age restrictions. These utilities need to handle:
+
+- Parsing package manager config values that represent positive integer thresholds
+- Parsing and validating package release timestamps from registry responses
+- Computing how old a package release is
+- Finding the latest stable (non-pre-release) release that passes a given age restriction
+- Determining whether a project's current exclusion list already covers Storybook packages
+- Generating clear, user-facing messages that instruct users how to retry with a compatible older release
+
+## Expected Behavior
+
+- Config values representing valid positive integers (with optional surrounding whitespace) must be parsed and returned as a number; values representing zero, boolean false, null, undefined, or empty must be treated as unconfigured
+- Package release timestamps must be parsed into Date objects, with invalid values returning null
+- The function that finds a compatible older release must skip pre-release versions and return the most recent stable version that satisfies the age gate
+- The exclusion-check function must support glob-style wildcard patterns, so that a wildcard pattern matching storybook-related names is recognized as covering all core Storybook packages
+- Rerun instructions and commands must match the install context: creation flows and upgrade flows produce different messages
+- Error log extraction must join relevant fields from structured error objects
+
+## Why This Matters
+
+Without these utilities, every package manager integration would need to duplicate this logic independently. Centralizing them ensures consistent behavior and makes the minimum-release-age handling maintainable across all supported package managers.

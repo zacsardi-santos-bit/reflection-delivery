@@ -1,5 +1,14 @@
-I'm working on the session caching system and want to split cache access into two modes so that app sessions can reuse work that was already cached during development. Right now caching only kicks in during edit sessions and it's completely off for app/run mode, which means presentation sessions always recompute from scratch even when there's a perfectly good cached view sitting there. The catch is app sessions are consumer facing so they should never touch the cache, no writes, no path changes, nothing that could stomp on the developer's saved computation state.
+## Description
 
-So what I need is a mode concept on the caching extension with two values, one for full read-write access that editing sessions keep using exactly like today, and one for read-only access that app sessions use. When a session is read-only it should load the existing cached view but it must not start the cache writer, and it must not update the cache when the notebook gets renamed, so no path renaming either.
+The session caching system currently has no concept of read-only access. When a session runs in app/presentation mode, caching is simply disabled — there's no way for these sessions to benefit from work that was already cached during development. At the same time, app sessions should never be allowed to overwrite the cache, since they are consumer-facing and should not interfere with the developer's saved computation state.
 
-On top of that I want a new runtime config option that controls whether app sessions actually get served from the cache. When it's disabled, app sessions skip the cache entirely (same as the current behavior), and when it's enabled they read from the cache in read-only mode. Edit sessions stay read-write regardless. The whole point is teams can share expensive cached results with end users viewing the app while keeping cache writes strictly limited to editing sessions.
+## Expected Behavior
+
+- Introduce a read-only caching mode that allows sessions to load pre-computed results from the cache without writing anything back.
+- Editing sessions should continue to use full read-write cache access as before.
+- App/run mode sessions should use read-only cache access: they can load from the cache but cannot modify it (no writing, no path renaming).
+- A new runtime configuration option should allow users to opt in to having app mode sessions served from cached data. When disabled, app sessions skip the cache entirely; when enabled, they read from it.
+
+## Why This Matters
+
+Developers working interactively can accumulate expensive computation results in the cache. Without this change, those results are never visible to end users viewing the app — the app always recomputes from scratch. With read-only caching for app sessions and a configuration toggle, teams can share cached results with users while keeping cache writes strictly controlled to editing sessions.

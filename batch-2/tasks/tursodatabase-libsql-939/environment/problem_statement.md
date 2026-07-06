@@ -1,5 +1,15 @@
-I'm hitting a gap with our libsql server that talks to clients over that stream-based HTTP protocol. When a SQLite error comes back, say I insert a row that trips a UNIQUE constraint, the error that reaches the client only has a human-readable description and nothing machine-readable telling me what category of failure it was. So right now clients are stuck parsing message strings to tell a uniqueness violation apart from a read-only error or a type mismatch, which is brittle and I don't want to keep doing it.
+## Description
 
-What I want is for the error response that goes out through the stream error path to carry a structured error code right alongside the description, both present, so clients can branch on the code programmatically. For the UNIQUE constraint case specifically the code should identify the constraint error category rather than just handing back a message string. And the client-side error representation needs to actually reflect that structured info so the category is observable without any string matching.
+When a database operation fails due to a SQLite error (such as a constraint violation), the error returned to clients over the server's HTTP streaming protocol only contains a human-readable message. There is no machine-readable error code included in the response.
 
-The motivation is that folks writing clients want to do things like retry after a lock error or show a friendly message on a constraint violation, and they can't do that reliably today. Adding the code makes type-safe error handling on the client possible. So thread the machine-readable code through the SQLite error to stream error conversion so both the description and the code land on the client.
+This makes it hard for client applications to programmatically detect and handle specific error categories. Right now, clients have to parse the error message string to figure out what kind of error occurred — for example, to distinguish a uniqueness constraint violation from a read-only error or a type mismatch.
+
+## Expected Behavior
+
+- Errors returned through the stream protocol should include a machine-readable error code alongside the human-readable message.
+- For a UNIQUE constraint violation, the error code should identify the constraint error category, not just provide a message string.
+- Client error representations should reflect this structured information, making the error category observable without string parsing.
+
+## Why This Matters
+
+Clients that want to handle specific error types — like retrying after a lock error or showing a user-friendly message for a constraint violation — currently cannot do so reliably. Adding a structured error code makes it possible to write robust, type-safe error handling on the client side.

@@ -1,11 +1,27 @@
-I'm migrating an Nx workspace from the legacy ESLint config format to the new flat config format with the built-in conversion tool, and I keep hitting a bunch of correctness bugs in the output that make the migrated config behave differently than before and also mess up build caching.
+## Description
 
-First off, every generated flat config gets an extra block jammed at the top that ignores the usual build output directories, but that wasn't in my original configs and shouldn't be auto-injected at all, so please drop that default ignore block entirely.
+The tool that converts an Nx workspace from the legacy ESLint configuration format to the new flat config format has several correctness issues that cause the resulting configuration to behave differently than expected or to break build caching after migration.
 
-Second, some of my project configs use the extends field to point at a neighboring base config file without spelling out the file extension (the old format let you omit it). After migration the converter doesn't recognize those as JSON configs so they end up routed through a compatibility shim instead of becoming a direct flat config import. I want extensionless base references treated as JSON configs and turned into proper direct imports.
+## Issues
 
-Third, a few configs use ignore patterns that pair a broad exclusion (ignore a whole folder) with a targeted negation to keep one specific file un-ignored. Right now those negated patterns get dropped, so the converted config ignores more than it should. Those negations paired with the broader pattern need to survive into the output.
+- **Unnecessary default ignores injected**: Every generated flat config gets a block that ignores common build output directories, even when the original config didn't ask for this. This default block should not be added automatically.
 
-Fourth, in ESM output the parsers referenced inside overrides come out as dynamic inline import expressions instead of static top-level imports. I need them as static top-level imports so the module's exported bindings resolve correctly (dynamic inline stuff breaks modules that expose their API through top-level exports).
+- **Extensionless config references not recognized**: When a project config uses the extends field to reference a neighboring config file without an explicit file extension (which the old format permitted), the converter doesn't recognize it as a JSON config. It falls back to a compatibility layer instead of generating a direct import, producing a less efficient config.
 
-Finally, after conversion the old ESLint config and ignore filenames are still floating around in the input lists of both the workspace configuration and the individual project configuration files. Those stale references keep the build cache tracking files that don't exist anymore, so all such input entries should get rewritten to point at the new flat config filenames, and when multiple old names map to the same new name the resulting duplicates should collapse into a single entry.
+- **Negated ignore patterns dropped**: If an ignore patterns list combines a broad pattern (e.g., ignore an entire folder) with a targeted negation (e.g., keep one specific file), the negation gets discarded. After conversion the config ignores more files than it should.
+
+- **Parser imports use dynamic expressions**: In ESM output, parser references are emitted as dynamic inline imports instead of static top-level imports, which can cause issues with modules that expose their API through top-level exports.
+
+- **Stale file references in workspace and project configuration**: After conversion the old ESLint config filenames remain scattered through input lists in the workspace configuration and individual project configuration files. These stale references prevent the build cache from correctly tracking the new flat config files.
+
+## Expected Behavior
+
+- Converted configs should not contain any auto-injected ignore blocks that weren't present in the original.
+- Extensionless base config references in the extends field should be treated as JSON configs and converted to direct flat config imports.
+- Negated ignore patterns paired with broader patterns should be preserved in the output.
+- ESM parser references should be converted to static top-level imports.
+- All input entries in workspace and project configuration files that reference old ESLint config or ignore filenames should be rewritten to point at the new flat config filenames, with duplicates removed.
+
+## Why This Matters
+
+These bugs mean that a workspace migrated with the converter ends up with a subtly different linting configuration than it had before, and build caching may not work correctly because it's tracking files that no longer exist.

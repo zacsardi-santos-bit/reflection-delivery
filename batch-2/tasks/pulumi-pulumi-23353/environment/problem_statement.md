@@ -1,3 +1,13 @@
-I'm hitting a dependency tracking bug in the Pulumi PCL interpreter, specifically around component boundaries. When I wire a component's input to the output of another resource instead of a plain literal, the resulting resource snapshot shows nothing about that upstream resource in the component's dependencies. It's just missing, both from the overall dependency list and from the per-input-property dependency tracking. Worse, the child resources inside the component that consume that input don't carry it either, so the whole chain breaks right at the component boundary. Net effect is the engine has no clue these resources need to be created after the resource whose output they depend on, which means operations can run in the wrong order and you get race conditions or outright failures when something depends (even indirectly through a component) on an output that isn't there yet.
+## Description
 
-What I want is for dependency info to actually flow through when the PCL interpreter registers components. So when a component input is set to a resource output, the component's registration should record that upstream resource as a dependency, both overall and per-property. And when a resource inside the component uses that input, and it ultimately traces back to an external resource's output, that internal child resource should record the external resource too, keeping the full dependency chain intact across the boundary. Oh and the sane baseline still has to hold: a resource whose inputs are all literal values should end up with no recorded dependencies at all. Can you fix the interpreter so both the component and its internal resources reflect all their real dependencies?
+When a component resource receives an output value from another resource as one of its inputs — rather than a plain literal — the engine fails to record any dependency between the component and the resource that provided that output. As a result, the engine has no way to know that the component must be created after the upstream resource, which can lead to operations being performed in the wrong order.
+
+## Expected Behavior
+
+- When a component's input is wired to another resource's output, the component's registration should reflect a dependency on that upstream resource — both in its overall dependency list and per-input-property dependency tracking.
+- When resources inside a component use the component's input, and that input ultimately traces back to an external resource's output, those internal resources should also record the external resource as a dependency. The dependency chain must not break at the component boundary.
+- A resource whose inputs are all literal values should have no recorded dependencies.
+
+## Why This Matters
+
+Without proper dependency propagation across component boundaries, the infrastructure engine cannot safely determine the correct order in which to create, update, or delete resources. This can cause race conditions or failures when a resource depends — even indirectly through a component — on the output of another resource that has not yet been created.

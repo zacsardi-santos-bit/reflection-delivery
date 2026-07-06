@@ -1,7 +1,26 @@
-I'm working with MLflow tracing and I keep hitting a wall where I can't express that a span in one trace is causally related to a span in a totally different trace. Distributed and multi-step systems do this all the time, one trace triggers or depends on another, and right now that relationship just gets lost because there's no concept of a "link" on a span. I want to add a standalone link entity that points at a target span by its trace ID and span ID and optionally carries metadata attributes describing the relationship, and it should live in the top-level entities package with its own serialization support (to_dict/from_dict style).
+## Description
 
-The main thing is these links need to survive the whole lifecycle. I should be able to attach one or more links to a live span while it's being recorded, and then reading them back returns what I stored. When a span gets converted to a dictionary the links field comes along, and deserializing reconstructs them. Same deal round-tripping through the OpenTelemetry proto wire format, no loss. And when spans get persisted to and pulled back from the tracking store, all the link fields stay faithful.
+MLflow spans currently have no mechanism for expressing relationships to spans that exist in other traces. In distributed or multi-step systems, it is common for a span in one trace to be causally related to — or triggered by — a span in a completely different trace. Without a way to record these cross-trace connections, the relationship is lost.
 
-Oh and validation matters here, the trace ID and span ID in each link have to match the expected formats, so if someone passes a malformed identifier adding the link should raise with a clear error message rather than silently accepting garbage.
+This feature request adds support for attaching cross-trace links to MLflow spans. Each link should identify a target span by its trace ID and span ID, and optionally carry metadata attributes that describe the nature of the relationship. These links need to be:
 
-Also there's the Unity Catalog v4 trace format wrinkle. Spans with a v4-style trace ID should just report an empty link list and not try to pull links out of the underlying OTel data at all. But for standard v3-format traces, if the underlying OpenTelemetry span already had links attached at creation time, those should get picked up automatically and surfaced through the same interface so it all looks consistent.
+- **Attachable to spans** while they are being recorded
+- **Preserved through serialization** — survives conversion to and from a dictionary representation
+- **Preserved through the OpenTelemetry wire format** — round-trips to and from the OTel proto representation without loss
+- **Persisted in the tracking database** — stored and retrieved faithfully via the tracking store
+- **Format-validated** — trace IDs and span IDs must match the expected formats; malformed identifiers should be rejected with a clear error message
+
+Links should be supported for standard MLflow traces. Spans associated with the Unity Catalog v4 trace format should have an empty link list and should not attempt to populate links from the underlying OpenTelemetry data.
+
+## Expected Behavior
+
+- A new link entity type can be constructed with a target trace ID, target span ID, and optional attributes
+- A live span can have links added to it; subsequent reads return the stored links
+- Serializing a span to a dictionary includes a links field; deserializing reconstructs the links
+- Converting a span to/from the OTel proto format preserves link data
+- Storing and retrieving a span via the tracking store preserves all link fields
+- Adding a link with a malformed trace ID or span ID raises an error
+
+## Why This Matters
+
+This enables richer observability for workflows where one trace depends on or was initiated by another, making it possible to trace causal chains and dependencies across trace boundaries.

@@ -1,7 +1,12 @@
-I'm poking at the experiment evaluation UI and hit a confusing gap. When an eval run can't produce a pass/fail result, the status just comes back empty, totally blank, and users have no idea what's going on. There are two distinct situations where this happens and right now neither one surfaces anything useful.
+## Description
 
-First case is when the run has no associated experiment item at all. Second is when an item exists but nobody's configured any assertions for it. Both currently render with an absent status, so from the outside it looks like the eval is maybe pending, maybe broken, maybe just not set up, you can't tell which.
+When viewing experiment evaluations, runs that cannot produce a pass/fail result currently show no status at all — the status is simply absent. This happens in two distinct situations: when no experiment item is associated with the run, and when an item exists but no assertions have been defined for it. In both cases, the UI offers no explanation, leaving users confused about why the evaluation shows nothing.
 
-What I want is for both of these to show a "skipped" status instead of nothing, each with its own human-readable explanation attached so people know exactly what to do. When there's no experiment item associated with the run, the skip message should explain that no item is defined so the user knows to create one. When there is an item but no assertions are configured, the message should say assertions still need to be defined so they know to go add some. The two messages need to be different since they point at different fixes.
+## Expected Behavior
 
-Basically anytime a run falls into either of those two unconfigured states, it lands on skipped with the matching reason, and that's it, users can immediately read why the run didn't produce a result and take the right corrective action instead of staring at a blank field.
+- When a run has no associated experiment item, it should display a clear skipped status with a message explaining that no experiment item is defined, so the user knows they need to create one.
+- When a run has an experiment item but no assertions are configured, it should display a skipped status with a message explaining that no assertions are defined, so the user knows to add assertions.
+
+## Why This Matters
+
+Without this distinction, users cannot tell whether an evaluation is genuinely pending, broken, or simply unconfigured. Surfacing a human-readable skip reason for each case dramatically reduces confusion and helps users take the right corrective action.

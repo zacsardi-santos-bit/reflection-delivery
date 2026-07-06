@@ -1,5 +1,16 @@
-I'm poking at the verona runtime build config and hit a naming thing that keeps tripping me up. We've got this option that makes our custom memory allocator just hand allocation requests straight to the system allocator instead of going through its own pool mechanism, basically a pass-through mode. Problem is the build system signals it with a generic flag named after the system allocator itself (malloc-ish), which is confusing since it doesn't say which library's behavior it controls or what pass-through even means here. The actual allocator library we depend on uses its own more specific name for this exact concept, so I want to rename the flag to match what snmalloc itself recognizes and rip out every reference to the old generic name.
+## Description
 
-So wherever we conditionally compile or run code based on whether pass-through is active, it needs to point at the new flag name instead. And the memory pool tests over in the pool test code should then correctly detect whether pool-based allocation is really on, and skip the pool-specific checks when we're in pass-through mode using that updated flag. This matters because it keeps us consistent with the upstream allocator's conventions and makes sure the condition gets detected right in all build configs, like when address sanitizer is enabled and the pool isn't actually in play.
+The runtime's build system has a configuration option that allows the custom memory allocator to be bypassed, passing allocation requests directly to the system allocator instead of using the built-in pool mechanism. The flag used to signal this mode is named after the generic system allocator, which is confusing — it doesn't make clear which library's behavior it's controlling or what "pass-through" means in context.
 
-Oh and one more unrelated thing while I'm in here: there's a test for concurrent ownership weak references that builds up a tree structure, and its depth parameter needs to drop by one, from 10 down to 9, to line up with updated behavior in the underlying stack data structure. Just that one value.
+This flag should be renamed to something that more clearly identifies it as the allocator library's own pass-through setting, bringing the name in line with how the underlying allocator library itself refers to this mode.
+
+## Expected Behavior
+
+- The build flag controlling allocator pass-through mode should use the name the allocator library itself recognizes, rather than the generic system allocator name.
+- Any code that conditionally compiles or executes based on whether allocator pass-through is active must reference the new flag name.
+- Memory pool tests must correctly skip pool-specific checks when operating in pass-through mode, using the updated flag.
+- A test for concurrent ownership weak references should use a reduced tree depth to reflect updated behavior in the underlying data structure.
+
+## Why This Matters
+
+Using the allocator library's own flag name avoids confusion, ensures the condition is correctly detected in all build configurations (such as when address sanitizer is enabled), and keeps the codebase consistent with the upstream allocator library's conventions.

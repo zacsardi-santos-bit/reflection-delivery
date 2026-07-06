@@ -1,5 +1,25 @@
-I'm hitting a crash whenever I filter the detached tables system view by UUID. Setup is simple: I've got an Atomic-engine database, I create a table in it, then detach it, and then I query the system listing of detached tables with a predicate on the UUID column (something like checking that the UUID isn't equal to a known all-zeros value). Instead of getting back a count, ClickHouse throws a severe internal logical error and in debug builds it actually aborts the process. The message is along the lines of the UUID argument being expected to have 1 row but having 0, so it's a column-length mismatch.
+## Description
 
-Digging in, it looks like when the query planner allocates a UUID column because the predicate filters on UUID, the internal function that builds the result block for detached tables fills in the table-name column for each detached entry but never inserts the corresponding UUID value into that UUID column. That's what triggers the size mismatch. For attached tables the UUID gets populated correctly, so there's clearly working logic to mirror, the detached branch just skips the same insertion step.
+Querying the system table that lists detached tables while filtering by UUID crashes with an internal logical error when there is at least one detached table in an Atomic database.
 
-Can you fix the detached-tables branch so it inserts the UUID value alongside the table name whenever a UUID column is present (same as the attached path does)? After the fix I want that query to complete normally and return the correct count of detached tables matching the predicate, no errors, no abort.
+## Steps to Reproduce
+
+1. Create a database using the Atomic engine.
+2. Create a table and then detach it.
+3. Query the system listing of detached tables with a filter on the UUID column (e.g., checking that the UUID does not equal a known zero value).
+
+## Expected Behavior
+
+The query should return the correct count of detached tables matching the predicate, without any errors.
+
+## Actual Behavior
+
+The query throws a severe internal error with a message along the lines of: the UUID argument was expected to have 1 row but has 0. This crash is severe enough to abort the process in debug builds.
+
+## Root Cause
+
+The internal function that builds the result block for detached tables populates the table-name column for each detached entry but does not insert the corresponding UUID value into the UUID column, even when the query planner has allocated a UUID column because the predicate filters on UUID. This causes a column-length mismatch that triggers the logical error.
+
+## Why This Matters
+
+Users who rely on UUID-based filtering to search or inspect their detached tables are completely blocked — any such query crashes rather than returning results. The fix should mirror the UUID insertion logic already present for attached tables.

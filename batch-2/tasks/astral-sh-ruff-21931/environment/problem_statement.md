@@ -1,5 +1,13 @@
-I'm hitting false positive lint warnings on our generator functions and it's getting noisy in CI. The rule I mean is the one that flags a generator that mixes a yield expression with a value-bearing return statement (return with an actual value). In most cases that combo really is a bug, but for pytest-style hook wrappers it's the whole point of the protocol: you yield to the wrapped hook and then return its result. When I mark a function as a hook wrapper via the wrapper-enabling option on the hook registration decorator (think `@hookimpl(hookwrapper=True)` or the newer `wrapper=True` form), yielding and then returning a value is intended, so the rule shouldn't fire there.
+## Description
 
-The tricky part is I still want the warning to stay for everything else. So if someone uses that same hook registration decorator but without the wrapper-enabling option, returning a value after a yield is not part of the protocol and it's a genuine error, keep flagging it. Same deal for generator functions registered as test fixtures that also have a value-bearing return, those are still real issues and should stay flagged. Basically the rule needs to actually understand the hook wrapper protocol and only suppress when the function is a properly-configured wrapper.
+The lint rule that detects the combination of a yield expression and a value-bearing return statement in generator functions is producing false positive warnings for a legitimate and common pattern in testing framework hook wrappers. When a function is explicitly registered as a hook wrapper using the appropriate wrapper-enabling option on the hook registration decorator, it is both expected and required to yield control to the wrapped hook and then return the hook's result. The lint rule does not recognize this pattern and incorrectly flags these functions as bugs.
 
-Can you update the check so it detects the wrapper-enabling decorator option and skips the diagnostic in that case, while leaving the behavior unchanged for plain hook impls, fixtures, and any other generator that combines yield with a returned value? The motivation here is devs writing plugins and hook wrappers keep seeing spurious warnings on architecturally correct code, which pushes them to sprinkle suppression comments or restructure valid code for no reason.
+## Expected Behavior
+
+- Generator functions registered as hook wrappers via the wrapper-enabling decorator option should not trigger the lint rule — returning a value after yielding is the intended protocol for these wrappers.
+- Generator functions that use the same hook registration decorator *without* the wrapper-enabling option should still trigger the lint rule, since returning a value in that context is not part of the protocol.
+- Generator functions registered as test fixtures that use both a yield expression and a value-bearing return should still trigger the lint rule.
+
+## Why This Matters
+
+Developers writing plugins or hook wrappers are seeing spurious lint warnings for code that is architecturally correct. This creates noise in CI pipelines and may lead developers to add suppression comments or restructure perfectly valid code unnecessarily. The rule should understand the hook wrapper protocol well enough to distinguish intentional patterns from actual bugs.

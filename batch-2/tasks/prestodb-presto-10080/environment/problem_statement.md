@@ -1,3 +1,18 @@
-I'm adding access control to the Raptor connector in Presto because right now there's basically no security layer, anyone can read or write any data without restriction and that's not okay for real deployments. I want to be able to pick one of three security modes through a connector property that selects the behavior. The default should be allow-all, which is the current behavior just made explicit so existing setups don't break, every user can do anything. Second mode is read-only where all users are restricted to reads and any write attempt like creating a table gets rejected with a proper access-denied error. Third is a file-based mode where per-user permissions load from an external JSON rules file, so users listed with read privileges can query tables and users who aren't granted access get rejected with a clear access-denied message. That rules file format needs to support defining which users have specific table privileges (read access being the main one) plus which users own particular schemas.
+## Description
 
-For the wiring, the connector's internal structure has to accept and expose an access control implementation, and I need a new config class that binds the security mode selector property so the mode gets read from configuration. Oh and the query runner helper we use in tests needs to accept extra connector properties too, so I can inject these security settings during testing. The point of all this is letting operators enforce data protection boundaries, like making a catalog read-only to prevent accidental writes or locking sensitive tables down to specific users via the rules file. When no mode is specified it must fall back to allow-all.
+The Raptor connector currently has no access control mechanism — every user can read and write all data without restriction. We need to add configurable security support so that administrators can enforce appropriate access policies for their deployment.
+
+## Expected Behavior
+
+- The connector should support a configuration property that selects one of three security modes:
+  - **Allow all** (default): the current behavior, now made explicit — all users can do anything.
+  - **Read-only**: all users are restricted to read operations only; any attempt to write (e.g., create a table) is rejected with an access-denied error.
+  - **File-based**: per-user permissions are loaded from an external JSON rules file. Users listed with read privileges can query tables; users not granted access are rejected with an appropriate access-denied error.
+
+- The file-based rules format should support defining which users have specific table privileges (such as read access) and which users own schemas.
+
+- When no security mode is specified, the connector must default to allowing all access so that existing deployments are not broken.
+
+## Why This Matters
+
+Without access control, any user with connector access can read or modify all data stored in the Raptor connector. Adding security modes allows operators to enforce data protection boundaries — for example, making a catalog read-only to prevent accidental writes, or restricting sensitive tables to specific users via a rules file.

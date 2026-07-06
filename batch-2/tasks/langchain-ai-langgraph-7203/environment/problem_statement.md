@@ -1,5 +1,18 @@
-I'm working on making LangGraph play nicer with external observability and tracing tools, and I hit a gap. When a graph runs and emits execution events, the metadata on those events carries handy graph-specific stuff like which node is executing, the step number, what triggered it, and so on, but there's nothing in there marking that these events actually came from a LangGraph execution. That means tracing and monitoring platforms consuming these events can't automatically detect and categorize them as LangGraph runs, they have to rely on indirect signals or manual config, which is annoying.
+# Add integration identifier to LangGraph execution metadata
 
-What I want is to automatically inject a standard integration identifier into all execution event metadata so consumers can recognize LangGraph traces out of the box. This needs to show up at every level of execution, the root graph level, individual node executions, subgraph executions, and also the error/exception event paths, so nothing slips through. And it's gotta cover both the synchronous and asynchronous execution paths since folks use both.
+## Description
 
-One important detail: only set the identifier if it isn't already present in the metadata, so any user-supplied value doesn't get clobbered. It's a small metadata addition but it makes the whole ecosystem more interoperable with standard tracing infra without any extra setup on the user's end.
+When LangGraph executes a graph, it emits metadata alongside each execution event — tracking which node is running, what step number it is, what triggered it, and so on. However, this metadata currently contains no information identifying that the execution originates from a LangGraph integration.
+
+External observability, tracing, and monitoring tools that consume these execution events cannot automatically identify and categorize them as LangGraph runs. There's no standard marker in the metadata that distinguishes LangGraph traces from other frameworks. This forces consumers of these events to rely on indirect signals or manual configuration.
+
+## Expected Behavior
+
+- All execution events emitted during graph execution should include a standard integration identifier in their metadata
+- The identifier should appear at every level: the root graph level, individual node executions, subgraph executions, and error/exception event paths
+- Both synchronous and asynchronous execution paths should include the identifier
+- The identifier should only be set if not already present (i.e., it should not override a user-supplied value)
+
+## Why This Matters
+
+This change allows observability platforms and tracing tools that receive LangGraph execution events to automatically detect and categorize them without any additional user configuration. It's a small metadata addition that enables better tooling integration and makes the overall LangGraph ecosystem more interoperable with standard tracing and monitoring infrastructure.

@@ -1,7 +1,14 @@
-I'm poking at the interface bulk rename feature in NetBox and I want it to handle renaming more than one field at a time. Right now the interface bulk rename only targets a single implicit field, so there's no way to pick whether I'm renaming the interface name, the interface label, or both together, and I'd really like both to be selectable in one operation.
+## Description
 
-So the bulk rename view for interfaces needs to declare that it supports both fields (name and label), so the form actually renders the field-selection controls for me to choose from. Also when someone submits the form without picking any fields at all, that should get rejected with a validation error telling them to select at least one field, don't just silently do nothing.
+The bulk rename feature for network interfaces should support renaming multiple fields — both the interface name and the interface label — in a single operation. Currently, the interface bulk rename view only targets a single implicit field. There is no way for users to choose whether they want to rename the name, the label, or both fields simultaneously.
 
-When valid fields are selected everything downstream should work. The preview step, the part that shows how many matching interface objects will be affected, needs to list them all correctly even when the selection spans multiple pages, and it should honor the selected field names included in the submission. And the apply step that actually performs the find/replace rename should run using the provided pattern plus the field selection and then redirect me on completion.
+## Expected Behavior
 
-Point is, network admins rename interfaces in bulk all the time, and being able to hit both name and label in one pass cuts the manual effort. Requiring explicit field selection also keeps the intent clear so nothing gets modified by accident.
+- When performing a bulk rename on interfaces, users should be able to select which field(s) they want to apply the find/replace operation to (name, label, or both).
+- If a user initiates a bulk rename without selecting any fields, the operation should be rejected with a validation error prompting them to select at least one field.
+- The preview step should correctly show all matching interface objects when a valid field selection is provided, even when the selection spans multiple pages.
+- The apply step should successfully rename interfaces using the provided find/replace pattern when the field selection is provided, and redirect the user on completion.
+
+## Why This Matters
+
+Network administrators frequently need to rename interfaces in bulk. Supporting renaming of both the name and label fields in a single operation reduces manual effort and makes bulk operations more flexible. Requiring explicit field selection also makes the operation's intent clear and prevents unintended modifications.

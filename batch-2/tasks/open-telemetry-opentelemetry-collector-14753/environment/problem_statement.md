@@ -1,5 +1,15 @@
-I keep hitting a spec conformance problem with the Collector's own self-monitoring telemetry. All the internal metrics we emit use plural unit strings like "records", "spans", "datapoints", "samples", "batches", "times", "items", "units", "combinations", and "requests", but the OpenTelemetry spec says metric unit identifiers have to be singular. So our own telemetry is technically non-conformant with the very spec we're supposed to implement, which trips up any downstream tooling or observability platform that validates metric metadata against OTel conventions. I want to fix that so our self-monitoring is first-class OTel-compatible.
+## Description
 
-What I need is every internal telemetry metric unit string flipped to its singular form across all the major components, receivers, exporters, processors, and scrapers. Concretely that means "records" becomes "record", "spans" becomes "span", "datapoints" becomes "datapoint", "samples" to "sample", "batches" to "batch", "times" to "time", "items" to "item", "units" to "unit", "combinations" to "combination", "requests" to "request", and so on for any similar cases. So a metric counting spans should carry the singular unit, a metric counting log records the singular unit, etc.
+The OpenTelemetry Collector currently emits its own internal telemetry metrics using unit strings expressed in plural form — for example, units like "records", "spans", "datapoints", "samples", "batches", "times", "items", "units", "combinations", and "requests". However, the OpenTelemetry specification requires that metric unit identifiers be in singular form.
 
-Two places need to stay in sync: the source metadata definitions for each component (the yaml-ish metadata where these units are declared) and the generated code that registers those metrics with the instrumentation layer, so update both so they match. Heads up this is a breaking change to the emitted metric metadata, anyone relying on the exact old unit strings will need to update, but that's the point, we want spec compliance.
+This mismatch causes the Collector's own self-monitoring metrics to be non-conformant with the specification, which can cause issues when integrated with tooling that validates metric metadata against OTel conventions.
+
+## Expected Behavior
+
+- All metric unit strings in the Collector should use singular form (e.g., "record" instead of "records", "span" instead of "spans", "datapoint" instead of "datapoints")
+- The change affects metrics across all major Collector components: receivers, exporters, processors, and scrapers
+- This is a breaking change to the emitted metric metadata — anyone relying on the exact unit strings will need to update
+
+## Why This Matters
+
+Conforming to the OpenTelemetry specification for unit naming is important for interoperability. Downstream observability platforms and tooling that enforce or validate OTel conventions will correctly recognize the Collector's metrics only when those metrics are specification-compliant. Fixing this ensures the Collector's self-monitoring is first-class OTel-compatible telemetry.

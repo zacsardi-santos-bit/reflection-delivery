@@ -1,7 +1,19 @@
-I'm working in the Storybook codebase and need a server-side utility that parses a raw MDX documentation string and pulls out structured metadata. These docs use a special metadata component that can declare a story title, a reference to the component being documented, a display name, a summary, a template flag for whether the file is a reusable template, and a set of tags. I want to feed in the raw MDX and get back a structured object with the list of imports, the title, the referenced component resolved to its import path, the display name, the summary, the template boolean, and the tags.
+## Description
 
-It also needs to validate those attributes and throw descriptive errors when things are off. The string-only fields (title, display name, summary) should only take plain string values, so if someone uses a dynamic expression like a template literal instead, the error should name the field and the kind of value it got. The component reference has to be a JSX expression pointing to an identifier that was actually imported, so a plain string or an unknown identifier should each throw something clear and descriptive. The template flag should accept an implicit boolean (bare attribute), explicit boolean expressions, and reject string literals or other non-boolean expressions with a clear message. Tags must be an array of plain strings, so a non-array value or non-string elements should each produce their own descriptive error. And if the metadata component shows up more than once, that's an error saying it can only be declared once.
+Storybook's server-side processing needs a reliable way to extract structured metadata from documentation files written in the MDX format. These files contain a special metadata component that declares things like the story title, which component is being documented, a display name, a summary description, whether the file is a reusable template, and a set of tags. Currently, there is no dedicated utility to parse this metadata out of an MDX document, and there is no validation of the metadata attributes.
 
-On the flip side, don't throw when there's just no metadata component at all, or when the MDX is so malformed the metadata can't be parsed. In those cases return sensible defaults (empty/default metadata fields) while still returning whatever imports were found. Also it shouldn't choke on docs that contain exported declarations.
+## Expected Behavior
 
-Oh and I need a helper that, given a parsed AST of a JS/MDX module, extracts a mapping of all imported identifiers and namespace aliases to their source module paths. That's what the component resolution leans on. The point of all this is so Storybook can reliably index and process doc pages, with early clear errors so authors can fix their files instead of hitting cryptic build or runtime failures later.
+- A utility that parses an MDX document and returns structured metadata including: the list of imports, the story title, the referenced component (resolved to its import path), a display name, a summary, a template flag, and tags.
+- String-only attributes (title, display name, summary) should only accept plain string values. Using a dynamic expression (like a template literal) for these fields should produce a clear error indicating the field name and the type of value that was received.
+- The component reference attribute must be a JSX expression pointing to a known imported identifier; providing a plain string or an unknown identifier should produce a clear, descriptive error.
+- The template flag should support an implicit boolean (bare attribute), explicit boolean expressions, and should reject string literals or non-boolean expressions with clear error messages.
+- The tags attribute must be an array of plain string values; a non-array value or non-string array elements should each produce a descriptive error.
+- If the metadata component appears more than once in the document, an error should be raised indicating it can only be declared once.
+- If the document contains no metadata component, the utility should return default/empty values rather than an error.
+- Malformed MDX that prevents parsing the metadata component should resolve gracefully, returning whatever imports were found and default values for metadata fields.
+- The utility should not fail on documents that contain exported declarations.
+
+## Why This Matters
+
+Having a validated, server-side metadata extraction utility makes it possible for Storybook to reliably index and process documentation pages. Clear, early error messages make it easier for authors to diagnose problems in their documentation files rather than encountering cryptic failures later in the build or at runtime.

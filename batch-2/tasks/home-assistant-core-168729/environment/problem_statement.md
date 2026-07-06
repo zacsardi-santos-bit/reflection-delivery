@@ -1,5 +1,22 @@
-I'm hacking on the WaterFurnace geothermal heat pump integration for Home Assistant and right now it only surfaces sensor data (temperatures, power usage, fan speed, that kind of read-only stuff), but there's no climate entity at all so I literally can't touch the thermostat from HA. I want to add a proper climate entity that reports the current operating mode (heat, cool, automatic heat-cool, or off) and also shows the current HVAC action, like whether it's actively heating, cooling, running the fan, idle, or locked out. It should let me set the mode to off, heat, cool, or auto, and let me set a single temperature target in heat or cool mode plus a low/high range when it's in automatic mode, oh and set a target humidity too. The underlying library already has methods to set the mode, heating setpoint, cooling setpoint, and humidity, so those just need wiring to the standard climate service calls.
+# Add Climate Entity to WaterFurnace Integration
 
-Important bit: when the unit's unreachable or returns a failure during a control op, I want a clear error raised to me instead of it silently swallowing the failure, and the message should say specifically whether it broke during a mode change, a temperature adjustment, or a humidity change.
+## Description
 
-Also the device reports two separate things I need to translate correctly, an "active mode" (heat/cool/auto/off) and a "mode of operation" (what it's actually doing right now, heating, fan, cooling, lockout), both need mapping from the heat pump's internal numeric values to HA's standard modes and actions. And while you're in there, some existing sensors for the heating setpoint, cooling setpoint, and dehumidification setpoint currently show as unknown, they should report real values when the device provides that data. Point is I don't want to leave HA to control this thing.
+The WaterFurnace geothermal integration currently only exposes sensor data — power consumption, temperatures, fan speed, and similar read-only values. However, there is no way to actually control the heat pump through Home Assistant's standard climate interface. Users who want to set heating or cooling mode, adjust temperature targets, or change humidity settings have to use a separate app, even though the underlying library already supports these control operations.
+
+## Expected Behavior
+
+The integration should provide a climate entity that:
+
+- Reports the current operating mode (heating, cooling, automatic heat-cool, or off)
+- Shows the current HVAC action (e.g., actively heating, cooling, fan running, idle, or locked out)
+- Allows setting the operating mode to off, heat, cool, or automatic (heat-cool)
+- Supports setting a single temperature target in heat or cool mode, and a low/high temperature range in automatic mode
+- Supports setting a target humidity level
+- Raises a clear error to the user when the geothermal unit cannot be reached or returns a failure during a control operation, rather than silently ignoring it
+
+In addition, some sensor readings (for heating setpoint, cooling setpoint, and dehumidification setpoint) that previously showed as unknown should now correctly report their values when the device provides that data.
+
+## Why This Matters
+
+Without a climate entity, users must leave Home Assistant to control their geothermal system, breaking the unified home automation experience. Exposing the thermostat through the standard climate interface lets users integrate it with automations, dashboards, and voice assistants just like any other thermostat.

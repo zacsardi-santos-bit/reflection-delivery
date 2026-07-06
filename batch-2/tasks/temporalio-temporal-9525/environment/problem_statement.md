@@ -1,7 +1,21 @@
-I'm working on CHASM side-effect tasks on standby clusters in our multi-DC (active/standby) setup and hitting a real gap. Right now when a side-effect task that got replicated from active has been pending on standby past the configured discard delay, the standby executor just drops it. That's bad, because if a failover happens before the active cluster processes the task, the work is silently lost.
+## Description
 
-What I want is for task executors to optionally declare a custom discard handler, some action to take when the discard deadline hits on standby instead of always silently dropping. Like an activity dispatch executor could spill the task into the standby cluster's own task queue so workers can pick it up after failover. If no discard handler is registered for a task type, keep the old behavior (return the task-discarded error).
+In a multi-datacenter (active/standby) deployment, CHASM side-effect tasks that are generated on the active cluster get replicated to standby clusters. When a task has been pending on standby past a configured discard delay, the standby executor currently has no meaningful way to handle it — it simply drops the task. This means that if a failover occurs before the active cluster finishes processing the task, the work is silently lost.
 
-This touches a few spots. The task executor interface needs an optional discard method, so an executor can implement discard behavior. The task registry needs a way to report whether a discard handler is registered for a given task type. The CHASM node tree needs a new operation to invoke the discard handler for a task, and the higher-level tree interface needs that operation too. Then the standby task executors for the outbound, transfer, and timer queues all need updating so that when the discard delay expires they check for a discard handler first, and if one exists call it, otherwise return the standard discarded error. Oh and the standby outbound executor also needs access to a remote cluster connection client so it can check whether the execution still exists on the source cluster before deciding to discard vs spill.
+## Expected Behavior
 
-Also, while I'm in there, the existing side-effect task execution method should stop making callers pass in the task registry explicitly, the node should just look it up internally instead. The point of all this is to stop silent work loss during failovers by letting executors pre-position work on standby before the active cluster loses leadership.
+Task executors should be able to declare a custom "discard handler" — an optional action to take when a task reaches the standby discard deadline. When such a handler is registered, the standby task executor should invoke it rather than silently dropping the task.
+
+For example, an activity dispatch task could spill itself into the standby cluster's task queue so that workers can pick it up once the standby cluster becomes active after a failover. Without a handler, the current behavior (task discarded with an error) should remain.
+
+Specifically:
+
+- There should be a way for a side-effect task executor to declare custom discard behavior by implementing an optional discard interface.
+- The task registry should be able to report whether a given task type has a discard handler registered.
+- The CHASM node tree and the higher-level tree interface both need a new operation to invoke the discard handler for a task.
+- Standby task executors (outbound, transfer, and timer queues) must check for a discard handler before discarding: if one exists, call it; if not, return the standard discarded error.
+- The existing side-effect task execution method should stop requiring the caller to pass in the registry explicitly — the registry should be obtained internally.
+
+## Why This Matters
+
+This change prevents silent work loss during failovers. By giving task executors the ability to pre-position work on the standby cluster before a failover happens, the system becomes resilient to situations where the active cluster did not process a task before losing leadership.

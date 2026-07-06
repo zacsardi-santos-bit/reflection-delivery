@@ -1,5 +1,30 @@
-I'm working on two autocomplete improvements in the editor and could use your help.
+## Description
 
-First thing, I want variable name completions inside those template-style curly brace interpolation blocks. Right now when I'm inside a single-brace expression block the editor gives me nothing, so I'm typing out notebook variable names from memory. I'd like autocomplete to fire in there and show me the variable names along with their type info. Key detail though, it has to stay quiet outside any open block, and also right after a closing brace, and inside double-brace escape sequences since those aren't interpolation at all, they're escapes. Also completions should suppress on non-word characters. The whole thing needs to be toggleable so it only activates for cell types that actually support interpolation, basically conditionally on or off depending on context. Please build it as a proper reusable module (a standard editor language extension) so it composes cleanly with other completions and can get imported by both the markdown and the SQL language adapters.
+There are two related improvements needed in the editor's autocomplete system:
 
-Second, there's a caching bug in the SQL completion store. When I load new datasets into my session the SQL autocomplete keeps showing the old tables. Turns out the cache is keyed only on the connection object, not the current set of local tables, so updates to local datasets never invalidate it. I need the store to fold current local dataset/table state into its cache lookup so fresh completions come back on the next request whenever the dataset list changes, no session restart needed. Oh and while we're in there, changes to the connection schema (including a changed default schema) should get reflected correctly in later completion requests too. Without this I get no in-editor help for variable refs in template strings, and SQL queries against newly loaded tables give me incomplete or just wrong suggestions.
+### 1. Variable completions inside template interpolation blocks
+
+When editing cells that support template-style variable interpolation using curly brace syntax, there is currently no autocomplete support for notebook variable names inside those blocks. Developers have to type variable names manually and rely on memory.
+
+We need a new completion provider that:
+- Suggests notebook variable names (with type metadata) when the cursor is inside a single-brace interpolation block
+- Correctly suppresses completions when the cursor is outside any open block, after a closing brace, or inside a double-brace escape sequence
+- Can be toggled on or off depending on context (e.g., only active for cell types that support variable interpolation)
+- Integrates as a standard editor language extension so it composes with other completions in both markdown and SQL cell types
+
+### 2. SQL autocomplete doesn't reflect updated local tables
+
+The SQL completion store caches schema information per-connection, but the cache key does not account for local dataset tables. As a result, after loading new datasets into the session, the SQL autocomplete still shows the old set of local tables — it only updates when a new connection object is seen, not when the datasets themselves change.
+
+The completion store needs to incorporate current local table state into its cache key so that any update to the available datasets immediately produces fresh completion suggestions on the next request.
+
+## Expected Behavior
+
+- Variable name completions with type details are offered inside single-brace interpolation blocks
+- Completions are suppressed for double-brace sequences, positions outside open blocks, and non-word characters
+- SQL autocomplete immediately reflects changes to local dataset tables without requiring session restart
+- Updated connection schemas (including changed default schema) are reflected correctly in subsequent completion requests
+
+## Why This Matters
+
+Without these fixes, developers get no in-editor help for variable references in template strings, and SQL queries against newly loaded tables produce incomplete or incorrect completion suggestions.

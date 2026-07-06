@@ -1,5 +1,23 @@
-I'm building out an XSOAR integration for the European Union Vulnerability Database (the EUVD, which is the thing ENISA over in EU cybersecurity land maintains) because right now our security team literally has no way to query it without bouncing out of the platform, which kills our triage speed and makes any playbook automation impossible. I want analysts to cross-reference this data straight from incident response workflows.
+## Description
 
-So here's what I need it to do. It should look up a specific advisory by its advisory ID. It should look up a vulnerability two ways, either by the standard CVE-style vulnerability identifier or by the ENISA-assigned database identifier (those are separate lookups). I also want commands to pull the latest critical vulnerabilities, the latest exploited ones, and just the most recently published vulnerabilities in general. And then the big one, a full search/query against the database with filters, so base score range, EPSS score range, date ranges, vendor name, product name, assigner, exploitation status, keyword text search, and pagination controls all need to be supported.
+There is currently no integration in the XSOAR platform for the European Union Vulnerability Database (EUVD), a vulnerability database maintained by the EU cybersecurity agency (ENISA). Security teams have no way to query this database directly from their incident response workflows or automated playbooks.
 
-Oh and for any command that needs an identifier (advisory ID, ENISA ID, or vulnerability ID), if that identifier's missing or empty I want it to raise a clear, informative error instead of silently doing something weird. Also there should be a connectivity test that confirms the API is actually reachable and returns a simple success message when it is.
+## Expected Behavior
+
+A new integration should be added that allows analysts to:
+
+- Look up a specific advisory by its ID
+- Look up a vulnerability by its ENISA-assigned database identifier
+- Look up a vulnerability by its standard CVE/vulnerability ID
+- Retrieve the latest critical vulnerabilities from the database
+- Retrieve the latest exploited vulnerabilities from the database
+- Retrieve the latest vulnerabilities from the database
+- Search and filter vulnerabilities using criteria such as base score range, EPSS score range, date range, vendor, product, assigner, exploitation status, keyword text, and pagination controls
+
+Commands that require an identifier (advisory ID, ENISA ID, or vulnerability ID) should return an informative error when that identifier is not provided.
+
+The integration's connectivity test should verify that the API is reachable and return a success indicator when it is.
+
+## Why This Matters
+
+Many organizations need to cross-reference vulnerability data from the EU agency's database as part of their triage and response process. Without a native integration, analysts must leave the platform to consult the database manually, slowing down response times and making automation impossible.

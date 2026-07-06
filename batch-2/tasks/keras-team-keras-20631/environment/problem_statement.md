@@ -1,5 +1,22 @@
-I'm cleaning up the model export API in Keras and it's bugging me on a couple fronts. The main export function over in the export library has a name that says nothing about what format it actually writes, so I want it renamed to something that makes the target format obvious just from reading it. Also there's no way to call export straight off a model, right now you have to reach into a separate utility module which is annoying, so models should get an `export` method that takes a filepath plus an optional format arg.
+## Description
 
-Oh and the export function needs an optional input signature parameter so folks can spell out shape and dtype info explicitly. It should handle a few flavors of input spec, like the shape-and-type descriptor objects (think InputSpec style), abstract tensor references (KerasTensor), and actual concrete tensor values. If someone hands it a type that isn't one of those as part of the signature, raise a clear TypeError that names the offending value so they know exactly what broke.
+The current model export API has a few shortcomings that make it harder to use than it should be:
 
-Couple more error cases: when export gets called with a format name it doesn't recognize, throw a helpful error that identifies the bad value. And when it's running on a backend that just doesn't support export at all, raise something descriptive explaining the backend restriction rather than failing weirdly. Btw for certain backends specifically, export should also accept backend-specific keyword arguments (a static execution flag and conversion kwargs) so users can control how the model gets lowered during export. The whole point here is less confusion about what format you're producing, export reachable right from the model without extra imports, and error messages that actually save debugging time.
+1. The main export function has a vague name that doesn't communicate the output format being produced. It should be renamed to make the target format explicit.
+2. There is no way to specify the input signature (shape and dtype information) when exporting a model, which is needed for certain deployment scenarios.
+3. There's no convenient method on the model object itself to trigger export — users must go through a separate library import.
+4. When export is attempted on unsupported backends or with unsupported format names, the errors produced are not clear or actionable.
+
+## Expected Behavior
+
+- The export function in the export library should have a name that clearly reflects the output format it produces.
+- The export function should accept an optional input signature argument, supporting various input specification types including shape-and-type descriptor objects and actual tensor values.
+- Passing an unsupported type as an input signature element should raise a clear type error indicating which value is not supported.
+- Model objects should have an export method accepting a filepath and optional format parameter.
+- Calling export with an unrecognized format name should raise a clear error identifying the bad format value.
+- Calling export on a backend that does not support the export feature should raise a descriptive error explaining the limitation.
+- For users of certain backends, the export function should accept backend-specific options (a static execution flag and conversion keyword arguments) to control how the model is lowered.
+
+## Why This Matters
+
+A clearer export API reduces confusion about what format is being produced and makes export accessible directly from model objects, without requiring extra imports. Good error messages for unsupported configurations save developers debugging time.

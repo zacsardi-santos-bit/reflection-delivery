@@ -1,7 +1,19 @@
-I'm building an agent that needs to operate in distinct phases, like first planning and getting user approval, then flipping into a more autonomous execution phase, and right now our framework has no built-in way to manage this mode-switching so everyone rebuilds it from scratch. I want to add agent modes as a first-class concept.
+## Description
 
-The core piece is a context provider developers attach to an agent to configure named operational modes, each with a behavioral description. It should inject instructions that describe every available mode and clearly indicate which one is currently active, and it should also expose tools the agent can call at runtime to read the current mode and switch to a different one. Mode state has to be persisted in the session so it survives across interactions within that session.
+The agent framework currently has no built-in concept of operational phases or modes. When building agents that need to behave differently depending on the stage of work — for example, collecting requirements and seeking approval versus autonomously executing tasks — developers have no structured way to configure, store, or transition between these phases. Everything must be built from scratch each time.
 
-I also want standalone helper functions for reading and writing the current mode straight from session state, useful for external code that needs to inspect or change the mode without going through the agent. These helpers should normalize mode values (strip whitespace and fold case) and validate that the requested mode is one of the configured ones. If someone sets an unrecognized mode, raise a clear error, and if the existing session state under the mode key isn't in the expected format, raise a descriptive error instead of silently overwriting it. Oh and if the previously persisted mode is no longer in the current configured set, the helper should gracefully fall back to the default mode rather than handing back something invalid.
+## Expected Behavior
 
-All of this should be marked experimental and associated with the harness feature group, consistent with how similar harness features are treated here. The point is that structured mode-aware workflows (plan then execute being the obvious one) are a common pattern for safer, more controllable agents, so having it as a real primitive cuts the boilerplate and makes behavior more predictable and auditable.
+- Developers should be able to configure an agent with named operational modes, each with its own behavioral description.
+- The agent's current mode should be tracked in session state and persist across interactions within a session.
+- Helper functions should allow reading and writing the current mode directly from session state, with input normalization (whitespace trimming, case folding) and validation.
+- If an unrecognized mode is set, the system should raise a clear error.
+- If existing session state for the mode key is not in the expected format, the system should raise a descriptive error rather than silently overwriting it.
+- If the previously persisted mode is no longer available in the configured set, the system should gracefully fall back to the default mode.
+- The agent itself should be able to read and update its mode through dedicated tools injected at runtime.
+- Instructions provided to the agent should clearly describe each available mode and indicate which mode is currently active.
+- All mode-related APIs should be marked as experimental (part of the harness feature group).
+
+## Why This Matters
+
+Structured mode-aware workflows — such as a "plan then execute" pattern — are a common pattern for building safer, more controllable AI agents. Having this as a first-class primitive in the framework reduces boilerplate and makes agent behavior more predictable and auditable.

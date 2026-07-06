@@ -1,7 +1,23 @@
-I'm updating an adapter that wraps a third-party AI streaming SDK so it speaks the OpenAI streaming format, and the SDK just shipped a new version that renamed and reshaped a bunch of its streaming event types plus the tool definition format, so our code (written against the old version) breaks with the new one. I need the type definitions and conversion logic fixed so streaming completions, tool calls, and finish events all work end to end.
+## Update AI SDK Adapter to Match New SDK Event Shapes
 
-Here's what changed on the streaming side. Text content delta events renamed the field that carries the text, so we're still reading the old name. The reasoning content event type got renamed and its content field renamed too. Tool call events renamed the field holding the tool call arguments. The streaming tool input delta events got a totally new type name and renamed fields across the board. Finish events moved the token usage object to a differently named top-level property and renamed the individual token count fields inside it. The step lifecycle events (step start and step end) were both renamed and their shapes simplified. File attachment/parts events now nest the file metadata inside a sub-object instead of having it sit at the top level. And the streaming tool input start event was renamed along with its identifier field.
+The third-party AI SDK has released a new version that changed the shapes and names of streaming event objects as well as the format for defining tool schemas. Our adapter code that wraps this AI SDK has not been updated to reflect these changes, causing it to break when used with the new SDK version.
 
-On top of all that, the tool definition format changed too, the property that holds each tool's parameter schema now has a different name, so when we pass tool defs to the SDK we need to put the schema under the new property.
+## Specific Issues
 
-So I want the adapter to correctly parse all the new event shapes, convert each to the equivalent OpenAI-compatible streaming chunk (text deltas, reasoning, tool calls, tool input deltas, finish with usage, step lifecycle, file parts, tool input start), and handle tool definitions with the renamed schema property. Basically match the new SDK contract so anyone relying on the AI SDK-backed providers for streaming or tool use stops hitting broken behavior. The changes live in the adapter's type definitions and conversion code, so update both the shapes and the mapping logic together.
+- **Streaming text events**: The field carrying text content has been renamed. The adapter still reads the old field name.
+- **Reasoning events**: The event type name has changed, and the content field has also been renamed.
+- **Tool call events**: The field carrying tool call arguments has been renamed.
+- **Streaming tool input delta events**: The event type name and all its fields have been renamed.
+- **Finish events**: The token usage object has been moved to a differently named property, and the individual token count field names have also changed.
+- **Step lifecycle events**: Both the "step start" and "step end" event type names have been renamed, and their shapes simplified.
+- **File parts**: The file metadata is now nested inside a sub-object rather than being at the top level.
+- **Tool input start events**: The event type and its identifier field have been renamed.
+- **Tool schema format**: When passing tool definitions to the AI SDK, the parameter schema must now be provided under a different property name.
+
+## Expected Behavior
+
+After updating, the adapter should correctly parse all new event shapes from the AI SDK, convert them to the equivalent OpenAI-compatible streaming chunks, and handle tool definitions with the new schema property name.
+
+## Why This Matters
+
+Any user relying on the AI SDK-backed providers for streaming completions or tool use will experience broken behavior until this adapter is updated to match the new SDK contract.

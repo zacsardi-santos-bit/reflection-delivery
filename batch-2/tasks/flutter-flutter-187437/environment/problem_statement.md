@@ -1,3 +1,15 @@
-I'm poking at a security gap in the Flutter web release asset server and it's making me nervous. Right now when a request comes in and the server tries to resolve the file, it'll serve basically anything it can find under the project root dir or the Flutter SDK root dir, no filtering on file type at all. Problem is those roots are only meant to exist for source-map debugging, they just need to hand back Dart source files so the debugger can resolve stuff. But because there's no restriction, someone hitting the local server can grab whatever they want by path, think .env files with API keys, or the signing/credential files used for native platform builds. That's a real disclosure risk for anyone running a web release build locally, since the local server is reachable and there's zero legit reason to expose random project or SDK files over HTTP.
+## Description
 
-Can you tighten this up in the release asset server so that when a request targets the project root or the Flutter SDK root, only actual Dart source files get served, and requests for any other file type from those two roots fall through to the standard index.html fallback response instead of returning the real file. Dart files from those roots still need to serve normally so source-map resolution doesn't break. And the web build output directory should stay totally unrestricted since it's only ever generated, publishable assets in there, nothing sensitive. Basically: lock the project root and SDK root down to Dart-only, leave the build output alone.
+The release asset server for Flutter web apps currently serves any file it can resolve within the project root directory or the Flutter SDK root directory — without any restriction on the type of file being requested. This means that sensitive files in a typical Flutter project (such as environment configuration files containing API keys, or credential and signing files used for native platform builds) can be retrieved over HTTP just by knowing their path.
+
+These roots are only supposed to serve source files needed for source-map debugging resolution. There is no legitimate reason for the server to expose unrelated project or SDK files over HTTP.
+
+## Expected Behavior
+
+- Requests for Dart source files from the project root and Flutter SDK root should continue to be served normally, since they may be needed for source-map resolution.
+- Requests for any other file type from the project root or Flutter SDK root should fall through to the index.html fallback response rather than serving the actual file.
+- Files in the web build output directory should remain unrestricted, since that directory only contains generated, publishable assets.
+
+## Why This Matters
+
+A developer running a Flutter web release build locally should not inadvertently expose sensitive project files to anyone who can reach the local server. Restricting the project and SDK roots to only source-map-relevant file types prevents accidental disclosure of secrets without breaking legitimate debugging use cases.

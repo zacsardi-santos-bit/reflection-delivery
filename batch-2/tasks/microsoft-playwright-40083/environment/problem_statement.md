@@ -1,5 +1,23 @@
-I'm building a page with a bunch of alert notifications where every one has the same accessible name like "Upload successful", but each has a different description saying which file it was for. When I try to grab a specific alert with the role-based locator I can't tell them apart because right now the locator only lets me filter by role and name, so there's no accessible way to distinguish them and I'm stuck falling back to brittle CSS or XPath.
+## Description
 
-What I want is a description option on the role locator so I can target elements by their accessible description, that supplementary text screen readers announce next to the name. It should do the same flexible matching the name option already does, so case-insensitive substring matching by default, exact matching (case-sensitive, full string) when I ask for it, and regexes for the trickier patterns. The description needs to resolve from the standard sources, a direct description attribute first, then text of elements pulled in via described-by relationships, and title attribute as a fallback. Also normalize whitespace on both the element's description and my search string so tiny formatting differences don't blow up the match. And when I use description together with name, the exact flag should apply to both at once.
+When using role-based locators to find elements on a page, it's currently only possible to filter by accessible role and accessible name. However, many modern UIs have multiple elements with the same role and the same name — for example, several alert banners all labeled "Upload successful" but each describing a different file. In these situations, there is no accessible way to distinguish between them, forcing developers to fall back to brittle CSS or XPath selectors.
 
-Oh and the automatic selector generator should get smarter here too. Right now when two elements share role and name the generated selector isn't specific enough, so it should pull the accessible description into the selector when name alone isn't unique, skip the description when name is already unique, and only fall back to a position-based selector when both name and description are shared. Last thing, when I pass the description as a regex, the code generation for languages like Java and C# needs to emit the regex-specific property names instead of the string-based ones.
+## Expected Behavior
+
+Developers should be able to additionally filter role-based locators by the element's **accessible description** — the supplementary text associated with an element that screen readers announce alongside the element's name. This should support:
+
+- **Substring matching** by default (case-insensitive)
+- **Exact matching** (case-sensitive, full string) when explicitly requested
+- **Regular expression matching**
+- Resolving the description from multiple sources: a direct description attribute, text content of referenced elements, and a title attribute as a fallback
+- Whitespace normalization so minor whitespace differences don't prevent a match
+
+The description filter should work alongside the existing name filter, and the exact matching flag should apply to both when combined.
+
+## Selector Generation
+
+Playwright's automatic selector generator should also be aware of accessible descriptions. When the accessible name alone is not enough to uniquely identify an element (because multiple elements share the same name and role), the description should be automatically included in the generated selector. When the name is already unique, the description should be omitted. If both name and description are non-unique, the generator should fall back to a position-based selector.
+
+## Why This Matters
+
+This makes it possible to write robust, accessibility-oriented tests for pages where multiple elements share the same role and visible name, which is common in notification-heavy UIs, file-upload confirmations, and list views with repeated action buttons.

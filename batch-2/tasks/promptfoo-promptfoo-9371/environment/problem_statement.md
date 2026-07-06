@@ -1,5 +1,20 @@
-I'm chasing a deep-linking bug in our evaluation results table. The idea is you can share a URL that points at a specific test result row, and when the page loads with that hash the table should paginate to whichever page holds that row and pop open its detail view. Works fine normally, but it breaks the moment a filter like "show only failures" is active.
+## Description
 
-Here's the mismatch: the URL hash encodes a row's global position across all unfiltered results, but when a filter is on, pagination runs on the filtered subset and uses positions within that subset, not global indices. So the code grabs the global index from the hash and treats it like a filtered-table position, which sends you to the wrong page entirely. What I want is for hash-based page navigation to just be skipped whenever any filter is active. Don't throw the hash away though, keep it in the URL so if the target row does happen to land on the current filtered page, the detail dialog still opens. Also the legacy row-ID query parameter already encodes a filtered position, so that one should keep working for navigation even with filters on.
+The evaluation results table supports deep-linking: users can share a URL that points directly to a specific test result row. When the page loads with such a URL, the table should automatically paginate to the page containing the target row and open its detail view. However, there is a bug when a filter (such as "show only failures") is active at the same time as a deep link.
 
-There's a related thing too. After a filter gets removed, the table sometimes re-reads a deep-link parameter that was already cleared, and it jumps back to the deep-linked page instead of staying put or resetting to the first page. That re-use of cleared params needs to stop, cleared means cleared, stay on or reset to page one. Oh and one more, this has to be stable under React's dev Strict Mode. Right now Strict Mode replays effects and that was wiping out the initial deep-link navigation before it could take, so behavior has to come out the same whether Strict Mode is active or not. All of this lives in the eval results table components and their pagination/deep-link effects, so poke around there.
+## The Problem
+
+The URL hash format for deep links encodes the row's **global** position across all unfiltered results. When a filter is active, the table operates on a filtered subset of results — and filtered pagination uses positions within that subset, not global indices. The bug causes the table to treat the global index from the hash as if it were a filtered-table position, which navigates to the wrong page.
+
+Additionally, when a filter is later removed after suppressing a hash-based deep link, the previously-ignored deep link parameters can sometimes be re-read and trigger an incorrect navigation — instead of simply resetting to the first page.
+
+## Expected Behavior
+
+- When a filter is active, hash-only deep links should **not** be used to compute which page to navigate to. The hash should still be preserved in the URL so the target row's detail view can open if that row happens to appear on the current filtered page.
+- The legacy row-ID query parameter (which already encodes a filtered position) should continue to work for page navigation even with filters active.
+- After a filter is removed, any cleared deep-link parameters should not re-trigger navigation — the table should stay on or reset to the first page.
+- The above behavior must be stable even in React's development Strict Mode, which replays effects and previously caused deep-link navigation to be incorrectly suppressed.
+
+## Why This Matters
+
+Users who apply filters and also land on deep-linked URLs will be taken to the wrong page. This makes the deep-linking feature unreliable, especially when shared links are opened in a filtered view.

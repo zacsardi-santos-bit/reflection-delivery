@@ -1,5 +1,16 @@
-I'm working on Apache Airflow and we've got this central metrics registry that's supposed to document every metric we emit (scheduler heartbeats, pool slots, task durations, all that stuff), but there's nothing that actually verifies the metric calls scattered through the codebase line up with what's registered. So someone adds a new Stats call and forgets to register it, or renames something without touching the registry, and CI just sails right past. I want a pre-check script that scans Python source and pulls out every metric tracking call so we can diff it against the registry, because right now the registry can silently drift and nobody can audit whether what we emit is actually documented.
+## Description
 
-The tricky part is metric names aren't always plain strings. Some are static, sure, but plenty get built dynamically via f-strings or string concatenation with variable parts mixed in, so the script needs to normalize those dynamic names into a comparable pattern (placeholder-style) and then look them up. Lookup should handle a few cases: exact name match, structural equivalence when the variable placeholders differ but the shape matches, matching against legacy name formats documented in the registry, and recognizing when a dynamic metric is just a valid expansion of a known registered prefix. It's gotta understand both the current naming convention and the older legacy formats.
+Airflow tracks many operational metrics (scheduler heartbeats, pool slots, task durations, etc.) through a central metrics registry that documents every metric the project supports. Currently, there is no automated check to verify that every metric call made in the codebase actually corresponds to a registered metric. This means a developer can add a new metric call and forget to register it, or rename a call without updating the registry, and no CI check will catch the discrepancy.
 
-For each call it finds, record the metric name pattern, the tracking method that was used, the object the call was made on, whether the name is dynamic, the line number, and the file path. If a metric name can't be resolved, just skip that call gracefully rather than blowing up. Calls made on objects we don't recognize should be ignored, and for files that don't exist or have syntax errors it should return nothing at all instead of erroring out.
+## Expected Behavior
+
+A CI pre-check tool should be available that can:
+
+- Scan Python source files to find all places where metrics are tracked, regardless of whether the metric name is a plain string, a dynamically constructed string, or a formatted string with embedded variables.
+- Normalize metric names for comparison, handling both the current metric naming convention and any legacy naming formats documented in the registry.
+- Look up each discovered metric against the central metrics registry, matching by exact name, by structural equivalence when variable placeholders differ, by legacy name, or by recognizing that a dynamic metric is a valid expansion of a registered prefix.
+- Report which metric calls were found, including the method used, the object on which the call was made, whether the metric name is dynamic, the line number, and the source file.
+
+## Why This Matters
+
+Without this tooling, the metrics registry can silently drift out of sync with what the codebase actually records. Developers cannot easily audit whether all metrics in use are documented, and newly introduced metrics may go unregistered. Automating this check in CI prevents such drift and ensures the registry remains the authoritative source of truth for all metrics the project emits.

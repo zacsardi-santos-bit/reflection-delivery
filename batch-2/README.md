@@ -112,7 +112,8 @@
 ## Layout
 ```
 batch-2/
-  tasks/<id>/  task.toml, instruction.md, environment/{Dockerfile,problem_statement.md},
+  tasks/<id>/  task.toml, instruction.md,
+               environment/{Dockerfile, problem_statement.md (original), prompt_statement.md (rich agent prompt)},
                solution/{solve.sh,golden.patch}, tests/{grade.py,config.json,test.sh}
   evals/<id>/*.json   # Opus-4.8 rollout trajectories
   logs/<id>/          # nop+oracle behavioral logs

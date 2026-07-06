@@ -1,5 +1,13 @@
-I'm hitting a weird cascade failure in our Rust project that uses snapshot testing to check error messages when invalid PyPI dependency configs fail to parse. Someone added a guard test recently that verifies one particular snapshot file is in the current, up-to-date format, and it's blowing up. The problem is the snapshot file that captures the deserialization failure cases for PyPI requirements still has an old-style header that includes an explicit type classification field in its metadata. The newer snapshot format doesn't carry that marker anymore, so the guard test that asserts the marker is absent is failing.
+## Description
 
-The really annoying part is that when this guard test fails, the test runner aborts early and cancels all the remaining tests, so the majority of the suite never even runs. I basically can't get a clean run until this is sorted.
+The project uses snapshot testing to verify that certain error messages are produced correctly when invalid PyPI dependency configurations are parsed. One of these snapshot files is stored in an older format that includes an explicit type classification field in its header metadata. A new guard test has been added to enforce that this snapshot file uses the current format — specifically, that it does not contain the older type classification marker.
 
-What I want is to update that snapshot file so it drops the outdated type classification field from its header, matching the current format. Once that marker's gone the guard test should pass, and with it passing the full test suite should run to completion instead of bailing out partway through. So please fix the snapshot header, don't touch the actual expected error message content, just get rid of the stale format marker so everything runs green again.
+## Expected Behavior
+
+- The snapshot file capturing deserialization failure cases for PyPI requirements should be updated to remove the outdated format marker from its header.
+- The guard test that checks for the absence of this outdated marker should pass.
+- With the guard test passing, the full test suite should run to completion without the test runner aborting early.
+
+## Why This Matters
+
+When the guard test fails, the test runner cancels all remaining tests, preventing the majority of the test suite from running. Fixing the snapshot file format resolves the cascade failure and allows all tests to execute properly.

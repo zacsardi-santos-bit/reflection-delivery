@@ -1,3 +1,19 @@
-I'm hitting a nasty reactivity bug in Svelte where a rendering error during a synchronous state update permanently wrecks everything after it. I've got a conditional block that can fail at runtime, like when a component reference is missing or invalid, and when that throws I'd expect to catch it and keep going. Instead any state update after that just silently stops touching the DOM even though my reactive state is obviously changing. It's like the internal effect tree gets left in a corrupted state once the error fires and nothing ever re-renders again, so the whole app is dead for the rest of its lifetime and I have to full-reload the page to get it back.
+## Description
 
-What I want is for the runtime to actually recover after a render error. So if I wrap a synchronous flush in a try/catch and catch the rendering error, the error should surface to the caller (so I can handle it), the corrupted internal effect state should get cleaned up, and the very next flush for some totally unrelated state change should work like normal and the DOM should reflect it. Oh and there's a mode difference that matters here: in synchronous mode the state change that triggered the error was already applied before rendering blew up, so that state should be preserved after recovery, whereas in async mode the state changes from the failed update shouldn't be applied at all. This all lives in the client runtime reactivity/flush machinery, so the fix is about restoring the effect tree to a sane state after a render throws rather than leaving tracking wedged.
+When a reactive state change triggers a runtime error during rendering — such as attempting to render a component that doesn't exist — Svelte's effect tree becomes corrupted. This means that after the error, future state updates no longer work correctly: the application is effectively broken for the rest of its lifetime even though the error was limited to a single render cycle.
+
+## Expected Behavior
+
+- When a state flush causes a rendering error, the error should be surfaced to the caller so it can be handled
+- After the error is handled, subsequent state updates should continue to work normally
+- The DOM should correctly reflect any further reactive changes made after the error
+- In synchronous mode, state changes that were part of the failed update should be preserved after recovery
+- In async mode, state changes from the failed update should not be applied
+
+## Current Behavior
+
+After a rendering error during a synchronous flush, the internal reactive effect tree is left in a corrupted state. Subsequent state updates appear to have no effect on the DOM, and the application cannot recover.
+
+## Why This Matters
+
+This severely limits the ability to build resilient Svelte applications. If any single rendering error occurs — even in an isolated conditional block — the entire reactive system stops working, forcing a full page reload to restore functionality. Proper error recovery would allow applications to remain functional after catching and handling render-time errors.

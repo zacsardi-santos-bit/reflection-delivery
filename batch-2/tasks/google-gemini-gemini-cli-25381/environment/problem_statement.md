@@ -1,3 +1,13 @@
-I'm hitting spurious error diagnostics when I connect to certain MCP servers that don't support prompt listing. When one of those servers replies to a prompt discovery request with a properly typed "method not found" error (the correct MCP error type and the standard method-not-found error code from the protocol), the client should just quietly return an empty list of prompts, but instead it's spitting out a diagnostic warning like something actually broke. The server's behaving exactly as expected here, it's just telling us it doesn't support the feature, so there shouldn't be any warning or diagnostic emitted at all in that case.
+## Description
 
-Digging into it, the problem is the detection logic is checking the error message text for a specific phrase rather than inspecting the actual error type and code. That's brittle, because if a server returns the correct typed error but words the human-readable message differently, the substring check misses it and we emit a false-positive warning. I want this fixed so the detection keys off the error's type and code, not the content of the message string. Any properly typed method-not-found error should be handled silently and return an empty prompt list regardless of the exact wording. That way the integration stays quiet for servers that use the proper error code but vary the message text.
+When connecting to an MCP server that doesn't support prompt listing, the server responds with a standard "method not found" error. The current code detects this by checking if the error message text contains a specific phrase. This approach is fragile: if the server returns the correct typed error but with a different message, the check fails and a spurious diagnostic is emitted — making it appear something went wrong when the server is actually behaving as expected.
+
+## Expected Behavior
+
+- When a server responds to a prompt discovery request with a "method not found" error (using the proper MCP error type and error code), the discovery should silently return an empty list of prompts.
+- No diagnostic or warning should be emitted in this case — the server is simply indicating it does not support the feature.
+- The detection logic should rely on the error's type and code, not on the content of the error message string.
+
+## Why This Matters
+
+Relying on error message text is brittle. As long as the server returns the appropriate typed error code, the client should recognize it correctly and remain silent. This eliminates false-positive warnings and makes the integration more robust against servers that use the proper error code but vary the human-readable message text.

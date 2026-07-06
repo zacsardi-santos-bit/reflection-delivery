@@ -1,5 +1,13 @@
-I'm using a code formatter that's got an overrides section in its config, so I can apply different formatting settings to specific files or globs. Problem is when I stick an invalid option value inside an overrides block it just doesn't report anything. Like if I set a line width value that's out of the allowed range in an overrides entry, the formatter silently keeps going (or formats wrong) instead of telling me the config is busted. Same deal when two mutually exclusive import-sorting options both end up enabled after the override gets merged with whatever's inherited from the root, no error, nothing.
+## Description
 
-The annoying part is that when I put that exact same invalid value at the top level of the config, it catches it right away with a clear parse error and bails. I want that same validation when overrides get resolved for a specific file. So if a resolved config turns out invalid, I'd expect a per-file diagnostic that names both the affected file and the exact reason it's invalid (out of range value, conflicting options, whatever), emitted in the same structured error format the formatter already uses for other per-file errors, and it should exit with code 2 rather than quietly proceeding.
+The formatter does not validate configuration options that are specified inside an overrides section. When an invalid or conflicting option appears at the top level of a configuration file, the formatter correctly reports a parse error and exits immediately. However, when the same invalid option (such as a line width value that is out of the allowed range) or a conflicting pair of options appears only within the overrides block, the formatter silently accepts it with no diagnostic output, leaving the user with no indication of what went wrong.
 
-The root cause is basically that resolved override configs never get validated, only the top-level one does. This bites people who tweak just one field in an override while another field inherited from the root creates a conflict they never see. So please validate the merged/resolved configuration whenever overrides apply to a file, treat both the out-of-range single value case and the mutually exclusive import-sorting pair case as config errors, and surface them as per-file diagnostics with the right exit code.
+## Expected Behavior
+
+- When a configuration's overrides section resolves to an invalid setting for a specific file, the formatter should report a clear per-file error identifying both the affected file and the exact reason the configuration is invalid.
+- When two mutually exclusive import-sorting options are both enabled after merging overrides, the formatter should report that combination as a configuration conflict.
+- Invalid override-resolved configurations should result in an exit code of 2 and diagnostic output in the same structured error format used for other per-file errors.
+
+## Why This Matters
+
+Users who write per-file formatting overrides in their configuration files can easily introduce invalid settings without realizing it, especially when the override only changes one field while another field inherited from the root creates a conflict. Without validation of resolved configurations, these errors are silently ignored, causing confusing or incorrect formatting behavior.

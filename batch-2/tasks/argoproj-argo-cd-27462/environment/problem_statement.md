@@ -1,5 +1,15 @@
-I'm hitting a nasty issue in Argo CD where a bunch of cluster management operations blow up whenever the main ArgoCD control plane secret is missing its encryption key. This happens during startup or init before the key gets generated, and also in degraded or partially-initialized states. Digging into it, the root cause is that the check for whether in-cluster deployments are allowed goes through a heavier settings-loading path that insists on the encryption key being present, even though the in-cluster enabled flag actually just lives in the config map and has zero dependency on the key. So listing clusters, creating clusters, watching for cluster changes, and querying cluster addresses by name all fail for no good reason when the key's absent.
+## Description
 
-What I want is for the in-cluster enablement check to read straight from the config map, independent of the encryption key or any other secret data. When it hits an error (say the config map is missing) it should return the default value of enabled along with an informational error rather than failing hard. And the cluster ops that lean on this check should degrade gracefully, logging a warning instead of propagating the error when the check itself fails.
+Several cluster management operations in Argo CD fail when the ArgoCD control plane secret is missing its encryption key. This can happen during startup or initialization before the key has been generated, as well as in degraded or partially-initialized states. The root cause is that the check for whether in-cluster deployments are allowed is currently routed through a heavier settings-loading mechanism that requires the encryption key — even though the in-cluster enabled flag only lives in the config map and has no dependency on the key.
 
-One exception though: explicit config still wins. If in-cluster is explicitly disabled in the config map, then trying to create an in-cluster cluster should still get rejected with an appropriate error. But if there's no in-cluster preference set at all in the config map, default to treating in-cluster as enabled. The whole point is that users shouldn't get cryptic errors blocking cluster operations during startup or when the secret's temporarily missing its key, when those operations don't actually need the key in the first place.
+## Expected Behavior
+
+- Checking whether in-cluster deployments are allowed should read directly from the config map, independently of the encryption key or any other secret data
+- When the config map is absent, the check should return the default value (enabled) along with an informational error rather than failing hard
+- Listing clusters, creating clusters, watching for cluster changes, and querying cluster addresses by name should all continue working even when the encryption key is missing — logging a warning where appropriate instead of propagating an error
+- If in-cluster mode is explicitly disabled in configuration, attempts to create an in-cluster cluster must still be rejected with an appropriate error
+- If no in-cluster preference is set in the config map, the default behavior should be to treat in-cluster as enabled
+
+## Why This Matters
+
+Users encounter this issue during Argo CD startup or when the secret is temporarily missing its encryption key. Rather than failing with cryptic errors that block cluster operations, the system should degrade gracefully for operations that do not actually require the encryption key.

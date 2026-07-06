@@ -1,7 +1,14 @@
-I'm working on the Python serverless runtime for Vercel and hitting an annoying gap around identity tokens. The way it works, functions authenticate with platform services by reading an identity token off a request header, but in some deployment scenarios, especially local dev, the token only shows up as an environment variable and never arrives as an actual request header. So handler code that reads the token from a header just gets nothing, even though the token's sitting right there in the environment.
+## Description
 
-What I want is for the runtime to automatically inject that env var token as a request header when no request-scoped token is already present, so handler code can read it uniformly through the header interface no matter where it's deployed. It's strictly a fallback though, so if the incoming request already carries the corresponding header, don't touch it, the existing value has to be preserved as-is. And if the env var is empty or unset, don't inject anything at all.
+Python serverless functions on Vercel can authenticate with platform services by reading an identity token from a request header. However, in some deployment scenarios — particularly local development — the token is available only as an environment variable rather than arriving as a request header. In these situations, handler code that expects to read the token from a header finds nothing, even though the token is available in the environment.
 
-Also there's an internal platform-level token header, and when that one's present it should win over the env var value and get surfaced as the public header, with the internal header stripped out afterward.
+## Expected Behavior
 
-This needs to work across all three app types the runtime supports, so plain HTTP handlers, WSGI apps, and ASGI apps all get the same treatment in the relevant handler entrypoints under `@vc_init.py` (and wherever the WSGI/ASGI request adapters live). btw the whole point is handlers written to read the token from a header work fine in production where the platform sets it, but silently fail locally where only the env var exists, so bridging that keeps handler code consistent across environments without manual workarounds.
+- When the identity token is set in the environment and an incoming request does not already carry the corresponding request header, the runtime should automatically inject the token as a header so handler code can access it uniformly.
+- The environment variable token should only be used as a fallback: if the request already contains the header, the existing header value must be preserved without modification.
+- An internal platform-level token header, when present, should take precedence over the environment variable value and be surfaced as the public header (with the internal header stripped).
+- If the environment variable is absent or empty, no token header should be injected.
+
+## Why This Matters
+
+Handlers written to read the identity token from a request header work correctly in production (where the platform provides the header) but silently fail in local development (where only an environment variable is available). Bridging this gap lets developers write consistent handler code that works across both environments without manual workarounds.

@@ -1,5 +1,13 @@
-I'm deep in the DeepSeek V4 sparse attention path on NVIDIA hardware and I keep hitting a perf gap that's bugging me. The function that builds the mixed sparse token index tables (over in the sparse attention code where we assemble those index tensors for the kernels) gets called more than once per forward pass with the exact same batch metadata object. It happens because the sliding-window attention path triggers a build, and then the coarser-grained sparse attention path triggers another one right after, and both calls get identical inputs so they crank out identical results. It's an expensive computation and we're just redoing it for no reason, which is wasting time on every forward pass.
+## Description
 
-What I want is a caching layer around that index builder. When it's invoked a second time within the same step with the same batch metadata, it should hand back the previously computed tensors instead of rebuilding them from scratch. This reuse should kick in for the sliding-window-only path and also for the high-compression-ratio sparse path, since those genuinely produce the same tables given the same metadata.
+When running inference with the DeepSeek V4 sparse attention implementation on NVIDIA hardware, the function that constructs mixed sparse token index tables is called multiple times per forward pass with identical batch metadata. This happens because both the sliding-window attention path and the coarser-grained sparse attention path each trigger the index build, even though both calls receive the same inputs and would produce the same output. The computation is expensive and the redundant rebuilding wastes time.
 
-The one thing to watch out for, and this is important, don't cache the fine-grained sparse path (the low compression ratio mode). Those index tables can legitimately differ between calls even with the same metadata, so caching there would return stale tensors and give wrong results. Skip it deliberately for that mode. Net effect I'm after is killing the redundant rebuild so we cut the unnecessary work per forward pass and get better inference throughput for models leaning on this mechanism.
+## Expected Behavior
+
+- When the sparse index builder is invoked for the sliding-window-only attention path, and then invoked again with the same batch metadata in the same step, the second call should return the previously computed result from a cache rather than rerunning the build.
+- The same cache reuse should apply for the high-compression-ratio sparse attention path.
+- For the fine-grained (low compression ratio) sparse path, caching should be intentionally skipped because the index tables may legitimately differ between calls, making caching incorrect for that mode.
+
+## Why This Matters
+
+Eliminating the redundant index rebuild reduces unnecessary computation within each forward pass, improving inference throughput for models using this sparse attention mechanism.

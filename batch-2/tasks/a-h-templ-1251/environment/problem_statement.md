@@ -1,5 +1,14 @@
-I'm working on the templ template compiler and I keep hitting a wall when I try to annotate attributes inside an HTML element's opening tag. Basically I want to drop a comment right there between attributes to explain why a given attribute is set the way it is, like documenting a browser quirk workaround or clarifying some non-obvious value that encodes a business rule. Right now if I put anything like that in an attribute list, either a single-line comment or a block-style comment, the parser just chokes and the template won't compile at all. That's the gap I want closed.
+## Description
 
-So I need the parser to actually accept both single-line and block comments sitting between attributes within an element's opening tag, and represent them in the parsed template structure. It should capture the comment text and also track whether each one is single-line or block-style so we don't lose that distinction. These comments have to play nice alongside all the existing attribute kinds too, so constant/key-value attributes, expression-based attributes, boolean attributes, whatever, mixing them in shouldn't break anything.
+Template files don't currently support placing comments inside HTML element attribute lists. When developers want to explain why a particular attribute is set — for example, to document a browser quirk workaround or clarify the purpose of an attribute value — there is no way to do so inline. Adding a comment next to an attribute simply breaks the parser.
 
-The other half is codegen. When the template gets compiled and rendered to HTML these attribute comments must be stripped entirely, no trace in the output, they're purely for people reading the source. So the generator should just discard them. Oh and I want a new test component that exercises this end-to-end, mixing attribute comments with real attributes, plus a matching expected HTML output file so I can confirm the comments vanish from the rendered result while everything else stays intact.
+## Expected Behavior
+
+- Developers should be able to place both single-line and block-style comments between attributes within an element's opening tag
+- The parser should recognize these attribute comments and represent them in the parsed template structure, capturing the comment text and whether it is a single-line or block-style comment
+- When the template is compiled and rendered, all attribute comments must be stripped — they should produce no output in the final HTML
+- Attribute comments may appear alongside any attribute type (constant attributes, expression attributes, boolean attributes, etc.)
+
+## Why This Matters
+
+Large templates often contain subtle attribute decisions that aren't obvious from reading the attribute name and value alone. Without inline comments, developers have to rely on external documentation or separate code comments far from the relevant attribute. Supporting comments directly inside attribute lists makes templates self-documenting, especially for attributes that encode non-obvious business rules or browser compatibility workarounds.

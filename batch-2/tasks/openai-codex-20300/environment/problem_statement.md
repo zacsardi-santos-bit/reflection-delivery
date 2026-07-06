@@ -1,5 +1,13 @@
-I'm poking at the analytics layer in our multi-agent setup and hitting a blind spot. When the orchestrator spawns a subagent in a brand new thread, any analytics events that subagent fires (compaction events being the big one I care about) just get silently dropped. Digging in, it's because the subagent thread has no connection record of its own, so the analytics reducer can't resolve the client metadata it needs to actually emit anything. So the event evaporates.
+## Description
 
-What I want is for subagent threads to inherit their parent's connection context automatically. When a subagent thread gets created through a parent thread spawn, the reducer should copy over the parent thread's connection so there's something to look up later. Then when something like a compaction event fires inside that subagent, the analytics layer can find the parent connection and emit the event attributed to the parent client, including the parent client identifier and the parent thread ID baked into the emitted data.
+When an agent spawns a subagent in a new thread, analytics events fired by that subagent — such as compaction events — are silently dropped. This happens because the subagent thread has no connection record of its own, so the analytics reducer cannot resolve the client metadata needed to emit the event.
 
-Can you update the analytics reducer so this inheritance happens on spawn, and so subsequent events (compaction especially) for those subagent threads carry the parent connection's client info plus the parent thread relationship? Right now operators can't see what a subagent was doing, which client it belonged to, or how it ties back to the parent thread, and I want that whole chain traceable downstream. Basically no more dropped events, and the parent thread relationship needs to actually show up in the analytics payload so consumers can trace origin.
+## Expected Behavior
+
+- When a subagent thread is created through a parent thread spawn, it should automatically inherit the parent thread's connection context.
+- Analytics events generated within the subagent thread — including compaction events — should be correctly attributed to the parent client connection.
+- The parent thread relationship should be properly recorded in the emitted analytics data, so downstream consumers can trace which client and thread originated the subagent activity.
+
+## Why This Matters
+
+Without this fix, any analytics event (e.g. context compaction) that occurs inside a spawned subagent thread is silently discarded. This creates a blind spot in analytics for multi-agent workflows: operators cannot see what the subagent was doing, which client it belonged to, or how it relates to the parent thread. Ensuring proper connection inheritance closes this gap and makes subagent activity fully observable through analytics.

@@ -1,5 +1,18 @@
-I'm poking at the OCI metrics CDI integration in Helidon (the bean over in `@integrations/oci/metrics/cdi/src/main/java/io/helidon/integrations/oci/metrics/cdi/OciMetricsCdiExtension.java` or wherever the OCI metrics CDI bean lives) and I keep hitting a wall where I can't customize its behavior through subclassing. All the key setup methods are package-private right now so I literally can't override them from outside the package, which is a problem because I've got a downstream library that needs to tweak how OCI metrics get configured without copy-pasting the whole setup.
+## Description
 
-What I want is for those lifecycle methods to be protected instead so subclasses can extend them. Specifically I need to override the method that decides which config key is used to look up OCI metrics settings (so I can point at an alternate config hierarchy), and the method that creates and initializes the metrics support builder (so I can map alternate property names to metric settings like namespace and resource group, or do custom init logic). Also the method that activates metrics support should take both the root config node and the OCI-metrics-specific config node so overrides have the full config tree to work with, not just the sub-node. And after activation the bean should hang onto the built metrics support object so I can retrieve it later.
+The OCI metrics CDI bean currently cannot be customized through subclassing. All of its key setup methods are package-private, which means that developers who need to adjust how OCI metrics are configured — for example, to use a different configuration key or to map alternate property names to metric settings — have no supported way to do so. There is also no way for application or library developers to supply their own logic for building or activating the OCI metrics integration.
 
-Last thing, and this is important, the OCI metrics init has to be guaranteed to run only after the standard metrics CDI extension finishes its own setup, otherwise metrics aren't there yet when the OCI side tries to use them. So the OCI metrics observer's priority needs to be strictly greater than the general metrics CDI extension's registration observer priority, and that ordering should actually be verifiable, not just assumed.
+Additionally, there is no explicit guarantee or test that the OCI metrics bean initializes itself only after the standard metrics CDI extension has fully completed its own setup. If the ordering is wrong, metrics may not be available when the OCI integration tries to use them.
+
+## Expected Behavior
+
+- Key lifecycle methods on the OCI metrics CDI bean should be accessible to subclasses (i.e., have protected visibility), so that library or application developers can extend and customize the integration.
+- Subclasses should be able to override the method that determines which config key is used to look up OCI metrics settings, allowing alternate configuration hierarchies.
+- Subclasses should be able to override the method that creates and initializes the metrics support builder, allowing custom config property mappings or alternate initialization logic.
+- The method that activates metrics support should receive both the root config and the OCI-metrics-specific config node, giving overriding implementations full access to the configuration tree.
+- The CDI bean should store the built metrics support object so callers can retrieve it after activation.
+- The OCI metrics observer must have a higher priority than the standard metrics CDI extension's registration observer, ensuring correct initialization order.
+
+## Why This Matters
+
+Without extensibility, integrators are forced to copy-paste or re-implement large portions of the OCI metrics setup code. Making the bean properly extensible allows downstream libraries to provide drop-in customizations without forking the core implementation.

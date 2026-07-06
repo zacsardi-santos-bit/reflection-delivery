@@ -1,7 +1,14 @@
-I've got a base model with a bunch of fine-tuning adapters loaded at once, and saving just one of them is broken. When I pass a single adapter name to save, the checkpoint I get back has way more weights than it should. Looks like it's grabbing weights from other adapters whose names happen to overlap as substrings with the one I actually asked for.
+## Description
 
-Concrete repro: load adapters named "default", "default2", "other_default", "foodefault_bar", and "efaul" all at the same time, then save only "default". The saved file ends up including entries from those other adapters because their names contain (or are contained by) "default" as a prefix, suffix, infix, or plain substring. What I want is the saved weight count to match exactly what the one selected adapter contributes, nothing more.
+When saving a PEFT model that has multiple adapters loaded and specifying a subset of adapter names to save, the save operation incorrectly includes weights from unintended adapters if the specified adapter name appears as a substring in another adapter's name (or vice versa).
 
-The root cause seems to be that the filtering logic that decides which weights belong to the selected adapter uses substring comparison instead of exact name equality. So "efaul" matches into "default", "other_default" matches back, etc. I need that changed to strict equality so only weights strictly belonging to the chosen adapter name land in the checkpoint, regardless of any substring overlap with the other loaded adapter names.
+For example, suppose a model has adapters named "default", "default2", "other_default", "foodefault_bar", and "efaul" all loaded simultaneously. When saving only the "default" adapter, the saved checkpoint ends up containing more weights than it should — picking up entries from adapters whose names partially overlap with "default" through substring relationships.
 
-This matters because I'm managing several adapters on one base model and rely on named saves to produce clean, isolated checkpoints. Right now any substring overlap in adapter names gives me oversized or contaminated files, which makes it impossible to reliably checkpoint and restore individual adapters in a multi-adapter workflow. So the fix is really just: when saving a PEFT model with a specific adapter name selected, produce a checkpoint containing only the weights for that exact adapter, and get the count right.
+## Expected Behavior
+
+- Saving a model with a specific adapter name selected should produce a checkpoint file containing only the weights that belong to that exact adapter.
+- The number of saved weights should match exactly what that single adapter contributes, regardless of whether other loaded adapters have names that contain the target name as a prefix, suffix, infix, or substring.
+
+## Why This Matters
+
+Users who manage multiple adapters on a single base model and rely on named saves to produce clean, isolated checkpoints currently get oversized or contaminated checkpoint files whenever adapter names have substring overlap. This makes it impossible to reliably checkpoint and restore individual adapters in multi-adapter workflows.

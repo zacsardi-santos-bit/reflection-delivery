@@ -1,5 +1,14 @@
-I'm poking at the Elgato integration in Home Assistant and the error handling in there is bugging me. Whenever a button press or a switch toggle fails, the error message says "Elgato Light" even though the thing that failed isn't a light at all, it's a button or a switch. I want that wording fixed to say "Elgato device" instead so it's accurate no matter what entity type triggered it, and this needs to apply everywhere across buttons, lights, and switches (see the button, light, and switch platform files under `@homeassistant/components/elgato/`).
+## Description
 
-Also right now there's just one catch-all error, so I can't tell if the failure was a network/connectivity thing or some genuinely unexpected error. I'd like to split those two apart. When it's a connection failure (device unreachable on the network, that sort of thing) the message should specifically say an error occurred while communicating with the Elgato device. For anything else, the unknown/unexpected case, it should be a separate, clearly different message saying an unknown error occurred while communicating with the Elgato device. So it's really a two-tier thing, connectivity vs unknown.
+The Elgato integration currently shows misleading and inconsistent error messages when operations on Elgato devices fail. Specifically, all error messages refer to "Elgato Light" even when the failing entity is a button or a switch — not a light at all. Additionally, there is no distinction between a connectivity failure (e.g., the device is unreachable on the network) and an unexpected/unknown error, so users cannot tell what kind of problem occurred.
 
-Oh and this two-tier handling has to cover all the operations, not just normal control. So button presses, the light control operations, switch operations, and also the identify action all need to follow the same connectivity-vs-unknown split with the "Elgato device" wording. Point is users on buttons and switches shouldn't be seeing "Light" anymore, and everybody should be able to tell at a glance whether it's a comms problem or something weird.
+## Expected Behavior
+
+- Error messages should refer to "Elgato device" rather than "Elgato Light" across all entity types (buttons, lights, and switches)
+- Connection-related failures should produce a specific message indicating that an error occurred while communicating with the Elgato device
+- Unknown or unexpected errors should produce a different, clearly labeled message indicating that an unknown error occurred while communicating with the Elgato device
+- Button presses, light control operations, switch operations, and identify actions should all follow this two-tier error handling
+
+## Why This Matters
+
+Users interacting with Elgato buttons and switches see confusing error messages that mention "Light" even when no light is involved. More importantly, having a single catch-all error message makes it harder to diagnose whether an issue is a connectivity problem or something else. Splitting the error handling makes the integration more informative and accurate for all device types.

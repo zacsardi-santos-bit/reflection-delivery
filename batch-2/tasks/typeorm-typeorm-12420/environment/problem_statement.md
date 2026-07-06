@@ -1,5 +1,14 @@
-I'm hitting a wall with the JSON containment find operator in TypeORM (the JsonContains one) when I use it against JSONB columns that actually store arrays instead of plain objects. Works great for a normal JSON object column, but the second my column holds an array, whether that's an array of objects or just an array of primitive values like numbers, things fall apart in two ways.
+## Description
 
-First off the TypeScript types won't let me pass an array in directly, so I'm stuck doing an unsafe type cast just to get the thing to compile, which is gross. And second, even once I hack past the typing, the generated query doesn't behave, records that clearly should match don't come back, so the SQL it's building for array values seems wrong.
+TypeORM's JSON containment find operator only supports querying JSONB columns that store plain objects. When a JSONB column stores an array (either an array of objects or an array of primitive values), using this operator requires an unsafe type cast to avoid TypeScript errors. Moreover, even with the cast, the query may not be generated correctly when the value is an array — resulting in incorrect or broken database queries.
 
-What I want is for the containment operator to just support arrays natively so I can do partial containment queries on these array-backed JSONB columns without any casting. So if I ask for a subset of objects, or a subset of numbers, it should return only the records whose JSONB array contains all the elements I passed, and give me nothing back when none of my elements match. Lots of real schemas stash arrays of tags or metadata or connection params in JSONB like this, and right now I can't use the standard find API for them at all, I'm forced into raw queries. The type signature accepting arrays and the query builder emitting correct containment SQL for both the array-of-objects and array-of-primitives cases is the whole ask here.
+## Expected Behavior
+
+- The JSON containment find operator should accept arrays as its argument without requiring an unsafe type cast
+- When querying a JSONB column that stores an array of objects, partial containment filtering should work correctly — only records where the column's array contains all the specified objects should be returned
+- When querying a JSONB column that stores an array of primitive values (e.g., numbers), partial containment filtering should also work correctly
+- Records that do not contain the specified elements should not be returned
+
+## Why This Matters
+
+Many real-world database schemas use JSONB columns to store arrays of structured data (e.g., tags, metadata, connection parameters). Without array support in the containment operator, developers cannot use the standard find API for these columns and must resort to raw queries or type workarounds. Proper array support enables clean, type-safe querying of these common data patterns.

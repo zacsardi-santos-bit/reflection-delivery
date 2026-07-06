@@ -1,3 +1,13 @@
-I'm poking at LangChain's runnable config normalization in `@libs/core/langchain_core/runnables/config.py` and hit an inconsistency. When a config gets normalized through `ensure_config`, the model name (`ls_model_name`) sitting in the `configurable` dict gets automatically copied up into the config's `metadata` dictionary, which is nice for tracing and observability tools that read metadata. But the checkpoint namespace field (`checkpoint_ns`) doesn't get the same handling. Even when I explicitly set a checkpoint namespace in the configurable settings, it never shows up in the config's metadata after normalization, so monitoring systems that inspect metadata for run context have no idea which sub-graph or nested execution scope a run belongs to.
+## Description
 
-I want the checkpoint namespace promoted into metadata exactly like the model name already is. So when the configurable settings contain a checkpoint namespace string value, that value should get surfaced into metadata (only if it isn't already set there, don't clobber an existing one). And when a checkpoint namespace comes in as a top-level config key, it should be treated like other top-level keys, moved into the configurable settings, and also copied into metadata. The existing model name behavior needs to keep working untouched, and a config carrying both a model name and a checkpoint namespace in its configurable settings should end up with both values appearing in metadata. Basically just mirror the logic that's already there for the model name so this stays consistent.
+When LangChain normalizes runnable configuration objects, it already promotes the model name from the configurable settings into metadata so that tracing and observability tools can see it. However, the checkpoint namespace — which identifies which sub-graph or nested execution scope a run belongs to — is not similarly promoted. This means monitoring systems relying on config metadata are unaware of the active checkpoint namespace even when it is specified in the configurable settings.
+
+## Expected Behavior
+
+- When a config's configurable settings contain a checkpoint namespace string value, that value should be automatically surfaced in the config's metadata dictionary (as long as it isn't already set there).
+- When a checkpoint namespace is provided as a top-level config key, it should be handled the same way as other top-level keys — moved into the configurable settings — and also copied into metadata.
+- The existing behavior for the model name field should continue to work as before, and configs containing both a model name and a checkpoint namespace in their configurable settings should have both values appear in metadata.
+
+## Why This Matters
+
+Without this propagation, tooling that inspects config metadata for run context (such as which checkpoint namespace a run belongs to) misses this information even when it is explicitly configured. Making checkpoint namespace metadata-visible keeps it consistent with how the model name is already handled.

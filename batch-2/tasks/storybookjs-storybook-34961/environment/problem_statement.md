@@ -1,7 +1,23 @@
-I'm reworking the server side of our open-service module and the big problem is that creating a service and building static snapshots are totally separate right now, there's no shared registry so when I generate static files I have to pass service definitions in by hand and services can't see each other during the static build. I want one server-side module that keeps a global registry. When I register a service definition it should drop it into that registry and hand me back the usable service instance, and then I can look it up by its string identifier from anywhere, both during live query handling and during static builds.
+## Description
 
-Lookups need to be strict, so if I ask for an identifier that isn't there, or if I try to register the same identifier twice, I want a structured error back with a machine-readable code plus a clear human message. Same deal when I call a query or command that has no handler, give me a structured error that names the missing operation. Also I need a synchronous function to list all currently registered services, plus one that returns a lightweight summary of each (just the query and command names) and another that returns the full descriptor including the actual schema references.
+The open-service module currently lacks a unified server-side registry. Service creation and static asset generation are fragmented across separate entry points, which makes cross-service lookups during static builds impossible and forces callers to manually manage lists of service definitions.
 
-Oh and handlers should be optional in the definition, so I can supply them at registration time instead, that way environment-specific logic gets injected separately. The handlers and preload functions both need to be able to look up other registered services by id so services can compose during runtime and during the static build phase.
+We need a single server-side module that provides a global service registry. All services should be registered once and then automatically available to each other during runtime and during the static asset build phase.
 
-For static builds the function should just draw from the global registry, no explicit service list passed in. It generates the snapshot files and normalizes any custom output paths, resolving relative prefixes and converting path separator styles, and it should reject any path trying to escape the output root with a structured error. Run all the preload work in parallel so services can observe each other's state as it builds. Last thing, I want a function that writes those snapshots to disk under a standard subdirectory of a given output directory, serialized as pretty-printed human-readable JSON.
+## Expected Behavior
+
+- A function to register a service definition into a global registry, returning the usable service instance
+- A function to look up a registered service by its unique string identifier; if the identifier is unknown, the call should be rejected with a structured error (including a machine-readable code and a clear message)
+- A function to synchronously retrieve the list of all currently registered services
+- Functions to retrieve summary information (names of queries and commands) and full descriptors (including schema references) for registered services
+- Registering the same service identifier twice must be rejected with a structured error
+- Calling a query or command that has no handler must be rejected with a structured error identifying the missing operation
+- Handlers and preload functions must be able to look up other registered services by ID, enabling cross-service composition during both runtime and the static build phase
+- Service handlers can be omitted from the definition and supplied at registration time, allowing environment-specific implementations to be provided separately
+- The static build function must operate on the global registry with no explicit service list, generating snapshot files and normalizing output paths (resolving relative prefixes, converting path separators)
+- Paths in static output that attempt to escape the root directory must be rejected with a structured error
+- A function to write static snapshot files to disk under a standard subdirectory of a given output directory, using pretty-printed JSON
+
+## Why This Matters
+
+Without a shared registry, services are isolated from each other during static builds, making it impossible to compose services that depend on one another. Consolidating registration into a single module eliminates the duplicated service-creation patterns and enables the full preload and composition capabilities that the open-service design requires.

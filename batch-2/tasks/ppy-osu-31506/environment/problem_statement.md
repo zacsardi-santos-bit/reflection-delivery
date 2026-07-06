@@ -1,3 +1,15 @@
-I'm hitting a nasty stutter with storyboards during gameplay and I think I know why. When I dim the background all the way up so the storyboard goes fully invisible, the engine stops sending it update ticks (it's got that optimization where invisible components just don't get updated). Problem is the storyboard's internal update loop stalls out, so the moment I drop the dim back down and it becomes visible again there's a big backlog of animation and state work it tries to churn through all at once, and you get this obvious jump/stutter in the animations. Really annoying for anyone who plays with high dim but still wants storyboards on, like right when a break section starts and the dim eases off.
+## Description
 
-What I want is for the storyboard to keep running its internal update loop even while it's completely hidden by the dim, so it stays in sync with the game clock the whole time and there's zero catch-up needed when it pops back into view. Basically whenever the storyboard show setting is enabled, the storyboard component should be flagged so the engine keeps updating it no matter what its current visibility is, and this needs to apply to both the storyboard container itself and its inner contents (the drawable that holds the actual storyboard elements). It should hold even at max dim when the thing is totally invisible on screen. So don't lean on visibility to decide whether to tick it, tie the always-update behavior to the show setting instead.
+When a player dims the background fully during gameplay (so the storyboard becomes completely invisible), the storyboard currently stops receiving internal update ticks from the engine. This is because the engine skips updating invisible components as an optimization.
+
+The consequence is that when the player later reduces the dim level (making the storyboard visible again), the storyboard has a large amount of animation and state work to "catch up" on all at once, causing a noticeable stutter or jump in the storyboard animations.
+
+## Expected Behavior
+
+- Even when a storyboard is fully dimmed and therefore invisible, it should continue to run its internal update loop.
+- When the storyboard becomes visible again (by reducing the dim level), it should already be in sync with the game clock with no catch-up work needed.
+- The storyboard should remain present (in terms of receiving engine updates) whenever the storyboard show setting is enabled, regardless of whether it is currently visible on screen.
+
+## Why This Matters
+
+This affects players who use high dim settings during gameplay but still have storyboards enabled. Without this fix, any time the dim is reduced (e.g., at the start of a break section), the storyboard will stutter as it processes a backlog of animation work. The fix ensures smooth visual behavior when transitioning between dimmed and undimmed states.

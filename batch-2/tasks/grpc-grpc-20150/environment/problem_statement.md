@@ -1,5 +1,14 @@
-I'm hitting a wall with our gRPC-on-Bazel setup where the Python proto and gRPC library generation rules just don't understand proto libraries that remap their import paths using Bazel's built-in prefix remapping (the import_prefix / strip_import_prefix stuff). When a proto library requests that kind of remapping, Bazel quietly drops its generated files into a special virtual imports subdirectory instead of the normal output location, and our Python codegen has zero awareness of that, so it blows up the moment it runs into those files. Lots of our production APIs are organized under namespaced import paths, so this is a real blocker, we basically can't remap prefixes and generate Python bindings at the same time right now.
+## Description
 
-What I want is a small utility function added to the protobuf Bazel helpers (the shared `_common.bzl`-style utility module, the one all the language rules pull from) that takes a proto source file and tells you whether it lives inside one of these virtual imports directories. Then I want that helper wired in throughout the Python proto and gRPC library rules (and honestly it should be reusable by the C++, Objective-C, and other language rules too since they'll all need the same detection) so that when a virtual import file shows up, the output paths and include directories get computed relative to the virtual import root instead of the standard path. End goal: I can write a proto library with a remapped import prefix, use it as a dep of a py_proto_library or py_grpc_library target, and it just builds, no failures, both for normal proto files and the remapped ones.
+The Bazel build rules for generating Python protobuf and gRPC bindings do not support proto library targets that remap their import paths using Bazel's prefix arguments. When a proto library places its output files in a virtual import directory (which is what Bazel does internally when import path remapping is requested), the downstream Python generation rules fail because they have no way to detect or handle that virtual directory structure.
 
-Oh and while you're in there, the existing tests for this need a little cleanup, they're referencing the wrong proto field names in a couple spots, and they need to actually run correctly under both Python 2 and Python 3, so fix those up too.
+## Expected Behavior
+
+- The Python proto and gRPC library generation rules should be able to detect whether a given proto source file is located in a virtual imports directory.
+- When such virtual import files are detected, code generation should correctly compute output paths and include directories relative to the virtual import root.
+- Developers should be able to write proto libraries with remapped import prefixes and then use them as dependencies of Python proto and gRPC library targets without build failures.
+- A utility function for detecting virtual import files should be added to the protobuf Bazel utility module so it is reusable across all code generation rules (Python, C++, Objective-C, etc.).
+
+## Why This Matters
+
+Many production proto APIs are organized under namespaced import paths. Without this support, teams cannot use Bazel's import path remapping for their proto definitions while also generating Python gRPC bindings. This is a significant gap for projects that organize their proto files under structured namespace paths.

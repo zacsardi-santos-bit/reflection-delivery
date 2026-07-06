@@ -1,5 +1,15 @@
-I'm hitting a wall with our monorepo overrides and I think it's a real gap. We pin shared dependency versions in a workspace catalog, and I want to be able to point at those catalog entries straight from the package overrides section instead of copy-pasting version strings. Right now if I drop a catalog reference in as an override value it just isn't recognized, the override resolver doesn't know what to do with it and either silently does nothing or throws some unhelpful error. That's exactly the drift trap I'm trying to avoid, because when someone bumps the catalog version but forgets the override, the two fall out of sync.
+## Description
 
-So what I want is for the override system to understand catalog reference syntax as an override value. When the reference has no suffix (the bare catalog: form), resolve the override to the version pinned under that package's name in the default workspace catalog (the one literally named "default"). When there's a non-empty suffix naming a specific catalog, pull the version from that named catalog instead. Oh and if the override key itself carries a version selector, the catalog lookup should use just the package name portion of the key, not the whole thing with the selector attached.
+Workspace projects that use a shared catalog to pin dependency versions cannot currently reference those catalog entries from within override declarations. This means developers must duplicate version strings between the catalog and the overrides section, leading to drift when the catalog version is updated but the override is not.
 
-This needs to work in nested override declarations too, not only top-level ones. And when the referenced package can't be found in whatever catalog got searched, I don't want a vague failure, I want a clear error that names both the override key and the catalog that was actually looked in, so it's obvious what went wrong and where. Keeping the config DRY is the whole point here.
+## Expected Behavior
+
+- When an override entry uses the catalog reference syntax (with no suffix), the system should resolve the override to the version pinned in the default workspace catalog under the package's name.
+- When an override entry specifies a named catalog (with a non-empty suffix), the system should resolve the override from that named catalog.
+- If an override key includes a version selector, the catalog lookup should use only the package name portion of the key.
+- Catalog references should also work in nested override declarations.
+- If the referenced package is not found in the specified catalog, a clear error should be returned identifying both the override key and the catalog that was searched.
+
+## Why This Matters
+
+Without this feature, teams maintaining monorepos with shared version catalogs are forced to maintain version numbers in two places. With this change, an override can simply point to a catalog entry, keeping the configuration DRY and eliminating the risk of version mismatches between the catalog and overrides.

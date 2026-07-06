@@ -1,5 +1,14 @@
-I'm trying to get better visibility into reader connections on my streaming server through the metrics endpoint. Right now all I can see is a total reader count per path, and it's stuck in the deprecated metrics section, so there's no way to tell from the metrics which protocol types the readers are actually using. Like I can't tell how many are connected over RTSP versus RTMP, which makes profiling and monitoring connection patterns a pain.
+## Description
 
-What I want is a per-type reader count exposed in the primary metrics section (not the deprecated one) that breaks down the active readers by their connection protocol type. So when a path has readers of multiple types, I need a separate metric line for each type, each labeled with its type and showing the count for just that type. And when there's more than one line for the same path, they should come out sorted alphabetically by the connection type name so the output is stable and dashboards can rely on it.
+The streaming server's metrics endpoint currently reports only a total reader count per path, placed in the deprecated metrics section. There's no way to tell from the metrics how many readers are using each protocol type — for example, how many are connected via RTSP versus RTMP. This makes it hard to profile or monitor connection patterns.
 
-Oh and at the same time, the old aggregate total reader count that currently lives in the deprecated section should just go away entirely, since this new type-aware metric in the primary section makes it redundant. This is mostly so operators can build dashboards and alerting that break reader connections down by protocol instead of only seeing a single opaque number.
+## Expected Behavior
+
+- The metrics endpoint should expose a per-type reader count metric in the **primary** metrics section, breaking down active readers by their connection protocol type.
+- When a path has readers of multiple types, there should be a separate metric line for each type, labeled accordingly, with the count for that type.
+- Multiple lines for the same path should appear sorted alphabetically by connection type.
+- The total reader count metric that currently lives in the deprecated section should be removed from the deprecated section (the new per-type metric in the primary section replaces it).
+
+## Why This Matters
+
+Operators monitoring a live streaming server often need to understand not just how many viewers are watching a stream, but which protocols they're using. With the current single-count metric in the deprecated section, this visibility is entirely absent. The new per-type metric allows dashboards and alerting systems to break down reader connections by protocol.

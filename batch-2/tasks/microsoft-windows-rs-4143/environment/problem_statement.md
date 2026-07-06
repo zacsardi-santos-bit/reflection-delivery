@@ -1,7 +1,18 @@
-I'm hacking on the RDL interface definition language over in windows-rs and want to add proper property and event shorthands inside interface bodies. Right now if I want a property I have to write out a pair of specially-named getter/setter functions each carrying a marking attribute, and it's verbose and easy to screw up, plus it doesn't really convey "this is a property" as a first-class thing. Same deal with WinRT events, I've gotta hand-write an add/remove method pair instead of just declaring the event.
+## Description
 
-So I want a concise field-like syntax for declaring a property directly in an interface body. With no qualifying annotation it should be read-write, generating both getter and setter. If it's annotated read-only I only want a getter, and write-only gives just a setter. For events I want a dedicated shorthand that binds a name to a delegate handler type.
+The RDL interface definition language currently requires developers to express interface properties by writing out individually annotated getter and setter functions, using a special naming convention and a marking attribute on each. This is unnecessarily verbose and does not clearly convey the concept of a "property" as a first-class construct. Similarly, WinRT interface events must be expressed as a pair of add/remove methods rather than as a dedicated event declaration.
 
-Validation matters here too. If someone marks a single property as both read-only and write-only at once, the parser should reject it with a clear error that points at the location. Same if a property carries some annotation that isn't the recognized read-only or write-only one, reject it with a location-aware message that spells out which annotations are actually supported.
+We should introduce a simpler, more expressive shorthand for declaring properties and events directly within interface bodies.
 
-Oh and the writer needs updating so roundtripping works, meaning when an interface gets serialized back out it emits these new property and event shorthands rather than expanding them back into the individual getter/setter or add/remove method forms. The parsing and writing bits live in the RDL crate, so wire the new syntax through wherever the interface body parsing and the emitter code already are. Point is to bring RDL closer to the actual conceptual model of COM and WinRT interfaces so definitions are easier to read and maintain.
+## Expected Behavior
+
+- A property can be declared with a concise field-like syntax inside an interface body. Without any qualifying annotation, the property is read-write.
+- A property annotated as read-only generates only a getter; a property annotated as write-only generates only a setter.
+- If a property is annotated with both the read-only and write-only annotations simultaneously, the parser must reject it with a clear, location-aware error message.
+- If a property carries any annotation that is not the recognized read-only or write-only annotation, the parser must reject it with a clear, location-aware error message explaining which annotations are supported.
+- WinRT interface events can be declared with a dedicated shorthand that binds a name to a delegate handler type.
+- The writer (used for roundtripping) must emit these shorthands back when serializing interfaces, rather than expanding them to individual method representations.
+
+## Why This Matters
+
+The old approach required several lines and special naming conventions for every property, obscuring intent and increasing the chance of mistakes. First-class property and event syntax makes interface definitions easier to read, write, and maintain, and brings the RDL language closer to the conceptual model of COM and WinRT interfaces.

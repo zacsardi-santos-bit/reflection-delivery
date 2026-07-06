@@ -1,5 +1,15 @@
-I'm working in the memories backend of the Codex Rust codebase and I need to add support for reading a memory file starting from a specific line instead of always dumping the whole thing from line 1. Right now every read hands back the entire file content, which is wasteful for big memory files where only the tail matters, like after an agent already chewed through the earlier sections and just wants to pick up from a known line. So I want the read to accept an optional 1-indexed starting line number, and when it's set the response should only contain the content from that line onward. Also the response needs to echo back the line number it started from so the caller can confirm where the returned chunk begins.
+## Description
 
-I need the invalid input cases handled properly too. If the starting line is zero, that's not a valid 1-indexed position so I want the request rejected with a specific error rather than pretending it's fine. And if the starting line points past the end of the file (exceeds the total line count) that should be a separate, descriptive error, not a silent empty result. Both of these need to be new variants on the backend error enum, and when they surface through the MCP server layer they should be treated as invalid parameter errors, same bucket as the existing validation stuff like invalid paths or empty queries.
+The memories backend currently only supports reading a file from the very beginning. There is no way to specify a starting line when reading a memory file. This becomes a problem when working with large memory files where only the latter portion is relevant — for instance, after an agent has already processed earlier sections and wants to continue from a known line.
 
-Oh and the no-offset path has to stay unchanged: when no starting line is given, or the starting line is 1, I still want the full file content returned from the beginning like before.
+## Expected Behavior
+
+- Reading a memory file should accept an optional 1-indexed starting line number. When specified, only the content from that line onward is returned.
+- The response should include the line number from which the content begins, so callers can confirm where the returned content starts.
+- If the starting line number is zero (which is not a valid 1-indexed position), the request should be rejected with an appropriate error.
+- If the starting line number exceeds the total number of lines in the file, the request should be rejected with a separate, descriptive error rather than returning empty content silently.
+- When no starting line is specified (or the starting line is 1), the behavior is unchanged — the full file content is returned starting from the beginning.
+
+## Why This Matters
+
+Without line offset support, agents must re-read memory files from the top every time, even when only the tail of a file is relevant. Supporting a starting line number makes memory access more efficient and allows incremental reading patterns.

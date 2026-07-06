@@ -1,5 +1,17 @@
-I'm working on Storybook and I want to add a runtime instance registry so external tools, especially AI coding assistants, can figure out which Storybook servers are actually running right now. The problem is there's no shared place on disk that tracks this stuff, so nothing can discover the URL a running instance is reachable at, what version it is, or whether the AI integration addon is active and on which endpoint. I want to fix that.
+## Description
 
-Basically I need a utility module that writes a small JSON record to a configurable directory whenever an instance starts up. Each record should capture the server's origin URL as just the base URL with no navigation path or query parameters, plus the port, the process ID, the working directory, the version, and details about the AI integration addon, whether it's installed and which endpoint it exposes. If that addon isn't present in the project's configuration, the record should reflect that it's not installed. If it is configured with a custom endpoint, record that endpoint, otherwise fall back to a sensible default endpoint value.
+When Storybook starts, external tools and AI-powered workflows have no reliable way to discover which Storybook instances are currently running, what URLs they are accessible at, which version is in use, or whether an AI integration addon is active and on which endpoint. There is currently no shared registry on disk that tracks this runtime metadata.
 
-Couple things that matter: the write needs to be atomic (write to a temp file then rename) so other processes don't read a half-written file, and I also need to be able to clean up (delete) the record when the instance stops. On top of that I want a higher-level convenience helper that does the whole lifecycle in one shot, generate a fresh record, write it into the registry directory, and return both the path to the written file and an async cleanup function that deletes it. Oh and the registry directory and the other params should all be configurable so I can use this in different environments and test setups.
+## Expected Behavior
+
+- A utility module should be created that writes a small JSON record to a configurable directory when a Storybook instance starts up.
+- Each record should capture the instance's origin URL (without navigation path parameters), port, process ID, working directory, version, and information about whether the AI integration addon is installed and which endpoint it exposes.
+- If the AI integration addon is not in the project's configuration, the record should reflect that it is not installed.
+- If the AI integration addon is configured with a custom endpoint, that endpoint should be recorded; otherwise a default endpoint value should be used.
+- The record should be written atomically (via a temporary file and rename) to avoid partial reads by other processes.
+- When a Storybook instance stops, it should be possible to clean up (delete) the record it wrote.
+- A higher-level helper should handle the full lifecycle: creating the record, writing it, and returning both the path and a cleanup function.
+
+## Why This Matters
+
+Without this registry, external tools — such as AI coding assistants — cannot discover running Storybook instances or determine whether the AI integration addon is available, which prevents automated workflows from connecting to live Storybook servers.

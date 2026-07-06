@@ -1,7 +1,26 @@
-I'm cleaning up how tools hand their schema to LLMs in LangChain core and the current setup bugs me. Every time you touch a tool's schema it gets rebuilt from scratch, and the derived bits (the input validator, the arg properties, the char count we use for token estimation) are all cached separately, so when a tool's name or description changes the invalidation gets messy and fragile.
+## Description
 
-What I want is one unified schema object living on each tool that's the single cached source of truth. If I access it a bunch of times it should hand back the same instance, not a new one, and it should get recomputed automatically when the tool's name or description gets mutated (so mutating the name means the next access gives me a fresh schema carrying the updated name). That object needs a method to validate incoming tool-call data and coerce it to the expected types, and it should carry a character count of the schema payload for token estimation. That count has to match whatever the tool already reports through its existing approximate character-count attribute, they can't drift. Oh and the new schema type needs to be importable straight from the top-level tools module so callers can reference the type directly.
+Tool objects currently rebuild their input schema from scratch every time it is accessed, and the various schema-derived values (input validator, argument properties, character count) are each cached independently with no single source of truth. This leads to redundant work and makes cache invalidation fragile when a tool's name or description changes.
 
-While I'm in here, there's a related bug in schema conversion (turning tool defs into the format LLMs expect). Optional fields are wrongly landing in the required list right now. They should still show up in the property definitions but not be listed as required, otherwise we're lying to the LLM about what it has to pass. Also there's a straight-up crash when a tool's input schema has a mutable-set field type, it raises instead of handling it, so that needs to convert correctly too.
+We need a unified, cached schema representation on each tool that is recomputed only when the tool definition changes. This object should provide:
+- Input validation for tool call data
+- A character count of the schema payload (for token estimation)
+- Consistent invalidation when the tool's name or description is mutated
 
-Reason this matters: apps that hit tool schemas a lot pay for all that redundant rebuilding, and the optional-field thing causes real wrong behavior. Relevant code lives around the tools base in `@libs/core/langchain_core/tools` with the export coming through the top-level tools namespace there.
+The new schema representation should also be exportable from the top-level tools module so callers can reference its type directly.
+
+## Expected Behavior
+
+- Accessing the tool's schema object multiple times returns the same cached instance
+- Mutating the tool's name produces a fresh schema with the updated name on the next access
+- The schema object validates input data and coerces it to the expected types
+- The schema's character count matches what was previously reported by the approximate character count attribute on the tool itself
+- The schema type is importable from the top-level tools namespace
+
+## Related Issue
+
+Additionally, when converting tools whose inputs include optional fields, optional fields are incorrectly included in the required-fields list. They should appear in the schema's properties but not be listed as required. Similarly, certain uncommon collection types (such as mutable sets) currently raise an error during schema conversion — these should be handled correctly.
+
+## Why This Matters
+
+Reducing redundant schema construction improves performance for applications that access tool schemas frequently. Correct optional-field handling prevents LLMs from being told a field is required when it is actually optional.

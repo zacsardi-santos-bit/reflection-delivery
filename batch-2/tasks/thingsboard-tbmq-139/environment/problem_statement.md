@@ -1,7 +1,16 @@
-I'm working on our MQTT broker and I want to start tracking two things about each client session, the MQTT protocol version the client connected with (like MQTT 3.1.1 or MQTT 5) and the name of the credential set used to authenticate them. Right now there's no fast path to get at this during an active session, retrieving it means expensive lookups on every query against slower sources of truth, so I'd like to keep it hot for operational visibility and perf.
+## Description
 
-What I want is for both of these to live in dedicated caches at connection time, one cache for the protocol version and a separate one for the credential name, both keyed by the client's ID. So when a client connects its protocol version gets stored keyed by client ID, and when a client successfully authenticates with basic credentials the credential set's name gets written into the other cache keyed by client ID too.
+The broker does not currently track which MQTT protocol version a connected client is using, nor which named credential set was used to authenticate the client. Retrieving this information requires expensive lookups on every query, and there is no fast path to access it during an active session.
 
-On cleanup, when a non-persistent (clean-session) client disconnects and its session is removed, both cache entries should get cleared automatically. For persistent sessions though the cached entries should stick around after disconnect and only get removed when the session is fully torn down, e.g. when the client reconnects with the clean-start flag and then disconnects.
+We need the broker to record each client's protocol version and authentication credential name in dedicated caches when the client connects, and to clean up those entries when the session is fully removed.
 
-Wiring-wise I need the connection-handling service and the session management service to both use this caching mechanism, and the authentication layer is the one that populates the credential name cache on successful login. Both services should reach the caches through a shared resolver component so there's one place holding these. Oh and make sure the removal path (non-persistent teardown vs persistent full-cleanup) matches that lifecycle exactly, that's the tricky bit.
+## Expected Behavior
+
+- When a client connects, its protocol version (e.g., MQTT 3.1.1 or MQTT 5) is stored in a cache keyed by client ID.
+- When a client successfully authenticates using basic credentials, the name of the credential set used is stored in a separate cache keyed by client ID.
+- When a non-persistent (clean-session) client disconnects and its session is removed, both cache entries are cleared automatically.
+- For persistent sessions, the cached entries remain after the client disconnects and are only removed when the session is fully cleaned up (for example, when the client reconnects with the clean-start flag and then disconnects).
+
+## Why This Matters
+
+This allows the system to quickly retrieve connection details — protocol version and credential name — for any active or persisted session without additional database lookups, improving operational visibility and system performance.

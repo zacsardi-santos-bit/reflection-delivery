@@ -1,7 +1,18 @@
-I'm working on the NGINX Kubernetes Ingress Controller and I hit a real gap in how we track policy references from Ingress resources. Right now the policy reference checker always reports that Ingress and Minion resources don't reference any policy, so when a policy gets updated in the cluster nothing downstream refreshes and the affected Ingress configs just go stale silently. I need to actually make this lookup work.
+## Description
 
-The way it works is we store policy references in an annotation on the Ingress object, and the value is a comma-separated list of policy names. Each entry is either a bare name (which means the policy lives in the same namespace as the Ingress) or a fully qualified reference with namespace and name separated by a slash. So the checker needs to parse that annotation and, given a policy identified by namespace and name, figure out if it's listed. A bare name should only match when the policy's namespace matches the Ingress's namespace, and for a comma-separated list any single matching entry should return true. This applies to both Ingress and Minion resources.
+When a policy is updated in the cluster, the ingress controller needs to identify which Ingress resources reference that policy so they can be reconfigured. Currently, the policy reference checker always reports that Ingress and Minion resources do not reference any policy, which means Ingress configurations are never refreshed when a policy changes. We need this lookup to actually parse the policies annotation on an Ingress and correctly determine whether a given policy (identified by namespace and name) is referenced.
 
-On top of that I want validation for the annotation value so each policy entry is a properly formed name, non-empty, lowercase, valid DNS subdomain format (alphanumeric plus hyphens and dots, no leading or trailing hyphens or dots, no consecutive dots, within the length limits), and when the namespaced slash format is used both the namespace part and the name part get validated independently. The errors should clearly say whether the issue is an empty name, an empty namespace, an invalid name format, or an invalid namespace format, so users catch misconfigured policies early instead of at runtime.
+Policies can be listed in an Ingress annotation as either a bare name (implying the same namespace as the Ingress) or as a fully qualified namespace-plus-name reference. The reference checker should handle both formats, as well as comma-separated lists of multiple policies.
 
-Oh and one more thing while I'm in here, the ingress annotation validation function currently takes a long list of individual boolean feature-flag parameters and it's getting unwieldy, so I want to refactor it to accept a single consolidated options object grouping all those flags instead. This all lives in the ingress controller reference-checking and annotation validation code paths, so update the relevant callers to match the new signature too.
+## Expected Behavior
+
+- The policy reference checker correctly returns true when an Ingress or Minion references the given policy, either by bare name or by namespaced reference.
+- When a policy is listed by bare name, it only matches if the policy's namespace matches the Ingress's namespace.
+- When a policy is listed as a comma-separated list, any matching entry should cause the method to return true.
+- The annotation value should be validated to ensure each policy entry is a properly formed name: non-empty, matching DNS subdomain rules (lowercase alphanumeric, hyphens and dots, no leading/trailing hyphens or dots, no consecutive dots, within length limits).
+- When a namespaced format is used, both the namespace and name parts are validated independently.
+- The ingress annotation validation should be refactored to accept a single consolidated options object instead of a long list of individual boolean parameters.
+
+## Why This Matters
+
+Without proper reference tracking, changes to policies attached to Ingress resources are silently ignored, leaving Ingress configurations stale. Adding robust validation of policy annotation values also helps users catch misconfigured policies early rather than at runtime.

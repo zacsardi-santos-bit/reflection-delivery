@@ -1,5 +1,15 @@
-I've got an outer wrapper model that holds an inner base model identified by a prefix, and I'm loading a checkpoint that was saved without that outer prefix in its key names. I set up a weight rename rule scoped to a specific part of the model and configured it with both a scope prefix and the model's base prefix, but loading blows up with missing keys. The rename rule just doesn't fire for checkpoint keys that drop the outer base prefix, even when the inner scope prefix is right there in the key.
+## Description
 
-What I want is for the renaming logic to cope with both forms of checkpoint keys, the ones that carry the full path including the base prefix and the ones that omit it (raw submodule checkpoints, basically a base-model-only save that doesn't know about the wrapper). So the rename rule needs to be aware of the model's base prefix and match keys with or without it. After loading, the renamed weight should land in the correct spot with nothing missing, unexpected, or mismatched.
+When loading a checkpoint into a model that has a hierarchical structure — specifically one where an outer wrapper model contains an inner base model identified by a prefix — the weight renaming mechanism fails when the checkpoint omits that outer prefix from its key names.
 
-Oh and the reverse path matters too, when I save the model back out to checkpoint format the original checkpoint key names should be reconstructed exactly, so load and save stay symmetric. Right now valid base-model-only checkpoints fail to load into wrapper architectures whenever rename rules are involved, which forces manual key surgery before loading, and I'd rather the machinery just handle the common pattern of omitting outer model prefixes on its own.
+This is a common scenario when working with "raw" submodule checkpoints (e.g., a base model checkpoint that doesn't include the wrapper's prefix) or when the scope of a rename rule aligns with the model's base prefix. In these cases, the rename rule cannot match the checkpoint key, so the weight is left unloaded (appearing as a missing key), even though the intent of the rename rule is clear.
+
+## Expected Behavior
+
+- A rename rule should be configurable with awareness of the model's base prefix so that it can match checkpoint keys both with and without that prefix.
+- When a checkpoint key omits the outer base prefix (but includes any inner scope prefix), loading should succeed — the renamed weight should land in the correct model location, with no missing, unexpected, or mismatched keys.
+- The reverse path (saving model weights back to checkpoint format after loading) must reconstruct the original checkpoint key names, maintaining symmetry between loading and saving.
+
+## Why This Matters
+
+Without this fix, valid checkpoints from base-model-only saves fail to load correctly into wrapper model architectures when rename rules are involved, forcing users to manually adjust checkpoint keys before loading. This change makes the loading and saving paths robust to the common pattern of omitting outer model prefixes in checkpoints.

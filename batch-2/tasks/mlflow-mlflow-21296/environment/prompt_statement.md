@@ -1,0 +1,7 @@
+I'm cleaning up how DSPy model traces show up in the model trace explorer and right now it's kind of a mess. DSPy sticks section delimiter markers into its outputs, those double-bracket things wrapping a section name, and they render as raw bracketed text so a trace just looks like it's full of technical noise instead of readable structure. What I want is: when one of those markers sits on its own line, convert it into a proper markdown section heading so it's obvious where each named section starts. Oh and there's a special "completed" termination marker that shouldn't render as a heading or anything, just silently drop it since it means nothing to a human reading the trace.
+
+The tricky bit is that some messages mention these same markers inside inline code blocks (backtick spans), and those need to stay exactly as-is, don't touch them, because that's real technical context someone put there on purpose. Also section names that use underscores as word separators should come out with spaces and proper capitalization instead of raw snake_case.
+
+Separately I need to handle when a DSPy response is actually a JSON value, it should render as a formatted, syntax-highlighted code block rather than plain text so it's actually readable.
+
+Can you pull the marker-to-heading conversion into its own dedicated utility function so it can be reused and tested on its own? That's the piece I care most about getting right and independently verifiable.

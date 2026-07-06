@@ -1,7 +1,19 @@
-I want to add the AAA (Adaptive Antoulas-Anderson) rational approximation algorithm to SciPy's interpolation module (over in `@scipy/interpolate`). It's a well-known method for building near-optimal rational approximants from function samples in barycentric form, and it's really useful for functions with poles or near-singularities where polynomial interpolation falls over. Having it directly in SciPy saves people from reaching for external tools for something this fundamental.
+## Description
 
-Basically I want a new class where you pass in a set of sample points and corresponding function values and get back a callable rational approximation of the function. The returned object should be evaluable at new points, and it should handle special floating-point values like NaN and infinity gracefully when you call it rather than blowing up. It should expose the selected support points, support values, barycentric weights, and per-iteration approximation error estimates as attributes, plus methods to compute the poles, residues (at those poles), and roots (zeros) of the approximation.
+SciPy's interpolation module currently lacks support for rational function approximation via the Adaptive Antoulas-Anderson algorithm. This is a well-established numerical method that constructs near-optimal rational approximants from function samples in barycentric form, and it is widely used in scientific computing for tasks that polynomial-based interpolation cannot handle well — particularly near singularities.
 
-The constructor needs to validate inputs, so raise a descriptive error if the sample points and values have mismatched sizes, if either isn't a 1-D array, or if the sample points contain non-finite values. It should take optional tolerance and maximum-terms parameters to control convergence, and if it can't converge within the allowed number of terms it should warn me instead of silently handing back garbage. Oh and the algorithm should skip over input function values that are NaN or infinite rather than failing on them.
+## Expected Behavior
 
-One thing I really care about: it needs to preserve the floating-point precision of the input. So if I feed it single-precision data, the evaluation output and all the attributes should come back single-precision too, with the poles, residues, and roots returning the matching complex type.
+A new approximation class should be added to the interpolation module that:
+
+- Accepts a set of sample points and corresponding function values and constructs a rational approximation of the function.
+- Returns a callable object that can be evaluated at new points, including graceful handling of special floating-point values like NaN and infinity.
+- Exposes the selected support points, support values, barycentric weights, and per-iteration error estimates as attributes of the returned object.
+- Provides methods to compute the poles, residues, and roots (zeros) of the rational approximation.
+- Validates its inputs: raises an error if the sample points and values have mismatched sizes, if either is not a 1-D array, or if the sample points contain non-finite values.
+- Accepts tolerance and maximum-terms parameters to control convergence, and warns the user if convergence is not achieved within the allowed number of terms.
+- Preserves the numerical precision of the input data: the returned approximation and all of its attributes should use the same floating-point type as the inputs.
+
+## Why This Matters
+
+Rational approximation is far more powerful than polynomial interpolation for functions with poles or near-singularities. The AAA algorithm is particularly robust because it is adaptive (it selects support points automatically), numerically stable (it uses barycentric weights), and it provides direct access to the analytic structure of the approximated function through its poles, residues, and roots. Having this available in SciPy directly saves users from depending on external tools for a fundamental numerical computing capability.

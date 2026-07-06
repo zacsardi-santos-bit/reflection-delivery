@@ -1,5 +1,17 @@
-I'm cleaning up the Python SDK and the way we handle permission escalations right now is kind of a mess. Every thread and turn operation makes you set two separate low-level params together, one being some internal approval policy concept and the other a reviewer field, and honestly it's not obvious which combos are valid or what they even mean. I want to collapse those two into a single high-level option that's an enum with a small set of named choices, one that denies all escalated permission requests and one that routes them to automatic review. That way people can just express intent ("deny everything" or "let the system handle it") without knowing anything about the underlying policy model.
+## Description
 
-This new option needs to show up on all the thread-creation methods, the thread-management ones, and the turn methods, and it has to be there on both the sync and async client variants. For brand new threads the default should be automatic review so it works sensibly with zero config. But when you're resuming, forking, or running a subsequent turn on an existing thread, the default should be to leave whatever approval settings are already there alone rather than clobbering them, unless the caller explicitly picks a mode. Oh and if someone passes a value that isn't valid, the error needs to clearly list the valid options so they know what to use.
+The SDK currently exposes approval behavior through two separate low-level parameters on thread and turn operations. Callers must understand internal approval policy concepts and a separate reviewer field to configure this correctly, which is confusing and error-prone. These two parameters should be replaced with a single, high-level option that clearly communicates the intent.
 
-Also make sure the new enumeration is exported from the root package so folks can import it directly right alongside the other public types.
+## Expected Behavior
+
+- A new high-level enumeration with two named options should replace the two existing approval parameters across all thread and turn operations:
+  - One option that denies all escalated permission requests
+  - One option that routes permission requests to automatic review
+- New thread operations should default to the automatic review mode so permission requests are handled gracefully without any explicit configuration.
+- Operations on existing threads (resuming, forking, or running subsequent turns) should default to preserving whatever approval settings are already in place, without overriding them, unless the caller explicitly specifies a mode.
+- Passing an unrecognized value should produce a clear error message listing the valid options.
+- The new enumeration must be part of the package's public API surface.
+
+## Why This Matters
+
+Developers should not need to know about internal policy models or reviewer configurations to express a simple intent like "deny all escalations" or "let the system handle it automatically." A single named option that maps to the correct underlying behavior is much easier to use correctly and harder to misuse.

@@ -1,7 +1,21 @@
-I'm hardening the extension management system and there's a gap that's basically a supply-chain risk: nothing stops someone from editing an installed extension's recorded install source after the fact, and when an update runs the updater just trusts the new location and applies it with zero verification. I want a cryptographic integrity check so before any update goes through, we confirm the installation source metadata hasn't changed since it was first recorded. On install or update we should store a signature of that metadata, and before applying an update we verify the stored signature against the current metadata. If it's been tampered with, block the update and give the user a clear error. If there's no integrity record yet (extension was installed before this feature existed), let the update proceed and write the initial trust record. And if the verification itself throws for some reason, also block the update with a descriptive message. Oh and the update command should prompt for confirmation before doing anything.
+## Description
 
-Store the integrity data securely: use the system keychain where it's available, otherwise fall back to a file with restrictive permissions. The signing key comes from the keychain, or gets generated and stored there if it's missing, and when the keychain isn't available the key lands in a file under the user's config directory.
+The extension management system has no mechanism to detect whether an extension's installation data has been tampered with between installation and an update. If someone modifies the recorded source location or configuration of an installed extension after the fact, the system will happily apply the forged update without any warning. This is a potential supply-chain security risk.
 
-There's also a startup mess to clean up. When an extension is linked to a source dir that no longer exists, the orphaned install directory gets left behind in a broken state that blocks re-installation, so I want that auto-deleted at startup instead. Also the broken-extension warnings are inconsistent right now, some go through the error channel and say "skipping" when they actually remove things, so make them a consistent format that names the extension and makes clear it was removed, routed through the warning channel not error.
+Additionally, when loading extensions at startup, broken or invalid extension installations produce inconsistent behavior: some errors go through the wrong logging channel, the messages say "skipping" rather than describing what actually happens (removal), and orphaned installation directories from failed or corrupted linked extensions are left behind — preventing re-installation until the user manually cleans them up.
 
-Last thing, macOS specific: the keychain availability check can succeed even when the default keychain database file is missing from disk, so it needs to actually verify that file exists before using the native keychain, and fall back to file-based key storage if it doesn't.
+On macOS, the keychain availability check can return incorrect results when the default keychain database file is missing from disk. Instead of gracefully falling back to an alternative storage mechanism, the system may attempt to use a broken native keychain.
+
+## Expected Behavior
+
+- When an extension is installed or updated, a cryptographic signature of its installation source metadata should be stored securely (using the system keychain where available, with a file-based fallback).
+- Before performing any extension update, the system should verify that the stored signature matches the current metadata. If tampering is detected, the update should be blocked with a clear error message.
+- If no integrity record exists yet (first update after this feature is deployed), the system should proceed with the update and establish the initial trust record.
+- At startup, any extension installation that points to a non-existent source should be automatically removed so the user can re-install cleanly.
+- Warnings about broken extensions during loading should use a consistent format that names the extension and describes what action was taken (removal), and should be routed through the standard warning channel rather than the error channel.
+- On macOS, before using the native keychain, the system should verify that the default keychain database file actually exists on disk, and fall back to file-based key storage if it does not.
+- The extension update command should prompt the user for confirmation before proceeding.
+
+## Why This Matters
+
+Without integrity verification, a compromised extension record could redirect an update to a malicious source without the user's knowledge. Automatic cleanup of orphaned installations removes a common frustration where users cannot re-install an extension after a failed or manually removed installation. Better warning messages make it easier to understand what the system did and why.

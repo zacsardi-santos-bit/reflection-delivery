@@ -1,9 +1,20 @@
-I'm adding a registry for remote AI tool servers (think MCP servers) into MLflow's database-backed tracking store since there's no data layer for this yet. I need full CRUD so servers, their versioned configs, lifecycle statuses, endpoint access bindings, tags, and named aliases all live in the DB and can be queried.
+# Add MCP Server Registry to the Database-Backed Tracking Store
 
-So creating servers should reject duplicate names and empty names with sensible errors. Each server can have versioned configs, and a version carries a lifecycle status (draft, active, deprecated, or deleted) plus structured tool definitions and metadata. Deletion is soft, so deleted versions get excluded from every query. Status can only move through allowed transitions and invalid ones should be rejected. Also a version can't be directly deleted while it's active, it has to move to an intermediate state first.
+## Description
 
-Named aliases should let users point at a specific version so they can reference a logical channel like "stable" instead of pinning a version string. The alias "latest" is reserved and auto-resolves to the most recently created eligible version, and when two versions share the same creation timestamp I want a deterministic tiebreaker. Aliases pointing at a deleted version get cleaned up automatically.
+MLflow needs a persistence layer for managing a registry of remote AI tool servers. Currently there is no way to store, version, or query these server configurations in the database. We need a full registry implementation backed by the existing database tracking store so that users can register servers, publish versioned configurations, control their lifecycle, and bind endpoint URLs to specific versions or named aliases.
 
-Access bindings tie an endpoint URL and transport type to a specific version or alias, and each binding should expose the concrete resolved version it points to. Bindings referencing deleted versions or aliases should be hidden in search results (or cleaned up). Both servers and versions support key-value tags with upsert semantics (add, update, delete), oh and trying to modify tags on a deleted version should error.
+## Expected Behavior
 
-Search over servers, versions, and bindings needs pagination with tokens, filtering by attributes (name, status, tags, access binding presence, transport type, timestamp), and ordering, with descriptive errors when the filter attribute or ordering key is invalid. And cascading deletes matter, deleting a server should wipe all its versions, tags, aliases, and bindings.
+- Users can create, retrieve, update, and delete entries for remote tool servers. Duplicate server names or empty names are rejected with appropriate errors.
+- Server configurations can be versioned. Each version tracks its lifecycle status (draft, active, deprecated, or deleted) and can carry structured tool definitions and metadata. Deleted versions are soft-deleted and excluded from all queries.
+- Status can only transition through allowed paths. Attempting invalid transitions is rejected. A version cannot be directly deleted while active — it must first be moved to an intermediate state.
+- Servers can have named aliases that point to specific versions, making it easy to reference a logical channel (e.g. "stable") rather than a hard-coded version string. The alias "latest" is reserved and always resolves automatically. Aliases are cleaned up when the version they point to is deleted.
+- Access bindings associate endpoint URLs and transport types with a specific version or alias. Bindings referencing deleted versions or aliases are hidden or cleaned up. Each binding exposes the resolved concrete version it points to.
+- Servers and server versions support key-value tags for metadata. Tags can be added, updated, or deleted.
+- Search operations for servers, versions, and bindings support pagination, filtering (by name, tag, status, access binding presence, transport type), and ordering.
+- Cascading deletes ensure that when a server is deleted, all its versions, tags, aliases, and bindings are also removed.
+
+## Why This Matters
+
+This registry provides the data layer that allows MLflow to catalog and serve information about remote tool servers, enabling downstream features that depend on discovering and connecting to these servers.

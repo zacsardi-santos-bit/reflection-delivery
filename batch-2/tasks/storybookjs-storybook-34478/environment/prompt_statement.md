@@ -1,0 +1,7 @@
+I'm cleaning up how Storybook's manager API handles clearing test statuses. Right now when someone hits the clear-all button in the sidebar, the code reaches straight into internal status stores and wipes them, which totally bypasses the test provider abstraction. That's fragile and tightly coupled, plus third-party or future test providers have no way to hook into it. I want to make clearing a proper first-class operation on the addons manager instead.
+
+So I need a new method on the addons manager API that broadcasts a "clear statuses" signal to every registered test provider. When it runs it should iterate over all the registered providers and, for each one that defines a clear callback, call it. Providers that don't have a clear callback should just be silently skipped, no error. And this is important, if one provider's clear callback throws, the method needs to catch that and keep going through the rest, it should never throw back to the caller. So one bad provider can't block the others from clearing.
+
+I also want the test provider type definition updated so it includes this optional clear callback property, that way any provider (built-in or external) can opt in just by declaring it in its registration object. And the built-in test provider itself should implement the callback so that when the signal comes in it resets both its component test statuses and its accessibility statuses.
+
+The end goal is that the sidebar UI can trigger clearing through this single well-defined API call without knowing anything about each provider's internals.

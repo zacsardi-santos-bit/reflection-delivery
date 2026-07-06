@@ -1,7 +1,14 @@
-I'm hardening the integrity verification in our package manager and there's a real gap I keep hitting. Right now when the tarball we pull from the registry doesn't match the checksum recorded in the lockfile, a normal install just logs a warning, quietly overwrites the stored checksum, and carries on like nothing happened. That basically defeats the whole point of committing a lockfile. A compromised registry, a tampered proxy, or a version republished with different content could swap in attacker-controlled packages on a clean machine and we'd just accept the new bytes. The protection only actually kicks in today if you happen to run with frozen-lockfile, which is backwards.
+## Description
 
-So I want a checksum mismatch against the lockfile to be a hard failure by default, even during a regular non-frozen install. And the force flag should not be a bypass here, it's a routine refresh operation, so it must not silently overwrite locked checksums either. Force isn't permission to rewrite integrity values.
+When a package's tarball checksum doesn't match the value recorded in the lockfile, the package manager currently logs a warning and silently overwrites the stored checksum, then continues with the install as if nothing happened. This defeats the entire purpose of committing a lockfile: a compromised registry, a republished version with different content, or a tampered proxy could substitute attacker-controlled packages on a clean machine and the tool would simply accept the new content.
 
-I also want a new dedicated opt-in option that explicitly allows refreshing the locked checksums from the registry, which is the right escape hatch for legit cases like a package getting republished under the same version, or stale metadata. That should be the only sanctioned way to rewrite those values so any bypass is an explicit, auditable action.
+## Expected Behavior
 
-One more thing: using that new checksum-refresh option together with the frozen-lockfile option needs to be rejected immediately with a clear error, since the two modes are fundamentally incompatible. Frozen installs are designed to never modify the lockfile, and the refresh option exists specifically to rewrite it, so they directly conflict and can't be combined.
+- A checksum mismatch against the lockfile should be a hard failure by default, even during a regular (non-frozen) install.
+- The force flag should not act as a bypass for integrity verification — it is a routine refresh operation and should not silently overwrite locked checksums.
+- A new dedicated opt-in option should be introduced to explicitly allow refreshing locked checksums from the registry (useful after a legitimate republish or stale metadata).
+- Using the new checksum-refresh option together with the frozen-lockfile option should be rejected with a clear error, since those two modes are fundamentally incompatible: frozen installs are designed to never modify the lockfile.
+
+## Why This Matters
+
+A committed lockfile is a security control. Silently overwriting its integrity values on any install means the protection only works if you happen to run with frozen-lockfile. Making mismatches fail hard by default closes the gap and ensures that any bypass is an explicit, auditable action.

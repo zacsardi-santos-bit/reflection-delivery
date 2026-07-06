@@ -1,5 +1,17 @@
-I keep hitting a formatter bug in Gleam where comments I put inside type annotations get moved around or straight up deleted. Concretely, when I write a function that takes another function as a param and I add comments between the type arguments of that function type to explain what each one is for, running the formatter silently displaces or drops them. Same deal with tuple return type annotations, a comment I put before a specific element ends up landing after that element instead of staying put where I wrote it. It's annoying because I use these inline comments to document complex signatures and the formatter basically punishes me for it, discouraging inline docs in types and quietly corrupting carefully written code every run.
+# Formatter Moves Comments Out of Type Annotations
 
-What I want is for the formatter (over in `@compiler-core/src/format.rs`, the code annotation printing path) to preserve comments that appear before type arguments in any type annotation context. So a comment before a type argument in a function type stays before that argument after formatting, a comment before a tuple element stays before that element and not after, trailing comments at the end of a function type's arg list stay in place, and nested function types with commented type arguments format with everything in the right spot. Also multiple consecutive comment lines before a single type argument should all survive together, not just one of them.
+## Description
 
-The big thing is idempotency, running the formatter on already-formatted code that has comments inside type annotations should produce zero changes, and running it multiple times shouldn't drift either. Can you fix it so all these cases round-trip cleanly?
+The Gleam code formatter incorrectly handles comments that appear within type annotations. When a developer adds comments before individual type arguments inside a function type annotation — for example, to document what each parameter represents — running the formatter either drops those comments or moves them to an incorrect position. The same issue occurs with comments placed before elements in tuple return type annotations: a comment intended to appear before a specific element ends up displaced to after that element.
+
+## Expected Behavior
+
+- Comments placed before a type argument within a function type annotation should remain before that argument after formatting.
+- Comments before elements in a tuple type annotation should appear before the element they describe, not after it.
+- Trailing comments at the end of a function type's argument list should be preserved in place.
+- Nested function types with commented type arguments should format with all comments in their correct positions.
+- Multiple consecutive comment lines before a single type argument should all be preserved together.
+
+## Why This Matters
+
+Developers sometimes add explanatory comments within complex function type signatures to describe what each parameter is. When the formatter destroys or misplaces these comments, it discourages inline documentation within types and can silently corrupt carefully authored code every time the formatter runs. The formatter should be idempotent — running it multiple times on already-formatted code should produce no changes.

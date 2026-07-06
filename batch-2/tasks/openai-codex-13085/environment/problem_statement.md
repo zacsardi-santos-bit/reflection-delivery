@@ -1,5 +1,17 @@
-I keep running into stale and sometimes corrupted memory data in my local setup, and there's no clean way to blow it all away from the CLI. Right now if I want a fresh start I have to go poke at the database by hand to delete records, then separately hunt down and remove the memories folder on disk, which is tedious and honestly easy to get wrong (partial cleanups leave the system in a weird inconsistent state). I want a debug subcommand that resets the whole memory system to a clean slate in one shot.
+## Description
 
-So the command should clear out all the stored memory summaries from the database, and also remove any memory-related background jobs, both the per-session ones and the global consolidation jobs, whether they're pending or already completed. On top of that it needs to mark all existing sessions as memory-disabled so that old historical rollouts don't get picked up again and start regenerating memories from stale history. Then it should delete the memories directory on disk, the one that lives under the configured home directory. Oh and once it's done doing all that, it should print a confirmation message to the terminal letting me know the memory state was cleared.
+There is currently no way to reset the local memory system to a clean state from the command line. When accumulated memories become stale, corrupted, or otherwise need to be wiped, a developer has to manually delete database records and filesystem directories — which is tedious and error-prone.
 
-Basically I want a reliable, supported, built-in way to wipe everything at once instead of the error-prone manual dance I'm doing now.
+## Expected Behavior
+
+A debug subcommand should be added that resets memory state in a single step:
+
+- Removes all accumulated memory summaries stored in the database
+- Removes any pending or completed memory background jobs from the database
+- Marks all existing sessions as memory-disabled so historical rollouts are not picked up again
+- Deletes the memories directory on disk (under the configured home directory)
+- Prints a confirmation message to the terminal indicating the memory state was cleared
+
+## Why This Matters
+
+Developers troubleshooting memory-related issues or wanting a fresh start need a reliable, built-in command to wipe all memory data at once. Without this, there is no safe or supported way to do so, and partial manual cleanups can leave the system in an inconsistent state.

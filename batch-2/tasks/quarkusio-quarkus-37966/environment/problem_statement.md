@@ -1,5 +1,14 @@
-I'm working on a Quarkus app that serves both REST and gRPC on the same HTTP port, and I've hit a wall with auth on the gRPC side. I added role-based access restrictions to some gRPC service methods, but when clients send normal auth headers with their calls (basic auth creds, bearer tokens, that kind of thing), the security identity inside the service handler never gets populated, so my access checks always fail like the caller's anonymous.
+## Description
 
-Near as I can tell the HTTP-level authentication context just isn't being carried through into the gRPC request processing pipeline when there's no custom authentication adapter registered for gRPC. Right now the only way to authenticate a gRPC request on the shared server is to write and register a custom bridge class per auth type, which is a ton of boilerplate for basic, bearer, cert-based, etc. What I want is for gRPC services on the shared HTTP server to just automatically use whatever authentication is already configured for the REST endpoints, so the identity resolved by the HTTP authenticator is the one my role annotations get enforced against. No custom bridge needed for every auth mechanism.
+When Quarkus gRPC services are configured to share the same HTTP server as REST endpoints, developers currently have no way to authenticate gRPC requests using Quarkus's built-in HTTP authentication mechanisms unless they implement a custom authentication adapter specifically for gRPC. This forces unnecessary boilerplate: any developer who wants to use basic authentication, bearer tokens, or certificate-based authentication with their gRPC services on the shared server must write and register a custom bridge class.
 
-This needs to work in both eager authentication mode (the default, where auth happens before the request is dispatched) and lazy or non-proactive mode (where the security identity gets resolved only when it's actually needed). And importantly the existing custom authentication adapter mechanism should still work as a fallback with the same priority it has today, so if someone's already got a custom adapter for a case the built-in HTTP auth can't cover, that keeps working. Basically I don't want two separate auth code paths for REST vs gRPC in the same app, it just leads to security misconfig risk and gRPC behaving inconsistently with REST when securing access.
+## Expected Behavior
+
+- gRPC services running on the shared HTTP server should be able to authenticate callers using the same authentication infrastructure already configured for REST endpoints — basic auth, bearer tokens, certificate-based auth, etc.
+- Role-based access control annotations on gRPC service methods should be enforced using the identity resolved by the HTTP authenticator.
+- This should work in both eager authentication mode (the default) and lazy (non-proactive) authentication mode.
+- Existing custom authentication adapter implementations should continue to work with the same priority they have today.
+
+## Why This Matters
+
+Developers who mix REST and gRPC endpoints in the same application should not need two different authentication code paths. Unifying authentication for gRPC with the standard HTTP authentication infrastructure removes boilerplate, reduces the chance of security misconfigurations, and makes gRPC services behave consistently with REST endpoints when it comes to securing access.

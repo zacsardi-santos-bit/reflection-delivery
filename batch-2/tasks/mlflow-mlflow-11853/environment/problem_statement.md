@@ -1,5 +1,17 @@
-I'm building out trace search in the MLflow tracking store and right now I can create and pull back individual traces just fine but there's no way to query across a bunch of them at once, which means anyone wanting to analyze traces has to fetch and filter in app code, doesn't scale at all. I want to bring this to parity with how run search already works. So I need a method on the SQL-backed store that searches traces across one or more experiments using a filter expression, letting me filter on trace name, status, start time, execution duration (the timestamp stuff), tags, and the associated run identifier / source run. The filter syntax should handle equality and inequality, pattern matching (LIKE style), and numeric comparisons, and let me AND multiple conditions together.
+## Description
 
-Results need to be sortable by any of those same fields including tag values, and when I sort by a tag, traces missing that tag should sort to the end (nulls after non-null). When no order_by is given, traces come back newest-first, descending by start time. Important bit: when two traces share the same start time the ordering has to be deterministic so cursor-based pagination stays stable and consistent across pages, so add a tiebreaker. Speaking of pagination, large result sets should page with a token to grab the next page, and if someone passes a page size that's too large or negative I want it rejected with a clear descriptive error.
+MLflow already supports creating and retrieving individual traces for experiment tracking, but there is no way to search or filter across multiple traces programmatically. Users need to be able to query traces the same way they can query runs — by filtering on attributes like name, status, timestamps, duration, tags, and associated run ID — and sort the results by those same fields.
 
-Oh and one refactor while I'm in there, the internal bit that generates a unique ID for each new trace should get pulled out into its own method so I can control/stub it independently during testing.
+## Expected Behavior
+
+- Users should be able to search for traces across one or more experiments using a filter expression
+- Filter expressions should support matching on trace name, status, start time, execution duration, tags, and source run
+- Results should be sortable by any of these attributes, including tag values, with null values sorting after non-null ones
+- When no sort order is specified, traces should be returned newest-first (descending by start time)
+- When traces share the same start time, results should be ordered deterministically so that pagination is stable and consistent
+- Large result sets should be paginated, with a token returned to retrieve the next page
+- Invalid pagination sizes (too large or negative) should be rejected with a clear error message
+
+## Why This Matters
+
+Without search support for traces, users must retrieve and filter traces manually in application code, which is inefficient and does not scale to large experiments. Adding this feature brings trace querying to parity with existing run search functionality and enables programmatic trace analysis workflows.

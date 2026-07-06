@@ -1,11 +1,22 @@
-I'm working on the pnpr registry proxy and there's a gap I need to close. We've got a local vulnerability database that's already wired into the dependency resolver, but the proxy's own packument and tarball endpoints ignore it completely, so clients pulling package listings or downloading tarballs through us can still get vulnerable versions even though we have the advisory data sitting right there locally. I want the proxy to actively screen what it serves.
+## Description
 
-When the vuln db is enabled, any version flagged as vulnerable should get silently dropped from packument responses, that means removing it from the versions map, dropping its timestamp entry, and stripping any dist-tags that point at it. If a client then asks for a manifest for one of those removed versions, we should return not found. The dist-tags endpoint should only surface tags whose targets are still available. Same filtering has to apply consistently whether the response was freshly proxied or came from cache.
+The pnpr registry proxy has a local vulnerability database integration that was originally wired only to the dependency resolver. The proxy itself — which handles packument and tarball requests — does not yet use this database to screen what it serves to clients.
 
-The filtering also needs to be defensive against malformed packument data, so version entries where the key doesn't match the version string inside the entry, or entries whose key isn't a valid semver, should be excluded from output even if they aren't directly in the db.
+As a result, clients that request package listings or download tarballs through the proxy can receive vulnerable versions even when the server has a local copy of the advisory data that would flag those versions.
 
-For tarballs, reject downloads of vulnerable versions before we ever contact the upstream, and the response should tell the client which advisories flagged that version. This blocking has to apply to already-cached tarballs too, a cached copy of a vulnerable tarball must not be served. One constraint though: auth checks come first, so an unauthenticated request to a protected package still gets an auth challenge rather than leaking any vulnerability info.
+## Expected Behavior
 
-Also there's a related scoped-package tarball bug. When a client requests a tarball using a URL-encoded full package name in the filename segment of the path, we don't normalize it before fetching and caching, so the upstream gets hit with a non-canonical URL and the cache entry lands at a path derived from the encoded name instead of the canonical short name. Both the canonical and non-canonical URL forms should serve identical content, upstream should only be contacted once, and the cache entry should live at the canonical path.
+- When the vulnerability database is enabled, packument responses should omit any version that is listed as vulnerable, along with its timestamp entry and any distribution tags pointing to it.
+- Version entries that contain identity inconsistencies (where the version string inside the entry does not match its key in the packument, or the key is not a valid semantic version) should also be excluded.
+- Requests for a specific version manifest that has been filtered out should return a "not found" response.
+- The distribution-tags endpoint should only expose tags whose target versions are still available.
+- Requests to download a vulnerable tarball should be rejected before the upstream registry is ever contacted, with a response that identifies which advisories flagged that version.
+- If a vulnerable tarball was cached before screening was enabled, it should still be blocked on subsequent requests.
+- Authentication requirements must still be enforced before vulnerability checks — an unauthenticated request to a protected package should not reveal vulnerability information.
+- The same filtering must apply consistently to both freshly proxied responses and cached responses.
 
-Oh and one rename while you're in there: the tarball name validation helper currently exposes a name externally that only implies validation, but it actually validates and parses/returns the canonical form, so rename it to reflect both.
+There is also a separate bug with scoped package tarball URLs. When a client requests a scoped tarball using a URL-encoded full package name in the filename portion of the path, the server does not normalize the filename before fetching and caching. This causes the upstream to be contacted with a non-canonical filename and the cached file to be stored under the wrong path, breaking deduplication.
+
+## Why This Matters
+
+Without this integration, the proxy offers no protection against known-vulnerable packages even when all the advisory data is available locally. Clients behind the proxy should be shielded from vulnerable versions automatically, not just during dependency resolution.

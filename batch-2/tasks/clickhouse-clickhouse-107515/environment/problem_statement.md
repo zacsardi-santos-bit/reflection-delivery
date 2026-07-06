@@ -1,7 +1,18 @@
-I'm hitting a crash in ClickHouse when I query a partitioned table and my WHERE clause wraps a subquery membership check inside a bigger expression instead of using it directly. Like, instead of just `WHERE col IN (subquery)`, I write something like `WHERE (col IN (subquery)) != 0` or some arithmetic comparison around the IN. On a non-partitioned table the exact same query runs fine, but on a partitioned one it blows up during partition pruning with a "Not-ready Set" error, basically complaining that it hit an unbuilt membership set as an argument to the IN function while doing key analysis.
+## Description
 
-The root cause is that partition pruning tries to evaluate that membership set during key analysis, but the set hasn't been built yet at that point. So when the IN (or NOT IN) is nested inside a comparison rather than being the top-level predicate, it crashes instead of just backing off.
+Queries against partitioned tables crash with a "Not-ready Set" error when a subquery-based membership check is wrapped inside a larger expression in the WHERE clause.
 
-Oh and I see the same thing with distributed membership checks (globalIn style, where results get gathered across nodes). Those sets are intentionally deferred and populated later during execution, so partition pruning should never try to evaluate them at all, even when the check is used directly at the top level, not wrapped in anything.
+For example, querying a table that is partitioned by a column and filtering with a pattern like "is the value a member of a subquery result, compared to zero" — where the membership check is not the top-level WHERE predicate but is nested inside an arithmetic comparison — causes ClickHouse to fail during partition pruning with an error indicating that an unbuilt membership set was encountered as an argument to the membership-check function.
 
-What I want is for partition pruning to gracefully skip any membership-check condition whose set isn't built yet, whether that's because it's nested inside a larger expression or because it's a distributed check that's deliberately deferred, rather than crashing. So the wrapped inclusion check (IN) and the wrapped exclusion check (NOT IN) should both execute cleanly on partitioned tables and return correct results, distributed variants shouldn't crash pruning either, and I don't want any regression: queries on non-partitioned tables and plain top-level non-distributed membership checks against partitioned tables need to keep working exactly like before. The relevant logic lives in the partition/key condition analysis path, so the fix is teaching that code to silently drop the condition when it encounters a not-yet-ready set instead of throwing.
+## Expected Behavior
+
+- Queries with a subquery-based inclusion check wrapped inside a comparison (rather than used directly as the WHERE predicate) should execute without errors on partitioned tables and return correct results.
+- Queries with a subquery-based exclusion check in the same wrapped pattern should also work correctly.
+- Distributed variants of these membership checks (which are intentionally deferred until after partition pruning) must also be handled gracefully — they should not crash partition pruning either.
+- Top-level (non-wrapped) membership checks against partitioned tables should continue to work as before (no regression).
+
+## Why This Matters
+
+This is a regression for users who write filter conditions where a subquery-based membership test is used as an operand in a larger expression rather than directly as a standalone predicate. The root cause is in partition pruning: the code tries to evaluate the membership set during key analysis, but that set has not been built yet at that point. The fix should make partition pruning silently skip the condition when it encounters an unbuilt set rather than crashing.
+
+The same issue also affects distributed membership checks, whose sets are intentionally filled in later during query execution — these must be excluded from the partition key analysis chain entirely.

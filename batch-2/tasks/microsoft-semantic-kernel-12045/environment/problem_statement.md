@@ -1,5 +1,17 @@
-I'm in the multi-agent orchestration framework and right now I've only got concurrent and sequential patterns, but I really need a group chat setup where several agents take turns talking to each other over multiple rounds, building on each other's responses, all coordinated by a manager that decides when to stop and picks who speaks next. Think round-table discussions, iterative content refinement, structured debates, multi-perspective reviews, that kind of collaborative back-and-forth. Doing this by hand every time is a pain so I want it as a first-class orchestration type.
+## Description
 
-Here's what I'm after: I create a group chat orchestration by handing it a list of member agents plus a manager, then invoke it with a task and get back the final result once the conversation ends. The manager should keep a count of how many rounds have happened and terminate after a configurable max rounds limit, and it should report whether the conversation should terminate. I want a default round-robin manager that just cycles through the agents in the order they're listed and returns the last message as the result.
+The multi-agent orchestration framework supports concurrent and sequential agent patterns, but there is no built-in group chat pattern where multiple agents can take turns in a structured conversation controlled by a coordinator. Teams working on collaborative agent workflows need a way to run a round-table discussion among agents, where a manager decides when to stop, selects which agent speaks next, and extracts a final result from the conversation history.
 
-Couple more things. Every participating agent needs a description set, and if one doesn't, the orchestration should reject it up front with a clear error rather than failing weirdly later. The initial task should accept either a plain string or a list of messages, and when it's a list of messages those should get folded into each agent's context before the agents get invoked. Also I'd like to optionally pass a callback that fires each time an agent responds so I can watch the conversation unfold in real time. Oh and cancellation, I need to be able to cancel a running orchestration mid-flight, but if it's already finished then cancelling should raise an explicit error telling me the invocation has already completed.
+## Expected Behavior
+
+- A new group chat orchestration type should allow multiple agents to participate in a back-and-forth conversation managed by a configurable group chat manager.
+- All participating agents must have a description set; attempting to create the orchestration without descriptions should be rejected with a clear error.
+- A default round-robin manager should be provided that cycles through agents in the order they are listed, stopping after a configurable maximum number of rounds.
+- The manager should track how many rounds have occurred and report whether the conversation should terminate.
+- When given a list of initial messages, the orchestration should incorporate them into each agent's context before invoking the agents.
+- An optional callback should allow callers to observe each agent response in real time as the conversation progresses.
+- The caller should be able to cancel a running orchestration mid-flight, but attempting to cancel after the orchestration has already completed should raise an error.
+
+## Why This Matters
+
+Many multi-agent use cases—such as iterative content refinement, structured debates, or multi-perspective reviews—require agents to build on each other's responses over several rounds. Without a group chat pattern, developers must wire up this logic manually. A built-in orchestration type with a configurable manager reduces boilerplate and makes collaborative agent workflows easy to compose and extend.

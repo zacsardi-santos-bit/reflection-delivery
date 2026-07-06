@@ -1,5 +1,18 @@
-I'm hitting a weird bug in Tauri's resource bundling where the map-based config that maps a source file to a specific destination path puts the file in the wrong spot. When I map some file that lives outside my project root to an exact destination inside the bundle, the resource iterator takes my already-complete destination and appends the source file's own name to it again, so I end up with this doubly-nested path that doesn't exist and my app can't find the file at runtime. What I want is for the destination I specify to be used exactly as-is, no extra filename component tacked on the end.
+## Description
 
-While you're in there, I want the iterator to get a few related cases right too. When a source file maps to an empty destination, the file should land at the bundle root using just its filename. When I map a source directory to a destination, walk the directory and place the files under that destination preserving the subdirectory structure. When I map a glob pattern to a destination, each matched file should go directly under the destination using only its filename, not the full matched subpath. Oh and when directory walking is turned off, directories in the resource list should just be silently skipped instead of blowing up with a hard error. Also, non-existent source paths shouldn't panic or crash, they should come back as an error through the iterator's result type so callers can handle it gracefully.
+There is a bug in how resource paths are resolved when using the map-based resource bundling configuration. When a developer specifies a mapping from a source file to a destination path, the resulting bundled resource ends up at an incorrect location.
 
-The whole point here is that bundled apps need their resources at predictable locations, and when I carefully pick destination paths I need those respected literally.
+For example, when mapping a source file outside the project root to a specific destination path within the bundle, the iterator incorrectly appends the source file's own name to the already-complete destination path, producing a doubly-nested location that doesn't match the intended destination. The developer's specified destination should be used directly without any additional path component being appended.
+
+## Expected Behavior
+
+- When a source file is mapped to a specific destination path, the destination path should be used exactly as provided (no extra filename appended).
+- When a source file is mapped to an empty destination, the file should appear at the bundle root using only its filename.
+- When a source directory is mapped to a destination, the directory's contents should be placed under that destination preserving subdirectory structure.
+- When a glob pattern is mapped to a destination, each matched file should appear directly under the destination using only the filename (not the full matched subpath).
+- When directory walking is disabled, directories in the resource list should be silently skipped rather than causing a hard failure.
+- Non-existent source paths should be reported as an error through the iterator result type, allowing callers to handle them gracefully.
+
+## Why This Matters
+
+Incorrect resource target paths mean that bundled applications cannot find their expected files at runtime, breaking functionality that depends on bundled resources being at predictable locations. Developers specifying careful destination paths for resources need those paths to be respected as-is.

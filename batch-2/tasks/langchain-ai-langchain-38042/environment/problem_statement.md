@@ -1,7 +1,16 @@
-I'm hitting a stale-detection bug in our agent framework's structured-output support check, the function that decides whether a given model can do native structured output. Newer Anthropic model generations (4.5 and above) just aren't being recognized, so agents silently drop to a weaker fallback strategy. I need the detection to catch Claude 4.5+ including the dated release variants, models that come with a provider namespace prefix, and newer Claude families at version 5 and above even with forward-looking or creative naming schemes. Basically anything Anthropic 4.5+ should read as supported.
+## Description
 
-On the other side, some stuff is slipping through that shouldn't. OpenAI names containing "oss" (the open-source variants) or ending in "-pro" don't actually support native structured output, so those need to be blocked. Also image and video generation models from any provider are getting flagged as capable even though they're not chat models at all, block those too.
+The logic for detecting whether a model supports native structured output has fallen out of date with current model releases. When developers use the agent framework with newer generations of Anthropic models (version 4.5 and above), those models are not recognized as supporting structured output, so the framework falls back to a less reliable strategy. Additionally, some model names that should NOT be treated as structured-output-capable are currently slipping through the detection: models with "pro" and "oss" qualifiers from certain providers, as well as image/video-generation models, are being incorrectly flagged.
 
-Oh and there's a subtle correctness thing: when someone passes a bare model name string instead of a full model profile object, any tool list handed in alongside it should be completely ignored, since tool-based filtering only makes sense for profile objects. Right now that path isn't consistent.
+## Expected Behavior
 
-Please keep all the currently-working detection intact, GPT-4.x, GPT-5.x, and grok should behave exactly as they do today. This matters because misdetection either forces the reliable native path off for models that support it, or lets unsupported models attempt the wrong strategy, and we want routing to stay correct as new generations ship.
+- Newer Anthropic model generations (version 4.5 and higher), including dated variants and models with provider prefixes, should be recognized as supporting native structured output.
+- Newer Claude model families with version 5 and above (including forward-looking or creative naming schemes) should also be recognized.
+- OpenAI model names containing "oss" or ending in "-pro" should be blocked (they do not support this capability).
+- Image/video-oriented models from any provider should be blocked.
+- When checking a bare model name string, any tool-list argument should be ignored (tool-based filtering only applies to profile objects).
+- All existing detection behavior for currently supported models (GPT-4.x, GPT-5.x, grok) should remain unchanged.
+
+## Why This Matters
+
+Agents built on this framework rely on accurate detection to route structured output requests to the right strategy. Misdetection forces a less reliable fallback for models that should use native structured output, and may silently allow unsupported models to attempt the wrong strategy. Keeping the detection current ensures correct behavior as new model generations are released.

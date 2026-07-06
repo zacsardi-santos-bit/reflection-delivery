@@ -1,5 +1,12 @@
-I'm poking at the Gleam build tool's dependency stuff, specifically the "check outdated dependencies" command, and there's this annoying gap where if everything's already up to date the command just prints nothing and exits. Which is super confusing because you literally can't tell if it ran fine or silently choked on something. I want it to always print a summary line no matter what, telling me how many packages out of the total have newer versions available.
+## Description
 
-So the behavior I'm after: when there are outdated packages, the output starts with a summary like "1 of 12 packages have newer versions available." and then the existing formatted table of outdated packages follows underneath it. And when nothing's outdated, I still want that summary line to show up, something like "0 of 12 packages have newer versions available.", so I know the check actually completed and looked at everything. The count is the number with newer versions out of the total number checked.
+The "check outdated dependencies" command in the Gleam build tool currently only produces output when packages have newer versions available. When all dependencies are already up to date, the command exits silently — giving no indication whether it ran successfully or simply found nothing to report.
 
-I need to implement the formatting function that produces this output (the summary above the table when updates exist, just the summary line alone when nothing's outdated), plus the associated snapshot files for the tests covering both the up-to-date case and the has-updates case. That's basically it, just make the result unambiguous in all cases.
+## Expected Behavior
+
+- When outdated packages are found, the output should always begin with a summary showing how many packages out of the total have newer versions available (e.g., "1 of 12 packages have newer versions available."), followed by the existing formatted table of outdated packages.
+- When no packages are outdated, the command should still print a summary line (e.g., "0 of 12 packages have newer versions available.") so the user knows the check completed successfully.
+
+## Why This Matters
+
+Without a summary message, users running the outdated check on a fully up-to-date project have no way to confirm that the command actually ran and checked all packages. The new summary makes the command's result unambiguous in all cases.

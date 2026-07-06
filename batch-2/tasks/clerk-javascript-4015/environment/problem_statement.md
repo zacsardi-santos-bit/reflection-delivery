@@ -1,5 +1,18 @@
-I'm poking at the UI package's appearance customization system and hit two things that need fixing. First off, the default appearance config is defined as a private module-level constant and never exported, so nothing outside that module (our tests, app code, whatever) can grab it to compare against or use as a baseline. I want it exposed as a proper named export so external consumers can reference the default appearance values directly.
+## Description
 
-Second, there's a nasty mutation bug in the merging logic. When element style overrides get applied, the code spreads a reference to the base theme instead of making a deep copy, so applying overrides in one place mutates the shared default theme in-place. That means nested providers or later renders inherit stale merged styles from a previous cycle, which is exactly the kind of subtle rendering inconsistency you get when you embed a component inside a custom-styled wrapper. So I need overrides to operate on independent copies, not the shared base.
+The appearance customization system in the UI package has two related issues that need to be fixed.
 
-Behavior I'm expecting once it's fixed: when no appearance is provided, the hook returns the default values with no override summary. When element overrides come in as class strings, each element in the merged appearance should show the default class plus the user-provided class. When multiple nested providers each add a class to the same element, all the classes accumulate in order, outer to inner, appended after the default class (and this has to be reliable, not flaky from the mutation). The user-provided override summary the hook returns should capture the raw user-provided classes at each level, and when two providers get merged the summary should also include a layout field. So please fix both: export the default appearance and stop the override merge from mutating the shared theme.
+First, the default appearance configuration is currently not accessible to code outside the module where it is defined. This makes it impossible for consumers — including tests and application code — to reference the default appearance values as a baseline or use them for comparisons.
+
+Second, there is a mutation bug in the appearance merging logic. When element style overrides are applied, the implementation spreads a reference to the base theme object rather than creating an independent copy. This means that applying customizations modifies the shared default theme in-place. As a result, subsequent renders or nested appearance providers can unexpectedly inherit merged styles from previous overrides, producing incorrect accumulated class names.
+
+## Expected Behavior
+
+- The default appearance configuration should be publicly accessible as a named export so external code can reference it.
+- Applying element style overrides via nested providers should produce a correctly merged result without modifying the original theme.
+- When multiple nested appearance providers each supply class names for the same element, all classes should be accumulated in order (outer to inner), appended after the default class.
+- The merged appearance state from multiple nested providers should include layout information in the user-provided overrides summary.
+
+## Why This Matters
+
+These issues can cause subtle rendering inconsistencies in applications that layer multiple appearance customizations, such as embedding a component inside a custom-styled wrapper. Without the fix, later renders may pick up stale or incorrect merged styles from a previous customization cycle.

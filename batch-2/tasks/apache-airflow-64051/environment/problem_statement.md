@@ -1,9 +1,22 @@
-I'm hitting a few gaps in the Airbyte sync operator in Apache Airflow and how it handles job outcomes, and it's causing silent data pipeline issues where workflows sail past a cancelled or timed-out sync as if it succeeded.
+## Description
 
-First thing, when an Airbyte job gets cancelled (remotely or by the system), the operator just finishes clean without raising anything, so I can't tell a real successful sync apart from one that got killed mid-run. I want a cancelled job to be treated as a failure and raise an error so downstream tasks and failure callbacks actually fire.
+The Airbyte sync operator has several gaps in its job lifecycle handling that cause incorrect behavior in production workflows.
 
-Second, there's no hard task-level execution deadline that also cancels the remote job. The existing wait timeout only controls how long we wait, it doesn't cancel anything on the Airbyte side when it's exceeded. I want a separate execution timeout concept that, when hit, cancels the remote job and then fails the task. And if both a wait timeout and this execution deadline are set, the earlier one should win. Also important, if the cancellation call itself throws while we're timing out, the task should still fail with the original timeout reason, the cancel error must not mask the real cause.
+**Issue 1: Cancelled jobs are silently treated as successes**
+When an Airbyte job is cancelled remotely, the operator completes without raising an error. This makes it impossible to distinguish between a successfully completed sync and one that was cancelled mid-run. Cancelled jobs should be treated as failures and raise an error so that dependent tasks and failure callbacks are triggered appropriately.
 
-Third, when the operator gets a kill signal (signal or scheduler intervention) and the cancel-job call fails, right now the exception propagates and crashes the whole task, which hides the real reason it died. Instead I want that cancel failure logged as a warning so the task proceeds with its remaining cleanup steps and fails for the right reason.
+**Issue 2: No hard task-level timeout with automatic job cancellation**
+The operator has a wait timeout that controls how long it waits, but this does not cancel the underlying Airbyte job when exceeded. There is no mechanism to enforce a hard task-level execution deadline that automatically cancels the remote job before failing the task. When both a wait timeout and a hard execution deadline are configured, the earlier deadline should take precedence.
 
-Oh and the async trigger side needs updating too to support this new execution deadline. It should accept the deadline as an optional param, include it in its serialized state, and emit a distinct timeout status event when the deadline is exceeded, separate from the existing end-time error event. Btw all the time comparisons in the trigger should use monotonic time so clock adjustments don't mess things up.
+**Issue 3: Cancellation failures crash the task**
+When the operator is killed (e.g., by a signal or scheduler intervention) and the cancel-job call fails, the exception propagates and can mask the real reason for the task's failure. Cancellation errors should be handled gracefully so the task fails for the right reason.
+
+## Expected Behavior
+
+- A cancelled Airbyte job should cause the task to fail with an appropriate error.
+- A separate "execution timeout" concept should exist that, when exceeded, cancels the remote Airbyte job and then fails the task. If the job cancellation itself fails, the task should still fail due to the timeout (the cancellation error must not override the timeout error).
+- When the operator is killed, any failure to cancel the remote Airbyte job should be logged as a warning rather than crashing the task, allowing any remaining cleanup to proceed.
+
+## Why This Matters
+
+These gaps lead to silent data pipeline issues — workflows continue past a cancelled or timed-out sync job as if it had succeeded. Proper lifecycle handling is essential for data reliability and correct downstream task behavior.

@@ -1,5 +1,17 @@
-I'm poking at the analytics module that emits guardian review events, you know, the records our security review component writes when it approves or denies an AI-initiated action. Right now a couple of fields on that review event data structure are required when they honestly shouldn't be, and it's blocking us from recording valid events in some flows.
+## Description
 
-First one is the field that identifies the specific item being reviewed. When a review gets kicked off by a delegated subagent rather than a direct user-facing action, there's often no particular target item to point at, but the struct forces you to supply an identifier anyway. I want that made optional so an event can be created without a value there when we just don't have one. Same deal with the count of tool calls made during the review, that figure isn't always known or applicable at the time we emit the event, so it should be optional too. Neither change should hurt the accuracy of events where the data actually is present, it's just removing an artificial constraint that causes failures when the data is genuinely absent.
+The analytics system records guardian review events — structured records of a security review component that approves or denies AI-initiated actions. Some fields on these records are currently required even when they do not logically apply in all situations.
 
-Oh and while I'm in there, the network access action variant that shows up under review currently carries extra fields for the host and target on top of the protocol and port. Only the protocol and port are needed now since the rest is tracked elsewhere, so drop those extra host/URL-string fields and keep just the network protocol and port on that variant. The whole point is we need to record guardian review events across a wider variety of scenarios without these fields tripping us up.
+Specifically, the field that identifies the particular item being reviewed is currently mandatory. However, when a review is triggered by a delegated subagent rather than a direct user-facing action, there may be no specific target item to reference. Forcing this field to always be present prevents review events from being recorded in these cases.
+
+Similarly, the count of tool calls made during a review is currently required, but this count is not always known or applicable at the time the review event is emitted.
+
+## Expected Behavior
+
+- The field identifying the item being reviewed should be optional, allowing review events to be created without providing a value when the information is not available.
+- The field recording the number of tool calls during a review should also be optional.
+- The description of a network access action under review should only include the network protocol and port — it should not include additional fields (such as target host or URL string) that are now tracked elsewhere.
+
+## Why This Matters
+
+Guardian review events need to be recorded across a wider variety of scenarios. Making these fields optional removes an artificial constraint that causes failures when the data is genuinely absent, without degrading the accuracy of events where the data is present.

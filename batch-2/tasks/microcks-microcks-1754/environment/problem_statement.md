@@ -1,7 +1,18 @@
-I'm building out real-time trace streaming for Microcks and right now there's just no path for clients to get pushed new trace data. They collect distributed traces from services as requests flow through, but subscribers have to poll to notice anything new, and there's no way to filter by service, operation, or where the request came from. I want event-driven notification plus a subscription manager so clients can register for a filtered live stream over a persistent connection.
+## Description
 
-So when a root span gets stored, meaning the start of a brand-new trace, I want a notification event published internally so other components can react to the arrival. The matching side needs to be flexible: subscribers give me exact service names, operation names, and client addresses to match against, but they can also pass a universal wildcard to match anything, or a regex pattern for partial matching. And if a pattern isn't a valid regex, don't error, just fall back to plain exact string equality.
+Microcks collects distributed trace data from services as they handle requests, but currently there is no way for clients to receive real-time notifications when new trace data arrives. Clients must poll to check for new traces, and there is no built-in way to filter traces by service name, operation, or originating client address.
 
-On subscribe, the client should immediately get a heartbeat confirming the subscription is live. As new traces come in, the manager looks up the spans for that trace, skips forwarding entirely if there aren't any spans yet, and otherwise pushes the trace to any subscriber whose filters match. If delivering to a subscriber hits an I/O/network error, gracefully close and clean up that subscription. Also I want a periodic heartbeat going out to all active subscribers to keep connections alive.
+## Expected Behavior
 
-Oh and I need a small utility that pulls trace context (service name, operation name, client address) out of the raw span attributes so the matching logic works against a clean structured representation instead of poking at raw attrs. Wire it all together so the notify/subscribe/filter flow actually holds up.
+- When a root span is stored (i.e., the start of a new trace), a notification event should be published internally so that other components can react to new trace arrivals.
+- A utility should be provided for matching service names, operation names, and client addresses against patterns, supporting exact matches, a universal wildcard, and regular expression patterns.
+- When a pattern is not a valid regular expression, matching should fall back to exact string equality.
+- A subscription manager should allow clients to register for a filtered live stream of trace events, specifying service name, operation name, and client address patterns. Each subscriber receives only the traces that match their registered filters.
+- When a subscriber registers, they should immediately receive a heartbeat confirmation that the subscription is active.
+- If a trace arrives but has no associated spans, no events should be forwarded to subscribers.
+- If a network error occurs while delivering an event to a subscriber, the subscription should be gracefully closed.
+- Periodic heartbeats should be sent to all active subscribers to keep their connections alive.
+
+## Why This Matters
+
+Without real-time notifications and filtering, developers cannot efficiently monitor specific services or operations as they execute. This change enables live observability of distributed traces within Microcks without requiring repeated polling, and gives subscribers fine-grained control over which traces they receive.

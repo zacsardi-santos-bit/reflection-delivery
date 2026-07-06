@@ -1,5 +1,17 @@
-I'm hitting this annoying thing where a bunch of tensor ops in our ops module just don't check the axis param against how many dims the tensor actually has. Like if I pass axis 10 on a 2D tensor, instead of getting a clean axis-out-of-bounds error right away, it either blows up in some confusing way further down the pipeline or (worse) doesn't error at all and silently keeps going. Super hard to debug when that happens.
+## Description
 
-What I want is for these ops to fail fast the moment an out-of-range axis shows up, with a descriptive error that clearly says which axis value was invalid and that it's out of bounds. And I want the message format to be consistent across all of them so it reads the same no matter which op tripped it. This needs to cover every op that takes an axis, so that's unstacking, concatenating (concat), splitting (split/chunk), computing element-wise differences (diff), indexing along an axis, and stacking tensors. Right now some of those either proceed with the bad axis or raise something unhelpful that doesn't mention the axis at all.
+Several tensor operations do not validate whether the provided axis value is within the valid bounds for the tensor's number of dimensions. When an out-of-range axis is passed, the operations fail silently or produce confusing downstream errors instead of immediately raising a clear, descriptive error.
 
-The reason this matters: consistent axis bounds checking makes it way easier to catch mistakes early. When I fat-finger an axis I should immediately see the invalid value and why it's wrong, instead of tracing some downstream mess back to its source. So please add the validation to each of those axis-accepting ops and make sure the invalid axis triggers the error right away, same clear wording everywhere.
+## Expected Behavior
+
+- When an out-of-range axis value is passed to any of the following operations, an error should be raised immediately with a message that clearly identifies the invalid axis value and states it is out of bounds.
+- This should apply consistently across: unstacking, concatenating, splitting, computing differences, indexing along an axis, and stacking tensors.
+- The error message format should be consistent across all affected operations.
+
+## Current Behavior
+
+The operations either silently proceed with the invalid axis, or raise an unhelpful error that doesn't clearly indicate the axis value was out of bounds.
+
+## Why This Matters
+
+Consistent axis bounds checking makes it much easier to catch and debug mistakes early. Developers passing an invalid axis should immediately see which axis value was invalid and why, rather than having to trace confusing downstream failures.

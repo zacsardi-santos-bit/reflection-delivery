@@ -1,5 +1,17 @@
-I'm working on the Biome linter and want to add a new accessibility rule that checks ARIA attribute values in HTML and the component template flavors we support (Vue, Svelte, Astro). We already validate this stuff in JSX land, but plain HTML and these templates get nothing right now, so someone can write "yes" instead of "true" for a boolean state, or shove a non-numeric string where a number belongs, and the linter stays quiet. I want it to catch that and emit a diagnostic that says which attribute is wrong and what values the WAI-ARIA spec actually allows.
+## Description
 
-It needs to handle the different ARIA value types: booleans, tristate, token enumerations, ID reference lists, and numbers. In plain HTML the attribute name matching should be case-insensitive, so an uppercase or mixed-case ARIA attribute name is still recognized as the same thing, but the diagnostic should echo the attribute name exactly as it was written in source (don't normalize it in the message). Oh and an ARIA attribute that's present but has no value at all should be treated like it's "true", which means it's fine for boolean types but invalid for any type that doesn't list "true" as an allowed option. One Vue-specific thing: dynamically bound ARIA attributes, where the value is a runtime expression instead of a static string, should be skipped entirely since we can't know the value at analysis time.
+Biome already validates ARIA attribute values in JSX-based files, but it does not do so for plain HTML files or component templates used in frameworks like Vue, Svelte, and Astro. This means developers writing HTML markup or component templates can accidentally use incorrect values for accessibility attributes — for example, using "yes" instead of "true" for a boolean state, or supplying a non-numeric string where a number is expected — without getting any feedback from the linter.
 
-The whole thing should apply across HTML, Vue, Svelte, and Astro files. Without this, bad ARIA values silently ship and break things for people on assistive tech, so I want the feedback to land early.
+## Expected Behavior
+
+- A new accessibility lint rule should validate the values of ARIA state and property attributes in HTML and component template files.
+- When an ARIA attribute has an invalid value, a diagnostic should be emitted indicating which attribute is wrong and what valid values are accepted according to the WAI-ARIA specification.
+- The rule should support different ARIA value types: booleans, tristate, token enumerations, ID reference lists, and numeric values.
+- Attribute name matching in plain HTML should be case-insensitive (e.g., an uppercase attribute name and its lowercase equivalent should be treated the same way). The diagnostic should preserve the attribute name exactly as written in source.
+- A valueless boolean ARIA attribute (the attribute present but without a value) should be treated as equivalent to the value "true" and accepted when "true" is valid for that attribute type.
+- Dynamic/runtime-bound ARIA attributes in Vue templates should be skipped, since their values cannot be known at analysis time.
+- The rule should apply to HTML, Vue, Svelte, and Astro files.
+
+## Why This Matters
+
+Without this validation, incorrect ARIA attribute values can silently ship to production, breaking the experience for users relying on assistive technologies. Having the linter catch these errors early helps teams maintain accessible, spec-compliant markup across all file types they author.

@@ -1,5 +1,13 @@
-I'm adding a new session-level feature, a built-in permissions-requesting tool that agents can invoke, and I need the instruction-generation code to know when it's active. Right now the functions that build the permissions instructions we hand to AI agents have zero awareness of this capability, so any session that turns it on can't actually tell the agent it exists.
+## Description
 
-What I want is a new boolean parameter threaded into the functions that construct those permissions instructions, basically a flag saying whether the permissions-requesting tool is enabled for the current session. When it's off the generated instructions have to come out byte-for-byte identical to what they produce today, I can't have any regression in the existing output for sessions that don't use this, so the off path stays exactly as-is.
+The functions that build permissions instructions for AI agents need to be extended to support a new feature flag indicating whether a session-level permissions-requesting tool is available. Currently, the instruction-generation functions have no awareness of this capability, so sessions that enable it cannot communicate its availability to the agent.
 
-The annoying bit is these instruction-builders get called from a bunch of spots across the codebase, and if I only add the param in one place it won't compile and every test in the affected package tanks. So all the call sites need updating to pass the new flag too. The value each caller passes should come from the existing feature-flag infrastructure that already tracks whether the permissions-requesting tool is enabled for that session, don't invent a new source, just wire up what's there. Goal is the project keeps compiling and the current tests keep passing while unblocking sessions that need to advertise the tool.
+## Expected Behavior
+
+- A new boolean parameter should be added to the functions that construct permissions instructions, indicating whether the permissions-requesting tool is enabled for the current session.
+- When the feature is disabled (the parameter is off), the generated instructions must be identical to what they were before the parameter was added — no regressions in existing output.
+- All places in the codebase that call these instruction-building functions must be updated to pass the appropriate value for the new flag, so that the project continues to compile and existing tests continue to pass.
+
+## Why This Matters
+
+Without this change, adding the new parameter only to part of the call chain causes the project to fail to compile. Updating all callers ensures backward compatibility and unblocks sessions that need to communicate the tool's availability to agents.

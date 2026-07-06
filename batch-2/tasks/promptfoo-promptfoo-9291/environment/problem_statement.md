@@ -1,7 +1,18 @@
-I'm trying to make the exported HTML eval report actually usable, right now it's super bare and each result cell is just a flat string with no structure, no summary stats up top, and no way to search or filter once you've got hundreds of results across all the prompts and variables. It's basically unreadable for debugging.
+## Description
 
-So what I want: a summary header that shows the total number of results and the overall pass rate as a percentage. Each result cell should break out the output text, the score formatted to two decimal places, the grading reason, and any error message as separate fields, all individually escaped so nobody can inject anything. Cells also need searchable metadata attached so I can filter by pass, fail, or error status, plus a search bar and status filter in the browser. When I click a result I want a detail panel to slide open with the prompt and the input variables, but load the variable details on demand instead of baking them into the initial HTML, otherwise big reports get slow.
+The static HTML report generated from an evaluation run is too bare-bones for practical use. It currently renders each result as a single flat string, with no structured metadata, no summary statistics, and no way to search or filter results. The template also does not properly separate the different parts of a result (output text, score, grading reason, error message), making it hard to skim or drill into individual outcomes.
 
-Also any result that failed, doesn't matter what the specific internal reason was, should consistently show up as a failure with the same status label. For error results specifically, the searchable text on the cell should combine the status label, score, error message, and grading reason so I can find them by any of those terms. Oh and I need an empty-state message for when nothing matches the current search or filter, and the run's description should show up in the page title area with a sensible fallback if no description was ever set.
+## Expected Behavior
 
-The template file backing all this needs updating too, ditch the old flat-cell approach and swap in the new structured cell object that has separate text, reason, error, status, status label, variable name, and score fields.
+- The report header should show key summary metrics: total result count and overall pass rate as a percentage.
+- Each result cell should surface the output text, numeric score (formatted to two decimal places), grading reason, and error message as distinct, individually escaped fields.
+- The report should include a search bar and status filter so users can quickly find passing, failing, or error results.
+- Clicking on a result should open a detail panel showing the prompt, the input variables, and other per-result information. Variable details should be loaded on demand rather than pre-rendered into the HTML, keeping large reports fast.
+- Any failed result — regardless of the specific internal reason for the failure — should be consistently classified and displayed as a failure.
+- The error message for a failed result should appear in a searchable index field alongside the score and grading reason, so users can find results by error text.
+- A visible empty-state message should appear when no rows match the current search or filter criteria.
+- All user-provided content in the template must be properly escaped to prevent injection.
+
+## Why This Matters
+
+Evaluations can produce hundreds of results across many variables and prompts. Without summary stats, search, and detail drill-down, the HTML output is difficult to use for analysis or debugging. Improving the report structure makes it practical to review evaluation runs directly from the exported file without needing the full application UI.

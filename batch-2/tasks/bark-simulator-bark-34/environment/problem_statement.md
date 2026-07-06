@@ -1,5 +1,18 @@
-I'm building out a road simulation framework and hit a wall with lane types. Right now our lane objects don't carry any notion of what kind of road feature they are, so there's no way to tell a driving surface from a sidewalk from a border strip. Because of that the road file parser just quietly skips anything that isn't a driving lane, which means I can't model urban roads that have driving lanes plus sidewalks and borders on each side. I want lanes to carry a type attribute (driving, sidewalk, border, and the other supported categories) that gets populated while parsing and can be queried afterward.
+# Add Lane Type Support and Decouple Lane Creation from Plan View
 
-The other half of this is an API problem. Lane creation today happens through a method on the plan view object, which hardwires every lane's geometry to the road's central reference line. That breaks multi-lane roads because outer lanes need to be offset from the adjacent inner lane, not from the center. I want lane creation pulled out into a standalone function that takes any reference line as input, so adjacent lanes can chain off each other when computing geometry. The plan view should still expose its reference line so callers can grab it when the center is the right anchor.
+## Description
 
-Then the parser needs updating to handle multi-lane cross-sections with mixed types, like an urban road with two driving lanes, sidewalks, and border strips per side, using this new creation approach. It should recognize all the supported lane categories, set each lane's type correctly after parsing, and skip only the truly unsupported ones. Oh and the visualization code should be able to check the type and render accordingly, driving lanes in grey, sidewalks in green, that kind of thing. Without this the sim can't represent real urban geometry accurately and that matters a lot for realistic urban driving.
+Currently, lane objects in the simulator do not carry any information about what kind of road feature they represent — there is no concept of whether a lane is a driving surface, a sidewalk, a border strip, or any other category. As a result, the road parser only processes driving-type lanes and silently ignores all others. This makes it impossible to accurately model urban roads that contain multiple lane categories (for example, a road with both driving lanes and sidewalks on each side).
+
+Additionally, creating a lane is currently done by calling a method on the plan view object, which tightly couples lane geometry construction to the road's central reference line. This prevents creating lanes whose geometry is offset from an adjacent lane rather than from the road centerline — a requirement for correctly computing the positions of outer lanes in multi-lane cross-sections.
+
+## Expected Behavior
+
+- Lane objects must carry a type attribute (driving, sidewalk, border, etc.) that can be set during parsing and queried afterwards.
+- Lane creation should be available as a standalone operation that takes any reference line as input, not only the road plan view's central line. This allows outer lanes to be offset from their inner neighbor.
+- The road parser should recognize all supported lane type categories (including sidewalks and borders), assign the correct type to each created lane, and skip only truly unsupported types.
+- Visualization code should be able to distinguish lane types and render them differently (e.g., driving lanes in grey, sidewalks in green).
+
+## Why This Matters
+
+Without lane type information, the simulator cannot distinguish different physical road features, leading to incomplete or incorrect road representations for urban scenarios. Accurate multi-lane urban roads — with sidewalks, borders, and driving surfaces — are essential for realistic simulation of urban driving.

@@ -1,5 +1,20 @@
-I'm working on our diagnostics tool and the output when linting or checking a big codebase is just a wall of per-issue noise that's impossible to scan. We've already got a detailed human-readable reporter and a structured machine-readable one, but neither helps me quickly gauge overall health. I want to add a new "summary" reporter that aggregates and counts issues by category instead of dumping every single one.
+## Description
 
-Here's what I'm after. When I run check or ci it should show all three categories, so a Formatter section listing the names of every file that needs reformatting, an Organize Imports section listing all files whose imports need sorting, and an Analyzer section presenting a table of each triggered lint rule with a breakdown of how many errors, warnings, and informational messages that rule produced. When I run just the formatter it should only show the Formatter section, and when I run just the linter it should only show the Analyzer rules section. Each section needs a clear heading and separation from the others.
+The tool currently supports two output formats for diagnostics: a detailed per-issue format and a structured machine-readable format. Neither is well-suited for quickly understanding the overall health of a codebase when there are many files and many types of issues.
 
-Also the help text for all the commands (check, ci, format, lint) needs updating so "summary" shows up as a valid value for the reporter flag alongside the existing options, otherwise nobody knows it's there. The command should still exit with an error when issues are found, and the whole thing should end with a footer summarizing how many files were checked and how many total errors were found. Basically I want a bird's-eye view so teams can see scope, which rules get violated most, how many files need formatting, without scrolling through hundreds of lines.
+A new reporting mode is needed that aggregates and summarizes diagnostics by category, giving developers a compact overview of problems across all files rather than listing every individual issue.
+
+## Expected Behavior
+
+When the new summary reporting mode is selected:
+
+- For formatting issues: the output should list the names of all files that need to be reformatted, grouped under a "Formatter" heading.
+- For import-ordering issues: the output should list all files whose imports need sorting, grouped under an "Organize Imports" heading.
+- For linting issues: the output should present a table showing each triggered rule and a breakdown of how many errors, warnings, and informational messages it produced, grouped under an "Analyzer" heading.
+- Each command (check, ci, format, lint) should show only the sections relevant to what it does.
+- The output should conclude with a footer showing the total number of files processed and errors found.
+- The help text for all commands should document this new reporter option alongside the existing options.
+
+## Why This Matters
+
+When working with large codebases, developers need a bird's-eye view of code quality issues. Scrolling through hundreds of individual diagnostics is impractical. A summary mode allows teams to quickly assess scope — how many files need formatting, which lint rules are most commonly violated, and how many total issues exist — without getting lost in per-line detail.

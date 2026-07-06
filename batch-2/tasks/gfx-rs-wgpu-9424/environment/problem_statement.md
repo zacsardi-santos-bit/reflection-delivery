@@ -1,5 +1,13 @@
-I'm hitting a nasty crash in the WGSL front-end. If I feed the parser a shader with pathologically deep nesting, like thousands of levels of nested function calls chained together, or thousands of levels of nested type-parameter/template argument expressions, the parser just blows up (stack overflow, ungraceful abort) instead of telling me what went wrong. Any adversarially crafted or just absurdly deep shader can take down the whole compilation pipeline this way, so I want the parser to defend itself.
+## Description
 
-What I'm after is a recursion depth limit in the WGSL parser so that when it descends past some reasonable depth it stops and reports a clean, human-readable error rather than crashing. The message should clearly say that the parser recursion limit was exceeded, and it needs to be surfaced as an internal front-end error with an accompanying note describing the cause (so it slots into the same error category as other internal front-end errors, not a normal syntax error). 
+The WGSL shader parser can crash (likely with a stack overflow) when given shader source code that contains extremely deep nesting — for example, thousands of levels of nested function calls or thousands of levels of nested type parameter expressions. Instead of emitting a useful error message, the process aborts ungracefully.
 
-Both paths need to trip this: deeply nested expression constructs like the chained call-expression trees you get from `f(f(f(...)))`, and the deeply nested type/template argument trees you get from stacking type parameters. So wherever the recursive descent happens for parsing expressions and for parsing template/type-parameter lists in the WGSL front-end (the parser lives under `@naga/src/front/wgsl/`), I want a depth counter that increments as we recurse and bails out with that recursion-limit-exceeded error once it crosses the threshold, then unwinds cleanly. Point is graceful failure with an actionable message instead of an uncontrolled crash, and it should behave consistently across both nesting shapes.
+## Expected Behavior
+
+- When the WGSL parser encounters nesting that exceeds a reasonable depth limit, it should stop parsing and report a clear, human-readable error indicating that the parser recursion limit was exceeded.
+- This should apply both to deeply nested expression constructs (such as chained function calls) and to deeply nested type/template argument constructs.
+- The error should be reported as an internal front-end error with a note describing the cause.
+
+## Why This Matters
+
+Without this protection, any sufficiently deeply nested (or adversarially crafted) WGSL shader can crash the compilation pipeline entirely. Adding a depth limit allows the parser to fail gracefully with an actionable error message rather than an uncontrolled crash.

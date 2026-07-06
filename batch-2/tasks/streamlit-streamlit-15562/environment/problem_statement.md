@@ -1,5 +1,17 @@
-I'm hitting a really annoying thing running Streamlit under WSL. The auto file-watching just doesn't fire reliably, my edits often don't trigger a reload, and I think it's because the event-based watcher can't deal with files sitting on mounted Windows drives. The native Linux filesystem is fine, but Streamlit has no idea it's running in WSL so it keeps using the event watcher anyway and I lose hot-reload.
+## Description
 
-What I want is for Streamlit to actually detect WSL and, when the watcher type is set to auto, quietly fall back to polling instead. Since it can't easily tell whether a given path is on a Windows mount, just always poll under WSL in auto mode, that's the safe bet. The detection should look at environment variables and the kernel version string (the `/proc` version file), and it needs to handle both standard WSL distros and custom WSL2 kernels. Please be careful about false positives though, don't match when "wsl" just happens to appear as a substring inside some unrelated build string, and don't blow up if that version file isn't available (treat it as not-WSL).
+Streamlit's automatic file-watching mode fails silently or behaves unreliably when running inside the Windows Subsystem for Linux (WSL). The event-based watcher works fine for files on the native Linux filesystem, but is unreliable for files on mounted Windows drives. Since Streamlit can't easily tell which case applies for a given path, the safest approach is to always use polling-based file watching when running in WSL under the "auto" mode.
 
-Also I only want to hear about this once, a single brief informational message saying polling is being used for WSL compatibility and how to override it, not spam on every reload. And if I've explicitly set a watcher type myself (like watchdog), respect that, don't override my choice even in WSL. Basically auto plus WSL means poll, but an explicit setting always wins. Right now there's no WSL detection anywhere in the codebase so this is net-new, and the goal is just to make the default experience reliable for folks like me whose files live on the Windows side.
+There's also no detection of WSL at all in the current codebase, so Streamlit has no way to make any WSL-specific decisions.
+
+## Expected Behavior
+
+- Streamlit should be able to detect whether it is running inside WSL by checking environment variables and the kernel version string.
+- The detection should recognize both official WSL distributions and custom WSL2 kernels, while avoiding false positives from unrelated strings that happen to contain "wsl" as a substring.
+- When the file watcher type is set to automatic and WSL is detected, Streamlit should use polling instead of event-based watching.
+- The user should receive a one-time informational message explaining that polling is being used for WSL compatibility and how to override the behavior.
+- If the user explicitly configures a specific watcher type (e.g., watchdog), that setting should still be honored even in WSL.
+
+## Why This Matters
+
+Users running Streamlit in WSL often find that file changes on their Windows drive are not picked up, leading to confusing behavior where hot-reloading doesn't work. Automatically switching to polling in WSL environments makes the default experience reliable, and giving users a clear message helps them understand what is happening and how to change it if needed.

@@ -1,7 +1,25 @@
-I'm hacking on the tree-sitter test runner and I keep hitting cases where the corpus test format just isn't flexible enough. Right now every test case in a corpus file runs unconditionally, which is a pain when I've got platform-specific parse behavior (think Windows vs Unix newlines), or inputs that are supposed to be invalid, or multi-language repos where different cases need different parsers (like a repo shipping both TypeScript and TSX, or XML and DTD). I want to be able to drop annotation keywords into a test header, below the test name and before the closing delimiter, that control how and whether the test runs.
+## Description
 
-Here's what I need to support: a skip annotation so I can temporarily disable a test without deleting it, a platform annotation that takes an OS name and only runs the test on that OS (and if there's more than one platform annotation they combine as OR), a fail-fast annotation that stops the whole run early if that test fails, an error annotation that just asserts the parsed input contains a parse error so I don't have to spell out the full error tree, and a language annotation taking a language name to direct the test at a specific named parser (multiple language annotations run the test once per named parser).
+The tree-sitter test corpus format currently has no way to annotate individual test cases with metadata that controls how they execute. Every test case is always run regardless of the current platform, expected parse result, or desired parser. This makes it difficult to manage test suites in real-world scenarios.
 
-The corpus parsing logic that reads these test files needs to recognize the annotation lines and stash the resulting metadata alongside each test entry so the runner can act on it. When there are no annotations, tests should behave exactly like they do today, so the metadata struct needs sensible defaults: not skipped, runs on all platforms, no fail-fast, not expecting an error, default parser. Each of those attributes should be tracked individually.
+## Problems
 
-Oh and while I'm in there, couple of small cleanups: there's a byte-string literal style fix needed in the parser test helper, and the procedural macro crate dependency needs a version bump.
+- There is no way to temporarily disable a test without deleting it entirely.
+- Tests cannot be restricted to specific operating systems, so platform-specific parse behavior (e.g., Windows vs Unix newlines) cannot be handled cleanly.
+- There is no lightweight way to assert that a piece of input is intentionally invalid without spelling out the full error-ridden parse tree.
+- Multi-language repositories (e.g., a repo that provides parsers for both TypeScript and TSX, or XML and DTD) have no way to direct individual test cases to run against a specific parser.
+- There is no way to stop the test run early after a critical failure.
+
+## Expected Behavior
+
+Test headers should support optional annotation lines placed between the test name and the closing delimiter. These annotations would control test execution:
+
+- A "skip" annotation causes the test to be skipped without removing it.
+- A "platform" annotation (with an OS name parameter) causes the test to run only on that operating system; multiple platform annotations combine with OR logic.
+- A "fail-fast" annotation stops the entire test run if that test fails.
+- An "error" annotation asserts that the parsed input contains a parse error, making it unnecessary to write out the expected error tree.
+- A "language" annotation (with a language name parameter) directs the test to use that specific parser; multiple language annotations run the test with each named parser.
+
+## Why This Matters
+
+Without this feature, developers maintaining parsers for multiple platforms or multiple languages must work around the limitations by deleting tests, writing complex conditionals outside the test format, or tolerating noisy failures. The annotation system provides a first-class solution inside the test corpus format itself.

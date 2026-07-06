@@ -1,7 +1,17 @@
-I'm cleaning up the CocoaPods integration in the Flutter build system, over in `@packages/flutter_tools/lib/src/macos/cocoapods.dart` and the related iOS/macOS plugin build glue. Right now the pod install method takes a pre-computed engine directory as a raw string and that's just outdated. iOS builds don't need that engine path injected into the pod install environment at all, and macOS builds shouldn't be handed the path externally either, they should derive it themselves from the build mode using their own artifacts. So I want to refactor so the method accepts a build mode value instead of the engine path string, and the class gets an artifacts dependency so it can compute the framework path internally.
+## Description
 
-Concretely, when I run pod install for an iOS project, don't set any engine or Flutter framework directory env var, drop it entirely. For macOS pod installs, still set the framework directory variable but compute it internally from the build mode and the artifacts, not from a caller-supplied string.
+The Flutter build system currently passes a pre-computed engine directory path as a raw string when running CocoaPods pod installations for both iOS and macOS platforms. This design is outdated: iOS projects no longer need the engine directory injected into the pod install environment at all, while macOS projects should derive this path internally from the build mode and available build artifacts rather than requiring the caller to supply it. Additionally, the code that handles outdated Podfile patterns is too lenient — it merely prints a warning instead of stopping the build — which can allow incompatible configurations to silently proceed.
 
-Also the Podfile compatibility checks are too soft. Right now when a Podfile references obsolete patterns (like creating engine symlinks or parsing the old plugins file format) it just logs a warning and keeps going, which lets broken setups slide through silently. I want those to actually fail the build with a clear error message so devs are forced to update their project files.
+## Expected Behavior
 
-Oh and same idea for the Xcode config generation, the iOS build config should no longer include the Flutter framework directory variable, while the macOS build config should still include it, computed from the build mode. Point is to make this self-contained so callers stop computing engine paths and outdated integrations get caught early instead of quietly proceeding.
+- The method that processes CocoaPods installation should accept a build mode value instead of a pre-computed engine path string.
+- The class should also accept an artifacts dependency to enable internal computation of any required framework paths.
+- When running pod installation for iOS projects, no engine or framework directory should be passed in the pod install environment.
+- When running pod installation for macOS projects, the framework directory should be computed internally and injected into the pod install environment.
+- Podfiles that reference obsolete Flutter patterns (such as creating engine symlinks or parsing the old plugins file format) should cause the build to fail with a clear error, not just print a warning.
+- The iOS Xcode build configuration should no longer include the Flutter framework directory variable.
+- The macOS Xcode build configuration should still include the Flutter framework directory variable, computed from the build mode.
+
+## Why This Matters
+
+This change makes the build system more robust and self-contained: callers no longer need to compute and supply engine paths externally, and projects using outdated integration patterns are caught early with a clear failure rather than silently continuing with a potentially broken setup.

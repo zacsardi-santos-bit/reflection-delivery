@@ -1,5 +1,17 @@
-I'm hitting an inconsistency with grouped skewness and kurtosis on nullable float data. When I've got a nullable float array where the validity mask says a position is present but the actual value is a not-a-number, the grouped skew and kurt reductions skip that value like it's absent. Sum, mean, and variance all do the right thing here, they treat it as a real data point so the arithmetic pushes not-a-number into the result, but skew and kurtosis instead hand back a normal numeric answer, which is wrong.
+## Description
 
-Same bug lives in the low-level numerical ops for skewness and kurtosis. When a boolean mask comes in alongside the data, the mask should be the only authority on what's missing. So masked (mask=True) entries are the absent ones, and everything else counts as valid data even if it's a not-a-number. Right now when skip-missing-values is on, we're skipping both the masked entries AND unmasked not-a-number values, which is the core issue when a mask is actually provided. With skip-missing off, hitting any masked-absent entry should make the result immediately become not-a-number.
+When computing skewness and kurtosis reductions on data that uses a boolean validity mask to distinguish between genuinely absent values and numeric not-a-number values, the computation incorrectly treats the two as equivalent. Specifically, if a data array uses a separate mask to indicate which entries are absent, and a floating-point not-a-number appears at a position where the mask says the entry is valid, that not-a-number should be treated as valid data (and cause the result to be not-a-number through arithmetic propagation). Instead, the current implementation skips it as though it were an absent value, producing an incorrect non-missing result.
 
-So I want the mask to be authoritative, and skew and kurtosis to follow the same rule as the other reductions consistently. Also, when there's an option active to distinguish not-a-number from genuinely absent values and I've asked it not to skip missing values, any group that contains a genuine absent value should come back as absent, not some numerical answer. This matters because folks leaning on nullable floats for precise NA semantics expect skewness and kurtosis to decide skip-vs-propagate the exact same way sum and mean do, and right now groupby silently returns wrong answers for these cases.
+This affects both the low-level numerical operations (skewness and kurtosis) and the higher-level grouped reductions built on top of them. Other reductions (sum, mean, variance, etc.) already handle this correctly — only skewness and kurtosis have this inconsistency.
+
+## Expected Behavior
+
+- When a mask is provided alongside an array of values, the mask is the authoritative indicator of which entries are absent. Entries marked absent in the mask are missing; all other entries — including those whose value is not-a-number — are valid data.
+- With "skip missing values" enabled, only mask-marked absent entries are skipped; numeric not-a-number values that are not masked as absent propagate not-a-number through the computation.
+- With "skip missing values" disabled, any absent entry (mask=True) encountered causes the result to immediately become not-a-number.
+- Grouped skewness and kurtosis reductions on nullable floating-point data must be consistent with other reductions like sum and mean.
+- When a future option to distinguish not-a-number from genuine absent values is active and "skip missing values" is disabled, grouped reductions must propagate genuine absent values as absent in the result.
+
+## Why This Matters
+
+Users relying on nullable floating-point arrays for precise NA semantics expect that skewness and kurtosis behave the same as sum, mean, and variance when deciding whether to skip or propagate missing values. The inconsistency means that groupby skewness and kurtosis silently return wrong answers for data containing not-a-number values in a nullable array.

@@ -1,9 +1,17 @@
-I'm building out our Next.js docs app and I need a protected API route that external content pipelines can hit to trigger cache revalidation for specific tags. Right now there's no secure way to purge stale cached docs on demand, so they can hang around indefinitely, and I want automated systems to invalidate specific tags without over-purging everything.
+## Description
 
-Here's the shape of it. Callers have to pass an API key in the authorization header, and I want to reject anything that's missing that header outright, plus reject anything using a key we don't recognize. So two separate rejection paths there, one for no token at all and one for an unrecognized token.
+The documentation site needs a secure API endpoint that external content pipelines can call to trigger cache revalidation. Currently there is no protected mechanism for this, so stale cached docs cannot be reliably purged by external services.
 
-There are two tiers of keys. Standard tier keys get rate-limited to once every 6 hours, so if someone already triggered a revalidation within the last 6 hours the request should come back with a rate-limit error. Privileged tier keys skip that cooldown entirely so trusted callers can always fire. To enforce the cooldown correctly on later calls I need to persist revalidation history in the database, basically recording each successful event so subsequent requests can check the timestamp.
+## Expected Behavior
 
-When a request clears auth, the tier check, and the body validation, it should trigger cache revalidation for each tag in the request body and return a success response. Oh and malformed bodies, like ones that don't include the tags array, need to get rejected with an appropriate error too. So the flow is: check the header, resolve the key and its tier, validate the body has the tags, enforce the 6 hour cooldown for standard keys against the stored history, then revalidate every tag and record the event.
+- The endpoint must verify that requests carry a recognized API key before performing any cache operations.
+- Requests without an authorization token should be rejected outright.
+- Requests with an unrecognized token should also be rejected.
+- Malformed request bodies (e.g., missing the list of cache tags to revalidate) should be rejected with an appropriate error.
+- For standard API keys, a cooldown of 6 hours must be enforced between successive revalidations: if a revalidation has already happened within the last 6 hours, the request should be rate-limited.
+- For privileged API keys, the 6-hour cooldown should be bypassed so that trusted callers can always trigger revalidation.
+- On a successful revalidation, the endpoint should purge the cache for each requested tag and record the event so the cooldown can be enforced in future requests.
 
-A few concrete interface details so this drops into our existing docs app and tooling. The route lives at `apps/docs/app/api/revalidate/route.ts`, and the request-handling logic must be a named export called `_handleRevalidateRequest` that takes the incoming request (the `POST` handler can wrap it). The standard-tier keys come from the `DOCS_REVALIDATION_KEYS` environment variable and the privileged-tier keys from `DOCS_REVALIDATION_OVERRIDE_KEYS` (each a comma-separated list); the token is taken from an `Authorization: Bearer <token>` header. Use a Supabase client built from the `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SECRET_KEY` environment variables to read the revalidation history via its `rpc` method (the returned rows expose a `created_at` timestamp used for the 6-hour check) and to record each event via `from().insert()`. The 400 response for a malformed body should mention that it is a malformed request body, and the 429 response for the standard-tier cooldown should mention that a tag was revalidated within the last 6 hours.
+## Why This Matters
+
+External content pipelines need a reliable, auditable way to keep the documentation cache fresh. Without this endpoint, stale content can persist in the cache indefinitely, and there is no way for automated systems to invalidate specific cache tags on demand while still protecting against accidental over-purging.

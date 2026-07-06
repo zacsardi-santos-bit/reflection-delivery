@@ -1,7 +1,24 @@
-I'm working on our lint rule that flags return type annotations wider than what a function actually returns, and right now it's missing the most common real-world case, where a union return type has extra variants the function never produces. Think a function declared to return a string or null that always returns a string, that should get flagged since callers are tricked into handling a null case that never happens.
+## Description
 
-I want this to fire across all the common function shapes: plain functions, async functions (including ones where the return type is wrapped, like a promise), arrow functions, class methods, class getters, and object literal methods. Type aliases that expand to a union should behave exactly like inline unions, and I need nested unions handled too. Oh and when a branch throws instead of returning, ignore that path when figuring out what's actually returned.
+The lint rule that detects misleadingly wide return type annotations is currently incomplete: it does not flag one of the most common real-world patterns, where a function's return type annotation includes extra union variants (like "or null", "or number") that the function never actually returns.
 
-When it detects a problem it should tell the dev the narrower type to use. If only one type comes back, suggest just that type. If two specific literal values are returned, suggest those two as a union. If the narrowed type is too gnarly to express cleanly, a generic "narrow this annotation" hint is fine as a fallback. Also there's an existing spot where a union that could get a precise variant suggestion was falling back to the generic note, that one should now emit the concrete suggestion instead.
+For example, a function declared to return a string-or-null that always returns a string should be flagged, because callers are misled into thinking they need to handle the null case. The rule should also suggest the correct, narrower type so developers know exactly what to change.
 
-Stuff that should NOT be flagged: unions where every variant genuinely gets returned somewhere across the branches, unions that contain a top type absorbing all the others, and unions where literal types are fully subsumed by their primitive base (like some literals plus the primitive that covers them, since those already collapse to the primitive at the type level so there's nothing left to narrow). Without this the rule's basically useless for the most frequent version of the problem, so it's worth getting right.
+## Expected Behavior
+
+- Functions with union return types (such as unions with a nullable variant, two-type unions, or three-way unions) should be flagged when the body never returns some of those variants.
+- The diagnostic should include a concrete suggestion of the narrower type when one can be determined (e.g. a message recommending the specific narrowed type to use instead).
+- This should work across all function forms: regular functions, async functions with wrapped return types, arrow functions, class methods, class getters, and object literal methods.
+- Type aliases that resolve to union types should be handled the same as inline unions.
+- Functions with branches where one path throws should correctly ignore the throwing path when computing what types are actually returned.
+- A specific case where a precise type variant could be suggested instead of a generic note should now produce the specific suggestion.
+
+## What Should NOT Be Flagged
+
+- Unions where all variants are genuinely returned across different branches.
+- Unions containing special top types that absorb all other members.
+- Unions where literal types are entirely subsumed by their corresponding primitive base type (e.g. a union of specific literal values and the broader primitive type that encompasses them, which effectively collapses to that primitive).
+
+## Why This Matters
+
+Without this coverage, developers routinely write overly broad return type annotations that mislead callers and prevent them from relying on narrower types. The lint rule's value is significantly reduced when it misses the most common form of this problem.

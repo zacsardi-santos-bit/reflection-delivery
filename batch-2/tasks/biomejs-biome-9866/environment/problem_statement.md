@@ -1,5 +1,17 @@
-I want to add a new CSS lint rule to the nursery group in our linter that flags selectors chaining too many class selectors together. The motivation is pretty simple, when you pile up a bunch of class selectors in one selector it gets hard to read, hard to override, and hard to reuse, so I'd like an automated way to enforce a limit on our stylesheets.
+## Description
 
-The rule needs to be configurable with a maximum number of class selectors allowed per selector. When a selector's class count goes over that max, it should report a diagnostic that explains how many class selectors were found and what the configured limit is. Teams should be able to set the threshold to zero if they want to disallow class selectors entirely, or to one, two, or whatever higher number if they just want to catch the really over-specific stuff. And this part matters, if there's no threshold configured at all the rule should stay totally silent and not flag anything, it only activates once a limit is actually set.
+CSS selectors that chain many class selectors together can quickly become hard to read, hard to override, and hard to reuse. However, the CSS linter currently provides no rule to enforce a maximum number of class selectors in a single selector. Teams that want to keep their stylesheets maintainable have no automated way to catch selectors that exceed their chosen complexity threshold.
 
-Couple of edge cases I care about getting right. Class selectors that show up inside pseudo-class function arguments (like the ones nested in `:is()` or similar) should count toward the total. Each selector in a comma-separated list needs to be evaluated on its own, independently. Nested selectors using the CSS nesting syntax should also be treated independently from their parent rules, so a nested block gets its own count and doesn't inherit the parent's classes. Oh and selectors that contain dynamic interpolations, like you'd see in SCSS, should just be skipped since we can't statically analyze those anyway. Without something like this our bigger CSS codebases just keep accumulating overly specific selectors that nobody wants to maintain, so catching it early in the workflow is the whole point.
+## Expected Behavior
+
+- A new lint rule in the nursery group should detect when a CSS selector contains more class selectors than a configurable maximum.
+- The rule should support a configurable option that lets teams choose their own threshold — including zero (to disallow class selectors entirely), one, two, or any other limit.
+- The total class count should include class selectors that appear inside pseudo-class function arguments.
+- Each selector in a comma-separated list should be evaluated independently.
+- Nested CSS selectors (using the nesting syntax) should be evaluated independently from their parent selectors.
+- Selectors with dynamic interpolations (as found in SCSS) should be excluded from the check.
+- The rule should produce no warnings at all when no threshold has been explicitly configured — it should only activate when a limit is set.
+
+## Why This Matters
+
+Without this rule, large CSS codebases can accumulate overly specific selectors that are difficult to maintain, override, and understand. Automating the enforcement of a class-selector limit helps teams catch complexity issues early in the development workflow.

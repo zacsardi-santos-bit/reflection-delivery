@@ -1,5 +1,21 @@
-I'm trying to fix screenshot exports for tall dashboards. Right now when a dashboard is taller than the browser viewport we only capture the visible chunk and everything below the fold gets cut off, so the automated exports and email reports with embedded screenshots end up incomplete for the big dashboards with tons of charts. I want to capture the full height by scrolling through the page in viewport-sized increments, grabbing a clipped screenshot at each position, and stitching those tiles into one image.
+## Description
 
-Can you add two utilities to the screenshot utilities module (somewhere like `@superset/utils/screenshots.py` or wherever that module lives). First, a function that combines a list of image tiles vertically into a single PNG, with the output width being the max of all the tile widths and the height being the sum of all their heights. If the list is empty it should just return empty bytes, and if there's only one tile return it as-is without extra processing. Oh and if the stitching hits an error, catch it, log it, and fall back to returning the first valid tile.
+When dashboards are taller than the browser viewport, the current screenshot mechanism only captures the visible portion of the page. For tall dashboards with many charts, this results in incomplete screenshots that cut off content below the fold.
 
-Second, a function that drives the actual tiling against a browser page, so it scrolls to each position, waits a couple seconds for the page to settle, captures the clipped screenshot for that tile, and once it's done with all of them resets the scroll position back to the top. It should also log the dashboard dimensions and the number of tiles it's capturing. For failures, if the target element can't be found on the page it should just return nothing gracefully instead of crashing, and any other unexpected error should get caught and logged with a descriptive message and also return nothing.
+We need a way to capture the full height of a dashboard by automatically scrolling through it in increments, taking a screenshot at each scroll position, and stitching those tiles together into a single complete image.
+
+## Expected Behavior
+
+- The system should scroll through the dashboard in viewport-sized increments, capturing each section as a separate tile.
+- All tiles should be combined vertically into a single full-height PNG image (width = max of all tile widths, height = sum of all tile heights).
+- A single tile should be returned as-is without unnecessary processing.
+- An empty set of tiles should return an empty result.
+- If the image stitching encounters an error, the first valid tile should be returned as a fallback, and the error should be logged.
+- If the target element cannot be located on the page, the operation should return nothing gracefully rather than crashing.
+- Any unexpected errors should be caught, logged with a descriptive message, and cause the function to return nothing.
+- The system should log the dashboard dimensions and the number of tiles being captured.
+- After capturing all tiles, the page scroll position should be reset to the top.
+
+## Why This Matters
+
+Automated dashboard exports and email reports that include screenshots currently produce incomplete images for tall dashboards. This feature ensures that users and recipients always receive a full snapshot of the entire dashboard regardless of its height.

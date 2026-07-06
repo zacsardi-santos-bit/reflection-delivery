@@ -1,3 +1,17 @@
-I'm poking at the CI pre-commit hook that validates breeze command config, the one over in `@scripts/ci/pre_commit/check_breeze_command_hash.py` (that module), and I keep hitting a stale-code problem. The hook shells out to breeze subprocesses, but breeze normally runs from a cached install, not my local worktree, so when I've got uncommitted edits to the breeze sources the hook happily computes command hashes and option groups off the old cached code. End result is it either skips a regeneration I actually need, or worse, it reverts an image I already regenerated correctly back to the stale version. Super annoying because devs editing breeze locally should be able to trust the hook to evaluate against the current code, not some old build artifact.
+## Description
 
-What I want is a small utility function in that pre-commit hook module that builds and returns a modified copy of the current process environment with the local breeze source directory stuck at the front of the Python import path (PYTHONPATH). So any subprocess that invokes breeze picks up my local sources first. It needs to handle both cases: when PYTHONPATH isn't set at all it should just become the local source dir path, and when PYTHONPATH already has one or more paths the local dir gets prepended with the right os path separator so it wins over whatever's already there. Big thing, oh and this is important, it can't mutate the actual running process environment, it should only ever return a fresh copy, and every other env var from the current process needs to carry through unchanged in that copy.
+The CI pre-commit hook that validates breeze command configuration runs breeze from a cached installation that doesn't always reflect uncommitted local changes to the breeze source code. When the cache is stale, the hook computes command hashes and option groups from the old code — which means it either fails to trigger a needed regeneration, or worse, reverts a correctly-regenerated image back to the stale cached version.
+
+## Expected Behavior
+
+There should be a utility function in the CI pre-commit hook module that:
+
+- Returns a complete copy of the current process environment with the local breeze source directory inserted at the front of the Python import path
+- When the Python import path variable is unset, it should be set to just the local source directory path
+- When the Python import path variable already has a value, the local source directory path should be prepended (with the appropriate path separator) so it takes priority over anything in the existing path
+- The function must not modify the actual running process environment — it should only return a modified copy
+- All other environment variables from the current process must be preserved in the returned copy
+
+## Why This Matters
+
+Developers editing the breeze sources locally should be able to rely on the pre-commit hook to evaluate their changes against the *current* code, not a stale build artifact. Without this fix, the hook silently uses old code and produces incorrect results, making the developer experience unreliable.

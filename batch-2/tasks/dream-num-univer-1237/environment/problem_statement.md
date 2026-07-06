@@ -1,7 +1,16 @@
-I'm building out the formula engine for a spreadsheet and a bunch of standard built-ins just aren't there yet, so formulas people expect to work fail completely. I need to add ISBLANK, IF, IFERROR, AND, and CONCAT (text concatenation), plus fix a type-comparison bug in range conditions.
+## Description
 
-ISBLANK should return true only when a cell or value is actually empty and false for anything non-empty, so errors, booleans, strings, and numbers all count as not-blank, even zero. IF does the usual conditional branching, one value when the condition's true, another when false, and it's gotta work for scalars and arrays both. IFERROR passes a value through untouched when it isn't an error and swaps in a fallback when it is, arrays included. AND returns true only if every logical value is true, false if any is false, and an actual error when it can't find any logicals at all (like when all the inputs are text). CONCAT joins multiple text values or arrays into one string, and it needs to handle escaped quotation marks properly.
+The formula engine is missing implementations for several common spreadsheet functions. Users trying to use standard spreadsheet formulas that check for blank cells, apply conditional logic, handle errors gracefully, combine boolean conditions, or concatenate text find that these operations don't work at all. In addition, when comparing values of different types (like a text value against a number, or a number against a boolean) in range-based conditions, the engine produces incorrect results because it doesn't apply the standard spreadsheet type-ordering rules.
 
-Every one of these has to deal with arrays/ranges, not just single cells, with broadcasting. When arrays have different dimensions the result expands to the max size and any position without a corresponding value fills with an #N/A style not-available error. One quirk for AND: it should ignore text values sitting inside arrays rather than erroring on them, but it still propagates real error values it hits.
+## Expected Behavior
 
-Also there's a comparison bug, oh, when you compare values of different types in range conditions (text vs number, number vs boolean, etc) the engine gives wrong results. It needs standard spreadsheet ordering where numbers rank below text and text ranks below booleans, and that ordering has to apply across all the standard comparison operators. These are foundational and everything downstream depends on them working right.
+- A blank-check function should return true when a cell or value is empty and false for any non-empty value — including errors, booleans, strings, and numbers (even zero).
+- A conditional branching function should return one value when a condition is true and another when it's false, supporting scalar and array inputs. When the condition or the return values are arrays, the result should expand to cover the full range; any out-of-bounds positions should return an appropriate "not available" error.
+- An error-handling function should pass through a value unchanged when it's not an error, and substitute a fallback value when it is — including inside arrays, with array broadcasting support.
+- An AND logic function should return true only if all provided logical values are true, false if any are false, and an error if no logical values can be found (e.g., all inputs are text). Error values in arrays should propagate.
+- A text concatenation function should join multiple text values or arrays into a single string result, with proper handling of escaped quotation marks and array broadcasting.
+- Cross-type comparisons must follow standard ordering: numbers are less than text, and text is less than booleans.
+
+## Why This Matters
+
+Without these functions, formulas that rely on any of these common operations fail entirely. These are foundational spreadsheet capabilities expected to work correctly in any formula engine.

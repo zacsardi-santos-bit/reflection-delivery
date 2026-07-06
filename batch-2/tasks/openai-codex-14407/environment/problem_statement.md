@@ -1,5 +1,13 @@
-I've been poking at our plugin API responses and something's bugging me about the policy fields. Right now both the authentication policy and the installation policy come back typed as optional, so they can be null, but honestly there's no real-world case where a plugin doesn't have these. Every plugin has a meaningful policy, always. So clients are stuck writing defensive code to unwrap or guard against a null that never actually shows up, which is just noise in the contract.
+## Description
 
-I want to make these non-optional across the board. For the plugin list response, each plugin entry should always carry both the installation policy and the authentication policy as required, non-null fields. For the plugin install response, the authentication policy should always be a concrete value, present and non-null. And it's not just the surface type, I want the underlying data and however these values get constructed through the pipeline to reflect that guarantee too, so no optional wrapping anywhere for these specific fields, not in the model, not in the builder, not in the response mapping.
+The plugin list and plugin install APIs return policy fields — specifically the authentication policy and installation policy — as optionally present values that can be null. In practice, these fields always have concrete values because every plugin has a meaningful policy. The optional/nullable representation creates unnecessary ambiguity for clients consuming these APIs, forcing them to handle a null case that never actually occurs.
 
-The point is the API should match reality (these are never absent) and callers should be able to just read the policy straight off the response without any unwrap or missing-value check. Any client that used to handle a null policy can now count on a value being there.
+## Expected Behavior
+
+- When listing plugins, each plugin entry in the response must include both the installation policy and authentication policy as always-present, non-null fields.
+- When installing a plugin, the install response must include the authentication policy as an always-present, non-null field.
+- Clients should be able to read these policy fields without needing to unwrap or guard against a missing value.
+
+## Why This Matters
+
+Making these fields always-present reflects reality (they are never actually absent) and simplifies the API contract for consumers. It removes a source of confusion and defensive handling that serves no purpose. Any client that previously had to handle a null policy can now rely on a guaranteed value being present.

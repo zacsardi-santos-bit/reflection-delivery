@@ -1,5 +1,19 @@
-I'm working on our distributed block storage and hit a gap in the background block deletion service. We keep a checksum tree file per container that tracks integrity info, and it has a field for recording which blocks got deleted, but the deletion service never actually writes those deleted block IDs into it. I need that wired up so after blocks are physically removed, their IDs land in the container's checksum tree file. Timing matters here: the recording has to happen before the deletion transactions get removed from the database, so if we crash and the deletion retries, the checksum file still updates correctly even when the block files are already gone from disk (partial failure where physical files went away but metadata didn't update yet).
+## Description
 
-The deleted block list in that file always needs to be sorted ascending with no duplicates. If the same block ID shows up more than once in a single batch, store it once. And multiple batches for the same container over time should accumulate, so later batches merge into the previously stored list, still sorted and deduped, giving the union of everything deleted. This all feeds container reconciliation, so when two replicas diverge the reconciliation process knows which blocks were legitimately deleted versus missing from corruption or replication failure, and won't pointlessly copy them back.
+When blocks are deleted from a storage container, there is currently no mechanism to record those deletions in the container's checksum tree file. This matters for container reconciliation: if two replicas of a container diverge, the reconciliation process needs to know which blocks have already been deleted so it doesn't attempt to copy them from another replica unnecessarily.
 
-While I'm in here, the checksum tree file manager's constructor currently demands a narrow config type; change it to take a more general configuration source instead. Also the method that fetches the path to a container's checksum file should become a static utility instead of needing an instance, and it should work against the base container data type rather than only a specific subtype. Oh and the test helpers for building chunk data and for comparing or reading checksum trees are duplicated across test files right now, so pull them into one shared utility class so multiple test suites can reuse them without the copy paste.
+## Expected Behavior
+
+- After block deletion runs, each affected container's checksum tree file should contain the list of block IDs that were deleted, in sorted order and without duplicates.
+- If a deletion is retried (for example after a partial failure where physical block files were already removed but the metadata was not yet updated), the checksum tree file should still be updated correctly even though the block files are no longer present on disk.
+- When the same block ID appears multiple times in a deletion request, it should be stored only once in the file.
+- When deletion requests arrive in arbitrary order, the stored block list must always be sorted in ascending order.
+- Multiple deletion batches for the same container must accumulate, so the file reflects the union of all previously deleted blocks.
+
+## Why This Matters
+
+Without this tracking, reconciliation between container replicas has no way to distinguish between a block that was legitimately deleted and one that is missing due to corruption or replication failure. Adding this tracking closes that gap and allows reconciliation to operate correctly.
+
+## Additional Refactoring
+
+Shared test helpers for building container checksum tree structures and reading checksum tree files from disk should be consolidated into a common utility class so different test suites can reuse them without duplication.

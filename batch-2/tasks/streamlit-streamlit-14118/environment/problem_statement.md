@@ -1,5 +1,13 @@
-I keep hitting noise in my logs every time a Streamlit app boots up, it always prints that welcome banner and the app URL to the console and there's no clean way to turn it off right now. In headless setups, CI/CD pipelines, or when I'm running Streamlit as an embedded service, that startup output is just clutter and I'd rather not monkey-patch or redirect stdout to get rid of it.
+## Description
 
-What I want is a new config option under the logger section that suppresses the startup welcome message entirely. When it's enabled, starting an app should produce no welcome or URL output to the console at all. When it's not set or left disabled, everything stays exactly like it is today, welcome message and URL printed as normal, so I don't break anyone relying on the current behavior.
+When Streamlit starts, it always prints a welcome message and URL to the console. There is currently no built-in way to suppress this output through configuration alone. This causes issues for users running Streamlit in automated environments, CI/CD pipelines, or as embedded services where the startup banner clutters logs or is simply unwanted noise.
 
-It should behave like every other Streamlit config option, meaning I can set it in the config file or via environment variable, whatever's convenient for the deployment. The idea is quiet startup for production and automated environments so the logs stay focused on actual application-level messages instead of a banner nobody reads. Default off, opt-in only, and the toggle lives with the rest of the logging config.
+## Expected Behavior
+
+- A new option should be available under the logger configuration section that allows users to hide the startup welcome message entirely.
+- When this option is enabled, starting a Streamlit app should produce no welcome/URL output to the console.
+- When this option is not set or disabled, the existing behavior (displaying the welcome message and URL) should remain unchanged.
+
+## Why This Matters
+
+Many production and automated deployments benefit from quiet startup behavior. Having a supported configuration option for this allows users to suppress the startup banner without resorting to output redirection or monkey-patching, keeping their logs clean and focused on application-level messages.

@@ -1,5 +1,19 @@
-I'm looking at our inefficient-dictionary-iteration lint rule and there's an annoying gap. Right now it only fires on traditional for-loops, so if I iterate over a dict's `.items()` and unpack both key and value into a two-element tuple but then only actually use one of them, it correctly nudges me to iterate over just the keys (or just the values) instead. Great for for-loops, but the exact same inefficiency shows up all the time in comprehensions and generator expressions and the linter stays totally silent there, which is inconsistent and means people optimize their loops but leave the same waste sitting in their comprehensions.
+# Extend Inefficient Dictionary Iteration Detection to Comprehensions
 
-I want to extend the rule to cover list comprehensions, set comprehensions, dict comprehensions, and generator expressions too. It should flag any generator clause inside one of those where the target is a two-element tuple unpacked from a dictionary's items but only one of the two elements ends up getting used in the comprehension body. That's true whether the unused element is a wildcard (`_`) or just a named variable that never gets referenced anywhere. When only the key is used, suggest iterating over the keys; when only the value is used, suggest the values.
+## Description
 
-A couple things it's got to get right so it doesn't turn into a false-positive machine: if both key and value are genuinely used, whether in the body or in a filter/if condition, leave it alone, and same if the iteration target isn't a two-element tuple at all. Oh and comprehensions can have multiple nested generators (more than one `for` clause), so each generator needs to be checked independently rather than assuming there's just one.
+The rule that detects inefficient dictionary iteration currently only covers traditional for-loops. When a loop iterates over a dictionary's key-value pairs but only actually uses one of the two elements, the rule suggests using the more efficient keys-only or values-only iteration method instead.
+
+However, this same inefficiency appears frequently in comprehension expressions — list comprehensions, set comprehensions, dictionary comprehensions, and generator expressions. Currently, none of these forms are checked, so developers miss out on optimization hints they would receive if they wrote the same logic as a for-loop.
+
+## Expected Behavior
+
+- A list comprehension, set comprehension, dict comprehension, or generator expression that unpacks both key and value from a dictionary's items but only uses the key should be flagged with a suggestion to iterate over just the keys instead.
+- The same applies when only the value is used.
+- Cases where the unused variable is a named identifier (not just a wildcard) that is simply never referenced in the body should also be detected.
+- Comprehensions with multiple nested generators should have each generator checked independently.
+- The rule should still allow cases where both key and value are genuinely used in the body or in a filter condition, and where the iteration target is not a two-element tuple.
+
+## Why This Matters
+
+Inconsistent lint coverage leads to developers optimizing for-loops but inadvertently leaving the same inefficiency in comprehensions and generators. Extending the rule to all iteration contexts ensures consistent feedback regardless of which style the developer prefers.

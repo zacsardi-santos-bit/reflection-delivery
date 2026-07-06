@@ -1,9 +1,22 @@
-I'm hitting a few related gaps in the document conversion service client and want to knock them out together.
+## Description
 
-First, when a conversion task fails server-side, all I get back is a plain string message. The server actually knows way more, the failure category, which processing phase went wrong, and whether the thing is retryable, but none of that shows up in the client's response models. I want a proper structured failure model on the response side capturing category, phase, and retryability, plus a dedicated exception type raised specifically when a task fails execution, carrying that failure message so callers can tell task execution failures apart from other errors and inspect the metadata to decide whether to retry.
+The document conversion service client has several gaps that make it harder to use reliably in production:
 
-Second, serialization is noisy. When I build a request with only a couple of options set, the payload still includes all the defaults (null/empty values for unset fields like timeouts) which clutters things and triggers warnings from the underlying validation library. I want option serialization to only include values I explicitly set, dropping defaults and nulls, and it's gotta be warning-free, both when I serialize the conversion options directly and when they ride along as part of a submission.
+1. **Task failures lack structured detail.** When a conversion task fails on the server, the client only surfaces a plain string error message. The server already tracks richer information about failures — the category of failure, which processing phase it occurred in, and whether the caller should retry — but none of that is modeled in the client response types or surfaced through a dedicated exception.
 
-Third, the per-item submit-and-retrieve flow (the batch retrieval path) doesn't do automatic delivery target selection. I want it to try presigned URL delivery first since it's more efficient, and gracefully fall back to inline body delivery if the server says presigned isn't configured. It should also still accept an explicit target when I want to control delivery mode myself.
+2. **Option serialization includes unwanted defaults.** When submitting a conversion request with only a subset of options explicitly set, the serialized payload includes fields at their default values (e.g., empty values for unset optional fields like timeouts). This inflates the request unnecessarily and can trigger serialization warnings in the underlying validation library.
 
-Finally, if the server hands back a response that doesn't match the expected schema (happens when client and server drift to different versions), I want a specific, informative exception that makes the version skew obvious to diagnose, not some generic unhandled error.
+3. **No automatic delivery target selection.** When no result delivery target is specified, the client should intelligently pick the most efficient available method — preferring presigned URL delivery when the server supports it, and falling back to inline body delivery if not. Currently this fallback logic is absent from batch retrieval flows.
+
+4. **Schema mismatches produce generic errors.** If a client and server are running mismatched versions and the response format has changed, the client raises a generic unhandled error rather than a clear, actionable exception that communicates the likely cause (version skew).
+
+## Expected Behavior
+
+- Structured failure information (category, phase, retryability) should be modeled in the response layer and a specific exception type raised when a task fails execution, carrying that information.
+- Serializing conversion options should only include explicitly set, non-default values, and must be warning-free.
+- Batch retrieval via the item-by-item submission flow should support both explicit target selection and automatic target selection with presigned-first fallback.
+- When the response from the server does not match the expected schema, a dedicated exception with an informative message should be raised instead of a generic one.
+
+## Why This Matters
+
+These improvements make failure handling more actionable for callers (they can inspect failure metadata to decide whether to retry), keep request payloads clean, and provide clear diagnostics when client and server versions drift apart.

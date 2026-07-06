@@ -1,7 +1,15 @@
-I'm working with the pg-meta PostgreSQL metadata library and it already does table-level privilege stuff (list, grant, revoke) but there's just nothing at the column level, which is a real gap for me because a lot of our deployments lean on column grants to let a role read only certain columns of a table, and right now I can't inspect or manage any of that programmatically. I want to add column privilege support so it's at parity with the table side.
+## Description
 
-So a few things. First I need to list all column privileges across the database, and each result should carry the schema, the table name, the column name, plus the set of grantors, grantees, privilege types, and whether each grant is grantable (i.e. can be passed on further). Also I want that listing to be filterable down to specific columns I care about by their identifier, so I'm not always pulling everything.
+The pg-meta library currently supports listing, granting, and revoking privileges at the table level, but there is no equivalent support for column-level privileges. Many PostgreSQL deployments use column-level grants to control access at a finer granularity — for example, allowing a role to read only certain columns of a table — but there is currently no API to inspect or manage these privileges programmatically.
 
-Then I need to grant one or more column-level privileges to a role on a specific column that's identified by a column ID. The privilege types I care about are SELECT, INSERT, UPDATE, REFERENCES, and there should be an "all" option that expands to the full set of those applicable column-level types at once. And the mirror of that, revoking those same privileges from a role.
+## Expected Behavior
 
-Oh and this all has to work correctly when table names or column names contain spaces or other characters that need special quoting/escaping, not just clean simple identifiers, so please handle the SQL identifier quoting properly throughout the list, grant, and revoke paths.
+- There should be a way to list all column privileges across the database, with results that include the schema, table name, column name, and the set of grantors, grantees, privilege types, and whether each grant is further grantable.
+- The listing should support filtering down to specific columns of interest by their identifier.
+- There should be a way to grant one or more column-level privileges (SELECT, INSERT, UPDATE, REFERENCES, or all of them at once) to a role on a specific column, identified by a column ID.
+- There should be a way to revoke those column-level privileges from a role.
+- All operations must work correctly for tables and columns whose names contain spaces or other characters that require special handling.
+
+## Why This Matters
+
+Without column privilege management, administrators and tooling built on pg-meta cannot inspect or control fine-grained data access at the column level. Adding this capability brings column-level privilege management to parity with existing table-level privilege support.

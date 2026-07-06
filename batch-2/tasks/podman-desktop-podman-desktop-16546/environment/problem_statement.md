@@ -1,5 +1,18 @@
-I'm working on the Podman Desktop extension and I want to add a feature that syncs the host machine's trusted CA certs into running Podman VMs. On macOS and Windows Podman runs inside a VM, so any custom or corporate CA certs installed on the host aren't visible inside the VM, which breaks connections to internal registries and services that need those certs to be trusted. There's no mechanism for this right now and it's blocking core stuff like pulling images or logging into internal registries.
+## Description
 
-What I need is a class that handles this certificate synchronization. It should gather all trusted certs from the host's various cert stores, combining the system-level ones, the bundled ones, and any extra or user-installed certs, and dedupe anything that shows up in more than one store. Then it figures out which Podman machines are currently running and actually have a VM type (so not native Linux), and for each running machine it compares the host certs against what's already in the machine and only syncs the diff, uploading certs that are new, deleting ones that are on the VM but no longer on the host, and skipping the ones that are unchanged. If nothing actually changed for a machine, skip the trust store rebuild and the service restart entirely, no point doing that work.
+When Podman runs inside a virtual machine (as it does on macOS and Windows), host system certificates are not automatically available inside the VM. This causes failures when Podman tries to connect to container registries or internal services that require custom or corporate CA certificates to be trusted. There's currently no mechanism to synchronize host certificates into running Podman machines.
 
-Oh and it needs to show progress to the user and support cancellation at any point during the operation. Also if no running machines are found it should surface a warning to the user. And if syncing one machine fails, don't bail on everything, just keep going to the next machine. The implementation lives in the Podman extension under `@extensions/podman/src`, alongside the existing machine and certificate handling code.
+## Expected Behavior
+
+- A new certificate synchronization capability should be introduced for the Podman extension.
+- The synchronization should collect trusted certificates from all certificate stores available on the host (system-level, bundled, and any extra/user-installed certificates), and deduplicate them.
+- The system should determine which Podman machines are currently running and have a VM (non-native Linux), and synchronize certificates into each of them.
+- Only certificates that are not already present in the VM should be uploaded; certificates on the VM that are no longer on the host should be removed.
+- If no changes are needed, the operation should skip the trust store update and service restart steps.
+- If no running machines are found, a warning should be displayed to the user.
+- Synchronization of one machine failing should not prevent other machines from being synchronized.
+- The operation should show progress feedback to the user and support cancellation.
+
+## Why This Matters
+
+Corporate and enterprise environments often require custom root CAs. Without this sync, Podman inside a VM cannot verify TLS certificates for internal registries, breaking core workflows like pulling images or logging in. This feature makes Podman in VM environments work seamlessly with the host's certificate trust store.

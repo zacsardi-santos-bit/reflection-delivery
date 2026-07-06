@@ -1,7 +1,22 @@
-I'm working on the text-search feature and the way we resolve the search binary is too brittle. Right now it only looks for a bundled copy, and if that's missing the whole feature just dies instead of trying a system-installed version. I want it to fall back to whatever's installed on the system when the bundle isn't there, but do it safely, because blindly trusting the system PATH is a real vulnerability, an attacker could plant a malicious executable earlier in the PATH and we'd pick it up.
+## Description
 
-So I need a trust check: a system-found binary should only get used if its real path (resolve symlinks first, then check) lives in a known-safe system directory. On Windows that means the dirs indicated by the standard system environment variables, and on macOS/Linux it's the standard binary locations plus common package-manager install paths. Anything inside the current working directory is never trusted.
+The text-search tool currently only works with a bundled search binary. If the bundled binary is missing or unavailable (e.g., in certain deployment environments), the feature simply fails rather than trying a system-installed version. We should add support for falling back to a system-installed binary when the bundle is not present.
 
-Also I want to collapse the two older helpers (one returned a bool for availability, one returned the path) into a single resolution function that returns the path directly when a binary is found or signals that none is available, since callers need the actual path to invoke it.
+At the same time, blindly trusting whatever the system PATH resolves to would be a security vulnerability—an attacker could place a malicious executable earlier in the PATH and have it picked up automatically. We need a trust-verification mechanism that only accepts a system-installed binary if it resides in a known-safe system directory (such as standard OS binary directories or common package-manager installation paths).
 
-Then there's command safety. Certain flags on this search binary can make it execute arbitrary external commands, so those flags should always classify the invocation as dangerous no matter whether the binary's path is trusted. And a bare unqualified binary name (not an absolute path) should never count as safe, to block search-path hijacking. Oh and the config object should expose a method to get the resolved binary path, and the search tool needs to call that instead of poking at file existence on its own.
+Additionally, certain flags accepted by the search binary can instruct it to execute arbitrary external commands, which would be dangerous. The safety classification logic for command invocations needs to understand these dangerous flags and treat them accordingly, regardless of whether the binary itself is considered trusted.
+
+## Expected Behavior
+
+- When no bundled binary is found, the system PATH is searched for an installed version
+- A binary found via system PATH is only used if its real, symlink-resolved path comes from a trusted system directory (standard OS bin dirs, package manager dirs, etc.)
+- Paths inside the current working directory are never trusted
+- On Windows, trusted directories are those indicated by standard system environment variables
+- On macOS/Linux, trusted directories include standard binary locations and common package manager paths
+- Certain dangerous flags on the search binary invocation always classify the command as dangerous, even if the binary itself is trusted
+- A bare, unqualified binary name (not an absolute path) is never considered safe, to prevent search-path hijacking
+- The configuration object exposes a method to retrieve the resolved binary path, and the search tool uses this method rather than checking file existence directly
+
+## Why This Matters
+
+Users who don't have the bundled binary available (or who prefer their system installation) can now use the search feature without it silently failing. The security validation ensures that this flexibility doesn't open an attack surface for search-path hijacking or arbitrary command execution via dangerous flags.

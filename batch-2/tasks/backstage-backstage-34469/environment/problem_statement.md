@@ -1,5 +1,17 @@
-I'm poking at the Backstage UI package and hit a real annoyance in the header navigation component. When my app is deployed under a sub-path, so the router's got a base path configured like "/app", the flat navigation tabs generate hrefs that drop the base path entirely. A tab pointing at "/catalog/overview" renders as "/catalog/overview" instead of "/app/catalog/overview", so clicking it takes me somewhere broken. Navigation's basically dead for any deployment that isn't sitting at the root.
+## Description
 
-The weird part is the grouped dropdown-style tabs already do this right, their items include the base path just fine. It's only the flat tabs that are busted. And active-tab detection (the highlight on whichever tab matches the current location) already works correctly under a base path too, so I don't want to regress that.
+Header navigation tab links do not respect the router's configured base path when the application is deployed under a URL sub-path.
 
-What I want is for the flat tabs to build their link URLs with the router's base path prefixed in, same as the grouped tabs do, so any tab link this component renders resolves correctly no matter what base path the router's configured with. Active detection should keep working, the tab whose path matches the current location including base path shows as active while the others don't, and grouped items stay base-path-aware like they are today. Basically bring flat tabs into parity so a "/app" base path plus a "/catalog/overview" tab gives me "/app/catalog/overview".
+## Current Behavior
+
+When using the header navigation component with a router that has a base path configured (e.g., the app is served at a sub-path rather than the root), flat navigation tabs generate link URLs that are missing the base path prefix. Users clicking on these tabs are taken to incorrect, broken URLs.
+
+## Expected Behavior
+
+- Flat navigation tab links should include the router's base path in their href, so that the link resolves correctly when the app is deployed at a sub-path.
+- Active tab detection should work correctly — the tab whose path matches the current location (including base path) should be visually marked as active, while other tabs should not.
+- Grouped (dropdown) navigation tab items should also have their hrefs include the router's base path (this already works today; the fix should bring flat tabs into parity).
+
+## Why This Matters
+
+Applications deployed under a sub-path need all navigation links to be base-path-aware. Without this fix, header navigation is broken for any Backstage deployment that configures a router base path, sending users to invalid routes instead of the intended destinations.

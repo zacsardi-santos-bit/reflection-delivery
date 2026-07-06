@@ -1,1 +1,15 @@
-I'm putting together a new AI chat integration module for our Spring Cloud Alibaba project, basically letting Spring Cloud microservices talk to a large-language-model chat service, and I need a proper options class that wraps up all the tunable params for the chat API. The thing I keep hitting is I want developers to be able to spin up a config without wiring every single field by hand, so it's gotta support a builder pattern where you can call build with no arguments and still get something usable back. When I do that, when I build with zero configuration, the result needs to be non-null and valid, a real config object I can hand off to the client. And the key default I care about right now is the max token limit for responses, which should come out as 1500 whenever nobody sets it explicitly. That default matters a lot because without a sane response size limit the client can behave unpredictably or just fail to initialize on first use, and the whole point here is the integration should work out of the box for folks who just want to get going quickly. So please implement this options class with the builder and those defaults baked in, making sure a freshly built instance (no builder overrides at all) comes back as a valid object with the max tokens sitting at 1500.
+## Description
+
+We are introducing a new AI integration module to Spring Cloud Alibaba that allows Spring Cloud microservice applications to connect with a large-language-model chat service. As part of this integration, a configuration options class is needed that encapsulates all tunable parameters for the chat API.
+
+The options class should support a builder pattern so that developers can construct a configuration object with optional overrides. When a developer uses the builder without specifying any values, the resulting configuration object must be valid and non-null, with sensible defaults already in place. In particular, the maximum token limit for responses should default to 1500 when no explicit value is provided.
+
+## Expected Behavior
+
+- The options class must support construction via a builder with no required arguments.
+- A freshly built options object (with no builder configuration) must be a non-null, usable configuration.
+- The default maximum token limit must be 1500 when no value is explicitly set.
+
+## Why This Matters
+
+Developers who want to quickly integrate the AI chat service should not need to configure every option manually. Sensible defaults — especially around response size limits — mean the integration works out of the box. Without a proper default for the token limit, the client may behave unpredictably or fail to initialize correctly on first use.

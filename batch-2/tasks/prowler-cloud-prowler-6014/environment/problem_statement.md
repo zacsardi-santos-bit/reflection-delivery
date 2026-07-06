@@ -1,7 +1,16 @@
-I'm adding real tenant deletion cleanup to the API and right now it's kind of a mess. When someone deletes a tenant through the REST endpoint, nothing kicks off to clean up the associated cloud providers and all their downstream data (scans, resources, findings, etc.), so we end up with a pile of orphaned records that waste storage and leave the DB in an inconsistent state. I want to fix this with a background task approach so the API stays responsive.
+## Description
 
-Here's the behavior I'm after: the delete endpoint should immediately return a success response and dispatch a background job to do the heavy lifting rather than blocking while everything gets torn down synchronously. The background job needs to iterate over all of the tenant's cloud providers, delete each one along with its related data, then delete the tenant itself. If the tenant has no providers, the job should still complete successfully and just return an empty result, and when there are providers it should delete them all and return a summary of what got deleted.
+When a tenant is deleted through the API, there is no background job to clean up all the associated data (cloud providers, scans, resources, findings, etc.). Currently, deleting a tenant leaves orphaned provider data in the database, which is inconsistent and could cause issues with storage and data integrity.
 
-On the API request side, membership records for the deleted tenant need to be removed as part of handling the request. Be careful with users though, anyone who still has memberships in other tenants should be preserved. Only the specific membership tied to the deleted tenant gets removed, not the user account itself. That part matters a lot, we don't want to accidentally nuke accounts that belong to multiple tenants.
+## Expected Behavior
 
-Oh and make sure the new background task is properly registered and importable from wherever it's being dispatched, so the endpoint can actually call into it cleanly.
+- When a tenant is deleted via the REST API, the system should dispatch a background task that removes the tenant and all its associated cloud providers and their related data.
+- The delete endpoint should return a success response immediately after dispatching the background job (it should not wait for all data to be cleaned up synchronously).
+- Membership records for the deleted tenant should be removed as part of the deletion process.
+- Users who have memberships in other tenants should be preserved — only their membership in the deleted tenant should be removed, not their account.
+- When the background cleanup job runs for a tenant with no providers, it should complete successfully and report an empty result.
+- When the background cleanup job runs for a tenant with providers, it should delete all providers and return a summary of what was deleted.
+
+## Why This Matters
+
+Without proper tenant cleanup, deleted tenants leave behind orphaned provider data. This wastes storage and makes the database inconsistent. A background task approach ensures the API remains responsive while cleanup happens asynchronously, and proper membership/user handling ensures related accounts are not accidentally deleted.

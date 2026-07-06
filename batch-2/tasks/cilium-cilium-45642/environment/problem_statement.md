@@ -1,5 +1,15 @@
-I'm working on the load balancer writer in the Cilium networking stack and I hit a bug in how backend selection handles zone-preference routing when health checking is in play. When a service is set up to prefer backends in the same availability zone as the local node, and all the backends in that zone get flagged unhealthy by the health checker, the selection logic still only hands back those unhealthy local backends. It doesn't fall back to healthy backends elsewhere, so a service configured for zone-preferred routing can end up stuck shipping requests to known-bad backends during a zone-local outage even though there's perfectly healthy capacity sitting in other zones going unused.
+## Description
 
-The way I want this to work is that zone-preference should be a soft, best-effort preference, not a hard restriction that blocks failover. So I need to fix the backend selection so unhealthy local-zone backends aren't counted as valid topology-preference candidates, and when there are no healthy candidates in the local zone, selection should fall back to including all backends across all zones. Healthy remote-zone backends have to show up in the selection in that case. This should apply specifically to services with health checking enabled, since that's the only situation where we've got reliable health state to reason about.
+When zone-aware traffic routing is configured to prefer backends in the same availability zone as the node, there is a gap in the fallback logic: if all backends in the local zone are flagged as unhealthy by a health checker, the routing system still restricts traffic to that zone instead of falling back to healthy backends in other zones.
 
-Oh and I also need to expose the local node store in the test fixture so tests can set the node's zone label and verify this fallback end-to-end.
+This means that a service configured for zone-preferred routing can effectively be stuck sending requests to known-bad backends when a zone-local outage or health degradation occurs. Backends in other zones that are perfectly healthy remain unused.
+
+## Expected Behavior
+
+- When zone-preference routing is active and health checking is enabled, backends in the local zone that are marked as unhealthy should not be treated as valid candidates for zone-preference.
+- If all same-zone backends are unhealthy, the routing logic should fall back to using all available backends across all zones.
+- Healthy backends in remote zones must be included in the selection when no healthy local-zone backends exist.
+
+## Why This Matters
+
+Without this fix, a partial zone failure (where all local backends become unhealthy but remote backends are healthy) can cause service degradation even though sufficient capacity exists in other zones. The zone-preference feature should be a best-effort optimization, not a hard restriction that prevents failover.

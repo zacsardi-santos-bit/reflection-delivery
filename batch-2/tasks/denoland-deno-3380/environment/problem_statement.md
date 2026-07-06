@@ -1,7 +1,23 @@
-I'm adding Node.js compat to Deno's std library and I need to get CommonJS modules loading from inside Deno, right now there's just no way to pull in a CJS module and that's the format basically every existing Node package ships in, so anyone porting a Node app or reusing packages is stuck.
+# Add CommonJS module loading support to Deno's Node compatibility layer
 
-What I want is a factory function that takes a file path as its anchor point (where the requiring module lives) and hands back a require-like loader function. When I call that loader with a module path it should resolve, load, and actually execute the CommonJS module and return its `module.exports`. Put this as the named export of a new file in the Node compatibility module directory under the std tree, something like `@std/node/require.js` fits the shape of what's already there.
+## Description
 
-The loader's gotta handle the real-world cases: relative requires so I can pull in a sibling `.js` file relative to the requiring module, subdirectory resolution for stuff like `./subdir/module`, and node_modules resolution so third-party packages sitting in a `node_modules` directory get found. Transitive deps (including ones coming out of node_modules) need to resolve right too.
+Deno's standard library does not currently support loading CommonJS (CJS) modules — the module format used by the vast majority of existing Node.js packages. Developers porting Node.js applications to Deno, or trying to reuse Node.js packages within Deno, have no way to consume these modules.
 
-Oh and circular deps, module A requires B which requires A back, that can't crash the runtime or spin forever, it should just gracefully return whatever partial exports exist so far the way Node does it. This is a foundational piece toward making Deno a near drop-in replacement for Node environments so I'd like it solid on those four scenarios.
+We need a way to load CJS modules from within Deno, including support for:
+
+- **Relative requires** — loading other local `.js` files relative to the requiring module
+- **Subdirectory resolution** — resolving modules in subdirectories (e.g. `./subdir/module`)
+- **Node modules resolution** — loading third-party packages from a `node_modules` directory
+- **Circular dependency handling** — gracefully handling modules that create circular dependency chains without crashing
+
+## Expected Behavior
+
+- A factory function creates a `require`-like loader anchored to a given file's location
+- The loader resolves and evaluates a CJS module, returning its `module.exports` value
+- Transitive dependencies (including node_modules packages) are resolved correctly
+- Circular dependencies do not crash the runtime or cause infinite loops
+
+## Why This Matters
+
+Without this, Deno cannot interoperate with the enormous ecosystem of CommonJS Node.js packages. This is a foundational step toward making Deno a drop-in (or near drop-in) replacement for Node.js environments.

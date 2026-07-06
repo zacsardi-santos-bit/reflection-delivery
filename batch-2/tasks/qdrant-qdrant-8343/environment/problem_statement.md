@@ -1,5 +1,19 @@
-I'm digging into the dedup logic in our vector DB's segment holder and it's got a real correctness bug around records that are in a pending / deferred state (inserted but the index entry isn't accessible yet). Right now when we clean up duplicates that appear across multiple segments, we just pick the highest-versioned copy as the winner and delete every older copy, no matter whether that winner is actually reachable through the index. Problem is, if the newest version happens to be sitting in this deferred state, deleting the older fully-indexed copy means the record vanishes from query results until the deferred one finishes indexing. During background indexing it's totally normal for a record to exist both as pending (in a new segment) and indexed (in an older segment), so the cleanup has to know the difference.
+## Description
 
-What I want is for dedup to be deferred-aware. A deferred/pending copy should never get deleted during cleanup regardless of its version. If the newest version of a record only exists in deferred form, then keep all the older fully-indexed copies intact so queries still work. If the newest version has a fully-indexed copy, older fully-indexed duplicates can be dropped like usual. And if a record has multiple deferred copies scattered across segments, all but one of those should be removed since they're genuine redundant duplicates of each other. Whatever happens, at least one copy of every record has to survive.
+The duplicate-removal logic that runs during segment compaction doesn't correctly handle records that are in a "pending" (not-yet-indexed) state. When the same record appears in multiple segments with different versions, the cleaner currently picks the highest-versioned copy as the winner and removes all other copies — regardless of whether the winning copy is actually accessible through the index yet.
 
-Oh and I also need a test helper that builds a segment with a configurable threshold where any points inserted past that threshold get stored in the deferred state, so I can actually exercise the mixed deferred/non-deferred behavior in tests.
+This causes a correctness problem: if the newest version of a record is still pending (not yet indexed), removing the older-but-fully-accessible copy leaves the record temporarily invisible to queries. The database should instead preserve the accessible copy until the pending version finishes being indexed.
+
+## Expected Behavior
+
+- A pending/deferred copy of a record should never be deleted during deduplication, no matter what version it has.
+- When the newest version of a record exists only as a pending copy, all older fully-indexed copies must be preserved intact.
+- When the newest version of a record has a fully-indexed copy, older fully-indexed copies can be removed as usual.
+- If a record has multiple pending copies across different segments, all but one of those pending copies should be removed (they are true redundant duplicates of each other).
+- At least one copy of every record must always survive deduplication.
+
+## Why This Matters
+
+During background indexing, it is normal for records to temporarily exist in both a pending state (in a new segment) and an indexed state (in an older segment). The deduplication cleanup must be aware of this distinction to avoid making records disappear from query results during the indexing window.
+
+A test helper function that creates segments with a configurable pending threshold is also needed so this behavior can be reliably exercised in tests.

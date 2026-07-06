@@ -1,5 +1,15 @@
-I want to add a new lint rule to our JS/TS analyzer that catches barrel files, you know the ones that just re-export a bunch of symbols from other modules instead of defining anything of their own. They're a real performance anti-pattern because bundlers and analysis tools end up dragging in huge chunks of the module graph even when almost none of those re-exported symbols actually get used, so builds get slower, memory balloons, and bundles bloat out. At scale this quietly becomes a tooling bottleneck, so I want something that either stops people introducing new barrel files or flags the existing ones so they can be restructured.
+## Description
 
-So the rule should warn on any re-export statement that forwards actual values from another module, and that means wildcard re-exports, named re-exports (aliased or not), and the case where a default export gets re-exported under a new name, all of those should fire. The diagnostic needs to spell out that barrel files slow down performance and cause large module graphs full of unused modules, and point the dev at a fuller explanation for more info.
+We should add a new lint rule to detect and warn about "barrel files" — files that consist entirely or primarily of re-export statements, forwarding symbols from other modules to a single convenient entry point.
 
-One important exception though, type-only re-exports should be totally fine, no warning, since they're erased before runtime and don't touch the module graph at build time, so they don't have the cost the value ones do. Oh and this should live in the nursery category, following whatever the existing conventions are for how rules get declared and registered in there.
+Barrel files are a widespread pattern in JavaScript and TypeScript projects, but they carry a real cost: bundlers and analysis tools are forced to load entire module graphs even when only a small subset of the re-exported symbols are actually used. This leads to slower build times, increased memory usage, and unnecessarily large bundles.
+
+## Expected Behavior
+
+- Any re-export statement that forwards values from another module (wildcard re-exports, named re-exports, aliased re-exports, or default-as-named re-exports) should produce a lint warning.
+- The warning message should explain that barrel files slow down performance and cause large module graphs with unused modules, and should direct the developer to a more thorough explanation.
+- Type-only re-exports should be exempt from this rule, because they carry no runtime cost and do not contribute to enlarged module graphs at build time.
+
+## Why This Matters
+
+Projects at scale commonly reach a point where barrel files silently become a performance bottleneck for tooling. Having an automatic lint rule lets teams proactively prevent this anti-pattern from being introduced, or identify existing barrel files so they can be restructured. Type-only re-exports are a safe exception because they are erased at compile time and do not affect runtime module loading.

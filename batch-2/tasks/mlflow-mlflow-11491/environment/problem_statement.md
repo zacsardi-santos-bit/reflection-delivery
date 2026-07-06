@@ -1,9 +1,18 @@
-I'm building out MLflow's tracing and I need an imperative API on the MLflow client so devs can manually start and end traces and spans, no decorators or context managers required. This matters a lot for callback-based frameworks like LangChain where spans get created at unpredictable times as part of a broader tracing setup and don't fit neatly into Python context managers.
+## Description
 
-Right now there's just no way to do this through the client. I want methods to start a root trace, create child spans under it, attach inputs/outputs/attributes to each span, and end them individually before finalizing the whole trace. Couple of edge cases I care about: if someone tries to start a child span without passing a parent span id, the client should raise a clear error. And if the trace gets closed before some child spans are explicitly ended, those unfinished spans should still show up in the exported trace data, with their status left unset and their end time absent (null timestamps basically).
+MLflow's tracing system currently only supports creating traces and spans through high-level decorators and context managers. There is no way for developers to manually start a trace, add child spans one at a time, and finalize everything explicitly — a pattern that is necessary when integrating with external callback-based tracing frameworks (such as LangChain callbacks). Additionally, the internal component that accumulates spans needs to be promoted into a proper trace manager that exposes helper utilities for looking up spans and root span IDs.
 
-Also the internal thing that accumulates in-flight spans needs to grow up into a proper trace manager. It should stay a singleton and stay thread-safe, and expose helpers to look up a specific span by its id and to find the root span id for a given trace.
+A related issue is that span timestamps are currently stored and compared in nanoseconds, but MLflow's other time-related fields use milliseconds or microseconds. This inconsistency causes assertions that check minimum elapsed time to fail when the wrong unit is assumed.
 
-Oh and one more, span timestamps are currently stored in nanoseconds but they should be microseconds to line up with MLflow's other time fields (which use ms/us). This trips up assertions that check minimum elapsed time when the wrong unit's assumed, so it changes how elapsed-time comparisons work throughout the tracing code, watch out for that.
+## Expected Behavior
 
-Last thing, the high-level fluent context-manager API and this new imperative client API need to interoperate. If I mix them within the same trace, spans created through either path should get linked together and appear in one unified trace that can still be searched and visualized.
+- Developers should be able to use the MLflow client directly to start a trace, create one or more child spans, and end them individually before finalizing the trace.
+- Attempting to start a child span without supplying a parent span identifier should raise a clear error.
+- If the trace is finalized before some child spans are explicitly ended, those spans should still be included in the exported trace data, with their status marked as unset and their end time absent.
+- The internal trace manager should be a singleton that provides methods to look up spans by ID and retrieve the root span ID for a given trace.
+- All span timestamps must be represented in microseconds, not nanoseconds.
+- Mixing the high-level context-manager API with the imperative client API within the same trace should work correctly — all spans should be linked and visible in a single trace.
+
+## Why This Matters
+
+Advanced integrations with frameworks like LangChain use callbacks that do not fit neatly into Python context managers. Developers working in those environments need a lower-level API that gives them explicit control over when spans are started and ended, while still producing well-formed MLflow traces that can be searched and visualized.

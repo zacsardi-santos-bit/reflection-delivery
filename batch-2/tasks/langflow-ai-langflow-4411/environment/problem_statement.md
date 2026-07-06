@@ -1,5 +1,18 @@
-I keep hitting these ugly error messages from our data-handling components whenever someone messes up their config, and honestly they're painful to read. Two things in particular are bugging me. First, when a user configures too many fields, we cap it at a max of 15, but the error message we throw has a bunch of extra text tacked on beyond the core limit statement that's either misleading or just noise. I want that one trimmed down so it plainly says the number of fields can't exceed 15 and nothing confusing past that.
+## Description
 
-Second, and this one's worse, when someone gives a text key that doesn't actually exist in their data object, the error prints the bad key name with no quotes around it and then lists the available keys jammed together with commas and no spaces, so you get something like key1,key2 which is a nightmare to scan when the keys look alike. I want the bad key wrapped in single quotes and the available keys list separated by a comma and a space, so it reads like key1, key2 instead.
+The error messages raised by our data-handling components when users provide invalid configuration are inconsistently formatted, making them difficult to read and act on.
 
-That's it really, just clean up both of those messages so devs can actually tell what went wrong at a glance without squinting at a dense string.
+Two specific issues have been identified:
+
+1. When too many fields are configured (more than the allowed maximum of 15), the error message contains unnecessary and potentially misleading extra text beyond the core message. The message should clearly state the limit was exceeded.
+
+2. When a text key is specified that doesn't exist in the provided data object, the error message formats the key name without quotation marks and lists the available data keys without spaces after commas. This makes the message hard to parse at a glance, especially when keys have similar names.
+
+## Expected Behavior
+
+- The "fields exceeded" error message should contain a clear statement that the number of fields cannot exceed 15, and nothing misleading beyond that.
+- The "invalid text key" error message should display the specified key name surrounded by single quotes and list the available data keys separated by a comma and a space (e.g., "key1, key2" rather than "key1,key2").
+
+## Why This Matters
+
+Clear, well-formatted error messages help developers quickly understand what went wrong when configuring components. These formatting improvements make the error output easier to read and act upon without requiring developers to parse dense or confusing strings.

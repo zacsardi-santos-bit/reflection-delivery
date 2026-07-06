@@ -1,5 +1,18 @@
-I've been moving a bunch of components off template literal string interpolation and onto plain JSX, and I keep leaving stray dollar signs behind before curly-brace expressions. In JSX you don't need the `$` before an expression since the curly braces handle embedding on their own, but the leftover dollar sign just renders as visible text on screen, which makes for confusing UI, and it's really easy to miss in review.
+## Description
 
-I want a new nursery lint rule in the Biome linter that catches this. The idea is when a JSX text node ends with a dollar sign and the very next sibling is a JSX expression, flag that dollar sign as a likely mistake. It should report as a warning and come with an automatic (unsafe) fix that just removes the offending `$`. Oh and if there are multiple occurrences inside the same element, each one should get its own separate diagnostic rather than lumping them together.
+When developers migrate code from template literal–style string interpolation to JSX, they sometimes accidentally leave behind a dollar sign that served as part of the interpolation syntax. In JSX, curly braces alone are used to embed expressions — the dollar sign has no special meaning and will simply appear as visible text in the rendered output. This is usually an unintentional mistake that is easy to miss in code review.
 
-Also it needs to be smart about intentional cases. If a lone dollar sign is the only text content before a single expression (think showing a price like `${price}`), treat that as deliberate and don't flag it. And it shouldn't trigger on regular template literals outside of JSX, or on dollar signs that aren't immediately followed by a JSX expression. Basically only the migration-leftover pattern gets caught.
+There is currently no lint rule in the nursery group that detects this pattern.
+
+## Expected Behavior
+
+A new lint rule should:
+
+- Flag any JSX text node that ends with a dollar sign when the next sibling is a JSX expression
+- Report the issue as a warning with an automatic (unsafe) fix that removes the offending dollar sign
+- Handle multiple occurrences within the same element individually, flagging each one separately
+- Recognize the special case where a lone dollar sign is the only text before a single expression (such as displaying a price), and treat that as intentional — not a bug
+
+## Why This Matters
+
+This type of mistake causes confusing UI output where users see an unexpected dollar sign rendered on screen. Having a lint rule catch it automatically prevents the bug from reaching production and makes the migration from template literals to JSX safer and less error-prone.

@@ -1,5 +1,17 @@
-I'm digging into our policy persistence code and hit a real safety hole with how permanent tool approvals get saved. Right now when someone grants "always allow" for a tool while in the standard interactive mode, the approval lands in the policy file with no mode context at all, so it quietly applies everywhere including plan mode, which is supposed to be a locked-down read-only research environment where unintended tool execution could break the safety guarantees we promise. That's not great.
+## Description
 
-What I want is for these persistent approvals to be context-aware based on the current mode and a permissiveness hierarchy. The order from most restricted to most permissive is plan < default < auto-edit < yolo, and an approval granted in a given mode should cover that mode plus every more permissive mode above it, but never leak down into more restricted ones. So granting in default covers default, auto-edit, and yolo, but leaves plan alone. The one special case is that anything granted while we're already in plan mode counts as a deliberate global trust decision and should cover all modes, since the user explicitly opted in from the most restricted spot.
+When a user grants permanent ("always allow") permission for a tool while in a particular operating mode, the resulting policy rule is stored without any mode context. This means the approval implicitly applies to **all** modes, including the plan mode — a restricted, read-only research environment where unintended tool execution could violate safety guarantees.
 
-The saved rule needs to actually record which modes it applies to instead of being mode-blind. Oh and there's a dedup thing too: if a tool already has a saved policy rule and the user later expands the approval (say granting from a more permissive mode), I want us to update that existing rule entry in place rather than tacking on a second rule for the same tool. Duplicate entries just leave the policy file in a confusing, inconsistent state and I don't want to debug that later. Users leaning on plan mode as a safe sandbox need confidence that only approvals they explicitly granted there actually apply there.
+The system should be smarter about scoping these persistent approvals: a permanent approval granted in the standard interactive mode should apply to that mode and any more permissive mode, but should **not** silently extend to more restricted modes like plan mode. Conversely, an approval explicitly granted while already in plan mode should be treated as a deliberate global trust decision and cover all modes.
+
+## Expected Behavior
+
+- When a permanent approval is granted, the saved policy rule should explicitly record which modes it applies to, based on the mode hierarchy
+- The mode hierarchy (from most restricted to most permissive) is: plan < default < auto-edit < yolo
+- An approval granted in a given mode covers that mode and all more permissive modes, but not more restricted ones
+- An approval granted while in plan mode covers all modes (since it is an explicit, intentional global trust decision)
+- If a tool already has a saved policy rule and its approval is later updated, the existing rule should be updated in-place rather than creating a duplicate entry
+
+## Why This Matters
+
+Without mode-aware approvals, granting permanent access to a tool in any mode — even a relatively permissive one — unintentionally expands that approval into the plan mode, undermining its safety guarantees. Users relying on plan mode as a safe research environment need confidence that only explicitly granted approvals apply there.

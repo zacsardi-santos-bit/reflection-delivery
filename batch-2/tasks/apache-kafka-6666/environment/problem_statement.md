@@ -1,7 +1,21 @@
-I've been chasing a bug in the consumer group coordinator around how static group members get treated during rebalances, over in the group state handling code where rebalance completion lives. When the rebalance timeout expires, the coordinator is evicting static members who haven't rejoined yet, even when their session timeouts are still ticking and they're theoretically alive. That's wrong. Static membership exists precisely so members can survive brief restarts or outages without triggering a full rebalance, so kicking them out on the rebalance window closing defeats the whole point and just churns the group.
+## Description
 
-A few things I want fixed together here. The rebalance completion path should only remove dynamic (non-static) members that didn't rejoin in time, and leave static ones registered in the group. Also there's no leader re-election, so if the current leader fails to rejoin before the deadline but other members did, right now it just gets stuck. Instead it should pick a new leader from the members who rejoined and complete the rebalance normally. Oh and when the rebalance finishes with some static members still absent, their instance identifiers should still show up in the leader's join result.
+When a consumer group rebalance times out, the group coordinator incorrectly evicts static (persistent) group members who have not yet rejoined — even if those members are still within their session timeout window and are theoretically still alive. This is incorrect behavior: static members are specifically designed to tolerate temporary disruptions without losing their group membership. Only dynamic (non-static) members should be removed when the rebalance window expires.
 
-One more case: if literally nobody rejoined (only non-responsive static members are left), the group shouldn't advance to the next generation at all. It should reschedule a fresh rebalance delay and wait for the session timeouts to clean things up naturally.
+There are also related issues:
 
-Last thing, the heartbeat handling. A static member that missed a rebalance is currently getting an "unknown member" error back, which is misleading since it implies the member doesn't exist. It's still registered, just behind by a generation, so it should get an "illegal generation" error instead, which correctly tells it the group moved on without it.
+1. **Leader re-election is missing**: If the current group leader fails to rejoin before the rebalance deadline but other members have rejoined, the group should elect a new leader from the joined members and proceed. Currently it gets stuck.
+
+2. **Incorrect heartbeat response for missed rebalance**: A static member that misses a rebalance (doesn't rejoin in time) currently receives an "unknown member" error on heartbeat. It should instead receive an "illegal generation" error, which correctly signals that the group has moved to a new generation without it.
+
+## Expected Behavior
+
+- Static members who don't rejoin within the rebalance timeout should remain registered in the group (not be evicted), because their session timeout hasn't expired yet.
+- If the group leader fails to rejoin but other members have, one of the rejoined members should be elected as the new leader and the rebalance should complete normally.
+- If no member has rejoined at all (only non-rejoining static members remain), the group should reschedule a new rebalance delay until session timeouts expire.
+- When the rebalance completes with some static members absent, those members' instance identifiers should still appear in the leader's join result.
+- Static members that missed the rebalance must receive an "illegal generation" response on heartbeat (not "unknown member").
+
+## Why This Matters
+
+Static group membership exists to allow consumer group members to survive brief restarts or disruptions without triggering a full rebalance. Incorrectly evicting these members during a rebalance defeats the purpose of the feature and causes unnecessary instability in consumer groups.

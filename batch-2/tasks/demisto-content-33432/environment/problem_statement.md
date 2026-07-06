@@ -1,7 +1,18 @@
-I'm building out a new event collector integration for Code42's insider risk platform so we can actually pull their security data into Cortex XSIAM automatically. Right now there's no way to get Code42 file activity events or admin audit logs into XSIAM for correlation and investigation, and having security teams manually export stuff creates gaps we can't afford.
+## Description
 
-The integration authenticates to the Code42 API using OAuth creds, specifically a client ID and client secret that come in through the integration params. On each scheduled fetch I want it to grab both categories separately, file events and audit logs, and tag every event with its event type before shipping them to the XSIAM ingestion pipeline in two distinct batches (one for file events, one for audit logs) so downstream consumers can tell them apart.
+We need a new event collector integration for the Code42 insider risk platform that automatically pulls security events into Cortex XSIAM. Currently there is no automated way to ingest Code42 data — neither file activity events nor administrator audit logs — into the platform for correlation and investigation.
 
-It's gotta track run state between fetches so we don't re-send already ingested events. The stored state should hold the timestamp and IDs of the most recently fetched events per type, plus a "next trigger" scheduling hint that gets saved whenever events were actually found (to trigger a faster follow-up fetch). Only keys relevant to the types actually fetched should land in the state, so if only audit logs turned up, just the audit log keys plus the next trigger get stored, nothing for file events.
+## Expected Behavior
 
-Also need a connectivity test command that confirms the API's reachable and the creds are valid, returning "ok" on success. And a manual on-demand command that retrieves events of a specified type (either file events or audit logs) starting from a given date, returning both structured output (each event tagged with its event type) and a human-readable table. Oh and it should respect configurable max fetch limits for each event type per cycle.
+- The integration should connect to the Code42 API using OAuth credentials (client ID and client secret) configured via the integration parameters.
+- On each scheduled fetch, the integration should retrieve both file activity events and audit logs separately, tagging each event with its type so downstream consumers can distinguish between them.
+- Events should be sent to the XSIAM event ingestion pipeline in two separate batches: one for file events and one for audit logs.
+- The integration should track state between runs so it does not re-send previously ingested events, and only state entries relevant to the event types actually found should be stored.
+- When events are found in a given run, a scheduling hint should be saved in the run state to trigger a faster follow-up fetch.
+- Configurable limits on how many file events and how many audit events to collect per fetch cycle should be respected.
+- Running the connectivity test should confirm that the API is reachable and credentials are valid, returning an "ok" result.
+- A manual on-demand command should allow fetching events of a specific type (either file events or audit logs) for a given time range, returning results in both structured and human-readable form.
+
+## Why This Matters
+
+Security teams using Code42 for insider risk detection need their event data available in XSIAM for threat correlation, alerting, and investigation. Without this integration, they would have to manually export events from Code42, creating delays and gaps in visibility.

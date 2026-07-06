@@ -1,5 +1,16 @@
-I'm hitting a bug in the FastAPI linter rule that flags handler parameters written without the recommended annotated type form, the autofix works fine most of the time but it breaks when the dependency call carries a default value. Like if I've got a query param whose dependency call gets a default string passed straight in, the fix just leaves that default sitting inside the annotation instead of pulling it out to be the parameter's real default. That's semantically wrong and worse it can generate invalid Python, since once a param has a default every param after it also needs one, so producing an annotated form without a standalone default straight up breaks the signature ordering.
+## Description
 
-What I want is for the fix to extract the default out of the dependency call and drop it after the annotated type as the parameter's actual standalone default. This needs to work whether the default is the first positional arg to the call or an explicit named keyword arg, either way remove it from the call and reattach it outside. Oh and if the dependency call also has other config keyword args alongside the default, those should stay put inside the call, only the default value gets moved out, so the call ends up empty or holding just the non-default keywords.
+The linter's suggested autofix for non-annotated FastAPI dependency parameters produces incorrect code when those parameters specify a default value inside the dependency call. Instead of moving the default value outside to become the parameter's actual default, the old fix embeds it inside the type annotation, which is semantically wrong and can break Python's ordering rules for function parameters.
 
-Basically it should produce valid Python in all cases, including when the fixed param comes after other params that already have defaults. Worth covering three cases: a positional default only, a keyword default only, and a positional default combined with extra keyword args. Right now the old behavior is at best pointlessly verbose keeping the default in the annotation and at worst syntactically invalid, so anyone leaning on this autofix is getting broken suggestions which kind of defeats the whole point.
+## Expected Behavior
+
+- When a handler parameter uses a dependency type call with a positional default (e.g. the first argument to the call is the default value), the autofix should extract that default and use it as the standalone parameter default, leaving the dependency call empty or containing only the non-default keyword arguments.
+- When the dependency call uses a named keyword argument specifying the default value instead of a positional default, the autofix should handle it identically — removing that keyword from the call and placing the value as the standalone parameter default.
+- When there are additional keyword arguments alongside the default, they must be preserved inside the dependency call while the default is moved out.
+- The fix must produce valid Python in all cases, including when the fixed parameter comes after other parameters that already have defaults.
+
+## Why This Matters
+
+The previous behavior generated code that was at best unnecessarily verbose (keeping defaults in the annotation) and at worst syntactically invalid (violating Python's rule that non-default parameters cannot follow default parameters). Developers relying on the autofix received broken suggestions, defeating the purpose of the automated fix.
+
+A new test fixture has been added to cover these three scenarios: a positional default only, a keyword default only, and a positional default combined with additional keyword arguments.

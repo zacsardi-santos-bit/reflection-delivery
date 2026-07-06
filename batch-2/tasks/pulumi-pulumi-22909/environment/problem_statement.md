@@ -1,7 +1,19 @@
-I'm adding version pinning for registry templates in Pulumi. Right now when you scaffold a new project from a registry template it always grabs the latest version, which means there's no way to reproduce an exact scaffold from a point in time or lock to a known-good version, so I want to support an "@version" suffix on template identifiers (like "@1.0.0") so folks can pin to a specific version.
+## Description
 
-This has to work across every way you can reference a template: a fully-qualified three-part identifier (source/publisher/name), a two-part publisher/name shorthand, or just a bare template name. The existing registry URL formats, including the special registry URL scheme, should also accept the version suffix. When a version is specified and it exists, fetch and use that version directly. When the requested version doesn't exist, I want a clear error that actually names the version that was asked for. And templates backed by version control systems (Git repos, GitHub, etc.) should explicitly reject any version specifier with a descriptive error explaining that mechanism isn't supported for those, since they resolve differently.
+When creating a new Pulumi project from a registry template, there is currently no way to specify which version of a template to use. The system always resolves to the latest available version, making it impossible to reproduce the exact project scaffold from a specific point in time or to use a known-good version that matches your requirements.
 
-I also need a lower-level resolution function that takes a template identifier plus an optional version and handles the resolution strategy per format: a single bare name uses a listing lookup to find the source/publisher, a two-part identifier tries the private source first then falls back, and a three-part one goes straight to the registry. Oh and if an identifier has too many parts it should return a typed error so callers can tell that case apart from a plain "not found" situation. The relevant code lives around the template resolution paths in the CLI's new-project flow, so wire it in there.
+## Expected Behavior
 
-Why this matters: without pinning, teams can't reliably recreate the same scaffold over time, and pinning gives control over when to adopt changes from newer template versions.
+- Users should be able to append a version specifier (e.g., "@1.0.0") to any template identifier when creating a project.
+- This works for all identifier formats: a fully-qualified source/publisher/name reference, a publisher/name shorthand, or a bare template name.
+- If the specified version exists, that version of the template is fetched and used.
+- If the specified version does not exist, the user receives a clear error message identifying the missing version.
+- Templates backed by version control repositories (like GitHub) must explicitly reject version specifiers with a descriptive error explaining that this mechanism is not supported for such templates.
+
+## Internals
+
+A general-purpose template resolution function should be introduced that accepts a template identifier in single-name, publisher-qualified, or fully-qualified form, together with an optional version constraint. The function should follow a clear resolution strategy depending on how many parts the identifier has, and return a structured error when the identifier is malformed (too many parts) or when the requested version is not available.
+
+## Why This Matters
+
+Without version pinning, teams cannot reliably recreate the same project scaffold over time. Pinning to a specific template version ensures reproducibility and gives users control over when to adopt changes introduced in newer template versions.

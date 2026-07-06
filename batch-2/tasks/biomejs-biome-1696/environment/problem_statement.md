@@ -1,5 +1,18 @@
-I'm hitting a formatting bug in the biome JavaScript formatter around member chain expressions and empty lines. When I write a chain of property accesses and method calls and stick blank lines between parts of it, the formatter doesn't do the right thing, and honestly the behavior feels inconsistent depending on how the chain is shaped.
+## Description
 
-Here's what I want. If a chain is short enough that it collapses onto a single line, I want all the empty lines between chain members stripped out so I get one clean compact expression, no leftover blanks hanging around. But if the chain is complex enough that the formatter's already breaking it across multiple lines, then the empty lines I deliberately put between logical groups within the chain should be preserved right where they showed up in the source, not discarded or shuffled to some other spot. Right now the multi-line case drops them or places them wrong, and the collapse case sometimes keeps them when it shouldn't.
+The JavaScript formatter is incorrectly handling empty lines inside member chain expressions. When code has intentional empty lines between parts of a chained sequence of property accesses and method calls, the formatter does not behave consistently.
 
-The reason this matters is I use blank lines inside long method chains to visually separate groups of operations, so when biome's breaking the chain anyway it should respect that intent, while still collapsing the short chains cleanly. So basically two paths: collapsing means remove all the empty lines, breaking across lines means keep the empties between groups exactly as written. The member chain formatting logic lives in the js formatter crate (`@crates/biome_js_formatter/src`), that's where the grouping and the single-line-vs-multi-line decision happens, so the fix goes there.
+Currently, there are two problems:
+
+1. **Chains that should be collapsed to a single line** sometimes incorrectly retain or mishandle empty lines between chain members, rather than producing a clean single-line result.
+
+2. **Chains that qualify for multi-line formatting** (because they are complex enough to be broken across multiple lines) do not preserve the developer's intentional empty lines between logical groups within the chain.
+
+## Expected Behavior
+
+- When a member chain is simple enough to fit on a single line, all empty lines between chain members should be removed, and the output should be a single compact expression.
+- When a member chain is complex enough that the formatter breaks it across multiple lines, empty lines that appear between groups within the chain in the original source should be preserved in the formatted output.
+
+## Why This Matters
+
+Developers often use empty lines within long method chains to visually separate logical groups of operations. The formatter should respect this intent when it is appropriate (i.e., when the chain is being broken across multiple lines anyway), while still collapsing short chains cleanly. The current behavior is inconsistent and produces unexpected results depending on the chain's structure.

@@ -1,3 +1,13 @@
-I've been chasing a nasty correctness and security bug in the Winch baseline compiler around how it generates code for memory access on 64-bit platforms. When it computes a final linear memory address, it takes a 32-bit WebAssembly offset and just uses it directly as if it were already a valid 64-bit value, instead of zero-extending the 32-bit thing up to 64 bits first. That's a real problem because a 32-bit value that's negative when read as signed (think -1, stored as 0xFFFFFFFF) ends up looking like a giant positive 64-bit address once it gets sign-extended, which sails right past the bounds check and lets you touch memory outside the allocated linear memory.
+## Description
 
-So what I want is: anywhere a 32-bit address value feeds into a memory load, store, or atomic op, the compiler needs to emit a proper zero-extension to 64-bit before it adds that offset to the memory base address, and this has to happen on both the x64 and the AArch64 backends. Concretely, if a program reads a signed byte that comes back as -1 and then uses that as the base for a later memory access, it should always trap out-of-bounds, never succeed. Same deal when someone takes the -1 that a failed table grow returns (grow fails to allocate, hands back -1) and uses it as a store address, that's gotta trap out-of-bounds too. Right now both of those patterns can silently read or write arbitrary memory, and both should reliably trap instead.
+The Winch baseline compiler incorrectly handles 32-bit WebAssembly memory addresses on 64-bit platforms. When computing a final memory address, the compiler treats a 32-bit integer offset as if it were already a 64-bit value rather than properly zero-extending it. This creates a correctness and security issue: a 32-bit value that is negative when interpreted as a signed integer (such as -1, stored as 0xFFFFFFFF) gets treated as if it is already a large positive 64-bit number, which can bypass memory bounds checks and allow out-of-bounds access.
+
+## Expected Behavior
+
+- When a 32-bit WebAssembly address value is used in a memory load or store, the compiler must always zero-extend it to 64-bit before adding it to the memory base address.
+- A program that reads a signed byte (-1) from memory and uses that value as a base for a subsequent memory access should always trap with an out-of-bounds error, not succeed.
+- A program that uses the result of a failed table grow operation (which returns -1 on failure) as a memory store address should also trap with an out-of-bounds error.
+
+## Why This Matters
+
+Without this fix, WebAssembly programs can craft inputs that cause the Winch compiler to generate code that reads or writes outside the bounds of the allocated linear memory. Two concrete exploit patterns are affected: using a sign-extended byte load result as a memory address, and using the -1 return value of a failed table grow as a store address. Both patterns should reliably trap, not silently access arbitrary memory.

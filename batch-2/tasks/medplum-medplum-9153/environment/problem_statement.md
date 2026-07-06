@@ -1,5 +1,14 @@
-I'm hacking on the Medplum AWS deployment tooling and want to add support for the AWS-native malware protection for S3 (GuardDuty-style scanning) as a replacement for the third-party antivirus we currently support. Basically I want deployments to be able to opt into the native scanning service instead of the old approach. So first, the deployment config should accept a new flag to turn this feature on for the storage bucket, something like an option that enables the native AWS malware protection.
+## Description
 
-When that flag's enabled, the storage bucket's access policy should automatically pick up a deny rule that blocks CloudFront from serving any object that hasn't been scanned and confirmed clean, so it's a read-gate keyed off the scan-status tag on each object (objects missing the "no threats found" / clean status tag get denied). Important bit: don't duplicate the rule, if it already exists in its complete correct form leave it alone, but if there's an incomplete or malformed/different version of the rule sitting there, still go ahead and append the correct one.
+Medplum's AWS deployment tooling currently supports a third-party antivirus scanner for S3 storage, but AWS now provides a native malware protection service that can gate file access based on scan results. We need to add support for this native scanning service so that deployments can enable it as a replacement for the older antivirus approach.
 
-Also, separate thing I keep hitting, the bucket policy update command bails entirely if one bucket update throws. Like if the App bucket already has a conflicting policy, the whole command dies and the Storage bucket never gets touched. I want each individual bucket update wrapped so it catches the error, logs it, and keeps going to the remaining buckets, and always finishes with a "Done" message at the end rather than halting. The relevant logic lives in the AWS deploy tooling under `@packages/cdk` (the bucket policy update command and the storage bucket policy construction), so wire it up there.
+## Expected Behavior
+
+- The deployment configuration should accept an option to enable the native AWS malware protection service for the storage bucket.
+- When this protection is enabled, the storage bucket's access policy should automatically include a deny rule that blocks CloudFront from serving any objects that have not been scanned and confirmed safe (i.e., objects lacking a scan-clean status tag).
+- The deny rule must not be duplicated if it already exists and is complete. However, if an existing deny rule is incomplete or malformed, a new correct one should be added.
+- The bucket policy update command should be resilient to partial failures: if one bucket's policy update fails (e.g., because a conflicting policy already exists), the command should log the error and continue updating the remaining buckets, completing with a "Done" message rather than halting entirely.
+
+## Why This Matters
+
+Deployments that rely on the older scanning approach cannot easily migrate to the newer AWS-native service without manually configuring S3 bucket policies. This change allows operators to simply enable the feature in the deployment config and have the correct access-control policies applied automatically. The added resilience in error handling also prevents a single stale or misconfigured bucket from blocking the entire update operation.

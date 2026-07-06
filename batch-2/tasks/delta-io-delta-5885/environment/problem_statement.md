@@ -1,7 +1,16 @@
-I'm working in the Delta Lake kernel and need to add two spatial data types to the kernel's type system, geometry for planar/cartesian data and geography for geodetic/spherical data. Right now there's no way to represent either, so Delta tables can't carry proper spatial column type metadata, and folks doing geospatial work get stuck falling back to untyped stuff.
+## Description
 
-Each geometry type stores a Spatial Reference System Identifier (SRID) in authority:code format, so things like "OGC:CRS84" or "EPSG:4326". The geography type carries both an SRID and a geodetic algorithm, where the supported algorithm values are spherical, vincenty, thomas, andoyer, and karney (anything else is unknown and should error out).
+The Delta Lake kernel does not currently support spatial data types. Specifically, there is no way to declare a Delta table column (or nested field) whose type is geometry (for planar spatial data) or geography (for geodetic/spherical spatial data). These are increasingly common in geospatial workloads, and their absence forces users to fall back to untyped representations.
 
-Both need to serialize to and deserialize from Delta's JSON schema format. On deserialize I want the shorthand forms to work: just the bare type keyword with no params uses sensible defaults (SRID defaults to OGC:CRS84, and geography's algorithm defaults to spherical). A single param that looks like a coordinate reference system (it contains a colon) gets treated as the SRID, and for geography a single param without a colon is treated as the algorithm name. Serialization though should always write out the full canonical form with every parameter spelled out, so it round-trips cleanly.
+## Expected Behavior
 
-Invalid inputs should raise informative errors, so empty parentheses, unrecognized parameter formats, unknown algorithm names, or too many params all need clear rejection messages rather than silently doing something weird. Oh and both types should compose naturally with the rest of the type system, meaning I can use them as element types inside arrays and as field types within struct types. The whole point is letting engines and connectors define, read, and write spatial columns with real type metadata so we can interop with spatial standards.
+Two new data types should be added to the kernel type system:
+
+- A **geometry** type that carries a Spatial Reference System Identifier (SRID) in authority:code notation (e.g., EPSG:4326, OGC:CRS84). Omitting the SRID on deserialization should use a default (OGC:CRS84), but serialization should always write the full form.
+- A **geography** type that carries both an SRID and a geodetic calculation algorithm. The supported algorithms are: spherical, vincenty, thomas, andoyer, and karney. Omitting either the SRID or the algorithm on deserialization should fall back to defaults (OGC:CRS84 and spherical respectively), but serialization should always write the full form.
+
+Both types must round-trip through Delta's JSON schema representation correctly. Invalid configurations — empty parameters, unrecognized SRID formats, unknown algorithms, or too many parameters — must be rejected with clear error messages. Both types must also be usable as nested element types inside arrays and struct fields.
+
+## Why This Matters
+
+Without built-in spatial type support, Delta tables cannot faithfully represent geospatial datasets through the kernel API. Adding these two types enables engines and connectors to define, read, and write spatial columns with proper type metadata, opening the door to interoperability with spatial standards.

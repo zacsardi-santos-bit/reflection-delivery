@@ -1,5 +1,18 @@
-I'm trying to clean up a nasty error experience in our shared oxc utilities. Right now if someone points a formatter or linter at a TypeScript config file while running a Node.js version that can't natively load TS modules, they just get this raw low-level "unknown file extension" error with zero explanation of what broke or how to fix it. It's confusing and honestly generates a lot of support noise because nothing tells them the minimum Node version or that they could just switch config formats.
+## Description
 
-So I want a small module added to the shared utils that does two things. First, a helper to check whether a given file path or URL refers to a TypeScript module, meaning it has a TypeScript file extension, and that should cover the standard ones plus the CommonJS and ESM TypeScript variants (so .ts, .cts, .mts and friends). Second, a function that takes an error plus a module specifier and, when the error is specifically the unknown-file-extension kind for a TypeScript specifier, returns a helpful hint string. That hint needs to include the original error text for context, state the Node.js version range required for TypeScript config support, report the currently detected/running Node version, and suggest either upgrading Node or using a JSON config file instead.
+When users run a formatter or linter tool with a TypeScript config file on an older version of Node.js that does not natively support loading TypeScript modules, they get a low-level, cryptic error that gives no indication of why it failed or what to do about it. The raw error is confusing and unhelpful because it doesn't explain the minimum Node.js version required or suggest a workaround.
 
-Important: the hint only fires for this exact failure mode. If the error is unrelated, or the specifier isn't a TypeScript file, the function returns nothing (undefined, no message). Oh and the supported Node.js version range should be exported as a named constant too so I can reference it consistently elsewhere in the codebase rather than hardcoding it in a bunch of places.
+## Expected Behavior
+
+- There should be a way to detect whether a given file path or URL refers to a TypeScript module (i.e., has a TypeScript file extension).
+- When a module-loading failure occurs specifically because the running Node.js version does not support TypeScript files, a clear, actionable hint should be produced that:
+  - Includes the original error message for context
+  - States the Node.js version range needed for TypeScript config support
+  - Reports the currently running Node.js version
+  - Suggests either upgrading Node.js or switching to a JSON config file instead
+- The hint should only appear for this specific failure mode; unrelated errors or non-TypeScript config files should not trigger it.
+- The supported Node.js version range should be exported as a named constant so it can be reused consistently across the codebase.
+
+## Why This Matters
+
+Without this, users who encounter the TypeScript-loading error have no way of knowing whether they need to upgrade Node.js or change their config file format. A targeted, informative message dramatically reduces confusion and support burden.

@@ -1,5 +1,15 @@
-I'm working with the official Anthropic partner integration for LangChain and I want to add tool-calling and structured data extraction natively in the partner package. Right now there's no experimental module in there at all, so I can't import a tool-capable chat model from the official package and I'm stuck using a deprecated community-maintained module that I'd really like to move away from. It's fragile relying on something that's basically unmaintained, and this stuff should be first-party so it stays up to date with the rest of the ecosystem.
+## Description
 
-So what I need is a new experimental module inside the Anthropic partner package that exposes a chat model class with tool-calling support (think along the lines of `ChatAnthropicTools` living somewhere like `@libs/partners/anthropic/langchain_anthropic/experimental/__init__.py`). It's gotta support all the standard chat model operations, so synchronous invoke and the async version, plus streaming and batching, all returning string content the way you'd expect. It also needs to behave correctly inside prompt chains that include system messages, that's a case I keep hitting.
+The official Anthropic partner integration for LangChain is missing an experimental module for tool-calling and structured output extraction with Claude models. Users who want to bind schemas to Claude and extract structured, typed data currently have to rely on a deprecated community-maintained module. This capability should be provided natively in the official partner package.
 
-The big one though is binding data schemas as tools. When I bind a schema (say something describing a person's name and age) and then invoke the model with natural language describing that structured data, oh and this is the whole point, the result should come back as a properly populated, correctly typed schema object instance with the right field values pulled out of the text. Structured extraction should just work end to end.
+## Expected Behavior
+
+- A new experimental module should be added to the official Anthropic partner package that exposes a chat model class with tool-calling support.
+- The new class should support all standard chat model operations: synchronous and asynchronous invocation, streaming, and batching — returning string content.
+- The class must also work correctly when used in prompt chains that include system messages.
+- The class must support binding data schemas as tools, enabling structured data extraction from natural language inputs.
+- When structured output is requested, invoking the chain with natural language should yield a correctly typed and populated schema object instance with the right field values.
+
+## Why This Matters
+
+Developers building applications with Anthropic's Claude models through LangChain should have a first-party, well-maintained way to extract structured data. Relying on a deprecated and unmaintained community module is fragile. Moving this capability into the official partner package ensures it stays up to date and is properly integrated with the rest of the LangChain ecosystem.

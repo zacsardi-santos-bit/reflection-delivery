@@ -1,5 +1,20 @@
-I'm chasing a nasty data-correctness bug with low-cardinality string columns in ClickHouse after a merge. Here's the setup: I've got a table where two big inserts together produce more unique values than the dictionary size limit, and after I OPTIMIZE the table to force a merge, querying specific rows gives me wrong string values. The column shows values from the wrong dictionary instead of what was actually written, no error, just silently bad data, which is the scary part since anyone running queries post-merge on tables with lots of distinct low-cardinality values could get garbage back.
+## Description
 
-Digging into it, the merge writes multiple dictionaries inside a single index granule because each output block overflows the size limit and starts a fresh dictionary. When the granule size is bigger than the total row count, the whole merged part ends up covered by one large mark, so all those per-block dictionary entries land at the same file offset. The reader uses mark positions as a heuristic: if all dictionary marks point to the same position it assumes the part has one shared dictionary, caches the first one, and reuses it for everything. So rows whose values only live in later dictionaries decode wrong.
+After merging parts in a table with a low-cardinality string column, queries can silently return wrong values when the merge produces multiple separate dictionaries within a single granule mark interval.
 
-What I want is for that single-dictionary optimization to only kick in when the part genuinely has one dictionary covering all rows. Instead of trusting the marks to look uniform, actually check whether the dictionary data stream is exhausted after reading the first dictionary. If it's not (meaning multiple dictionaries were written), reset the stream so the normal per-block dictionary updates get read during deserialization. End result: reading rows that span multiple dictionary blocks within a single granule returns correct string values for every row regardless of which block their value was originally written in.
+## Background
+
+Low-cardinality columns in ClickHouse store their data efficiently using a dictionary. When a merge produces output blocks that each overflow the dictionary size limit, each block writes its own new dictionary. If the entire merged part is covered by a single large index mark (because the granule size is larger than the total number of rows), all the per-block dictionary entries end up at the same mark position in the index.
+
+## The Bug
+
+The reader uses mark positions as a heuristic to decide whether a part has a single shared dictionary: if all the dictionary marks point to the same file offset, the part is treated as a single-dictionary part and the first dictionary is cached and reused for all reads. However, when multiple dictionaries are written within that single mark interval, this heuristic is wrong. The reader picks up only the first dictionary and uses it for all subsequent row lookups — rows whose string values only appear in later dictionaries are decoded incorrectly.
+
+## Expected Behavior
+
+- Reading rows that span multiple dictionary blocks within a single granule must return correct string values for all rows, regardless of which dictionary block their value was originally written in.
+- The single-dictionary optimization should only apply when the part genuinely contains one dictionary covering all rows, not when the marks appear uniform but multiple dictionaries were actually written.
+
+## Why This Matters
+
+This is a data-correctness bug. Users running queries after merges on tables with many distinct low-cardinality string values may receive silently wrong results — there is no error, just incorrect data returned.

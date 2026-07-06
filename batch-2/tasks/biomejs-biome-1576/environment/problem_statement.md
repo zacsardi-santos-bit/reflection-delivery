@@ -1,3 +1,16 @@
-I'm moving a project off Prettier and onto Biome using the migration command and I noticed my ignore patterns just vanish. I've got a `.prettierignore` with a pile of glob patterns for build dirs, generated files, third party packages, that kind of thing, and after running the migrate the resulting Biome config has none of those exclusions, so I'm stuck re-adding them by hand every time. The tool already does a good job translating the actual Prettier formatting settings into the equivalent Biome options, it just silently drops the ignore file, which leaves the new config incomplete.
+## Description
 
-What I want is for the migration to automatically detect and read the Prettier ignore file when it sits alongside the Prettier config, and convert those patterns into the formatter's exclude list in the Biome config it writes out. It should keep the original file order, and it should skip anything that's a comment line (starts with a hash) or a blank line so only the real glob patterns get transferred over. Oh and this needs to behave the same in both dry-run preview mode (where I just see the proposed changes) and when I actually apply it with the write flag, both should show the ignore patterns landing in the formatter exclude section. Without this, migrating any project that leans on ignore rules means manual follow-up, which kind of defeats the point of an automated migration.
+When running the Prettier-to-Biome migration tool, the tool correctly translates Prettier formatting settings into equivalent Biome configuration options. However, it does not currently process Prettier's ignore file, which means any paths or glob patterns that were excluded from Prettier formatting are silently dropped during migration.
+
+Developers commonly exclude directories like build artifacts, generated files, and third-party packages from Prettier. After migration, none of those exclusions are carried over to Biome, leaving the new Biome configuration incomplete and requiring manual intervention.
+
+## Expected Behavior
+
+- When a Prettier ignore file is present alongside Prettier configuration, the migration command should automatically detect and read it.
+- Non-empty, non-comment lines from the ignore file should be added to the formatter's exclude list in the resulting Biome configuration, preserving the original file order.
+- Comment lines (those beginning with a hash character) and blank lines should be skipped and not included in the migration output.
+- Both dry-run (preview) mode and write mode should reflect the ignore patterns in the proposed or written Biome configuration.
+
+## Why This Matters
+
+Without this, migrating a project that relies on ignore rules requires manual follow-up work. Supporting automatic ignore file migration makes the tool more complete and reduces friction for developers adopting Biome.

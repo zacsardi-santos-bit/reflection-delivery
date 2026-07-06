@@ -1,5 +1,23 @@
-I'm working on tool-call streaming in our LLM serving stack and hitting a real UX problem. When a model emits a tool call with a long string parameter (a summary, a report, whatever), we buffer the whole value until the closing parameter tag shows up before forwarding anything downstream. For short values nobody notices, but for tools that generate substantial text the client sees nothing for what can be a multi-second window even though the model's actively producing output. That basically kills the point of streaming.
+## Description
 
-What I want is for string-typed parameter values to stream incrementally, character by character, before the closing tag arrives. The key insight is that fields declared as string type in the tool schema can never be coerced to another type at parse time, so any partial content is always a valid prefix of the final value. Non-string fields (ints, booleans, etc.) still have to wait since they might serialize differently after coercion. Right now the streaming prefix logic stops at the value boundary for string fields so nothing gets forwarded until the tag closes, and I want to fix that. Important: the determination of which parameter keys are safe to stream early should be computed once when the tool name is resolved, not recomputed on every streaming chunk.
+When a model streams a tool call that contains a long string parameter value, the entire value is buffered until the closing parameter tag arrives before any content is forwarded downstream. For short values this doesn't matter, but for tools that generate substantial text content (summaries, reports, etc.) this means clients see no incremental updates during what could be a multi-second generation window — even though the model is actively producing output.
 
-While I'm in here, two related correctness bugs. First, if the opening tag for the next parameter arrives split across two chunks (first chunk ends with the start of a tag, rest comes next), that partial tag text must not leak into the previously streamed parameter value, it needs to be buffered until enough context arrives to decide whether it's actually a tag. Second, values that start with a newline (because the content begins on the line after the tag) should get that leading whitespace stripped, and honestly leading and trailing whitespace both, so it doesn't end up in the final parsed result. This makes tool-call streaming feel as responsive as regular content streaming.
+There are two related issues:
+
+1. **No early streaming of string argument values.** The streaming prefix logic stops at the value boundary for string fields, so string content is never forwarded until the tag closes. For fields that are typed as strings in the tool schema (and therefore cannot be coerced to another type at parse time), it is safe to stream the raw content incrementally.
+
+2. **Split parameter tags can leak into argument output.** If the opening tag for the next parameter arrives split across two streaming chunks (e.g., the beginning of the tag is in one chunk and the rest arrives in the next), the partial tag text can appear in the output of the previous parameter's value.
+
+3. **Leading whitespace in parameter values.** Parameter values that begin with a newline character (e.g. when the value starts on the line after the tag) currently include that leading newline in the final parsed result.
+
+## Expected Behavior
+
+- String-typed parameter values should be streamed incrementally to clients as content is generated, before the closing tag is received.
+- The parser should determine which parameter keys are safe to stream early based on their declared schema type.
+- The result of that determination should be computed once per tool call, not once per streaming chunk.
+- Split opening parameter tags must be buffered and must not appear in the output of any preceding parameter value.
+- Parameter values must have leading and trailing whitespace removed.
+
+## Why This Matters
+
+Real-time streaming is a key UX feature of LLM-based tools. When a tool returns a large text response, buffering the entire value before forwarding it eliminates the streaming benefit entirely. Fixing this makes tool-call streaming feel as responsive as regular content streaming.

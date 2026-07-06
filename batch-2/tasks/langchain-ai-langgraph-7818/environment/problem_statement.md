@@ -1,7 +1,18 @@
-I'm building out the streaming layer for the LangGraph Python SDK and right now there's just nothing there for opening a persistent connection to a thread and pulling real-time events off the new event protocol, so I need to write this from scratch. Three pieces.
+## Description
 
-First, a multi-cursor buffer where multiple independent consumers each iterate the same event sequence from the start. If a consumer joins late it replays everything from index zero, not just whatever shows up after it subscribes, and if a consumer asks for the next item and nothing's landed yet it suspends until something gets pushed. Closing the buffer needs to wake and release any waiting consumers cleanly. Oh and it should report how many items it currently holds and how many consumers are suspended right now.
+The Python SDK currently lacks the infrastructure needed to subscribe to and consume real-time event streams from LangGraph threads using the new streaming protocol. There is no client-side abstraction for opening a persistent server-sent event connection, receiving filtered events, or managing multiple independent consumers of the same event stream.
 
-Second, a subscription-matching module that looks at an incoming event and decides whether a given subscriber cares about it. That means normalizing namespace segments (stripping the runtime-appended suffixes), checking whether a namespace starts with a given prefix, enforcing an optional depth limit on how deep a namespace can go, inferring which channel an event belongs to from its method, and then the overall decision of whether an event matches a subscription's channel plus namespace filters.
+## Expected Behavior
 
-Third, an HTTP transport doing the actual SSE connection. It sends commands to a thread's command endpoint and streams events from the stream endpoint. It has to handle backpressure so a slow consumer suspends the pump instead of buffering everything in memory unbounded. Mid-stream transport errors should surface explicitly on a completion signal, distinguishable from a clean end where that signal just resolves to nothing, and a successful response that comes back with no body should raise a descriptive error. Also when the consumer closes the handle mid-stream it needs to stop emitting events immediately, no spurious post-cancel leakage. Command sending should work alongside streaming with proper handling of HTTP error responses too. Without this the SDK can't participate in the new protocol at all, and the whole point is letting people build apps that react to agent lifecycle events, checkpoints, tool calls, and custom events as they happen with reliable ordering and clean subscription semantics.
+- Developers should be able to open an event stream to a running thread and receive events in real time over SSE.
+- Late-joining consumers should automatically be replayed all events buffered since the stream opened, starting from the beginning — not just events that arrive after they subscribe.
+- Multiple independent consumers should each receive the full event sequence without interfering with one another.
+- The streaming layer should support backpressure: slow consumers should not cause unbounded memory growth; the pump should suspend until the consumer catches up.
+- Events should be filterable by channel type and namespace depth, so a subscriber can opt in to only the events it cares about.
+- Mid-stream transport errors should be surfaced explicitly to the caller, distinguishable from a clean stream end.
+- Canceling or closing a stream should stop event delivery immediately without spurious post-cancel events leaking out.
+- Sending commands to a thread (e.g., to start a run) should work alongside streaming, with proper error handling for HTTP error responses and empty response bodies.
+
+## Why This Matters
+
+Without this streaming layer, the SDK cannot participate in the new protocol for real-time thread event delivery. Adding it allows SDK consumers to build applications that react to agent lifecycle events, checkpoints, tool calls, and custom events as they happen, with reliable ordering and subscription semantics.

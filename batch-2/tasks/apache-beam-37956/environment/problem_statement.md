@@ -1,7 +1,20 @@
-I'm working with Apache Beam's ML inference framework and there's just no built-in handler for Anthropic's Claude models, so every time I want to run text through Claude as a pipeline step I end up hand-rolling all the client setup, request formatting, and retry logic myself. I want a proper integration that plugs into the framework the same way the other model providers do, living alongside the rest of the inference stuff under `@sdks/python/apache_beam/ml/inference/`.
+## Description
 
-Here's what I need it to do. It should take a simple single-turn text prompt, where each input is a plain string, and wrap it as a user message before sending it to the Anthropic API. It should also accept a multi-turn conversation history, meaning each input is an already-formatted list of user and assistant messages, and send that directly. I want an optional system-level instruction that I can set once on the handler so it applies to every request, but I should be able to override it on a per-request basis. Same deal for a structured output configuration (like a JSON schema to constrain the response format), settable on the handler and overridable per request.
+Apache Beam's machine learning inference framework supports several model providers, but it currently has no built-in support for Anthropic's Claude language models. Teams that want to run text through an Anthropic model as a step in a Beam pipeline must write all the API client setup, request formatting, and error-handling logic themselves.
 
-For reliability it needs to auto-retry requests that fail from transient server-side problems, so rate limits or temporary server unavailability, but it should not retry when the failure is a client mistake (a bad request shouldn't get hammered again). The client should get created from an explicitly passed API key, or fall back to the standard environment variable when no key is given. Also expose min and max batch size config so I can tune the pipeline.
+## Expected Behavior
 
-Results should come back as the standard prediction result objects that expose both the original input and the model response, so they drop right into the rest of a Beam pipeline without any extra glue.
+A new inference integration module should be added that:
+
+- Allows a single-turn text prompt to be formatted as a user message and sent to the Anthropic API.
+- Allows a multi-turn conversation history (a sequence of user and assistant messages) to be sent directly to the Anthropic API.
+- Supports an optional system-level instruction that can be set once on the handler and applied to every request, with the ability to override it per request.
+- Supports an optional structured output configuration (such as a JSON schema) that constrains the model's response format, also overridable per request.
+- Automatically retries requests that fail due to transient server-side errors (such as rate limiting or temporary server unavailability), while not retrying requests that fail due to client errors.
+- Plugs into the existing standard inference step in any Beam pipeline and returns results as standard prediction result objects with the original input and the model response accessible.
+- Supports configuring minimum and maximum batch sizes for pipeline tuning.
+- Creates the API client from an explicitly provided API key or from an environment variable when no key is passed.
+
+## Why This Matters
+
+Without this integration, every Beam user who wants to use Anthropic models must implement the same boilerplate for client setup, request serialization, and retry logic. A first-class integration removes this burden and makes Anthropic models as easy to use as any other supported provider in the framework.

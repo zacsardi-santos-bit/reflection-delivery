@@ -1,9 +1,27 @@
-I'm working on a big Apache Hudi table and I need a way to run clustering incrementally off the table's commit history. Right now every clustering plan strategy I've got just looks at file slices without caring which commit actually wrote them, so there's no way to resume from where a previous clustering run stopped. Re-clustering everything each time is slow and wasteful, and I want to keep clustering only the newly written data as commits pile up.
+## Description
 
-What I want is a new commit-aware clustering plan strategy that walks completed commits in chronological order and groups the files written in each commit. Files from different partitions have to go into separate clustering groups, and files from the same partition should get split across multiple groups once they blow past a configurable per-group size limit. Oh and it needs to skip any file groups that a later replace commit has already replaced, those must not show up in the plan at all.
+When running clustering on large Apache Hudi tables, there is currently no way to organize the clustering plan based on the table's commit history. Existing clustering plan strategies work on file slices without considering when individual files were written, making it impossible to cluster incrementally — processing only the files added since the last clustering run.
 
-After it builds the plan it should record the last commit it processed as a checkpoint stored in the plan's extra metadata (some checkpoint key), so a follow-up run can read that and start from the next commit instead of reprocessing from the beginning. If no commits actually got processed, that checkpoint key should be absent, meaning null in the extra metadata. Also when the timeline has no commits at all, it just produces no plan.
+Users need a commit-aware clustering plan strategy that:
+- Iterates through completed commits chronologically
+- Groups files from each commit by partition, placing files from different partitions into separate clustering groups
+- Respects a configurable per-group size limit, splitting files into multiple groups when necessary
+- Excludes file groups that have already been replaced by prior replace commits
+- Handles both regular commits and delta commits (for merge-on-read tables with log files)
+- Stores a progress checkpoint (the last processed commit time) in the clustering plan's extra metadata, so subsequent clustering runs can resume from where the previous run left off
 
-It's also gotta handle merge-on-read tables where some commits are delta commits writing log files rather than base files. Log-only file slices should still land in the plan, and by default treat them as big enough to form their own group.
+## Expected Behavior
 
-Last thing, I need a config option for an earliest commit time (exclusive) so the strategy only considers commits newer than that, which is what lets me kick off an incremental workflow from a known point in the timeline.
+- When no commits exist in the timeline, the strategy should produce no clustering plan
+- When eligible files are found, the strategy generates a clustering plan grouping files by partition and size
+- Files from replaced file groups must not appear in the clustering plan
+- After plan generation, the extra metadata must contain a checkpoint key indicating the last commit that was processed
+- When no commits were processed, the checkpoint key must be absent (null value) in the extra metadata
+
+## Configuration
+
+A new configuration option should allow users to specify an earliest commit time (exclusive) so the strategy only considers commits added after that point. This supports incremental clustering workflows where users want to start clustering from a known checkpoint.
+
+## Why This Matters
+
+Without this strategy, users cannot efficiently run incremental clustering on large tables with many commits. Re-clustering all file slices every time is expensive and redundant. A commit-based approach allows teams to continuously cluster only newly written data, keeping table performance optimal over time.

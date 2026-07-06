@@ -1,7 +1,18 @@
-I'm hitting a bug in the Sway formatter where it messes up the indentation of line comments inside function bodies. If I've got a function in an impl block with line comments sitting between statements, running the formatter shifts those comments and everything after them to the wrong indentation level. The code goes in already correctly formatted and comes out broken, which is the opposite of what I want. The formatter should be idempotent: run it on already-correct code and I get back exactly what I put in, byte for byte.
+## Description
 
-The thing that really seems to trigger it is comments with non-ASCII characters, like Unicode math comparison symbols (think ≤ or ≥ style stuff). My hunch is the byte offset calculations used when the formatter inserts comments back into the formatted output are counting characters instead of bytes, so multi-byte chars throw everything off. Comments containing non-ASCII need to be handled just as reliably as plain ASCII ones.
+The Sway code formatter is incorrectly modifying the indentation of line comments that appear between statements inside function bodies. When a developer writes well-formatted code with comments interspersed between statements in an implementation block, running the formatter causes those comments to end up at the wrong indentation level. The issue is especially pronounced when comments contain multi-byte Unicode characters (such as mathematical comparison symbols).
 
-This shows up in two spots: comments between plain statements, and also comments that appear after block expressions like if/else branches within a function body. Both cases should keep the comment at the same indentation as the surrounding statements.
+## Expected Behavior
 
-Can you fix the comment reinsertion logic so indentation is preserved in both situations? Right now it's actively making code worse, so a dev who trusts it to preserve well-structured code ends up with garbage instead, and it's basically unsafe to run on any code with Unicode in the comments. Please make sure well-formatted input round-trips unchanged.
+- When the formatter runs on already-correctly-formatted code, it should produce output that is identical to the input (idempotent behavior).
+- Line comments between statements in a function body should stay at the same indentation level as the surrounding statements.
+- Comments appearing after block expressions (such as conditional branches) inside function bodies should also maintain the correct indentation.
+- Comments containing non-ASCII characters must be handled just as reliably as those containing only ASCII characters.
+
+## Current Behavior
+
+Running the formatter on code that contains line comments with multi-byte characters between statements in an impl function body results in those lines being shifted to incorrect indentation. This corrupts the formatting of subsequent lines as well.
+
+## Why This Matters
+
+This bug effectively means the formatter actively makes code worse — a developer who runs the formatter trusting it to preserve well-structured code will instead end up with broken indentation. It undermines the utility of the auto-formatter and makes it unsafe to run on code containing Unicode characters in comments.

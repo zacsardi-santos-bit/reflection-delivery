@@ -1,5 +1,17 @@
-I'm hitting a busted fullscreen button across a bunch of our visual components and it's driving me nuts. The button renders fine, it's visible and clickable, but when I actually click it nothing happens at all. The label never flips, the component never goes into fullscreen mode, and clicking again does nothing either since the state was never updated in the first place. This is happening in the annotated image display component, the interactive image upload widget, the image comparison slider, and the native plot/chart component, so it's the same toggle logic broken in all four places.
+## Description
 
-What I want is the normal toggle behavior back. First click should enter fullscreen and update the button so it indicates I can now exit fullscreen, and a second click should exit fullscreen and restore the original button label. It needs to work consistently across all four of those components (annotated image, interactive image, image slider, and native plot), not just one or two of them.
+The fullscreen button is broken in several components: the annotated image display, the interactive image upload widget, the image comparison slider, and native chart components. When users click the fullscreen button, nothing happens — the button label does not change and fullscreen mode is not actually toggled.
 
-The whole point is people click that button expecting to view images and charts in a bigger fullscreen view, and right now the feature's basically dead. Can you track down whatever's preventing the fullscreen state from actually updating in the UI and fix the toggle so each click properly flips it on and off? Thanks.
+## Expected Behavior
+
+- Clicking the fullscreen button should enter fullscreen mode and update the button label to indicate the user can exit.
+- Clicking the button again should exit fullscreen mode and restore the original button label.
+- This toggle behavior should work correctly in all four affected components: annotated image, interactive image, image slider, and native plot.
+
+## Current Behavior
+
+The fullscreen button renders and is visible, but clicking it has no effect. The component's fullscreen state is never updated in the UI, so the button label stays unchanged regardless of how many times it is clicked.
+
+## Why This Matters
+
+Users clicking the fullscreen button expect to be able to view images and charts in a larger, fullscreen view. Since the toggle does not work, this feature is effectively non-functional in these components. Fixing this ensures the button behaves as expected — entering and exiting fullscreen mode on each click.

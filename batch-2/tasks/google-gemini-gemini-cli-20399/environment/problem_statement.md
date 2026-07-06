@@ -1,9 +1,21 @@
-I'm trying to make our CLI feel less alarming by default. Right now it dumps everything unconditionally, error counts in the footer, keyboard hints to pop open the diagnostics panel, failed tool output details, blow-by-blow retry progress, even for transient hiccups that the system recovers from on its own. It's noisy and it makes people think something's broken when it isn't.
+## Description
 
-What I want is a configurable error verbosity setting with two levels, "low" and "full", and low should be the default. In low mode I want recoverable error indicators suppressed: the footer shouldn't show error counts or the key hint to open the diagnostics view, model-initiated tool failures should be hidden from the conversation, and retry loading messages should just say something generic like "still working" after the first attempt instead of showing per-attempt counters. Also transient quota/capacity failures should get retried silently without asking the user anything.
+The CLI currently surfaces all error and diagnostic information unconditionally, which makes the interface feel noisy and alarming even for transient or recoverable situations. Users who just want to get things done are bombarded with error counts in the footer, keyboard hints to open diagnostic panels, failed tool output details, and detailed retry progress — all for errors the system would recover from automatically anyway.
 
-But (this part matters) when execution actually stops because of a terminal error while we're in low mode, the UI still needs to emit a compact note that some internal steps were suppressed, plus the real stop reason, plus a hint about how to get at fuller diagnostics. And terminal quota errors that genuinely need a user decision should still prompt no matter what the verbosity is set to. Oh and client-initiated tool failures stay visible regardless of level, only the model-initiated ones get hidden.
+We need a configurable error verbosity setting that lets users opt into a quieter experience. In "low" verbosity mode, recoverable error indicators should be suppressed: the footer should not show error counts or hints to open diagnostic views, failed model-initiated tool outputs should be hidden from the conversation view, retry attempts should show only a generic waiting message rather than detailed attempt counters, and transient capacity failures should be retried automatically without user prompting. When a non-recoverable execution stop does occur in low verbosity mode, the UI should still surface a compact summary indicating that some internal steps failed along with a hint about how to access diagnostics.
 
-Full verbosity mode should just restore all the current detailed behavior exactly as it is today. And running in debug mode should always behave as full, overriding any lower setting.
+In "full" verbosity mode, all existing behavior should be preserved. Debug mode should always behave as full verbosity regardless of the setting.
 
-So basically most folks don't need to see every recoverable stumble, low noise by default lets them focus, while power users and anyone troubleshooting can flip to full and get everything back.
+## Expected Behavior
+
+- A new configurable error verbosity setting is exposed, with "low" as the default and "full" as an alternative
+- In low verbosity mode: error summary indicators (count + diagnostic hint) are hidden from the footer
+- In low verbosity mode: errored tool calls from the model are hidden from the conversation; client-initiated tool errors remain visible
+- In low verbosity mode: retry loading messages show only a generic phrase after the first attempt, not per-attempt counters
+- In low verbosity mode: transient quota/capacity errors are retried silently; terminal quota errors still prompt the user
+- In low verbosity mode: when execution is stopped by a terminal error, a brief note about suppressed failures and a diagnostic hint are still shown
+- Debug mode overrides low verbosity and always shows the full error detail
+
+## Why This Matters
+
+Most users don't need to see every recoverable hiccup the system encounters. A lower-noise default helps users focus on their work while still giving power users and troubleshooters access to full diagnostics when needed.

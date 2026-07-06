@@ -1,5 +1,15 @@
-I'm cleaning up the remote agent config system and there's a naming wart I want gone. When you set up a remote agent that signs in interactively over OAuth (the browser-based flow with PKCE), the auth type in the YAML frontmatter currently uses a versioned identifier with a version number suffix on it. I want to drop that suffix so users just write the plain short name in the type field of the auth section. The versioned name is confusing, it implies some version-specific implementation when really this is meant to be the canonical name for this auth method, so a shorter stable identifier reads cleaner and more intuitive.
+## Description
 
-This needs to thread through all the agent loading and parsing code, so the type definitions, the schema validation, and the conversion logic that turns YAML config into internal agent definitions all need to use the new short name. Everything else about the OAuth behavior stays exactly as-is, the browser sign-in flow with PKCE, the optional client credential and scope fields, and the URL validation on the authorization and token endpoint fields. Don't touch any of that, just swap the string identifier.
+Remote agents that use the interactive OAuth browser-based sign-in flow need a configuration type identifier in their YAML frontmatter. Currently this type is specified with a longer, versioned name, but it should be simplified to a shorter name to improve usability and consistency.
 
-Couple things I want to still hold after the rename: configuring a remote agent with OAuth auth using the new short identifier should parse and validate fine, the optional fields (client credentials, scopes, etc.) keep working normally with the new identifier, a minimal config that only specifies the type field stays valid, and the URL validation on those optional OAuth endpoint fields keeps rejecting bad URLs like before.
+## Expected Behavior
+
+- When configuring a remote agent with OAuth-based authentication, users should use the shorter identifier (without a version suffix) in the type field of the auth section
+- The agent loader should parse and validate configurations using the new shorter identifier
+- All existing optional fields for OAuth auth (such as client credentials and scopes) should continue to work normally with the new identifier
+- Minimal configurations using only the type field should remain valid
+- URL validation for optional OAuth endpoint fields should continue to work correctly
+
+## Why This Matters
+
+Users who define remote agents with OAuth authentication need a clear, stable, non-versioned identifier for the auth type. Using a version-suffixed name is confusing and implies a version-specific implementation when the type is intended to be the canonical name for this auth method. Updating to the shorter name makes the configuration cleaner and more intuitive.

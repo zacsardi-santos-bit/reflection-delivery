@@ -1,3 +1,15 @@
-I'm building out the Xthings Cloud integration for Home Assistant and right now it only knows about lighting devices, but Xthings also makes smart plugs and generic switch-type devices that ride the same cloud API and websocket connection, and there's no way to control or monitor them today. I want to add a switch platform so these show up as switch entities under the switch domain. When someone toggles one on or off, the integration should send the right command to the cloud API, and here's the wrinkle: the exact API call differs depending on whether the device is a plug or a generic switch type, so the turn-on and turn-off handling needs to branch on device type and call the appropriate method for each. If a device is offline it should report as unavailable, and the entity state should update in real time when the device gets toggled externally, pushing status changes through the existing websocket connection rather than polling. This makes the integration actually useful for households mixing Xthings lights and plugs/switches instead of leaving the plug folks stranded.
+## Description
 
-Oh and one gotcha on the tests: the existing light tests currently spin up platforms together, and once the switch platform exists, running both during the light snapshot tests would pull switch entities into the snapshot and break the light-only checks. So I need to scope the light tests to just the light platform so their snapshots stay light-only and don't get contaminated by the new switch entities.
+The Xthings Cloud integration currently only exposes lighting devices to Home Assistant. However, Xthings also makes smart plugs and other switchable devices that are accessible through the same cloud service. These devices cannot be controlled or monitored through Home Assistant because no switch platform support exists in the integration.
+
+## Expected Behavior
+
+- Smart plug and switch-type devices from Xthings should appear as switch entities in Home Assistant under the switch domain.
+- Turning a switch entity on or off should send the appropriate command to the Xthings cloud API, with different API calls depending on whether the device is a plug or a generic switch.
+- If a device is offline, its corresponding switch entity should show as unavailable.
+- The state of switch entities should update in real time when devices are toggled externally, using the existing websocket connection.
+- Existing light entity tests should remain unaffected by the addition of the switch platform.
+
+## Why This Matters
+
+Users with Xthings smart plugs or other switchable devices currently have no way to integrate those devices with Home Assistant through the Xthings Cloud integration. Adding switch platform support makes the integration fully useful for households that have a mix of Xthings lighting and plug/switch devices.

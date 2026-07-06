@@ -1,5 +1,18 @@
-I'm poking at our API documentation viewer and hit a real gap: when an API description uses setext-style headings, the ones where you write the heading text and then underline it with a row of equal signs (level 1) or dashes (level 2), those headings just never show up in the nav sidebar. Only the ATX hash-prefixed style gets picked up right now, so anyone who writes their description in that underline style gets no navigation entries for their sections at all, which makes long descriptions basically impossible to navigate.
+## Description
 
-While I'm in here, I noticed heading extraction is duplicated in a few spots and there's no shared helper for it, so I want to build one clean utility in our helpers package that takes a markdown string and hands back a list of heading objects, each carrying a level from 1 to 6 and the plain-text content. It's gotta handle both ATX and setext styles, and strip inline formatting from the returned text (bold, italic, inline code, strikethrough, links, images, and HTML tags all gone). Also it needs to ignore anything that looks like a heading but lives inside a fenced or indented code block, plus the usual parsing nuances: Windows line endings, closing hash sequences, hashes that aren't at the line start shouldn't count, and 7+ hash characters is invalid so don't treat that as a heading either.
+Our API documentation viewer builds a navigation tree from the description text of an API spec. Currently, when an API description uses underline-style headings (where a line of text is followed by a row of equal signs or dashes to indicate heading level), those headings are silently ignored and never appear in the navigation sidebar. Authors who prefer this heading style get no navigation entries for their sections.
 
-Then once that utility exists, wire the description navigation builder over to use it so setext headings actually get recognized and slotted into the nav tree with the right nesting by level. Centralizing this also kills the duplication and keeps behavior consistent everywhere it's used.
+Additionally, heading extraction logic is duplicated across the codebase. We need a single, well-tested utility in the helpers package that extracts headings from markdown text, so different parts of the app can rely on one consistent implementation.
+
+## Expected Behavior
+
+- A new, standalone heading extraction utility should be created in the helpers package. It should accept a markdown string and return a list of heading objects, each with a heading level (1–6) and the plain-text heading content.
+- The utility must support both ATX-style headings (prefixed with hash characters) and setext-style headings (underlined with equal signs or dashes).
+- Inline formatting (bold, italic, inline code, strikethrough, links, images, and HTML tags) should be stripped from the returned heading text.
+- Headings appearing inside fenced or indented code blocks must be ignored.
+- The utility must handle edge cases: Windows line endings, closing hash sequences, headings with 7+ hash characters (invalid), and hashes not at the start of a line.
+- The description navigation builder must be updated to use this utility so that setext-style headings are properly included in the navigation tree.
+
+## Why This Matters
+
+API authors who use underline-style headings in their descriptions currently see no navigation entries for those sections, making it impossible to navigate long descriptions. Centralizing heading extraction into a shared utility also removes duplication and ensures consistent behavior across the application.

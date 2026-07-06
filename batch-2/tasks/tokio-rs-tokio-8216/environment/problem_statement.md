@@ -1,5 +1,13 @@
-I'm hitting a panic in the stream map thing that holds a bunch of named streams. The problem is the method that gives back a combined size estimate for everything it contains, it just adds up the individual size hints with plain arithmetic and that overflows the moment any stream reports a huge or maximum remaining count. So if I insert two streams that both advertise the max possible size, the very next call to get the size hint blows up with an integer overflow panic, which is a nasty surprise in what's otherwise totally normal usage.
+## Description
 
-What I want is for that size hint computation to be saturating and safe. The lower bound of the combined estimate should be added up with overflow-safe arithmetic that saturates at the maximum representable value instead of wrapping or panicking. And the upper bound should turn into unknown (unbounded, so `None`) whenever summing the individual upper bounds would overflow, rather than crashing. Basically computing the combined size hint of a stream map should never panic from integer overflow no matter what the individual streams report, even pathological or extreme sizes.
+The stream map type panics with an arithmetic overflow when computing its combined size hint if any of its contained streams report very large (or maximum) remaining item counts.
 
-Managing a collection of streams ought to hold up even when those streams claim ridiculous size estimates, so please make this a saturating operation end to end.
+## Expected Behavior
+
+- When a stream map holds multiple streams that each advertise an extremely large number of remaining items, calling the size hint method should return a saturated lower bound (capped at the maximum representable value) rather than panicking.
+- The upper bound of the combined size hint should become "unknown" (unbounded) whenever summing the individual upper bounds would overflow, instead of causing a crash.
+- In general, computing the combined size hint of a stream map must never panic due to integer overflow, regardless of what the individual streams report.
+
+## Why This Matters
+
+Code that manages a collection of streams should be robust even when those streams advertise extreme or pathological size estimates. Currently, inserting two or more streams that both report the maximum possible size causes an immediate panic on the next call to get the size hint, which is an unexpected crash in otherwise normal usage. This should be a saturating/safe operation instead.

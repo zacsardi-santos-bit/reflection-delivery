@@ -1,7 +1,17 @@
-I'm hacking on the Winch baseline compiler in wasmtime (the single-pass x86_64 backend) and it just doesn't handle reference type instructions, so any module touching function refs or null refs gets stuck. I want to wire these up properly so basic reference types programs actually compile and run under Winch.
+## Description
 
-Concretely, the null ref creation (ref.null) should emit a zero/null value, and the nullness check (ref.is_null) needs to return 1 when the reference is null and 0 otherwise. Getting a function reference for a declared function (ref.func) should work, probably via a runtime call to fetch the funcref. Typed select over two function references has to pick the first or the second depending on the condition, same semantics as regular select but for ref types.
+The Winch compiler backend (the single-pass baseline compiler) does not currently support basic reference type instructions on x86_64. This means any WebAssembly module that uses function references, null references, typed conditional selection over references, or reference-typed table operations cannot be compiled and executed with Winch. These reference type primitives are a fundamental part of the WebAssembly reference types proposal and are needed for many real-world modules.
 
-On top of that I need the table operations for funcref-typed tables to work: reading from a table (table.get), writing into it (table.set), growing it (table.grow), and reporting its current size (table.size), plus actually calling through a table slot (call_indirect) so a funcref stored in a table invokes the right function. And the trap behavior matters too, an out-of-bounds table access should trap, and calling through an uninitialized table slot should trap, both with the appropriate trap messages (uninitialized element, table out of bounds, that kind of thing).
+## Expected Behavior
 
-Oh and there's a related test that's over-restrictive, it currently insists the GC types feature be enabled when really it only needs reference types plus bulk memory, so that config should be relaxed to just those two. The end goal is Winch handling these common patterns and passing the full reference types suite on x86_64.
+- Creating a null function reference should produce a zero/null value.
+- Testing whether a reference is null should return 1 (true) for null references and 0 (false) for non-null references.
+- Obtaining a function reference for a declared function should work correctly.
+- Selecting between two function references conditionally should pick the correct one based on the condition.
+- Table operations involving function references (reading, writing, growing, and checking table size) should all work correctly under Winch.
+- Calling through a table slot populated with a function reference should invoke the correct function.
+- Trapping with appropriate messages on uninitialized table element access and out-of-bounds table access should work as expected.
+
+## Why This Matters
+
+Without reference type support in Winch, any module using these instructions must either be rejected or fall back to a different compilation tier. Adding support enables the Winch baseline compiler to handle these common WebAssembly patterns and run the full reference types test suite. Additionally, an existing test that was unnecessarily requiring the garbage-collection types feature enabled should be corrected to only require the reference types feature.

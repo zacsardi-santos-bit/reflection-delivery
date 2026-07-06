@@ -1,5 +1,14 @@
-I'm using the Gemini CLI's auto-edit approval mode so file modifications get approved automatically without me confirming each one, and it works fine for the normal file editing tools, but I keep hitting a snag where shell commands that redirect their output into a file still pop up asking me to confirm. That's annoying because a shell command like `echo foo > out.txt` is effectively writing to a file just like the edit tools do, so it should be treated the same when auto-edit is on.
+## Description
 
-What I want is for the shell tool's approval logic to recognize when a shell command includes output redirection, and when it does, treat it as a file-writing operation that auto-edit mode approves without prompting me. At the same time, shell commands that don't do any output redirection (regular command executions, no `>` or `>>` writing to a file) should still require my explicit confirmation like before, even in auto-edit mode. So the behavior splits on whether there's redirection into a file.
+When users switch to "auto-edit" approval mode in the Gemini CLI, they expect that all file-modifying operations are automatically approved without interruption. Currently, this mode correctly auto-approves standard file editing operations. However, shell commands that redirect their output directly into files are also effectively file-writing operations, and they should be treated the same way — yet they still require manual confirmation even in auto-edit mode.
 
-Can you update the shell tool so that when the approval mode is auto-edit, a command with output redirection skips the confirmation prompt, but a plain command without redirection still asks me first? Basically align redirection commands with the other file edits and keep everything else gated behind manual approval.
+This inconsistency forces users to manually approve these commands even when they have explicitly opted into auto-edit mode, defeating the purpose of that mode for such operations.
+
+## Expected Behavior
+
+- When in auto-edit mode, shell commands that write their output to a file via output redirection should be automatically approved alongside other file-editing operations
+- Shell commands that do NOT redirect output to a file (i.e., regular command executions) should still require explicit user confirmation even in auto-edit mode
+
+## Why This Matters
+
+Users who set up auto-edit mode to streamline autonomous file modification workflows are repeatedly interrupted by confirmation prompts for shell-with-redirection commands. Aligning these commands with other file edits makes auto-edit mode consistently hands-free for all file-writing operations.

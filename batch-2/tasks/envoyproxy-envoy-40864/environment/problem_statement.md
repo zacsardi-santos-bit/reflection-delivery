@@ -1,5 +1,18 @@
-I'm working on the Rust SDK for Envoy dynamic modules, the part where you write HTTP filter plugins, and I keep hitting this annoying bit of boilerplate. The trait you implement to build a filter configuration wants two generic type params, one for the filter config context type and one for the per-request filter handle type, but when you actually look at the trait the only method it has is the one that creates a new per-request filter instance, and that method only ever touches the per-request handle. The config context param just sits there doing nothing meaningful in the trait itself.
+## Simplify the HTTP Filter Configuration Trait Interface
 
-So every struct I write has to carry both type constraints even though the config context one is never used, and that same redundancy leaks into the factory function return type too, the type alias used to register filter config constructors. It's dead weight.
+## Description
 
-Can we drop the unused param so implementations only specify the per-request filter handle type? The new-filter method should then take the per-request handle type directly as its argument. I want all the existing behavior kept, just that one useless type parameter gone, and the function type alias for registering constructors updated to match the simplified single-param signature. Less boilerplate, easier to get right.
+The trait that SDK users must implement when writing HTTP filter configurations currently requires two separate generic type parameters: one for a filter configuration context type and one for the per-request filter handle type. However, the only method on this trait — which creates a new per-request filter instance — only ever uses the per-request filter handle. The filter configuration context type parameter is effectively unused and serves no purpose in the trait.
+
+This unnecessary dual-parameter design forces every implementor to carry and propagate an extra generic type parameter throughout their code, even though it adds no value.
+
+## Expected Behavior
+
+- The filter configuration trait should require only a single generic type parameter: the per-request filter handle type
+- The method for creating new filter instances should accept the per-request filter handle type directly as its argument
+- All existing functionality should be preserved; only the unnecessary type parameter is removed
+- The function type alias used to register filter configuration constructors should reflect the same simplified signature
+
+## Why This Matters
+
+Removing the redundant type parameter reduces boilerplate for SDK users, makes the trait easier to understand and implement correctly, and eliminates the need to propagate an unused type constraint through all filter configuration implementations.

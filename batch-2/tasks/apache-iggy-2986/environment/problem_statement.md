@@ -1,5 +1,16 @@
-I'm building out the Go client library here and I keep running into the same problem, every spot that touches wire-protocol messages re-implements its own byte-packing, so I want a shared binary codec package to kill that duplication. Basically a matched pair, one type for writing and one for reading, both little-endian. They should handle unsigned integers of the various widths, single-precision floats, raw byte slices, and strings in a few flavors: no length prefix, an 8-bit length prefix, and a 32-bit length prefix. Both should also be able to serialize and deserialize arbitrary objects that implement Go's standard binary marshaling interfaces (MarshalBinary/UnmarshalBinary style).
+## Description
 
-The big design thing I care about: both types accumulate errors silently. I want to chain a bunch of writes or reads and only check the error once at the end instead of after every call. And once an error's been recorded, later operations need to be harmless no-ops that don't clobber the original error, so the first failure is the one I see.
+The Go client library for this project currently lacks a shared, standardized mechanism for encoding and decoding binary data in the wire protocol format. Without a reusable codec layer, every part of the codebase that needs to serialize or deserialize numeric types and strings must implement its own byte-packing logic, leading to duplication and inconsistency.
 
-When something does go wrong, whether it's a buffer overrun on the read side, a string that's too long to fit its length prefix, or a marshaling method returning a failure, the error message should carry the source file and line number of the call that triggered it so I can jump straight to it while debugging. Oh and the writing side should let me pre-allocate the internal buffer to a given capacity, so a sequence of writes with a known total size doesn't thrash memory with reallocations. Put this in a new package under the Go client (something like `@go/` alongside the rest of the client code), it should be self-contained and well-tested.
+## Expected Behavior
+
+- A binary encoder that sequentially appends values into a byte buffer using little-endian byte order, supporting unsigned integer types of various widths, single-precision floats, raw byte slices, and strings both with and without length prefixes.
+- A binary decoder that sequentially reads values out of a byte buffer using the same little-endian conventions, mirroring all the encoder's types and string variants.
+- Both the encoder and decoder should support serialization of arbitrary objects through the standard binary marshaling interface.
+- Both types should accumulate errors silently across multiple operations, so callers can chain a series of reads or writes and inspect the error only once at the end.
+- When a buffer overrun or a serialization failure occurs, the resulting error should include the source location (file and line) where the failing operation was called, making it easy to pinpoint problems during development and debugging.
+- The encoder should offer a way to pre-allocate its internal buffer to a known size so that sequences of writes with known total size avoid memory reallocations.
+
+## Why This Matters
+
+Having a single, well-tested codec utility eliminates repetitive ad-hoc binary handling throughout the Go client, makes the serialization layer more reliable, and gives developers clear error messages with source locations when something goes wrong.

@@ -1,0 +1,7 @@
+I'm poking at Babel's React preset and the automatic JSX dev runtime, and I've hit a wall. When I flip on development mode the transform helpfully stuffs source location data (file name, line, column) plus a reference to the current `this` context into every single JSX call, and I've got no way to opt out while still getting the dev variant of the transform.
+
+Here's my situation: a lot of my JSX is generated programmatically, so it doesn't have meaningful source positions, and those injected annotations are just noise. I still want the development runtime (the thing that tells React we're in debug mode), I just don't want the source location and context args tagging along.
+
+So I want a new boolean option, defaulting to false (off), that controls whether this source location plus context injection happens. When it's not set, dev-mode output should stay lean, basically just the component, props, key, and the static-children flag with no extra location or context arguments. When I explicitly turn it on, keep the old behavior exactly as it is now with the source location info and context preserved.
+
+This needs to hook into the React preset's options validation, so passing a non-boolean should throw a clear error, and the default value should show up in the normalized options output. Also the underlying plugin factory function that creates the transform plugin should accept this same option so I can wire it up directly when building custom plugin instances, not just through the preset.

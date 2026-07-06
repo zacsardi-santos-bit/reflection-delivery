@@ -1,5 +1,15 @@
-I'm bumping deps in the netlify/cli repo and one of them is the little library we use to list directory contents recursively (the promise-based readdir thing). New major version changed the API on me: the promise listing function that used to hang off the default export got yanked, and now it's only available as a named export you have to import explicitly. So after the upgrade the copy-template-dir utility breaks at runtime because the internal code is still reaching for it the old way, as a method on the default import.
+## Description
 
-The test that copies a template directory and then checks the expected files actually landed on disk is now throwing, because both the implementation and the old-style import don't line up with what the upgraded library exposes. I need you to fix the source implementation of the copy-template-dir utility so it imports the recursive-readdir functionality via the new named export instead of off the default export, and the template copying works again.
+The CLI tool's template directory copying utility depends on a directory-reading library. This library released a major version update that changed its public API in a breaking way: previously, the promise-based listing function was accessed as a method on the library's default export, but in the new version that method no longer exists — instead, the functionality is exposed as a named export.
 
-Point being, once the library's at its latest major version, copying template dirs should just work, all the template files get written to the output directory without errors. This matters because that copy step is what scaffolds new Netlify CLI projects and functions from templates, so if it's broken users can't spin up anything from a template, and keeping deps current while adapting to their API changes keeps the CLI correct and secure.
+After upgrading this library to its latest version, the test suite started failing. The specific test that verifies template files are correctly written to disk began throwing errors because both the internal implementation and the test code were still using the old API pattern.
+
+## Expected Behavior
+
+- When the library is at its latest major version, the template directory copying utility should continue to work correctly.
+- Importing the library should use named exports (as exposed by the new version) rather than the old default export pattern.
+- All template files should be copied to the output directory without errors.
+
+## Why This Matters
+
+The template directory copying feature is used when creating new Netlify CLI projects and functions from templates. If it's broken, users cannot scaffold new projects from templates. Keeping dependencies up to date while adapting to API changes is essential for the CLI's correctness and security.

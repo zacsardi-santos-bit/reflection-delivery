@@ -1,5 +1,17 @@
-I'm hitting a nasty ordering bug in the query engine's SQL generation. When I query a top-level record and ask for its related records sorted by either an aggregate count or a plain scalar field that lives two or more relationship hops away, the order comes back wrong. Records that should sort first (fewer deeply nested items) show up last and vice versa, and honestly it sometimes feels like the ordering constraint just gets ignored and I get garbage order instead of an error, which makes it really hard to even notice.
+## Description
 
-Concretely think of a model where A has many B's, each B links to a C, each C links to a D, and each D has many related items, so if I query A's B-records ordered by the count of those deeply nested items it doesn't sort right. Single-hop ordering works fine, it's only paths that span two or more hops where it breaks, and it gets especially broken when any intermediate relation in the chain is a many-to-many join rather than one-to-many. Same deal for scalar fields, ordering by a scalar value on a model that's 2+ hops away is also busted.
+When querying records with nested relation ordering that spans two or more levels deep — particularly when any part of the relation chain involves a many-to-many relationship — the results come back in the wrong order. Instead of correctly sorting by the aggregate count or field value deep in the nested chain, the engine appears to ignore the ordering constraint or produces an incorrect order.
 
-What I want is for the engine to actually traverse the full relation chain and produce correct ascending (fewer related items first) or descending (more first) results based on the aggregate count or the field being ordered on, and this needs to hold regardless of whether the intermediate relations are one-to-many or many-to-many. It's a regression (see prisma/prisma issue 22926) that bites anyone modeling data with multiple relationship levels who wants to sort by aggregate counts or nested field values, so the deep chain traversal in the SQL generation is where the fix belongs.
+For example, if you have a data model where A has many B's, each B links to a C, each C links to a D, and each D has many related items — then querying A's B-records ordered by the count of those deeply nested items doesn't work correctly when the relation chain includes a many-to-many join at any point.
+
+## Expected Behavior
+
+- Ordering nested records by the count of a deeply nested relation (2+ hops away) should return records sorted in ascending order (fewer related items first) or descending order (more related items first) as specified.
+- This should work regardless of whether the intermediate relations in the path are one-to-many or many-to-many.
+- Ordering by a scalar field value on a model that is 2+ hops away should also work correctly.
+
+## Why This Matters
+
+This is a regression that affects users who model data with multiple levels of relationships and want to sort results by aggregate counts or field values on deeply nested related models. Without this fix, the ordering silently produces wrong results rather than surfacing an error, making it difficult to detect.
+
+Tracked in: https://github.com/prisma/prisma/issues/22926

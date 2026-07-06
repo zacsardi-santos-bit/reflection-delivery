@@ -1,5 +1,18 @@
-I'm hitting a nasty log flooding issue in our Ray-based LLM serving layer. When the backend inference engine crashes and goes unresponsive, every in-flight request fails with the same fatal error, and right now each one dumps a full traceback independently. In a high-throughput deployment that's hundreds or thousands of identical stack traces per second, which makes it basically impossible to find the root cause or even gauge how big the incident is, and honestly it can exhaust disk and overwhelm our log aggregation too.
+# Add rate limiting for fatal engine error logs in the LLM serving layer
 
-What I want is a rate limiter that applies only to fatal engine errors. First time a fatal engine error shows up, log the full traceback like normal for debugging. Any subsequent fatal errors within a configurable cooldown window should get silently suppressed instead of re-logged. Once that cooldown window expires and another fatal error arrives, emit a single summary line saying how many errors got suppressed during the window. And if the engine's been quiet for a longer stretch (roughly twice the cooldown), reset the state and treat the next fatal error as a fresh event, so it logs a full traceback again.
+## Description
 
-The key thing is this limiting is fatal-engine-only. Non-fatal stuff like bad client requests or other non-fatal server errors should still get logged every single time, just at the normal error or warning level depending on the HTTP status code, and those non-fatal errors shouldn't touch the rate limiting state at all (no resetting counters, no advancing windows, nothing). Oh and the existing function that builds error responses for callers needs to route through this new rate limiting path, and the error response it returns should still include the request ID in its message.
+When a backend inference engine crashes and becomes unresponsive, every incoming request fails with the same fatal error. Currently, each of these failures logs a full traceback independently. In production with high request rates, this means hundreds or thousands of identical tracebacks flood the logs within a single cooldown period, making it extremely difficult to diagnose the root cause or understand the scope of the incident.
+
+## Expected Behavior
+
+- When a fatal engine error is first encountered, a full traceback should be logged for debugging purposes.
+- Subsequent identical fatal errors within a configurable cooldown window should be silently suppressed rather than logged again.
+- When the cooldown window expires, a brief summary should be emitted indicating how many errors were suppressed during the window.
+- After a prolonged quiet period with no fatal errors, the system should reset so the next occurrence is treated as a fresh event and logs a full traceback again.
+- Non-fatal errors (e.g. bad client requests or other application errors) should always be logged individually and should not be affected by this rate limiting.
+- The error response returned to callers should still include the request ID in the error message.
+
+## Why This Matters
+
+Without this change, a single engine crash in a busy serving deployment causes a log explosion that can exhaust disk space, overwhelm log aggregation systems, and obscure the actual root cause. Operators need a way to see the first traceback clearly and then receive a summary of how many requests were impacted, without drowning in duplicate stack traces.

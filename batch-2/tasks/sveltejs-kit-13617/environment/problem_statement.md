@@ -1,5 +1,15 @@
-I'm refactoring the enhanced image library in this Svelte/Vite project and I need your help. Right now the custom image tag transformation runs as a Svelte preprocessor, and it works fine for turning our custom image tags into optimized picture elements with multiple source formats at build time, but it's got a real limitation: there's no way to style that custom image element with a CSS type selector in a component's style block. The colon in the tag name causes issues and the preprocessor doesn't even try to touch CSS rules targeting the custom tag, so devs have been forced to slap class names on their enhanced image tags and use class selectors instead, which is annoying and unnatural.
+## Description
 
-So I want to migrate this from a Svelte preprocessor over to a Vite plugin transform. The Vite approach processes the full component file, which means it can handle both the HTML template (replacing the custom image tags with proper picture elements, same as today) and the CSS style block. Here's the new bit I care about: when a component's style block has a CSS type selector targeting the custom image element by its escaped tag name (colon properly escaped), the plugin should rewrite that selector so it correctly applies to the actual rendered element. That way we can style enhanced images by tag name directly, no extra classes needed.
+The enhanced image library currently uses a Svelte preprocessor to transform custom image tags into optimized picture elements at build time. While this works for templates, it has a significant limitation: developers cannot style the custom image element using a CSS type selector in their component's style block. The colon in the tag name causes issues, and the preprocessor makes no attempt to transform CSS rules that target the custom tag.
 
-Put the refactored code in a new file that exports both the Vite plugin factory function and the utility for parsing the image metadata object strings, and that parser needs to handle both the compact single-line variant and the formatted multi-line variant. Keep the existing tag-transformation logic exactly as-is, so for any component without CSS changes the output should stay byte-identical to what the current preprocessor produces. Only the CSS selector rewriting is genuinely new.
+The solution is to migrate the image tag processing from a Svelte preprocessor to a Vite plugin transform. The Vite transform approach processes the full component file, allowing it to handle both the HTML template (replacing the custom image tags with proper picture elements) and the component's CSS block (rewriting any selectors that target the custom image element by its tag name so that they correctly apply to the rendered element).
+
+## Expected Behavior
+
+- The enhanced image tag processing continues to work as before, converting custom image tags into picture elements with multiple source formats
+- When a component's style block contains a CSS rule that uses the custom image element's tag name as a selector (with the colon properly escaped), the build tool should rewrite that selector so it applies to the rendered element
+- The image processing module should be refactored into a new file that exports the Vite plugin factory and the object-parsing utility
+
+## Why This Matters
+
+Previously, developers had to add class names to their enhanced image tags and use class selectors in CSS to style them — there was no way to use a type selector. This change makes styling more natural: you can now write CSS targeting the enhanced image element by its tag name directly in the component's style block.

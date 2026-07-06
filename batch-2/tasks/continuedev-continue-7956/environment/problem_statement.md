@@ -1,7 +1,16 @@
-I've got two different ways of describing MCP servers floating around and it's driving me nuts. External AI tools (think Claude Desktop style) use a JSON format, and my project uses an internal YAML format with different field names and structure. Right now there's zero tooling to move between them so every time I want to import someone's server config or share mine, I'm hand-rewriting the whole thing.
+## Description
 
-I want conversion utilities that go both ways, JSON to YAML and YAML back to JSON. It's gotta handle all three server flavors: process-based (the ones that spawn a command), SSE-based, and HTTP-based. The tricky part is some fields only live in one format and have no counterpart on the other side, so instead of silently dropping them or blowing up, the conversion should still succeed but hand back warning messages spelling out exactly what got dropped or changed. Also env var references use different syntax in each format, so translate those automatically in both directions so the values survive a round-trip cleanly.
+Many AI development tools use a JSON-based format to configure MCP (Model Context Protocol) servers, while the internal project configuration uses a YAML-based format with a different structure and field naming conventions. There is currently no way to automatically convert between these two formats, forcing developers to manually rewrite their server configurations when importing from external tools or exporting to them.
 
-Oh and if a config can't be matched to any known server type, don't just quietly produce garbage, throw a clear error in either direction so I know what went wrong.
+## Expected Behavior
 
-One more thing, I need a convenience function that takes an entire multi-server JSON config file and converts the lot in one call, giving me back an array of the YAML configs and collecting all the warnings from every individual server conversion into one place so nothing gets lost.
+- Developers should be able to convert a JSON-style MCP server config entry into the equivalent YAML-style config, including proper handling of server types (process-based, SSE-based, and HTTP-based).
+- Developers should be able to convert YAML-style MCP configs back into the JSON format used by external tools.
+- An entire multi-server JSON config file should be convertible to an array of YAML configs in a single operation.
+- When a field exists in one format but has no equivalent in the other, the conversion should succeed and produce a warning message describing what was dropped — rather than failing silently or throwing an error.
+- Environment variable references use different syntax in each format. Conversion should automatically translate variable references in both directions so that values are preserved through round-trips.
+- Conversion in both directions should throw a clear error for configs that cannot be matched to any known server type.
+
+## Why This Matters
+
+Developers frequently configure MCP servers in one tool and want to reuse that configuration in another. Without conversion utilities, they must manually adapt configurations, which is error-prone and time-consuming. Bidirectional conversion with clear warnings for unsupported fields enables safe import and export of server configurations across tooling boundaries.

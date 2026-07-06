@@ -1,5 +1,14 @@
-I'm hitting a frustrating gap with the vllm Rust CLI when I serve models. There are two flags on the `serve` command that just don't do anything: the shutdown timeout and the flag that disables statistics logging. The frontend parses them fine, I can see the values coming through on the CLI side, but they never make it to the Python engine subprocess that actually runs inference, so they're silently ignored.
+## Description
 
-The shutdown timeout one is the worst. When I configure a timeout and then shut the server down, the engine still aborts in-flight requests immediately as if no timeout was set at all, which drops requests mid-flight in production. And when I pass the flag to disable log stats, the engine keeps logging stats anyway, so my logging pipeline stays noisy. Both settings get accepted without any error, which gives me a false sense that my config is being applied when it isn't.
+The vllm Rust CLI's `serve` command accepts several configuration flags intended to control the behavior of the underlying Python engine process — including a shutdown timeout and a flag to disable statistics logging. However, these flags are currently parsed by the CLI frontend but never forwarded to the engine subprocess. As a result, users who configure these options find them silently ignored.
 
-What I need is for both of these to actually get forwarded to the engine when the subprocess is launched. So when I set a shutdown timeout that value should be handed to the Python engine so graceful shutdown works like it's supposed to, and when I turn off statistics logging that flag should reach the engine too so it respects it and stops logging. Basically wire the parsed values from the CLI frontend through into the arguments used to spin up the engine process, both of them, so they take effect instead of getting dropped on the floor.
+This is particularly impactful for the shutdown timeout: without forwarding it to the engine, in-flight requests are abruptly terminated when the server shuts down, regardless of what the user specified. Similarly, disabling statistics logging has no effect on the engine's actual logging behavior.
+
+## Expected Behavior
+
+- When a user starts the server with a shutdown timeout configured, that timeout value should be passed through to the Python engine so graceful shutdown works as expected.
+- When a user starts the server with statistics logging disabled, that flag should be forwarded to the engine so the engine respects it.
+
+## Why This Matters
+
+Users rely on these settings for production deployments — graceful shutdown prevents dropping requests mid-flight, and suppressing log stats reduces noise in logging pipelines. Currently both settings are accepted by the CLI without error, giving users a false sense that their configuration is applied.

@@ -1,3 +1,15 @@
-I'm hitting a weird bug in the WebSocket server extension around how error handlers get invoked when a binary message handler throws a runtime exception. Right now when the framework delegates to a registered error handler, that handler runs inside the same CDI request context that was active during the message handler that blew up. So any request-scoped beans I inject into the error handler already have state from the failed handler, which is not what I want at all. Error handlers are conceptually independent of the handlers that trigger them, so sharing the request context creates this surprising coupling where the error handler sees side effects from the very operation it's supposed to be handling, and that makes it really hard to write reliable recovery logic.
+## Description
 
-What I'd expect is that each error handler invocation starts with a fresh CDI request context, so request-scoped beans show up in their default newly-initialized state instead of carrying over data from the handler that caused the error. And this clean-context guarantee needs to hold no matter the thread model, so both when the error handler runs on an event loop thread and when it runs on a worker thread, each one should get its own fresh context when error handling begins. Basically error handling should be clean and isolated from the message handler that triggered it.
+WebSocket error handlers unintentionally share the CDI request context from the message handler that triggered the error.
+
+When a binary message handler encounters a runtime exception and the framework delegates to a registered error handler, the error handler is currently executed within the same CDI request context that was active during the original message handler. This means any request-scoped beans the error handler accesses will already contain state that was set during the failed message handler — which is unexpected and incorrect behavior.
+
+## Expected Behavior
+
+- When an error handler is invoked to handle a runtime exception thrown by a WebSocket binary message handler, the error handler should run within a **fresh** CDI request context.
+- Request-scoped beans accessed in the error handler should be in their default (newly initialized) state, not contaminated by state from the triggering handler's context.
+- This clean-context guarantee should hold regardless of the execution thread model — both event loop threads and worker threads must each get a fresh context when error handling begins.
+
+## Why This Matters
+
+Error handlers are conceptually independent of the handlers that trigger them. Sharing request context between a failed message handler and the error handler creates surprising coupling: the error handler sees side effects from the very operation it is supposed to handle, which makes it difficult to implement reliable error recovery logic.

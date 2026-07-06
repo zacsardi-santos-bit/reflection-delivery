@@ -1,5 +1,18 @@
-I'm hitting an ergonomics wall with this Laravel permissions package. Right now I can only manage roles from the user's side, like calling a method on a user model to give it a role, but there's nothing on the role itself to work the other direction. When I'm building an admin screen that shows everyone holding a particular role and lets me add or remove members, I have to loop through every user and call methods one at a time, which is annoying boilerplate, and same deal for background jobs that manage membership at the role level.
+## Description
 
-What I want is three methods on the role model over in the package's role class. One assigns the role to a batch of models without touching any existing assignments, one removes the role from a given list of models without affecting other models that have it, and one syncs the full set so models not in the new set lose the role while the ones I pass gain it. All three should take arrays of model instances, a single instance, raw IDs, or a mix of both, so I'm not forced to always wrap things in an array.
+Right now, assigning roles to users only works from the user's perspective — you call a method on a user (or other model) to give it a role. There is no convenient way to do the inverse: take a role and say "assign this role to all of these users at once," "remove this role from these users," or "make sure exactly these users have this role."
 
-Couple of things that matter for correctness. When I hand it raw IDs it needs to know which model class those belong to, either passed directly into the method call or falling back to a package config option. Everything has to be idempotent, so passing the same model or ID twice, or calling assign twice for the same model, should never create duplicate rows in the database. And the remove op should be safe to call for a model that doesn't currently have the role, it just does nothing in that case rather than blowing up.
+This is a real pain point when building admin screens or background jobs that manage role membership at the role level. For example, if you're building a page that shows all users with a given role and lets an admin add or remove members, you have to loop through each user individually and call methods on each one.
+
+## Expected Behavior
+
+- It should be possible to call a method on a role to assign that role to multiple models at once, without affecting any existing assignments.
+- It should be possible to call a method on a role to remove it from a list of models, without affecting other models that have the role.
+- It should be possible to synchronize the set of models that have a role — providing a new set should cause previous models not in that set to lose the role, while the given models gain it.
+- All three operations should accept model instances, raw IDs, or a mix; a single model or ID should also be accepted (not just arrays).
+- When passing raw IDs, there should be a way to specify which model class they belong to — either per-call or via a package configuration option.
+- All three operations should be safe against duplicates: passing the same model or ID more than once should never create duplicate database records.
+
+## Why This Matters
+
+This makes role management much more natural when you are thinking at the role level rather than the user level, and eliminates boilerplate loops in common admin and batch-processing scenarios.

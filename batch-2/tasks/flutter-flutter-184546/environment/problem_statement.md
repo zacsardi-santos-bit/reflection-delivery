@@ -1,3 +1,15 @@
-I'm on a locally built Flutter engine and the error I get when the tooling can't find the engine build directory at my configured path is driving me nuts. It's vague and passive, doesn't clearly say what actually failed or which path it went looking in, so every time I hit a misconfig I have to squint at it and reverse-engineer what happened. I want the message reworded so it directly states that no engine build directory was found at the specific path it searched, calling out both the failure and the exact location involved, so it's scannable at a glance instead of something I have to parse.
+## Description
 
-The fix lives in the local engine resolution logic under `@packages/flutter_tools/lib/src/`, wherever the tool constructs that error string when it fails to locate a valid engine build directory at the specified path. Right now the phrasing is imprecise (something along the lines of not being able to find the directory) and I'd like it to plainly read as "No Flutter engine build found at <path>" style, naming the actual path that was checked. The point is that a developer setting up or troubleshooting a local engine env should immediately see what was searched for and where it looked, since this comes up a lot when the environment isn't wired up right and the current wording just slows down diagnosis.
+When Flutter's local engine tooling is unable to find a valid engine build directory at the configured path, the error message it displays is vague and unhelpful. The current phrasing doesn't make it immediately clear what path was searched or precisely what was missing, making it harder for developers to quickly diagnose the problem.
+
+## Expected Behavior
+
+When the tool fails to locate a Flutter engine build directory at the specified path, the error message should clearly state that no engine build directory was found at that location, using more precise and actionable language that directly identifies both the failure and the exact path involved.
+
+## Current Behavior
+
+The current error message uses vague, passive phrasing that does not directly state the nature of the failure nor clearly identify the path that was searched, making it less immediately scannable for developers troubleshooting their local engine setup.
+
+## Why This Matters
+
+Developers working with a locally built Flutter engine frequently encounter this error when their environment is misconfigured. A clearer, more direct error message helps them immediately understand what was searched for and where, reducing confusion and speeding up diagnosis when setting up or troubleshooting a local engine environment.

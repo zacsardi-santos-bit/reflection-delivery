@@ -1,7 +1,22 @@
-I'm getting pydantic-ai ready for the next major version and we're gonna drop some of the older convenience APIs around our AG-UI protocol integration layer, but before ripping them out I want to warn people so they can migrate instead of getting silently broken later.
+## Description
 
-There are three older entry points that don't emit anything right now and I need each to fire off one of our own deprecation warnings (we've already got a custom warning class for this, the library-specific one, so use that rather than the plain built-in). First is the original module import path for the UI integration, so importing from the legacy `ag_ui` module location should immediately warn and point folks toward the new module location it moved to. Second is the convenience method on the `Agent` class that spins up a ready-to-deploy ASGI app (the `to_ag_ui` helper) which should warn and tell people to compose the new adapter directly instead. Third is the legacy standalone app wrapper class (the `AGUIApp` type) whose constructor should warn and also nudge toward the new composition approach.
+The library is preparing for a major version release that will remove some older, convenience-oriented entry points for its UI protocol integration. Before removing these APIs, they need to be formally deprecated so developers receive clear guidance to migrate to the newer, better-organized alternatives.
 
-Key thing: all three still have to actually work through this whole major version, we're deprecating not removing, so they warn and then behave exactly like before.
+Currently, there are three older entry points that should emit deprecation warnings:
+1. The original module path used to access the UI protocol integration
+2. A convenience method on the agent class that creates a ready-to-use app
+3. A standalone application wrapper class
 
-Oh and the other half of this, the newer canonical locations for several of the types and classes need to be importable from the new module path so existing code that imports from the old spot can be transitioned over. The old module path stays alive as a shim (with the warning on import), but it should only keep re-exporting the subset of things that are staying there temporarily for backward compat, not everything. So make sure the stuff that moved is available at its new home and the old path still resolves for the compat subset.
+None of these currently emit any deprecation warnings, so developers using them have no indication that they will be removed in the next major version.
+
+## Expected Behavior
+
+- Importing the legacy module path should immediately emit a deprecation warning pointing users to the new module location.
+- Calling the convenience method on an agent to produce an application should emit a deprecation warning directing users to compose the new adapter directly.
+- Constructing the legacy application wrapper class should emit a deprecation warning directing users to the new composition approach.
+
+All three deprecated entry points must remain fully functional during the current major version lifecycle — they should warn, not break.
+
+## Why This Matters
+
+Without these warnings, developers have no signal to start migrating. When the major version drop arrives and these APIs are removed, projects will break silently. Adding deprecation warnings now gives the community time to update their code while everything still works.

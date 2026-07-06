@@ -1,5 +1,18 @@
-I'm cleaning up the Kafka Streams state management API and the two-step persistence dance is driving me nuts. Right now persisting task state means calling one op to flush the state store data and a separate one to write the checkpoint file with current offsets, and callers always have to do both in the right order, so it's easy to flush without checkpointing or checkpoint stale data. On top of that there's this threshold thing where checkpointing only actually happens if the changelog offsets have advanced far enough since the last snapshot, which was meant as an optimization but really just means a checkpoint you expected can get silently skipped.
+## Simplify State Manager API: Merge Separate Persistence Operations into a Single Unified Operation
 
-I want to collapse the separate flush and checkpoint-write operations on the state manager interface into one unified persistence operation that always does both, persisting the registered state store data and writing the checkpoint file together. Remove the two old operations entirely. Both state manager implementations (the one for regular tasks and the one for global state tasks) need to implement this new unified op. And when it hits an error coming out of a state store, it should raise the appropriate exception type consistently, same as before.
+### Description
 
-On the task side, the method that optionally runs a checkpoint during periodic state persistence currently takes a boolean to force it, and with a unified op that force/no-force distinction doesn't mean anything anymore, so drop that parameter and make the method take no args. Update the task implementations, both active stream tasks and standby tasks, so their internal checkpoint logic calls the new unified operation instead of the two old ones, and rip out that offset-advancement threshold check that conditionally skipped checkpointing. Oh and all the test stubs and helpers across the suite need updating to match the new interface too, otherwise nothing compiles. Net effect I'm after is a persistence lifecycle that's actually predictable when tasks get suspended, closed, or restored.
+The current state management API for Kafka Streams tasks exposes two separate operations for persisting state: one for flushing store data and another for writing the checkpoint file with current offsets. Any code that needs to safely persist task state must call both operations in the correct order. This two-step model is unnecessarily complex and error-prone — it's easy to flush without checkpointing or to checkpoint stale data.
+
+Additionally, the decision of whether to actually write a checkpoint is gated by a threshold: checkpointing only happens if the changelog offsets have advanced by a significant amount since the last snapshot. While this was intended as an optimization, it adds complexity and can lead to situations where a checkpoint is expected but silently skipped.
+
+### Expected Behavior
+
+- The state manager interface should expose a single unified persistence operation that both persists registered state store data and writes the checkpoint file.
+- The previous two separate operations should be removed from the interface.
+- Tasks' periodic state persistence method should require no arguments — callers should not need to specify whether to "force" the operation, since the unified operation is always meaningful to run.
+- When the unified operation encounters an error from a state store, it should raise the appropriate exception type consistently.
+
+### Why This Matters
+
+Simplifying to a single unified persistence operation makes the API easier to understand and harder to misuse. It removes the need for callers to coordinate two separate calls and eliminates the subtle threshold-based skip logic that could cause checkpoints to be silently dropped. This also makes the lifecycle of task state persistence more predictable and easier to reason about when tasks are suspended, closed, or restored.

@@ -1,3 +1,15 @@
-I'm hitting a wall with the thread-read endpoint when I flip on the option to include conversation turns in the response. For any thread that doesn't yet have a file-based history path (the rollout path) resolved, the request just fails, even though the thread is fully active, non-ephemeral, and has real conversation history sitting in its thread store. Seems like the current implementation insists on a file-based rollout path existing before it'll load turns at all, so in-memory threads (the ones actively running that keep history in an in-memory or alternative backing store, or anything that hasn't materialized its on-disk representation yet) can't use this feature. What makes it worse is the error is misleading, these totally functional threads with persisted items in the store get rejected as if they were unsupported ephemeral threads, purely because no rollout file path got resolved.
+## Description
 
-What I want is: if a thread is loaded and not ephemeral, asking for its turns should just work by reading straight from the thread store, the same store that already holds the conversation history. So the include-turns path shouldn't gate on a rollout file path being present. The endpoint should hand back a complete thread snapshot (metadata plus the full conversation history) in a single request for any active non-ephemeral thread, regardless of whether a rollout file path has been assigned yet. That way clients loading a thread into memory can grab the full history in one shot without falling back to a separate pagination endpoint and without getting bounced solely because there's no rollout file on disk.
+When requesting a thread's details and asking for the conversation turns to be included in the response, the endpoint fails for any thread that doesn't yet have a file-based history path (rollout path). This affects actively running threads that store their history in an in-memory store, or any thread that hasn't yet materialized its on-disk representation.
+
+The error is misleading: threads that are fully functional and have persisted items in the thread store are rejected as if they were unsupported "ephemeral" threads, simply because no rollout file path has been resolved yet.
+
+## Expected Behavior
+
+- The thread-read endpoint should support returning conversation turns for any non-ephemeral loaded thread, regardless of whether a file-based rollout path has been assigned.
+- When a thread's history is stored in an in-memory or alternative backing store, those items should be readable via the thread-read endpoint with the include-turns option.
+- A client should be able to retrieve a complete snapshot of thread metadata and conversation history in a single request for any active thread.
+
+## Why This Matters
+
+This is particularly relevant for threads that are loaded into memory and actively running — clients should be able to get the full history without needing to use a separate pagination endpoint, and without the request being rejected solely due to the absence of a rollout file path.

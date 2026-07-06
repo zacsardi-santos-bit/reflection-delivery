@@ -1,3 +1,20 @@
-So I've hit a nasty silent bug in datetime index intersection and I want your help fixing it. When I intersect two DatetimeIndex ranges that share the same frequency, there's a fast path optimization that assumes matching freq means the two ranges live on the same grid, but it never actually checks alignment, so I get wrong results with no error raised. The classic repro: two ranges both stepping by one business day but one starts at 09:00 and the other at 10:00. They can never share a timestamp so the intersection should be empty, but instead I'm getting non-empty garbage back. Same story shows up a few other ways, oh and it's not just business days, any offset with variable or calendar-dependent spacing (no fixed stride between dates) can't guarantee alignment but still slips into the fast path. Also if the step multiplier is bigger than 1, like "every 2 months", two ranges can be shifted by a non-multiple of the step and share zero elements yet the optimizer thinks they're aligned. And unanchored weekly frequencies where the two ranges land on different days of the week produce different grids depending on start date but look compatible.
+## Description
 
-What I want is for the fast path to only kick in when the two ranges are genuinely on the same grid, meaning their wall-clock times of day are identical, the frequency has a fixed stride with a multiplier of exactly 1, and for weekly offsets without an anchored weekday both ranges fall on the same day of the week. If any of that fails (multiplier greater than 1, negative multipliers, variable-stride offsets, mismatched time of day, mismatched weekday) it should just fall back to the general non-optimized intersection algorithm and still return the correct result, which is often empty. Since no exception gets thrown today these bad results silently propagate into downstream calculations, so getting the alignment check right actually matters. Can you dig into the intersection logic in the datetime index code and add that alignment guard?
+There is a bug in datetime index intersection where two ranges that share the same frequency but do not lie on the same "grid" can produce silently incorrect results. The optimization that speeds up intersection checks for a matching frequency but does not verify that the two ranges are actually aligned, causing the fast path to be used incorrectly.
+
+## Affected Scenarios
+
+- Two datetime ranges with the same business-day (or other variable-stride) frequency but different times of day — for example, one range starting at 09:00 and another at 10:00 — will never share a timestamp, yet the fast path may incorrectly identify overlapping elements.
+- Offset types with variable or calendar-dependent spacing (no fixed stride) cannot guarantee alignment but may still enter the fast path.
+- When the frequency step size is greater than 1 (e.g., "every 2 months"), two ranges can be shifted by a non-multiple of the step and share no elements, yet the optimizer treats them as aligned.
+- Weekly ranges that use an unanchored weekday can produce different grids depending on the start date, causing misaligned ranges to appear compatible.
+
+## Expected Behavior
+
+- The intersection of two non-aligned datetime ranges should return the correct (often empty) result.
+- The fast intersection optimization should only be applied when both ranges are verifiably on the same grid, taking into account: wall-clock time of day, weekday alignment for unanchored weekly offsets, and whether the frequency has a fixed stride with a multiplier of exactly 1.
+- Correct results must also be produced for multipliers greater than 1 or negative multipliers, even though those cases skip the fast path.
+
+## Why This Matters
+
+Users who intersect date ranges with matching frequencies but different time-of-day starts, or who use compound offsets and multi-step frequencies, can get silently wrong data. Since no error is raised, these incorrect results may propagate undetected into downstream calculations.

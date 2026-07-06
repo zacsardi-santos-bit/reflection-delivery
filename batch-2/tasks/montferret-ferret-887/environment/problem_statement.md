@@ -1,9 +1,19 @@
-I'm hitting a bug in the formatter for our query language where it's not respecting the configured max line width once things get nested. The way it's supposed to work is that a candidate expression stays inline if it fits within the print width and breaks apart if it doesn't, but right now it only measures the length of the candidate expression itself and ignores how far into the line we already are from indentation. So an object nested inside an array gets rendered inline even though the full line, leading spaces included, blows past the limit. When the formatter checks whether something fits on one line it needs to account for the current column offset the printer's already at, including any leading indentation, at every level of nesting.
+## Description
 
-Related thing: arrays that hold object literals or other structured elements (nested arrays too) are being collapsed onto one line when they technically fit, but I want those to always expand to multiline with each element on its own indented line so the output stays readable. Same deal for object literals that have more than four properties, those should always go multiline.
+The query language formatter does not correctly respect the configured maximum line width when deciding whether to keep an expression on a single line. When content is already indented — for example, an object or array nested inside another structure — the formatter only measures the candidate inline expression's own length and compares it to the total print width. It ignores the column offset already consumed by indentation on the current line. This means that nested objects or arrays can end up formatted inline even though they would visually overflow the allowed line width.
 
-Also there's a comment edge case, if someone drops a comment right after the opening bracket or brace before the first element, it's getting dropped or ignored, when actually it should force multiline and keep that comment preserved on its own indented line.
+Additionally, arrays that contain object literals as elements are being collapsed onto a single line when they fit. The desired behavior is that arrays containing structured elements (objects, nested arrays) should always expand to multiple lines with each element on its own indented line.
 
-Oh and on the lower-level side, the output-writing component doesn't currently track the current column position as a byte count as it writes, and that tracking is exactly what's missing to make correct inline-fit decisions at each nesting level, so that needs to get added too.
+There is also a related issue in the low-level output component: it does not track the current column position as output is written. This means the information needed to make a correct inline-fit decision is simply unavailable.
 
-Last thing, formatted output should consistently end with exactly two trailing newlines. Basically I want the formatter to genuinely respect the line width everywhere, always expand arrays of structured elements, and handle leading comments in arrays and objects right.
+## Expected Behavior
+
+- When the formatter checks whether an expression fits on one line, it must account for how far along the current line the printer already is (including any leading indentation).
+- Arrays containing object literals or other structured elements must always be rendered in multiline format, with each element indented on its own line.
+- Object literals with many properties (more than four) must always be rendered in multiline format.
+- A comment placed between an opening delimiter and the first element must force multiline format with the comment preserved on its own indented line.
+- Formatted output should consistently end with exactly two trailing newlines.
+
+## Why This Matters
+
+Users relying on a configured print width to keep formatted output readable are surprised to see lines that exceed the limit when structures are nested. The formatter should produce output that genuinely respects the maximum line width at every level of nesting, not just at the top level.

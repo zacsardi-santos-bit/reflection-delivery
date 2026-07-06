@@ -1,9 +1,15 @@
-I'm working on the Unit 42 ATOMs threat intel feed integration and the fetch command keeps returning fewer indicators than the raw feed actually has. The data comes in nested, top-level reports point at subordinate reports, and those sub-reports are the ones holding the real threat indicators. Right now some of those sub-reports get misclassified and skipped instead of getting processed and returned as indicator objects, so analysts end up with an incomplete picture and threat data just silently vanishes.
+## Description
 
-What I need is to fix the report classification so it properly tells apart main reports (the ones whose references are entirely intrusion-sets and other reports) from sub-reports (the ones that directly reference indicators, malware, campaigns, and similar non-report objects). Both need to show up in the output in the end, the main reports and the sub-reports they reference, not just the top-level ones.
+The threat intelligence feed integration for Unit 42 ATOMs data fails to correctly parse indicators from reports that have a nested hierarchy. Top-level reports reference sub-reports, which in turn contain the actual threat indicators. Currently, some sub-reports that should be processed and included as output indicators are being skipped, and the relationships generated within parsed reports can carry invalid indicator types that are not recognized by the platform.
 
-Also the relationships we generate for these reports can end up carrying entity types that aren't in the platform's supported indicator type mapping, which breaks stuff downstream, so please make sure report relationships only use types the platform actually recognizes.
+## Expected Behavior
 
-Oh and there's a utility that splits an attack technique name into its id and display value at the colon separator, it's duplicated once in the feed integration and once in the shared TAXII2 API parser module. Kill the standalone copy in the feed integration and point all callers at the version on the shared parser class instead.
+- Both top-level ("main") reports and their referenced sub-reports should be produced as output indicators — not just the top-level ones.
+- The system should correctly classify which reports are main reports (those whose references consist entirely of intrusion-sets and other reports) versus sub-reports (those that directly contain indicator and other non-report references).
+- Relationship entries generated for reports must only use entity types that are valid and recognized by the platform's indicator type mapping.
+- The logic for extracting an attack technique identifier and value from a name string (splitting at the colon separator) should be centralized in the shared TAXII2 API module rather than duplicated in the feed integration.
+- When fetching a specific report object by ID returns multiple matches, a debug message should be recorded and the ambiguous result should be skipped.
 
-Last thing, I want a method on the client class that looks up a specific report object by its ID, checking locally cached data first and then falling back to the API. If the API hands back multiple objects for the same ID, it should log a debug message and skip that result rather than returning ambiguous data.
+## Why This Matters
+
+When the indicator fetch command is run against a Unit 42 ATOMs feed, the expected number of indicators is not returned because sub-reports are incorrectly classified and skipped. This means threat intelligence data visible in the raw feed is silently dropped, leaving analysts with an incomplete picture. Additionally, any relationships that carry unsupported indicator types can cause downstream processing errors.

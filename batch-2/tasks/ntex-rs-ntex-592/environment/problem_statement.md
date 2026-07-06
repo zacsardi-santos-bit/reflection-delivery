@@ -1,5 +1,13 @@
-I'm bumping the ntex project to the next major version of the `rand` crate and it's totally broken the build right now because `rand` changed a couple of things in this release. The thread-local rng function got renamed (it used to be `thread_rng()`, now it's `rand::rng()`), and the alphanumeric character distribution moved to a shorter module path (`rand::distributions::Alphanumeric` is now `rand::distr::Alphanumeric`). Several internal source files and test files still call the old names so nothing compiles, every test in the ntex crate fails.
+## Description
 
-What I need is to update the dependency version in the relevant Cargo config files (the workspace and/or the ntex crate's `Cargo.toml`, wherever `rand` is declared) to the new major release, then go through and swap every old call site over to the new equivalents so the codebase builds cleanly again. That means replacing all uses of the old thread-local generator function with the renamed one and updating the old distribution module path to the new one everywhere it shows up, in both `src` and test code.
+The project's random number generation library has released a new major version that introduces breaking API changes. The function used to obtain a thread-local random number generator has been renamed, and the module path for the alphanumeric character distribution has been reorganized. As a result, the codebase no longer compiles against the updated library, causing every test in the ntex crate to fail.
 
-The existing tests that generate random data for compression and HTTP payload testing should keep passing once this is done, so don't change their behavior, just get them compiling against the new API. Staying on the old major blocks other ecosystem updates and leaves us unable to build against a current dependency tree, so I really just want a clean build with all tests green again.
+## Expected Behavior
+
+- The dependency version should be updated to the new major release of the random number generation library.
+- All internal usages of the old API — specifically the renamed generator function and the old distribution module path — should be replaced with their new equivalents.
+- All existing tests that generate random data for compression and HTTP payload testing should continue to pass after the update.
+
+## Why This Matters
+
+Staying on an outdated major version of a core utility library blocks adoption of other ecosystem updates and leaves the project unable to build with a current dependency tree. Updating to the new version and fixing all call sites restores a clean build and keeps the project compatible with its dependencies.

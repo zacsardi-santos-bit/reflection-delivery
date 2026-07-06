@@ -1,5 +1,14 @@
-I'm wiring up a new gRPC-based admin shell service into the libsql-server crate and right now nothing compiles because there's no proto definition and no committed generated stubs for it. I need you to add a protobuf definition file for the admin shell service, put it at `@libsql-server/proto/admin_shell.proto`, and then run the code generation tooling to produce the Rust client and server stubs and commit those generated files into `@libsql-server/src/generated/` so the service can actually be referenced from other Rust source files.
+## Description
 
-Also, and this is important, I want a bootstrap test that recompiles the proto file at test time and does a git diff check to confirm the committed generated code is still in sync with the proto source. If someone edits the proto and forgets to regenerate, the test should fail with a clear message telling them the committed files are out of date so they know they have to commit the regenerated output. That's the whole point, catching the common mistake where the proto changes but the generated code silently diverges.
+The database server is gaining a new gRPC-based admin shell service, and the protocol buffer definition file along with its auto-generated client/server stubs need to be formally introduced to the repository. Currently, neither the proto definition file nor the generated Rust code exists in the repository, which means the new service cannot be built or used.
 
-Oh and the proto build tooling deps (the stuff needed to compile proto files at test time) need to go into the package's dev-dependencies, otherwise the bootstrap test won't even compile.
+## Expected Behavior
+
+- A protobuf definition file for the admin shell service must be added to the libsql-server/proto/ directory under the name admin_shell.proto.
+- The corresponding auto-generated Rust code (client and server stubs) must be compiled from that proto file and committed to libsql-server/src/generated/.
+- A bootstrap test must be added that re-compiles the proto file and verifies the committed generated code is still in sync — the test should fail with a clear message if the committed files are out of date.
+- The build tooling dependencies needed to compile proto files must be declared in the package's dev-dependencies.
+
+## Why This Matters
+
+Without committed generated stubs, the admin shell service cannot be referenced from other Rust source files. The sync-check test ensures that future edits to the proto definition do not silently diverge from the committed generated code, catching the common mistake of modifying the proto file without regenerating and committing the output.

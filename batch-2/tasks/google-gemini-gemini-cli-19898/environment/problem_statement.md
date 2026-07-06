@@ -1,5 +1,13 @@
-I'm hitting a crash in the file discovery service when my config lists custom ignore file paths that are actually directories. I've got stuff like a dependency folder and a temp output folder in there because I figured they'd just get skipped, but the service treats every entry in the custom ignore path list as an ignore *file* and tries to read it as a text file, and reading a directory as a file blows everything up downstream. It happens right at construction time too, so I can't even get the service built with those entries in place.
+## Description
 
-What I want is for the service to quietly filter out any custom ignore file path that resolves to a directory instead of a regular file, and keep going with the valid file entries. So if I've got a standard ignore file that exists as an actual file, that should still come back in the returned list of ignore file paths, but the directory names should just get dropped, silently, no error. Oh and this needs to cover entries with trailing path separators too (like a folder path ending in a slash), those shouldn't crash it either.
+When a user specifies a list of custom ignore file paths for the file discovery service, they can accidentally include directory names instead of file names. For example, a user might list a dependency folder name expecting it to be silently ignored, not realizing the service treats it as an ignore *file*. Currently, the service includes those directory paths in its list of ignore files — which can cause crashes downstream when the code attempts to read a directory as a text file.
 
-Basically constructing the service with directory names mixed into the custom ignore file path list should never panic or throw, it should just skip the non-file stuff. Makes the config way more forgiving when someone drops a folder in there by accident. Can you fix it so directories get excluded from the list while all the real file-based ignore paths still make it through?
+## Expected Behavior
+
+- When a custom ignore file path resolves to a directory rather than a file, it should be silently excluded from the list of ignore file paths returned by the service.
+- The service should still return all valid file-based ignore paths (e.g., a standard ignore file that exists as a regular file).
+- Constructing the service with directory names in the custom ignore file path list — including entries with trailing path separators — should never cause a crash.
+
+## Why This Matters
+
+Users who configure custom ignore paths with directory entries (intentionally or by accident) currently experience application crashes or unexpected behavior. The service should handle this gracefully by skipping non-file entries rather than propagating them, making configuration more forgiving and robust.

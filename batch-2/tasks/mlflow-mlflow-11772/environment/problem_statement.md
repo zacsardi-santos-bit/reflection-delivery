@@ -1,7 +1,18 @@
-I'm cleaning up the MLflow tracing module and hit a few things I want to fix together. First, the span classes are stuck in an internal types subpackage inside the tracing module, but they really belong with the other entities, so I want to move the main span class, the live span variant, and the no-op span variant (the one that gets returned when span creation fails) over into the entities module so they can be imported straight from the top-level entities package. Once that's done the old import paths from the internal types subpackage should be gone.
+## Description
 
-Second, there's a constants file living in an internal subpackage of the tracing module, and it should be promoted to the top level of the tracing module instead, so stuff like the span attribute keys, trace metadata keys, trace tag keys, and the truncation-related values can be imported from a cleaner path without digging through an internal types subpackage.
+The MLflow tracing codebase has several organizational issues that make it harder to use and maintain. Span-related classes are buried in a deep internal subpackage rather than being part of the main entities package where users would naturally look for them. Similarly, tracing constants are nested in an internal types subpackage when they should live at the top level of the tracing module. This scatters related things across confusing paths and forces all dependent code to import from non-obvious locations.
 
-Third, trace data deserialization is busted. When I call the method that converts trace data back from a dict, it only rebuilds the spans and totally ignores the request and response fields, so they come back empty. I want the round-trip to be lossless, meaning converting to a dict and back should give me an object whose dict representation matches the original exactly, request and response included.
+Additionally, the trace data deserialization is incomplete. When a trace data object is converted to a dictionary and back, the request and response fields are lost — only the spans are reconstructed. This means retrieving a persisted trace and re-hydrating it from storage does not produce a faithful copy of the original object.
 
-Finally, the client method for retrieving a trace doesn't hand me back a fully usable object. After I call it I should be able to inspect all the trace metadata fields and also drill into the trace data to pull the request, response, and each span's details, oh and that means each span's name, its associated request ID, inputs, outputs, start and end timestamps, and status too. Right now callers have no way to get at any of that from what the method returns, which makes re-hydrating a persisted trace from the tracking server kind of useless.
+Finally, the client method for retrieving a trace doesn't return a fully usable object — callers currently have no way to inspect the trace data (request, response, or individual span details such as inputs, outputs, timing, and status) from what the method returns.
+
+## Expected Behavior
+
+- Span-related classes (including the no-op variant used when span creation fails) should be importable directly from the main entities package
+- Tracing constants should be importable from a top-level module within the tracing package, without going through an internal types subpackage
+- Converting trace data to a dictionary and back should produce an identical result, including the request and response fields
+- Retrieving a trace through the client API should return a complete object that includes all trace metadata and all span data (inputs, outputs, timing, status, and associated request ID)
+
+## Why This Matters
+
+These issues make the public API harder to navigate, cause code spread across the codebase to import from fragile internal paths, and prevent users from fully inspecting persisted trace data retrieved from the tracking server.

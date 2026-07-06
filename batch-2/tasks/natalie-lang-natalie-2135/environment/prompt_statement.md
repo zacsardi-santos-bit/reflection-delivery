@@ -1,0 +1,7 @@
+I'm hacking on Natalie (the Ruby impl written in Ruby/C++) and I hit a gap in the one-line rightward pattern matching syntax. If I write something like an array matched against several comma-separated variable names on a single line, `arr => a, b, c` style, nothing gets bound. The feature just isn't wired up for array deconstruction, so my variables come back empty.
+
+What I want is for this to behave like real Ruby: each element of the array should bind to the corresponding target variable in order. And it shouldn't be limited to literal arrays either, any object that implements the standard array decomposition protocol (the `deconstruct` method) should work too, so when I pass one of those in, its `deconstruct` gets called and the returned array is what's used to bind the variables.
+
+The error handling matters just as much to me. When the left-hand value doesn't support deconstruction at all, I want a clear error naming the actual value that failed and calling out that it doesn't support array decomposition. And when the deconstructed result has the wrong number of elements versus the number of target variables, the error should spell out the length mismatch showing both the actual size and the expected size. Basically the messages need to be informative enough that I can diagnose it fast.
+
+This is a fundamental piece of Ruby's pattern matching and without it I can't use the clean single-line destructuring form that's idiomatic these days. Can you implement the array deconstruction support for this one-line syntax?

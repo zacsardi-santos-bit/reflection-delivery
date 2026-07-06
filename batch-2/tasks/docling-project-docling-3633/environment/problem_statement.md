@@ -1,5 +1,19 @@
-I'm cleaning up the doc conversion pipeline and heading hierarchy is a mess right now. When we convert structured docs like PDFs, scanned reports, or legal texts that use numbered section headings, the parser treats every heading as the same level no matter what the numbering scheme or visual size is. So a doc that uses Roman numerals for top-level parts and Arabic numbers for subsections just loses that hierarchy, both come out as depth-1 headings, and deeply nested legal numbering (parts, then sections, then subsections, then clauses, then sub-clauses) collapses completely. The exported Markdown ends up with the same depth marker everywhere so there's no real outline, which means people have to manually relabel every heading after conversion and that defeats the whole point.
+## Description
 
-I want the system to infer each heading's hierarchical level from its numbering pattern automatically. Roman-numeral-prefixed headings should rank higher than dotted-decimal sub-headings, keyword-prefixed parts, parenthetical letters, etc, and each distinct scheme in a nested legal layout should map to its own depth. Important detail: when a doc only uses one numbering scheme (say plain dotted decimal), that scheme's outermost level maps to heading level 1, don't add any artificial depth offset. Headings with no recognizable numbering pattern (plain words like "Summary" or "Abstract") shouldn't get an inferred level from the numbering logic at all. And when numbering's entirely absent, it'd be great to optionally fall back to visual cues, specifically the physical size of the heading text on the page, to figure out relative level.
+When converting structured documents (PDFs, scanned reports, legal texts) that use numbered section headings, the parser currently treats all headings as the same level regardless of their numbering scheme or visual size. For example, a document that uses Roman numerals for top-level parts and Arabic numbers for subsections will lose this hierarchy in the output — both are treated as depth-1 headings. Similarly, deeply nested legal-style numbering (parts → sections → subsections → clauses) collapses entirely.
 
-Also it needs to be configurable. I want a max heading depth setting that clamps anything deeper to that value, and I want the precedence order of numbering schemes to be user-configurable so, for example, Arabic numbers can be declared as outranking Roman numerals if the document calls for it. Then once levels are assigned, the structured export (Markdown and other structured formats) should reflect the inferred depth correctly, so a top-level heading renders as a first-level header and a subsection as a second-level header.
+This makes the Markdown (and other structured format) output incorrect: all headings get the same depth marker, so the exported document has no meaningful outline structure.
+
+## Expected Behavior
+
+- Headings that use different numbering schemes (Roman vs. Arabic, keyword-prefixed parts, parenthetical letters, dotted decimals) should be assigned relative hierarchy levels that reflect their structural role in the document.
+- When a document uses only one numbering scheme (e.g., dotted decimal), that scheme's outermost level should map to heading level 1 — no artificial depth offset should be added.
+- Unnumbered headings (plain words like "Summary" or "Abstract") should not receive an inferred level from the numbering logic.
+- When no numbering is present, the system should optionally fall back to visual cues such as heading size to determine relative level.
+- A configurable maximum level should clamp any deeper headings to the specified maximum depth.
+- The precedence of numbering schemes should be user-configurable so that, for example, Arabic numbering can be declared as outranking Roman numerals.
+- After levels are assigned, structured export formats such as Markdown should correctly reflect the assigned depth (e.g., top-level headings render as first-level headers, second-level as second-level headers).
+
+## Why This Matters
+
+Documents that follow structured conventions — academic papers, legal contracts, technical reports — rely on heading hierarchy to communicate their outline. Without inferring this hierarchy automatically, users must manually relabel every heading after conversion, which defeats the purpose of automated document conversion.

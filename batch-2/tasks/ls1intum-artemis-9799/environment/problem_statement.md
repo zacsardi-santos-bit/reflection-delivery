@@ -1,7 +1,18 @@
-I'm working on the modeling exercise participation piece in Artemis and need to add a feedback view so students can dig through their submission history instead of being stuck seeing only their latest attempt. Right now when a student opens their modeling exercise there's no way to jump back to an earlier submission and see the feedback that was attached to it, so let's add a mode that kicks in when the route carries a specific submission id. In that feedback view mode the component should fetch the full submission history for the participation, sort submissions by their most recent result's completion date newest first, and also build a results history where each entry is the latest result from each submission enriched with the participation context so the results carry that along.
+## Description
 
-The visibility timing matters too: before the assessment deadline students in this view should only see automated AI feedback, and after the deadline all results become visible including manual instructor assessments. Tutors and above always see everything.
+Students who have submitted multiple attempts for a modeling exercise currently have no way to review their submission history and see the feedback associated with each individual attempt. When a student navigates to their modeling exercise, they can only see their latest submission, with no way to go back and view what feedback was provided for an earlier submission.
 
-Also there's a format mismatch on the AI feedback side to fix. The feedback suggestion model currently stores element references as a list, but the rest of Artemis expects a single combined reference string holding both the element type and the identifier (that mismatch means feedback doesn't always link to the right diagram element). So change the model to store a single optional string, and the service that processes suggestions should split that string to pull out the element type and element identifier separately when it builds feedback objects.
+Additionally, the system that provides automated AI feedback for modeling exercises currently represents element references as a list of identifiers, but Artemis internally uses a single combined reference string (containing both element type and identifier). This mismatch means that feedback is not always properly associated with the correct diagram element.
 
-Oh and the websocket result handling needs to tell manual and AI-generated results apart more clearly. A failed AI assessment (no completion date, explicitly marked unsuccessful) should fire an error notification and clear the "generating feedback" indicator, a successful AI assessment should fire a success notification, and manual assessments without a completion date should just be silently ignored rather than processed. Without this students can't see how their thinking evolved across attempts, and the reference format bug keeps AI feedback from highlighting the right parts of the diagram.
+## Expected Behavior
+
+- Students should be able to navigate to a specific past submission and view the feedback results associated with it in a dedicated "feedback view" mode.
+- When in feedback view mode, the component should load and display a sorted history of all submissions with their results, sorted by the most recent result completion date.
+- Each entry in the result history should correspond to the latest result from its submission, and should carry along the participation context.
+- Before the assessment deadline, students in feedback view mode should only see automated AI-generated feedback; after the deadline passes, all feedback including manual instructor assessments becomes visible.
+- The automated AI feedback service should represent element references as a single combined string rather than an array, so that feedback can be reliably linked to specific diagram elements.
+- When an automated AI feedback generation fails, the student should receive an error notification and the "generating feedback" state should be cleared. When it succeeds, a success notification should be shown instead.
+
+## Why This Matters
+
+Without submission history navigation, students lose the ability to understand how their thinking evolved across attempts and what feedback was given for earlier work. The element reference format issue also means that AI-generated feedback may not correctly highlight the corresponding parts of the diagram, reducing the usefulness of the feedback.

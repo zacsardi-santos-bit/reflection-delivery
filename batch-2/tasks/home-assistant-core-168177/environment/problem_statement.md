@@ -1,5 +1,14 @@
-I'm working on the vacuum integration and hit a frustrating gap with the clean-area service. When you call it with area IDs that don't have any segment mappings configured, it just silently returns, no error, no nothing. That's a real problem because from the outside a successful no-op looks exactly like a successful clean, so there's no way to tell whether rooms weren't cleaned because the vacuum was already done or because the area-to-segment mapping was never set up correctly, which makes diagnosing config issues basically impossible for anyone writing automations or scripts against it.
+## Description
 
-What I want is for the service to raise a validation error when it runs into areas that can't be matched to vacuum segments across any of the targeted vacuum devices, and that error needs to carry the specific areas (their names/IDs) in its details so the caller knows exactly what went wrong. Important bit though, if only some of the requested areas lack mappings, I still want the properly mapped ones cleaned on the relevant devices, so a partial config shouldn't block the whole operation. The error should only get raised after the service has done whatever cleaning work it actually can.
+The vacuum clean-area service silently does nothing when it is called with areas that have no segment mappings configured — no error is raised and no feedback is provided to the caller. This makes it very hard to diagnose configuration problems: from the outside, a successful no-op looks identical to a successful cleaning.
 
-Also I need to refactor the internal area-cleaning logic. Right now it's called on a single vacuum entity instance, and instead it should work across a collection of entities at once, taking the full service call object rather than just a bare list of area IDs. Oh and that change should carry through to how the runtime error for missing registry entries gets triggered too.
+## Expected Behavior
+
+- When the clean-area service is called with one or more area IDs that cannot be matched to vacuum segments across any of the targeted vacuum devices, the service should raise a validation error that clearly identifies which areas were not mapped.
+- The validation error should include the names/IDs of the unmapped areas in its details so that the caller can understand exactly what went wrong.
+- If only some of the requested areas lack mappings, the service should still clean any areas that ARE properly mapped on the relevant devices — a partial configuration should not block the entire operation.
+- The internal method responsible for executing area cleaning on a set of vacuum entities should be refactored to accept a list of entities and the full service call object, rather than operating on a single entity instance.
+
+## Why This Matters
+
+Without an error, automations and scripts that call the clean-area service with a misconfigured area silently fail — users have no way to know whether rooms were not cleaned because the vacuum was already done or because the mapping was never set up. Clear error reporting makes the service much easier to use and troubleshoot.

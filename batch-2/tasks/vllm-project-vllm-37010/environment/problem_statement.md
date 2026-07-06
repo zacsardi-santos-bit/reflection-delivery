@@ -1,7 +1,14 @@
-I'm working on MoE checkpoint loading and hit a wall with padded expert weight buffers. Some distributed inference backends (DeepEP, NIXL EP with models like nemotron_h) need the hidden dimension rounded up to an alignment boundary, so a model with hidden size 2688 might get its weight buffers padded out to 3072. The trouble is our fused MoE layer weight-loading code has no idea what to do when the in-memory param tensor is bigger than the checkpoint tensor, so it either fails or silently loads garbage.
+## Description
 
-I want two new helper methods on the fused MoE layer class. First one figures out which dimension of a given weight tensor is the hidden dim, since that varies by weight role (w1, w2, w3, and transposed variants store it at different axes). It takes the tensor's number of dims and the shard dim and needs to handle 1D, 2D, and 3D weights, and it should raise a clear error for dim/shard combos that don't map to valid data dimensions.
+When using certain distributed inference backends with Mixture-of-Experts (MoE) models, the hidden dimension of expert weight buffers must be padded to a larger size than the original model checkpoint contains. For example, a model with a hidden size of 2688 may need its weight buffers rounded up to 3072 to satisfy backend alignment requirements. Currently, the weight-loading logic has no way to handle this mismatch: the in-memory parameter tensors are larger than the checkpoint tensors, so loading fails or silently produces incorrect weights.
 
-Second helper narrows the in-memory padded buffer down to match the checkpoint tensor's size before we copy, so the real weights land at the start and the padding stays zeroed. It's gotta be a safe no-op when there's no size mismatch, when the loaded weight is a scalar, or when a negative sentinel gets passed as the hidden dim. It should only narrow when the buffer is strictly larger at the hidden dimension, and when it does narrow it returns a view into the original buffer so writes go straight to the right place.
+## Expected Behavior
 
-Oh and one more thing, when a quantization scheme that's fundamentally incompatible with hidden-dim padding shows up during weight loading, don't silently produce corrupt weights, raise a descriptive actionable error instead. Point is the padded hidden dim should get handled transparently during loading, while bad quant schemes surface something I can actually act on.
+- When loading checkpoint weights into padded parameter buffers, the real weights should be placed at the start of the buffer and the padding region should remain zeroed.
+- A helper should be available to determine which dimension of a weight tensor is the "hidden" dimension, given the tensor's number of dimensions and its shard dimension. This is needed because weight tensors for different roles (e.g., w1, w2, w3, transposed variants) store the hidden dimension at different axes.
+- The narrowing helper should be a no-op when no size mismatch exists, when the loaded tensor is a scalar, or when a negative sentinel value is passed for the hidden dimension.
+- When using a quantization scheme that is fundamentally incompatible with hidden-dimension padding, weight loading should raise a clear error rather than silently producing corrupt weights.
+
+## Why This Matters
+
+Models like nemotron_h used with DeepEP or NIXL EP backends require this padding behavior to operate. Without this fix, loading such models either fails outright or loads incorrect weights, making these backend/model combinations unusable. With the fix, the padded hidden dimension is handled transparently during checkpoint loading, while incompatible quantization schemes surface a clear actionable error.

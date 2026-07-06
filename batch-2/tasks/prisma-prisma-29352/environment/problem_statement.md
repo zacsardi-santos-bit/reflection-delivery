@@ -1,7 +1,19 @@
-I'm adding a new CLI command that links a local project to a hosted Prisma Postgres database, because right now there's no built-in way to wire a local project up to a cloud-managed db and configure the environment automatically. Developers currently copy connection strings by hand, edit env files, and guess at next steps, which is slow and error-prone during onboarding.
+## Description
 
-I want two modes. Non-interactive takes an API key and a database identifier as flags, contacts the management API, grabs the connection string, and writes it into the local environment file. Interactive does a browser login then walks the user through picking a project and then a database from what's available. Oh and if the API key flag is omitted but its env var is set, use that instead. If a database ID is given but no key (and no env var), fall through to interactive auth rather than erroring. When only one database exists under the selected project, just pick it automatically, no prompt. Databases that aren't in a ready state should be filtered out in interactive mode.
+We need a new CLI command that lets developers link their local project to a hosted Prisma Postgres database. Right now there is no built-in way to connect a local project to a cloud-managed database and automatically configure the local environment — developers have to manually copy connection strings, update their environment files, and figure out what to do next. This is error-prone and slows down onboarding.
 
-Writing to the env file should use single-quoted values so nothing gets expanded. If the project already looks linked (based on the current connection URL value in the env file) skip the API call and tell the user how to force a re-link. After a successful link, give context-aware next steps: if a schema with data models exists, suggest generating the client and running migrations, otherwise prompt them to define their data model.
+## Expected Behavior
 
-I also want helper utilities around the env file: create it if absent, update existing entries in place, append new ones, and check whether it's excluded from version control. Plus management API helpers for listing projects and databases and creating a connection, with error handling that redacts sensitive values like connection strings and API keys from any error messages. It should fail gracefully with clear errors when there are no projects, no ready databases, or invalid credentials. And if a session's expired with an invalid refresh token, kick off a fresh browser login and retry automatically.
+- Running the command with an API key and a database identifier should contact the management API, retrieve the connection string, and write it to the local environment file automatically.
+- The command should support both a non-interactive mode (credentials and database ID provided as flags) and an interactive mode (browser-based login followed by guided selection of a project and then a database from the available options).
+- When the environment variable for the API key is already set and a database is specified, the command should use that key without requiring the flag.
+- When only one database is available under a selected project, the command should select it automatically without prompting.
+- If the project already has a connection configured, the command should detect this and skip the API call, informing the user that the project is already linked and how to force a re-link.
+- After successfully linking, the command should provide context-aware next steps — suggesting migration and client generation if a schema with data models already exists, or prompting the user to define their data model if not.
+- The command should fail gracefully with clear error messages if no projects or no ready databases exist, or if credentials are invalid.
+- Sensitive information (connection strings, API keys) must be redacted from error messages.
+- If a session has expired (invalid refresh token), the command should automatically trigger a browser re-authentication and retry.
+
+## Why This Matters
+
+Linking a local development project to a cloud-hosted database should be a one-command operation. This removes manual steps, reduces setup friction, and ensures credentials are not accidentally committed.

@@ -1,9 +1,22 @@
-I'm chasing down some IPv6 Neighbor Discovery bugs in the BPF datapath, the code that handles NS/NA in the network device path (Cilium style). Couple of correctness issues plus some test scaffolding that's missing so things won't even compile yet.
+## Description
 
-First bug: when the handler builds a Neighbor Advertisement in reply to a Neighbor Solicitation for a pod IP, it's stuffing the router IP into the NA source address. That's wrong, the NA source IP has to be the IP of the target endpoint that was actually solicited, otherwise any host that gets the NA caches a bogus IP-to-MAC binding. So I need the source to reflect the real target.
+The BPF-based IPv6 Neighbor Discovery Protocol (NDP) handler in the network device datapath has two correctness bugs that affect how Neighbor Solicitation (NS) packets are processed and how Neighbor Advertisement (NA) responses are generated.
 
-Second, the handler assumes every NS carries a Source Link-Layer Address option, but per RFC 4861 that option's optional for unicast reachability checks, and RFC 4862 actually requires it be absent during Duplicate Address Detection. Right now an NS without it just fails, so DAD packets get dropped. It needs to handle the option-present and option-absent cases gracefully and still emit a proper NA with the target link-layer address option filled in.
+**Bug 1: NA responses have wrong source IP**
 
-Third, both addressing modes need to work, plain unicast NS and solicited-node multicast NS (the multicast form is how initial address resolution normally happens), oh and NS targeting the node's own IP should still pass through to the kernel stack untouched.
+When the handler generates a Neighbor Advertisement for a pod endpoint, it uses the router's IP address as the NA source address. According to the NDP protocol, the NA source IP should be the IP address of the target endpoint being resolved — not the router IP. This means any host receiving the NA will cache the wrong IP-to-MAC binding.
 
-Also there's some infra to add for the new BPF tests: define a constant for the size of a Neighbor Discovery option (8 bytes) in the ICMPv6 header file, and add two test helper constants in the packet-generation header, one for the IPv6 multicast MAC prefix and one for the IPv6 multicast address prefix. Without those the tests won't build.
+**Bug 2: NS packets without a LL source option are not handled**
+
+RFC 4861 states that the Source Link-Layer Address option in NS messages is optional for unicast reachability checks, and RFC 4862 (Duplicate Address Detection) explicitly requires that this option be absent. Currently, when an NS arrives without this option, the handler fails to generate a proper response.
+
+## Expected Behavior
+
+- Neighbor Solicitations targeting Pod IPs should be answered with a Neighbor Advertisement whose source IP is the target pod's IP address (not the router IP)
+- NS packets without the optional Source Link-Layer Address field should be handled gracefully and still receive a correct NA response
+- Both unicast and solicited-node multicast NS addressing modes should work correctly
+- Neighbor Solicitations targeting the node's own IP should continue to pass through to the kernel stack unmodified
+
+## Why This Matters
+
+These bugs cause incorrect ARP/NDP cache entries on neighboring hosts and drop legitimate NS packets from sources performing Duplicate Address Detection. Fixing them is necessary for correct IPv6 neighbor resolution behavior in the Cilium BPF datapath.

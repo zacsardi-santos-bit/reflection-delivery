@@ -1,5 +1,12 @@
-I'm hitting a duplication bug with our context building. When just-in-time context mode is on, the project memory file content gets sent to the model twice, once baked into the system instructions and again inside the environment context. That's wasted context window space and it can confuse the model by repeating the same instructions, so I want to fix it.
+## Description
 
-What I want is for the environment context builder to be aware of whether JIT context mode is active and skip adding the environment memory content in that case, since it's already present in the system instructions when JIT is on. So when JIT context mode is enabled, the environment memory should be excluded from the environment context entirely, don't append it. But when JIT context mode is disabled, keep the current behavior exactly as it is today, meaning the memory content should still show up in the environment context like before.
+When the just-in-time context mode is active, the project memory content is already injected as part of the system instructions. However, the same content is also being included again in the environment context that gets sent to the model, causing it to appear twice in the full context window.
 
-So basically it's a conditional: check the JIT flag, and only include the environment memory in the environment context when JIT is off. Everything else about how the environment context is assembled stays the same, I just want to stop the redundant second copy of the project memory from going out when JIT mode is doing its thing.
+## Expected Behavior
+
+- When the just-in-time context mode is enabled, the environment memory content should be **excluded** from the environment context, since it is already present in the system instructions.
+- When the just-in-time context mode is disabled, the environment memory content should continue to appear in the environment context as before.
+
+## Why This Matters
+
+Duplicating the project memory wastes valuable context space and can confuse the model by repeating the same instructions twice. The environment context builder should be aware of whether JIT context is active and skip the memory content accordingly to avoid this redundancy.

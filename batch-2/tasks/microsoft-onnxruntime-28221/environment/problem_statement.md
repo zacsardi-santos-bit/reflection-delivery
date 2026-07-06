@@ -1,5 +1,17 @@
-I'm trying to speed up my static quantization workflow because right now every run forces me to hand over calibration data and redo the whole calibration pass even when nothing changed, which is painful when I'm just tweaking quant settings over and over. What I want is a calibration cache. The quantization API should take an optional path where it saves the calibration results after the first run, and then on later runs if I don't pass any calibration data but that cache file exists, it just loads from there and skips recalibrating. If I give it calibration data along with a path, it runs calibration normally and writes the results out to that path afterward. If I provide neither calibration data nor a valid cache file, it needs to raise a clear error rather than silently producing garbage scales and zero-points.
+## Description
 
-The cache has to be careful about compatibility too. It should record which calibration algorithm and which quantization mode were used to produce it, and if the cached data came from a different algorithm or a different quantization mode than the current run, warn me and recompute instead of trusting mismatched data. Older cache files that predate some of these settings fields should still load fine by assuming sensible defaults for the missing bits.
+Static quantization requires calibration data to determine the appropriate scale and zero-point values for each tensor. Currently, every quantization run must rerun the full calibration process from scratch — even when the same model and calibration data are used repeatedly. This is wasteful and slow, especially during development when the quantization settings are being tuned.
 
-Also the save and load need to round-trip everything faithfully, all the per-tensor statistics including histogram data when it's present, so the loaded values match what was computed. And the save function should create any missing parent directories on its own so I don't have to mkdir first. This all lives in the static quantization pipeline determining scale and zero-point per tensor, so it should slot into that existing flow cleanly.
+We need a calibration cache system that allows calibration results to be saved to disk and reloaded on subsequent runs, so that users can skip recalibration when nothing has changed.
+
+## Expected Behavior
+
+- Calibration results for a model can be saved to a file and later loaded back, preserving all numeric data faithfully.
+- When performing static quantization, users can supply a path to a cache file. If calibration data is also provided, results are saved to that path after calibration. If no calibration data is provided but a valid cache file exists, the cache is used instead of recalibrating.
+- Providing neither calibration data nor a valid cache file should produce a clear error.
+- The cache must record which calibration algorithm and which quantization mode were used. If the cache was produced with different settings than the current run, the system should warn the user and recompute rather than silently using incompatible cached data.
+- Older cache files that predate the introduction of certain settings fields should be handled gracefully, with sensible defaults applied.
+
+## Why This Matters
+
+Without caching, developers who iterate on quantization settings must re-run the potentially expensive calibration step every time. With caching, calibration is done once and reused, making the workflow significantly faster.

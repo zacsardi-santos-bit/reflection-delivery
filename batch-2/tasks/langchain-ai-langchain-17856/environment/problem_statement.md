@@ -1,5 +1,17 @@
-I'm building a LangChain partner integration for Groq's inference service since there's no official package yet that lets you hit Groq's API through LangChain's standard chat model interface. Groq's a fast inference provider and folks want to drop it into existing chains and agents without special-casing anything, so I need the same guarantees people expect from other partner packages around security, serialization, and config.
+## Description
 
-I want a new installable package whose only public export is the chat model class, and it should behave like any other LangChain chat model with sync invoke, async invoke, and streaming all working. The model name needs to be configurable using either "model" (the short form) or "model_name" (the descriptive long form), both driving the same underlying setting. It takes an API key via constructor arg that's treated as a secret so it never shows up in the string repr of the object, and it can also read the key from an environment variable. Serialization matters a lot here, so saving a configured model and restoring it (maybe with a different key pulled from a secrets map on load) should keep all the non-secret config intact while excluding the key from serialized output.
+We need a new LangChain partner integration package for the Groq inference service. Groq offers fast language model inference, and many LangChain users want to use it seamlessly within their existing LangChain workflows. Currently, there is no officially supported way to connect to Groq's API using LangChain's standard chat model interface.
 
-For extra kwargs, unknown ones should get accepted and tucked into an extra-params dict with a warning to the user, but if someone passes the same key twice, or tries to shove a core parameter into the extras dict, the constructor should raise a clear error. Also enabling streaming while asking for multiple completions per request should blow up right at init time rather than failing silently later. Oh and I need a helper in the chat models module that converts raw API response dicts (the ones with a "role" field) into the right LangChain message type.
+## Expected Behavior
+
+- A new installable package should expose a chat model class that works like any other LangChain chat model, supporting synchronous invocation, asynchronous invocation, and streaming.
+- The model should accept an API key either via constructor argument or an environment variable.
+- The API key must be treated as a secret: it should never appear in string representations of the model object and must not be included in serialized output.
+- The model must support full serialization and deserialization — saving a configured model and restoring it (potentially with a different API key from a secrets store) should preserve all non-secret configuration fields.
+- The model name should be configurable using either of two supported keyword argument names — a concise short form and a more descriptive long form — both controlling the same underlying model setting.
+- Unknown constructor keyword arguments should be accepted as extra model parameters (with a warning), but if the same key is provided twice, or if a core parameter is passed as an extra, a clear error should be raised.
+- Streaming mode with multiple completions per request should raise a clear error at construction time rather than failing silently at inference time.
+
+## Why This Matters
+
+Developers using Groq for fast inference should be able to plug it into any existing LangChain chain, agent, or workflow without special-casing. Having a proper partner package ensures consistent behavior around security, serialization, and configuration — the same guarantees users expect from other LangChain chat model integrations.

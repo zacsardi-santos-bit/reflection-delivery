@@ -1,7 +1,22 @@
-I keep hitting a bunch of rough edges in how our bundler's macro system reports failures, specifically the difference between a macro module failing to load versus a macro failing while it executes. Right now when a macro file can't be found, or it's got a syntax error that keeps it from even loading, the diagnostic uses the wrong prefix, it talks about the failure happening during evaluation when it actually blew up during loading. Those are two genuinely different failure modes and I want them worded differently so the root cause is obvious, load failures should say the error happened while loading, not evaluating.
+## Description
 
-Also the error's pointing at the wrong spot. It underlines the call site where the macro gets invoked, but a load failure really originates from the import declaration up top, so that's where the error indicator belongs, not down at the call.
+The bundler's macro system has several bugs related to how it handles failures that occur when loading a macro module (as opposed to failures that occur during macro execution).
 
-Another annoyance, if the same busted macro gets called several times in one file I get a separate error per call which just floods me with dupes. I'd want one error per broken macro, dedup the rest.
+Currently, when a macro module cannot be found or contains a syntax error that prevents it from being loaded, the error message incorrectly says the failure happened during "evaluation" rather than during "loading". This makes it harder to understand the root cause of the problem.
 
-The big one though is watch mode. If a macro file has a syntax error I see a build failure, fine, that's expected, but then when I fix the file the bundler just sits there and doesn't recover into a successful build, I have to kill it and restart the whole thing. It should notice the fix, rebuild, actually run the macro this time, and emit the expected output into the bundle. So the fix should cover the loading vs evaluation message prefix, the import-declaration error location, the dedup so it's one diagnostic per broken macro even with multiple call sites, and the watch-mode recovery producing a clean successful rebuild with correct macro output.
+Additionally, the error is pointed at the wrong location in the source code — it highlights the call site where the macro is invoked, rather than the import declaration where the macro is defined. This makes it harder for developers to know where the problem originates.
+
+A third bug: if the same broken macro is called multiple times in the same file, the bundler emits a separate error for each call, flooding the user with duplicate diagnostics when a single error would suffice.
+
+Finally, watch mode does not recover correctly when a macro file has a load error. After fixing the broken macro file, the bundler fails to trigger a successful rebuild.
+
+## Expected Behavior
+
+- When a macro cannot be loaded, the error message should clearly say the failure occurred during loading (not evaluation).
+- The error location should point to the import declaration, not the call site.
+- When the same macro fails to load and is called multiple times, only one error should be reported.
+- In watch mode, fixing a broken macro file should trigger a successful rebuild that correctly executes the macro and produces output.
+
+## Why This Matters
+
+These bugs make macro error messages confusing and noisy, and prevent developers from recovering from macro errors in watch mode without restarting the bundler.

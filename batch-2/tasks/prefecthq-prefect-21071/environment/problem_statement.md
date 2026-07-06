@@ -1,7 +1,16 @@
-I'd like Prefect to automatically collect and export system resource metrics like CPU and memory usage while a flow run is executing, because right now there's no built-in way to do this and operators have no standard way to correlate resource consumption with the rest of the telemetry we already emit. I want it to go out over OpenTelemetry so it lands next to our other signals.
+## Description
 
-The endpoint needs to be configurable. If the standard OpenTelemetry endpoint env vars are set I want those respected, with the metrics-specific one (`OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`) taking priority over the generic `OTEL_EXPORTER_OTLP_ENDPOINT`. When someone's connected to Prefect Cloud and hasn't specified a custom endpoint, just send the metrics to Cloud automatically with the right auth headers built from the configured API key. Really important bit: when a custom endpoint is set via env var, don't inject any Prefect auth credentials at all, that's a security thing so we never leak API keys to third-party collectors, and it also lets the existing OTEL header env vars work like people expect.
+Prefect currently has no way to collect or report system resource metrics (CPU, memory, etc.) during flow run execution. It would be valuable to automatically gather these metrics and export them via the standard OpenTelemetry protocol so that operators can observe resource usage alongside other telemetry signals.
 
-Users should be able to turn the whole feature on or off, and separately set how often metrics get collected, through Prefect's settings system so it's controllable via environment variables too.
+## Expected Behavior
 
-Oh and it's gotta degrade gracefully. If the required OpenTelemetry libraries aren't installed, or the endpoint's misconfigured and setup blows up, the whole thing should silently fall back to a no-op so flow execution never gets interrupted. Wire the collection into the flow execution engine (`@src/prefect/engine.py` and the telemetry bits under `@src/prefect/telemetry/`) so it kicks in automatically during flow runs, with the settings living alongside the other Prefect settings so env vars map cleanly.
+- Prefect should automatically collect system resource metrics while a flow run is active and export them to an OpenTelemetry-compatible endpoint.
+- Users should be able to enable or disable this feature via a Prefect setting, and separately configure the collection interval.
+- The metrics endpoint should be resolved from standard OpenTelemetry environment variables when set, allowing users to point metrics at any compatible collector. A metrics-specific endpoint variable should take priority over a generic one.
+- When pointing to Prefect Cloud, authentication should be handled automatically using the configured API key.
+- When a custom endpoint is specified via environment variable, Prefect must **not** inject any Prefect-specific authentication headers — this ensures API keys are never leaked to third-party collectors, and existing OpenTelemetry header environment variables are still respected.
+- If the required libraries are not installed, or if the endpoint is misconfigured, the feature should silently degrade to a no-op without interrupting the flow run.
+
+## Why This Matters
+
+Observability into resource consumption during flow execution helps users diagnose performance issues, plan capacity, and understand the health of their workflows. Without this, operators have no standardized, automatic way to correlate flow execution with system resource data.

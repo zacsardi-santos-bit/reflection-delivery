@@ -1,5 +1,15 @@
-I'm working with the Microsoft Defender for Endpoint integration and there's a gap I keep hitting: I can pull software inventory, missing security updates, and vulnerabilities at the org level, but there's no way to scope any of that to one machine. When I'm triaging a specific device I don't want to filter through org-wide result sets, I just want to ask what's on this box.
+## Description
 
-So I need three new commands added, each taking a machine ID as input. One retrieves the installed software for that machine, returning things like software name, vendor, whether a public exploit exists, the number of exposed machines, and whether the software is normalized. Another pulls the missing security updates (the KBs) for the machine, giving me KB ID, name, OS build, URL, and how many CVEs it addresses. The third lists the known vulnerabilities affecting the machine, so CVE details including severity, CVSS scores, exploit info, and detection timestamps.
+The Microsoft Defender for Endpoint integration supports querying software inventories, missing security updates, and vulnerabilities at the organization level, but there are no commands to retrieve this information scoped to a **specific machine**. When responding to an incident, analysts need to quickly determine what software is installed on a particular device, which security patches it is missing, and what vulnerabilities affect it — without having to filter through organization-wide result sets.
 
-For each one the human-readable output should have a clear heading naming both the type of data and the machine being queried, and only the most relevant fields belong as table columns. The structured outputs need to map the raw API response fields to sensibly named context keys, and drop any field that's empty or null so playbooks get clean context. All three should return structured outputs usable downstream in playbooks.
+## Expected Behavior
+
+- A new command should allow analysts to retrieve the list of software installed on a specific machine, returning details such as software name, vendor, whether a public exploit exists, the number of exposed machines, and whether the software is normalized.
+- A new command should allow analysts to retrieve the missing security updates (KBs) for a specific machine, returning details such as the KB ID, name, OS build, URL, and number of CVEs addressed.
+- A new command should allow analysts to retrieve the known vulnerabilities affecting a specific machine, returning CVE details including severity, CVSS scores, exploit information, and detection timestamps.
+
+All three commands should accept a machine identifier as input and return structured outputs suitable for use in playbooks.
+
+## Why This Matters
+
+Security analysts investigating a compromised or at-risk device need per-machine context fast. Without these commands, they must query organization-wide lists and manually correlate data, which slows down triage and response. Per-machine queries significantly reduce investigation time for endpoint-focused workflows.

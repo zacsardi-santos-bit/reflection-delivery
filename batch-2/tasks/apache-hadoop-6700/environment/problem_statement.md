@@ -1,7 +1,17 @@
-I'm cleaning up Hadoop's vectored read API, the one that lets apps submit a bunch of non-contiguous file byte ranges for async parallel reading in one call. Right now it's inconsistent and it drives me nuts: depending on which filesystem backend you hit, overlapping ranges throw different exception types, and reads that run past the end of the file only blow up during the actual IO instead of getting caught the moment you submit the request. That makes it really hard to write portable code over vectored IO, apps can't rely on error types and don't find out about bad requests until deep in some pipeline.
+## Description
 
-What I want is a shared range-validation function that every filesystem impl can call. It should take the list of requested ranges plus optionally the known file length, sort the ranges (so callers always get consistent ordering back), and check for overlaps and out-of-bounds stuff, raising the same well-defined errors everywhere. Overlapping or duplicate ranges get rejected right away with one consistent exception type no matter the backend. If the file length is known, ranges that extend past EOF or start exactly at the end of the file should be rejected upfront too, before any IO kicks off. Reading the whole file as a single range should succeed, but asking for more bytes than the file has should fail immediately when the length is known. Empty lists, null lists, and null elements inside a list all need to be rejected with clear errors.
+Hadoop's vectored read API allows applications to submit multiple non-contiguous file ranges for asynchronous parallel reading in a single call. However, the validation of requested ranges is currently inconsistent across filesystem implementations: different storage backends raise different exception types for the same invalid inputs (such as overlapping ranges), and invalid ranges that extend beyond the end of the file are only caught during the actual read rather than upfront.
 
-Couple supporting utilities too: a helper to build a list of file ranges more conveniently (either creating a single-range list or appending to an existing one), a helper that computes the total byte count across a list of ranges, and a contract option constant that tells tests whether a given filesystem does this early EOF check at request time rather than during IO. Oh and the local filesystem's contract config should declare that it does support early EOF detection. Also the existing result-validation helper for vectored reads needs a new base offset parameter so it can validate results for reads that don't start at offset zero.
+This creates an unpredictable developer experience. Applications can't rely on consistent error types, and they may not learn about invalid requests until much later in an IO pipeline. The validation logic also needs to be usable by filesystem implementations that already know the file length at open time, so they can perform an early check without waiting for IO to fail.
 
-Last thing, the existing test class for these vectored read utilities should move to a sub-package that better reflects its scope.
+## Expected Behavior
+
+- Overlapping and duplicate ranges should always be rejected immediately with a consistent exception type, regardless of which filesystem backend is used.
+- Filesystem implementations that know the file length at the time the vectored read is submitted should be able to validate ranges against that length upfront and reject out-of-bounds reads before any IO starts.
+- A null range list or a list containing a null element should be rejected with a clear error.
+- Reading the entire file as a single range should succeed. Reading more bytes than the file contains should be rejected immediately when the file length is known.
+- Range validation utilities should return sorted ranges so callers get a consistent ordering.
+
+## Why This Matters
+
+Inconsistent validation behavior makes it hard to write portable code over the vectored IO API. Standardizing the error conditions and unifying the validation logic across all filesystem implementations reduces surprises and makes the API more reliable for downstream use.

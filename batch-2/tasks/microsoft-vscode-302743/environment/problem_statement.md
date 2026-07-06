@@ -1,5 +1,18 @@
-I'm adding fork support to the contributed chat sessions extension API in VS Code and right now there's no reliable way for an extension-contributed session provider to advertise or actually handle a fork, where you branch a conversation at a specific message and continue it as a separate parallel thread. There's a deprecated fork mechanism sitting on the session object itself but it doesn't propagate to the host side consistently, and host-side session management doesn't advertise fork support to the UI or route fork requests properly, so I want to wire this end to end.
+## Description
 
-The service interface managing chat sessions needs two new methods, one for checking whether a loaded session supports forking and one for actually triggering the fork at a given conversation point, and the mock version of that service used in tests needs to stub both of these too. On the protocol layer between the extension host and the main thread I need a new message type that lets the main thread request a fork on the extension side, and the session content data transfer object sent during initialization should carry a flag indicating whether that session supports forking.
+VS Code supports contributed chat session providers via extensions. These providers can supply custom conversation sessions, but there's currently no proper infrastructure for them to support conversation forking — the ability to branch a conversation thread at a specific message and continue it as a separate session.
 
-On the main-thread side, when a session is initialized and the fork flag is set, the session object should gain a fork function that marshals the request info across to the extension host and returns the result with any resource references properly revived back into usable URI objects. Over on the extension host side there are two possible sources of fork handling, a modern handler registered on the session item controller and a deprecated one that may be set directly on the session object, and the controller's handler should take priority. Whichever one gets used should receive the session resource plus a request turn object representing the conversation point to fork from, constructed from the incoming request data. Oh and the session content provider should report fork support as active whenever either source has a handler present.
+There is a deprecated mechanism for fork support on the session object itself, but it is not consistently propagated to the host side, and the host-side session management does not correctly advertise fork support to the UI or properly route fork requests.
+
+## Expected Behavior
+
+- The service interface responsible for managing chat sessions must expose methods for checking whether a loaded session supports forking, and for triggering a fork at a given conversation point.
+- The mock implementation of this service used in tests must stub these new methods.
+- The protocol between the extension host and the main thread must include a new message type that triggers a fork on the extension side.
+- The data transfer object for session content must include a flag indicating whether fork support is available for a given session.
+- On the host side, when a session's content is initialized and fork support is declared, the session object must expose a fork function that marshals the request across the extension boundary and properly revives any resource references in the result.
+- On the extension host side, if a session item controller has registered a fork handler, that handler must take priority over any deprecated fork handler set on the session object. The fork handler must receive the session resource and a request turn object that corresponds to the conversation point being forked from.
+
+## Why This Matters
+
+Without this infrastructure, contributed chat session providers have no reliable way to support conversation forking, even if the underlying provider is capable of it. This change enables the fork UI control to be shown and wired up correctly for contributed sessions, and ensures the fork operation works end-to-end across the extension boundary.

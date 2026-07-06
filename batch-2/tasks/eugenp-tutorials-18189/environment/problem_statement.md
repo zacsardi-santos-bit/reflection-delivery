@@ -1,5 +1,14 @@
-I'm building out a currency converter and the whole module won't compile right now because there's a data transfer object class that just doesn't exist yet. I need a plain data holder to represent whatever comes back from an external exchange rate API, and it belongs in the DTO package inside the currency converter module (so wherever the other dto types live, `@currencyconverter` module's data transfer object package).
+## Description
 
-Basically it's a model class for the exchange rate API response. When I `new` it up with the no-arg constructor, both the base currency field and the rates field should just sit at null until something sets them. I want the usual accessor pattern on it, so a setter and getter for the base currency (String), and a getter for the rates that hands back whatever's stored, returning null when nothing's been assigned yet.
+The currency converter module is missing a data model class for representing responses from an external exchange rate API. Without this class, the rest of the application cannot parse or use exchange rate data returned by the API, causing compilation and runtime failures across the service layer.
 
-The reason this matters is the conversion service leans on this class to deserialize the API payload and pull out the target currency's exchange rate, so without it the service layer can't do anything and the conversion feature is totally broken. Once the class is in place with those defaults and accessors the module should compile and work correctly again. Nothing fancy, just the data holder with the right fields and methods so the rest of the code has something to bind to.
+## Expected Behavior
+
+- A data holder class for exchange rate responses should exist in the appropriate data transfer object package within the currency converter module
+- When created without arguments, both the base currency field and the rates field should default to null
+- The class should support setting and retrieving the base currency via standard accessor methods
+- The class should expose the exchange rates field via a standard accessor method, returning null when no rates have been set
+
+## Why This Matters
+
+The currency conversion service depends on this class to deserialize API responses and extract the target currency exchange rate. Without it, the service layer cannot function, and the entire conversion feature is broken.

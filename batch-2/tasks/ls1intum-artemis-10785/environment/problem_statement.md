@@ -1,5 +1,16 @@
-I'm hitting a wall with our passkey auth flow whenever someone's got the Bitwarden browser extension installed. When those folks try to register or log in with a passkey, Bitwarden hands back a credential object in this weird non-standard shape, it uses plain objects with numeric string keys instead of actual binary arrays, so serialization just blows up and the whole WebAuthn flow breaks for them. Since Bitwarden's one of the most common password managers and its users are exactly the security-conscious crowd likely to adopt passkeys, silently failing here is a bad look and kind of defeats the point of the feature.
+## Description
 
-I want to add a few utilities to fix this. First, our shared Base64 helpers don't have a URL-safe encoder, so I need a function there that encodes byte arrays as URL-safe Base64 without any padding characters, since we'll use it for the binary fields in the malformed credential. Second, I need a utility that takes one of these malformed Bitwarden-format credentials and converts it into a proper credential object with correctly formatted fields, and it should return null for null input and also return null for anything it can't actually process. Third, right now the credential creation options logic is baked straight into the passkey settings component instead of being reusable, so I want to pull that out into a utility that prepares the creation options from the server's response plus the current user object. That one should decode the challenge and any excluded credential IDs from Base64 (and handle the case where those exclusion lists just aren't there), set the user identity fields, apply the authenticator selection settings so it requires a resident key and prefers user verification, and throw a descriptive error if the user's ID or email is missing.
+Users who have the Bitwarden browser extension installed are unable to register or authenticate using passkeys in our application. The Bitwarden plugin returns credential objects in a non-standard format that our code cannot process: instead of using proper binary arrays, it uses plain objects with numeric string keys. This causes serialization to fail, breaking the entire passkey flow for Bitwarden users.
 
-End goal is Bitwarden users can register and authenticate with passkeys just like everyone else.
+Additionally, the credential creation options logic is currently embedded directly in the passkey settings component rather than being a reusable utility, and there is no URL-safe Base64 encoding function available in the shared utilities.
+
+## Expected Behavior
+
+- A new shared utility function should encode binary data (byte arrays) as URL-safe Base64 strings without padding characters, for use in WebAuthn credential processing.
+- A new utility should convert the malformed Bitwarden credential format into a proper credential object, returning null for null or unprocessable input.
+- A new utility should prepare the credential creation options from server-provided data and a user object, decoding binary fields from Base64, populating the user identity fields, and applying standard authenticator selection settings.
+- The credential options utility must reject invalid user data with a clear error and handle the case where optional credential exclusion lists are absent.
+
+## Why This Matters
+
+Bitwarden is one of the most widely used password managers, and its browser extension is common among security-conscious users — who are also likely to adopt passkeys. Silently failing when these users attempt to register or log in with passkeys provides a poor experience and undermines the usefulness of the passkey feature.

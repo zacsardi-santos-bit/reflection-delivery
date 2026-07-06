@@ -1,3 +1,14 @@
-I've been poking at the CLI overflow behavior and noticed something annoying. When output is too long to fit the terminal, the truncation indicator tells you how many lines are hidden ("first N lines hidden" / "last N lines hidden" style), but it gives zero hint that you can press a key to expand and see the rest. I only found out about the shortcut by accident reading the docs, which is bad for discoverability. Ctrl+O is the shortcut for showing hidden lines, so let's just put that right in the indicator so people know they can actually do something when they see content got cut off.
+## Description
 
-What I want is for the truncation message to include a hint about that shortcut inline with the line count. In a normal-width terminal show the full hint alongside the count, something like "(Ctrl+O to show)" so it reads as both how many lines are hidden and what to press to reveal them. In a narrower terminal where horizontal space is tight, fall back to a shorter version of the hint that still gets the Ctrl+O shortcut across without eating up too much room. Oh and don't break the existing singular/plural handling, it should still say "line" when it's one line hidden and "lines" otherwise based on the hidden count. Keep that logic intact while adding the hint.
+When CLI output is too long to display in the terminal, the UI shows a truncation indicator telling the user how many lines are hidden. However, the indicator only shows a count — it gives no hint that the user can press a keyboard shortcut to expand and view the full content. Users may not realize the feature exists, reducing its discoverability.
+
+## Expected Behavior
+
+- When content is truncated, the truncation indicator should include a hint about the keyboard shortcut for showing hidden lines, so users know they can take action.
+- In a normal-width terminal, the full hint should appear alongside the line count, e.g. indicating both how many lines are hidden and what key to press to reveal them.
+- In a narrow-width terminal where space is limited, a shorter hint format should be used that still communicates the keyboard shortcut without taking up too much space.
+- The singular/plural form of "line" vs "lines" should be preserved based on the hidden line count.
+
+## Why This Matters
+
+Users who see truncated output may not know there is a way to expand it. Adding an inline keyboard shortcut hint improves the discoverability of the overflow navigation feature and reduces friction for users who want to see the full output without consulting documentation.

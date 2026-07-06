@@ -1,5 +1,16 @@
-I'm cleaning up error handling in the migration system and hitting a few gaps that make failures way harder to debug than they should be. First one: when we fetch migration configuration for a package and that config is missing its version info, right now it doesn't fail fast, the problem just surfaces later as a confusing crash or silent failure. I want it to detect that early and throw a descriptive error that names the affected package so it's obvious what's wrong.
+## Description
 
-Related thing, when migration metadata for a parent package lists updates for child packages and one of those children is missing its version, we should catch that too and report both which parent's metadata is invalid and which child's version is missing. But important caveat: if that update group gets skipped entirely because its conditions aren't met, don't throw at all, just ignore the skipped group and let migration proceed normally.
+The migration system does not validate the metadata it fetches when calculating which packages to update. When a fetched migration configuration is missing required version information, the tool fails silently or crashes later in an uninformative way rather than surfacing a clear error at the point of the problem.
 
-Also, when the migration process runs package manager commands and they fail, the error we report doesn't include the package manager's own diagnostic output (registry errors, fetch failures, that kind of stuff). I want a small utility that combines the command failure message with the stderr when it's there, or falls back gracefully to the full error message when there's no stderr. Basically surface what actually went wrong instead of hiding it downstream.
+Additionally, when the migration tool runs package manager commands and those commands fail, the useful diagnostic output produced by the package manager (such as registry errors or fetch failures) is not included in the error shown to the user — making it hard to understand what actually went wrong.
+
+## Expected Behavior
+
+- If fetched migration metadata for a package is missing its version information, the migration should fail immediately with a clear message identifying the affected package.
+- If a package update referenced within a parent package's migration metadata is missing version information and that update would be applied, the migration should fail immediately with a message identifying both the parent package and the affected child package.
+- If a package update with missing version information belongs to an update group that is skipped (because its conditions are not met), the migration should proceed normally without error.
+- When a package manager command fails during migration, the error output from the package manager should be included in the reported failure alongside the failure message.
+
+## Why This Matters
+
+These issues mean that corrupted or incomplete migration metadata causes confusing downstream failures rather than actionable errors, and that package manager failures during migration are hard to diagnose because their detailed error output is not surfaced. Better upfront validation and error formatting helps developers quickly identify and fix the root cause of migration failures.

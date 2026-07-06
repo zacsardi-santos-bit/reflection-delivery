@@ -1,3 +1,13 @@
-I'm poking at the macOS environment validation in Flutter's tooling and the CocoaPods handling feels way too harsh. Right now when CocoaPods isn't installed, the validator (over in the CocoaPods validator logic under `@packages/flutter_tools/lib/src/macos/cocoapods.dart` and wherever the doctor validator wires up its result type) treats the whole dev environment as broken, it emits an error-level message and reports a missing/broken validation status. Thing is CocoaPods is only actually needed for building iOS and macOS targets, so if someone's targeting Android or web or whatever they get slapped with this alarming "missing" error even though their setup is totally fine for what they're doing.
+## Description
 
-What I want: when CocoaPods is absent, report a partial status instead of the fully missing/broken one, and downgrade the accompanying message from an error to a hint so it reads as optional/non-blocking rather than a critical failure. The message text should stay informative though, keep it pointing users at the CocoaPods installation instructions like it does now, I just don't want the severity screaming at people who don't even need it. So basically same guidance, gentler signal, partial rather than broken. That way folks on non-Apple platforms get an accurate picture that their environment works fine for their use case instead of thinking something's busted.
+When running the Flutter environment checker on a system where CocoaPods is not installed, the check currently reports it as a hard failure — marking the entire development environment as broken with an error-level message. This is too aggressive, because CocoaPods is only needed for building iOS and macOS targets, not for Flutter development targeting other platforms.
+
+## Expected Behavior
+
+- When CocoaPods is absent, the environment check should report a **partial** status rather than a fully broken/missing status.
+- The corresponding message should be a **hint** rather than an error, indicating that something is optional or non-blocking rather than a critical problem.
+- The message content should still guide users toward installation instructions.
+
+## Why This Matters
+
+Developers working on Android, web, or other non-Apple platforms are currently shown alarming "missing" errors when they simply haven't installed CocoaPods. This creates unnecessary confusion and makes the environment appear broken when it is perfectly functional for their use case. Downgrading this to a partial status with a hint message gives a more accurate and less alarming picture of the environment.

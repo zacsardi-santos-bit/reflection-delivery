@@ -1,5 +1,16 @@
-I'm cleaning up our UDP test plumbing and fixing the statsd sink, and it's gotten messy. Right now a bunch of test files each roll their own low-level UDP socket management, allocating a socket, flipping it into blocking mode, building raw buffer slices, and writing retry loops to poll for responses. One integration test even defines its own private synchronous UDP client class that nobody else can touch. I want to pull that out into a shared synchronous UDP peer helper in our common test utility library so any test can create a UDP endpoint, send a datagram to a given address, receive one synchronously, and query the local socket address without copy-pasting setup. Then go update the tests that currently do all this by hand so they use the shared helper instead, they should get noticeably shorter.
+## Description
 
-Also the statsd UDP sink tests are kind of useless right now, they just check that an internal file descriptor has the right value instead of confirming the correct bytes actually land at a receiver. I want those rewritten to really receive the datagrams and assert the exact wire format for counters, gauges, and timers (histograms), both with and without tags.
+Several test files that deal with UDP networking each independently implement their own low-level socket management: allocating a socket, toggling it into blocking mode, building raw buffer slices, and writing retry loops to read back responses. This duplicated boilerplate makes tests hard to read and maintain. One integration test file even has its own private synchronous UDP helper class that is invisible to the rest of the test suite.
 
-Oh and the big one, the statsd sink needs to work with Unix domain socket addresses. The current implementation uses a connection-oriented approach that's incompatible with non-IP socket types, so switch it to something datagram-friendly. If the server isn't listening yet when a flush happens it should fail gracefully rather than crash, and once a server is bound and available the later flushes should deliver correctly-formatted datagrams. Add a test covering that whole flow end-to-end. Btw the sink's writer abstraction should become a proper nested abstract interface on the sink class itself so tests can swap in a mock without reaching into implementation details.
+Additionally, the statsd sink tests currently only verify internal state (file descriptor values and connected addresses) rather than checking that the correct data actually arrives at a UDP receiver. There is also no test coverage for the case where the sink is initialized with a Unix domain socket address — which should work, but at present the underlying implementation uses a connection-oriented approach that does not support non-IP socket types.
+
+## Expected Behavior
+
+- A shared, reusable synchronous UDP peer helper should exist in the common test infrastructure so any test can easily send and receive UDP datagrams without duplicating socket setup code.
+- Existing tests that manage UDP sockets manually should be simplified to use this shared helper.
+- The statsd sink should support being initialized with a Unix domain socket address and should degrade gracefully if no server is listening when a flush is attempted.
+- The statsd sink tests should verify the actual wire content of sent metric datagrams: counters, gauges, and histograms with and without tags.
+
+## Why This Matters
+
+Centralizing UDP test plumbing reduces the chance of subtle bugs in test helpers and makes the tests themselves shorter and more readable. Validating actual datagram content (rather than file descriptor state) makes the tests meaningful regression guards. Supporting Unix domain sockets for statsd expands deployment flexibility.

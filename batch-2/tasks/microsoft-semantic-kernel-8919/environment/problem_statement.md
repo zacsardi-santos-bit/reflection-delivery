@@ -1,3 +1,13 @@
-I'm poking around the Semantic Kernel samples and there's a gap I keep hitting. We've got ChatCompletion examples for the different providers, and each Azure OpenAI one follows a nice consistent naming convention, but there's no dedicated sample showing how to wire up Azure OpenAI with a custom client config. Every other scenario seems covered except this one, which is annoying because customizing the client is such a common need (setting custom HTTP headers, tweaking timeouts, defining retry policies, that kind of thing) and right now devs have nowhere obvious to look.
+## Description
 
-So what I want is a new sample class added under the ChatCompletion samples directory, specifically for the Azure OpenAI custom client scenario. It's gotta match the naming convention the other Azure OpenAI samples already use so it slots in cleanly and is discoverable right alongside them, the class name should read as the Azure OpenAI variant of the custom-client example that other providers already have. Put it in the right namespace and file location so it integrates with the rest of the samples collection, same folder as the sibling ChatCompletion examples, correct namespace declaration to match the surrounding files. Basically I just need this one missing piece filled in following the patterns that are already there, nothing exotic, just consistency and discoverability so folks can find the custom client reference for Azure OpenAI without hunting around.
+The Semantic Kernel samples collection is missing a dedicated example for connecting to Azure OpenAI using a custom client configuration. Currently, there is no sample that follows the established Azure OpenAI naming convention for this use case, making it difficult for developers to discover how to use custom client settings when working with Azure OpenAI.
+
+## Expected Behavior
+
+- A new sample should be added under the ChatCompletion examples, specifically for Azure OpenAI with a custom client
+- The sample should follow the existing naming convention used by other Azure OpenAI samples in the collection
+- The sample should be discoverable alongside other Azure OpenAI examples
+
+## Why This Matters
+
+Developers commonly need to customize their Azure OpenAI client (e.g., to set custom HTTP headers, configure timeouts, or define retry policies). Without a clearly-named, dedicated example following the project's conventions, developers struggle to find the right reference. Adding a properly named sample improves consistency and discoverability within the samples collection.

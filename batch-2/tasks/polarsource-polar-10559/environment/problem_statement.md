@@ -1,5 +1,19 @@
-We review org checkout setups and right now we only look at the success and return URLs as declared, we collect the URLs and their domains but never actually follow them to see where they land. Problem is bad actors supply their own API endpoint as the checkout destination and then silently redirect customers off to prohibited stuff (adult, gambling, etc), so the declared URL looks fine on our domain but the real destination isn't. I want to close that gap by following those checkout URLs during review and recording where each one ultimately ends up.
+# Detect cross-domain redirects on checkout URLs during organization review
 
-So the behavior I'm after: for each success and return URL, follow it and figure out the final landing spot. If a URL redirects to a different domain, store that as a clear high-risk signal (cross-domain = true). If it doesn't redirect at all, or only redirects within the same domain like a path change, still record the result but mark it as not cross-domain. And if a URL can't be resolved, say a timeout or connection failure, capture that error and associate it with that URL instead of blowing up the whole review, we don't want one bad URL crashing everything.
+## Description
 
-These redirect results need to get attached to the success URL and return URL data structures in the setup info, sitting alongside the existing URL and domain lists so the review analyzer can pick them up downstream. The function doing the URL following should be async, should handle empty input gracefully by just returning an empty list, and oh, it needs to be designed so the host validation step can be bypassed in test environments where there's no DNS resolution, otherwise tests can't run. Point is, relying only on declared domains makes it trivial to pass review while still routing customers somewhere harmful, and actually following the URLs gives reviewers a much stronger signal.
+When organizations set up checkout flows, they provide success and return URLs that customers land on after completing or abandoning a payment. During organization review we inspect these URLs — but right now we only look at the domains as declared. We don't actually follow the URLs to verify where they ultimately send users.
+
+Bad actors have been found to supply their own API endpoints as checkout destination URLs, which then silently redirect customers to prohibited content (adult sites, gambling, etc.). The declared URL looks legitimate, but the actual destination is not.
+
+## Expected Behavior
+
+- During organization review, the system should follow checkout success and return URLs and record where each one ultimately lands.
+- If a URL redirects to a **different domain**, that should be surfaced as a high-risk signal.
+- If a URL does not redirect, or redirects within the same domain, it should be recorded but not flagged as a cross-domain redirect.
+- Errors during URL resolution (timeouts, connection failures) should be captured and associated with the URL rather than causing the review process to fail.
+- The redirect results should be stored in the setup data alongside the existing URL and domain lists, so they are available for downstream analysis.
+
+## Why This Matters
+
+Relying solely on declared domains during review makes it trivial to pass review while still routing customers to harmful destinations. Following URLs at review time closes this gap and gives reviewers a much stronger signal when a checkout URL is being used to redirect users outside the organization's own domain.

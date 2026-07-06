@@ -1,9 +1,29 @@
-I'm hitting a bunch of rough edges with the CTC (Connectionist Temporal Classification) ops in Keras and I want to clean them all up in one pass since they're related.
+## Description
 
-Big one first: CTC loss and CTC decode just don't work on the numpy backend, they raise errors saying the op isn't supported. I do a lot of testing and prototyping on numpy so I need both `ctc_loss` and `ctc_decode` implemented there like the other backends have them. While you're in there, the decode function makes me pass a strategy every single time even when I just want plain greedy decoding, so make "greedy" the default so I can call it without specifying anything. Oh and if I pass some bogus strategy name it does something confusing, so validate the strategy up front and raise a clear error saying it's invalid before it tries to compute anything.
+The CTC (Connectionist Temporal Classification) operations in Keras have several issues that limit their usability across backends and create inconsistencies in their interface.
 
-Also the decoded output pads the unused positions (the ones past the actual decoded sequence length) with zeros, but 0 is a real valid label index so that's ambiguous, the conventional fill is -1 which actually means "no label here", so switch the padding fill value to -1.
+**Issues:**
 
-There's also a naming nit: the op class for CTC loss is capitalized differently from the other nn ops in the same module, so rename it to match the standard casing everyone else uses.
+1. **No numpy backend support**: Both the CTC loss computation and the CTC decoder raise errors when running under the numpy backend. Users who rely on the numpy backend for testing or prototyping cannot use these operations at all.
 
-Couple things I care about behavior-wise: decoded labels should always come back as integer tensors, and scores should be floating point with sensible dtype promotion, at least float32. And decode needs to work with symbolic tensor inputs too, so shape inference should compute the right output shapes from the input dims and the number of top paths. This all matters because CTC models like speech and handwriting recognition need to behave predictably across every backend, same dtypes, same padding conventions.
+2. **Required strategy argument**: The decode function requires users to explicitly pass a decoding strategy even when they simply want the default greedy behavior. The greedy approach should be the default so it does not have to be specified every time.
+
+3. **Wrong padding value for decoded outputs**: The decoded output uses zero to fill unused positions beyond the decoded sequence length. The conventional and expected fill value is negative one, which distinguishes "no label" from the first valid label index.
+
+4. **Naming inconsistency**: The loss operation class uses a different capitalization convention than the rest of the neural network operations. It should be renamed to follow the consistent casing style used by other operations in the same module.
+
+5. **Missing input validation**: When an unrecognized decoding strategy is passed, there is no clear error message — the call either silently misbehaves or raises an obscure error. A descriptive validation error should be raised immediately.
+
+## Expected Behavior
+
+- CTC loss and CTC decode should work with the numpy backend.
+- The decoding function should default to the greedy strategy when no strategy is specified.
+- Decoded outputs should use negative one as the padding fill value for positions beyond the decoded sequence length.
+- The loss operation class should be accessible under the corrected naming convention.
+- Passing an unsupported strategy name should raise a clear validation error indicating the strategy is invalid.
+- Decoded labels should always be returned as integer tensors; scores should be floating point with appropriate dtype promotion, ensuring at least 32-bit floating point precision.
+- The decode operation should support symbolic tensor inputs, with shape inference correctly computing the output shapes based on the input dimensions and the number of top paths.
+
+## Why This Matters
+
+These inconsistencies make the CTC operations error-prone and incomplete. Fixing them ensures that CTC-based models (such as speech recognition and handwriting recognition) work reliably across all backends and behave predictably with respect to output dtypes and padding conventions.

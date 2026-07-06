@@ -1,5 +1,19 @@
-So I'm cleaning up our onboarding telemetry in the CLI and I hit a gap. Right now when someone finishes onboarding we log that it succeeded plus their tier, but we've got no idea how long onboarding actually took, which means we can't watch performance over time, catch regressions, or compare timings across tiers. I want to thread a duration (elapsed onboarding time in milliseconds) through the onboarding success event so it lands everywhere we record that success.
+# Track Onboarding Duration in Telemetry
 
-Concretely the success event needs to carry the duration and it should flow to all our sinks. The structured event log (Clearcut) should include the duration as a metadata field, and the observability side (OTEL) needs the log body to mention the duration right alongside the tier, with the log attributes including the numeric duration value too. On the metrics layer I want to record the duration as a histogram measurement when it's actually available, while keeping the existing success counter around, oh and if the duration isn't provided then just skip emitting the histogram (don't record a zero or anything, only record when we have it).
+## Description
 
-Also the user setup code is where we actually measure things, so that flow should time how long onboarding takes and pass that duration in when it reports the success event. Basically success reporting becomes duration-aware end to end.
+When a user successfully completes onboarding, the system records that the onboarding succeeded and the user's tier, but it does not capture how long the onboarding process actually took. This makes it impossible to monitor onboarding performance, identify regressions, or compare performance across different user tiers.
+
+## Expected Behavior
+
+- The onboarding success event should include the elapsed time of the onboarding process in milliseconds.
+- This duration should be recorded across all telemetry sinks: structured event logging (Clearcut), observability logs (OTEL), and metrics.
+- The metrics system should record the duration as a histogram measurement when the duration is available, in addition to the existing success counter.
+- The observability log body should include the duration alongside the tier information.
+- The observability log attributes should include the numeric duration value.
+- When the duration is not provided, the histogram metric should not be recorded.
+- The user setup flow should measure how long the onboarding takes and include that duration when reporting the onboarding success event.
+
+## Why This Matters
+
+Without duration tracking, it is impossible to analyze onboarding performance trends over time or across user tiers. Adding this measurement enables teams to monitor the onboarding experience and detect performance regressions early.

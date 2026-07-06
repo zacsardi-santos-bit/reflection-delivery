@@ -1,7 +1,16 @@
-I'm cleaning up our release workflow and the package-selection dropdown is driving me nuts. Right now every option is a full directory path with the whole prefix spelled out, which is verbose and easy to mistype, and every new package means hand-constructing the path again. I want to switch the dropdown to use short, human-readable package names instead, just the package identifier with no path prefix in front of it.
+## Description
 
-Here's the catch. We've got a validation script that checks the dropdown entries against the actual package directories on disk, and it currently compares dropdown values directly against the full directory paths. So the second I swap the dropdown over to short names, that script stops finding any matches and breaks.
+The release workflow's package-selection dropdown currently lists entries as full directory paths (e.g. with path prefixes included). This is verbose and makes it harder to maintain — every new package requires careful manual construction of the full path. The dropdown would be cleaner and less error-prone if it used short, human-readable package names instead.
 
-So I need two things done together. First, update the dropdown in the release workflow so it lists short names. Second, teach the validation script to expand those short names back into full directory paths before it does the comparison. The expansion has to know about two categories: a small set of top-level packages (think core, the base framework packages, and the test utilities) that live directly under the main packages directory, versus all the other partner integration packages which live under a partners subdirectory, so those two groups resolve to different path prefixes.
+However, switching to short names breaks a validation script that checks whether every package directory on disk has a corresponding dropdown entry. That script currently compares dropdown values directly against directory paths, so it would no longer find any matches once the dropdown switches to short names.
 
-And it still needs to actually catch problems after all this, so if there's a package directory sitting on disk that isn't represented in the dropdown, or a dropdown entry that doesn't map to a real directory, the validation should flag the mismatch. Basically keep the dropdown in sync with the real repo structure, just with the nicer short names now.
+## Expected Behavior
+
+- The dropdown in the release workflow should use short names (just the package identifier, no path prefix).
+- The validation script must correctly reconstruct full directory paths from short names before comparing against actual packages on disk.
+- Top-level packages (core, base framework packages, and test utilities) resolve to a different path prefix than partner integration packages.
+- After the change, the validation script should confirm that every package directory on disk is represented in the dropdown, and every dropdown entry corresponds to a real directory.
+
+## Why This Matters
+
+Having full paths in the dropdown is fragile and verbose. Short names are easier to read and less likely to be mistyped. The validation script keeps the dropdown in sync with the actual repository structure, so it must understand the path expansion rules to remain useful after this change.

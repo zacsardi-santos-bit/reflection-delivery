@@ -1,5 +1,14 @@
-I'm working on Ledger Live Desktop and hitting a papercut where every link we open to a Ledger web property is hardcoded to English, so if someone's set the app to French, Japanese, Portuguese, or Chinese and they click a help link or a promo, they get silently dropped onto English pages, which feels broken. I want a hook that takes a URL and returns the localized version based on the currently active locale, which it should read off the Redux store (the language the user picked in the app).
+## Description
 
-The tricky part is that the three domains we care about, the main Ledger website, the support center, and the shop, each use their own URL structure for language variants, so the hook needs to build the right locale code per domain rather than assume one scheme. Also some locales don't map straight through, they need regional codes. Portuguese should land on Brazilian Portuguese on both the main site and the shop, and Chinese should map to the right Chinese regional variant per site too. And heads up, the support site uses full regional codes that differ from the short locale identifiers we use internally, so translate accordingly there.
+Ledger Live Desktop links users to various Ledger web properties — the main website, the support center, and the shop — but these links always point to English-language pages, regardless of the user's language setting in the app. A French, Japanese, Portuguese, or Chinese user who clicks a help link is silently sent to English content, which is a poor experience.
 
-Anything that isn't one of those three Ledger properties should just come back untouched, no rewriting other URLs. Basically: match the domain, apply that domain's locale-mapping rules (including the regional overrides), otherwise pass it through as-is.
+## Expected Behavior
+
+- There should be a way to take any Ledger URL and automatically adjust it to the appropriate language version based on the user's currently active locale.
+- The main Ledger website, support site, and shop each use their own URL structure for language variants, so the logic needs to produce the correct locale code per domain.
+- Some languages require a different regional code than the short locale identifier used in the app (for example, a user with "Portuguese" selected should land on the Portuguese-Brazilian regional pages, and a "Chinese" user should land on the appropriate Chinese regional pages on each site).
+- For URLs that belong to other web properties (not the main site, support site, or shop), the URL should be returned unchanged.
+
+## Why This Matters
+
+Users who have selected a non-English language in Ledger Live are consistently sent to English web pages when following help links or clicking promotional content. Automatically localizing these URLs ensures users land on content in their selected language, improving usability and reducing friction.

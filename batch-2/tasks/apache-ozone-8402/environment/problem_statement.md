@@ -1,9 +1,15 @@
-I'm deep in the container Merkle tree code in Apache Ozone's data integrity system and hit a real gap. Right now when I build a container Merkle tree and add chunks to a block, the tree just records checksums and offsets, there's no way to flag whether those chunks are actually healthy or corrupted. So when a scanner detects a bad chunk, that health state just gets lost, everything reads as implicitly healthy regardless of its real condition, which makes the tree kind of useless for reconciliation since repair workflows need to know exactly which chunks are corrupt to fix them right.
+## Description
 
-So I want to extend the chunk tree entries to carry an "is healthy" boolean, and callers adding chunks should be able to say whether those chunks are healthy or unhealthy, and that status has to survive into the serialized tree proto round-trip.
+The container Merkle tree used in Ozone's data integrity system has no way to record whether individual chunks are healthy or corrupted. When a scanner detects that a chunk is bad, this health state cannot currently be captured in the tree structure — all chunks appear as implicitly healthy regardless of their actual condition. This limits the usefulness of the Merkle tree for reconciliation workflows, which need to know which chunks are corrupted in order to repair them correctly.
 
-Also I need to be able to spin up a tree writer from an already-serialized tree proto instead of always rebuilding from scratch, so I can incrementally update an existing tree, like tacking on newly discovered empty blocks or newly scanned chunks. Related to that, I need a way to add an empty block (a block with no chunks) to the tree, and those empty blocks have to be preserved through serialization round-trips too, don't drop them.
+## Expected Behavior
 
-Oh and there's a naming thing that's been bugging me: the method that builds a container Merkle tree from stored block metadata has a name that doesn't make it clear it's reading from metadata rather than doing a live scan. I want it renamed so that metadata-vs-live-scan distinction is obvious at the call site.
+- When adding chunks to a container Merkle tree, callers should be able to specify whether the chunks are healthy or unhealthy. This health status should be preserved in the serialized tree representation.
+- It should be possible to create a new Merkle tree writer from an already-serialized tree, so that an existing tree can be incrementally updated (e.g., to add newly discovered empty blocks or newly scanned chunks) without rebuilding from scratch.
+- Empty blocks should be representable in the tree and preserved during serialization round-trips.
+- The method used to build a container Merkle tree from stored block metadata should have a name that clearly distinguishes it from a live scan-based tree builder.
+- The container set should support registering an on-demand scanner callback so that reconciliation operations can trigger automatic re-scans.
 
-Last thing, the container set needs to support registering an on-demand scanner callback/hook, so when reconciliation triggers a container scan the registered scanner gets invoked automatically instead of me having to wire that up externally every time. That rounds out the accurate targeted repair story during reconciliation.
+## Why This Matters
+
+Without chunk-level health tracking in the Merkle tree, the reconciliation process cannot tell which chunks need to be repaired versus which are healthy. Adding this flag enables accurate, targeted repair during container reconciliation and makes the overall data integrity story more complete.

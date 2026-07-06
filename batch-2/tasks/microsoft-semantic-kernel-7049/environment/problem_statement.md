@@ -1,5 +1,21 @@
-I'm on the Semantic Kernel Python SDK and we've got connectors for OpenAI, Azure OpenAI, and a bunch of others, but there's nothing for Mistral AI and I want to use their models for chat completion without rolling my own integration and losing all the framework consistency (config patterns, error handling, the shared provider abstraction, all of it).
+## Add Mistral AI Chat Completion Connector
 
-So I need a native Mistral AI chat completion service that plugs into the existing chat completion abstraction so Mistral models can be swapped in interchangeably with the other providers using the same code patterns. It should be configurable either through constructor args or through dedicated environment variables for the model identifier and the API key, and when the API key or model ID is missing at init it needs to fail loudly with a clear initialization error rather than blowing up later. It's gotta handle both standard non-streaming chat message retrieval and streaming chat completions too, and any errors coming out of the underlying Mistral client should get translated into consistent framework-level exceptions instead of leaking raw SDK errors up the stack.
+## Description
 
-Oh and I also need a companion prompt execution settings class alongside it that supports the usual generation params, temperature, top-p sampling, max tokens, and messages. One thing to watch, function-choice behavior isn't supported by this connector yet, so if someone tries to use it the settings class should raise a clear not-implemented error instead of silently doing the wrong thing. New code should live under the mistral_ai connector area within `@python/semantic_kernel/connectors/ai`, following the layout the other providers already use.
+The Semantic Kernel Python SDK currently supports several AI providers for chat completion (OpenAI, Azure OpenAI, etc.) but has no built-in support for Mistral AI models. Developers who want to use Mistral AI through Semantic Kernel must build custom integrations themselves, without the consistency, error handling, and configuration patterns the framework provides for other services.
+
+We need a native Mistral AI connector that integrates with the existing chat completion abstraction so that Mistral AI models can be used interchangeably with other supported providers.
+
+## Expected Behavior
+
+- A new chat completion service for Mistral AI that plugs into the existing provider abstraction
+- The service should be configurable via constructor arguments or dedicated environment variables for the model identifier and API key
+- Initialization should fail with a clear error when required configuration (API key or model ID) is missing
+- The service should support both standard (non-streaming) and streaming chat message retrieval
+- Errors from the underlying Mistral AI client should be translated into consistent framework-level exceptions
+- A dedicated prompt execution settings class should be provided, supporting common generation parameters (temperature, top-p sampling, max tokens, and messages)
+- Attempting to use function-choice behavior (not yet supported by this connector) should raise a clear "not implemented" error
+
+## Why This Matters
+
+Adding this connector enables developers to swap in Mistral AI models with the same code patterns they already use for other providers, without needing to write custom plumbing or error-handling logic.

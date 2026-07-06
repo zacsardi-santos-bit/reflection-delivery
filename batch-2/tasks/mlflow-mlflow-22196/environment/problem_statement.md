@@ -1,5 +1,18 @@
-I'm cleaning up the MLflow GenAI scoring infrastructure and want to consolidate how scorer integrations talk to LLM backends. Right now every scorer framework we support (deepeval, phoenix, ragas, trulens for the automatic eval metrics) carries two separate adapter classes, one for Databricks-managed models and a different one for external/gateway providers, and it's a mess. That split means the routing logic, retry handling, and provider dispatch are all duplicated across a bunch of scorer modules, so anyone adding a new scorer or a new provider has to touch all of them, and honestly the Databricks-vs-gateway distinction is just an internal artifact that's leaking into the public API. Users shouldn't have to know which of two classes to instantiate.
+## Description
 
-What I want is one shared backend client living in its own module that handles all the routing decisions off a model URI string. It should figure out automatically whether a request goes to a Databricks-managed endpoint (bare Databricks identifiers as well as endpoint URIs), a natively-supported external provider (making sure the required credentials are present for native provider URIs), a gateway endpoint, or falls back to a third-party external completion library when the provider isn't natively supported. Retry behavior and structured response format handling should be centralized in this client too rather than scattered around.
+The MLflow GenAI scoring infrastructure currently maintains multiple separate backend adapter classes for each scorer integration (deepeval, phoenix, ragas, trulens). Each integration has one class for Databricks-managed endpoints and a different class for external/gateway providers. This duplication scatters routing logic, retry handling, and LLM provider dispatch across many individual scorer modules, making the code harder to maintain and evolve.
 
-Then each scorer framework should expose exactly one unified adapter class instead of two, and that class takes this shared backend client so routing and dispatch stop being the scorer's problem. The factory functions that build scorer models from a URI string should keep working but return this single unified class in every case, no more branching on backend type. Oh and the utility that invokes an LLM for simulation purposes should use this shared client too, instead of its own private internal function.
+## Problem
+
+When adding support for new LLM providers or changing how backends communicate, developers must update the same routing and dispatch logic in many different places. The split between "Databricks" and "gateway" classes within each scorer framework is an internal implementation artifact that leaks into the public-facing API. Users and downstream code must know which class to instantiate rather than relying on a single, uniform adapter.
+
+## Expected Behavior
+
+- A single unified backend client should be introduced to centralize all routing decisions, retry logic, and LLM provider dispatch. All scorer integrations should delegate to this shared client.
+- Each scorer framework should expose exactly one model adapter class instead of two (no separate "Databricks" and "gateway" variants).
+- The shared backend client should correctly route requests based on the model URI: bare Databricks identifiers, endpoint URIs, native provider URIs (with required credentials), gateway URIs, and unsupported providers falling back to an external completion library.
+- Retry behavior and structured response format handling should be managed by the shared backend client.
+
+## Why This Matters
+
+Centralizing the backend routing in one place reduces duplication, makes it easier to add or update LLM provider support, and presents a simpler API to scorer authors. Instead of knowing which of two adapter classes to use, a scorer author supplies a model URI to the shared client and gets back a uniform interface regardless of which backend is in use.

@@ -1,5 +1,14 @@
-I'm poking around webpack's internal HTML and CSS parsing helpers and the import story is kind of a mess. If I want to do anything with HTML parsing right now I've gotta pull from one module for the tree-building (AST builder) function and the namespace constants, then reach into a totally separate module for the tokenizer, the quote-type constants, and the entity-decoding helpers. CSS is fragmented the same way, tokenizer utilities and identifier helpers and the CSS constant values all living in different spots. It's annoying to track all these paths just to work in one parsing domain.
+## Description
 
-What I want is a single unified "syntax" entry-point module for everything HTML related and a separate one for everything CSS related, so I can import all of a domain from one place. These new modules should re-export all the existing functions, constants, and TypeScript type definitions from the original specialized files, so the HTML one covers the AST builder, tokenizer, namespace constants, quote-type constants, and entity decoding, and the CSS one covers the tokenizer utilities, identifier helpers, and constant values. Nothing changes behaviorally, it's just consolidation.
+The HTML and CSS parsing utilities in webpack's internal library are currently split across multiple module files. To work with HTML parsing, a developer must import from one module for the tree-building function and namespace constants, and from a separate module for the tokenizer function, quote-type constants, and entity-decoding utilities. CSS parsing utilities are similarly scattered. This fragmentation forces consumers to track multiple module paths just to access the tools for a single parsing domain.
 
-One important bit though, the HTML unified module needs to expose its tree-building function as a named export rather than a default export. That way individual parts of it can be selectively replaced (mocked) in test environments while the rest of the module stays intact, which you can't really do cleanly with a default export. So make sure that function comes through as a named export on the HTML side.
+## Expected Behavior
+
+- A single entry-point module for all HTML parsing exports (AST builder, tokenizer, namespace constants, quote-type constants, and entity decoding functions) should be available so consumers can import everything HTML-related from one place.
+- A single entry-point module for all CSS parsing exports (tokenizer utilities, identifier helpers, and CSS constant values) should be available so consumers can import everything CSS-related from one place.
+- Both new unified modules should expose all the same functions, constants, and TypeScript type definitions that previously existed in the individual specialized modules.
+- The HTML unified module must expose its tree-building function as a named export (not a default export), so that parts of it can be individually replaced in tests without affecting the rest of the module.
+
+## Why This Matters
+
+Having fragmented module paths for a single parsing domain makes the internal API harder to discover and maintain. Consolidating each domain into a single "syntax" entry point reduces the number of import paths developers must remember and makes the public surface of each domain self-contained.

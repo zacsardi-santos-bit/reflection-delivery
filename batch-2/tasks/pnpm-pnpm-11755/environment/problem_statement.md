@@ -1,3 +1,18 @@
-I'm porting a package manager to Rust and keep hitting deserialization failures when I fetch package metadata (packuments) from the npm registry. The issue is the `deprecated` field on a package version. Our type def treats it as a string (the deprecation reason), which matches what the JS implementation assumes, but the registry actually sends a boolean sometimes instead of a string, and since the Rust side is strict about types it blows up the whole parse the moment it sees a boolean `false`. The old JS code got away with this because it just did truthiness checks, but our deserialization can't. This breaks package resolution for any package that has even one version with a boolean `deprecated` in its registry metadata, and apparently that includes a bunch of popular packages, so it basically makes installs on large dependency trees fail entirely, which is blocking the whole benchmark workload.
+## Description
 
-What I want is for the package version struct to accept all the shapes the registry might send and normalize them during deserialization so callers always get a consistent optional string. So: a missing or null field means not deprecated (maps to nothing), a boolean `false` also means not deprecated (same as absent, nothing), a boolean `true` means deprecated but with no recorded reason (maps to an empty string), and an actual string passes through as the reason as-is. This normalization should happen transparently as part of parsing so nobody downstream has to think about the boolean case.
+Deserializing package metadata from the npm registry fails for many real-world packages (including several widely-used ones) because the registry sometimes includes a deprecated field with a boolean value rather than a string.
+
+The type definition for the deprecated field in package version manifests declares it as a string (the deprecation reason), and the JavaScript implementation handles the boolean case silently via truthiness checks. However, the Rust deserialization code is strict about types, and when it encounters a boolean false value for the deprecated field, it fails to parse the entire packument.
+
+## Expected Behavior
+
+- When the deprecated field is missing or null in the JSON, it should be treated as "not deprecated."
+- When the deprecated field is a boolean false, it should also be treated as "not deprecated" (same as absent).
+- When the deprecated field is a boolean true, it should be treated as deprecated with an empty reason string.
+- When the deprecated field is a string, it should be treated as deprecated with that string as the reason.
+
+This normalization should happen transparently during deserialization, so callers always receive a consistent optional string shape.
+
+## Why This Matters
+
+Without this fix, any install that involves packages which have even one version with a boolean false deprecated field in the registry metadata will fail entirely. This blocks the integrated benchmark workload and makes the package manager unusable for large dependency trees.

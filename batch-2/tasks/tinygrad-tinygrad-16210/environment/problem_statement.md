@@ -1,5 +1,20 @@
-I'm chasing a nasty correctness bug in tinygrad around in-place tensor mutation, basically element assignment via `__setitem__`. The problem is when I mutate a tensor element while another live tensor holds a lazy computation that depends on it, the mutation quietly succeeds but leaves that dependent tensor pointing at a stale computation graph, so when I evaluate it later I get results that diverge from what eager execution would've given me. Right now the framework only rejects this unsafe mutation when gradient tracking is enabled (requires_grad), but the exact same divergence problem exists regardless of whether grads are being tracked, the lazy graph goes stale either way. So I want the check to apply universally, not gated on gradient tracking.
+## Description
 
-Concretely there are three unsafe scenarios I need caught. First, a realized tensor gets mutated while another live tensor holds an unrealized (not-yet-evaluated) computation that depends on it. Second, an unrealized tensor gets mutated while another live tensor holds a view or slice of it. Third, a tensor gets mutated when another tensor object shares the exact same underlying operation reference, ie they're aliased. In all three, doing the mutation would silently corrupt state and make other live tensors diverge from eager semantics, so it should fail loudly with a clear error instead of proceeding.
+Tinygrad's in-place tensor mutation (element assignment) can silently corrupt the computation graph when another tensor holds a lazy reference to the tensor being mutated. This currently only raises an error when gradient tracking is enabled, but the same divergence problem exists for all tensors regardless of gradient tracking.
 
-The rule I'm after: raise an error whenever the mutation would diverge from eager execution, specifically when any other live tensor object still holds a reference to the computation of the tensor being mutated. Silent graph corruption is brutal to debug so failing loudly beats wrong results. Oh and don't break the stuff that already works, valid in-place accumulation like addition-assignment (`+=`) still needs to succeed correctly, so the fix can't be so broad that it rejects legit accumulation.
+## Problem
+
+When a tensor is mutated in-place:
+- If another tensor holds an unrealized downstream computation that depends on the mutated tensor, the mutation updates the underlying buffer but the dependent tensor still holds the old computation graph. Evaluating it later will produce results that diverge from what eager execution would have produced.
+- If an unrealized tensor has any live views or slices, mutating the tensor in-place leaves the views referencing stale graph state.
+- If two tensor objects share the exact same underlying operation reference (aliased), mutating via one leaves the other with a stale reference.
+
+All three scenarios currently proceed silently without error (unless gradient tracking is enabled), making it easy to write code that appears to work but produces incorrect results.
+
+## Expected Behavior
+
+In-place element assignment should raise an error whenever the mutation would diverge from eager execution semantics — specifically, when any other live tensor object has a reference to the computation of the tensor being mutated. This check should apply universally, not only when gradient tracking is enabled.
+
+## Why This Matters
+
+Silent graph corruption is extremely hard to debug. Failing loudly with a clear error message in these unsafe mutation scenarios is far better than allowing programs to silently produce wrong results. Users relying on the lazy evaluation model need to be protected from accidental aliasing and stale-graph bugs.

@@ -1,5 +1,20 @@
-I've got schema parsing and normalization logic for external tool definitions buried inside our big central core crate, and it's annoying because anything that wants to validate or interpret a tool schema has to pull in the whole core dependency tree just to use it. That's way too heavy for what should be a self-contained bit of logic, so I want to pull the schema model and its parsing function out into a new small standalone crate in the same workspace, one that doesn't depend on core at all. Then any consumer can depend on it directly.
+## Description
 
-The tricky part is the parser has to keep handling all the real-world weirdness external sources throw at us. Boolean shorthand schemas (like just `true`) should get normalized into a permissive string schema. If a schema has no explicit type but carries object-like keywords, infer it as an object, and same idea for array-like keywords. The "integer" type alias should be treated as the numeric type. Arrays without a specified item type should default to accepting strings. And nested schemas showing up as additional-properties constraints need to be recursively normalized the exact same way, so don't skip the recursion there.
+Several components in this codebase need to parse and normalize JSON schemas used by external tool definitions, but the only existing implementation of this logic lives inside the large central core crate. Any component that wants schema parsing today must take on the entire core as a dependency, which is too heavy.
 
-Once it's extracted, the new crate should export both the schema type and the parsing function so lightweight consumers can use them without going through core. Basically it just needs a clear, independently testable home. Btw the behavior should match what core does today, I'm just relocating it, not changing the normalization rules.
+The schema parsing logic itself is self-contained: it handles external schemas that may be missing required fields, use non-standard type representations, or rely on shorthand forms that our internal model does not directly support. This includes things like boolean-valued schemas, numeric types expressed as integers, arrays without item type specs, and objects inferred from keyword presence rather than an explicit type annotation.
+
+## Expected Behavior
+
+- A new, standalone crate should own the schema model and the parsing/normalization logic.
+- It should be lightweight (no dependency on the central core crate).
+- The schema parser should handle all the real-world edge cases that external sources produce:
+  - Boolean shorthand schemas should be coerced to a permissive string schema.
+  - Schemas with object-like keywords but no explicit type should be inferred as objects.
+  - The "integer" type variant should be normalized to the numeric type.
+  - Arrays without an item type should default to a string item type.
+  - Nested schemas inside additional-properties constraints should be recursively normalized.
+
+## Why This Matters
+
+Extracting this logic into its own crate makes it possible for lightweight consumers to use schema parsing without pulling in the entire core dependency tree, and gives the parsing logic a clear, independently-testable home.

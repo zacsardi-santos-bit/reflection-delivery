@@ -1,7 +1,18 @@
-I'm digging into how our CLI loads commands and resolves conflicts, and the whole thing feels inconsistent right now. Commands come from a few different places, user config, project/workspace config, and extensions, but there's no standard way to tell where any given command actually originated. On top of that, conflicts get disambiguated using this dot-based naming scheme that isn't super readable, and extension commands get their source name auto-prepended to their description in brackets which just clutters everything up.
+## Description
 
-What I want is for every command loaded from a file to carry a namespace that indicates its origin. User commands should be tagged under a "user" namespace, project-level ones under a "workspace" namespace, and extension commands under the extension's own name as the namespace. Then when we resolve or display a command's final name, we should combine the namespace and the original command name with a colon separator (so it reads as namespace, colon, command name).
+The CLI currently uses a dot-based naming scheme to differentiate commands that come from different sources when conflicts arise, but there is no standard way to identify where a command originated. Additionally, extension commands automatically have their source name prepended to their description in brackets, which is redundant and clutters the command list.
 
-Conflict resolution should still work the way it does, appending an incrementing numeric suffix to find a unique name, but using this new colon-separated format instead of the old dot notation. And the conflict reporting bits should reflect the fully namespaced name rather than the short original one.
+## Expected Behavior
 
-Oh and while I'm in there, kill the auto-generated bracket prefix on extension command descriptions. Descriptions should just come straight from the command definition file as plain text, no automatic modification tacking the extension name on in brackets. Keeps the command list clean and lets people immediately see which source a command's from.
+- Every command loaded from a file should carry metadata indicating its source: user configuration, project/workspace configuration, or a specific extension.
+- User commands should be labeled under a "user" namespace.
+- Project-level commands should be labeled under a "workspace" namespace.
+- Extension commands should be labeled under the extension's own name as a namespace.
+- When displaying or resolving command names, the namespace and command name should be combined using a colon separator (e.g., a namespace prefix, a colon, and the command name).
+- When a namespaced command name conflicts with an existing command, the system should append an incrementing numeric suffix to find a unique name.
+- Conflict reporting should use the fully namespaced name, not just the short original name.
+- Extension command descriptions should be plain text as defined in the command file — no bracket-prefixed extension name should be automatically added.
+
+## Why This Matters
+
+This makes the command system clearer and more consistent: users can immediately see which source a command comes from, conflict resolution uses a predictable and readable colon-separated format, and descriptions stay clean without redundant auto-generated prefixes.

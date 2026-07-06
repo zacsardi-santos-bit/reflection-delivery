@@ -1,7 +1,18 @@
-I'm cleaning up the judge adapter framework and the telemetry situation for Databricks-backed models is a mess. Right now every adapter subclass reimplements the same telemetry recording logic when it invokes a Databricks model provider, so success telemetry, failure telemetry, token usage extraction, and error suppression all get copy-pasted around. If I ever need to tweak how telemetry works I have to touch every adapter, which is fragile and annoying.
+## Description
 
-What I want is to push all this into the base adapter class using a template method pattern. The base class should expose a concrete invocation method that wraps the real invocation logic (subclasses provide that piece separately) and layers telemetry recording on top. For Databricks model providers specifically, on success it records usage metrics with token counts and the request ID, and on a recognized error type it records failure telemetry before re-raising the error. Whatever happens, telemetry failures can't be allowed to disrupt the actual judge invocation, so those get silently swallowed.
+The judge adapter framework currently requires each adapter subclass to implement its own telemetry recording logic when invoking Databricks-backed models. This duplicates the same telemetry code across multiple adapters — every adapter that calls a Databricks model provider must independently handle success and failure telemetry, retry-safe error suppression, and token usage extraction. This is fragile and hard to maintain: if telemetry behavior needs to change, every adapter must be updated individually.
 
-Also the telemetry utility functions currently live inside a specific adapter module, which is the wrong home once this logic moves up to the base class. I want them relocated to a shared utilities module so the base class can import them from a consistent spot.
+Additionally, the gateway-style adapter currently discards token usage information (prompt tokens, completion tokens) and request identifiers from the underlying model invocation, returning only the feedback result. This means downstream telemetry has no data to record even if it were properly wired up.
 
-Oh and there's a real bug in the gateway-style adapter: it throws away token usage (prompt tokens, completion tokens) and request identifiers from the underlying model response and just returns the feedback result. So even if telemetry were wired up, there'd be nothing accurate to record. I need that adapter updated to capture and forward token usage and request metadata from the underlying model response so the centralized telemetry actually gets good data. Net effect is every current and future adapter gets consistent usage tracking with zero per-adapter boilerplate.
+## Expected Behavior
+
+- The base adapter class should centralize telemetry recording so all subclasses automatically get consistent behavior without implementing it themselves.
+- When a Databricks-backed model is called and the invocation succeeds, usage metrics (token counts and request ID) should be recorded to the telemetry system automatically.
+- When a Databricks-backed model is called and the invocation fails with a recognized error type, failure telemetry should be recorded automatically before re-raising the error.
+- Telemetry failures must never disrupt the judge invocation — they should be silently suppressed.
+- The gateway-style adapter should capture and forward token usage and request metadata from the underlying model response.
+- The telemetry utility functions should live in a shared utilities module, not inside a specific adapter module.
+
+## Why This Matters
+
+Centralizing telemetry in the base class ensures that all current and future adapters get accurate, consistent usage tracking without any per-adapter boilerplate. It also corrects missing token data in the gateway adapter that would otherwise leave telemetry incomplete.

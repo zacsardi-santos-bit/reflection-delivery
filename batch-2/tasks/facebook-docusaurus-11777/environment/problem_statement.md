@@ -1,5 +1,17 @@
-I'm cleaning up our Docusaurus markdown utility package and I've got two things tangled together that I want sorted out. First, the functions that deal with custom heading IDs (the parsing, the writing, and the escaping helpers) are currently jammed into the general-purpose markdown utils file, which makes the whole thing a pain to navigate. I want those heading ID bits pulled out into their own dedicated module so they live separately from the general markdown stuff, importable from there.
+## Description
 
-Second, right now we only support the classic bracket style for heading IDs, like `{#some-id}`, but that syntax is actually invalid in newer MDX, so I want to add a comment-based syntax too (the MDX-friendly `<!-- -->` style) so teams moving to modern MDX don't have to do manual search-and-replace across their whole docs tree. The parser should take a param saying which syntax to use, and the two formats need to be parsed independently, meaning each one recognizes only its own pattern and treats the other as plain text, no cross-matching. The writer should likewise accept a syntax option controlling which format gets appended when it generates IDs.
+The utilities for parsing, writing, and escaping custom heading IDs in Markdown documents are currently bundled together with general-purpose Markdown processing utilities. This makes the code harder to navigate and maintain. These heading ID utilities should be extracted into their own dedicated module.
 
-Oh and while I'm in there, two new writer modes: a "migrate" mode that converts every existing heading ID in a doc from whatever syntax it's currently in over to the target syntax while keeping the actual ID values intact, and an "overwrite" mode that throws away all existing IDs and regenerates them fresh from the heading text. Those two are mutually exclusive, so if someone asks for both at once it should error out. And the existing respect-vs-overwrite behavior needs to keep working for both syntaxes, including docs that have a mix of formats in the same file.
+Beyond the refactoring, the heading ID writer currently only supports one style of heading ID — a bracket-based format that is technically invalid in newer versions of MDX. Projects that prioritize valid MDX syntax should be able to use a comment-based syntax instead. The writer should support both styles, and users should be able to choose which syntax to use when generating heading IDs for their documents.
+
+## Expected Behavior
+
+- The heading ID utilities (parsing, writing, escaping) are available from a new dedicated module, separate from the general markdown utilities.
+- When writing heading IDs, users can choose between a classic bracket style and a comment-based MDX-compatible style.
+- When migrating an existing document, the tool can convert all heading IDs from one syntax to the other while preserving the actual ID values.
+- When both "migrate" and "overwrite" modes are requested simultaneously, the tool should report an error because these two modes are mutually exclusive.
+- The heading ID parser correctly handles each syntax independently — recognizing only its own format and treating the other as plain text.
+
+## Why This Matters
+
+Many Docusaurus users are migrating to newer versions of MDX, where the classic bracket-style heading ID syntax is no longer valid. Having a supported way to generate and migrate to the comment-based syntax reduces friction for teams that want fully valid MDX documents without manual search-and-replace across their entire documentation tree.

@@ -1,5 +1,18 @@
-I'm hitting a gap in our Avro logical type conversion where anything nested doesn't get resolved. The utility that runs after reading an Avro file converts top-level logical type fields fine, so a UUID at the record root comes back as a proper identifier, but the moment a logical type lives inside an array or a map or a sub-record it stays as raw binary, an int, or plain text instead of the decimal, timestamp, or uuid it's supposed to be. I've got schemas like records that hold arrays of sub-records, and each of those sub-records has a map field whose values are decimals, plus I've got arrays of decimal values and maps of records sitting at the top level too, so it's genuinely multi-level.
+## Description
 
-What I want is for the conversion to go recursive. When a field is an array I need each element converted, applying the element type's logical type if it has one, or recursing into the element when it's itself a record. Same idea for maps, every value should get converted according to the map's value schema. And nested records should recurse so their own logical type fields get processed the same way the top level ones do. The end goal is that logical types at any depth resolve to their typed equivalents after reading, so a complex schema where arrays contain records with map fields that use decimals all comes out correctly typed.
+When reading Avro records that contain logical type fields (timestamps, decimals, UUIDs, etc.) nested inside complex structures like arrays, maps, or nested records, the current logical type conversion logic does not recursively descend into these nested structures. As a result, values that should be converted to their properly typed logical equivalents (such as time-based values, decimal numbers, or unique identifiers) remain as their raw Avro representations (binary data, integers, or text) after conversion.
 
-This matters because real-world Avro schemas lean on these nested structures all the time, and right now downstream pipelines that depend on the conversion get the wrong types and can't process the data. Please make the whole thing work end to end for that deeply nested case, not just the top-level fields it handles today.
+## Expected Behavior
+
+- Logical types nested inside arrays should be converted element by element
+- Logical types nested inside maps should be converted value by value
+- Nested records should be recursively converted so that their own logical type fields are also processed
+- All of this should work together in a complex, multi-level schema where arrays contain records with map fields that themselves use logical types
+
+## Current Behavior
+
+Currently, only top-level logical type fields on a record are converted. Any logical type fields that appear inside an array, map, or sub-record are left as their raw Avro types, leading to incorrect downstream behavior.
+
+## Why This Matters
+
+Real-world Avro schemas frequently use complex nested structures with logical types embedded at various levels. Without recursive conversion, data pipelines that depend on these logical type conversions receive incorrect types and cannot process the data correctly.

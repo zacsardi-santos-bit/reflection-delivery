@@ -1,9 +1,20 @@
-I'm cleaning up the Cassandra storage backend for Jaeger and the span writer is annoyingly coupled to an external tracing library for all its core types (spans, trace IDs, processes, tags, logs, references) and I want it working directly against our Cassandra-native internal model instead. Those internal types use primitive integers for timestamps, durations, and IDs, they represent a process as a value type rather than a pointer, and they use a different field name for span references, so the writer should just accept the internal db model span type directly with no conversion from the external types. Oh and the write method takes a context param it never actually uses, so drop that while you're in there and simplify the interface down to the core write and close ops.
+## Description
 
-Separately there's no direct write path for the newer OpenTelemetry-formatted traces in the v2 storage layer yet, so I need a new writer there that accepts OTel trace batches, converts them into the Cassandra internal data model, and writes each span one at a time, collecting all the per-span errors and returning them together instead of bailing on the first failure.
+The Cassandra span writer currently depends on an external tracing library for its core data types (spans, trace IDs, processes, tags, logs, references). This creates an unnecessary coupling that makes the storage layer harder to maintain and evolve independently. We should refactor the write path to work directly with the Cassandra-native internal model, which uses simpler primitive types for timestamps, durations, and identifiers, and represents processes as value types rather than pointers.
 
-Also I need a little utility in the database model package that pulls span kind out of a span's tag list, since the new v2 write path needs that for operation name indexing.
+As part of this refactoring, the write interface can be simplified: the context parameter on the write method is unused and should be removed.
 
-And the tag filter config logic (blacklist vs whitelist vs drop-all) should live in the v2 factory. It needs to error when both a blacklist and a whitelist are configured at the same time, and when only one is set it just applies that one filter.
+Additionally, there is currently no direct write path for the newer OpenTelemetry-formatted traces in the v2 storage layer. We need a trace writer that accepts OTel trace batches, converts them into the Cassandra internal data model, and writes each span individually — collecting and reporting all per-span errors together.
 
-Why bother: killing the external library dependency on the write path shrinks the surface we have to touch every time the data model evolves and keeps the storage layer more self-contained.
+Finally, a utility function is needed to look up span kind from a span's tag list, since this information is required for operation indexing in the write path.
+
+## Expected Behavior
+
+- The Cassandra span writer accepts the internal database model span type directly (no conversion from external types)
+- A new interface captures the span writer's core write and close operations
+- A new writer for the v2 storage layer accepts OpenTelemetry traces, converts them to the internal model, and writes each span while aggregating any errors
+- A helper to retrieve span kind from span tags is available in the database model package
+
+## Why This Matters
+
+Removing the external library dependency from the write path reduces the surface area that needs updating when the data model evolves and makes the storage layer more self-contained.

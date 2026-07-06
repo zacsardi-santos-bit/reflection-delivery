@@ -1,5 +1,13 @@
-I'm poking at the Graphite tag support in VictoriaMetrics and hit something that feels wrong. The tag series registration endpoints, the ones that handle registering a single Graphite tag series and the bulk variant that registers multiple at once, are actually creating brand new time series as a side effect when you call them. That was never the intent. Somebody hitting these is probably just trying to "tag" a series that already exists, not ingest fresh data, so having them silently write new series into the database is a footgun and it just quietly accumulates junk over time.
+## Description
 
-I want to kill that behavior entirely. These operations shouldn't be supported at all, so instead of accepting the request and doing the write, the server should come back with a "not implemented" HTTP status (501) for both the single registration path and the multi/bulk one. The response needs to clearly say these operations aren't supported so it's obvious to whoever's calling, no ambiguity there.
+The Graphite tag series registration endpoints currently accept requests and process them by creating new time series in the database. This behavior was not intentional — calling these endpoints creates side effects (new time series) even when callers may simply be trying to "tag" an existing series. These endpoints should not be silently creating data.
 
-The big thing is no new time series get created as a result of calling either endpoint, none, that's the whole point. So gut the write path and just return the not-implemented status for both handlers. Both should behave the same way.
+## Expected Behavior
+
+- When a client sends a request to register a single Graphite tag series, the server should respond with "not implemented" rather than accepting the request and creating new time series.
+- When a client sends a request to register multiple Graphite tag series, the server should likewise respond with "not implemented" and should not create any new time series.
+- The response must clearly communicate that these operations are not supported.
+
+## Why This Matters
+
+Users and operators may unknowingly cause unintended data ingestion when interacting with these endpoints. By explicitly returning a "not implemented" status, the server makes it clear that these Graphite tagging operations are not supported, prevents accidental time series creation, and avoids silent data accumulation in the database.

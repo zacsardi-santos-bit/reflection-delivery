@@ -1,3 +1,15 @@
-I'm hacking on the Deno runtime and there's no clean spot for parsing command-line flags right now, argument handling is scattered all over and there's no structured representation of the flags that control how the runtime behaves. I want to introduce a dedicated module for this, probably something like `@src/flags.rs`, that defines a struct holding all the recognized flags plus a function that takes the raw argument list, picks out and consumes the flags it knows about, and hands back both the populated flags struct and the leftover non-flag args (the stuff meant for user code). The flags I care about are: enabling debug logging, toggling module reload (reloading cached resources), granting write access to files, granting network access, showing version info, and showing help. So the struct needs fields for each of those and the parse function should flip them on when it sees the matching flag and leave everything it doesn't recognize in the returned args list.
+## Description
 
-Oh and separately I need a preprocessing layer that runs before args hit the underlying V8 engine, because some flags should be intercepted and kept at the runtime level instead of forwarded. Specifically the general help flag should be pulled out and not sent to V8 at all, while the flag that asks for V8's own list of options should get translated into the form V8 actually expects rather than passed through as-is. This preprocessing should return the engine-bound args and the intercepted ones separately so the runtime can act on what it kept. The point is a single source of truth for all command-line options so it's easy to add new flags later and user-facing options don't leak into the engine in weird forms.
+The Deno runtime currently has no dedicated module for parsing command-line flags. Argument handling is scattered across the codebase, and there is no structured representation of the flags that control runtime behavior. This makes it difficult to cleanly separate user-facing flags (such as enabling debug logging, reloading cached resources, allowing file writes, or allowing network access) from script arguments passed to user code.
+
+Additionally, there is no clean layer that intercepts certain flags before they reach the underlying V8 engine. The help flag, for example, should be consumed by the runtime rather than forwarded to V8, while the option that requests V8's own help output should be translated into the form that V8 actually understands.
+
+## Expected Behavior
+
+- A new module should parse all recognized runtime flags from the argument list and return a structured representation of the enabled flags alongside the remaining non-flag arguments.
+- Recognized flags should include: enabling debug logging, toggling module reload, granting write access, granting network access, showing version info, and showing help.
+- A preprocessing step should separate flags intended for the runtime from those destined for the underlying engine, translating or filtering as appropriate.
+
+## Why This Matters
+
+Without this, runtime configuration is inconsistent and hard to extend. A clean flags module gives the runtime a single source of truth for all command-line options, making it straightforward to add new flags and ensuring user-facing options do not leak into the engine in unexpected forms.

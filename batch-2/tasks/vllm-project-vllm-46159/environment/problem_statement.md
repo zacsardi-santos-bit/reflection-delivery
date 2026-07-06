@@ -1,7 +1,18 @@
-I'm chasing a nasty streaming bug in our parser that deals with models doing a reasoning/thinking phase before the real response content. When the content section starts with multi-byte characters, think Korean or Chinese or Japanese, I'm seeing the Unicode replacement character show up at the very start of the content output instead of the actual text. It's garbling the first few chars silently, no error raised, just corrupted output, which is a regression that's really annoying for anyone streaming from these think-then-respond models.
+## Description
 
-What's happening, near as I can tell, is the byte sequences for those characters get split right across the boundary between the reasoning section and the content section. So when the content-side fragment gets decoded in isolation, without the preceding byte context, the tokenizer can't rebuild the full character and falls back to the replacement char. I think the fix is to flush the reasoning parser's accumulated byte context at the transition so multi-byte chars that straddle the boundary decode correctly.
+When a language model produces a reasoning/thinking section before its actual response, and that response begins with multi-byte characters (e.g. Korean, Chinese, Japanese), the streamed output becomes corrupted at the transition point. The first few characters of the content are replaced by the Unicode replacement character instead of the intended text.
 
-I need this working so multi-byte characters at the reasoning-to-content handoff always decode right and that replacement character never leaks into content, and it's gotta hold for the GLM4.7-MoE and Qwen3 model families, and stay correct no matter how the token stream gets chunked, whether we process one token at a time, small batches, or the whole sequence at once.
+## Root Cause
 
-Oh and while I'm in here, the shared chunk-size config that a bunch of the parser streaming tests use should get centralized into the replay harness module so multiple test files can reuse it instead of duplicating it everywhere.
+This happens because the byte sequences encoding multi-byte characters can be split across the reasoning/content boundary. When the content-side fragment is decoded in isolation (rather than together with the preceding byte context), the tokenizer cannot reconstruct the original character and falls back to the replacement character. The fix should flush the reasoning parser's accumulated byte context at the transition, ensuring multi-byte characters that straddle the boundary are decoded correctly.
+
+## Expected Behavior
+
+- After the reasoning section ends and content begins, multi-byte characters in the content output must appear correctly decoded.
+- The Unicode replacement character must never appear in the content output, regardless of how the token stream is chunked during streaming.
+- This must work correctly for all relevant model configurations (including GLM4.7-MoE and Qwen3 families).
+- Correct behavior must hold across all streaming chunk sizes (individual tokens, small batches, and full sequences).
+
+## Why This Matters
+
+Users relying on streaming output from models that use structured reasoning (think-then-respond) would observe garbled characters at the start of responses whenever the content begins in a non-Latin script. This is a regression that silently corrupts model output without raising errors.

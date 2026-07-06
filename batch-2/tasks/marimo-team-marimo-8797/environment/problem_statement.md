@@ -1,5 +1,14 @@
-I'm hitting a wall with marimo in an environment where I've got all Python bytecode cache files redirected to a separate directory using the system-level pycache prefix setting (`sys.pycache_prefix`). The trouble is marimo just ignores it and keeps writing its output artifacts, session caches, generated images, and other notebook outputs, right next to the notebook source files. That's a hard fail for us because the source directory is read-only, and honestly a lot of containerized or shared-filesystem setups need source and output kept apart anyway.
+## Description
 
-What I want is for marimo to check whether that cache prefix redirection is actually active, and if it is and the notebook has an absolute path, mirror the notebook's directory tree under the designated cache directory when it decides where to drop its outputs. So session caches and generated images all land under the redirect root following the same folder structure. When the prefix isn't configured, keep everything exactly as it works today, don't change a thing. Also relative notebook paths and the case where there's no notebook path at all should be left completely alone by this redirection logic, no mirroring there.
+When Python's built-in mechanism for redirecting bytecode cache files to a separate directory is active, marimo ignores this setting and continues placing its output artifacts — session caches, generated images, and other notebook outputs — alongside the notebook source files. This causes failures in environments where the notebook's source directory is read-only, or where keeping source and output files separate is a hard requirement (e.g., certain containerized or shared-filesystem setups).
 
-Oh and there's a related annoyance I keep hitting: the output directory path gets resolved eagerly at startup, which sometimes throws errors before the directory is even needed. Can you make that resolution lazy so it only happens the first time the path is actually needed instead of at init time? That'd stop the startup errors. Look around wherever marimo computes the output/cache directory for a notebook to wire this up.
+## Expected Behavior
+
+- When the system-level Python cache redirection is active and the notebook has an absolute path, all marimo output artifacts (session caches, generated images) should be written under the designated cache directory, mirroring the notebook's directory tree.
+- When the cache redirection is not active, behavior should remain unchanged.
+- Relative notebook paths and the case where no notebook path is provided should not be affected by the cache redirection setting.
+- The output directory path should be resolved lazily (only when first needed), rather than eagerly at initialization, to avoid errors during startup.
+
+## Why This Matters
+
+Developers running marimo in environments with read-only source directories or strict separation between source and output files are blocked because marimo unconditionally writes outputs next to the notebook. Supporting the system-level cache redirection setting removes this obstacle and aligns marimo's behavior with standard Python tooling conventions.

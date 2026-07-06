@@ -1,7 +1,19 @@
-I'm working with the HuggingFace datasets library and I want to add native support for loading Apache Iceberg tables. Right now there's just no built-in way to do it, so anyone keeping training data in an Iceberg catalog has to write their own custom loading code instead of going through the standard `load_dataset` interface like they would for CSV or Parquet. Iceberg is everywhere for large-scale analytical storage and tons of ML folks keep their datasets there, so it'd be great if they could get all the ecosystem stuff (streaming, column projection, filtering, snapshot time-travel) for free.
+## Description
 
-What I'm after is a new packaged module called "iceberg" that lets users pass a catalog object plus a table identifier to the standard loader and get a dataset back. It should support column projection where passing a list of column names returns only those columns, row filtering via a SQL-style filter string returning only matching rows, and multiple splits by passing a mapping of split names to table identifiers so you get one split per entry. Streaming mode should give back an iterable dataset when requested and a regular in-memory dataset otherwise, and there should be time-travel where passing a snapshot id loads the table as it existed at that historical point (nice for reproducibility). Parallel loading with multiple worker processes needs to work correctly too.
+The datasets library currently has no built-in support for loading data from Apache Iceberg tables. Users who store training data in Iceberg catalogs must write custom loading code instead of using the standard dataset loading interface. We should add an "iceberg" packaged module so that users can load Iceberg data with the same API they use for other supported formats.
 
-Oh and error handling matters here. If the catalog arg is missing or not provided I want a clear descriptive error that actually mentions "catalog", and same deal for the table arg, a descriptive error that mentions "table" so people know which required parameter they left out.
+## Expected Behavior
 
-Also I need a test utility decorator (following the same pattern as the existing skip decorators for optional deps) that skips tests when the required Iceberg library isn't installed.
+- Passing a catalog object and a table identifier to the standard dataset loader should return a dataset with all columns and rows from that table.
+- Column projection should be supported: passing a list of column names should return only those columns.
+- Row filtering should be supported: passing a SQL-style filter string should return only matching rows.
+- Multiple splits should be supported: passing a mapping of split names to table identifiers should return a dataset with one split per entry.
+- Streaming mode should be supported: the result should be an iterable dataset when streaming is requested, and a regular in-memory dataset otherwise.
+- Time-travel queries should be supported: passing a snapshot identifier should load the table as it existed at that historical point.
+- Parallel loading should work correctly when multiple worker processes are requested.
+- If the catalog argument is missing or not provided, a descriptive error must be raised that mentions "catalog".
+- If the table argument is missing or not provided, a descriptive error must be raised that mentions "table".
+
+## Why This Matters
+
+Apache Iceberg is widely used for large-scale analytical data storage, and many ML practitioners keep their training datasets in Iceberg tables. Without native support, users cannot leverage the ecosystem features (streaming, column projection, filtering, snapshot time-travel) that make the library useful for large datasets.

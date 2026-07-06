@@ -1,5 +1,17 @@
-I'm hitting an annoying flicker with our dashboard cells. When I open a cell's config editor and then back out to the dashboard, the cell briefly drops into a loading state and re-fetches its view from the server even though that same data was already loaded before I ever opened the editor. So the content vanishes, shows a spinner, then comes right back with identical data. It's disruptive and pointless.
+## Description
 
-What I want is for the exit-from-editor path to check whether the cell's view data is already sitting in the app state, and if it is, just use it directly, no loading indicator, no network round trip. The only time we should actually fetch from the server and flip into a loading state is when the data genuinely isn't there locally. Right now the code sets the loading state unconditionally, before it even checks whether a fetch is needed at all, which is the root of the problem, so the loading flag ends up being a default step every single time the editor closes regardless of whether anything's cached.
+When a user exits the configuration editor for a dashboard cell, the cell content briefly disappears and shows a loading indicator before reappearing with the same data that was already loaded. This creates an unnecessary and disruptive flash of loading content even though the view data is already available in the application state.
 
-So basically: reuse the already-loaded view when it's present, only fetch (and only show loading) when the view data is missing.
+## Expected Behavior
+
+- If a dashboard cell's view data is already present in the application state, exiting the cell configuration editor should display the cell content immediately without triggering a loading state or re-fetching from the server.
+- A network request to retrieve the view should only be made when the view data is not already available locally.
+- The loading indicator should only appear when a fetch is actually needed — not as a default step every time the editor is exited.
+
+## Current Behavior
+
+- The cell always resets to a loading state and re-fetches its view from the server when exiting configuration mode, regardless of whether the data is already cached.
+
+## Why This Matters
+
+Users editing dashboard cells experience an unnecessary visual disruption every time they exit the editor. The content they were just looking at flickers through a loading state before reappearing unchanged. By reusing already-loaded view data when available, the transition becomes seamless and the application avoids redundant network requests.

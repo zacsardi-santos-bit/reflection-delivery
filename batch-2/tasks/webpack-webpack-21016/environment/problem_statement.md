@@ -1,9 +1,25 @@
-I'm adding HTML processing to webpack and I need a parser that turns a raw HTML string into a structured tree the rest of the toolchain can walk and rewrite, think discovering resource references in HTML entry points. Right now there's nothing built in for this. I want it as a new module in the library's HTML processing area, exposed as the module's default export.
+## Description
 
-Every node needs a discriminating type field. The root is always a document node with a children array. HTML tags become element nodes carrying a lowercase tag name, their children, and their parsed attributes where each attribute has a name and a value (valueless attributes get an empty string, and unquoted values need handling too). Elements also carry a self-closing flag (true for void elements like img, br, input and for tags written with a trailing slash, and those carry no children), a numeric namespace identifier, and a numeric end offset into the source string.
+Webpack needs a way to parse HTML strings into a structured tree (AST) so that plugins and core internals can traverse, inspect, and transform HTML content at the structural level — for example, to discover and process resource references in HTML entry points.
 
-Text content becomes text nodes with a data field, and adjacent text segments at the same level should merge into one. Comments become comment nodes with a data field, and weird constructs like processing-instruction-style markup that doesn't match standard comment syntax should also come through as comment nodes with the raw text as data. DOCTYPE declarations get their own node type.
+Currently there is no built-in HTML parser in the project. Adding one would let webpack understand the full structure of an HTML document: its elements, text content, attributes, comments, doctype declarations, and embedded namespace contexts like SVG and MathML.
 
-It needs HTML5 optional-closing rules, so a paragraph auto-closes when a block-level element opens inside it, a list item closes when another list item follows at the same nesting level, and table cells behave the same way. For namespaces: elements inside an SVG root get the SVG value, inside a MathML root get the MathML value, everything else gets HTML. Inside SVG, foreign-object and description element content reverts to HTML. Raw-text elements like script blocks capture their inner content verbatim as a single text child, no angle-bracket parsing.
+## Expected Behavior
 
-Oh and when an element is implicitly closed because an ancestor's explicit closing tag was reached, the implicitly-closed element's end offset should match the end offset of the element whose closing tag triggered the closure. Also the three namespace values (0 for HTML, 1 for MathML, 2 for SVG) should be exposed as named constants directly on the exported function so callers can compare against them.
+The parser should produce a tree where every node has a discriminating type field:
+
+- The root is always a document node.
+- HTML tags become element nodes, with a tag name, a list of children, and a list of parsed attributes (each with a name and value).
+- Void elements (like image tags, line-break tags, and input tags) are flagged as self-closing and carry no children.
+- Text content becomes text nodes with the raw string.
+- HTML comments become comment nodes. Unusual comment-like constructs that do not use the standard comment syntax should also be treated as comments.
+- DOCTYPE declarations become their own node type.
+- The parser should handle optional tag-omission rules (e.g., paragraph elements closing before block elements, list items closing before the next list item).
+- Elements inside SVG or MathML sections should be tagged with the appropriate namespace, and HTML integration points inside SVG (such as foreign-object content) should revert back to HTML namespace.
+- Raw-text elements like script blocks should have their inner content preserved verbatim as a single text node, without any attempt to parse it as markup.
+- Each element node should track its end position in the source string, including the correct end for implicitly-closed elements.
+- Three numeric namespace constants (for HTML, MathML, and SVG) should be exported alongside the parser function so callers can compare against them.
+
+## Why This Matters
+
+Without a proper HTML AST, webpack cannot meaningfully analyze or rewrite HTML files during a build. This foundational parser is a prerequisite for higher-level HTML processing features.

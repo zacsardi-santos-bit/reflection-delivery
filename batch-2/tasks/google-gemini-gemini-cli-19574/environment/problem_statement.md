@@ -1,7 +1,17 @@
-I'm cleaning up how our file-writing and search tools report back after they run, because right now writing or updating a file returns the whole file content and for a big file where only one line changed that's just noise that wastes context and buries the actual change. What I want is for a write or update to return a labeled snippet with a clear "here is what changed" header showing only the modified portion plus a few lines of surrounding context, and lines far from any change should be dropped and replaced with a placeholder so it's obvious content got skipped. But if the file is brand new or small enough that the whole thing fits comfortably in context (few or no changes), just return the full content instead.
+## Description
 
-Same idea for search: when a file has 3 or fewer matches, I want it to automatically include surrounding lines before and after each match, not just the bare matching line, so I can actually tell where in the file structure the hit lands. Also the search params should take an explicit numeric option controlling how many context lines show around each match result.
+When AI tools write or modify files, the response currently returns either the full file content or minimal feedback. For large files — say, a file with 100 lines where only one line changed — returning the entire content wastes context space and makes it hard for the model to focus on what actually changed. We need smarter, diff-aware responses.
 
-Oh and I need a reusable utility that takes an original and a modified string (each multi-line text) and produces a compact diff snippet with only the changed lines plus a configurable number of context lines. When changes are far apart it separates them with a placeholder, and when they're close it merges the context windows so they don't overlap awkwardly. Context should default to 5 lines but be overridable.
+Similarly, the search tool currently returns match lines without surrounding lines when there are very few results. A single match deep in a large file is hard to interpret without seeing the lines around it.
 
-All of this cuts unnecessary content in the responses while keeping the part that matters, which makes it way easier to see the effect of a write on a large file and to understand rare search matches.
+## Expected Behavior
+
+- When a file write or update is performed, the tool should return a labeled snippet (prefixed with a clear header) that shows only the modified portion(s) of the file plus a few lines of surrounding context. Lines far from any change should be omitted, replaced by a placeholder showing that content was skipped.
+- When a file write or update results in few or no changes (e.g., the file is new or tiny), the full content should be returned.
+- When the search tool finds 3 or fewer matches in a file, it should include surrounding lines (context before and after each match) to show where in the file the match appears.
+- A standalone utility should be available to compute context-aware diff snippets given original and modified text, with a configurable number of surrounding context lines.
+- The search tool parameters should support an explicit numeric context option so callers can control how many surrounding lines appear around each match.
+
+## Why This Matters
+
+Returning only changed lines with context makes it much easier to understand the effect of a write operation on a large file. Including context lines around rare search matches improves comprehension of where those matches appear in the file structure. Both improvements reduce unnecessary content in AI responses while preserving the information that matters most.

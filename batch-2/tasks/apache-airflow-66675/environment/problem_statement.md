@@ -1,3 +1,12 @@
-I'm chasing a file descriptor leak in the Airflow triggerer service and it's biting us in prod. The triggerer runs these long-lived async triggers, each with an associated local log file, and when a trigger finishes the code tries to upload its buffered log output to a remote storage backend and then closes the local log file handle. Problem is the ordering, if that remote upload throws anything at all (network error, permission problem, misconfigured storage creds, whatever), the exception propagates straight up and we never get to the line that closes the handle. So every failed upload leaks an open file descriptor that's never released, and in environments where remote uploads fail a lot these pile up until we hit the OS file descriptor limit and the triggerer degrades or crashes.
+## Description
 
-What I want is for the local cleanup to happen no matter what happens during the upload. Even when the remote upload fails for any reason, the local log file handle should always end up closed afterward, and the trigger's id should get removed from the internal tracking state the triggerer keeps, both the logger cache and the running triggers set, regardless of whether the upload succeeded or blew up. Basically wrap it so the local resource release doesn't depend on the upload path succeeding. The finished-trigger logic lives in the triggerer job runner code under `@airflow/jobs/triggerer_job_runner.py`, so that's where the fix goes.
+The triggerer service manages long-running asynchronous tasks and their associated log files. When a task finishes, the system attempts to upload any buffered log data to a remote storage backend, then closes the local log file handle. A bug exists where, if the remote upload step fails — due to a network error, permission problem, or any other exception — the error propagates immediately without giving the code a chance to close the local file handle. Every failed upload leaves behind an open file descriptor that is never released.
+
+## Expected Behavior
+
+- When a trigger finishes and its remote log upload fails for any reason, the local log file handle must still be closed.
+- The trigger's ID must be cleaned up from all internal tracking structures (the logger cache and the running triggers set) regardless of whether the upload succeeded or failed.
+
+## Why This Matters
+
+In production environments where remote log uploads fail frequently (e.g., intermittent network issues or misconfigured storage credentials), file descriptors accumulate without bound. Over time this exhausts the operating system's file descriptor limit and degrades or crashes the triggerer service. The fix is to ensure that local file resources are always released after a trigger finishes, no matter what happens during the upload step.

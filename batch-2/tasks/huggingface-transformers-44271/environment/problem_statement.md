@@ -1,5 +1,20 @@
-I'm using the transformers library and I keep wanting a learning rate scheduler that reacts to actual training dynamics in both directions, not just backing off. Right now the only metric-aware option can reduce the LR when things plateau but it can't take advantage of a run that's consistently improving by bumping the LR up. I want a new adaptive scheduler that watches an eval metric and raises the learning rate when the metric improves for a configurable number of consecutive evaluations, and lowers it when the metric stops improving (plateaus) for a configurable count.
+## Description
 
-Stuff I need it to handle: configurable patience for both improvements and non-improvements, separate scale factors for going up vs down, hard lower and upper bounds on the LR so it never wanders off, and optional cooldown after a decrease plus warmup after an increase so it doesn't oscillate. Also I want optional rolling-window smoothing of the metric before any decision gets made, and an auto-reset that restores the initial LR after it's been pinned at the minimum for too many steps. It should work in both minimize and maximize orientations, and support models with multiple optimizer param groups (scale each group).
+The transformers library offers a variety of fixed-schedule learning rate schedulers, but lacks a built-in option that adaptively adjusts the learning rate in **both directions** based on observed training metrics. The only metric-aware scheduler currently available can only reduce the learning rate when training plateaus — it cannot capitalize on periods of consistent improvement by raising the learning rate.
 
-It's gotta be fully serializable, save and restore state including the smoothing window contents, and loading a partial state dict from an older checkpoint shouldn't crash, missing keys just keep their defaults. I need it reachable two ways: as a named scheduler type in the training config (so I can select it by name and pass patience, scaling factor, etc. alongside), and as a plain object I can instantiate directly and hand to the trainer. When it goes through the trainer it should be stepped with the eval metric after each evaluation run, not automatically every train step, same as the existing plateau-reduction one. Oh and don't change the default scheduler for new runs, keep that backward compatible. The relevant code lives around the optimization and trainer plumbing in the transformers package (the scheduler definitions and the trainer's scheduler-stepping logic).
+We need a new adaptive scheduler that monitors a training metric and:
+- **Increases** the learning rate when the metric consistently improves over a configurable number of consecutive evaluations.
+- **Decreases** the learning rate when the metric stops improving (plateaus) for a configurable number of consecutive evaluations.
+
+Additional required behaviors:
+- The learning rate must stay within configurable lower and upper bounds.
+- After each adjustment, a configurable cooldown (for decreases) or warmup (for increases) period should suppress further changes.
+- Optional smoothing of the metric values via a rolling window before making decisions.
+- An auto-reset mechanism that restores the initial learning rate after it has been stuck at the minimum for a configurable number of steps.
+- Both "minimize metric" and "maximize metric" orientations.
+- Full serialization support (save and restore state) with backward compatibility when loading partial state dicts from older checkpoints.
+- Integration with the standard training configuration so it can be selected by name, and integration with the trainer so it is stepped on evaluation metrics rather than on every training step (matching how the existing plateau-reduction scheduler is handled).
+
+## Why This Matters
+
+Many training runs benefit from being able to both back off when stuck and accelerate when making progress. A scheduler that can do both reduces manual tuning and can lead to faster, more stable convergence.

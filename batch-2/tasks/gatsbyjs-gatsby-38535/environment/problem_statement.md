@@ -1,5 +1,17 @@
-I'm chasing down a crash in Gatsby's dev server error overlay, that runtime error panel we show developers during local development so they can see what blew up. Problem is it dies completely when it gets an error with no stack trace. Turns out some errors don't carry stack info, stuff thrown in certain browser environments or errors that were manually constructed without a stack, and right now instead of degrading gracefully the whole overlay throws and renders nothing, so the developer just sees a broken panel and learns nothing about what actually went wrong. Kind of defeats the point of an error overlay.
+## Description
 
-What I want is for the runtime error rendering (look at the overlay component under `@packages/gatsby/cache-dir/`, the dev error overlay bits) to handle these stackless errors without falling over. When an error does have a stack trace, keep everything exactly as it works today, message shows visibly and all that. When there's no stack trace, still show the error's message visibly rather than blowing up. Basically always surface at least the message.
+The development error overlay crashes when it encounters runtime errors that don't have a stack trace. Some errors — particularly those thrown in certain environments or manually constructed errors — may not include stack information, and the overlay currently fails entirely in these cases instead of showing the user the error message.
 
-Oh and the dedup logic matters here too. If the same error shows up multiple times in the errors list it should only render once, and that deduplication needs to work for both errors that have a stack trace and errors that don't. So don't key dedup off the stack alone or you'll break the stackless case.
+## Expected Behavior
+
+- When the error overlay receives errors that include a stack trace, it should display the error message visibly as it does today.
+- When the error overlay receives errors that do **not** have a stack trace, it should still display the error message visibly rather than crashing.
+- Duplicate errors passed to the overlay should be deduplicated so each unique error appears only once.
+
+## Current Behavior
+
+If any error in the errors list lacks a stack trace, the overlay throws an exception instead of rendering. The developer sees nothing useful — just a broken overlay.
+
+## Why This Matters
+
+Developers rely on this overlay during development to understand what went wrong. When the overlay itself crashes due to a missing stack trace, it defeats its own purpose. The overlay should degrade gracefully and always show at minimum the error message, even when detailed stack information is unavailable.

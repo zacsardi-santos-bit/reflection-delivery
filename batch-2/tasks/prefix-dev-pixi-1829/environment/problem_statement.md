@@ -1,5 +1,19 @@
-We upgraded our Python env management library and one of its internal modules got renamed in the newer version, so now our integration tests won't even compile because we're still pointing at the old module name all over the place. I need you to swap the dependency in our build config so it declares the renamed package and no longer references the old name, then go through every source file that mentions the old module name and update each reference to the new one. Once that's done the whole thing should build cleanly and the integration tests that do Python environment introspection should compile and pass.
+## Upgrade Python environment management dependency
 
-While you're in there, I also want to add an optional cleanup flag to our example test runner script. The idea is you pass the flag and before it runs each example project's tests it first cleans that project's environment, kind of a pristine-state thing that's handy for CI and reproducible runs. If the cleanup step fails for a given project, don't try to run its tests, just mark that example as failed, bump the failure count, and move on to the next one. Without the flag it behaves like it does today.
+### Description
 
-The motivation here is that the old module literally doesn't exist anymore in the new library version so we're stuck until we do the rename, and keeping current with it also picks up the latest upstream fixes. Make sure the flag is genuinely optional so existing invocations don't change behavior.
+The library we use for Python environment management has released a newer version in which one of its internal modules was renamed. Our codebase still references the old module name, which causes compilation failures in integration tests. We need to update all references throughout the source code and build configuration to use the new module name.
+
+### Expected Behavior
+
+- The build configuration should declare the renamed dependency (no longer referencing the old name) so the project compiles cleanly.
+- All source files that previously referenced the old module name should be updated to the new name.
+- Integration tests that rely on Python environment introspection should compile and pass.
+
+### Additional Feature
+
+The example test runner script should gain an optional cleanup flag. When this flag is passed, the script should run a cleanup operation on each example project before executing its tests. If the cleanup fails, the example should be counted as failed and the script should move on to the next one.
+
+### Why This Matters
+
+Without the rename, the codebase fails to build because the old module no longer exists in the newer version of the library. Keeping up with this rename lets us take advantage of the latest fixes in the upstream library. The optional cleanup flag is useful for CI and reproducible testing scenarios where a pristine environment is desired before each test run.

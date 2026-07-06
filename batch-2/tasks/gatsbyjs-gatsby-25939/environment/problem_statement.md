@@ -1,5 +1,16 @@
-I'm poking at the Gatsby Recipes renderer and hitting two annoying gaps in the plan output it spits out. When the renderer builds up its list of planned changes, each plan item is missing the resource type name, so anything downstream that wants to know whether a given item is a file write, an npm package install, or whatever else, has no idea. Right now that field just comes back undefined, which is useless for a web UI or any tool trying to render a proper label without doing extra lookups. I want each plan item to carry the resource type name directly as a populated field on the plan object so consumers can just read it off.
+## Description
 
-The other thing is the diff text. Each plan item includes a diff string, but it's got raw ANSI terminal color escape codes baked right into it. That's fine if you're only ever dumping it to a terminal, but the second you show it in a web interface or log it or process it as plain text, those escape sequences turn into garbage characters. I want the diff output to be plain, readable text with zero embedded color or formatting codes.
+The Gatsby Recipes renderer produces plan output that is difficult to consume programmatically or display in non-terminal contexts. Two specific issues exist:
 
-So basically, fix the renderer so plan items include the resource type name and so the diffs are clean plain text. Plan output gets consumed by both terminal UIs and other surfaces, so it needs to work everywhere without callers having to strip escape sequences or do their own type lookups first.
+1. **Missing resource type information**: When the renderer produces a list of planned changes, each plan item is missing information about what kind of resource it represents. Tools or UI components that consume the plan output cannot determine whether a given item is a file operation, an npm package install, or another resource type without additional lookup.
+
+2. **ANSI escape codes in diff output**: The diff text included with each plan item contains raw terminal color codes embedded in the string. This makes the diff output unreadable when displayed outside a terminal (e.g., in a web UI or when processed as plain text), and makes programmatic processing of diffs unnecessarily complex.
+
+## Expected Behavior
+
+- Each planned change item should include the name of the resource type it represents, available as a dedicated field on the plan object.
+- The diff text for each plan item should be plain, readable text with no embedded terminal color or formatting codes.
+
+## Why This Matters
+
+Recipe plan output is consumed by both terminal UIs and other rendering surfaces. Having resource type information directly on plan items allows consumers to render appropriate labels without extra lookups. Having clean diff text ensures the output can be displayed, logged, or processed without stripping escape sequences first.

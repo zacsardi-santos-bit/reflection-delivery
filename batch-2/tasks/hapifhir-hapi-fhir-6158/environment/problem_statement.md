@@ -1,5 +1,16 @@
-I'm dealing with a schema migration framework for a FHIR server and the online index handling on SQL Server is bugging me. Right now we detect the SQL Server edition up front and use that to decide whether online (non-locking) index create/drop is even possible, falling back to the locking approach when we think it's not supported. Problem is the detection is wrong twice over: SQL Server Developer Edition gets flagged as not supporting online indexing when it totally does, so those environments take unnecessary table locks during migrations, and Azure SQL Edge editions (both the Developer and Premium variants) aren't handled at all so they get misclassified and get no online support.
+## Description
 
-What I want is to stop leaning on edition detection at the point where we create or drop an index on SQL Server. Instead, for both index creation and index dropping when the online flag is enabled, generate SQL that wraps things in a database-level TRY/CATCH: try the online non-locking version first, and if it throws (because the edition genuinely can't do it) automatically retry the same operation without the online flag, i.e. the standard table-locking path. That way the database decides at runtime and correctness doesn't hinge on us guessing the edition right.
+When performing database schema migrations against SQL Server, the migration framework needs to create and drop indexes without locking tables where possible. Currently, the system queries the SQL Server edition at startup and decides whether online (non-locking) index operations are supported. If the edition doesn't support it, the system falls back to the locking approach. This pre-detection mechanism has two issues:
 
-Also, the edition detection logic still gets used for other database types, so fix it too, it should recognize Developer Edition and Azure SQL Edge (Developer and Premium) as supporting online operations, while Standard Edition keeps being recognized as not supporting them. Basically the create/drop path shouldn't care about detection anymore, but where detection lives it should classify those editions correctly.
+1. **Wrong edition classification**: SQL Server Developer Edition is incorrectly classified as *not* supporting online index operations, even though it does. This means environments running on Developer Edition unnecessarily take table locks during migrations.
+2. **Missing Azure SQL Edge support**: Azure SQL Edge editions (Developer and Premium variants) are not handled and get classified incorrectly.
+
+## Expected Behavior
+
+- For SQL Server, both index creation and index dropping with the online flag enabled should use a TRY/CATCH approach at the database level: first attempt the online (non-locking) operation, and if it fails (e.g., because the edition truly doesn't support it), automatically fall back to the standard locking operation. This removes the dependency on correct edition detection for the common create/drop index path.
+- The edition detection logic should be corrected to properly recognize SQL Server Developer Edition and Azure SQL Edge (Developer and Premium) editions as supporting online operations.
+- SQL Server Standard Edition should continue to be recognized as not supporting online index operations.
+
+## Why This Matters
+
+The current approach causes Developer Edition environments to take unnecessary table locks during migrations. Azure SQL Edge users get no online migration support at all. The TRY/CATCH approach is more robust: it works correctly regardless of whether the edition detection is accurate, since the database itself decides at runtime whether to run the online or the locking path.

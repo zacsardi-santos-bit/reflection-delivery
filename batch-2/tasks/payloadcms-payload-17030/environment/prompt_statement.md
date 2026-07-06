@@ -1,0 +1,7 @@
+I'm hitting a nasty data-loss bug with collections that combine cloud storage (local file storage disabled) and draft versioning. When I save a draft that includes a new file upload, two bad things happen: the currently published version of the document gets corrupted, its status gets flipped or overwritten with the draft content so editors lose their live content, and the published file sitting in the cloud storage backend gets a delete request and vanishes even though it's still live and in use.
+
+What I actually want is for saving a draft with a new file to leave the published document completely untouched, so same status, same filename, same field values, no changes at all. Only the draft version should carry the new file and its own distinct data, kept separate from the published one. And the published file in cloud storage must not get deleted when a new draft file comes in, that delete request shouldn't fire at all while a draft is just being staged.
+
+Then later, when the draft actually gets published, that's the moment (and only then) the published document should adopt the draft's file and data.
+
+Oh and regular non-draft updates on these collections need to keep working like before, updating the main document with the new file and data without any issues. Content editors lean on this draft/publish flow to stage changes before they go live, so wrecking the published state and nuking the live cloud file as a side effect of a draft save is exactly the thing I need gone.

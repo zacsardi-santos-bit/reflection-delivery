@@ -1,3 +1,15 @@
-So I keep hitting this really confusing thing when I fumble an import path in Deno. If I accidentally point a static import at a local directory instead of an actual file (like I forgot to add the filename at the end), the runtime throws this raw filesystem error at me, something like "is a directory" with the low-level "os error" text baked into the message. It gives zero hint that the actual problem is that I tried to import a directory, which just isn't supported for ES modules, and it doesn't look anything like the errors I'd expect coming from the JS/Node world.
+## Description
 
-What I want is for fetching a local file URL that resolves to a directory to produce a clean, structured error instead. It should be categorized as a JavaScript type error (I want to be able to verify at runtime that it really is a TypeError, not some generic OS or I/O error), and it should carry a recognizable error code that follows the Node.js convention for this case, indicating directory imports aren't supported for ES modules. Oh and the error needs to include the URL of the directory that caused it so I can actually see which import went wrong and fix the path. Also, importantly, the message must not leak any of that low-level OS detail, so no "os error" string showing up in there. Basically when someone forgets the filename on an import, the error should immediately tell them what happened in terms that match the rest of the ecosystem.
+When a local file URL that points to a directory is fetched as an ES module, Deno produces a raw OS-level error (e.g. "is a directory" or similar filesystem error) instead of a clear, structured error message. This makes it very confusing for developers to diagnose what went wrong — the error gives no indication that the problem is an unsupported directory import.
+
+## Expected Behavior
+
+- Fetching a local directory URL should produce a specific, recognizable error indicating that directory imports are not supported for ES modules
+- The error should carry the problematic URL so that it can be surfaced to the developer
+- The error should be categorized as the appropriate JavaScript error type (a type error), not as a generic OS or I/O error
+- The error message should include a well-known error code matching the Node.js convention for this scenario
+- The message must not expose low-level OS error details (e.g. "os error")
+
+## Why This Matters
+
+Developers who accidentally write an import path pointing to a directory (e.g. forgetting the filename) currently receive a confusing, unhelpful error. With this fix, the error is immediately recognizable, categorized correctly, and consistent with established conventions from the broader JavaScript ecosystem.

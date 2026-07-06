@@ -1,5 +1,15 @@
-I'm poking at the CSE pass in Sway's IR optimizer and there's a whole class of redundant stuff it just walks right past. When you load the address of the same local var, or a global, or a configurable constant, or a storage key, more than once in a function, those loads are always going to produce the same value. The address of any of those entities is invariant within the function, it never changes between program points, so two instructions loading the same target's address are guaranteed to compute identical values and should be congruent as far as CSE is concerned.
+## Description
 
-Right now they aren't, which means we keep the second redundant load around and, worse, any pointer ops hanging off it (element-access, offset/pointer-arithmetic that used the second load as their base) stay pointed at it instead of the first. So we emit more instructions than we need, bytecode gets bigger, gas goes up.
+The Sway compiler's optimizer includes a Common Subexpression Elimination (CSE) pass that identifies and removes redundant computations in the intermediate representation. However, the CSE pass currently fails to recognize a whole class of obviously redundant instructions: multiple loads of the address of the same local variable, global variable, configurable constant, or storage key.
 
-What I want is for the CSE pass to recognize these get-address-style instructions as congruent when they refer to the same local, global, configurable, or storage key, then rewrite all the downstream uses of the second onto the first so the dead second load can get swept up later by Dead Code Elimination. It should cover all four entity kinds, not just locals, and when it actually makes one of these replacements it needs to report that the IR was modified so the pass pipeline knows something changed. The dependent pointer instructions should just fall out of the use-rewrite automatically since they'll now reference the surviving instruction. Net effect I'm after is smaller programs and less gas, measurable as reduced bytecode size across compiled programs.
+Since the address of any such entity is invariant within a function — it never changes between program points — any two instructions loading the same address are always guaranteed to produce identical values. The CSE pass should be able to recognize this and replace references to the redundant second load with the first, allowing the dead second load to later be removed by the Dead Code Elimination pass.
+
+## Expected Behavior
+
+- When two instructions both load the address of the same local variable, they should be treated as congruent by CSE, and uses of the second should be rewritten to use the first.
+- This congruence should extend to instructions loading the address of global variables, configurables, and storage keys.
+- As a side effect, instructions that depend on the redundant load (such as pointer-arithmetic or element-access instructions that used it as a base) are automatically updated to use the surviving instruction.
+
+## Why This Matters
+
+Currently, the compiler generates slightly larger and less efficient bytecode than necessary because these redundant address loads are not eliminated. Fixing this produces smaller programs and reduced gas consumption, as demonstrated by the measurable bytecode size reductions in various compiled programs.

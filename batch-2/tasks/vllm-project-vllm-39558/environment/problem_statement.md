@@ -1,7 +1,25 @@
-I'm hacking on the vLLM IR operator framework and want to fix a cluster of related issues in one go. The big one is test reliability: right now all the IR operator tests share a single global registry, and since PyTorch keeps operator registrations alive for the whole process, tests step on each other and running them twice in the same process can actually crash things when the same operator name gets registered twice. I want each test to get its own clean, isolated operator registry backed by a fresh torch library instance, with automatic teardown so registrations from one test don't leak into another.
+# Test Isolation, Name Validation, and Developer Ergonomics for IR Operators
 
-Second thing, operator names and provider names aren't validated at all right now, so a name with uppercase letters, hyphens, or one that starts with a digit sails through silently. I want names restricted to lowercase letters, underscores, and digits, and they have to start with a letter or underscore, so registering either an operator or an implementation with a bad name should raise an error that clearly says the name is invalid.
+## Description
 
-Third, there's no provenance when something goes wrong, I end up grepping the whole codebase to find where an op was registered. So each operator and each implementation should capture a stack trace at registration time, exposed as a traceback attribute, and it should trim the internal framework frames off the end so the last entry points right at the user's decorator call.
+The vLLM IR operator test suite has a reliability problem: all tests share a single globally registered set of custom operators. Because PyTorch holds operator registrations for the entire process lifetime, tests can interfere with each other, and reusing the same operator name in different test runs can even crash the process. We need each test to have its own isolated operator registry so that tests can register and deregister operators independently.
 
-Last one is just ergonomics, when I print an operator I get the default Python object repr which is useless in logs. I want a compact machine-readable form (repr) that's a short identifier string including the name for unambiguous ID, plus a human-readable form (str) that includes the first line of the operator's docstring when there is one, falling back to the same compact format otherwise. Without the isolation the suite stays order-dependent and flaky, without validation bad names silently create confusing ops, without the traceback debugging is manual grep work, and without proper string reps operators are just opaque objects in debug sessions.
+Beyond test isolation, there are two missing features that would help developers working with IR operators:
+
+1. **Name validation**: Operator names and provider names are currently accepted without validation, so a name using uppercase letters, hyphens, or starting with a digit passes silently. Names should follow a strict lowercase convention, and violations should produce a clear error.
+
+2. **Registration provenance**: When debugging an issue with a registered operator, there is no record of where in the source code the operator (or its implementation) was registered. Each operator and implementation should capture a stack trace at registration time so developers can trace the origin.
+
+3. **Human-readable representation**: IR operators currently have no meaningful string representation, making them hard to identify in logs and debug output. Operators should have a compact machine-readable representation that includes their name, and a human-readable form that incorporates the first line of their docstring when one is present.
+
+## Expected Behavior
+
+- Each test that registers IR operators should work against its own clean, isolated registry; registrations from one test must not affect another.
+- Attempting to register an operator or implementation with a name that contains uppercase letters, hyphens, or that starts with a digit should raise an error clearly indicating the name is invalid.
+- After registration, each operator and each implementation should expose a traceback attribute containing a stack trace pointing to the user code that performed the registration, with internal framework frames removed from the end.
+- The compact machine-readable form of an operator should return a short identifier string.
+- The human-readable form of an operator should include the first line of its docstring when available, or fall back to the same compact format.
+
+## Why This Matters
+
+Without test isolation, the test suite is fragile and order-dependent. Without name validation, bad operator names can silently create confusingly named ops. Without stack traces, debugging registration issues requires manual code search. Without string representations, operators are opaque objects in logs and debug sessions.

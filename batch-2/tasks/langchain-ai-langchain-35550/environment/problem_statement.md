@@ -1,5 +1,13 @@
-I'm hitting a schema generation bug with tool arguments that use factory-based defaults, you know, fields like a list or dict that get created fresh on each call. When I convert one of these tools into the JSON schema shape that AI model APIs expect, those factory-defaulted fields keep showing up in the required list even though they obviously have defaults. So the model thinks it has to supply values for stuff that's meant to be optional, and it ends up throwing values at parameters that already have working defaults, which causes needless validation errors and just worse tool-calling behavior overall.
+## Description
 
-What I want is for any field that has a default to be treated as optional in the generated schema, doesn't matter if it's a plain static value or a lazily-created factory one, either way it shouldn't land in required. Only fields with no default at all (no static value and no factory) should be required.
+When defining tool argument schemas that include fields with lazy/factory-based defaults (e.g., a list or dictionary that should be initialized fresh for each call), those fields are incorrectly marked as required in the generated JSON schema. This means AI models see these optional arguments as mandatory, causing them to attempt to supply values for parameters that should have working defaults.
 
-I think the actual fix lives in the internal helper that builds subset models out of an existing model. Right now it's dropping the factory defaults when it copies fields over, so the required designation comes out wrong. It needs to preserve factory-based defaults from the original model's fields so the resulting schema marks required correctly. Can you sort that out?
+## Expected Behavior
+
+- A tool argument schema field that has a factory-based default should be treated as optional — it must **not** appear in the required list of the generated schema.
+- The internal utility that builds subset models from an existing model should preserve factory-based defaults from the original model's fields so that the "required" designation is correct in the resulting schema.
+- Only fields with no default at all (neither a static value nor a factory) should be listed as required.
+
+## Why This Matters
+
+Incorrect "required" metadata in tool schemas breaks tool calling workflows: the AI model is told it must supply values for arguments that the developer intentionally gave defaults, leading to avoidable validation errors and worse tool-calling behavior.

@@ -1,0 +1,9 @@
+I'm building a liquid staking protocol on CosmWasm with a hub contract and a staker contract, and I've hit a gap in the unbonding lifecycle. When users unbond their liquid staking tokens the system batches those requests and submits them for unbonding, but once the unbonding window passes and the native tokens come back on-chain there's currently no way for the hub to tell the staker layer that a particular batch's tokens have actually been received. So the process never really completes.
+
+I want a new operation on the hub contract that finalizes this token receipt step. When it's called for a batch that's already been submitted and whose unbonding period has elapsed, it should forward a message to the staker contract to handle the received tokens for that batch (passing along the batch identifier), and the response should carry an event recording both the batch id and the expected token amount. It also can't accept any attached funds.
+
+Error handling matters here too. If the batch hasn't been submitted yet, reject it with a "batch not found" error, and if the unbonding period isn't done yet, reject with a "batch not ready" error that includes the current timestamp plus the time when the batch becomes ready so callers can see how long's left.
+
+On the staker side, the handler that processes incoming unstaked token receipts is wide open right now, any address can invoke it, which is a security hole. I need that locked down so only the trusted hub contract address can call it, and unauthorized callers get rejected. Oh and while you're in there, the event emitted when setting the hub address on the staker contract is currently built as a raw inline event, so please swap that over to a proper typed event struct instead.
+
+Without this the unbonding flow is basically incomplete, tokens can return but nothing acknowledges receipt, and it also closes that authorization gap on the staker's receipt handler.

@@ -1,1 +1,20 @@
-I'm hitting a bug with set operations on unordered categorical indexes in pandas and it's giving me silently wrong results, so I want to get it fixed. The setup is I've got two categorical indexes that contain the same categories (same values, same count) but listed in a different order, both unordered, and when I do a union or intersection between them the output is just wrong. For the union I'd expect all unique values from both combined correctly, with the first index's values coming first and then any values from the second index that aren't already in the first appended after, and the result's category list should match the first index. For intersection I'd expect only the values appearing in both, and when there's no overlap at all the result should be an empty categorical index whose categories come from the first index. Right now neither of those holds. It looks like the internal implementation is assuming two categorical indexes with identical category sets are interchangeable regardless of the order those categories are listed in, which is the wrong assumption and where the incorrect outputs come from. This is tracked as GH#55335 btw. Can you fix union and intersection so they behave correctly in this scenario? The relevant logic lives in the index code under `@pandas/core/indexes/`, so that's where I'd start looking.
+## Description
+
+There is a bug in set operations on unordered categorical indexes when the two indexes have the same categories defined in different orders. Specifically, performing a union or intersection between two such indexes produces incorrect results.
+
+## Steps to Reproduce
+
+Create two unordered categorical indexes that share the same categories (same values, same count) but with those categories listed in a different sequence. Then perform a union or intersection between them.
+
+## Expected Behavior
+
+- The **union** should return all unique values from both indexes combined, with values from the first index appearing first, followed by values from the second index that are not already in the first. The result's category list should match the first index.
+- The **intersection** should return only values that appear in both indexes. When there are no shared elements, the result should be an empty categorical index whose categories come from the first index.
+
+## Actual Behavior
+
+The results are incorrect — the union and intersection operations return wrong values when the two unordered categorical indexes define the same categories in a different order. The internal implementation assumes that two categorical indexes with identical category sets can be treated interchangeably regardless of the order in which those categories are listed, which causes incorrect outputs.
+
+## Why This Matters
+
+Users relying on set operations to combine or filter categorical data can get silently wrong results when two categorical indexes are constructed with categories listed in different orders, even when both are unordered and contain the same categories. This is tracked in GH#55335.

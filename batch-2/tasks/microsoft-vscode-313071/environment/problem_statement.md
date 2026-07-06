@@ -1,1 +1,19 @@
-I'm deep in the AI chat infra for our editor extension and hit a real annoyance with how mode switches interact with our conversation caching. We've got different assistant modes, like a full implementation/agent mode and a read-only planning mode, and normally we use stateful cache markers so we can resume a conversation from a cached point instead of resending everything. That's great within a single mode, but the moment a user switches modes we're still reusing the old mode's cached marker, and since the new mode has totally different tools and behavior we end up feeding stale or plain wrong context to the model. What I want is: when a mode change is detected (it comes through as a flag in the request options), ignore any existing stateful markers, strip those marker messages out of the input list before it goes to the model, and send all the relevant conversation messages fresh to the new mode instead of resuming from a stale point. For follow-up requests in the same mode where there's no mode change, keep the existing caching and resumption behavior exactly as-is, don't touch it. This has to work the same way for both our WebSocket persistent-connection path and the regular HTTP request path. Oh and it needs to handle multi-step switches, so if the history has markers from several successive mode changes (agent to plan to agent, say), each individual transition should independently drop its own corresponding old marker and start fresh. Separately, I also want the planning mode agent's default tool set locked down to read-only. There should be a clearly named constant representing those default read tools, and the planning agent's default config must use exactly those read tools plus a couple of coordination tools, with no file editing or creation tools included by default so we can't accidentally do write operations during what's meant to be a read-only planning phase.
+## Description
+
+When a user switches between AI assistant modes (for example, from a full implementation/agent mode to a planning mode), the system should not attempt to reuse cached conversation state from the previous mode. Currently, mode switches are not properly accounted for, and the system carries over a "resume point" from the old mode into the new one. This can cause context confusion because different modes have different tools and behavior — the old cached state is no longer valid for the new mode.
+
+## Expected Behavior
+
+- When a mode change is detected, the AI request should start fresh: all relevant conversation messages should be sent rather than resuming from a stale cache marker.
+- The cached marker message itself should be removed from the message list sent to the model.
+- This behavior should apply consistently for both persistent connection (WebSocket) and regular HTTP requests.
+- When no mode change has occurred (follow-up requests within the same mode), existing behavior should be preserved — caching and resumption from the last marker should continue to work.
+- Multi-step mode switches (e.g., agent → plan → agent) should each independently force a fresh start on each transition.
+
+## Planning Mode Tools
+
+The planning mode agent should expose only read-only tools by default. File editing tools such as creating or modifying files must not be included in the default tool set for planning sessions. The exact set of allowed tools in planning mode should be derivable from a clearly named constant.
+
+## Why This Matters
+
+Without this fix, switching modes can cause the AI to respond with stale context from the previous session, leading to incoherent or incorrect answers in the new mode. Making the default tool restriction explicit for planning mode also prevents accidental write operations during what should be a read-only planning phase.

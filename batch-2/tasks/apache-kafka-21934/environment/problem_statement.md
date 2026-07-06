@@ -1,3 +1,17 @@
-I'm digging into the Kafka Streams DSL internals and hit a design smell in how session window stores get materialized. Right now the time-ordered session store supplier carries a boolean flag to say whether it supports headers, so one class is juggling two fundamentally different behaviors, and worse, the session store materializer always builds a headers-capable store hierarchy even when the underlying supplier is just a plain session store. That mismatch means DSL operations materializing session windows can wrap stores in the wrong layer types, and downstream consumers like processor-API nodes then can't correctly reach the session state store, which can block access or blow up at runtime during stream processing.
+## Description
 
-What I want is to differentiate headers support at the type level instead of via a flag. So split the time-ordered session store supplier into a plain variant that doesn't carry any headers info (drop the headers flag from its constructor), plus a separate dedicated class for headers-capable time-ordered session stores that implements the appropriate interface to signal headers support. Then update the session store materializer so at build time it inspects the provided supplier: if it signals headers capability, take the headers-enabled builder path and produce a headers-metered store at the top of the hierarchy, otherwise use the plain session store builder path. Either way the metering, caching, and change-logging layers need to be assembled in the correct order for each combination of caching and logging settings, and caching should auto-disable whenever the emit strategy is set to fire on window close, regardless of the materialization settings.
+In Kafka Streams, the session window store supplier currently uses a boolean flag to control whether the store should support headers. This means the same class handles two fundamentally different behaviors, making it harder to distinguish between plain and headers-capable stores at the type level. Additionally, the session store materializer (the DSL-internal component that builds the layered state store hierarchy) always produces a headers-capable store, even when the underlying store is a plain session store.
+
+This creates a mismatch: the materializer should select the appropriate store-builder path based on whether the provided store supplier actually supports headers. Without this, DSL operations that materialize session windows may produce incorrect store hierarchies — wrapping stores in the wrong layer types.
+
+## Expected Behavior
+
+- A dedicated supplier class should exist for time-ordered session stores with headers support, separate from the plain session store supplier.
+- The existing plain session store supplier should no longer carry a headers flag; headers support should be expressed through a separate type.
+- The session store materializer should detect at build time whether the supplied store supports headers and select the corresponding builder path, producing either a headers-capable store hierarchy or a plain session store hierarchy as appropriate.
+- The store layering (metering, caching, change-logging) must be correct in both cases, matching the expected layer ordering for each combination of caching and logging settings.
+- When the emit strategy is configured to fire on window close, caching must be automatically disabled regardless of the materialization settings.
+
+## Why This Matters
+
+These changes allow downstream consumers, such as processor-API nodes, to correctly access session window state stores created through the DSL. Without the correct store type detection, the store hierarchy is mismatched, which can prevent processors from accessing the store or cause runtime errors during stream processing.

@@ -1,7 +1,13 @@
-I'm hitting a rough edge writing chunked arrays out to Zarr with xarray. When my in-memory dask chunks don't line up with the encoding chunk sizes I want in the store, xarray either errors out or, worse, silently writes something wrong, so I end up manually rechunking every array before `to_zarr`. That's tedious, especially for multi-dimensional stuff with irregular chunk sizes, and it burns memory and brain cycles.
+## Description
 
-What I want is to request automatic chunk alignment as part of the write itself, so I pass an encoding with the chunk grid I care about and the library rechunks for me, including the case where I'm writing to a specific region of an existing store (the region slices need to factor into the alignment). I'd add a flag on the write path to opt into this rather than raising.
+When writing a chunked data array to a Zarr store with a specified chunk encoding that differs from the array's existing chunk layout, xarray currently raises an error or produces silently incorrect results rather than automatically aligning the chunks. Users who have arrays with irregular or non-aligned chunk sizes must manually rechunk their data before writing, which is inconvenient and error-prone.
 
-Along with that I want a few reusable helpers in the Zarr backend under `@xarray/backends/zarr.py`: one that computes grid-aligned chunks for a single dimension given a target chunk size and an optional region slice (so it accounts for the offset), one that aligns a multi-dimensional variable's chunks against target backend chunks, and one that rechunks a variable's underlying data to align with the encoding chunks and region. These all need to handle multi-dimensional arrays, various region offsets, and irregular variable chunk sizes correctly, not just the easy 1D aligned case.
+## Expected Behavior
 
-Oh and two error messages in that same Zarr backend spell library names in lowercase where they should be proper nouns, like "zarr" and "dask", so please capitalize those to "Zarr" and "Dask" while you're in there.
+- When writing a chunked data array to Zarr with explicit chunk encoding, users should be able to request automatic alignment of the array's chunks to match the encoding's chunk grid.
+- There should be utility functions for computing grid-aligned chunk layouts for a single dimension given a target chunk size and an optional region (slice), for aligning multi-dimensional variable chunks with backend chunk specifications, and for rechunking a variable's underlying data to align with encoding chunks and a region.
+- These chunk-alignment utilities should correctly handle multi-dimensional arrays, various region offsets, and irregular variable chunk sizes.
+
+## Why This Matters
+
+Without automatic chunk alignment, users writing chunked arrays to Zarr must manually rechunk arrays before saving — adding extra steps, potential memory overhead, and cognitive burden. Automating this process makes the write path more robust and user-friendly. Additionally, error messages referring to library names should use consistent capitalization as proper nouns.

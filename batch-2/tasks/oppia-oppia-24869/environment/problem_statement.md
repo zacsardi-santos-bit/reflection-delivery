@@ -1,7 +1,15 @@
-I'm running a blog platform where accounts can be permanently deleted, and when that happens the published posts by those users stick around but the separate author details record (display name plus bio) never gets created for them. That's because we only create that record on demand at runtime for active users, so any blog page that renders a post by a deleted author blows up for readers. I need two new batch jobs to sort this out.
+## Description
 
-First one's a read-only audit job that walks all published blog posts, figures out which author IDs belong to accounts that have been deleted and that also have no author details record, and reports each of those orphaned author IDs plus a count of them. It should also report the total number of unique published post author IDs it saw. Important bit: authors who still have active accounts must never get flagged as orphaned even if their details record is missing, since the runtime creates those automatically. And draft posts should be excluded entirely, only published ones count.
+When a user account is permanently deleted from the platform, their published blog posts remain in the system. The system stores an author's display name and biography in a separate record that gets created on demand for active users — but for deleted users, this record will never be created automatically because the underlying account no longer exists. This causes errors when blog visitors try to browse pages that include posts by deleted authors.
 
-Second is a migration job that actually backfills the missing records, creating author details for those deleted users with standard fallback values for the display name and bio. It's gotta be idempotent, so if an author already has a details record (say from a previous run) just skip them, no duplicates. Same rules as the audit here too, skip active users and skip draft posts. The job output should report each migrated author and the total count migrated.
+## Expected Behavior
 
-The audit gives us visibility into how bad the problem is, and the migration is the safe repeatable fix. btw both jobs live alongside the other batch maintenance jobs in the codebase.
+We need two new batch maintenance jobs:
+
+1. **An audit job** that scans all published blog posts, identifies author IDs whose accounts have been deleted (and who have no fallback author details record), and reports each such "orphaned" author along with a count. Authors who still have active accounts should not be flagged, even if their details record is missing, since those are handled automatically at runtime. Draft posts should be excluded entirely.
+
+2. **A migration job** that creates placeholder author detail records (with standardized fallback display name and bio) for those deleted users. The job must be idempotent — running it multiple times must not produce duplicate records or re-process authors who were already migrated. Like the audit job, it should skip active users and draft posts.
+
+## Why This Matters
+
+Without these jobs, blog pages that include posts by deleted authors will continue to fail for readers. The audit job provides visibility into the scope of the problem, and the migration job provides a safe, repeatable way to fix it by backfilling the missing data with appropriate placeholder values.

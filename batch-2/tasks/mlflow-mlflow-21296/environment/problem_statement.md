@@ -1,7 +1,15 @@
-I'm cleaning up how DSPy model traces show up in the model trace explorer and right now it's kind of a mess. DSPy sticks section delimiter markers into its outputs, those double-bracket things wrapping a section name, and they render as raw bracketed text so a trace just looks like it's full of technical noise instead of readable structure. What I want is: when one of those markers sits on its own line, convert it into a proper markdown section heading so it's obvious where each named section starts. Oh and there's a special "completed" termination marker that shouldn't render as a heading or anything, just silently drop it since it means nothing to a human reading the trace.
+## Description
 
-The tricky bit is that some messages mention these same markers inside inline code blocks (backtick spans), and those need to stay exactly as-is, don't touch them, because that's real technical context someone put there on purpose. Also section names that use underscores as word separators should come out with spaces and proper capitalization instead of raw snake_case.
+When inspecting DSPy model traces in the model trace explorer, the section delimiters that DSPy inserts into its outputs are currently shown as raw bracketed syntax (e.g. double-bracket markers surrounding a section name). This makes trace content hard to read because the delimiters look like technical noise rather than semantic structure.
 
-Separately I need to handle when a DSPy response is actually a JSON value, it should render as a formatted, syntax-highlighted code block rather than plain text so it's actually readable.
+## Expected Behavior
 
-Can you pull the marker-to-heading conversion into its own dedicated utility function so it can be reused and tested on its own? That's the piece I care most about getting right and independently verifiable.
+- Standalone section markers that appear on their own line should be rendered as formatted section headings, making it immediately clear where each named section begins.
+- A special termination marker should be silently removed from the output since it carries no meaningful information for a human reader.
+- Markers that appear embedded inside inline code should be left exactly as-is, preserving technical accuracy.
+- Section names that use underscores as word separators should be displayed with spaces and proper capitalization.
+- When a DSPy trace response contains a JSON object, it should be rendered as a properly formatted, syntax-highlighted code block rather than plain text, improving readability and clarity.
+
+## Why This Matters
+
+DSPy traces currently expose raw internal formatting to users, making them harder to read compared to other model types. Proper rendering would make traces easier to understand for anyone inspecting DSPy-powered model behavior in the explorer.

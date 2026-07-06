@@ -1,7 +1,14 @@
-I've been messing with Biome's file filtering config and the priority ordering between include and ignore rules feels backwards. When I globally ignore a file under the top-level files config, I expect it gone everywhere, formatter, linter, import organizer, all of it. But right now if that same file shows up in the formatter's include list, Biome formats it anyway and just steamrolls my global exclusion. That's the bug. Global ignore should always beat feature-level includes.
+## Description
 
-Same deal with version control ignore files. If a file's listed in my VCS ignore file it shouldn't get formatted even when I've explicitly included it at the formatter level, the global VCS-based exclusion needs to win. And going the other way, a file with an absolute path that doesn't match any VCS ignore pattern should still format fine, so the VCS integration can't break processing for paths that sit outside the project root, no errors there please.
+Biome's file filtering logic has a priority ordering bug: feature-level include lists (for the formatter, linter, or import organizer) can override global file exclusion rules. When a file is globally ignored under the top-level files configuration, users expect it to be completely excluded from all processing. However, if that same file also appears in the formatter's or linter's include list, Biome still processes it — contrary to the user's stated intent.
 
-Oh and overrides are tangled up in this too. When I put a file in an override's ignore section it currently affects whether the file gets processed at the global level, which isn't what I want at all. Override ignores should only control whether that particular override's settings apply to a file, they shouldn't stop the file from being processed altogether.
+## Expected Behavior
 
-So can you fix the cascade logic so global ignore rules (including the VCS-based exclusions) always take priority over the formatter/linter/import-organizer includes, and so override-level ignores only affect override scoping instead of global file processing? The upshot is that a globally ignored file stays excluded from every tool no matter what includes say, VCS-ignored files stay out of formatting, absolute paths outside any VCS pattern process normally, and override ignore patterns just scope overrides. Users who globally ignore stuff expect it truly excluded, so this makes the config predictable again.
+- A file marked as globally ignored must be excluded from all processing, even if it is explicitly included at the formatter, linter, or import organizer level.
+- Files excluded via a version control system's ignore file must also be excluded from formatting, even if they appear in a feature-level include list.
+- Files with absolute paths that do not match any VCS ignore pattern should be processed normally without errors.
+- Patterns listed in an override's ignore section must not prevent files from being processed globally — they should only affect how that specific override's settings apply to those files.
+
+## Why This Matters
+
+Users who globally ignore files expect those files to be truly excluded from all tool operations. The current behavior silently bypasses global exclusions when feature-level includes are present, leading to unexpected processing of files that should be skipped. Fixing this cascade ensures that global rules take precedence, making the configuration system predictable and consistent with user expectations.

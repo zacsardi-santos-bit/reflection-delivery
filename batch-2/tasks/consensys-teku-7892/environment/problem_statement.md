@@ -1,5 +1,19 @@
-I'm refactoring the deposit tree snapshot loading in Teku and the current design only takes a single optional file path, which can't express stuff like "try a checkpoint sync node first, fall back to the bundled network snapshot if that fails." I also need to tell apart sources that are required (missing one means a config error) from optional ones (missing = silently skip and move on). So I want the loader to take multiple ordered sources and walk them in order, skipping optional sources that aren't available, throwing a descriptive error for a required source that isn't available with the actual path included in the message, and returning the first one that succeeds. If no sources are configured at all, loading should just return an empty result, no error.
+## Description
 
-On top of that the snapshot config settings are scattered right now (custom user path, bundled network path, the enabled flag) and I want them consolidated into one dedicated config object where each of those, plus a checkpoint sync URL, is accessible independently. When a checkpoint sync URL is set, derive a deposit snapshot URL from it and treat it as an optional source that's tried before the bundled fallback. A custom path though should take priority over everything, so the bundled and checkpoint-sync sources get ignored when it's present. And disabling the feature entirely should make the bundled path unavailable even if a network was configured.
+The deposit tree snapshot loading system currently accepts only a single optional file path as its source. This design can't express more nuanced scenarios — for example, "try fetching a snapshot from a checkpoint sync node first, but fall back to the bundled network snapshot if that fails." There is also no way to distinguish between snapshot sources that are required (missing = configuration error) and sources that are optional (missing = silently skip).
 
-Also, oh, the service layer needs to expose its internal deposit manager and snapshot loader so the resource configuration can actually be verified. This is mostly about the beacon/deposit snapshot loading area of the codebase, so wire the config object into the loader and the service accordingly.
+Additionally, the deposit snapshot configuration is scattered across several individual settings that are not grouped together. There is no clear separation between a custom user-specified path, the built-in network-bundled snapshot, and any checkpoint sync-derived snapshot URL.
+
+## Expected Behavior
+
+- The snapshot loader should support multiple ordered sources. It should try each source in turn and use the first one that succeeds.
+- Each source should be configurable as either required (throws an error with the path in the message if not found) or optional (silently skipped if not found).
+- When no sources are configured, loading should return an empty result without error.
+- The deposit snapshot configuration settings should be consolidated into a dedicated configuration object exposing the custom path, the bundled network path, an enabled/disabled flag, and a checkpoint sync URL — each accessible independently.
+- When a checkpoint sync URL is provided, the system should derive a deposit snapshot URL from it and treat it as an optional source to try before falling back to the bundled snapshot.
+- Providing a custom path should take priority over all other sources, with the bundled and checkpoint sync sources ignored.
+- Disabling the deposit snapshot feature should make the bundled path unavailable even if a network was configured.
+
+## Why This Matters
+
+This refactoring makes it possible to seamlessly support checkpoint sync scenarios where a snapshot may be available remotely but needs a reliable local fallback. It also eliminates the previous constraint that forced users to choose between a custom path and the bundled snapshot rather than being able to combine multiple sources gracefully.

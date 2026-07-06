@@ -1,3 +1,14 @@
-I'm using server-sent events with a broadcaster that holds a set of registered sinks plus some close callbacks, and I've hit a couple of problems around client disconnects. The big one is that when a client closes their SSE connection on their end, the server never finds out. The broadcaster just keeps thinking the client is still there, and the close callbacks I registered never fire. I need the server to actually detect when the underlying HTTP connection gets closed and automatically kick off the close logic on the sink, which should then notify the broadcaster and fire any registered close callbacks so my server-side code can clean up resources, update state, stop generating events, etc. Right now there's no reliable way to react to a client going away.
+## Description
 
-There's a related thing too. If I broadcast an event after a client's already disconnected, the broadcaster tries to send to that dead connection and ends up triggering error callbacks, which is wrong. A closed sink should just be quietly skipped (removed) during a broadcast, not treated as an error, otherwise I can't tell real errors apart from the totally-expected client-disconnect case. So after a sink's been closed, later broadcast calls shouldn't even attempt to send to it. And one more: when the broadcaster itself gets closed, it should close all of its registered sinks as well, not leave them dangling.
+When using server-sent events with a broadcaster, the server is not properly notified when a client closes the connection. Registered close callbacks on the broadcaster are never invoked when a client disconnects, making it impossible for server-side code to react to client disconnections. Additionally, if a client disconnects and a broadcast is subsequently attempted, the broadcaster tries to send to the now-closed connection, which leads to unexpected error callbacks instead of silently skipping the closed sink.
+
+## Expected Behavior
+
+- When an SSE client disconnects, any close callbacks registered on the broadcaster should be invoked on the server side.
+- When a broadcast is sent after a client has disconnected, the closed sink should be silently removed/skipped — no error callback should be triggered as a result of sending to a stale connection.
+- When the broadcaster itself is closed, all registered sinks should also be closed.
+- After a sink is closed, subsequent broadcast calls should not attempt to send events to that sink.
+
+## Why This Matters
+
+Server applications need to know when clients disconnect so they can clean up resources, update state, or stop generating events. Without proper close notification, the server has no reliable way to detect client disconnections. The spurious error callbacks from broadcasting to closed sinks also make it harder to distinguish real errors from expected client-disconnect scenarios.

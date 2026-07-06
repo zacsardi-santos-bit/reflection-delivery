@@ -1,9 +1,19 @@
-I'm hitting a cluster of memory-context bugs in our AI assistant CLI and want to fix them together. First issue: memory file paths show up lowercased for people on macOS and Windows, so a file that's really "MEMORY.md" renders as "memory.md" in listings and memory show output. It's because the path util we run during memory discovery lowercases paths on case-insensitive filesystems. I want a new path utility that normalizes separators and resolves relative paths to absolute ones but keeps the exact letter casing of every segment as it sits on disk, no lowercasing at all.
+## Description
 
-Second, I need a new function that resolves the memory file paths for a given project memory directory. It should prefer a new primary index filename when that file exists, fall back to the older legacy context filename if it doesn't, and return an empty result when neither exists. Whatever it returns has to preserve the on-disk casing (using that new util).
+Memory file paths are being displayed with incorrect casing on macOS and Windows. When memory context files are discovered and shown to users (e.g., in memory listings or memory show output), filenames like "MEMORY.md" appear lowercased as "memory.md". This happens because the path normalization utility used during memory discovery converts paths to lowercase on case-insensitive filesystems, even though the original on-disk casing should be preserved for display purposes.
 
-Third, the memory management command is a static object right now with a fixed set of subcommands, and I want it turned into a function that takes a config object at call time and builds the command dynamically. When the automatic memory management feature is enabled via that config, drop the manual "add" subcommand from the returned command. When it's disabled or no config is passed, include "add" like normal.
+Additionally, the memory management command currently has a fixed set of subcommands regardless of the active feature configuration. When an automatic memory management mode is enabled, the manual "add" subcommand should be hidden since it is no longer applicable. This requires the command to be constructed dynamically based on runtime configuration rather than as a static object.
 
-Last thing, it's a reliability gap in the extraction pipeline: when the background memory extraction agent spits out a patch file with a malformed diff (the number of lines in a hunk exceeds what the hunk header declares), that patch should just get silently deleted instead of being recorded in the extraction state or surfaced as a notification. Silent discard, no noise, before any recording or notify happens.
+There is also a reliability issue in the memory extraction pipeline: when the AI extraction agent produces a patch file with a mismatched hunk line count (more lines than the diff header declares), the malformed patch is currently recorded and surfaced to the user. Instead, malformed patches should be silently deleted before any recording or notification occurs.
 
-Users seeing wrong casing is confusing, hiding "add" when auto mode's on avoids showing irrelevant options, and dropping bad patches quietly keeps garbage out of the workflow when the agent produces invalid output.
+## Expected Behavior
+
+- Memory file paths shown to users preserve their original on-disk casing (e.g., "MEMORY.md" stays "MEMORY.md", not "memory.md")
+- A new project memory index file (distinct from the legacy context filename) is recognized and preferred as the primary memory path for a project
+- The memory management command's available subcommands reflect the active configuration at runtime
+- When automatic memory mode is on, the manual add subcommand is hidden
+- Malformed AI-generated memory patches are discarded silently without any user notification or state recording
+
+## Why This Matters
+
+Users seeing incorrect filename casing in memory listings is confusing and breaks the expected display of memory files. The feature flag behavior for subcommand visibility is needed to avoid exposing irrelevant options when automatic memory management is active. Silent discard of malformed patches prevents noise from appearing in the memory management workflow when the extraction agent produces invalid output.

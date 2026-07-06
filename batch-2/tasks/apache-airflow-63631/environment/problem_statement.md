@@ -1,5 +1,15 @@
-I'm hitting a wall with the DAG calendar API for partitioned DAGs, the ones on the newer AIP-76 model where each run gets a partition date instead of a logical date, so the logical date field is just empty for those runs. The calendar endpoint only understands logical dates right now, so when I pull up a partitioned DAG in the calendar view the runs either don't show up at all or show up wrong, which basically makes the calendar useless for anyone who's migrated to partitioned scheduling (and that's a growing group). The calendar is the main way people spot scheduling gaps and failures at a glance so this really matters.
+## Description
 
-What I want is for the endpoint to use partition date as the display date whenever it's set, falling back to logical date when it isn't, so whichever field is populated becomes the run's effective date for grouping and display. So with no filter applied on a partitioned DAG, all runs should show, each keyed off its partition date, and any run that only has a logical date still shows using that.
+The DAG calendar view currently does not work correctly for partitioned DAGs (as introduced in AIP-76). These DAGs assign a "partition date" to each run rather than a "logical date," leaving the logical date field empty. As a result, the calendar endpoint either skips these runs entirely or shows incorrect data when displaying the run history for a partitioned DAG.
 
-Also I need filtering by partition date range, start and end bounds, analogous to the existing logical date range query params. When a partition date filter is active only runs with a partition date in that window come back, runs with only a logical date get excluded. And flip side, when a logical date filter is active with no partition date filter, only logical-date runs come back and partition-only runs are excluded. Oh and this all needs to work for both the daily and hourly calendar granularities.
+## Expected Behavior
+
+- When viewing the calendar for a partitioned DAG with no date filter applied, all runs should be displayed. Each run's "partition date" should be used as the display date in the calendar entries. Any runs that only have a logical date (and no partition date) should still appear using their logical date.
+- The calendar endpoint should support filtering by partition date range (start and end bounds), so users can narrow the calendar view to a specific time window based on partition date.
+- When a partition date filter is active, only runs matching that partition date range should be returned. Runs that only have a logical date should be excluded.
+- When a logical date filter is active (and no partition date filter), only runs with a matching logical date should be returned. Runs that only have a partition date should be excluded.
+- Both the daily and hourly calendar granularities should work correctly for partitioned DAGs.
+
+## Why This Matters
+
+Users who have migrated their DAGs to the new partitioned scheduling model have no way to view their run history in the calendar interface. The calendar view is an important tool for identifying scheduling gaps and run failures at a glance. Without this fix, the calendar is essentially unusable for a growing category of DAGs.

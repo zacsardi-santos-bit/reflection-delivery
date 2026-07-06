@@ -1,5 +1,19 @@
-I'm chasing a perf gap in the Wasmtime WebAssembly runtime where every bulk memory copy or GC array copy goes through a libcall at runtime, even when the byte length is a tiny compile-time constant like 16 or 28 bytes. That per-call overhead (crossing the host/guest boundary, indirect call dispatch) totally swamps the actual copy work for small sizes, so these are way slower than they should be, and tiny constant copies show up a lot in GC array manipulation and linear memory ops. I want the compiler to recognize when a bulk copy has a statically known length that's small enough (up to 128 bytes inclusive) and just expand it inline as a sequence of loads and stores instead of calling the library function. The boundary needs to be exact: a 128-byte copy goes inline, a 129-byte copy keeps using the libcall, and anything with a dynamically computed length keeps using the libcall too.
+## Description
 
-The expansion should greedily cover the range with the widest available type first, so 16-byte vector loads/stores, then 8-byte, 4-byte, 2-byte, down to 1-byte as needed, to hit the range in as few ops as possible. Also all the loads have to happen before any of the stores so overlapping source and destination regions (think same-array copies) still copy correctly and preserve move semantics.
+Small, constant-length bulk memory copy operations in WebAssembly currently always go through a library function call, even when the number of bytes to copy is known at compile time and is very small (e.g., 16 or 28 bytes). The per-call overhead of crossing the host/guest boundary and performing an indirect call dominates the actual work for tiny copies, making them significantly slower than they need to be.
 
-One more thing, there's a big-endian correctness bug here. The vector load and store instructions only support a little-endian encoding, so I need the memory access flags on every chunk op pinned to little-endian byte order no matter the target's native endianness, otherwise compiling an inline copy on a big-endian target (like big-endian Pulley) trips an assertion in the instruction emitter. This should apply to both linear memory copies and GC array copies and stay correct for all element types, integers of various widths, floats, and SIMD vectors.
+## Expected Behavior
+
+When the compiler can determine at compile time that a bulk copy operation covers a small, fixed number of bytes (up to 128 bytes), it should expand that copy directly inline as a sequence of load and store instructions rather than delegating to a library function. The strategy should:
+
+- Cover the byte range with the widest possible load/store granularity (e.g., 16-byte vector loads first, then 8-byte, 4-byte, 2-byte, 1-byte as needed)
+- Emit all loads before any stores, so that overlapping source/destination ranges copy correctly (preserving move semantics)
+- Use little-endian memory access flags for all chunk operations, ensuring correctness on big-endian targets where vector load/store only supports a little-endian encoding
+
+Copies larger than 128 bytes, or copies with a dynamically computed length, should continue to use the existing library call path.
+
+## Why This Matters
+
+- Tiny constant-length copies are common in GC array manipulation and linear-memory operations. Eliminating the library call overhead gives measurable speedups (roughly 1.7–2.7× faster than the libcall path for small sizes on measured hardware).
+- The optimization must work correctly for all element types (integer, float, SIMD vector) and must handle same-array overlapping copies without corruption.
+- Big-endian targets (e.g., big-endian Pulley) previously triggered an internal assertion when vector instructions were emitted with the wrong endianness; pinning all chunk accesses to little-endian fixes this regression.

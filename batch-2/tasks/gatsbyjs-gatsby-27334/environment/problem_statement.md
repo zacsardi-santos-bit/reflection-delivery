@@ -1,7 +1,15 @@
-I'm building a Gatsby plugin and I've got a schema describing what options it accepts, types, which ones are required, all that. I want to unit test that my schema actually rejects bad option values and accepts good ones, but right now there's no way to do that short of kicking off a full Gatsby build, which is way too heavy for a unit test.
+## Description
 
-What I'm after is a helper in the plugin utils package (`@packages/gatsby-plugin-utils`) that plugin authors can call from their test files. The idea is you hand it your plugin's schema definition plus a partial object of the option values you want to check, and it hands back a simple result telling you whether those options are valid and, if not, what went wrong. Key thing is it should only validate the fields I actually pass in, so if I just want to test one or two options I don't have to construct the whole config object.
+Gatsby plugin authors currently have no standardized way to write unit tests for their plugin's option schema validation logic. When a plugin defines what options it accepts and what types those options must be, there is no built-in utility to verify that the schema correctly rejects invalid values or accepts valid ones — without needing to trigger a full build process.
 
-The result should be structured, something like a boolean for validity (say `isValid`) plus an array of error messages (`errors`) that's empty when everything checks out. The errors need to be human-readable and clearly name the offending field and why it failed, stuff like "field must be a boolean" or "field is required" or details about which item in an array is the wrong type when it's an array field. So a boolean option given a string should come back invalid with a message pointing at that field, a required option that's missing should say it's required, and a valid set should come back isValid true with no errors.
+## Expected Behavior
 
-Oh and it needs to be a named export from the package so it's trivial to import in a test suite. Basically I want a first-class testing helper so I (and other plugin authors) stop skipping schema tests or writing a pile of boilerplate to fake the validation behavior ourselves.
+- Plugin developers should be able to pass a plugin schema definition along with a partial set of test option values to a dedicated testing utility.
+- The utility should return a structured result indicating whether the provided options are valid, along with a list of human-readable error messages for any failing fields.
+- The utility should support testing a subset of the schema's fields at a time — only the fields included in the test input should be checked.
+- Error messages should clearly identify the field name and the nature of the validation failure (wrong type, missing required value, invalid array item, etc.).
+- The utility should be exported from the plugin utilities package so it is easy for plugin authors to import in their own test suites.
+
+## Why This Matters
+
+Without this utility, plugin authors either skip testing their option schemas entirely or write significant boilerplate to replicate validation behavior. A first-class testing helper lowers the barrier to writing schema tests and helps ensure Gatsby plugins have reliable, well-validated option handling.

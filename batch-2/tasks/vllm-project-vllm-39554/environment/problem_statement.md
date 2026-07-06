@@ -1,5 +1,13 @@
-I'm hitting an annoying inconsistency with config loading when I override the model type on a checkpoint. Here's the setup: I've got a checkpoint that was saved as one architecture type on disk, but I want to load it using a different custom-registered config class via a model type override. When I load through the config utility with that override, the returned config is correct, it's my custom class, great. But then if I do a plain HuggingFace auto-config lookup for the same checkpoint directory afterward, I get back the wrong class, the one matching whatever architecture is stored in the checkpoint file, not my override.
+## Description
 
-Digging in, the problem is the override only registers my custom config class under the overridden type but never under the type that's actually written on disk. So any lookup that keys off the on-disk type still resolves to the original class. What I want is for the override to register the custom class under both the overridden type and the on-disk type, so every config resolution pathway comes back consistent.
+When loading a model checkpoint that was originally saved as one architecture type, but the user wants to treat it as a different custom-registered architecture via a model type override, the config loading system does not correctly handle the mismatch. Specifically, the custom config class is registered under the overridden type, but not under the type stored on disk. This means that standard HuggingFace auto-config lookups — which use the on-disk type — still return the original config class rather than the custom one.
 
-Concretely, when a custom config class is registered and a model type override is passed at load time, the returned config object needs to be an instance of my custom class even though the checkpoint's on-disk config declares a different architecture. The custom class should land in the auto-config mapping under both the overridden type and the on-disk type. And after that override, any standard HuggingFace config lookup for that checkpoint dir should also return the custom class, not the original one tied to the stored architecture. Right now it only partially takes effect, direct load is right but subsequent standard lookups fall back to the wrong one, which makes accessing the same checkpoint via different APIs subtly broken.
+## Expected Behavior
+
+- When a custom config class is registered and a model type override is specified at load time, the returned config object must be an instance of the custom class — even if the checkpoint's on-disk config declares a different architecture.
+- The custom config class must be registered in the auto-config mapping under both the overridden type and the on-disk type.
+- After such an override, any standard HuggingFace config lookup for that checkpoint directory must also return the custom config class, not the one originally associated with the stored architecture type.
+
+## Why This Matters
+
+Users who load checkpoints with custom config overrides expect all config resolution pathways to be consistent. Currently, the override only partially takes effect: the direct load returns the right class, but subsequent standard lookups fall back to the wrong one. This creates subtle inconsistencies when the same checkpoint is accessed via different APIs.

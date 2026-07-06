@@ -1,5 +1,20 @@
-I want to add a new stylelint rule that flags deprecated CSS selectors, since right now there's just no built-in way to catch things like outdated HTML element names, obsolete pseudo-classes, or removed pseudo-elements. Devs can write these in their stylesheets and get zero warnings even though they're deprecated or straight up don't work in modern browsers anymore. This fills the gap alongside the existing "no-deprecated" rules we've got for declarations, media types, and properties, and helps teams modernize their CSS instead of relying on browser behavior that's already gone or on its way out.
+## Description
 
-Here's what I want it to do. Flag deprecated HTML element type selectors case-insensitively (stuff removed from the HTML living standard), and flag deprecated SVG element type selectors case-sensitively since SVG element names actually are case-sensitive. Also flag deprecated pseudo-classes case-insensitively and deprecated pseudo-elements case-insensitively, and in both those cases distinguish between the ones that have a modern replacement and the ones that don't. For any deprecated selector with a known modern equivalent, auto-fix it by swapping the deprecated form for its replacement; the ones with no known replacement should just get reported as unfixable (no fix applied). Precise source position info matters here, so each deprecated selector needs its own warning with accurate positions, and when multiple deprecated selectors show up in the same CSS rule I want each one reported separately rather than collapsed into one.
+Stylelint currently has no rule to catch deprecated CSS selectors. Developers may unknowingly write stylesheets using element names, pseudo-classes, or pseudo-elements that have been deprecated or removed from web specifications and may no longer work in modern browsers. These include obsolete HTML element names (such as those removed from the HTML living standard), outdated pseudo-class syntax that has been superseded by modern equivalents, and old pseudo-elements that have been replaced by newer versions.
 
-Oh and it should take an optional secondary option that accepts an array of strings and regex patterns to exclude specific deprecated selectors from reporting, which is handy when someone's using a deprecated selector on purpose, like to target legacy browsers.
+## Expected Behavior
+
+A new lint rule should:
+
+- Flag deprecated HTML element type selectors (case-insensitively)
+- Flag deprecated SVG element type selectors (case-sensitively, as SVG element names are case-sensitive)
+- Flag deprecated pseudo-classes (case-insensitively), distinguishing between those that have a modern replacement and those that do not
+- Flag deprecated pseudo-elements (case-insensitively), distinguishing between those that have a modern replacement and those that do not
+- Auto-fix deprecated selectors that have a known modern replacement by substituting the deprecated form with its replacement
+- Report precise source positions for each deprecated selector found
+- When multiple deprecated selectors appear in the same rule, report each one separately
+- Support a secondary option for ignoring specific selectors, accepting both plain string names and regular expression patterns, allowing specific deprecated selectors to be excluded from reporting
+
+## Why This Matters
+
+This fills a gap in the existing set of "no-deprecated" rules for declarations, media types, and properties. Catching deprecated selector usage helps teams modernize their CSS and avoid relying on browser behavior that may already be removed or on its way out.

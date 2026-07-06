@@ -1,5 +1,16 @@
-I'm digging into the operator graph in our streaming execution layer and there's a nasty design issue with how reverse (downstream) dependency edges get tracked and rewired during transforms. Right now both logical and physical operators keep a list of downstream operators that consume their outputs, but logical operators genuinely don't need that reverse tracking, it's just extra state and complexity, so I want the logical operator layer to stop maintaining any downstream-dependency state at all. No such attribute should exist on a logical operator instance either before or after a transform runs.
+## Description
 
-The physical side is where the real bug bites. When a transform replaces one operator node with another, whether that's swapping out an input node or replacing the node itself, the reverse dependency edges from the old nodes never get cleaned up, so we end up with stale references pointing at operators that aren't in the active graph anymore. That wrecks resource analysis and execution planning because downstream consumers get double-counted or missed entirely. So I need transform to correctly rewire everything: old nodes must be removed from their former inputs' downstream lists, and new nodes must be registered against their actual inputs. After any transform, every physical operator's downstream list should contain only the currently active downstream operators, no leftovers from prior transforms.
+The operator graph transform logic in the data streaming execution layer is broken in two related ways: logical operators maintain reverse dependency tracking that they do not need, and physical operators fail to correctly rewire those reverse dependencies when graph transformations replace nodes.
 
-Oh and one more thing, I want transform to explicitly reject a common footgun. If a transform function mutates an operator's inputs in place and returns the same object instead of a fresh node, it should fail loudly with a clear error message rather than silently building an inconsistent graph. That makes it way safer to refactor and optimize the execution plan after initial construction.
+When a graph transformation replaces one operator with another, the old operator can remain in its former inputs' downstream lists even after it has been removed from the graph. This leads to stale references throughout the operator graph, making resource analysis and execution planning unreliable. Logical operators, which do not need downstream tracking at all, are also burdened with this state unnecessarily.
+
+## Expected Behavior
+
+- Logical operators should not track or expose reverse (downstream) dependency information. No such attribute should be present on logical operator instances before or after a transform.
+- Physical operators should correctly track which downstream operators consume their output, and this tracking must remain accurate after any graph transformation.
+- When a transform replaces a node in the physical operator graph, the returned graph must have all reverse dependency edges correctly updated: old nodes must be removed from their former inputs' downstream lists, and new nodes must be registered with their actual inputs.
+- Transforms that attempt to mutate an operator's input list in-place instead of returning a new node should be rejected with a clear error.
+
+## Why This Matters
+
+Stale reverse dependency edges can cause downstream consumers to be double-counted or missed entirely during resource planning and execution. Keeping unused dependency tracking on logical operators adds complexity and confusion. These bugs make it hard to safely refactor or optimize the execution plan after initial construction.

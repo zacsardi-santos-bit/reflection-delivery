@@ -1,5 +1,17 @@
-I'm reworking how the OpenLineage Python client grabs git metadata for lineage events. Right now it shells out to the git CLI in a subprocess to figure out the repo URL, current commit, branch, and tag, then stuffs that into a source code location facet. Problem is it silently breaks anywhere git isn't installed (containers, sandboxed runtimes, whatever), it's an external process dependency I don't want, and the tests are brittle because they have to mock subprocess calls. I want to rip all that out and replace it with pure Python that reads git's internal files straight off the filesystem, no subprocess anywhere.
+## Description
 
-Put the new implementation in its own dedicated module. It should locate the git directory by walking up the directory tree from the working dir, and it needs to handle linked worktrees where the git dir entry is a pointer file instead of an actual directory (so follow that pointer). Read the current commit SHA and branch name out of the HEAD file, look up tags from both loose tag files and the packed-refs file, and parse the repo URL directly from the git config. Oh and the config parsing has to cope with URLs that contain percent signs without blowing up (percent-encoded stuff should be handled gracefully, not error out).
+The OpenLineage Python client currently detects git metadata (repository URL, current commit, branch, and tag) by spawning a subprocess to call the git command-line tool. This approach is fragile: it silently fails in environments where the git binary is not installed, introduces an external process dependency, and is harder to test reliably because it requires mocking subprocess calls.
 
-Couple more things: the source code location facet should be disabled by default now, it's opt-in, users have to explicitly turn it on. And the cached git info should be a real identity cache, so repeated accesses hand back the exact same object rather than recomputing. Net effect is the whole thing gets more portable and testable and drops the security concern of executing external processes in restricted environments.
+We should replace the subprocess-based git detection with a pure Python implementation that reads git's internal data files directly from the filesystem. This would make the feature work in containerized environments, sandboxed runtimes, and any context where the git CLI is unavailable.
+
+## Expected Behavior
+
+- The client should locate the git directory by walking up the directory tree from the working directory, without invoking any external process.
+- It should support linked worktrees, where the git directory entry is a pointer file rather than a directory.
+- It should read the current commit SHA, branch name, and tags by parsing git's internal file formats directly.
+- It should read the repository URL from the git config file, handling edge cases like percent-encoded URLs gracefully.
+- The source code location facet should be **disabled by default** — users must opt in to enable it.
+
+## Why This Matters
+
+Removing the subprocess dependency makes the git metadata detection more portable, reliable, and easier to test. It also avoids potential security concerns around executing external processes in restricted environments.

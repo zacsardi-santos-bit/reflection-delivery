@@ -1,9 +1,23 @@
-I'm building out a new "navigation-next" mode for OpenSearch Dashboards where sidebar links get grouped by use case (Observability, Analytics, Management, that kind of thing) instead of the flat unordered list we show today. The current sidebar has no concept of use case grouping and the header can't switch styles even when the feature's on, so I need to wire up a bunch of pieces.
+## Description
 
-First the navigation controls service needs a new registration slot for bottom-left nav controls sitting alongside the existing left, right, and center slots, and whatever gets registered there should come back as an observable that emits the controls sorted by their order value. Then I want a new collapsible navigation component that, when active, shows links organized by group with an overview mode displaying a few representative links per group plus a "See all…" entry to drill into one specific group's full link set. Clicking that should navigate into the group's focused view and there needs to be a back button to get back to the overview. It renders links for the current use case, or all groups when in overview mode.
+OpenSearch Dashboards is introducing a new navigation mode that organizes navigation links by use case (e.g., Observability, Analytics, Management) rather than a single flat list. The current navigation sidebar has no concept of use case grouping, and the header has no way to switch to this new navigation style when the feature is enabled.
 
-The nav also needs a top section that conditionally shows a home button, a back button, and a collapse/expand toggle depending on state, oh and it should render the home button by default, switch to the back button once you've navigated into a specific group and multiple groups exist, and always keep the collapse/expand toggle visible. There's a dedicated bottom area too for utility controls like settings or profile.
+We need to:
 
-On the header side, swap the existing nav component for the new one whenever the nav group feature flag is enabled, and the header has to accept a few extra inputs: the nav group map, the current nav group, the bottom nav controls observable, and a setter for the current nav group.
+1. Add support for registering and retrieving navigation controls positioned at the bottom of the expanded left navigation sidebar.
+2. Build a new collapsible navigation component that, when activated, displays links organized by use case groups, with an overview that shows a few representative links per group along with a "See all…" option to drill into a specific group.
+3. Build a top section for the new navigation that can display a home link, a back button (when inside a specific use case), and a collapse/expand button.
+4. Update the header component to use the new navigation when the nav group feature flag is enabled, and to accept the additional observables and callbacks the new navigation requires.
+5. Update core plugins (Dashboard, Discover, Index Pattern Management, Advanced Settings) to register their navigation links into the appropriate use case groups during plugin setup.
 
-Finally the Dashboard, Discover, Index Pattern Management, and Advanced Settings plugins all need updating so during their plugin setup they call the nav group registration API to register their links into the right use case groups so everything shows up where it belongs. This is the foundation for letting people navigate a big pile of plugins by workflow rather than one giant list.
+## Expected Behavior
+
+- The navigation controls service exposes a new slot for registering bottom-left controls and an observable that emits those controls sorted by their order value.
+- When the nav group feature flag is enabled, the header renders the new navigation component instead of the existing one.
+- The new navigation component renders links for the current use case (or all groups in overview mode) and supports clicking through to a group and returning to the overview.
+- The top section of the new navigation conditionally shows a home button, a back button, and a collapse/expand button based on the current navigation state.
+- Core plugins correctly call the nav group registration API during setup so their links appear in the right places.
+
+## Why This Matters
+
+This capability is the foundation for the "navigation-next" feature, enabling users to navigate a large set of plugins and features organized by workflow rather than a flat, unordered list.

@@ -1,5 +1,13 @@
-I'm poking at the JS minifier and pure-flag annotations aren't landing right. Those are the markers we stick on a constructor call to say it has no side effects, and right now they get set in an early normalization pass before the main peephole optimization loop even starts. Problem is the loop keeps rewriting code after that, like folding two concatenated string literals into one string, or inlining a single-use variable into somewhere else, and those rewrites can make brand new constructor calls eligible for the pure marker. But since the purity check never re-runs, those newly eligible constructors just never get annotated.
+## Description
 
-Concrete cases I keep hitting: a regexp constructor that gets concatenated string args folded into a single literal doesn't get flagged pure even though it obviously is, and a constructor whose argument is an inlined pure constructor call misses the annotation too (in that inlining case I'd want both the outer and inner constructor evaluated and marked pure if they qualify). Downstream dead code elimination then can't tell these are safe to drop, so stuff that should vanish stays in and bundles end up bigger than they need to be.
+The minifier's dead code elimination is less aggressive than it should be for certain patterns involving well-known pure constructors. Specifically, when the optimization loop folds string literal concatenations or inlines single-use variables, the resulting constructor calls may now qualify for a "pure" (no side effects) annotation — but they don't receive it, because the pure-flag check only runs once during an early normalization phase before the loop begins.
 
-What I want is for the pure-flag evaluation to re-run after each iteration of the peephole optimization loop, so anything made eligible by folding or inlining picks up the correct annotation. So when a constructor gets a folded string arg (two string literals concatenated becoming one literal) it should be re-evaluated and annotated if it qualifies, and same for the inline-a-single-use-pure-constructor case. Oh and it needs to stay idempotent, running the optimization again on already-optimized output should produce the exact same result, no drift.
+## Expected Behavior
+
+- When a constructor call receives a folded string argument (e.g., two string literals concatenated together become a single literal), the constructor should be re-evaluated for purity and annotated accordingly if it qualifies.
+- When a single-use variable holding a pure constructor call is inlined into another constructor's arguments, both the outer and inner constructors should be evaluated and annotated as pure if they qualify.
+- The optimization should be fully idempotent — running it multiple times on already-optimized code should not change the output.
+
+## Why This Matters
+
+Without this re-evaluation, downstream optimizations (such as dead code elimination) cannot see these expressions as safe to remove. Code that could be eliminated or simplified remains in the output, leading to larger bundle sizes and missed optimization opportunities.

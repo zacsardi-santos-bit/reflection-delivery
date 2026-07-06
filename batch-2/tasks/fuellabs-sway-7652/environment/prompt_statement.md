@@ -1,0 +1,7 @@
+I'm hitting a bug in the Sway formatter where it messes up the indentation of line comments inside function bodies. If I've got a function in an impl block with line comments sitting between statements, running the formatter shifts those comments and everything after them to the wrong indentation level. The code goes in already correctly formatted and comes out broken, which is the opposite of what I want. The formatter should be idempotent: run it on already-correct code and I get back exactly what I put in, byte for byte.
+
+The thing that really seems to trigger it is comments with non-ASCII characters, like Unicode math comparison symbols (think ≤ or ≥ style stuff). My hunch is the byte offset calculations used when the formatter inserts comments back into the formatted output are counting characters instead of bytes, so multi-byte chars throw everything off. Comments containing non-ASCII need to be handled just as reliably as plain ASCII ones.
+
+This shows up in two spots: comments between plain statements, and also comments that appear after block expressions like if/else branches within a function body. Both cases should keep the comment at the same indentation as the surrounding statements.
+
+Can you fix the comment reinsertion logic so indentation is preserved in both situations? Right now it's actively making code worse, so a dev who trusts it to preserve well-structured code ends up with garbage instead, and it's basically unsafe to run on any code with Unicode in the comments. Please make sure well-formatted input round-trips unchanged.

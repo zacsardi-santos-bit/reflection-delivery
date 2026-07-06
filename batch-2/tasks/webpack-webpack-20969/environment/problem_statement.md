@@ -1,7 +1,17 @@
-I'm working on webpack's HTML tokenizer and I hit a gap around HTML character encodings, the entity/reference stuff you see in attribute values and text nodes. Right now the tokenizer scans HTML fine at a basic level but there's no actual utility to decode those encoded sequences into their real characters, so if a link address was authored using the encoded ampersand form I can't turn it back into a literal ampersand before using it as a resource path. That's a real problem for URLs especially, think query string params where ampersands get encoded all over the place.
+## Description
 
-So I want a decoding function exposed as part of the HTML tokenizer module that takes a raw string full of these encodings and returns the decoded string. It needs to handle the common named forms (ampersand, less-than, greater-than, double-quote, apostrophe/single-quote, and non-breaking space), plus decimal numeric references, plus hex numeric references with both the lowercase and uppercase hex indicators. Oh and if an encoding is unknown or malformed, just leave it as-is, don't silently drop content.
+Webpack's HTML processing pipeline currently has no way to decode HTML character encodings — the patterns used in HTML to represent special characters as named references or numeric codes. This is a problem when webpack needs to resolve the actual value of an attribute or URL: a link address that was authored using the encoded ampersand form needs to be decoded back to a literal ampersand before it can be used as a resource path.
 
-Also the tokenizer itself should recognize and step over all these encoding forms while scanning so it doesn't misread them as HTML syntax, and that should work in text nodes as well as double-quoted, single-quoted, and unquoted attribute values.
+Additionally, the HTML tokenizer should properly handle all forms of HTML character encoding — named references, decimal numeric references, and hexadecimal numeric references — so it can step over them without confusing them with other HTML syntax.
 
-One thing to be careful about: don't apply the decoding globally to every attribute during tokenization. Numeric character encodings inside srcset attributes have to stay as encoded sequences so the srcset parser can deal with them, because if you decode them first the whitespace-encoded characters get treated as separators and that breaks otherwise valid srcset values.
+## Expected Behavior
+
+- A decoding utility should be available as part of the HTML tokenizer module to convert HTML-encoded strings back to their actual character values.
+- The decoder must handle the common named encodings (ampersand, less-than, greater-than, double-quote, apostrophe, non-breaking space) as well as both decimal and hexadecimal numeric forms.
+- Unknown or malformed encodings should be preserved as-is to prevent silent data loss.
+- The HTML tokenizer must correctly recognize and skip over these encoding sequences while scanning HTML content.
+- Numeric character encodings in srcset attribute values should NOT be decoded globally — doing so would break srcset parsing for whitespace-encoded values.
+
+## Why This Matters
+
+Without a decoding utility, webpack cannot correctly derive the actual URL or text content from HTML attributes that use character encoding. This is a common pattern in real-world HTML, especially for query string parameters in URLs where ampersands are encoded. The decoding needs to be selective — not applied globally during tokenization — to preserve correctness for attribute types like srcset where encoding semantics must be respected.

@@ -1,5 +1,14 @@
-I'm poking at Airflow's template field serialization and hit a confusing thing with the sentinel objects we use to mark template fields as either "not yet set" or "set dynamically during execution." When these get converted to strings, say for logs or serialized task output, I want stable readable labels instead of raw Python object dumps.
+## Description
 
-Right now the "set during execution" sentinel already behaves, it stringifies to "DYNAMIC (set during execution)" both via str() and repr(), and the template field serialization helper returns that same label when handed it. But the "not set" sentinel is the problem, it's got no proper string rep methods so it falls back to the default object representation with a memory address baked in, which is useless when you're trying to read what state a template field is in.
+Airflow uses special sentinel objects to represent template fields that are either "not yet set" or "set dynamically during execution." When these sentinel values are serialized or converted to a string — for example, when capturing the state of a template field in logs or serialized task outputs — they should produce stable, human-readable labels. However, the "not set" sentinel currently lacks proper string representation methods, causing it to display as a raw internal Python object string (including a memory address) instead of the expected label.
 
-What I want is for that "not set" sentinel to produce the label "NOTSET" whenever it's converted, so str() on it gives "NOTSET", repr() gives "NOTSET", and passing it through the template field serialization helper also returns "NOTSET". Basically both sentinels should give deterministic human-readable labels across every code path that turns them into a string, so serialization behaves the same no matter who does the converting. The "set during execution" one keeps its existing "DYNAMIC (set during execution)" label, I just need the "not set" one to match that consistency.
+## Expected Behavior
+
+- When the "not set" sentinel is converted to a string or its representation is obtained, the result should be the stable label "NOTSET".
+- When the template field serialization helper is called with the "not set" sentinel, it should return the label "NOTSET".
+- When the "set during execution" sentinel is converted to a string or its representation is obtained, the result should be "DYNAMIC (set during execution)".
+- When the template field serialization helper is called with the "set during execution" sentinel, it should return "DYNAMIC (set during execution)".
+
+## Why This Matters
+
+Without these stable string representations, any code path that converts these sentinels to strings — including serialization, logging, or display — produces confusing internal object dumps that make it impossible for users to understand the state of their template fields. Having consistent, deterministic string representations also ensures that serialization behaves predictably regardless of which code path converts the value.

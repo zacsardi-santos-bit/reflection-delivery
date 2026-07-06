@@ -1,7 +1,23 @@
-I'm cleaning up the GreyNoise integration and the API client init is driving me nuts. Right now we build the client by passing a long flat list of positional args, the API key, server URL, timeout, proxy settings, the caching flag, the integration name, all crammed into the constructor. It's hard to test and configure and it couples construction to every caller. I want a dedicated config object that bundles all those connection settings together so the client just takes one config object instead of the flat list. The entry point function should be the thing that creates that config object and hands it off to the client, so the client no longer accepts the positional argument list at all.
+## Description
 
-While I'm in there a few command handlers need fixes too. The business service intelligence lookup command (the riot command) currently nests its key result fields inside a sub-object, and I want the IP address and the riot indicator promoted up to the top level of the output instead so consumers don't have to dig. The query command is using an outdated output key format that's inconsistent with the rest of the integration, so update its output keys to the current format. Also the IP quick-check, IP similarity, and IP timeline commands don't put the command name into their error messages when certain failure codes come back from the API, which makes it impossible to tell which command actually failed during incident response, so include the failing command's name in those error messages.
+The GreyNoise integration initializes the API client by passing a long list of individual connection settings as positional arguments. This makes the client hard to test, configure, and extend, and it tightly couples construction logic to callers. We should refactor to use a dedicated configuration object that bundles all settings together — the client then receives a single config object instead of a flat argument list.
 
-Oh and the community variant of the integration needs a new utility function that takes IP lookup data and returns the extracted tag names.
+Additionally, several command handlers need improvements:
 
-Clean init patterns and consistent error messages cut down the confusion when debugging, and flattening the riot output plus fixing the query key means downstream consumers get data in the shape they expect.
+- The business service intelligence lookup command nests its key result fields inside a sub-object, making them harder to consume. Key fields (IP address and the riot flag) should be promoted to the top level of the output.
+- The query command uses an outdated output key format that is inconsistent with the rest of the integration.
+- The IP quick-check, IP similarity, and IP timeline commands do not include the command name in their error messages for certain failure codes, making it hard to tell which command failed during incident response.
+- The community integration variant needs a utility function to extract tag names from IP lookup responses.
+
+## Expected Behavior
+
+- A configuration object is created first with all connection settings, then handed to the client — the client no longer accepts a flat positional argument list.
+- The integration entry point creates the configuration object and passes it to the client.
+- The business service intelligence command returns output with the IP address and riot indicator at the top level.
+- The query command uses the updated output key format.
+- Error messages from the quick-check, similarity, and timeline commands include the name of the command that failed.
+- The community integration exposes a function that extracts and returns tag names from IP data.
+
+## Why This Matters
+
+Clean initialization patterns and consistent error messages reduce confusion during debugging and make the codebase easier to maintain and test. Flattening the riot command output and fixing the query output key ensures consumers of the integration get data in the expected shape.

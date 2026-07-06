@@ -1,5 +1,15 @@
-I've got a keeper manager component that runs a periodic check to see whether keeper instances are sitting in the right replication state, and when they look misaligned it fires off correction commands to fix them. Works fine in steady state, but it's actively breaking datacenter migrations. During a migration the keeper topology is supposed to be in a transitional state (whether the local dc is becoming primary or some other dc is migrating), and the checker doesn't know that, so it reads the transitional topology as an error and sends corrections that revert the intentional changes and disrupt the whole migration.
+## Description
 
-I want to teach the checker about migration state. The way I want it to decide a migration is happening: look at whether the current datacenter is in the primary role, and check whether the keeper's expected master endpoint actually corresponds to a known redis instance in the shard. If the keeper master doesn't match any known shard redis in that expected context, that's a migration. When it detects a migration, it should still go query all the keeper instances so we can observe their current state, but it must not send any correction commands. In the normal no-migration case, keep sending corrections exactly like before.
+The keeper manager component periodically checks whether keeper instances are in the correct replication state and sends correction commands when they appear misaligned. This mechanism works well during normal operation, but it causes problems during datacenter migrations.
 
-To pull this off the keeper manager needs two new dependencies wired in. One is a metadata cache that can hand back the list of redis instances for a given shard and tell us whether the current datacenter is the primary dc for a given cluster. The other is a keyed executor so that correction jobs for the same cluster/shard get serialized and can be cancelled when a newer one supersedes them. Wire both into the manager and use them in the check path.
+During a migration — whether the local datacenter is transitioning to primary or another datacenter is undergoing a migration — the keeper topology intentionally changes as part of the migration workflow. The keeper state checker does not currently understand when a migration is in progress, so it incorrectly treats the transitional keeper topology as an error and sends correction commands that interfere with the migration.
+
+## Expected Behavior
+
+- The keeper state checker should detect when a migration is in progress by comparing the expected keeper master endpoint against the list of known redis instances for the shard and by checking whether the current datacenter is in the primary role.
+- When a migration is detected, the checker should still query all keeper instances to observe their current state, but it should refrain from sending any correction commands.
+- When no migration is in progress (normal steady-state operation), the checker should continue to send correction commands as before.
+
+## Why This Matters
+
+Sending keeper correction commands during migration can actively disrupt the migration process by reverting intentional topology changes. The keeper manager needs awareness of migration state so that it does not interfere with ongoing migrations, allowing them to complete successfully.

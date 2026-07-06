@@ -1,7 +1,17 @@
-I'm building out a guardrail system for the MLflow AI gateway and could use your help wiring it up. Right now the gateway just routes requests straight to the AI providers with zero inspection, and I've got no way to enforce content safety or org policies on the traffic flowing through. I want operators to be able to attach one or more guardrails to a gateway endpoint, each tied to a scorer that evaluates content, so before a request gets forwarded I run all the pre-request guardrails and if any one fails the request is rejected with an error and the provider never gets called at all. Same idea on the way back, after the provider responds I evaluate the post-response guardrails and if any fails the response gets blocked and the caller gets an error.
+## Description
 
-Beyond plain blocking (call it validation mode) I need a rewriting mode too, where instead of rejecting, a failing check hands the offending content off to a separate sanitizer endpoint that rewrites it, and we use the rewritten content going forward. Oh and if a guardrail's in rewriting/sanitization mode but there's no sanitizer endpoint configured, it should just fall back to blocking with an error.
+The MLflow AI gateway routes requests to underlying AI providers, but currently has no mechanism to enforce content safety or policy rules on the traffic passing through it. We need to add a guardrail system that lets operators attach evaluation and sanitization rules to gateway endpoints.
 
-Also trusted internal callers need an escape hatch, they can skip all guardrail evaluation by sending a specific request header, but the bypass only kicks in when that header's value is exactly the string "1", any other value must not be treated as a bypass. And when multiple guardrails are on the same endpoint they've gotta run in ascending priority order no matter what order they were registered in.
+## Expected Behavior
 
-I need the gateway API handlers for both the invocations route and the chat completions route to actually use this logic. On top of that I want standalone utility functions I can test on their own: one that loads the guardrail configs from the data store for a given endpoint (resolving the scorer endpoint references while it's at it), one that runs the pre-request guardrails, and one that runs the post-response guardrails.
+- Operators should be able to configure one or more guardrails on a gateway endpoint, each associated with a scorer that evaluates content.
+- Before a request is forwarded to the provider, all "pre-request" guardrails should be evaluated. If any fails, the request should be rejected with an error and the provider should never be called.
+- After the provider responds, all "post-response" guardrails should be evaluated. If any fails, the response should be blocked and an error returned to the caller.
+- In addition to a blocking (validation) mode, a guardrail can be configured in a rewriting (sanitization) mode: when the scorer fails, the content is passed to a separate "sanitizer" endpoint which rewrites it, and the rewritten content is used instead of rejecting the request entirely.
+- A sanitization guardrail with no sanitizer endpoint configured should fall back to blocking the request with an error.
+- Trusted internal callers should be able to bypass all guardrail checks by including a specific request header with the exact value "1". Any other value for that header must not bypass the guardrails.
+- When multiple guardrails are attached to the same endpoint, they should be evaluated in the order defined by their configured priority (ascending execution order), regardless of the order they were registered.
+
+## Why This Matters
+
+Without guardrails, the gateway has no way to enforce organizational policies, safety rules, or content filters on AI-generated traffic. This feature makes the gateway suitable for production deployments where content must be validated or sanitized before reaching end users.

@@ -1,5 +1,15 @@
-I'm hitting a bug in gRPC's TLS security layer where a client with no pre-loaded key material and no credential reload config gets an error when fetching key materials. That's wrong for clients. Servers genuinely must have credentials, so failing there makes sense, but a TLS client that only needs to verify the server's identity shouldn't be forced to present its own certificate. Right now the fetch logic treats clients the same as servers and rejects them, which blocks perfectly valid client setups that rely on server-side cert verification.
+## Description
 
-Can you fix the key material fetching so it distinguishes client mode from server mode? For a client with no pre-loaded key materials and no reload config, the operation should succeed and return an OK status. For a server in that same situation (no key materials, no reload config), keep the existing behavior where it fails with a precondition error since servers really do need credentials.
+When a TLS client attempts to connect without having pre-loaded key material and without providing a credential reload configuration, the connection is incorrectly rejected with an error. This is wrong behavior because clients — unlike servers — do not always need to present their own certificates. A TLS client may only need to verify the server's identity, and in that case, having no client-side key material should be acceptable.
 
-Oh and there's a gap on the config side too. There aren't any tests covering that the TLS key materials configuration object actually stores and exposes what you set on it. After I hand it a PEM root certificate and a private key plus certificate chain pair, querying the config should give me back the exact same root cert, private key, and certificate chain I set. Please cover both the client/server fetch fix and this set-then-get behavior on the config object.
+Additionally, there are no existing unit tests that verify the correct storage and retrieval of TLS key material configuration after it has been set — including the PEM root certificate and private key/certificate pairs.
+
+## Expected Behavior
+
+- When fetching key materials for a TLS **client** that has no pre-loaded key materials and no credential reload config, the operation should succeed (return OK status).
+- When fetching key materials for a TLS **server** with no pre-loaded key materials and no credential reload config, the operation should continue to fail with a precondition error (servers must have credentials).
+- After setting key materials on a TLS configuration object, querying it should return the exact root certificate, private key, and certificate chain that were set.
+
+## Why This Matters
+
+The current behavior incorrectly treats clients as if they must always have pre-loaded key material, just like servers do. This prevents valid TLS client configurations from working correctly. Fixing this allows TLS clients that rely on server-side certificate verification (without providing client certificates) to function properly.

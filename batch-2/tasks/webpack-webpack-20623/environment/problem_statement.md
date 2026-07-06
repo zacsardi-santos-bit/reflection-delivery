@@ -1,1 +1,14 @@
-I'm chasing down some failing Pug template loader tests in the webpack test suite and it turns out the whole thing is leaning on that old deprecated `pug-loader` package that's basically abandoned and doesn't play nice with modern Node anymore, so I want to move everything over to the maintained `@webdiscus/pug-loader` alternative instead. There are a couple of spots to touch. The webpack config that registers the loader for `.pug` files needs to point at the new package, and there's also an inline loader reference in the test itself that uses the old syntax and needs swapping to the new one too. Oh and one gotcha with the new loader, the "self"-mode rendering option (the mode where template vars come off a self object) can't be passed as a bare flag like before, it has to be an explicit key-value pair now, something like `self=true` rather than just `self`, so make sure that gets updated wherever it shows up. On top of that the new package dropped support for older Node runtimes, so I need the test filters guarded to skip on anything below Node 16. That means both the Pug loader test filter and the related context loader test filter should only let things run on Node.js version 16 and up. Basically I just want these Pug loader tests green again without the flaky deprecated dependency, and I don't want them blowing up in confusing ways on older Node installs either, hence the version guard. Can you get all that wired up?
+## Description
+
+The webpack test suite currently uses an old Pug template loader package that is no longer actively maintained. This is causing test failures, as the deprecated package does not work reliably with modern Node.js environments. We need to migrate to a well-maintained alternative Pug template loader.
+
+## Expected Behavior
+
+- The webpack configuration for handling Pug template files should reference the new, actively-maintained loader package instead of the old deprecated one.
+- Inline loader references in test cases should also be updated to use the new package.
+- The option for enabling "self"-mode rendering (where template variables are accessed via a self object) must be passed using explicit key-value syntax rather than a bare flag, as required by the new loader's API.
+- Both the Pug loader tests and the related context loader tests should be restricted to run only on Node.js version 16 and above, since the new loader does not support older Node.js versions.
+
+## Why This Matters
+
+Using a deprecated and unmaintained loader causes intermittent test failures and blocks CI pipelines. Switching to the maintained alternative ensures the test suite remains reliable and compatible with current Node.js environments. The minimum version guard prevents confusing failures on older Node.js installations.

@@ -1,5 +1,13 @@
-I'm hitting a frustrating bug with the Airflow Google Ads integration. When I set up a Google Ads connection through the Airflow web UI's connection form, I fill in the developer token, refresh token, client ID, and client secret in the fields it gives me, and then the connection just doesn't work at runtime. The hook fails to initialize even though every credential is entered correctly.
+## Description
 
-Digging in, I figured out why. The connection form stores each credential as a flat, top-level field in the connection extras, but the hook only knows how to read credentials when they're nested inside a wrapper object under a special key. So any connection I create via the UI is broken out of the gate, and the only workaround is hand-crafting a JSON extras blob in the legacy nested format, which is error-prone and unintuitive.
+The Google Ads connection hook does not work with connections that are configured through the Airflow web UI's connection form. When a user fills in their Google Ads credentials using the connection form, each credential (developer token, refresh token, client ID, client secret) is stored as a separate top-level field in the connection's extras. However, the hook currently only recognizes credentials that are wrapped inside a nested object under a specific key, so connections set up through the UI always fail at runtime.
 
-What I want is for the hook to support both shapes: the flat format the UI form produces, and the existing nested format for backward compatibility. With that in place the hook should authenticate, create service clients, run search queries, and list accessible customers no matter which way the credentials are stored. Also the authentication type detection needs to work correctly when the flat format is used, not just the nested one. Legacy nested connections should keep working exactly as before. Basically both configuration paths, UI form and legacy JSON blob, should produce a working connection with all operations succeeding either way.
+## Expected Behavior
+
+- Connections configured via the connection form (flat/top-level credential fields) should work the same as connections using the legacy nested format.
+- All hook operations — including authentication type detection, service instantiation, search queries, and listing accessible customers — should succeed with connections configured either way.
+- The legacy nested format should continue to work for backward compatibility.
+
+## Why This Matters
+
+Users who configure their Google Ads connections through the Airflow UI get unexpected failures even though they entered all required credentials. They have to resort to manually crafting a JSON extras blob in the legacy nested format, which is error-prone and unintuitive. Both configuration paths should produce a working connection.

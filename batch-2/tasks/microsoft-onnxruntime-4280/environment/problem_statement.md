@@ -1,7 +1,17 @@
-I'm building out the optimizer config layer for the ONNX Runtime training frontend and right now there's no clean, validated way to express optimizer hyperparameters before handing them to the trainer, so people just pass loose dicts and misconfigure runs. I want dedicated config objects for SGD, Adam, and Lamb that carry sensible defaults and validate inputs early.
+## Description
 
-There should be a shared base config class handling the common validation: the optimizer name has to be a string drawn from the supported set, the defaults must be a dict containing a valid non-negative learning rate, each parameter group entry must be a dict with a 'params' key, and there needs to be a strict 1:1 mapping between the hyperparameter keys in defaults and the keys in each parameter group entry. Wrong types, negative learning rates, unknown optimizer names, missing 'params', mismatched keys, all of that should be rejected with a clear error.
+The ONNX Runtime training module needs a structured way for users to configure optimizers (SGD, Adam, and Lamb) when setting up a training pipeline. Currently, there is no dedicated configuration object that captures optimizer hyperparameters with proper defaults and input validation. This makes it difficult for developers to express optimizer settings in a clean, validated way before passing them to the trainer.
 
-For SGD, default the learning rate to 0.001 and don't support per-parameter groups at all, if someone passes per-parameter settings raise an error saying params must be an empty list. Adam and Lamb both allow optional per-parameter hyperparameter overrides where per-param values take precedence over the global defaults, but learning rate can't live inside a per-parameter group, attempting that should raise a clear error too.
+## Expected Behavior
 
-Adam defaults to lr 0.001, alpha 0.9, beta 0.999, lambda coefficient 0.0, epsilon 1e-8, bias correction enabled, plus a weight decay mode setting backed by an enum that has at least a "before weight update" variant. Lamb defaults to lr 0.001, alpha 0.9, beta 0.999, lambda 0.0, epsilon 1e-6, ratio bounds of negative infinity and positive infinity, and bias correction enabled. Basically clean config classes with early validation so training runs don't blow up later.
+- There should be dedicated configuration objects for each supported optimizer type (SGD, Adam, and Lamb) that carry hyperparameters with sensible defaults.
+- SGD configuration should default to a learning rate of 0.001 and should not support per-parameter hyperparameter groups — attempting to provide them should result in a clear error.
+- Adam configuration should default to: learning rate 0.001, alpha 0.9, beta 0.999, lambda coefficient 0.0, epsilon 1e-8, bias correction enabled, and a specific weight decay mode. It should expose a weight decay mode enum with at least a "before weight update" variant.
+- Lamb configuration should default to: learning rate 0.001, alpha 0.9, beta 0.999, lambda coefficient 0.0, epsilon 1e-6, ratio bounds of negative infinity and positive infinity, and bias correction enabled.
+- Adam and Lamb configurations should support optional per-parameter hyperparameter groups, where per-parameter values take precedence over global defaults.
+- Learning rate must not be overridable at the per-parameter level for Adam and Lamb — attempting to do so should raise a clear error.
+- Invalid inputs (wrong types, negative learning rates, unknown optimizer names, missing required keys, mismatched hyperparameter keys between defaults and parameter groups) should all be rejected with an error.
+
+## Why This Matters
+
+Without these configuration objects, users have no consistent, validated way to express optimizer settings. The new configuration classes provide a clean API with early validation, reducing the chance of misconfigured training runs.

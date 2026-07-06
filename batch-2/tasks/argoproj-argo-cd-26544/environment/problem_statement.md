@@ -1,5 +1,16 @@
-I'm hitting a bug in Argo CD's repo server around how Helm app details get populated for multi-source apps. You know the pattern where value files live in a separate external repo and get referenced with that special ref-name prefix syntax in the file path? The application details endpoint just doesn't check those external repos out right now, so the Helm parameters shown in the details view come back missing or wrong. Operators lean on that details view to inspect the effective Helm config, so this makes multi-source Helm apps basically unreadable in the UI.
+## Description
 
-What I want is for the function that populates Helm application details (over in the repo server code under `@reposerver/repository/repository.go`) to take the main application's commit SHA and revision as extra inputs, and use that to resolve and check out the external referenced repos, but only when they're actually referenced in the value files. If a ref source is declared but not used anywhere, skip it entirely, don't check it out.
+When using Argo CD's multi-source application feature, Helm applications can reference value files from external repositories using a special ref-name prefix syntax in the file path. However, the application details endpoint does not currently support this pattern — it cannot resolve or read value files that live in external referenced repositories. As a result, the Helm parameters shown in the application details view are incorrect or incomplete for multi-source Helm applications.
 
-Also it needs to validate that the same repo isn't pulled at conflicting revisions. So if a ref source points at the same repo as the main app but at a different commit, that's a conflict and should return a clear descriptive error. Same deal if two different ref sources point at the same external repo at different revisions, descriptive error there too. And if the revision for a referenced repo just can't be resolved, return a descriptive error for that as well. After the fix the details should show the correct Helm parameters sourced from those external value files.
+## Expected Behavior
+
+- When fetching Helm application details, external repositories declared as ref sources should be checked out at the correct revision so their value files can be read.
+- The application details must show the correct Helm parameters sourced from those external value files.
+- Ref sources that are declared but not actually referenced in any value files should be ignored and not checked out.
+- If a referenced repository's revision conflicts with the main application's revision of the same repository, an appropriate error must be returned.
+- If two ref sources reference the same repository at different revisions, an appropriate error must be returned.
+- If a referenced repository's revision cannot be resolved, an appropriate error must be returned.
+
+## Why This Matters
+
+Without this fix, multi-source Helm applications that keep their value files in a separate repository cannot display accurate parameter information in the Argo CD UI. Operators relying on the application details view to inspect configuration will see missing or wrong values, making it impossible to reason about the effective Helm configuration for these applications.

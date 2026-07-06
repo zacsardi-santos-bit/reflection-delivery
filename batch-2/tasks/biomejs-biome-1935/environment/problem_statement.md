@@ -1,5 +1,20 @@
-I'd like a new nursery lint rule that catches assertion calls sitting outside of proper test runner blocks. I keep seeing folks accidentally drop an assertion at the top level of a file, or tuck it inside a suite container (the block that groups related tests) but not actually inside a test runner callback, and when that happens the assertion runs at module load time or during test organization instead of as part of an individual test. That leads to unpredictable, hard-to-debug suite behavior where things silently pass or fail in ways that don't reflect real execution, which is especially nasty to catch in review.
+## Description
 
-So the rule should flag assertions in two invalid spots: directly at the file's top level (outside any test block), and inside a suite grouping block but not nested within an actual test runner callback. It needs to recognize common assertion function patterns, both direct calls and member-style calls, whether they come from global scope or are imported from popular testing libraries. When it fires I want a clear diagnostic saying the assertion isn't inside a proper test runner callback and that this'll cause unexpected behavior, plus a suggestion to move it into the appropriate test runner block.
+It would be very helpful to have a lint rule that detects assertion calls placed outside of proper test runner blocks. When assertions are written at the top level of a file, or inside a test suite grouping block but not inside an actual test runner callback, they execute during module load or suite setup rather than as part of an individual test. This can cause unpredictable behavior in the test suite that is hard to debug.
 
-Oh and anything that's correctly nested inside an individual test runner callback should be considered valid and stay unflagged, even when those test runners are themselves nested inside suite containers, so don't trip on the legitimate nesting case.
+## Expected Behavior
+
+The rule should flag assertion calls that appear in the following invalid positions:
+
+- Directly at the top level of a file (outside any test block)
+- Inside a test suite organization block (a container that groups related tests) but NOT nested within an actual test runner callback
+
+The rule should recognize common assertion functions used by popular testing frameworks — including both globally-available assertions and those imported from well-known test libraries.
+
+The rule should produce a clear diagnostic explaining that the behavior will be unexpected, and suggest that the developer move the assertion into the appropriate test runner block.
+
+Assertions correctly placed inside proper individual test runner callbacks (including when those are nested inside suite containers) should not be flagged.
+
+## Why This Matters
+
+Misplaced assertions can silently pass or fail in ways that don't reflect actual test execution, making test suites unreliable. This is especially tricky to spot during code review.

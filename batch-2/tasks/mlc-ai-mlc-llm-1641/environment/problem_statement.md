@@ -1,7 +1,19 @@
-I'm hitting a nasty import-time crash in the model compilation integration tests. The problem is our target config table builds hardware target objects for GPU devices right at module level, so the framework tries to construct those objects the moment the test module gets imported, before any test runs, and if the compilation backend isn't ready during import the whole suite errors out on load. Blocks all compilation validation, super annoying.
+## Description
 
-What I want is to restructure that target spec table so the complex hardware entries (CUDA, ROCm, Vulkan style devices) live as plain data structures at module level instead of fully built framework objects. Then the actual framework target object only gets constructed lazily inside the test function when it runs. Simpler targets can just be plain string identifiers, no wrapping needed.
+The model compilation integration test is failing because hardware target specifications for GPU devices are being fully constructed as framework objects at the time the test module is imported, rather than at test execution time. This causes the entire test to error out on module load when the compilation backend isn't ready during import.
 
-The test function itself needs to handle both shapes: if the target value is already a string, use it directly, but if it's a data structure, wrap it into the appropriate framework target object and convert it to a string before using it at test time.
+Additionally, the test only covers a subset of the supported deployment targets. Apple Metal, Android, and iOS are missing from both the target specification table and the output artifact suffix table, so compilation for those platforms cannot be tested at all.
 
-While I'm in there, I also want to cover three deployment platforms we're missing entirely right now. Apple Metal, Android, and iOS aren't in either the target spec table or the artifact suffix table, so we can't test compilation for them at all. Add them as plain string targets and wire up their expected compiled artifact extensions too: Apple Metal produces a dylib, Android produces a tar, and iOS also produces a tar. WebGPU (web) stays as a string target as well. That way the suite actually covers the full range of platforms we ship to for deployment.
+## Expected Behavior
+
+- Target specifications for complex hardware (such as CUDA, ROCm, and Vulkan devices) should be stored as plain data structures at module level, and only converted into framework-specific objects when the test actually runs.
+- Simple targets (such as Metal, WebGPU, Android, and iOS) can be specified as plain string identifiers.
+- The test function should handle both cases: if the target value is already a string, use it as-is; if it is a data structure, convert it to a framework target object and then to a string at test time.
+- The test infrastructure should recognize the following new deployment targets, along with their expected compiled artifact file extensions:
+  - Apple Metal → dylib
+  - Android → tar
+  - iOS → tar
+
+## Why This Matters
+
+Without this fix, the integration test fails to load at all, blocking compilation validation. Adding support for Metal, Android, and iOS ensures the test suite covers the full range of platforms that the project targets for deployment.

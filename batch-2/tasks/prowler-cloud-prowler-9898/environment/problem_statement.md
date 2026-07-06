@@ -1,5 +1,24 @@
-I'm cleaning up the security check suite in our cloud compliance tool and I've got two things that need doing across the Azure and M365 Entra checks.
+## Description
 
-First, there's an existing Azure check that verifies whether a conditional access policy enforces MFA for management API access. The name doesn't really say what it does, so I want it renamed to something that clearly conveys it's a conditional access policy check. Also the findings it emits are wrong on the resource front, right now whether it passes or fails it reports the tenant domain and tenant ID as the affected resource, which is misleading since we're actually evaluating the conditional access policy, not the tenant. So both the resource name and the resource ID on those findings should reference the conditional access policy instead.
+Two improvements are needed in the cloud security check suite targeting Azure and Microsoft 365 Entra configurations.
 
-Second, I need a brand new M365 check for the default application management policy in a tenant. Basically it should fail if the policy isn't enabled at all. If it is enabled, then it needs to confirm all four required credential restrictions are present and actively in an enabled state: one blocking password additions, one enforcing a maximum password lifetime, one blocking custom password additions, and one restricting maximum certificate lifetime. For any restriction that's missing or not enabled, the finding details need a specific human-readable phrase saying what's missing so an admin can see at a glance what to fix, and each one should be called out separately. When all four are present and enabled, it passes. Oh and if no policy exists at all, produce no findings. For the resource id on findings, use the policy's own ID, or fall back to the tenant domain when the policy has no ID, and the resource name should always be "Default App Management Policy". The service layer also needs new data model classes to represent the policy, its restrictions collections, and the individual credential restrictions (each carrying a type, a state, and an optional maximum lifetime field). This closes a gap where weak app credential policies could let attackers add long-lived or custom creds to registered apps, and the rename plus consistent resource fields just makes triage saner for the security team.
+**1. Rename and fix an existing Azure check**
+
+An existing check that verifies whether a conditional access policy enforces multi-factor authentication for management API access is currently named in a way that doesn't clearly reflect its scope. It should be renamed to better convey that it is specifically a conditional access policy check. Additionally, when the check produces a finding (either passing or failing), it currently reports the tenant domain and tenant ID as the resource — this is misleading because the check is really evaluating the conditional access policy, not the tenant itself. The reported resource name and resource ID should both consistently reference the conditional access policy.
+
+**2. Add a new Microsoft 365 check for the default application management policy**
+
+There is currently no check that verifies whether the default application management policy in a Microsoft 365 tenant is both enabled and properly configured. Administrators need to be alerted when this policy is missing, disabled, or lacks specific required credential restrictions. The required restrictions cover four areas: blocking new password additions, enforcing maximum password lifetimes, blocking custom passwords, and limiting certificate lifetimes. Each missing or inadequately configured restriction should be identified separately in the finding details so administrators know exactly what needs to be fixed.
+
+## Expected Behavior
+
+- The renamed Azure check produces findings that reference the conditional access policy as the resource (not the tenant).
+- The new M365 check returns no findings if the policy does not exist.
+- The new M365 check fails if the policy is not enabled.
+- The new M365 check fails and lists each specific missing or disabled restriction if any of the four required restrictions are absent or not in an enabled state.
+- The new M365 check passes if the policy is enabled and all four required restrictions are configured and enabled.
+- When the policy has no identifier, the tenant domain is used as a fallback resource identifier.
+
+## Why This Matters
+
+Inconsistent resource identification in findings makes triage harder for security teams — renaming the check and fixing the resource fields improves clarity. The new M365 check closes a gap where weak application credential policies could go undetected, potentially allowing attackers to add long-lived or custom credentials to registered applications.

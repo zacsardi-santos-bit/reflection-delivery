@@ -1,5 +1,21 @@
-I'm hitting a nasty build caching problem in my Nx workspace where TypeScript's incremental compilation just stops working after a cache hit. Traced it down to the TypeScript plugin not listing the incremental compilation state files (the `.tsbuildinfo` files TS emits in build mode) as task outputs. Those state files are what TS uses on the next run to figure out what changed, so if they're not tracked as outputs the cache can't capture or restore them, and after a cache hit TS has to recompile everything from scratch, which is exactly the perf hit I'm seeing.
+## Description
 
-Right now the inference is broken in a couple of ways. For typecheck targets where no output directory is configured, the outputs list comes back completely empty so the state file isn't tracked at all. And for build targets where both an output dir and a source root are set, it uses this overly broad wildcard/glob that doesn't reliably match where the state file actually lands.
+When Nx infers TypeScript task configurations from project tsconfig files, it records which output files each task produces. These output declarations are critical for the build cache to work correctly: if a file is not listed as a task output, the cache cannot capture or restore it.
 
-What I want is for every inferred TypeScript task (both typecheck and build) to include the precise, exact path to its state file in the outputs, no wildcards or globs. The location follows a predictable rule based on the tsconfig filename: take the base name of the config file and swap its `.json` extension for the build state file extension. If an output directory is configured the state file lives there, otherwise it sits at the project root with that same naming convention. Also if the tsconfig has an explicit override for the state file location, respect that instead. And for projects with multiple internal TypeScript configuration references, each reference's state file needs to be tracked separately in the outputs list. One more thing on path formatting: paths inside the project directory should use the project-relative token, and paths that fall outside (like a workspace-level output folder) should use the workspace-relative token. This all lives in the Nx TypeScript plugin inference logic.
+TypeScript's build mode always generates an incremental compilation state file alongside the compiled output. This state file allows TypeScript to skip recompiling unchanged source files on subsequent runs. However, the Nx TypeScript plugin is not correctly including these state files in task output declarations:
+
+- For typecheck targets with no output directory configured, the outputs list is completely empty — the state file is not tracked at all.
+- For build targets where both an output directory and a source root directory are configured, the outputs list uses an overly broad wildcard pattern that may not match the actual location of the state file.
+
+## Expected Behavior
+
+- Every TypeScript task (typecheck and build) must include the precise path to the incremental compilation state file in its outputs list.
+- The state file path should be an exact, specific path — not a wildcard or glob pattern.
+- The path should be determined from the tsconfig filename: the state file lives in the output directory (or at the project root if no output directory is set), with a filename derived from the tsconfig configuration filename — specifically, the base name of the config file with its JSON extension replaced by the build state file extension.
+- When an explicit override for the state file location is set in the tsconfig, that path should be respected.
+- When a project contains multiple internal TypeScript configuration references, each one's state file must be tracked separately in the outputs list.
+- Paths that fall within the project directory should use a project-relative token; paths that fall outside (e.g., in a workspace-level output folder) should use a workspace-relative token.
+
+## Why This Matters
+
+Without accurate output declarations, the Nx build cache cannot capture and restore TypeScript incremental compilation state. After a cache hit, TypeScript loses its incremental compilation advantage and must recompile from scratch, degrading build performance unnecessarily.

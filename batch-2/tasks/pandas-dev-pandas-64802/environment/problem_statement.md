@@ -1,5 +1,20 @@
-I'm hitting a wall with axis-based reductions on 2D nullable arrays, both the integer and float kinds (the sort that show up from internal DataFrame ops). When I try to find the minimum or maximum along a specific axis, either across rows or across columns, it just errors out or gives me wrong numbers instead of the per-column or per-row extremes I'd expect. What I want is a 1D nullable array of the same type back, with missing values skipped during the computation by default, and where an entire column (or row) slice is all missing, that position in the output should itself be a missing value rather than blowing up.
+## Description
 
-Related to that, computing the mean along an axis when one column is entirely missing should give me a result array with a missing value sitting at that column's position, but right now the whole thing short-circuits and hands me back a single scalar missing value for everything, which is useless.
+Reduction operations (minimum, maximum, mean, and aggregations with missing-value propagation) on 2D nullable integer and floating-point arrays do not work correctly when reducing along a specific axis.
 
-Oh and the missing-value propagation mode is broken too. When I opt into propagation (I don't want missing values skipped), any column or row with at least one missing value should yield a missing value at that spot in the output, and this needs to hold for all the aggregations, sum, product, mean, variance, standard deviation, minimum, and maximum. None of them currently do this right along an axis. So basically I need three behaviors working across these reductions: skip missing by default, return a missing value when a whole slice is missing, and propagate missing values into the output positions when I explicitly ask for that. All of them should return a proper 1D nullable array of the appropriate type.
+Specifically:
+
+- Finding the minimum or maximum value along either axis of a 2D nullable array raises an error or returns incorrect results instead of computing the per-column or per-row extremes while properly skipping missing values.
+- When an entire column consists of missing values, the minimum or maximum for that column should be a missing value in the output — but this does not happen correctly.
+- Computing the mean along an axis when a column is entirely missing should yield a missing value at that column's position in a result array — instead the operation short-circuits and returns a scalar missing value for the whole result.
+- When missing-value propagation is requested (i.e., the user does not want missing values skipped), aggregations along an axis should produce missing values at positions where any input was missing. This also does not work correctly for any of the supported aggregation functions.
+
+## Expected Behavior
+
+- Column-wise and row-wise minimum/maximum on 2D nullable integer or float arrays should return a 1D nullable array of the same type with missing values at positions where all inputs were missing.
+- Mean along an axis when an entire column is missing should return a missing value at that column's position, not abort entirely.
+- All aggregations (sum, product, mean, variance, standard deviation, minimum, maximum) called with missing-value propagation along an axis should return a 1D nullable array with missing values wherever any input slice contained a missing value.
+
+## Why This Matters
+
+Users who work with 2D nullable integer or float arrays — for example, those arising from internal DataFrame operations — need reliable axis-based reductions. Broken min/max and incorrect propagation of missing values make it impossible to correctly aggregate such arrays.

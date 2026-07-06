@@ -1,3 +1,14 @@
-I'm hitting a bug in the Cohere Command reasoning parsers in vLLM around how they figure out whether a model's thinking/reasoning phase has actually ended. The method that checks for reasoning completion just scans the entire token sequence looking for any end-of-reasoning marker, which is fine for a single fresh generation but totally wrong once you feed in a full conversation history. If a prior turn already had a completed reasoning block sitting in the input tokens, the parser sees that and concludes the current generation has finished reasoning too, even though the current turn hasn't produced any reasoning output at all. So multi-turn convos with these Command models that support a thinking phase end up misbehaving, prematurely treating a generation as done reasoning and causing bad output routing or early termination of the reasoning step.
+## Description
 
-What I want is for the check to be conversation-context aware. There's a special chatbot delimiter token that marks where the current model generation begins, so the completion check should only inspect tokens that come after the most recent occurrence of that delimiter. That way a previous turn's completed reasoning block has zero effect on whether the current generation counts as finished reasoning. And if there's no such delimiter present at all (pure generation-only context, no history), then it's fine to consider the whole token sequence like before. Fix lives in the Cohere Command reasoning parser code.
+The Cohere Command reasoning parsers have a bug in how they detect whether a model's thinking/reasoning phase has ended. When processing a full conversation history (where prior turns are included in the token sequence), the current implementation searches the entire sequence for any end-of-reasoning marker. This means a completed reasoning block from a previous conversation turn can cause the parser to incorrectly conclude that the current generation has also finished reasoning — even when the current turn has not generated any reasoning output at all.
+
+## Expected Behavior
+
+- When determining whether reasoning has ended, only the tokens belonging to the **current** model generation should be inspected.
+- A special chatbot delimiter token separates the current generation from prior conversation context. The parser should scope its check to only tokens appearing after the most recent such delimiter.
+- A prior turn's completed reasoning block should have no effect on whether the current generation is considered to have finished reasoning.
+- When no chatbot delimiter is present (i.e., generation-only context with no conversation history), the entire token sequence is considered.
+
+## Why This Matters
+
+Multi-turn conversations with Cohere Command models that support a thinking/reasoning phase can produce incorrect behavior when the reasoning-end detection fails to account for conversation history. This can cause the system to prematurely treat a generation as having completed its reasoning phase when it hasn't, leading to incorrect output routing or early termination of the reasoning step.

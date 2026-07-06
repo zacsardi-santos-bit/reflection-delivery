@@ -1,7 +1,15 @@
-I'm using Biome's import organizer on a project that leans hard on side-effect imports, polyfills, CSS files, various init modules that don't export or bind anything, and I've got no way right now to keep these "bare" imports separate from the regular ones that actually bind names. I want to configure import groups where I can target just the bare (side-effect only) imports, the ones without any imported bindings, in their own group, and separately target all the imports that do have named or default bindings (the non-bare ones) in another group, with a blank line separator between them.
+## Description
 
-This should play nice with the existing group types and blank line separators that are already there, so it's not a special-case thing, it's just another dimension I can group on. Also I want to be able to narrow a bare import group further by filtering on the import's source path with a glob, so for example I could put CSS bare imports in one group and all the other bare imports in another.
+The import organizer in Biome currently has no way to create import groups based on whether an import is a "bare" (side-effect only) import versus one that binds a name. Many JavaScript projects use side-effect imports for polyfills, CSS files, and other initialization modules that need to be loaded in a specific order or kept visually separate from regular imports. Without the ability to group imports by their "bare" vs "binding" nature, the import organizer cannot correctly handle these cases.
 
-On top of that I need a new option to sort bare imports alphabetically within their group, since their load order actually matters and I want them consistently ordered. That sort should apply to every bare import that lands in the bare group whether it's a relative path or a package path, don't treat those differently. The relevant logic lives in the import sorting/assist code under `@crates/biome_js_analyze`, so that's where the grouping predicate for bare vs binding imports and the new bare-sort option need to go.
+## Expected Behavior
 
-Without this, teams doing polyfills or CSS-in-JS or other side-effect-first patterns can't rely on the organizer to keep the file structure and the execution order correct, so that's the gap I'm trying to close.
+- Developers should be able to configure an import group that specifically targets side-effect-only imports (bare imports — those without any imported bindings).
+- Developers should be able to configure a group that targets all imports that do have named or default bindings (non-bare imports).
+- The bare/non-bare grouping should work together with other existing group types and blank line separators.
+- It should be possible to further narrow a bare import group by also filtering on the import's source path using a glob pattern (e.g., only CSS imports).
+- A new option should allow bare imports to be sorted alphabetically within their group.
+
+## Why This Matters
+
+Without this feature, teams using polyfills, CSS-in-JS, or other side-effect-first patterns cannot rely on the import organizer to maintain the correct file structure. This improvement makes it possible to enforce consistent import ordering for projects that care about both the structure and execution order of their imports.

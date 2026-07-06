@@ -1,5 +1,16 @@
-I want to add a new Biome lint rule that catches embedded frame elements (iframes) that don't have a proper sandbox restriction, since untrusted content loaded in a frame with no sandbox can run scripts, poke at the parent page, or navigate the user around, which is a real XSS and privilege escalation vector. The rule needs to work across both plain HTML files and component-based template files, and it should live in the nursery group since it's new and still evolving.
+## Description
 
-Here's the behavior I'm after. When a frame element has no sandbox attribute at all, I want an error reported explaining the attribute's missing and suggesting one be added, with the diagnostic spelling out why sandbox matters for content security. For HTML specifically, a bare boolean sandbox attribute (no value) counts as valid, because that maps to the most restrictive mode. But in component templates it's different: that same element with only a boolean attribute and no string value should be flagged as invalid, since boolean attributes and string attributes get interpreted differently there and a boolean-only flag doesn't actually restrict anything. A valid sandbox string value, including an empty string (which applies the most restrictive mode), should never be flagged.
+Embedded frames that lack sandbox restrictions can expose applications to serious security vulnerabilities — untrusted content loaded inside them may execute scripts, access the parent page, or navigate the user without any protection. There's currently no automated way for the linter to warn developers about missing or insufficient sandbox restrictions on embedded frames in either plain HTML files or component-based template files.
 
-Also, if a frame element gets its attributes via spread props, treat it as valid since the sandbox might be coming through dynamically. And non-frame elements should never be touched by this rule at all.
+## Expected Behavior
+
+- When an embedded frame element has no sandbox restriction attribute at all, the linter should report an error explaining that the attribute is missing.
+- When an embedded frame element in a component template has a sandbox attribute present but set only as a plain boolean flag (no string value specifying the allowed capabilities), the linter should also report an error, because a boolean-only value does not meaningfully restrict the frame's content in that context.
+- Embedded frame elements that have a valid sandbox string value — including an empty string, which applies the most restrictive mode — should not be flagged.
+- Embedded frame elements that receive their props via a spread should not be flagged, since the sandbox attribute may be provided dynamically.
+- Other (non-frame) elements should not be affected by the rule.
+- The rule should exist in the nursery group, as it is a new and evolving check.
+
+## Why This Matters
+
+Without an automated lint rule for this, developers may inadvertently embed third-party or user-generated content in frames without any restrictions, creating cross-site scripting vectors and privilege escalation risks. A linter rule makes it easy to catch these issues at development time before they reach production.

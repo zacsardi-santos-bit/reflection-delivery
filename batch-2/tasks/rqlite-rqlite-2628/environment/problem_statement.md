@@ -1,7 +1,21 @@
-I'm cleaning up the snapshot subsystem and want to introduce a proper package for the companion checksum files that live next to our snapshot data files. Right now those checksums get written and read through a low-level internal utility, and the annoying part is the file format is tightly coupled to that utility's implementation, plus it doesn't record which algorithm produced the checksum. So there's no self-describing metadata, the file just holds a raw value, which makes it hard to evolve the format later.
+## Description
 
-What I want is a new dedicated package that stores checksum info as structured JSON capturing both the checksum value and the algorithm type. It should let me create an in-memory checksum record for a given value, write that record to disk, read it back, pull out just the numeric CRC32 value, and compare a data file's actual checksum against what's stored in its companion file (returning whether they match). Round-tripping matters: write then read has to recover the exact original value, including zero. Reading a missing file or one with malformed/invalid structured content should return an error, and the compare path should also fail gracefully if either the data file or the companion file is absent.
+The snapshot subsystem currently stores CRC checksums alongside data files using a low-level internal utility. This utility writes checksums in a format that is tightly coupled to its implementation and does not record which algorithm was used to produce the checksum. As a result, there is no self-describing record of the checksum type, making it harder to extend or evolve the format in the future.
 
-Oh and the in-memory record's method for returning the numeric checksum needs to be strict about the stored string. It should reject anything that isn't exactly eight hex characters, so empty strings, too-short, too-long, and strings with non-hex chars all get rejected, and it should also reject records whose algorithm type isn't recognized.
+## Expected Behavior
 
-Once this package exists, go update the existing snapshot code that currently calls the lower-level checksum utility directly so it uses the new package instead. This is mostly about making the integrity system more maintainable and future-proof by having a self-describing format, so callers across the snapshot subsystem should migrate over.
+A new, dedicated package should be introduced to manage these companion checksum files. The companion files should be stored in a structured format (JSON) that records both the checksum value and the algorithm used. The package should expose functions to:
+
+- Create a new in-memory checksum record for a given value
+- Write a checksum record to a file on disk
+- Read a checksum record back from a file
+- Read just the CRC32 value from a checksum file
+- Compare a data file's actual checksum against a stored checksum file, returning whether they match
+
+Reading and writing must round-trip correctly — a value written to disk must be recoverable as the same value. Reading a file that does not exist or is not valid structured data should return an error. Comparing files where either the data file or the companion file is missing should also return an error.
+
+The in-memory record should reject attempts to extract a CRC32 value if the algorithm type is unrecognized, or if the stored checksum string is not a properly formatted 8-character hexadecimal value (rejecting strings that are too short, too long, empty, or contain non-hex characters).
+
+## Why This Matters
+
+Having a self-describing checksum file format makes the snapshot integrity system more maintainable and future-proof. Callers across the snapshot subsystem should migrate to using this new package instead of calling lower-level checksum utilities directly.

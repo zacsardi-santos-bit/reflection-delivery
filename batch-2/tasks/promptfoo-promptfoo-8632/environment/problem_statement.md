@@ -1,11 +1,40 @@
-I'm hitting a pile of bugs in our HTTP fetch caching layer and I want the whole thing cleaned up so the cache behaves correctly, secrets don't leak, and callers stay isolated. Right now requests that differ only in their headers get treated as the same cached request, so two callers with different auth tokens end up getting each other's responses, and worse, the actual token values are stored verbatim in the cache key, meaning anything that can read the cache can read secrets. I want different headers to produce different cache entries, and sensitive stuff like API tokens, authorization headers, and URL query params carrying secrets should be hashed before going into the key rather than sitting there in plain text.
+## Description
 
-Also when I pass a request object that has its own embedded headers into the fetch wrapper and don't re-specify headers in the options, those embedded headers get silently dropped and my auth credentials vanish mid-request with no warning. Embedded headers should be preserved when no init headers are given, and replaced when init headers are explicitly passed.
+The HTTP fetch caching layer has several correctness and security issues with how it generates cache keys and handles concurrent requests.
 
-There's a cloud auth problem too, we're adding cloud API authentication based on a prefix check on the URL instead of an exact origin match, so lookalike domains that start with or extend the cloud hostname could wrongly receive the token. It should only attach when the request targets the exact configured cloud host.
+**Cache key correctness problems:**
 
-Then a bunch of normalization issues, HTTP method casing (lowercase vs uppercase) produces different keys for the same request, option property order changes the key, and requesting the same URL with different response formats (structured data versus plain text) wrongly shares a cache entry. Normalize method casing and option ordering so equivalent requests collapse to one entry, and make the response format part of the key so formats don't get mixed up.
+- Requests that differ only in their headers — including authentication tokens — are treated as the same cached request, so responses may be served to the wrong caller.
+- When a request object with embedded headers is passed to the fetch wrapper and no additional headers are specified in the options, those embedded headers are silently dropped, causing authentication credentials to be lost.
+- HTTP method names using different casing (e.g. lowercase versus uppercase) produce different cache keys and result in duplicate network calls.
+- Options objects with the same fields in different property order produce different cache keys instead of the same one.
+- Requests for different response formats (such as structured data or plain text) to the same URL share a cache entry, causing the wrong format to be returned.
 
-Some request types can't be reliably serialized and should just bypass the cache gracefully, oh and right now they don't, multipart form data bodies, stream bodies from request objects when an explicit absent-body override is passed in the options (that override was being read as "no body" and masking the stream), and requests with non-serializable transport options.
+**Cache key security problems:**
 
-Finally, concurrent requests to the same URL where one carries an abort signal and one doesn't are being deduplicated together, so when the signaled caller aborts it kills the unsignaled caller's in-flight request too. Abort signals need to isolate in-flight requests per-signal so cancelling one caller doesn't take down anyone else.
+- Sensitive values such as API tokens, authorization headers, and URL query parameters containing secrets are stored verbatim in cache keys, potentially exposing credentials.
+
+**Incorrect caching of non-cacheable requests:**
+
+- Requests with multipart form data bodies are incorrectly cached, causing responses for different payloads to be mixed up.
+- Requests with non-serializable transport options bypass the cache inconsistently.
+- When a request object's body is a stream, an explicit absent-body override in the options was incorrectly treated as "no body," masking the stream and producing wrong cache keys.
+
+**In-flight deduplication problems:**
+
+- When two concurrent callers make requests to the same URL — one with an abort signal and one without — they are incorrectly deduplicated. Aborting the signaled caller's request also cancels the unsignaled caller's request.
+
+## Expected Behavior
+
+- Requests with different headers should produce different cache entries.
+- Actual secret values (tokens, keys) should be hashed before being incorporated into cache keys, not stored in plain text.
+- Multipart form data bodies, non-serializable transport options, and stream-based request bodies should bypass the cache gracefully.
+- Abort signals should isolate in-flight requests per-signal, so cancelling one caller does not affect others.
+- HTTP method casing and option property order should be normalized so equivalent requests share a single cache entry.
+- The response format should be part of the cache key to prevent format mismatches.
+- Headers embedded in a request object should be preserved when no init headers are provided, and replaced when init headers are explicitly passed.
+- Cloud API authentication should be added only when the request targets the exact configured cloud host — not any lookalike domain.
+
+## Why This Matters
+
+These bugs can cause incorrect responses to be served from cache, authentication credentials to be silently dropped, secrets to be exposed in cache storage, and unrelated concurrent requests to be cancelled when one caller aborts.

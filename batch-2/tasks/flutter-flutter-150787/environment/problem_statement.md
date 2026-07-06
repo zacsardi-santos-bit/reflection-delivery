@@ -1,3 +1,15 @@
-I'm poking around in the flutter tools library and this constant that stands for the OS "file not found" code (error code 2) has a name that doesn't make it obvious it's actually a numeric OS error code. It reads like a high-level concept, so contributors hit it and aren't sure what kind of value it holds. I want it renamed to something that signals plainly it's an OS error code number, and then all the existing usages of the old name across the source updated to point at the new one.
+## Description
 
-While I'm in there, there's a Windows edge case I want locked down. When the file deletion helper tries to delete a file or directory and gets back an OS-level "file not found" error (that error code 2 again), but the target still exists on disk afterward, that means the delete genuinely failed. Right now the correct thing happens, the tool throws a tool exit with a friendly, actionable message instead of leaking the raw system exception at the user, but there's nothing guarding that behavior. So I also want coverage proving that on Windows, when a delete fails with error code 2 and the entity is still there afterward, we throw the tool exit with the user-facing message rather than surfacing the cryptic system error. It's the kind of thing that could silently regress otherwise and then users just see garbage.
+The flutter tools codebase contains a constant representing the OS-level "file not found" error code, but its name is ambiguous — it describes a high-level concept rather than making clear that it is a numeric OS error code. This can confuse contributors who encounter it and aren't immediately sure what kind of value it holds. The constant should be renamed to make its nature explicit.
+
+Additionally, there is a gap in test coverage: when the flutter tool attempts to delete a file or directory on Windows and receives an OS-level "file not found" error — but the entity still exists on disk — the expected behavior is that the tool exits with a friendly, actionable message rather than surfacing a raw system exception. This behavior is correct in the current implementation but is not covered by any test, leaving it unprotected against future regressions.
+
+## Expected Behavior
+
+- The constant previously used for OS error code 2 should be renamed to better signal that it holds a numeric OS error code.
+- All existing usages of the old constant name throughout the source should be updated to the new name.
+- The file deletion helper must throw a tool exit (with a user-friendly message) when a Windows delete operation fails with OS error code 2 and the target file or directory still exists afterward.
+
+## Why This Matters
+
+The rename improves code clarity and reduces confusion for contributors. The new test ensures the critical error-handling behavior on Windows is documented and protected against regressions, so users always receive a clear, actionable message instead of a cryptic system error when file deletions fail unexpectedly.

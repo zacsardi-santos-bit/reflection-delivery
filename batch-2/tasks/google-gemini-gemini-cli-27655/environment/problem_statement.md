@@ -1,9 +1,26 @@
-I'm deep in the model routing logic for the CLI and there are three related flash model bugs I need fixed together, so let me dump the whole picture.
+## Description
 
-First one, when a newer generally-available flash model gets enabled, the current code just promotes every flash selection to the GA version, even when someone with preview access has explicitly picked the preview flash variant. That's wrong. If a user has preview access and manually selected the preview flash model, honor it, don't silently override it. The GA promotion should only kick in for the generic flash alias and the default flash model, not an explicit preview choice.
+The flash model routing logic has two correctness problems when a newer generally-available flash model is enabled, and the statistics display shows an incorrect model name.
 
-Second, the GA flash promotion is auth-agnostic right now and it really shouldn't be. The GA flash model is only appropriate for folks authenticating directly via the Gemini API, so route those users to the GA flash model, but users on other auth paths (like Google login) should get the model that fits their tier instead. So the promotion logic needs to check which auth method is in use before deciding what to assign. Oh and the auto-model description text should reflect the correct flash model name when the GA flash feature is active.
+**Problem 1 — Preview model selection not respected**
 
-Third thing, the session statistics views are showing an internal model identifier for one of the flash variants instead of the proper display name, which makes the stats confusing after a session. When a model's recorded internally under that flash alias identifier, the display layer should translate it to the user-facing name before rendering it, so all variants including the internal flash alias show correctly.
+When the GA flash model is enabled, the routing code currently promotes _all_ flash model selections to the GA version — including cases where the user has explicitly chosen the preview flash variant. A user who has access to the preview flash model and manually selects it should continue to use that preview model. Their selection must not be silently overridden by the GA promotion logic.
 
-Also, all the routing strategies that do model classification need updating consistently, so when the GA access flag is on they resolve to the correct model constant rather than a hardcoded model string. The why here is simple: bad routing means people get silently sent to a model they didn't pick or don't have access to, and the wrong display name makes usage stats hard to read.
+**Problem 2 — Auth-type-aware model assignment missing**
+
+The GA flash model is only appropriate for users who authenticate directly via the Gemini API. Users on other authentication methods (such as those who log in through Google) should receive a different flash model suited to their access level. Currently, the same model is assigned regardless of which authentication path is used, which is incorrect.
+
+**Problem 3 — Wrong model name shown in statistics**
+
+The statistics display components show an internal model identifier for one of the flash model variants rather than the proper display name. This makes the session stats confusing for users.
+
+## Expected Behavior
+
+- When a user explicitly selects the preview flash model and has access to it, that model should be used — not replaced by the GA flash model.
+- When the GA flash feature is active, direct-API users should receive the GA flash model; users on other auth paths should receive the appropriate model for their tier.
+- The auto-model description text should reflect the correct flash model name when the GA flash feature is active.
+- Statistics views should display the proper display name for all model variants, including the internal flash alias.
+
+## Why This Matters
+
+Incorrect model routing means users may be silently sent to a model they did not select or one they do not have appropriate access to. The display name issue makes it harder to interpret usage statistics after a session.

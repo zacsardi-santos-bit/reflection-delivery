@@ -1,5 +1,21 @@
-I'm cleaning up the code editing context in marimo so it stops managing its own state and instead uses the notebook document model that already exists in the system. Right now the context keeps a module-level dictionary of cell names that sticks around across batch invocations, which has caused subtle bugs when I run multiple batches in sequence, and when operations finish it fires two separate frontend notifications, one carrying cell code plus stale/fresh status and another for cell ordering. I want to collapse all that into a cleaner flow.
+## Refactor: Replace Legacy Cell Notifications with Atomic Document Transactions in Code Mode
 
-The idea is the context should read a document snapshot from a context variable that the caller sets up before each invocation rather than building its own internal cell state. If that document context variable hasn't been set by the caller, initialization should refuse to proceed and raise an appropriate error instead of silently working off stale data. Once a batch of operations completes, everything should go to the frontend as one atomic transaction notification (the single transaction message that already exists in the messaging layer) describing precisely what happened, which cells were created, which were deleted, which had code changed, which had config changed, and the final cell ordering, all at once. After emitting that, the context should apply the same transaction to its local document snapshot so name lookups keep working correctly within the same batch.
+### Description
 
-Oh and as part of this the old internal cell data class the context defined for itself needs to go away entirely, cells should just be represented using the existing notebook cell type from the document module. That type uses an empty string for the name field when no name has been assigned, not an absent or missing value, so cells without names report `""` which lines up with the rest of the system. And the two old code-update and ordering notifications shouldn't be sent for these operations anymore, they're fully replaced by the single transaction notification.
+The code editing context currently uses two separate notification messages to communicate notebook changes to the frontend: one for cell code and stale/fresh status, and a second for cell ordering. Additionally, the context maintains its own private module-level dictionary to track cell names across invocations, separate from the notebook document model that already exists in the system.
+
+This fragmented approach causes several problems:
+- The frontend has to piece together information from multiple messages to understand what changed
+- The code editing context duplicates state management that is already handled by the notebook document model
+- Cells without names report an absent/missing value for their name field, which is inconsistent with the rest of the system
+
+### Expected Behavior
+
+- The code editing context should accept a notebook document snapshot from an external source (a context variable set by the caller) rather than building its own internal cell state
+- All changes from a batch of operations should be communicated to the frontend as a single atomic transaction notification, describing precisely what happened: which cells were created, deleted, had code changed, had configuration changed, and the final cell ordering
+- When a cell has no name, its name field should be an empty string, not an absent or missing value
+- The old separate code-update and ordering notifications should no longer be sent for these operations
+
+### Why This Matters
+
+This makes the frontend communication cleaner and more atomic — the frontend receives one message describing exactly what changed, rather than having to reconcile multiple partial updates. It also removes the code editing context's private name tracking, which was a source of subtle state management bugs when running multiple batches in sequence.

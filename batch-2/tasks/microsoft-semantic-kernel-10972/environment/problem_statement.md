@@ -1,5 +1,13 @@
-I'm cleaning up how the SQLite vector store connector works in Semantic Kernel and the connection handling is way more painful than it should be. Right now I have to create, open, and hand a live database connection object into the vector store constructor or register that connection in the DI container myself, which means my code owns the whole lifecycle: opening it, loading any needed extensions, and disposing it properly before I even get to use the store. That's a lot of boilerplate for every integration and it's easy to get wrong.
+## Description
 
-What I want instead is for the vector store class and the record collection class to each take a connection string in their constructors rather than a pre-existing connection, so the library creates and disposes connections internally. Same idea for the dependency injection registration helpers, they should accept a connection string directly instead of expecting a registered connection object in the container. That way I can wire the whole thing up straight from app settings (a config file, say) without writing custom connection setup, and the library can open short-lived connections per operation and clean them up.
+The SQLite vector store connector currently requires consumers to create, open, and pass a database connection object themselves when constructing the vector store or registering it in the dependency injection container. This means callers must manage the full connection lifecycle — opening the connection, loading any required extensions, and ensuring proper disposal — before handing it off to the library. This creates unnecessary complexity and coupling in consumer code.
 
-Oh and while you're in there, the internal SQL command builder utilities are currently tied to an instance that holds a connection as state, which is clunky. I'd rather those be static methods that accept a connection as a parameter so nothing needs to be instantiated to build commands. Please update all these types across the SQLite connector so they work with connection strings rather than connection objects, keeping the existing behavior otherwise intact.
+## Expected Behavior
+
+- The vector store and record collection types should accept a connection string directly, so the library can manage connection creation and disposal internally.
+- The dependency injection registration helpers should accept a connection string parameter, removing the need for consumers to register a pre-opened connection object in the container.
+- The internal SQL command builder should expose its operations as static utility methods that accept a connection as a parameter, rather than requiring the builder to be instantiated and hold a connection as state.
+
+## Why This Matters
+
+Requiring callers to manage connection state before passing it to the library is error-prone and adds boilerplate to every integration. Accepting a connection string instead makes it straightforward to configure the SQLite vector store from standard application settings (e.g., a configuration file) without writing custom connection setup code. It also allows the library to open short-lived connections per operation and clean them up properly.

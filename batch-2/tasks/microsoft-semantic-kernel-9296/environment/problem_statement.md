@@ -1,5 +1,20 @@
-I'm building on the Semantic Kernel framework and I want to use Azure Cosmos DB NoSQL as a vector store backend, but there's no built-in connector for it so I need one implemented that plugs into the existing vector store abstraction. It should give me a vector store that connects to an Azure Cosmos DB NoSQL database and handles creating, listing, and deleting vector collections (containers), plus a collection implementation that supports upserting records, retrieving them, and deleting them with vector embeddings. On retrieval I want to optionally include or exclude the vector field in the returned records.
+## Description
 
-A few specific scenarios I care about: it should support custom partition keys so a collection can be partitioned by a path other than the default key field, and when my model's key field is named something other than the standard property name Cosmos DB uses internally as its item id, the connector should transparently map between them on both upsert and retrieval. Also when a collection doesn't exist yet and I try to read, write, or delete against it, I want a clear descriptive error instead of some cryptic silent failure. Config should work either through explicit parameters or environment variables, and the underlying client needs to be closed properly when the connector's used as a context manager (async with, etc).
+The Semantic Kernel vector store framework needs a connector for Azure Cosmos DB NoSQL, which is currently missing. Developers who want to use Azure Cosmos DB NoSQL as a vector storage backend have no supported integration available. This prevents teams already using Azure Cosmos DB NoSQL from adopting the vector store abstraction in Semantic Kernel without writing their own low-level integration.
 
-Oh and one more thing while you're in there, actually a separate issue: another vector store connector in the codebase was silently returning an absent value for certain distance function configs it doesn't support instead of raising, and that masks misconfigurations. I want that changed so it raises an explicit error, so developers catch incompatible distance function settings right away instead of it quietly getting ignored.
+## Expected Behavior
+
+- A vector store implementation that connects to an Azure Cosmos DB NoSQL database and supports creating, listing, and deleting vector collections (containers).
+- A collection implementation that supports upserting, retrieving, and deleting records with vector embeddings.
+- Retrieval should support optionally including or excluding the vector field in returned records.
+- The connector should support custom partition keys, so that a collection can be configured with a partition path other than the default key field.
+- When a model's key field has a name other than the standard property name used internally by Cosmos DB, the connector should transparently map between them during upsert and retrieval.
+- When a collection does not yet exist, attempting to perform read, write, or delete operations should raise a clear, descriptive error rather than silently failing.
+- The connector should be configurable via explicit parameters or through environment variables.
+- The connector's underlying client should be properly closed when the connector is used as a context manager.
+
+## Why This Matters
+
+Teams building AI-powered applications on Azure who use Azure Cosmos DB NoSQL as their primary data store should be able to plug it directly into the Semantic Kernel vector store abstraction. Without this connector, they are forced to manually manage the low-level Cosmos DB API for vector operations, which duplicates effort and bypasses the framework's abstractions.
+
+Additionally, the vector index configuration for another supported vector store was silently ignoring unsupported distance function values instead of raising an error. This silent failure masked misconfigurations; the behavior should be to raise an explicit error so developers catch these issues early.

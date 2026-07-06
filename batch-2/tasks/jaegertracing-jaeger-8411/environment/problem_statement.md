@@ -1,7 +1,16 @@
-I'm adding metrics support to the ClickHouse storage backend in Jaeger and right now there's just no metrics reader for ClickHouse at all, so when someone configures Jaeger with ClickHouse and tries to query service performance metrics like latency percentiles through the standard Jaeger metrics API, nothing handles it even though the span data is sitting there in ClickHouse. I want a metrics reader that implements the standard Jaeger metrics reader interface and actually aggregates that span data into time-series metrics.
+## Description
 
-For latency, querying should return results grouped by service, with each service's data points coming back as gauge values over time, and when the query asks for operation grouping I want results grouped by both service name and operation name. The SQL used to fetch the latency data should live as named constants so the reader and tests can refer to them by name.
+Jaeger's ClickHouse storage backend is missing the ability to serve latency metrics. When a user configures Jaeger with ClickHouse as the backend, they currently cannot query service performance metrics (such as latency percentiles) because there is no metrics reader implementation for ClickHouse. The storage backend has span data in ClickHouse but no mechanism to aggregate and expose it as time-series metrics through the standard Jaeger metrics API.
 
-The step size parameter needs graceful handling, so I need a helper that turns a step duration into a whole number of seconds where nil, zero, or negative values fall back to a default, sub-second values clamp up to one second, and fractional seconds get truncated. Also I need another helper that maps the standard OpenTelemetry span kind identifiers into the lowercase strings ClickHouse stores.
+## Expected Behavior
 
-The rest of the metrics methods aren't ready yet, so call rate, error rate, and minimum step duration queries should just return a clear "not implemented" error to signal those features don't exist yet. Even this partial implementation (latency working, explicit stubs for everything else) lets folks start using SPM features with ClickHouse.
+- A metrics reader for ClickHouse should be added that implements the standard Jaeger metrics reader interface
+- Querying latency metrics should return results grouped by service, with each service's data points as gauge values over time
+- When queried with operation grouping enabled, latency results should be grouped by both service and operation name
+- The step size parameter should be handled gracefully: invalid (nil, zero, or negative) values fall back to a default; sub-second values are clamped to one second; fractional seconds are truncated
+- Span kind strings in the standard OpenTelemetry format should be converted to the format stored in ClickHouse
+- Call rate, error rate, and minimum step duration queries should return a clear "not implemented" error to signal that those features are not yet available
+
+## Why This Matters
+
+Without this metrics reader, ClickHouse-backed Jaeger deployments cannot expose service performance metrics to the frontend or downstream systems. Adding even a partial implementation (with latency support and explicit stubs for the rest) lets users start using SPM (Service Performance Monitoring) features with ClickHouse.

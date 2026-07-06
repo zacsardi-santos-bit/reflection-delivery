@@ -1,7 +1,19 @@
-I'm trying to get the test suite up and it's totally dead, every single test errors out before anything even runs. Traced it to the global teardown script pulling in a package that isn't declared anywhere in our dependency manifest, so it never gets installed and Jest chokes at startup loading the teardown module. Because of that even the foundational stuff never executes, like the checks that verify our core library constants get exported right (the rendering types, blend modes, texture formats, scale modes groups, all of that).
+## Description
 
-So first thing, I need that missing package added as a dev dependency in `package.json` so it's automatically installed when someone sets up deps. Once it's there the teardown module can actually load.
+The test suite is completely broken because the global test teardown script imports a package that is not listed in the project's dependency manifest. Since the package is never installed, the teardown module fails to load at Jest startup, causing every test to error before it even runs — including foundational checks that verify the library's core constants are exported correctly.
 
-There's also two Windows-specific gremlins in the test infra around how we manage the local HTTP server. When we spawn it we're not going through the system shell, and on Windows the server executable is a batch script so it just can't start without shell. So spawning needs to use the shell on Windows and plain direct execution everywhere else. And on teardown we're only killing the top-level server process, which leaves its child processes running as orphans, so it should kill the whole process tree instead, not just the root.
+Beyond the missing dependency, there are two additional Windows compatibility problems in the test infrastructure:
 
-Get all three fixed (missing dep, cross-platform spawn, full-tree kill) and the core constants tests should run clean. Without the dep nothing runs at all, and on Windows even with the dep the server can't start or clean up, so all of it matters for CI to be reliable across platforms.
+1. The local HTTP server is spawned without going through the system shell, which means it cannot start on Windows (where the server executable is a batch script).
+2. On teardown, only the top-level server process is killed, leaving its child processes running as orphans.
+
+## Expected Behavior
+
+- The missing package should be declared as a developer dependency so it is automatically installed when developers set up project dependencies.
+- Spawning the local test server should use the system shell on Windows and direct execution on other platforms.
+- The teardown should kill the entire process tree — not just the root process — so no orphaned processes are left behind.
+- With these fixes in place, the core constants tests (verifying that groups like rendering types, blend modes, texture formats, and scale modes are all properly exported) should run successfully.
+
+## Why This Matters
+
+Without the missing dependency, **no tests can run at all** — the suite fails at the setup/teardown loading stage before any test code executes. On Windows, even after the dependency is added, the server can't start and can't clean up properly. Fixing all three issues is required to make CI reliable across platforms.

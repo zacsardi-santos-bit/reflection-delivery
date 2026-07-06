@@ -1,3 +1,17 @@
-I'm hitting a couple of things with the Accordion component in Gradio that are annoying me. Main one is I can't control the open/closed state from Python at all, there's no way to read what state it's currently in or push a new state from the server side. And when I do try to flip it from the backend, the expand and collapse events just don't fire the way they do when someone actually clicks the toggle, so any handlers I've wired up from Python never run. I want the Accordion to let me read and write its open state externally, and whenever the state actually changes (whether a user clicked or I updated it programmatically) the right event should fire, expand when it goes closed to open, collapse when it goes open to closed, matching exactly what a real click does. Important bit: if I set it to the same value it already has, nothing should fire and the DOM shouldn't change at all. Oh and I'd like the label to be updatable the same way, just swapping the displayed text.
+## Description
 
-The other thing is a visibility bug. When I hide the accordion using the visibility property set to false, it straight up removes the component from the DOM instead of just hiding it visually. Every other Gradio component stays in the DOM when hidden and just gets hidden via a CSS class, so this is inconsistent and it's breaking my layout. I want the hidden accordion to stay in the page and be hidden with a CSS class like the rest of them do. The relevant code lives around the Accordion frontend and Python bits, so wherever `open`, `label`, and `visible` get handled for that component.
+The Accordion component in Gradio cannot be controlled or observed from outside the UI. There is currently no way for Python backend code to programmatically open or close an accordion, nor to react to its state changes in all scenarios. Additionally, when the accordion is hidden through the standard visibility setting, it incorrectly disappears from the DOM entirely rather than simply being visually hidden — which breaks layout behavior and consistency with other components.
+
+## Expected Behavior
+
+- The accordion should expose a way to read its current open/closed state programmatically.
+- The accordion should expose a way to set its open/closed state programmatically (e.g. from Python backend code).
+- When the state is changed programmatically from closed to open, the appropriate expand events must fire — just as if the user clicked the toggle button.
+- When the state is changed programmatically from open to closed, the appropriate collapse event must fire — just as if the user clicked the toggle button.
+- If the programmatic update sets the same state that already exists, no events should fire and the DOM should not change.
+- The programmatic label update should also be supported (changing the displayed label text).
+- When the component is made invisible via the visibility property (set to false), it should remain in the DOM and be hidden via a CSS class — not removed from the page.
+
+## Why This Matters
+
+Without programmatic control, developers cannot use the Accordion as an interactive, server-controlled UI element. The missing events also mean that event handlers registered from Python code would never be triggered when state is changed programmatically. The visibility bug causes layout inconsistencies compared to other Gradio components.

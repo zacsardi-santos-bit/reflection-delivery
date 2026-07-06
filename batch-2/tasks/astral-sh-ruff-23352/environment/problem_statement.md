@@ -1,5 +1,13 @@
-I'm hitting a nasty contradiction in my linter config and the tool just silently does the wrong thing. I've got one rule that requires a specific standard-library import from the collections module to always be present, and at the same time I've enabled another rule that says that same import always has to be aliased. So one rule wants the plain unaliased import there, and the other flags any unaliased usage as a violation. The auto-fix for one immediately trips the other, and I end up in an endless fix loop with no explanation.
+## Description
 
-What I want is for the linter to catch this upfront, before any actual linting runs, and hand me a clear actionable error instead of behaving contradictorily in silence. The error should name both conflicting rules by their name and code, explain what the conflict actually is (the required import can't be both present unaliased and mandatorily aliased), and give me concrete ways out, like aliasing the required import so it satisfies the aliasing rule, or just disabling the conflicting rule.
+When a user configures the linter to require a specific import from the standard collections module AND simultaneously enables a rule that mandates that same import always be aliased, the two rules directly contradict each other. One rule demands the import be present (unaliased), while the other flags any unaliased usage as a violation. Currently, the linter does not detect this contradiction — it either silently produces confusing behavior or leads to an auto-fix loop where applying one suggested fix immediately triggers the other rule.
 
-Important part though: only flag this when both rules are genuinely enabled together with the contradictory settings. If I've already configured the required import with the exact alias the aliasing rule demands, no conflict should fire and linting should proceed normally. And if I never enable the aliasing rule at all, the required-import rule should keep working fine on its own with zero conflict detection. Basically the check needs to be precise, not overeager, so it doesn't nag me when my config is actually consistent. This'd save a ton of debugging time since right now there's no signal at all about why things are looping.
+## Expected Behavior
+
+- When both rules are active at the same time with conflicting settings, the linter should detect the contradiction early and report a clear, actionable error before any linting takes place. The error should identify the two conflicting rules by name and code, explain the nature of the conflict, and offer concrete resolution steps (either alias the required import or disable the conflicting rule).
+- When the required import is already configured with the alias that the other rule demands, no conflict should be reported and linting should proceed normally.
+- When the rule that requires aliasing is not enabled, the required-import rule should work normally without triggering any conflict detection.
+
+## Why This Matters
+
+Without this detection, users enabling both configurations face a confusing situation where auto-fixes from one rule undo the requirements of another. Surfacing this contradiction as an explicit error with actionable guidance makes the tool significantly more user-friendly and prevents wasted debugging time.

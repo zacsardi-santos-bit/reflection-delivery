@@ -1,5 +1,14 @@
-I'm poking at the Markdown parser and hit this annoying silent failure. If you open a fenced code block with backticks and stick a backtick into the info string (the language tag part right after the opening fence), CommonMark says that's not a valid fence at all, so the line quietly falls through and gets parsed as a regular paragraph. Which is technically correct per spec, but right now we emit nothing, no warning, no error, so an author writes what looks like a code block, sees it render as a paragraph, and has no idea why. Very hard to diagnose.
+# Silent Paragraph Demotion for Fenced Code Blocks with Backticks in Info String
 
-What I want is for the parser to notice this exact case and emit a helpful diagnostic. It should point right at the stray backtick sitting in the info string, explain that the fence is invalid because of that backtick, and suggest a fix, either drop the backtick or switch over to a tilde-based fence instead. Oh and the hint should also make clear that as things stand the line is being treated as a paragraph rather than an actual code block, so the author knows what's actually happening to their content.
+## Description
 
-The flip side matters too: tilde fences are allowed to have backticks in their info strings per the spec, so a tilde-delimited fence with a backtick in the info string should parse cleanly with no error and no diagnostic at all. Don't flag those. Basically only the backtick-fence-plus-backtick-in-info-string combo should trigger the diagnostic, and tilde fences stay quiet regardless of what's in their info string.
+When authoring Markdown, if you open a fenced code block using backticks as the fence character and include a backtick in the info string (the language tag), the CommonMark specification says the line is **not** treated as a code fence at all — it silently falls through and becomes part of a paragraph. Currently the parser accepts this without any warning or error, which means authors get a confusing silent failure: they wrote what looks like a code block, but it renders as a paragraph.
+
+## Expected Behavior
+
+- When a backtick-fenced code block has a backtick character in its info string, the parser should emit a clear error pointing to the stray backtick, explaining that the fence is invalid and the line will be treated as a paragraph instead.
+- The error should suggest using a tilde-based fence as an alternative, since tilde fences **are** allowed to have backticks in their info strings and should parse successfully without any error.
+
+## Why This Matters
+
+Without this diagnostic, the issue is completely invisible to users: they write what they believe is valid Markdown, see no errors, and then wonder why their code block doesn't render correctly. A proper diagnostic makes the problem immediately actionable — it tells the author exactly where the backtick is and how to fix it.

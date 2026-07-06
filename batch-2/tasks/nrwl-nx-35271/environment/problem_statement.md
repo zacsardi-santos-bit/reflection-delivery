@@ -1,3 +1,15 @@
-I'm hitting a lockfile parsing bug with a monorepo that upgraded to a newer major version of a popular JS package manager (think pnpm-style). When its version-management feature is turned on, the lockfile it writes is now a multi-document YAML file with two separate documents in the one file: the first document is metadata about the package manager tool itself (basically its own version info), and the second document is the actual workspace dependency tree for the project. Our lockfile parser doesn't get this format at all. Instead of reading the workspace section it's grabbing the wrong document, so the package manager itself pops up as a dependency node in the graph while all our real packages just go missing or end up unreachable. Not great.
+## Description
 
-What I want is for the parser to detect when a lockfile is in this multi-document form and always pick the workspace dependency document for analysis, ignoring the package-manager metadata doc entirely. So packages that only live in that first metadata section should never show up as dependency nodes, and every regular project dependency declared in the workspace document should parse correctly and land in the graph with the right name, version, and hash. Basically single-document lockfiles should keep working like before, but for these newer configs we need to reach past the metadata doc and treat the second document as the source of truth. The motivation here is that anyone upgrading to this newer version with version-management enabled currently produces a broken or incorrect dependency graph, and I need the graph to reflect the true set of dependencies again. The relevant code lives in whatever parses lockfiles in our tooling, so that's where the multi-document detection and document selection logic should go.
+A newer major version of a popular JavaScript package manager introduced a multi-document lockfile format. When a certain version-management feature is enabled, the lockfile file contains two separate YAML documents: the first document records metadata about the package manager tool itself (its own version information), and the second document holds the actual workspace dependency tree for the project.
+
+The existing lockfile parser does not account for this format. As a result, it processes the wrong document or incorrectly surfaces the package manager itself as a project dependency, while the real workspace dependencies may be missing or unreachable.
+
+## Expected Behavior
+
+- When a lockfile is in the multi-document format, the parser should detect this and automatically select the workspace dependency document for analysis.
+- Packages listed only in the package-manager metadata section of the first document should NOT appear as dependency nodes in the graph.
+- All regular project dependencies declared in the workspace document should be correctly parsed and included in the dependency graph with accurate name, version, and hash information.
+
+## Why This Matters
+
+Projects upgrading to this newer package manager version with version-management enabled will produce an incorrect or broken dependency graph. Fixing the parser to correctly handle the multi-document format restores compatibility and ensures the dependency graph reflects the true set of project dependencies.

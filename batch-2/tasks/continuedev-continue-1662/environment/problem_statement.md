@@ -1,5 +1,26 @@
-I'm building out a code intelligence tool and hitting two related gaps I need help closing.
+## Description
 
-First one's about workspace indexing. We're currently leaning on a built-in IDE method to list workspace contents, but it doesn't really respect ignore files at different levels of the tree, so we end up indexing stuff developers explicitly excluded, which adds noise to search results and wastes processing. I want a standalone, testable directory traversal utility that recursively walks a directory and returns file paths. The key thing is it reads ignore files at every directory level, not just the root, and an ignore file sitting in a subdirectory should only apply to its own subtree, not bleed up to parent dirs. It's gotta handle all the usual ignore file features correctly: wildcard patterns, negation patterns, directory-level patterns, and root-anchored patterns. Oh and besides the standard version-control ignore file it should also honor a second tool-specific ignore file alongside it. I want it to support returning either relative or absolute paths, and there should be a mode that returns only directory paths instead of files.
+The codebase currently relies on a built-in IDE method to list workspace files, but this method has limited support for ignore patterns and directory traversal. We need a standalone, testable directory traversal utility that correctly handles all common ignore file patterns found in real projects.
 
-Second thing, the code chunking feature needs work too. When I split a structured code file into chunks, I want each top-level definition, so a class or a standalone function, to come out as its own chunk as long as it fits within the size limit. If a class is too big to fit in one chunk, then the class itself should show up as a summary chunk with placeholder content standing in for each method body, and then each method should also appear as its own full chunk. For an empty file, don't return any chunks at all. And when a whole file fits inside the size limit, the entire file should just be one chunk. The point of all this is keeping semantic code units intact as retrieval units instead of getting cut at arbitrary line boundaries.
+Additionally, the code chunking feature doesn't properly handle structured code files — when a file contains multiple classes and functions, they should each appear as their own independent chunk rather than being lumped together or split arbitrarily.
+
+## Expected Behavior
+
+**Directory traversal:**
+- A new directory traversal utility should walk a directory recursively and return file paths
+- It should read and respect ignore files (such as standard version-control ignore files) at every directory level, not just the root
+- It must handle negation patterns, wildcard patterns, directory-level patterns, and root-anchored patterns correctly
+- Ignore files in subdirectories should apply only to their own subtree, not to parent directories
+- It should also respect a tool-specific ignore file in addition to the standard one
+- It should support returning either relative or absolute paths
+- It should support a mode that returns only directory paths instead of files
+
+**Code chunking:**
+- When a file is empty, no chunks should be returned
+- When a file fits within the chunk size limit, the entire file should be one chunk
+- Each top-level code structure (class, function) in a structured file should appear as its own chunk when they fit within the size limit
+- When a class is too large, it should be represented both as a summary chunk (with placeholder content for method bodies) and as individual method chunks
+
+## Why This Matters
+
+Without proper ignore file support, the tool may index files that developers have explicitly excluded, leading to noise in search results and wasted processing. The code chunking improvements ensure that semantic code units are preserved as meaningful retrieval units rather than being cut at arbitrary line boundaries.

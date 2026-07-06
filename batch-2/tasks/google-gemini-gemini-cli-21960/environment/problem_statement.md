@@ -1,9 +1,14 @@
-I'm chasing a few related retry and cancellation bugs in the streaming UI and they all feed into each other. The main thing is when I cancel an in-progress request, the UI sometimes keeps showing a "retrying..." status because retry events that land after the cancellation are still getting applied to the state. I want retry status cleared immediately on cancel, and any late retry events that arrive afterward should just be silently ignored so nothing stale sticks around.
+## Description
 
-Related to that, the escape-to-cancel hint shows up even when we're idle. If a loading phrase happens to be set, the cancel hint appears alongside it even though nothing's actually in progress. That hint should only show while a request is actively being processed (the responding state), never when idle, even if some loading phrase is lingering.
+There are several related bugs around retry status and cancellation in the streaming UI. When a user cancels an in-progress request, lingering retry events can still update the retry status display — causing a stale "retrying..." message to appear even after cancellation. Similarly, retry status phrases and cancel hints are shown in states where no active request is occurring (e.g., when the system is idle but a retry phrase happens to still be set). Finally, the underlying retry utility can fire retry notifications even when the operation has already been aborted, which contributes to these stale UI states.
 
-Same deal with retry status loading phrases, they show in the idle state when retry status data is still present. Those phrases should only render while actively responding, so when idle we produce no retry phrase at all regardless of whether retry status data is hanging around.
+## Expected Behavior
 
-And there's an underlying cause in the retry utility itself. If an abort signal fires right at the point where a retry notification would go out (either during error handling or during the content-based retry evaluation path), the retry callback still runs instead of the operation aborting cleanly. I want the retry util to check the abort signal before invoking any retry callback, and if it's already aborted at that point, reject with an abort error without calling the callback and without logging any warnings.
+- The escape-to-cancel hint should only appear while a request is actively being processed (in the responding state). It should not appear when the system is idle, even if a loading phrase happens to be set.
+- Retry status loading phrases should only be shown while the system is actively responding. When idle, no retry phrase should be produced even if retry status data is present.
+- Retry status should be immediately cleared when a request is cancelled, and any retry events that arrive late (after cancellation) should be silently ignored.
+- The retry utility should check for abort signals before firing retry callbacks. If the signal is already aborted at the point where a retry notification would be sent, the operation should abort cleanly without invoking the retry callback or logging any warnings.
 
-Fixing these keeps the UI honest about what's really happening so we don't get "retrying..." indicators or cancel hints when there's nothing being retried or cancelled.
+## Why This Matters
+
+These bugs cause confusing UI states where "retrying..." indicators or cancel hints appear when there is nothing actually being retried or cancelled. Fixing them keeps the UI consistent with the actual state of the system and prevents stale notifications from confusing users.

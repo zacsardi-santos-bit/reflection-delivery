@@ -1,5 +1,14 @@
-I'm digging into the runtime environment packaging code and I just realized our zip extraction has zero protection against path traversal, the classic zip slip thing. If someone hands us a runtime env packaged as a zip with entries that use relative traversal sequences pointing outside the extraction dir, or entries with absolute paths, those files land wherever they want on the filesystem instead of getting skipped. That's bad, especially in multi-tenant or automated deploy setups where I can't trust the archive contents, a crafted zip could silently clobber sensitive files in parent or sibling dirs.
+## Description
 
-What I want is for the extraction function to figure out each entry's resolved destination and, if it falls outside the intended target directory, just silently skip that entry while still extracting everything safe normally. Needs to cover simple traversal like a single `../`, nested ones, and both Unix-style (`/etc/...`) and Windows-style (`C:\...`) absolute paths. Oh and this same safety check has to hold when the top-level directory stripping mode is turned on, unsafe entries excluded there too without touching external files.
+The zip file extraction used for runtime environment packaging is vulnerable to path traversal attacks (also known as "zip slip"). A malicious or corrupted zip archive can contain entries with relative path traversal sequences or absolute paths that, when extracted, cause files to be written outside the intended destination directory — potentially overwriting arbitrary files on the filesystem, including those in parent or sibling directories.
 
-Also there's a helper that strips a leading directory name off archive entry paths. I'd like it to actually validate the directory argument and raise an error when it's given something that doesn't make sense as a prefix, meaning an empty string, a single dot, a double dot, or any absolute path (Unix or Windows). Those values are nonsense as directory prefixes and probably signal misuse, so error out rather than silently doing something weird.
+## Expected Behavior
+
+- When extracting a zip archive, any entry whose resolved destination path falls outside the specified target directory should be silently skipped. This includes entries using single or nested relative traversal sequences, as well as entries with Unix-style or Windows-style absolute paths.
+- Safe entries (those that remain within the target directory) should still be extracted normally.
+- When the top-level directory stripping mode is active, unsafe entries should also be excluded without affecting external files.
+- A utility function that strips a leading directory prefix from archive entry paths should validate its directory argument and reject values that are empty, self-referential, parent-directory references, or absolute paths (either Unix or Windows style), raising an error for those cases.
+
+## Why This Matters
+
+Without this protection, a runtime environment packaged as a specially crafted zip file could silently overwrite sensitive files during extraction, posing a serious security risk in multi-tenant or automated deployment scenarios where archive contents cannot be fully trusted.

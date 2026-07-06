@@ -1,5 +1,16 @@
-I'm poking at the semantic kernel planning module and I keep hitting a gap: all the planners we've got are built for multi-step sequences, but sometimes I just want the kernel to pick the single most relevant registered function for a natural-language goal and fill in its params automatically, no full pipeline orchestration. So I want a new single-action planner living in the planning package that does exactly that, given a goal it selects exactly one function from the kernel's registered skills and hands back a plan that's ready to execute with the right parameters populated.
+## Description
 
-It needs to validate inputs upfront so I don't forward garbage to the model. If no kernel is passed in it should reject right away with a clear planning error, and if the kernel doesn't have a language model service configured then construction should fail with a meaningful error too. Also if the goal string is empty it should raise a planning error instead of sending a meaningless request off to the model. And when the LM comes back with a response that can't be interpreted as a valid plan (malformed, or missing the expected plan structure), I want it to raise a planning error rather than returning junk or crashing on me.
+The semantic kernel planning module currently lacks a simple, single-action planner. Existing planners focus on generating multi-step sequences of operations, but there are many use cases where a developer just wants the kernel to pick the single most relevant registered function and fill in its parameters automatically — without orchestrating a full pipeline.
 
-Once a plan does get created successfully it should carry the description of the selected function, and the extracted parameter values need to be accessible in the plan's state. Oh and the planner should be able to produce a formatted string listing all the available functions by skill name and function name, since I'll use that when building the prompt. Last thing, make sure this new planner is importable from the main planning package alongside the other existing planner types so I can pull it in the same way.
+## Expected Behavior
+
+- A new planner type should be available that, given a natural-language goal, selects exactly one function from the kernel's registered skills and returns a plan ready to execute with the appropriate parameters populated.
+- If no kernel is provided, the planner should immediately reject the request with a clear planning error.
+- If the kernel does not have a language model service configured, construction should fail with a meaningful error.
+- If the goal is empty, the planner should raise a planning error rather than forwarding a meaningless request to the model.
+- If the language model returns a response that cannot be interpreted as a valid plan (e.g., malformed or missing the expected structure), the planner should raise a planning error.
+- The planner should also be able to enumerate all available functions as a formatted string listing each skill and function name, for use in prompt construction.
+
+## Why This Matters
+
+Developers who want a lightweight "pick the best function for this task" workflow currently have no appropriate planner to use. This change adds a missing, simpler planner variant that covers single-action intent detection without forcing them to use a full multi-step planning approach.

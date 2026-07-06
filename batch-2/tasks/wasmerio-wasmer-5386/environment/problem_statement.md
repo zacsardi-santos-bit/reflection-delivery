@@ -1,3 +1,13 @@
-I'm poking around the journal system in the Wasmer runtime, the thing that records events for checkpoint and snapshot purposes so persisted state can be rebuilt later. There's a journal entry variant that tracks pipe creation and it stores two file descriptors, but right now the two fields have generic positional names (think along the lines of "fd1"/"fd2" or "first"/"second") that don't tell you anything about their roles. It's genuinely not clear from the field names alone which descriptor is the read end of the pipe and which is the write end, and that makes the API less self-documenting, so anyone reading or writing these entries has to go dig through source or docs to figure out which end is which, which is exactly the kind of thing that leads to subtle bugs.
+## Description
 
-I want to rename those two fields to something that clearly says read end vs write end (descriptive names conveying their purpose instead of opaque positional ones). And it can't just be a cosmetic rename on the struct/variant, everything that touches these entries needs to line up, so all the code that creates these pipe creation entries, plus whatever serializes them and deserializes them back from storage, should use the new names consistently. The important part is the serialize then deserialize roundtrip still works correctly with the renamed fields so persisted journal data reconstructs accurately, same values in the read and write descriptor slots coming back out. Basically clean rename, keep the roundtrip intact.
+The journal system records pipe creation events, but the data structure for these events uses generic, non-descriptive field names for the two file descriptors involved. Currently, the two fields do not indicate which one represents the read end and which represents the write end of the pipe. This makes the API less self-documenting and can lead to confusion or mistakes when working with pipe creation journal entries.
+
+## Expected Behavior
+
+- The pipe creation journal entry should have clearly named fields that distinguish between the read end and write end file descriptors.
+- Any code that creates, serializes, or deserializes pipe creation entries should use these descriptive names consistently.
+- The serialization and deserialization roundtrip must work correctly with the renamed fields so that persisted journal data can be accurately reconstructed.
+
+## Why This Matters
+
+When developers read or write journal entries for pipe creation events, the field names should make the intent immediately clear. Using opaque, positional names (like "first" and "second") rather than role-describing names forces readers to consult additional documentation or source code to understand which end of the pipe each field corresponds to. Clear naming reduces bugs and improves maintainability.

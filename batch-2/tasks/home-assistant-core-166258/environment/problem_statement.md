@@ -1,5 +1,22 @@
-I'm extending the battery component in Home Assistant so it supports automation triggers, not just conditions. Right now you can check whether a battery is low as a condition when an automation runs, but there's no clean way to have an automation fire the moment a battery actually changes state, you're stuck wiring up generic state-change triggers and filtering by device class by hand, which is exactly the kind of workaround I want to kill off.
+# Add Battery Triggers Support
 
-What I want is a set of battery-specific triggers covering the common state changes: when a battery goes low, when it recovers from low, when a device starts charging, when it stops charging, when the battery level changes numerically, and when the level crosses a configured percentage threshold. The low and charging triggers should apply to binary sensor entities with the appropriate battery/charging device classes, while the level-change and threshold-crossing triggers apply to sensor and number entities that report battery percentage. So it's binary sensors for the boolean-ish states and numeric sensor/number entities for the percentage stuff.
+## Description
 
-Each trigger also needs a behavior option so the user can pick whether the automation fires when any one battery in a group changes, only when the first one does, or only when the last one does (any/first/last). Oh and these should ship as a labs/preview feature, meaning they're gated behind a feature flag and not on by default. For that gating to actually work, the battery platform needs to be registered with the automation framework as an experimental trigger platform so the labs flag applies correctly. Basically this completes the feature set and makes battery consistent with other device-class integrations that offer both conditions and triggers, so I can finally build stuff like "notify me when my smoke detector battery goes low."
+The battery component currently only supports automation **conditions** — you can check whether a battery is low at the moment an automation runs, but you cannot have an automation fire automatically the moment a battery changes state. This means users have to build workarounds using generic state-change triggers and manually filtering by device class, rather than having a clean, purpose-built battery trigger.
+
+## Expected Behavior
+
+The battery component should support automation triggers so users can react to battery state changes in real time:
+
+- Trigger when one or more batteries become low (or recover from low)
+- Trigger when one or more devices start or stop charging
+- Trigger when a battery level changes numerically
+- Trigger when a battery level crosses a configured percentage threshold
+
+These triggers should work with binary sensor entities (for low/charging state) and with numeric sensor and number entities (for battery percentage). They should be available as a labs/preview feature.
+
+Each trigger should support a "behavior" option to control how multi-device groups are handled: fire when **any** device in the group meets the condition, only when the **first** one does, or only when the **last** one does.
+
+## Why This Matters
+
+Without dedicated battery triggers, users cannot easily build automations like "notify me when my smoke detector battery goes low." Adding trigger support to the battery component completes the feature set and makes it consistent with other device-class integrations that provide both conditions and triggers.

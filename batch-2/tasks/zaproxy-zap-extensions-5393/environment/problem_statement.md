@@ -1,5 +1,17 @@
-I'm poking at the automation add-on for ZAP (Zed Attack Proxy) and the API view that returns plan progress is giving back data in a shape that's basically unusable. The start and finish timestamps aren't coming out as standard date strings, they're raw date objects, and the info, warning, and error message lists are wrapped in some nested structure instead of being flat string arrays, so clients hitting either the JSON or XML API can't reliably parse any of it.
+## Description
 
-I want to fix the plan progress response so it exposes a plan ID, a start time, a finish time, and the three message lists (info, warnings, errors) cleanly. The start and finish timestamps should be formatted as ISO 8601 UTC strings, not raw date objects, and when a timestamp isn't available I'd rather it come back as an empty string than get dropped from the response entirely. In JSON the info, warnings, and errors fields each need to be plain arrays of strings, no nested objects. In XML those same three categories should each render as a list element (clearly typed as a list) that contains individual message child elements for each message.
+The automation add-on's API endpoint for retrieving plan progress does not correctly expose all the information it should. The current response format has two main problems: timestamps are not formatted as standardized date strings, and the info, warning, and error message lists are not serialized as simple string arrays — instead they are being wrapped in a nested structure that is difficult for clients to parse.
 
-Yeah this is a breaking change to the existing response format so anyone consuming this endpoint will have to update their parsing, but it's the only way to make the data actually consumable in a consistent, standard way across both APIs.
+## Expected Behavior
+
+- The plan progress response should include a plan ID, start time, finish time, and three message lists (info, warnings, errors).
+- Start and finish timestamps must be formatted as standard ISO 8601 UTC strings, not as raw date objects.
+- In JSON, the info, warning, and error fields must be plain arrays of strings, not nested objects.
+- In XML, the info, warning, and error fields must each be serialized as a list element containing individual message child elements, with each list element clearly typed as a list.
+- When a timestamp is absent, the corresponding field should be an empty string rather than being omitted.
+
+## Why This Matters
+
+Clients relying on this endpoint cannot reliably parse the current response because dates and message lists are not in a consistent, standard format. Fixing the serialization makes the plan progress data properly accessible via both the JSON and XML APIs.
+
+> **Note:** This is a breaking change — existing clients will need to update their parsing logic to handle the new format.

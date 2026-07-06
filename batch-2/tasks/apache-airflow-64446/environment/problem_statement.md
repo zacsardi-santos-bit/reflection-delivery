@@ -1,5 +1,18 @@
-I want to add two CI helper scripts so we can actually track flaky end-to-end browser tests over time instead of manually eyeballing a pile of workflow runs. Right now our CI runs these e2e browser tests across a bunch of runs and there's zero tooling to collect and report flakiness, so persistent offenders just slip through.
+## Description
 
-First script: it reads a browser e2e test results JSON from a single run and writes two structured output files, one listing failed tests with their error details and another listing tests that are temporarily disabled pending a fix (grab their annotations too). It's driven entirely by env vars, the results path, the output directory, the browser name, and a run identifier. If the results file is missing it should still write empty outputs with a flag saying no data was available so downstream doesn't choke. Error messages need normalizing (strip whitespace and newlines) and truncate anything over 300 chars. Build each test title from the spec file path plus the full path of nested suite names joined together.
+The project's CI pipeline runs end-to-end browser tests across multiple workflow runs, but there is currently no automated tooling to collect, analyze, and report on test flakiness over time. We need two new scripts:
 
-Second script aggregates those structured outputs across many recent CI runs, computes a failure rate per test (times failed relative to times it ran), filters out anything below a minimum failure-rate threshold, and sorts results by failure rate highest first. Then it builds a Slack-formatted message summarizing the worst tests. That message always includes a specific target channel identifier, a plain-text fallback, and structured blocks. When there's nothing problematic it still needs clear "no issues detected" copy. When there are offenders the blocks show test names, failure rates as percentages, and error snippets. Oh and before embedding anything into the Slack blocks, escape special characters (ampersands, angle brackets) in both test names and error messages so it renders safely. Drop these under `@scripts/` alongside the rest of our CI tooling.
+1. A script that parses browser end-to-end test reports in JSON format from a single CI run and writes structured output files listing failed tests and tests that have been temporarily disabled pending a fix.
+2. A script that aggregates those structured outputs across many recent CI runs, computes failure rates to identify the most problematic tests, and posts a formatted summary to a team channel with proper escaping of special characters in test names and error messages.
+
+## Expected Behavior
+
+- The extraction script reads a browser test results file, extracts failed tests (with error details) and temporarily-disabled tests (with their annotations), and writes them to separate output files. If no results file is found, it writes empty outputs indicating no data was available.
+- Error messages longer than 300 characters must be truncated. Whitespace and newlines in error messages must be normalized.
+- Test titles should be constructed from the file path and the full path of nested suite names joined appropriately.
+- The analysis script aggregates failure data from multiple runs, computes a failure rate per test, and filters out tests below a minimum threshold. Results must be sorted by failure rate (highest first).
+- The Slack-formatted message must include a fixed target channel identifier, a text fallback, and structured blocks. When no problematic tests are found, the message should clearly indicate this. All test names and error text must have special characters escaped for safe rendering.
+
+## Why This Matters
+
+Without this tooling, identifying persistently flaky tests requires manual inspection of many individual CI runs. This automation makes it easier to catch and address flakiness proactively, keeping the test suite reliable.

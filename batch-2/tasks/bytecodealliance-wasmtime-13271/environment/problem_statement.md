@@ -1,5 +1,15 @@
-I'm working on the Winch compiler's AArch64 backend in Wasmtime and I keep hitting a wall with the wide arithmetic proposal. Right now four wide arithmetic ops just aren't implemented for AArch64: 128-bit integer addition, 128-bit integer subtraction, signed 64x64-to-128-bit multiplication, and unsigned 64x64-to-128-bit multiplication. When a module uses any of these and gets compiled with Winch targeting AArch64, compilation blows up with an "unimplemented" error. And it's worse than that, because the wide arithmetic proposal is currently marked as entirely unsupported for Winch on AArch64, so modules touching these features get rejected before they even reach the backend.
+## Description
 
-These all already work on x86-64 with Winch, so I want AArch64 at parity. The nice thing is AArch64 has native instructions for carry-propagating add and subtract, plus high-half multiply for both signed and unsigned cases, so the mapping should be pretty direct. I need the backend to actually compile modules using i128 add, i128 sub, signed wide mul, and unsigned wide mul, and they've got to work correctly whether the operands are constants, local variables, or function parameters. Oh and lift that wide arithmetic proposal restriction for AArch64 at the same time, otherwise nothing gets through the front door anyway.
+The Winch compiler's AArch64 backend does not currently support four wide arithmetic operations from the WebAssembly wide arithmetic proposal: 128-bit addition, 128-bit subtraction, signed 64×64-to-128-bit multiplication, and unsigned 64×64-to-128-bit multiplication. When a WebAssembly module uses any of these instructions and is compiled with Winch targeting AArch64, the compilation fails with an "unimplemented" error.
 
-Why it matters: folks writing wasm that does 128-bit math (crypto, bignum, overflow-checked arithmetic, that kind of thing) can't currently use Winch on AArch64 for those workloads, and I'd like consistent cross-platform behavior.
+These operations are already supported on x86-64 with Winch. The AArch64 backend is missing the corresponding implementation, and additionally the wide arithmetic proposal is currently marked as entirely unsupported for Winch on AArch64 — preventing any module that uses these instructions from being compiled at all.
+
+## Expected Behavior
+
+- The Winch AArch64 backend should compile WebAssembly modules that use 128-bit integer addition, 128-bit integer subtraction, signed wide multiplication, and unsigned wide multiplication.
+- These operations should work correctly whether operands come from constant values, local variables, or function parameters.
+- The wide arithmetic proposal should no longer be treated as unsupported on AArch64 with Winch.
+
+## Why This Matters
+
+Developers writing WebAssembly modules that perform 128-bit arithmetic (common in cryptography, arbitrary precision arithmetic, and overflow-checked math) cannot use the Winch compiler on AArch64 for these workloads. Bringing AArch64 to parity with x86-64 for these operations is necessary for consistent cross-platform support.

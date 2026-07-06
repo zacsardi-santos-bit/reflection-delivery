@@ -1,5 +1,19 @@
-I'm working with LangGraph's checkpoint system and I keep hitting a wall where I can only pull back saved checkpoints by their exact config (thread ID plus timestamp), and there's just no way to search across everything by metadata. I want to find, say, all the checkpoints that represent user-approved or high-quality interactions, and right now that's impossible.
+## Description
 
-So first thing, I need the checkpoint backends (the SQLite one, the async SQLite one, and the in-memory one) to grow a search capability. I'd pass in a partial metadata dictionary as a filter and get back every checkpoint whose metadata matches all the key/value pairs I gave. An empty filter should return everything, a filter with one or more pairs returns only the checkpoints containing all those matching entries, and a filter that matches nothing comes back empty. This needs to work both synchronously and async. Oh and the checkpoint metadata should pick up a new optional integer score field so I can mark individual checkpoints as high-quality and then use score as one of my filter keys. For the SQLite side, I'll need some internal helper functions that build the right SQL for this metadata search, and those helpers should be importable so the async SQLite backend can reuse them too.
+The checkpoint system in LangGraph currently only allows retrieving saved checkpoints by their exact configuration (thread ID and timestamp). There is no way to search across all saved checkpoints based on their associated metadata. This makes it impossible to, for example, find all checkpoints that represent user-approved or high-quality interactions.
 
-Second piece, actually the whole point of this: I want a retrieval-augmented few-shot pattern. A new managed value type that I can declare as a graph state field, and when a run happens it automatically queries the checkpointer for the well-scored past checkpoints and injects that recovered state as examples into the current run. The count of examples returned should be configurable. On the very first run when nothing's been scored yet, the examples list is just empty. The idea is I mark good past conversations by setting their score, and then future runs of the same graph automatically get those as in-context demonstrations, so response quality improves without me hand-tuning prompts between runs.
+We need to add:
+1. A **search capability** to checkpoint backends (SQLite, async SQLite, and in-memory) that allows filtering checkpoints by any combination of metadata fields.
+2. A **score field** on checkpoint metadata, so developers can mark individual checkpoints as high-quality.
+3. A **few-shot examples managed value** that automatically retrieves well-scored past checkpoints and injects them as dynamic context into subsequent graph invocations.
+
+## Expected Behavior
+
+- Checkpoint backends must expose synchronous and asynchronous search methods that accept a metadata filter dictionary and return matching checkpoints.
+- Searching with an empty filter returns all checkpoints. Searching with one or more key/value pairs returns only checkpoints whose metadata contains all matching entries. Searching with a filter that matches nothing returns an empty result.
+- A new optional score field on checkpoint metadata allows callers to attach an integer quality rating to any checkpoint.
+- A new managed value type, when declared as a graph state field, automatically queries the checkpointer for highly-scored past checkpoints and makes them available as examples during each graph run. The number of examples can be configured. On the first run (when no checkpoints have been scored), the examples list is empty.
+
+## Why This Matters
+
+This enables a retrieval-augmented few-shot prompting pattern: developers can mark good past conversations as high-quality, and future runs of the same graph will automatically receive those examples as in-context demonstrations. This improves response quality without requiring any manual prompt engineering between runs.

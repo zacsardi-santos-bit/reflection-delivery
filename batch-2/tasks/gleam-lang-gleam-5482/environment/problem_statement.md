@@ -1,7 +1,14 @@
-I'm hacking on the Gleam compiler and hit a gap in how we validate record update syntax. You know the spread thing where you write something like `SomeConstructor(..existing, field: newval)` to make a modified copy of a record by overriding named fields? That only makes sense when the constructor actually has labelled fields to override. If the constructor has only positional (unnamed) fields, there's nothing to update by name and the whole thing is nonsensical.
+## Description
 
-Right now the compiler doesn't handle this properly. When someone writes update syntax against a constructor that has zero labelled fields, it either fails silently, spits out some confusing error that's unrelated to the real problem, or straight up panics, so the programmer gets no actionable feedback about what they did wrong.
+The Gleam compiler does not properly detect when the record update (spread) syntax is used on a type constructor that has no labelled fields. The update syntax is designed to create a modified copy of an existing record by spreading it and overriding specific named fields — but this only makes sense for constructors with at least one labelled field. When a constructor has only positional (unnamed) fields, using the update syntax is invalid.
 
-I want the type checker to catch this case and emit a clear error saying the constructor has no labelled fields and that the record update syntax requires a constructor with at least one labelled field. The error should point at the constructor name so it's obvious where the problem is. Oh and this needs to work in both spots where update syntax can appear: inside regular function bodies and also inside constant definitions, since constants can hold records too. Both paths should surface the same validation and the same helpful message rather than one of them slipping through or panicking.
+Currently, if a programmer mistakenly writes record update syntax for such a constructor, the compiler either fails silently, produces a confusing error unrelated to the real problem, or panics. The programmer is left without actionable feedback.
 
-The point here is safety and usability, catching semantically bogus code at compile time instead of letting it look valid and leave people stuck.
+## Expected Behavior
+
+- When record update syntax is applied to a constructor with no labelled fields, the compiler should produce a clear error message explaining that the constructor has no labelled fields and that the update syntax requires at least one.
+- This validation should work correctly both inside function bodies and inside constant definitions.
+
+## Why This Matters
+
+Without this validation, programmers can write code that looks syntactically valid but is semantically nonsensical, and the compiler fails to guide them toward the correct solution. A clear error at compile time makes the language safer and easier to use.

@@ -1,0 +1,7 @@
+I'm cleaning up the snapshot API in rqlite and the current design bugs me. Right now the snapshot store answers "is a full snapshot needed?" with a plain boolean, which forces every caller to reason backwards, like false means "not full so it must be incremental." That's ambiguous and pushes the interpretation onto callers. I want to flip this so the method directly tells you which type of snapshot is due next instead of a yes/no.
+
+So replace the boolean-returning "is full needed" method with one that returns the actual snapshot type due next, either full or incremental. The logic should be: when the store is empty, report that a full is due next, and after a full has been explicitly flagged, also report full, otherwise report incremental. Concretely, after a successful snapshot is persisted it should say incremental is due next, after a new database is loaded into the system it should go back to full due next, and after a vacuum that doesn't require a full snapshot it should report incremental.
+
+Also the type constants have these long prefixed names that feel unnecessarily verbose, so rename them to shorter unqualified identifiers that read better.
+
+And the companion setter, the thing that explicitly marks a full snapshot as needed, shouldn't be a dedicated boolean-style toggle anymore. Update it to accept the snapshot type directly instead. Make sure all of this lands both in the snapshot package itself and in the interface that the store package uses to talk to snapshot stores (the store side depends on this same shape), so the two stay in sync.

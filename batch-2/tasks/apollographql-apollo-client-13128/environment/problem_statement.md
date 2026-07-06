@@ -1,7 +1,16 @@
-I'm hitting a hydration mismatch with Apollo Client in my server-rendered React app and it's driving me nuts. When I set up a `useQuery` (or `useSuspenseQuery`, whatever) with both `skip: true` and `ssr: false` at the same time, React logs recoverable hydration errors right when the client boots up.
+## Description
 
-Here's what's happening: on the server the component renders fine in a non-loading, ready state because the query's being skipped, that's correct. But then when React hydrates on the client it seems to think the component should be in a loading state, so the server HTML and the initial client render disagree and React yells about the mismatch. I keep seeing those recoverable hydration errors in the console.
+When a query is configured with both the "skip this query" and "don't run during server-side rendering" options at the same time, React raises hydration mismatch errors during client-side initialization.
 
-What I actually want is for a query that's both skipped and excluded from SSR to just stay in a consistent non-loading, ready state the whole way through, during server rendering, during hydration, and on the post-mount client renders after that. So no hydration warnings or recoverable errors from React at all, and no intermediate loading flash where it briefly shows loading before settling. Every render pass from SSR to hydration to post-mount should produce the same state values.
+The server correctly renders the component in a non-loading, ready state because the query is skipped. However, the client's hydration pass presents a different — loading — state, causing React to detect a discrepancy between what the server rendered and what the client initially expects. This results in recoverable hydration errors being logged.
 
-Oh and the Apollo client cache should still be empty after SSR since the query never ran and nothing got fetched. The reason this matters is folks doing SSR with Apollo who want to skip certain queries (like ones that should only run client-side under specific conditions) are getting these confusing errors in prod, which spam the server logs and browser console and sometimes cause visible UI flashes as React re-renders after recovering. The fix should live in the Apollo hooks logic, probably wherever the loading state gets computed for skipped/no-SSR queries.
+## Expected Behavior
+
+- When both options are set on a query, the component should consistently be in a non-loading, ready state across server-side rendering, hydration, and after client-side mounting.
+- No hydration warnings or recoverable errors should be raised by React during hydration.
+- The Apollo client cache should remain empty after server-side rendering, since the query was skipped and no data was fetched.
+- Every render pass — from SSR through hydration through post-mount — should produce the same state values with no intermediate loading flash.
+
+## Why This Matters
+
+Developers using server-side rendering with Apollo Client who want to skip certain queries (e.g., for queries that should only run on the client under specific conditions) encounter unexpected React hydration errors in production. These errors degrade the developer experience, cause confusing warnings in server logs and browser consoles, and in some cases produce visible UI flashes as React re-renders after detecting and recovering from the mismatch.

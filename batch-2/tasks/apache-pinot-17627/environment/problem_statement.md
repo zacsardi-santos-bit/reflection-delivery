@@ -1,5 +1,19 @@
-I'm adding time-range filtering to segment reload in Apache Pinot. Right now the reload endpoint lets me target all segments, a named set, or segments on a specific server, but there's no way to say "reload everything whose data falls in this window." For big time-partitioned tables that means manually enumerating segments, which is tedious and error-prone. So I want the reload endpoint to accept optional start and end time boundaries in milliseconds, and only segments whose time range falls inside that window get reloaded. Either bound should be omittable so the range can be unbounded on that side. I also need a flag to control whether segments that only partially overlap the boundary are included or excluded (so "exclude overlapping" restricts to segments fully contained in the range).
+## Description
 
-Validation matters here too. Invalid timestamp strings and illogical ranges where start isn't strictly less than end should be rejected with a 400. The time-range params need to be mutually exclusive with the server-targeting options, so passing both should also 400, and using the exclude-overlapping flag without any timestamps should 400 as well.
+When reloading segments in a Pinot table, operators can currently target all segments, a named set of segments, or segments hosted by a specific server. However, there is no way to filter segments by when their data was ingested — for example, "reload everything from the past 30 days." For large tables with time-partitioned data this forces operators to manually identify and enumerate segments, which is error-prone and tedious.
 
-Separately, whenever a reload spans multiple servers, whether through time-range filtering or an explicit instance-to-segments mapping, today each server writes its own independent job tracking entry in ZooKeeper which makes it hard to treat the whole thing as one operation. Instead I want a single unified tracking record per table that captures the complete mapping of servers to segments. And the status-reporting component should read that stored mapping directly when it's present instead of re-deriving it from the cluster's current state. Oh and the reload message itself should carry an explicit job identifier so all messages dispatched for one reload operation share the same job ID.
+Additionally, when a reload spans multiple servers today, each server generates its own independent job tracking entry. This makes it difficult to treat the entire reload as one logical operation and monitor its status through a single record.
+
+## Expected Behavior
+
+- The segment reload endpoint should accept optional start and end time boundaries (in milliseconds). Only segments whose time range falls within the specified window are reloaded.
+- Either the start or end boundary may be omitted to make that side of the window unbounded.
+- An option should allow restricting the reload to segments whose data is fully contained within the range (excluding those that only partially overlap the boundary).
+- Time-range filtering must be mutually exclusive with server-targeting options — combining them should result in a clear error response.
+- Invalid timestamp values and illogical ranges (start ≥ end) must be rejected with an appropriate error response.
+- When time-range or multi-server reloads are triggered, a single unified job entry per table should be stored for tracking, capturing the complete mapping of servers to segments.
+- The status-reporting component should use this stored mapping directly when it exists, rather than re-deriving it from cluster state.
+
+## Why This Matters
+
+Time-range-based reloads make it possible to refresh data within a known window without manual segment enumeration. Unified job tracking simplifies operational monitoring: a single entry captures the whole operation, and status checks can use the stored mapping directly without querying the cluster.

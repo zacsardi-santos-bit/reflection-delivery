@@ -1,9 +1,17 @@
-I'm cleaning up how inline name editing works in the Appsmith design system and IDE entity explorer, and I want your help extracting the duplicated logic into one reusable composable hook. Right now the state for an editable name (tracking what the user types, validating it, saving on Enter or blur, cancelling on Escape) is copy-pasted inside individual components, which makes it impossible to test in isolation or reuse elsewhere, so let's move it into the design system where any component can grab it.
+## Description
 
-The hook should take a flag for whether editing is currently active, the current name, a callback to exit editing mode, a validation function that returns an error string when the name's invalid or nothing when it's valid, and a save callback for the new name. It returns, in this fixed tuple order, a ref to the input element, the current editable name, the current validation error, a keyboard event handler, and a change event handler. Validation runs on each change.
+The logic for managing inline name editing in the entity explorer — tracking the current input value, validating it, saving on confirmation, and cancelling on escape — is currently duplicated inside individual components. This makes the behavior hard to test in isolation and impossible to reuse across different parts of the UI. We should extract this logic into a dedicated, reusable hook that lives in the design system and can be shared by any component that needs inline text editing.
 
-For the save logic: if Enter is pressed and the name hasn't changed, just exit without saving; if it changed and it's valid, save then exit; if it changed but fails validation, exit without saving. Escape always exits without saving. And when the input loses focus (blur), apply that same save logic.
+## Expected Behavior
 
-It needs to be a named export from the design system package so consumers import it directly from there, and then the editable name component over in the IDE should be refactored to use this shared hook instead of its own state management. Oh and while we're in here, the list items rendered in the data sources pane need proper list item semantics (a real listitem ARIA role) so they can be reliably found and accessed by role.
+- A new composable hook in the design system manages the full inline-editing lifecycle: it tracks the editable name, calls an external validation function on each change, saves on Enter (if the name changed and is valid), cancels on Escape, and auto-saves when the input loses focus.
+- The hook returns a reference to the input element, the current editable name, the current validation error, a keyboard event handler, and a change event handler — in that fixed order.
+- If the name has not changed when the user confirms, the hook exits editing mode without calling the save callback.
+- If the new name fails validation, the hook exits editing mode without saving.
+- The hook is published as a named export from the design system package so any consumer can import it directly.
+- The editable name component in the IDE is refactored to use this shared hook instead of its own duplicated logic.
+- List items in the design system carry proper list item semantics so they can be reliably identified by their ARIA role.
 
-Centralizing this in one well-tested hook kills the duplication and lets future components adopt editable names without rebuilding all the same event handling.
+## Why This Matters
+
+Centralising the inline-editing logic in a single well-tested hook eliminates duplication, makes the behaviour verifiable in isolation, and allows future components to adopt editable names without re-implementing the same state management and event handling.

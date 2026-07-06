@@ -1,7 +1,17 @@
-I'm extending our ServiceNow event collector integration and I need to add a third event type. Right now it handles audit logs and syslog transactions, but there's no way to pull customer service cases, which come from a different API endpoint than the other two. Security teams monitoring ServiceNow really need case data alongside the audit and syslog stuff to get the full picture, so I want cases fetchable on demand through a dedicated command just like the existing two, and also included in scheduled fetches when they're configured.
+## Description
 
-While I'm in there I want to fix how log types are handled across the whole integration. Right now each type is a plain string constant with separate lookup dictionaries scattered around for stuff like which key to use in the run-state dict or which API path to hit, and it's fragile and annoying to extend. I'd like to consolidate all the per-type metadata (the API path construction, the run-state dictionary keys, the string identifiers that show up in collected events, display names) into a single structured representation where each log type carries its own metadata, so helpers can take that structure instead of raw strings.
+The ServiceNow event collector integration supports fetching audit logs and syslog transactions, but it has no support for collecting customer service case events. Cases represent a distinct category of activity in ServiceNow and are served by a different API endpoint than the other two log types. Security teams that monitor ServiceNow need case data alongside audit and syslog information to have a complete picture.
 
-Specifically the functions that enrich events with timing info, dedupe events across runs, figure out the last fetch start time, and convert user-facing type names to internal types should all accept the structured type instead of plain strings. And the client should resolve both the correct API URL and the per-type default fetch limit through that structure too.
+Beyond just adding a new data source, the current code handles log type identity through scattered string constants and separate lookup dictionaries, which makes it error-prone to add new types and hard to maintain. Each log type has its own run-state keys, API path, and display name, but none of that is grouped together — it's spread across multiple constants and conditional blocks.
 
-Oh and the dedup logic needs to handle the timestamp boundary carefully. When new events share the same timestamp as the last fetch, cross-check them against the IDs seen in the previous run so we don't re-ingest duplicates. When events come in with a newer timestamp, reset the tracked IDs to just those new events. This all lives in the ServiceNow event collector integration code, so wire the new case type through everywhere the other two types already flow.
+## Expected Behavior
+
+- A third event type — customer service cases — should be fetchable in the same way as audit logs and syslog transactions.
+- All per-type metadata (API path construction, run-state dictionary keys, string identifiers used in collected events) should be centralized in a single structured representation rather than separate constants.
+- Helper functions for enriching events, deduplicating events, determining the fetch start time, and converting user-facing type names to internal types should accept this structured representation instead of raw strings.
+- The client should resolve the correct API URL and default fetch limit per log type using the structured representation.
+- Fetching case events on demand via a dedicated command should work the same way as for the other two event types.
+
+## Why This Matters
+
+Without this change, analysts cannot collect ServiceNow case data through the integration, leaving a gap in their monitoring coverage. The refactor also makes it straightforward to add additional log types in the future without modifying multiple independent constant definitions and conditional branches.

@@ -1,7 +1,17 @@
-I'm hacking on the approval mode config for our AI assistant and hit two annoyances with the fully-automatic mode, the one where every tool action gets approved without asking the user. Compared to how the other special modes behave it's inconsistent and it's bugging me.
+## Description
 
-First thing, when I switch into fully-automatic mode the system instructions don't get refreshed. But they do refresh when I enter or exit plan mode. So the active instructions can end up stale and not reflect the current operating mode, which is exactly what I don't want. I need switching into fully-automatic mode to trigger the same system instruction refresh that entering and exiting plan mode does.
+When the assistant is switched into the fully-automatic approval mode (where all tool actions are approved without user confirmation), two inconsistencies exist compared to how other special modes behave:
 
-Second, the tool that lets the assistant transition into a planning workflow (the plan-entry tool) is still getting registered even when we're already in fully-automatic mode. Since this mode already bypasses all approvals it makes no sense to offer entering a planning flow, it's redundant and honestly kind of confusing. So the plan-entry tool shouldn't be registered when we're in fully-automatic mode, even if the planning feature is otherwise enabled in the config.
+1. **Stale system instructions**: Entering the fully-automatic mode does not trigger a refresh of the system instructions, unlike entering plan mode, which always triggers a refresh. This can leave the active system instructions misaligned with the current operating mode.
 
-Oh and to be clear, switching between the other non-special modes (anything that's neither plan mode nor fully-automatic) should keep behaving like it does now and leave the system instructions untouched. I only want the refresh behavior to kick in for the fully-automatic case, matching plan mode, plus that tool suppression. The point is just to keep the assistant's instructions and available tools actually consistent with whatever approval mode is active.
+2. **Unnecessary plan-entry tool**: The tool that lets the assistant switch into a planning workflow remains registered and available even when already in the fully-automatic mode. Since this mode bypasses all approval requirements, offering the ability to enter plan mode is redundant and potentially confusing.
+
+## Expected Behavior
+
+- Switching into the fully-automatic approval mode should refresh system instructions, consistent with how entering and exiting plan mode works.
+- The plan-entry tool should not be registered when the assistant is operating in fully-automatic approval mode, even if the planning feature is otherwise enabled in the configuration.
+- Switching between other non-special modes (those that are neither the planning mode nor the fully-automatic mode) should continue to leave system instructions unchanged.
+
+## Why This Matters
+
+These inconsistencies mean that the assistant's behavior and available tools may not accurately reflect the current approval mode. Fixing this ensures the assistant's instructions and available capabilities are always consistent with the active mode.

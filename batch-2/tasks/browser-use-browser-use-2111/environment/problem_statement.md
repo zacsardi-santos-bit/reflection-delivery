@@ -1,11 +1,31 @@
-I'm cleaning up the file system module our browser agents use internally, it's got a bunch of API inconsistencies that keep biting me, mostly around save/restore state across sessions being flaky.
+## Description
 
-First thing, on the file objects, size and line count are currently callable methods but they really should be plain read-only properties (Python idiom, computed values), so convert those. While you're in there, add a method to update file content in place, plus dedicated methods to sync a file's contents to disk in both async and sync variants, and dedicated async methods for writing new content and for appending that also handle the disk sync themselves.
+The file system module used by browser agents needs to be refactored and cleaned up. The current implementation has accumulated several inconsistencies and design issues that make it harder to use and maintain.
 
-For the file system container class, the constructor should accept both a string path and a path object for the base dir, oh and add a boolean flag controlling whether default files get created on init so callers can opt out. Expose the base directory and the data directory as direct attributes, not just via a method. Add a method to completely destroy the data directory and everything in it, and a method to query which file extensions are allowed.
+## Problems / Desired Changes
 
-The read-file op is async right now but it reads from an in-memory cache, not disk, so make it synchronous. Also I want exact, consistent return message strings across all the file operations.
+- The file system class does not accept a clear boolean flag to control whether default files are created on initialization — callers need a way to opt out of creating default files.
+- There is no method to cleanly destroy the managed file directory and all its contents.
+- Size and line count information on file objects are exposed as methods rather than properties, which is inconsistent with how Python idiomatic code usually presents read-only computed values.
+- File objects currently lack a clean method to update their content in place, and do not support dedicated disk-sync methods (both synchronous and asynchronous variants).
+- The file-reading operation is unnecessarily asynchronous since it reads from an in-memory cache rather than the actual disk.
+- When restoring a file system from a previously saved state, unknown file types are silently converted to a default type instead of being safely skipped — this can mask data corruption or version mismatches.
+- The state serialization stores the wrong directory path, making round-trip save/restore unreliable.
+- File extension parsing does not normalize case, so uppercase extensions like `.TXT` are treated differently from `.txt`.
+- There is no easy way to query which file extensions are supported.
+- The directory display does not show both the beginning and end of large files — only the start is shown, leaving the user unable to see recent content.
 
-When saving state, the serialized base directory path should point to the parent directory, not the data subdirectory (this is the round-trip bug). When restoring, any file entries whose type isn't recognized should be silently skipped rather than substituted with a default type, since substituting can mask corruption or version mismatches.
+## Expected Behavior
 
-Extension parsing should normalize to lowercase so `.TXT` and `.txt` are the same. Filename validation should reject names with multiple extension separators, special characters, and empty base names. For the directory display, large files should show both the start and the end of their content with an indicator for the omitted middle, right now only the beginning shows so you can't see recent content. And finally export two constants directly from the module, one for the data subdirectory name and one for the invalid-filename error message.
+- The constructor should accept both string and path-object base directories and a flag to skip creating default files.
+- A method should remove the managed data directory entirely.
+- File size and line count should be accessible as properties.
+- File objects should support methods to update content in place, write new content to disk, append content to disk, and synchronize content to disk both asynchronously and synchronously.
+- The file-reading operation should be synchronous.
+- Restoring from a saved state should skip (not substitute) files with unrecognized types.
+- State serialization should correctly store the parent directory path, not the data subdirectory path.
+- Two exported constants — one for the data directory name and one for the invalid filename error message — should be importable directly from the module.
+
+## Why This Matters
+
+These issues cause subtle bugs when saving and restoring agent state across sessions, and make the API harder to use correctly. Cleaning up the design now will improve reliability and consistency for all callers.

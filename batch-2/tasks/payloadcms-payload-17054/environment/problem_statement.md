@@ -1,7 +1,23 @@
-I'm working on the Payload MCP plugin and it's missing a bunch of operations my AI assistant workflows actually need. Right now it only covers the core document lifecycle (create, read, update, delete), which means AI tools have to hack around what's missing or just can't do it at all.
+## Description
 
-First thing, I want a count tool for collections that returns how many documents match an optional filter, without me having to fetch the whole list and count client-side. Also need a tool that lists all distinct values for a specific field across a collection. And a duplicate tool that copies an existing document while letting me optionally override some fields on the copy.
+The Payload MCP plugin exposes CMS operations to AI assistants, but currently only covers the core document lifecycle (create, read, update, delete). Several common and useful operations are missing, which forces AI tools to work around limitations or simply cannot perform them.
 
-Security bit on duplication: it should be off by default for auth-related collections (the ones handling user authentication), and if someone calls it on a collection where it's disabled anyway, they should get a clear error message saying it's not enabled rather than something cryptic.
+## Missing Capabilities
 
-Beyond that I need full version history support. When a collection has versioning turned on, I want to count versions, list them, retrieve a specific version by its ID, and restore a previous version. Same deal for globals with versioning enabled, count, list, find by ID, and restore all available there too. These version tools should show up alongside the existing tools in the tool listing whenever versioning is enabled, and they need appropriate annotations flagging which ops are read-only (counting, listing, finding) versus destructive (restoring). Basically I'm trying to get the MCP integration up to feature parity with the underlying Payload API for these common read and content-management tasks so version-aware workflows are fully covered.
+- **Count documents**: There is no way to ask "how many documents match this filter?" without fetching the full list and counting client-side.
+- **Find distinct values**: There is no tool to retrieve all unique values for a given field across a collection.
+- **Duplicate a document**: There is no way to copy an existing document and optionally override some fields on the copy.
+- **Version management for collections**: When a collection has versioning enabled, AI assistants cannot count versions, list versions, retrieve a specific version by ID, or restore a prior version.
+- **Version management for globals**: Similarly, when a global has versioning enabled, none of these version management operations are available.
+
+## Expected Behavior
+
+- A count tool should be available for collections and return the number of documents matching an optional filter.
+- A tool should exist to list all distinct values for a specific field in a collection.
+- A duplicate tool should be available for collections, creating a copy of a document with an optional set of field overrides.
+- Document duplication should be disabled by default for authentication-related collections, and calling it on a disabled collection should produce a clear error.
+- For collections and globals with versioning enabled, tools to count versions, list versions, retrieve a version by ID, and restore a version should all be available.
+
+## Why This Matters
+
+AI assistants using MCP to manage Payload content currently have a significant gap in what operations they can perform. Adding these tools brings the MCP integration up to feature parity with the underlying Payload API for common read and content-management tasks, and ensures version-aware workflows are fully supported.

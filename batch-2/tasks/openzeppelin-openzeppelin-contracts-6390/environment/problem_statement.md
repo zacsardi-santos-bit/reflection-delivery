@@ -1,3 +1,16 @@
-I'm hitting a nasty gotcha with our ERC7579-compatible smart account and its hook module. The hook intercepts operations by running a pre-check before an action and a post-check after, which is fine normally, but when I go to uninstall the hook module itself the account still calls the hook's own check functions as part of the uninstall flow. So if the hook reverts (a bug, a maliciously written hook, or the contract code got wiped entirely) the whole uninstallation reverts and the hook becomes permanently stuck. That basically means a broken or hostile hook can make itself irremovable and lock the account into a degraded or compromised state, which is exactly the thing we can't allow, since users and account managers need to always be able to yank a malfunctioning hook for recovery.
+## Description
 
-What I want: when the module being uninstalled is the hook module specifically, the account should tolerate failures in the hook's own checks and finish the uninstallation regardless of whether the hook reverts or its code is missing. If the pre-check fails, neither the pre-check nor the post-check callbacks should fire and the hook still gets cleanly removed. If the pre-check succeeds but the post-check fails, the pre-check callback fires, the post-check gets skipped, and the hook is still cleanly removed. Same resilience if the hook's contract code has been deleted out from under us. For any other module type though (non-hook modules) keep the behavior exactly as it is now, so a reverting hook still reverts the whole operation and we don't weaken the normal security guarantees. Oh and I also need the hook mock we use in tests updated so it can be configured to revert during its pre-check or its post-check, that way these new tolerate-on-uninstall behaviors can actually be verified.
+In ERC7579-compatible smart accounts, a hook module is used to intercept and validate operations — running checks before and after each action. Currently, when a user tries to remove the hook module itself, the system still invokes the hook's own check functions as part of the uninstall flow. If those check functions revert (due to a bug, a malicious hook, or because the hook's contract code was removed), the uninstallation fails and the hook becomes permanently stuck.
+
+This means a broken or hostile hook module can make itself irremovable, potentially locking an account into a degraded or compromised state.
+
+## Expected Behavior
+
+- When a user uninstalls the hook module itself, any failures in the hook's own pre-check or post-check must be tolerated. The uninstallation should succeed regardless of whether the hook reverts or its code is missing.
+- If the pre-check fails, neither the pre-check nor post-check callbacks should fire, and the hook module should be cleanly removed.
+- If the pre-check succeeds but the post-check fails, the pre-check callback fires, the post-check is skipped, and the hook module is cleanly removed.
+- For all other module types (non-hook modules), hook check failures must still cause the operation to revert, preserving normal security guarantees.
+
+## Why This Matters
+
+Users and account managers must always be able to remove a malfunctioning or malicious hook from their smart account, even if the hook is designed to resist removal. Without this fix, any hook that starts reverting on its checks becomes a permanent fixture, blocking account recovery.

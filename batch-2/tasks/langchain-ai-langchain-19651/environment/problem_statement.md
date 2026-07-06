@@ -1,5 +1,15 @@
-I'm working with LangChain's self-query retrieval and hit a wall with TencentVectorDB, there's just no query translator for it yet. Pinecone and Chroma already have translators that turn LangChain's structured query IR into the filter syntax each database speaks, but TencentVectorDB has nothing, so I'm stuck writing raw filter expressions by hand which is error-prone and blocks me from using the higher-level query construction tools.
+## Description
 
-I want a translator for TencentVectorDB that takes LangChain's structured query intermediate representation, handling the AND and OR logical operators plus comparisons like equality, less-than, and set membership (the "in" style membership check), and emits the SQL-like filter expression string that TencentVectorDB expects. OR subexpressions need to be wrapped in parentheses in the output, while AND ones just join their pieces directly without extra wrapping. Oh and it should optionally take a list of allowed metadata field names, so if a query references a field that isn't in that allowed list it raises a clear, descriptive error that names the offending field. This lives alongside the other translators in LangChain's self-query retrievers area.
+TencentVectorDB is a fully managed enterprise vector database service, but it currently lacks support for LangChain's self-querying retrieval system. This means developers cannot use natural language queries that automatically translate into structured metadata filters — they have to write raw filter expressions by hand, which is error-prone and prevents use of LangChain's higher-level query construction tools.
 
-Also I need a helper function inside the TencentVectorDB vector store module itself (see `@libs/community/langchain_community/vectorstores/tencentvectordb.py`) that converts a LangChain filter string directly into a TencentVectorDB expression, so filtering can be applied transparently during similarity searches. And finally, register TencentVectorDB as a compatible store for LangChain's document indexing system so it shows up in the list of supported vector stores there.
+## Expected Behavior
+
+- A translator component should be available for TencentVectorDB that converts LangChain's structured query format (with logical operators like AND and OR, and comparisons like equality, less-than, and set membership) into the raw filter expression syntax that TencentVectorDB accepts.
+- Logical OR expressions should be wrapped in parentheses in the output expression, while AND expressions should join their sub-expressions directly.
+- The translator should optionally accept a list of allowed metadata field names. When such a list is provided and a query references a field not in the list, the system should raise an error clearly identifying the unsupported field name.
+- A utility function should also be available to translate LangChain filter strings directly into TencentVectorDB expressions, for use within the vector store itself.
+- TencentVectorDB should be registered as a compatible store for LangChain's indexing functionality.
+
+## Why This Matters
+
+Without this integration, TencentVectorDB users cannot use LangChain's self-query retrieval pipeline. Adding this support brings TencentVectorDB in line with other vector stores that already support self-querying, and allows developers to build more sophisticated retrieval applications with automatic metadata filtering.

@@ -1,5 +1,15 @@
-We're bringing our Prebid Server bidder config in line with the OpenRTB 2.x protocol and right now per-bidder site, app, and user overrides live under a legacy "first party data" section, but the spec wants those top-level request objects carried under an "ortb2" key inside each bidder config block, which is causing confusion and interop headaches for integrators. So I want a new data type that represents the ortb2 bidder config holding the site, app, and user objects, and I need the bidder config container updated to include this new ortb2 type alongside the existing fpd structure, plus every place that builds or consumes bidder configs should switch to reading and writing the new ortb2 section.
+## Description
 
-Also there's the messy case where a request hands us both the legacy context-and-user format and the new ortb2 format for the same bidder at once, and when that happens I want the server to auto-merge them before processing. The legacy "context" field should merge into the ortb2 "site" object and the legacy "user" field should merge into the ortb2 "user" object, with the legacy data winning any conflicts (it takes priority). The "app" object should NOT get merged between the two formats, it stays separate. And after the merge the original legacy fields need to be left untouched, don't mutate them. Oh and the OpenRTB field type normalization that runs during bid request processing should now operate on the ortb2 section instead of the legacy fpd section.
+The server currently stores per-bidder site, app, and user configuration overrides inside a "first party data" section within each bidder config block. However, the OpenRTB 2.x protocol standard uses a dedicated section keyed as "ortb2" to carry these top-level request objects for individual bidders. Our current implementation is inconsistent with the spec, which creates confusion and interoperability issues for integrators.
 
-The point of all this is that aligning with the OpenRTB 2.x structure makes integration more predictable and correct for bidders relying on the protocol, and the automatic merging keeps backward compatibility through the transition so we don't lose data from either the legacy or the new source.
+## Expected Behavior
+
+- Bidder-specific site, app, and user overrides should be stored under an ortb2-keyed section within each bidder configuration block, following the OpenRTB 2.x protocol structure.
+- When a request includes both the legacy context-and-user format and the new ortb2 format for the same bidder, the server should automatically merge them before processing. For site data, the legacy context field should be merged into the ortb2 site object (with the legacy format taking priority for conflicting fields). For user data, the legacy user field should similarly be merged into the ortb2 user object.
+- The app object should NOT be merged between the legacy and new formats — it should remain separate.
+- After merging, the original legacy fields should be left untouched.
+- The normalization of OpenRTB field type inconsistencies within bidder configs should operate on the new ortb2 section.
+
+## Why This Matters
+
+Aligning the bidder configuration structure with the OpenRTB 2.x standard makes integration more predictable and correct for bidders relying on the protocol. Providing automatic merging between the legacy format and the new format ensures backward compatibility during the transition period without losing any data from either source.

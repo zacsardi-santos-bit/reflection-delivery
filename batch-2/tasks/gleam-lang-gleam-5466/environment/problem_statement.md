@@ -1,5 +1,13 @@
-I keep hitting this annoying thing where Gleam files saved on Windows won't parse. Some editors (notably on Windows) auto-insert an invisible Unicode Byte Order Mark right at the very start of the file, and the rest is totally valid Gleam but the parser chokes on that leading marker and bails with a parse error. Developers using those editors can't really turn that off, so their code is uncompilable unless they manually strip the BOM, which is a pain and a bad first experience.
+## Description
 
-What I want is for Gleam to just silently ignore a BOM when it shows up at the beginning of source input. That should work both for a single expression and for a full module, so whatever path the lexer/parser in `@compiler-core/src/parse.rs` takes when consuming the start of the input, it treats a leading BOM as if it weren't there at all. No parse error should be raised just because the file starts with this encoding marker, the compile should succeed exactly as it would without it.
+Gleam source files that begin with a Unicode Byte Order Mark fail to compile, even when the rest of the file is perfectly valid Gleam code. Many editors and tools — particularly on Windows — automatically insert this invisible marker at the start of text files to signal their encoding. Developers using such tools have no way to prevent this behavior, which makes their Gleam files uncompilable without a manual workaround.
 
-Most modern language parsers handle this gracefully already, it's basically standard practice, so it'd be great to match that. Just to be clear, it's only about the marker at the very start, the code after it stays valid Gleam and compiles normally. btw this is a real cross-platform compatibility thing, folks on Windows or collaborating with Windows users shouldn't have to fight their editor's defaults just to write valid Gleam.
+## Expected Behavior
+
+- A source file that starts with a Byte Order Mark should compile successfully, as though the marker were not there.
+- The marker should be silently ignored at the start of any source input, whether it is a single expression or a full module.
+- No parse error should be raised simply because a file begins with this encoding marker.
+
+## Why This Matters
+
+This is a common cross-platform compatibility issue. On Windows, many popular text editors save files with this prefix by default. Gleam developers on Windows (or collaborating with Windows users) should not have to fight their editor's default settings just to write valid Gleam code. Accepting and silently ignoring this marker is standard practice in most modern language parsers.

@@ -1,5 +1,15 @@
-I'm hitting a weird inconsistency with how Prettier wraps complex TypeScript types inside generic angle brackets. When I've got a type parameter that's a union type and the line runs past my configured print width, it correctly breaks the argument onto its own indented line with the closing angle bracket dropped to a new line too. Great. But the moment I swap in other complex type constructs, like intersection types (`A & B`), operator-prefixed types (`keyof T`, `typeof x`), array types (`Foo[]`), or indexed access types (`T[K]`), it just leaves them inline and blows right past the width limit. Same content, totally different behavior depending on which kind of type I use, which feels arbitrary.
+## Description
 
-It's especially bad on arrow function return types. If I've got an async arrow returning some generic wrapping a complex type expression, it won't wrap at all, even though the exact same type on a plain variable declaration might get wrapped fine. So the return-type position is being treated differently from the variable-declaration position, and that shouldn't matter.
+Prettier does not consistently format complex TypeScript type expressions when they appear inside generic type angle brackets and exceed the configured line width. Specifically, intersection types, operator-prefixed types, array types, and indexed access types are not being wrapped properly — they stay on one line even when they should break onto their own indented line.
 
-What I want is consistent handling across all these complex type forms: if the whole line is too long, the single type argument goes on its own indented line with the closing `>` on its own line, and this should hold whether it's a variable declaration or an arrow function's return type. And obviously short types that fit within the print width should stay inline, no unnecessary breaking. Right now the output exceeds my print width in some cases and it makes the formatter feel unreliable for codebases leaning on complex generics. The printing logic lives in the TypeScript type-annotation handling, so the fix should land there so union, intersection, operator, array, and indexed access types all make the same line-length decision. Can you sort this out?
+This inconsistency is especially noticeable in arrow function return type annotations. When a long or complex type appears as a generic type argument in a return type position, prettier ignores the print width and keeps it inline, while simpler types (like union types) are wrapped correctly.
+
+## Expected Behavior
+
+- When a generic type parameter contains a complex type expression and the total line length exceeds the print width, the type argument should be broken onto its own indented line, with the closing angle bracket on a separate line.
+- This should work consistently whether the generic type annotation appears on a variable declaration or on an arrow function's return type.
+- Short type parameters that fit within the print width should remain on a single line without unnecessary breaking.
+
+## Why This Matters
+
+Inconsistent line-wrapping behavior makes the formatter unreliable for TypeScript codebases that use complex generic types. Developers expect all complex type expressions to be treated uniformly when it comes to line-length decisions. The current behavior produces output that exceeds the configured print width in some cases, depending arbitrarily on which kind of type construct is used.

@@ -1,7 +1,17 @@
-I set up promptfoo to talk to our on-prem deployment with a custom host URL, but a bunch of features just ignore it and hit the public cloud endpoint anyway. Guardrail checks, the email verification status request, and the HTTP provider generator all seem to route to the default public API instead of the host I configured. And since our on-prem box requires auth, none of those requests carry the bearer token we've set, so even if you fixed the routing they'd still fail without credentials.
+## Description
 
-What I want: when a custom cloud or on-prem host is configured and enabled, all the relevant API calls (guardrail checks, email status, HTTP provider generation) should go there and include the appropriate bearer token. When it's not enabled, fall back to the default public endpoint exactly like today, no auth token attached. Oh and one more wrinkle, if someone sets an explicit env var override for the remote API base URL, that override should win over the configured cloud host, but it should not forward any credentials to that override endpoint.
+Several promptfoo features always send their API requests to the public cloud endpoint, completely ignoring the custom on-premises host that users have configured. This means customers running promptfoo against their own self-hosted deployment cannot use guardrails, email status checks, or the HTTP provider generator — these features silently bypass their configured host and hit the public API instead.
 
-There's also a trailing-slash bug that's easy to trip over. If the host URL ends with a slash (natural habit), the constructed requests end up with a double slash in the path and everything breaks with weird errors. I'd like the host URL to get silently normalized so the trailing slash is stripped both when it's stored and when it's read back to build URLs, so callers never see a double-slash path and nobody has to remember to format it just right.
+Additionally, when users configure a host URL with a trailing slash (which is a natural habit and common convention), API calls produce malformed double-slash URLs that fail with unexpected errors.
 
-Basically on-prem and private cloud are supposed to be supported, but these routing gaps break core features for those users, and the slash normalization kills off a subtle class of config-formatting failures. Please dig through the promptfoo source (the cloud/host config helpers, the guardrails path, the email status check, and the HTTP provider generator) and make sure host resolution and auth token forwarding behave consistently across all of them.
+## Expected Behavior
+
+- When a user has configured a custom cloud or on-premises host, all API calls (guardrail checks, email status, HTTP provider generation) should be routed to that configured host, not the default public endpoint.
+- Requests to the configured on-premises host should include the appropriate bearer token for authentication.
+- Host URLs that end with a trailing slash should be silently normalized — the slash should be stripped when stored and when used to construct URLs, so that callers never end up with double-slash paths.
+- When no custom host is configured, behavior should remain unchanged: requests go to the default public endpoint without any authentication token.
+- An explicit environment variable override for the remote API base URL should still win over the configured cloud host, without leaking any authentication credentials to the override endpoint.
+
+## Why This Matters
+
+On-premises and private cloud deployments of promptfoo are a supported use case, but these routing bugs effectively break several core features for those users. Fixing the trailing-slash normalization also prevents subtle, hard-to-debug failures that crop up from simple configuration formatting differences.

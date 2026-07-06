@@ -1,5 +1,17 @@
-I'm working with the streaming API for graph runs and merged multi-channel output is coming out wrong. When I combine several output channels into one sequence, the events don't yield in the order they were actually produced. Instead they rotate across channels round-robin, one item per channel, so if my values channel fires off several events quickly before my messages channel produces anything, those values events get spread out with gaps instead of showing up together in their natural arrival order. I need the merged iteration to respect arrival time, whichever channel produced an item first should yield it first. Concretely if one channel produces three events before another produces one, all three of those should appear first in the combined output, not interleaved by rotation.
+## Description
 
-There's also a cleanup problem, after I finish iterating the combined output the channels stay marked as subscribed, which blocks anything downstream from telling that the stream has finished since they look subscribed indefinitely. I want subscriptions released when iteration ends no matter how it ends, whether it completes normally, I break out early (cancellation), or an error gets thrown mid-iteration. Oh and if one of those release steps fails partway through, the channels that were already set up should still get released, don't leave stragglers.
+When consuming multiple output channels from a graph run simultaneously, items from different channels are currently interleaved in a round-robin rotation. This means that if one channel produces many items before another produces any, those items are artificially delayed — held back until the rotation reaches them — rather than being delivered in the order they actually arrived.
 
-Last thing, if I try to start combined iteration on a channel that's already being consumed by something else, I want a clear error saying it already has a subscriber rather than silent weirdness. This all matters because consumers combining multiple output types (state values and messages, say) need events in time order to display or process them right, and leaking subscriptions makes it impossible to reuse or inspect channels after a stream completes.
+Additionally, after finishing a combined multi-channel iteration, channel subscriptions are not released. This blocks any downstream observer from seeing that the channels have finished, since they remain marked as subscribed indefinitely.
+
+## Expected Behavior
+
+- Items from multiple channels merged into a single sequence should appear in the exact order they were produced, not interleaved by rotation.
+- If one channel produces three events before another produces one, those three events should all appear first in the combined output.
+- After multi-channel iteration completes — including early cancellation — all channel subscriptions must be released so that observers can detect the completed state.
+- If iteration is interrupted by an error, subscriptions must still be cleaned up.
+- Attempting to start combined iteration over a channel that is already being consumed should raise an error indicating the channel already has a subscriber.
+
+## Why This Matters
+
+Consumers of graph run streams that combine multiple output types (e.g., state values and messages) need the events in time order so they can display or process them correctly. Round-robin interleaving breaks this guarantee and makes the API harder to reason about. Leaking subscriptions also makes it impossible for callers to reuse or inspect channels after a stream completes.

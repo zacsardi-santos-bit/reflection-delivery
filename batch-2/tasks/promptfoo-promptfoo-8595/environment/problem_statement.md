@@ -1,5 +1,18 @@
-I'm adding first-class support for Abliteration AI (a service with models trained to strip refusal behaviors) to promptfoo, because right now there's no built-in way to reference these models and folks are stuck with clunky generic HTTP provider workarounds. I want it to behave like any other real provider (OpenAI, Anthropic, etc.), so I need a new implementation that users reference with a prefix-based naming convention, something like `abliteration:<model>` for the default format plus a `abliteration:chat:<model>` alias variant that both work.
+## Description
 
-Auth should go through its own dedicated env var (think `ABLITERATION_API_KEY`), and importantly it must not fall back to OpenAI API keys or org IDs at all, that's a hard no. The API base URL needs to be configurable three ways, direct config, a provider-level env map, and a process env variable, with explicit config winning, then provider env, then process env, and empty strings should be treated exactly like unset. The API key follows that same priority chain, and when there's no key available at call time I want a descriptive error that points people at the right env var or config option.
+The promptfoo evaluation framework supports many AI model providers out of the box, but it currently has no built-in support for Abliteration AI — a service that offers models trained to remove refusal behaviors. Users who want to run evaluations against Abliteration models must resort to awkward workarounds using generic HTTP provider configurations.
 
-Oh and there should be an option to show the model's reasoning content in the output (hidden by default), and when it's turned on the output prefixes the thinking with a label and separates it from the final answer. HTTP error responses (client errors, rate limits, server errors) shouldn't crash, they come back as structured error results carrying the HTTP status code and relevant response headers like rate-limit retry headers. Also wire this into the main provider loader so Abliteration-prefixed strings auto-dispatch to the new implementation, and if someone hands me a malformed provider string with no model name, throw a clear error explaining the correct formats.
+We should add a first-class Abliteration provider that users can reference directly in their promptfoo configurations, just like they reference OpenAI, Anthropic, or any other supported provider.
+
+## Expected Behavior
+
+- Users should be able to reference Abliteration models by name using a standard prefix format, with an optional "chat" alias variant also supported
+- The provider should authenticate via its own dedicated API key environment variable, completely separate from any OpenAI credentials — OpenAI API keys and organization IDs must not be used as fallbacks
+- The provider should support an optional setting to expose the model's internal reasoning steps in the output; by default, reasoning content should be hidden
+- When the model name is missing from the provider string, a clear error message should be shown explaining the correct format
+- HTTP errors (client errors, rate limits, server errors) should be surfaced gracefully as error results rather than crashing, and relevant metadata such as HTTP status codes and rate-limit headers should be preserved
+- The provider should support overriding the API endpoint via configuration or environment variables, following the same priority rules as other providers (explicit config wins over provider-level env, which wins over process env)
+
+## Why This Matters
+
+Without this integration, promptfoo users cannot easily include Abliteration models in their red-teaming or benchmarking pipelines. Adding proper first-class support makes these models available alongside every other provider in the ecosystem, with consistent authentication handling and configuration patterns.

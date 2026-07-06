@@ -1,3 +1,15 @@
-I'm doing some package cleanup in our Hudi storage layer and want a hand moving a few classes into homes that actually reflect what they depend on. Right now there's an HBase-based HFile reader class and an HFile utility class both sitting in the general storage package next to storage-agnostic stuff, which is misleading since they're tightly coupled to Hadoop and HBase. I want both of those moved out of the general storage package and into a package whose name clearly signals the Hadoop/HBase dependency, so it's obvious to anyone reading the tree which code pulls in HBase. Also there's an HFile-backed bootstrap index implementation that's living up in a high-level common package, and it really belongs down in a more specific sub-package grouped with the other HFile implementation code it actually uses, so please relocate that one too.
+## Description
 
-While we're at it I'd like to simplify the HBase HFile reader's API. Today callers have to build a cache configuration object themselves and pass it into the constructor when they create a reader, and that's an internal detail they shouldn't have to care about. I want the reader to construct and manage that cache config internally instead, and the constructors trimmed down accordingly so nobody's passing a cache config in anymore. Make sure all the call sites that used to hand in a cache config get updated to the simplified constructors, and fix up every import and package declaration across the codebase that references these moved classes so everything still compiles and wires together. The point of all this is cleaner module boundaries, less boilerplate at the call sites, and a lower chance of accidentally dragging HBase dependencies into non-HBase code paths.
+Several internal storage implementation classes are currently placed in packages that do not accurately reflect their dependencies or responsibilities. Specifically, two classes that are tightly coupled to HBase and Hadoop-specific HFile operations live in a general-purpose storage package shared with storage-agnostic code. This creates unclear module boundaries and makes it harder for developers to understand which parts of the codebase depend on HBase.
+
+Similarly, one of the main bootstrap index implementation classes — the one backed by HFile storage — is housed in a high-level common package rather than alongside the HFile implementation code it depends on.
+
+## Expected Behavior
+
+- The HFile-backed bootstrap index implementation class should be moved into a more specific sub-package, grouped with other HFile implementation code.
+- The HFile utility class and the HBase-based HFile reader class should be moved from the general storage package into a package that clearly identifies their Hadoop/HBase dependency.
+- The HBase-based HFile reader should be constructable without the caller needing to explicitly create and pass a cache configuration object. The reader should handle this configuration internally, reducing boilerplate for callers.
+
+## Why This Matters
+
+These reorganizations improve code clarity and module cohesion. Grouping HBase-dependent classes in their own packages makes dependency boundaries more obvious and reduces the risk of accidentally introducing HBase dependencies into non-HBase code paths. Simplifying the reader's constructor API makes it less error-prone to use.

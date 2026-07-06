@@ -1,5 +1,17 @@
-I want to add a new nursery lint rule to Biome that catches passing strings to timer scheduling functions, meaning setTimeout, setInterval, and setImmediate. The thing is when you pass a string as the first arg instead of an actual callback, the runtime evals that string as code, which is basically the same as using dynamic code evaluation and carries all the same security (code injection) and perf (no engine optimizations) risks. Right now Biome has nothing to catch this, and folks write it in all sorts of forms without realizing.
+## Description
 
-So the rule should report a diagnostic whenever a string expression shows up as the callback (first) argument. String expression here means a plain string literal, a template string with no dynamic substitutions, or a string concatenation expression, and it should still flag even when the whole thing's wrapped in parentheses. It also needs to detect these when the timer functions are reached through global objects (like window or globalThis), including via optional chaining and computed member access, plus chained global references.
+JavaScript's timer scheduling functions have a lesser-known but dangerous behavior: when you pass a code string as their first argument instead of a callback function, the runtime evaluates that string as executable code. This is essentially the same as using dynamic code evaluation and carries all the same risks — it can enable code injection vulnerabilities and prevents engine-level performance optimizations.
 
-But it's gotta be smart about false positives, so don't flag when an actual function is passed (function expression or arrow), when the function name's shadowed by a local variable, when the call's on some non-global object, when a non-string value is used, or when a template string has dynamic parts, oh and deeply-nested member chains shouldn't trip it either. Needs to work in both regular JS and JSX files. This lives in the nursery group under `@crates/biome_js_analyze/src/lint/nursery/`.
+There is currently no lint rule in Biome to detect this pattern. Developers may unknowingly write code that passes strings to these timer functions in various forms: plain string literals, template strings without dynamic parts, concatenated string expressions, or calls through global object references.
+
+## Expected Behavior
+
+- A new lint rule in the nursery group should detect and report a diagnostic whenever a string expression is passed as the callback argument to timeout/interval/immediate scheduling functions.
+- The rule should cover direct calls, calls through global objects, optional chaining, computed member access, and chained global references.
+- String expressions should include string literals, template strings without substitutions, and string concatenation — even when wrapped in parentheses.
+- The rule should NOT flag function arguments (function expressions, arrow functions), non-string values, template strings with dynamic substitutions, locally-shadowed function names, calls on non-global objects, or deeply-nested member chains.
+- The rule should work in both plain JavaScript and JSX files.
+
+## Why This Matters
+
+Passing strings to timer functions is a subtle but serious mistake that creates real security vulnerabilities and performance problems. An automated lint rule gives developers immediate feedback to catch this pattern before it reaches production.

@@ -1,5 +1,16 @@
-I'm building a .NET app that does semantic search over vector databases, and I want to register vector stores through the normal dependency injection setup instead of hand-wiring everything each time, which right now is all boilerplate and easy to get wrong, plus it's inconsistent with how the rest of the framework registers services. There aren't any built-in DI helpers for the vector store connectors yet, so I keep manually instantiating and registering these stores in the container.
+## Description
 
-What I want is one-call registration extension methods that hang off both the standard service collection and the AI kernel builder, covering Azure AI Search, Qdrant, Redis, and the built-in in-memory volatile store. Whichever entry point I call, the store should come back resolvable as the common vector store interface, and the resolved instance needs to be the correct concrete implementation for whatever backend I picked.
+The vector store connectors (Azure AI Search, Qdrant, Redis) and the built-in in-memory vector store currently lack dependency injection registration helpers. Developers have to manually instantiate and register these stores in the service container, which introduces boilerplate and is inconsistent with how other services are registered in the framework.
 
-For Azure AI Search and Qdrant I want two styles per backend: one where I hand over connection details (endpoint, credentials, host/port, that kind of thing) and the underlying client gets built internally, and one that takes no connection args and just pulls the client that's already registered in the container. Redis should work the same way, grabbing an existing database connection out of the container. Oh and the in-memory store needs no connection parameters at all, it should just register straight up. So basically each variant either creates the client from the details I pass or resolves an existing one from DI, and every path ends with the vector store resolvable under the shared interface as the right concrete type.
+We should add extension methods for both the standard service collection and the AI kernel builder that let developers register any of the supported vector store backends with a single method call. The extension methods should support multiple connection styles — for example, using an existing client already in the container or providing connection details directly.
+
+## Expected Behavior
+
+- Calling the registration method on either the service collection or the kernel builder should make the vector store resolvable as the vector store interface.
+- The resolved instance must be the correct concrete implementation for the chosen backend.
+- Registration variants that accept connection details (endpoint, credentials, host/port, etc.) should create the underlying client internally.
+- Registration variants that take no connection arguments should resolve the required client from the existing DI container.
+
+## Why This Matters
+
+Without these helpers, every application that wants to use a vector store must duplicate the wiring logic, increasing the risk of misconfiguration and making it harder to switch backends. Providing first-class DI registration methods brings vector stores in line with the rest of the framework's service registration patterns.

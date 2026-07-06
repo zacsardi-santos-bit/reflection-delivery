@@ -1,0 +1,7 @@
+I'm writing automation scripts around Prefect's CLI and I keep hitting a wall with the config view command and the profile listing command, they only spit out human-readable text so there's no clean way to parse them in a script. I want both of those commands to grow an output flag, both a long form (something like `--output`) and a short form, that flips them into a structured, machine-readable format like JSON.
+
+For the config view command, when I ask for structured output I want it to include the active profile name plus a list of settings where each entry carries the setting's name, its current value, and the source it came from, like whether it was pulled from an environment variable or set in a profile. Secrets should still be obfuscated in that output, don't leak them. Oh and this needs to play nice with the existing flag that hides source info, in which case each setting in the structured output just shouldn't have a source field at all (omit it rather than leaving it null or empty).
+
+For the profile listing command, the structured output should be a list of all profiles where each one has its name and a boolean saying whether it's the currently active profile.
+
+Also if someone passes an output format that isn't supported, I don't want garbled output, both commands should fail gracefully with a clear error message telling them the format isn't valid. This all matters because operators running automated deployments or CI/CD pipelines shouldn't have to fragilely scrape text to inspect settings or profiles.

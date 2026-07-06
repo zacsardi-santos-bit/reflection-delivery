@@ -1,3 +1,17 @@
-The sidebar nav buttons are all coming through in the app's primary accent color and it makes the whole sidebar feel way too loud, like every single button (pipeline list, experiments, runs, recurring runs, artifacts, executions, the docs link, etc.) is shouting for attention in this bold colored style instead of blending in with the sidebar background. I want all of those navigation buttons to inherit the surrounding text color instead of applying the primary color, so the sidebar reads as neutral and subdued and doesn't compete visually with the actual primary-colored interactive stuff elsewhere in the UI.
+## Description
 
-Also, while you're in there, the documentation link in the sidebar should open in a new browser tab with the right security attributes (so target new tab plus the noopener/noreferrer rel setup you'd expect for an external link). And the URL for that docs link shouldn't be hardcoded inline, it needs to come from a shared exported constant living in the router module so other parts of the codebase can reference it reliably and so it's verifiable in tests. So basically swap the inline URL for that constant, wire up the new-tab behavior with proper link security, and make sure none of the sidebar nav buttons are using the primary color anymore, they all just pick up the inherited text color.
+The sidebar navigation buttons in the frontend are currently rendered with the application's primary accent color. This causes an undesirable visual effect where every nav button in the sidebar appears in a prominent, colored style — which is inconsistent with the intended neutral appearance of the sidebar.
+
+All sidebar navigation buttons (pipeline list, experiments, runs, recurring runs, artifacts, executions, documentation, etc.) should inherit the surrounding text color rather than using the app-wide primary color. This will make the sidebar look visually cohesive and prevent nav buttons from competing visually with primary-colored interactive elements elsewhere in the UI.
+
+Additionally, the documentation link in the sidebar should be confirmed to open in a new browser tab with appropriate link security settings, and the documentation URL should be sourced from a shared constants location rather than being hardcoded inline.
+
+## Expected Behavior
+
+- All sidebar navigation buttons must use an inherited text color, not the primary accent color.
+- The documentation link must open in a new browser tab with proper security attributes.
+- The documentation URL must reference a shared, exported constant so it can be reliably referenced in tests and across the codebase.
+
+## Why This Matters
+
+Using the primary color on every sidebar button creates visual noise and is stylistically inconsistent. The sidebar should have a subdued, neutral styling that does not draw undue attention, while the documentation link should follow security best practices for external links.

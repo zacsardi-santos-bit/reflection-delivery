@@ -1,5 +1,15 @@
-I'm working on DataHub's metadata ingestion framework and I need to add a way to pull secrets from cloud-hosted secret managers at runtime. Right now there's nothing built in for this so people end up hardcoding credentials straight into their config files, which defeats the whole point of storing them in a secure secrets service in the first place. I want to fix that so ingestion pipelines can fetch creds securely without any plaintext secrets floating around in config.
+## Description
 
-So I need two new secret store implementations, one for AWS Secrets Manager and one for Google Cloud Secret Manager. Each should be built from a plain config dictionary via a factory method (create style), and that config carries the cloud region for AWS or the project id for GCP, plus an optional prefix to namespace the secret names, and a cache TTL. The stores need to look up a batch of secrets by their logical names (applying the prefix internally when it actually talks to the backend) and hand back a plain dict mapping each name to its value.
+DataHub's metadata ingestion framework currently has no built-in way to retrieve secret values stored in cloud-hosted secret management services. Users who follow security best practices by storing credentials in their cloud provider's secrets service are forced to hardcode sensitive values directly in configuration files instead of referencing them from a secure store.
 
-Couple of important behaviors: if a secret doesn't exist or isn't accessible, don't raise, just return a null (None) value for that key. Also they should each have a single-key convenience lookup, oh and an empty input should give back an empty result, don't go hitting the backend for nothing. And each store needs a stable string id so callers can tell which backend is in use (like something identifying AWS Secrets Manager vs GCP Secret Manager). Keep the interface consistent across both since they're doing the same job against different clouds.
+## Expected Behavior
+
+- The ingestion framework should include a store implementation for AWS Secrets Manager that connects to a specified AWS region, uses a configurable prefix to namespace secret names, and retrieves secrets by their logical names.
+- The same capability should exist for Google Cloud Secret Manager, using a project ID and configurable prefix.
+- Both stores should expose a consistent interface: a factory method for constructing the store from a configuration dict, a method to retrieve multiple secrets at once by name, and a convenience method to retrieve a single secret.
+- When a requested secret does not exist or is inaccessible, the store should return a null value for that key rather than raising an error.
+- Each store should have a stable string identifier that uniquely identifies which backend is in use.
+
+## Why This Matters
+
+Without native support for cloud secret stores, teams cannot follow the principle of keeping secrets out of configuration files. Adding these integrations allows ingestion pipelines to securely fetch credentials at runtime from AWS Secrets Manager or GCP Secret Manager, without any secrets appearing in plain text in configuration.

@@ -1,5 +1,25 @@
-I maintain a handful of Flutter plugins and I want the build tooling to nudge me when a plugin is missing Swift Package Manager support while I'm actively working on it. Right now when I build the example app that ships inside my plugin's repo, there's zero feedback about whether the plugin is set up correctly for Swift Package Manager. Maybe I've only got a legacy CocoaPods podspec and no Swift Package Manager manifest at all, or maybe I have a manifest but it's missing the required framework dependency, and in both cases the tools just stay silent, which leaves downstream app devs stuck when they try to use SPM with my plugin.
+## Description
 
-What I want is a developer-friendly warning during the example app build that inspects the parent plugin and tells me which platform (iOS or macOS) has the compatibility gap, and it should include a link to the official docs so I know how to fix it. Cover both cases, the "no SPM support at all" one where there's just a podspec, and the "manifest exists but is incomplete" one where the framework dependency is missing. Oh and for plugins that share a single source directory across iOS and macOS, run the check for both platforms.
+When Flutter plugin authors build the example app that ships with their plugin, the tools currently have no way to warn them if their plugin is missing support for the newer Swift Package Manager dependency system. Plugin authors may unknowingly ship a plugin that only supports the legacy CocoaPods approach, or they may have a Swift Package Manager manifest that is incomplete (missing the required framework dependency). This leaves downstream app developers in a difficult situation when they try to use Swift Package Manager with these plugins.
 
-It should only fire when it actually makes sense though, I really don't want false positives in regular app projects. So stay quiet if the plugin already ships a complete and correct SPM manifest, or if the plugin doesn't support that platform at all. Also stay silent when the current project isn't a plugin's example app (the directory layout doesn't match the expected pattern), or when the parent package metadata is missing, malformed, or doesn't describe a Flutter plugin, or when the parent plugin name can't be matched to a known plugin. Basically it should be an early, actionable signal for me as the author, not noise for everyone building normal apps.
+## Expected Behavior
+
+- When building a plugin's example app, Flutter tools should inspect the parent plugin and emit a developer-friendly warning if:
+  - The plugin only provides a legacy CocoaPods podspec with no Swift Package Manager manifest at all.
+  - The plugin provides a Swift Package Manager manifest but the manifest is missing the required framework dependency.
+- The warning should include a link to the official documentation so plugin authors know how to fix the issue.
+- The warning should include the name of the platform (iOS or macOS) that has the compatibility gap.
+- For plugins that share a single source directory for both iOS and macOS, the check should apply to both platforms.
+- If the plugin already provides a complete and correct Swift Package Manager manifest, no warning should be emitted.
+- If the plugin does not support the given platform at all, no warning should be emitted.
+
+## Smart Suppression
+
+The warning logic must only fire in the right context. It must remain silent when:
+- The current project is not a plugin's example app (i.e., the directory layout does not match the expected pattern).
+- The parent package metadata is absent, malformed, or does not describe a Flutter plugin.
+- The parent plugin name cannot be matched to a known plugin.
+
+## Why This Matters
+
+Plugin authors often build and test via their bundled example app. Surfacing compatibility warnings at that point — with a direct link to documentation — gives authors an early, actionable signal to add or fix Swift Package Manager support before their plugin is published.

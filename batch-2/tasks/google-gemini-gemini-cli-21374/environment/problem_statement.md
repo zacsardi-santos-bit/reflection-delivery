@@ -1,5 +1,15 @@
-I'm working on a CLI tool that authenticates users against a cloud service, and right now every time we need user account data plus project config the setup function fires a fresh network call, even when the same credentials and project were just looked up seconds ago. That's redundant latency and wasted quota when auth checks fire multiple times in quick succession. I want a short-lived in-memory cache on the user setup function so repeated calls inside a 30-second window reuse the result instead of hitting the server again.
+## Description
 
-Key thing: the cache should be keyed on both the auth-client instance and the project identifier, so if someone changes the project (via an env var) the old entry is effectively invalidated and we fetch fresh. Also if a previous attempt threw, don't cache that failure, the next call should always retry. Entries go stale after about 30 seconds.
+Every time user account data and project configuration are needed, the authentication setup process makes a fresh network call to the server — even when the same credentials and project were looked up just moments earlier in the same session. This creates unnecessary latency and redundant API calls whenever the same user triggers authentication checks multiple times in quick succession.
 
-Alongside this I need a general-purpose caching utility I can reuse elsewhere so we don't scatter one-off caches everywhere. It should support configurable TTL expiration, either a global default per cache instance or a per-entry override, and both string-keyed and object-reference-keyed storage modes, plus a get-or-create convenience method. Oh and when a cached value is a pending async operation, the cache should auto-remove the entry if that promise rejects, unless that behavior is explicitly turned off. The string-keyed mode needs a method that clears all entries at once, but calling that on object-keyed storage should throw a clear error since you can't enumerate weak refs like that. Also export a test-only function from the user setup module that resets the cache between tests so we get proper isolation.
+## Expected Behavior
+
+- When user setup is called multiple times with the same credentials and project, only the first call should hit the network. Subsequent calls within a short window should return the cached result immediately.
+- If the configured project changes between calls, the system must bypass the cache and fetch fresh data.
+- After a short expiration window (about 30 seconds), cached results should be considered stale and the system should re-fetch.
+- If a previous setup attempt failed with an error, that failure should not be cached — the next attempt should always retry.
+- A new general-purpose caching utility should be introduced to power this feature and be available for use elsewhere in the codebase. It should support time-to-live expiration, string and object-keyed storage, automatic eviction of failed asynchronous results, and a "get or create" convenience method.
+
+## Why This Matters
+
+Eliminating redundant network round-trips improves startup time and reduces unnecessary quota consumption. Having a shared caching utility also avoids ad-hoc one-off caching implementations scattered across the codebase.

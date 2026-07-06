@@ -1,5 +1,18 @@
-I'm poking at Langflow and the database just keeps ballooning because vertex build records never get pruned. Every time a flow runs we insert fresh build records for each vertex node, but the old ones sit there forever, so over months you end up with millions of rows, slow queries, and disk pressure. I want automatic rotation so we only keep the most recent builds up to a configurable ceiling, and I need two separate caps here: a global cap on the total number of vertex build records across the whole system, and a per-vertex cap that limits how many builds we retain for each individual vertex node within a flow.
+## Description
 
-The behavior I'm after is that right after a new build gets logged, if either cap is exceeded, the oldest builds (ordered by timestamp) get deleted automatically to bring the count back under the limit. Both of these should live in the app settings with sensible defaults, and in particular I need the per-vertex limit surfaced as a real settings field, not just a magic number buried somewhere.
+Langflow's vertex build records accumulate indefinitely in the database. Every time a flow is built, new build records are inserted for each vertex node, but old records are never cleaned up. Over time this causes unbounded database growth, which degrades query performance and wastes storage.
 
-Oh and the function that writes/logs build records should take optional per-call override values for both the global and per-vertex limits, so tests and special callers can bypass the configured global settings when they need to. Also this has to be safe under concurrency, multiple builds happening at once shouldn't throw errors or blow past the limits, so handle the concurrent-write case gracefully.
+We need a mechanism to cap how many build records are retained — both globally across the entire system and per individual vertex node. When a cap is exceeded, the oldest records should be removed automatically so that only the most recent builds are kept.
+
+## Expected Behavior
+
+- A configurable global cap limits the total number of vertex build records in the database.
+- A separate configurable per-vertex cap limits how many build records are kept for each individual vertex node within a flow.
+- When either cap is exceeded after a new build is logged, the oldest builds (by timestamp) are deleted to bring the count back within the limit.
+- The retention limits should be part of the application settings with sensible defaults.
+- The function that logs new build records should accept optional override values for both limits, so callers can bypass the global configuration when needed.
+- Concurrent build operations must not produce errors or violate the limits.
+
+## Why This Matters
+
+Without this change, long-running Langflow instances accumulate millions of build records with no way to prune them, leading to slow queries and disk pressure. With configurable limits and automatic pruning, operators can tune build history retention to match their storage budget.

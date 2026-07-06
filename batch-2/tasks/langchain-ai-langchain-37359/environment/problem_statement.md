@@ -1,7 +1,18 @@
-I'm working with the Perplexity chat integration in LangChain (over in `@libs/partners/perplexity/langchain_perplexity/chat_models.py` basically) and right now everything just routes to the standard chat completions endpoint, which means there's no way to hit Perplexity's newer Responses (Agent) API. I need that path because it's what handles built-in tools like web search, stateful multi-turn conversations that continue from a previous response identifier, and system instructions, none of which chat completions can do. So today if someone passes a built-in tool it silently falls back to a path that doesn't support it, which is exactly the surprise I want to kill.
+## Description
 
-What I want is auto-detection: when the payload has a built-in tool (as opposed to a plain custom function), or has a conversation continuation id, or system instructions, or any other Responses-only param, it should route to the Responses API on its own. Also I need a way to explicitly force it on or disable it at construction time so it overrides the auto-detection either way.
+The Perplexity chat integration currently only supports the standard chat completions endpoint, which means developers cannot access Perplexity's more advanced "Responses" (Agent) API. This newer API supports built-in tools like web search, stateful multi-turn conversations using persistent response identifiers, and system instructions — capabilities that are simply not available through the chat completions path.
 
-The annoying bit is the two APIs take different params. Stuff like sampling temperature and stop sequences aren't accepted by the Responses path, so those should get dropped cleanly, but log a warning when the drop might surprise someone (like if they explicitly set temperature). Tool-choice params are different, those should raise an error instead of being silently dropped since quietly ignoring them can break agent loops.
+There is no routing logic today: all requests go to chat completions regardless of whether the payload contains built-in tools or continuation parameters that only the Responses API understands. When a developer passes a built-in tool like web search, the request silently falls back to a path that doesn't support it.
 
-Oh and I need streaming plus async both working through the Responses API with correct usage metadata, and errors that show up mid-stream as structured error events need to propagate properly. When errors happen they should carry structured info (error code, type, request id) so I can handle them programmatically instead of parsing plain text. Last thing, Perplexity extras like citations, images, and related questions should land consistently in the message's additional/supplementary keyword args (not the response metadata) no matter which API path got used.
+## Expected Behavior
+
+- When a request includes a built-in tool (e.g., web search), the integration should automatically detect this and route to the Responses API instead of chat completions.
+- Requests that include conversation continuation identifiers, system instructions, or other Responses-API-only parameters should also be automatically routed to the Responses API.
+- Developers should be able to explicitly force or disable the Responses API path at construction time, overriding the auto-detection logic.
+- Certain parameters that are incompatible with the Responses API (sampling temperature, stop sequences, tool-choice) must be handled gracefully: silently dropped with a log warning, or rejected with an explicit error so developers are not caught by surprise.
+- Streaming and async invocation paths should both be supported through the Responses API with proper usage metadata and error propagation.
+- Perplexity-specific extras returned from the Responses API (citations, images, related questions, etc.) should land in the message's supplementary keyword arguments, not in the response metadata.
+
+## Why This Matters
+
+Without this routing layer, developers trying to use built-in tools or multi-turn conversation features have no supported path. Adding auto-detection with clear warnings for incompatible parameters makes the integration both more capable and less surprising to use.

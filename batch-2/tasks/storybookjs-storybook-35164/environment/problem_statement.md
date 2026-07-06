@@ -1,5 +1,19 @@
-I'm digging into the AI integration layer in Storybook's CLI, the part that talks to a running Storybook instance over the tool protocol. When the client first connects it does an initialize handshake before it fetches the list of available tools, and it turns out the server can hand back workflow instructions during that same handshake, project-specific guidance like "use existing stories as examples" or "run tests after writing stories." Right now we just throw that away, which is a shame because it's exactly the kind of context an AI assistant needs to generate consistent stories.
+## Description
 
-What I want is a new function that fetches both the tool list and any workflow instructions from that initialize handshake in a single call and returns them together so consumers get both. The instructions should be trimmed of surrounding whitespace, and if the value is missing, blank, whitespace-only, or just not a string, the result should quietly omit them instead of blowing up. Really important bit: if the initialization step itself fails for any reason (malformed response, protocol error, missing data), the tool list should still come back fine. Server metadata failures shouldn't block tool retrieval, we just degrade gracefully and return empty metadata. Oh and there's a related cleanup, when the initialize response comes back with a failure status and has a body stream, cancel that stream explicitly rather than leaving it dangling.
+When an AI assistant connects to a running Storybook instance, it retrieves a list of available commands via the initial connection handshake. However, the server can also return workflow instructions during that same handshake — project-specific guidance such as "use existing stories as examples" or "run tests after writing stories." Currently, this guidance is silently discarded and never reaches the AI assistant.
 
-Then on the help side, the function that assembles the Storybook help text for AI assistants needs to use this new combined fetch. Change the header line from "Storybook commands (from the Storybook running at...)" to "Storybook help from the Storybook running at...", add a "Storybook commands" section heading before the tool list, and when workflow instructions are present, put a "Storybook workflow instructions" section before the commands section with the instructions text shown verbatim.
+Additionally, the help text that the AI assistant sees lacks clear section structure: there is no heading for the commands section, the header wording is slightly off, and there is no way to display workflow instructions even if they were available.
+
+## Expected Behavior
+
+- A new API should be available that, in addition to fetching the tool list, also returns any server-provided workflow instructions captured during the initialization handshake.
+- Workflow instructions should be extracted and trimmed. If the value is absent, empty, whitespace-only, or not a string, it should be treated as if no instructions were provided.
+- If the initialization handshake fails for any reason (bad response, protocol error, missing data), the system must still successfully return the tools list — server metadata failures should not block tool retrieval.
+- When a failed handshake response has a body stream, the stream must be properly released/canceled.
+- The help text output must include a clearly labeled "Storybook commands" section heading.
+- When workflow instructions are available, they must be displayed in a separate "Storybook workflow instructions" section that appears before the commands list.
+- The help text header must be updated to say "Storybook help from the Storybook running at..." instead of the current phrasing.
+
+## Why This Matters
+
+AI assistants that integrate with Storybook can provide much better guidance when they have access to project-specific workflow instructions alongside the list of available commands. Without this, each project's best practices are invisible to the AI, leading to suboptimal or inconsistent story generation. This change also improves help output readability with proper section headings.

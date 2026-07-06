@@ -1,7 +1,17 @@
-I'm dealing with a Storybook feature where an AI agent generates stories, and there's an onboarding checklist that tracks whether the AI setup is complete. Right now the "setup done" check is way too loose. It only looks at whether the AI setup command got recorded in the event log, but that event gets written no matter whether the agent actually produced any story files in the current project. So in a monorepo, if I ran the AI setup command in one package, it flips the checklist to done for every other package too, even though the agent never touched those packages. That gives false confidence that AI content is ready when none exists.
+## Description
 
-What I want is for the AI setup item to only mark complete when two things hold: the setup command actually ran for the specific project I'm viewing, and at least one story carrying an AI-generated marker actually exists in that project's story index. If setup ran but produced zero AI stories, the item should stay open, and running the command in a sibling package must not affect the current package's checklist.
+The AI setup checklist item marks itself as "done" too eagerly. Currently it only checks whether the AI setup command was recorded in the event log — but that event is written regardless of whether the agent actually produced any story files in the current project. In a monorepo this means running the AI setup command in one package incorrectly flips the checklist to "done" for every other package in the repo.
 
-There's also a related bug with the opt-in status. Folks who have telemetry disabled never see the correct opt-in state because the opt-in flag was only read from the telemetry event cache, which is a no-op for them. I need that read from a regular per-project filesystem cache instead so it works regardless of telemetry settings, scoped to the specific project.
+Additionally, users who have telemetry disabled never see the correct opt-in status in the checklist because the opt-in flag was only being read from the telemetry event cache, which is a no-op for them.
 
-Oh and the checklist still needs to load immediately without blocking while these checks run in the background, and it should handle cache read failures gracefully rather than throwing. Also the ghost stories and analytics pipeline should respect this same new condition, so don't emit those events if no AI-generated stories are present, even after the idle timer fires.
+## Expected Behavior
+
+- The AI setup checklist item should only be marked complete when the AI setup command ran for the **specific project** being viewed **and** at least one AI-generated story actually exists in that project's story index.
+- Running the AI setup command in a sibling monorepo package must not affect the checklist for the current package.
+- The opt-in status should be determined from a per-project filesystem cache so it works correctly even when telemetry is disabled.
+- If the AI setup ran but no AI-generated stories have been created yet, the checklist item should remain open.
+- The checklist should still load immediately without waiting for these checks, and should handle cache read failures gracefully.
+
+## Why This Matters
+
+Without this fix, the checklist gives false confidence that AI-generated content is ready when none exists, and behaves incorrectly in monorepos and for users with telemetry disabled.

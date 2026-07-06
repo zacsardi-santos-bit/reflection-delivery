@@ -1,7 +1,25 @@
-I'm hitting two gaps in Salt's SSH PKI module that I want to close out.
+## Description
 
-First one's about key generation. Right now when I create a new SSH private key and write it to a file path, only the private key file lands on disk, and then I have to turn around and run a separate command to pull out the public key and save it. Annoying. I want writing a private key to disk to automatically drop a companion public key file right alongside it in the same location, using the standard public key file suffix (the `.pub` extension convention), and the content of that file should match exactly what you'd get by extracting the public key from the private key I just generated. That's the standard convention anyway so it should just happen for me.
+Two related improvements are needed for SSH certificate and key management:
 
-Second one's in the certificate signing policy logic. The policy merging code only understands TTL durations at the moment, but sometimes I want to pin a cert's validity window with explicit start and end timestamps instead of (or on top of) a TTL. Problem is the merge logic doesn't know anything about those date params, so I need it to accept explicit "valid from" and "valid until" date strings passed alongside the signing policy args. And when I do pass an explicit range next to a policy that enforces a max duration, the policy should cap things by trimming the end date down if my requested range runs past that limit. Oh and whenever any TTL-based calculation actually kicks in, I want the resolved params to carry concrete start and end timestamps as formatted date strings, not just the raw number of seconds, so everything downstream has clear validity boundaries to work with instead of guessing.
+**1. Private key creation should automatically produce a public key file**
 
-Net effect I'm after: operators get both key files in one step, and signing policies can actually enforce validity window limits even when someone hands them explicit date ranges.
+When generating a new SSH private key and writing it to a file path, only the private key file is currently created. In practice, users almost always also need the corresponding public key. Having to run a separate command to extract the public key is an extra burden. The system should automatically create a companion public key file (with the standard public key file suffix) alongside the private key file whenever a key is written to disk. The content of that file should match what you would get by extracting the public key from the private key.
+
+**2. Signing policy should support explicit validity date ranges, not just durations**
+
+The SSH certificate signing policy mechanism currently accepts a TTL (time-to-live) duration to control how long certificates are valid. However, users sometimes want to specify explicit start and end dates for a certificate's validity window instead of or in addition to a TTL. There is currently no support for passing absolute date parameters through the policy merging logic.
+
+When explicit validity dates are provided alongside a policy that enforces a maximum duration, the policy should enforce that limit by trimming the end date if the requested range exceeds it. When any TTL-based calculation is in effect, the system should also store concrete start and end timestamps in the resolved parameters — not just the numeric duration — so downstream consumers have clear, explicit date boundaries.
+
+## Expected Behavior
+
+- Creating a private key to a path also creates a companion public key file in the same location
+- The companion file content matches the public key extracted from the generated private key
+- Explicit validity start and end date strings can be passed alongside signing policy arguments
+- Policy duration limits cap the end date if the requested range is too long
+- When a TTL is applied, resolved parameters include both concrete start and end timestamps as formatted strings
+
+## Why This Matters
+
+These changes make key and certificate management more ergonomic and policy-safe: operators get both key files in one step, and signing policies can now reliably enforce validity window limits even when users supply explicit date ranges.

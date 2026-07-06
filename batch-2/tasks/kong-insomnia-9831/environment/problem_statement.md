@@ -1,5 +1,19 @@
-I'm dealing with the Konnect integration in Insomnia and I've got a leak I need to plug. We support environment variable template syntax all over the app, so users end up sticking those placeholders into their route configs, dynamic paths, host names, headers, methods, whatever. Trouble is when a route gets published or synced out to external infrastructure, those template expressions just ride along as raw strings. The external service has no clue what to do with them and it can also expose sensitive variable names that shouldn't be visible outside.
+## Description
 
-So I want a sanitize step that runs on route objects before they leave the app, stripping out any template expression from the string fields (name, paths, hosts, methods, headers, and expression) while keeping everything else intact. It's gotta handle both the variable interpolation syntax and the block tag syntax. And be smart about partial values, so if a path or host entry has a template expression embedded in the middle of some real text, strip just the expression and keep the surrounding text. paths and hosts get each entry sanitized individually keeping partials. For array fields like methods though, if an entry is entirely a template expression and ends up fully stripped, drop that entry, and if all entries get dropped the whole field should become null so the default behavior kicks in. For headers, if either the key or the value is entirely a template expression, yank the whole header entry after sanitization.
+Route configurations in the Konnect integration can contain template placeholder expressions — syntax used by Insomnia's environment variable system to inject dynamic values. When these routes are published or synced to external infrastructure, those template expressions remain in the route data as raw strings. This means sensitive variable names or configuration details may leak to external services that have no concept of the template language, and the expressions may also cause unexpected parsing or processing failures on the receiving end.
 
-Also there's a security thing, I need interleaved or nested delimiter combos handled too, where one type of template syntax is embedded inside the other, strip those so nobody sneaks an expression through by combining delimiters in weird ways. But if a delimiter is unpaired (no closing tag) leave it alone since it's not valid template syntax and shouldn't be touched. Oh and null fields should just pass straight through without blowing up.
+## Expected Behavior
+
+- Before a route is sent externally, any template expression syntax should be stripped from the route's string fields (name, paths, hosts, methods, headers, and expression).
+- Stripping should remove only the template expression itself, leaving any surrounding text intact.
+- Array fields like paths and hosts should have each entry sanitized individually, keeping partial values.
+- Array fields like methods should have fully-stripped entries removed entirely; if no entries remain, the field should fall back to null so that a default can apply.
+- Header entries whose key or value is entirely a template expression should be dropped completely after sanitization.
+- Both variable interpolation syntax and block tag syntax should be stripped.
+- Template injection via interleaved or nested delimiter combinations should also be neutralized.
+- Unpaired delimiters that do not form a complete template expression should be left unchanged.
+- Fields that are already null should be handled gracefully without errors.
+
+## Why This Matters
+
+Without sanitization, any route that references environment variables via template syntax would expose those variable names to external services in plain text. This is both a potential security concern and a correctness issue, since the external service cannot render the templates and may reject or mishandle the route configuration.

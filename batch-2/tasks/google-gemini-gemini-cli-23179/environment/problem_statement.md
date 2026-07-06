@@ -1,5 +1,15 @@
-I'm cleaning up the tool permission flow in the CLI and it's kind of a mess right now. When a tool's about to run and we need the user to approve it, the permission dialog title is just this verbose description string that crams everything together, the command plus the working directory plus any description annotation plus a background flag, all in one blob. MCP tools are even worse, the whole JSON payload of the parameters ends up as the title. It's unreadable.
+## Description
 
-What I want is to split this into two pieces. There should be a short display title that's just the most human-relevant identifier, so for shell commands that's the raw command by itself, and for MCP tools it's the command argument if one's present, otherwise fall back to the tool's display name. Then separately there's an explanation that carries all the contextual stuff, for shell tools that's the directory, description, and background status, and for MCP tools it's the serialized parameter JSON with a graceful truncation message when the payload's too big to reasonably show.
+When an AI agent requests user permission before running a tool, the permission dialog currently uses the same full description string for both the title and any contextual details. For shell commands this means the title contains the command together with the working directory, a description annotation, and a background flag all crammed together. For MCP tools the entire parameter payload appears as the title. The UI cannot easily separate the short identifier (the command name) from its context.
 
-Then the protocol layer that actually sends permission requests should use the short title for the dialog heading and route the explanation out as a separate thought update instead of bundling it all into the title slot. That way the UI can show a clean scannable heading and still surface the detailed context through the right channel. Basically two concerns, kept apart, so tools expose both the concise title and the explanation and the permission-requesting code wires each to where it belongs.
+This makes permission dialogs harder to read and prevents the UI from routing information to the right places. A concise title (e.g. just the shell command) should appear in the title slot, while richer context (directory, description, background status, or the full parameter payload) should be delivered as a separate message so the UI can present it as secondary information.
+
+## Expected Behavior
+
+- Tools should expose a short display title that contains only the most human-relevant identifier — for shell tools, just the command; for MCP tools, the command argument when available, otherwise the tool's display name.
+- Tools should also expose a separate explanation containing the contextual metadata — for shell tools, the directory, description, and background status; for MCP tools, the serialized parameters (with a graceful truncation message for large payloads).
+- The protocol layer that requests permissions should use the short title for the permission dialog heading and deliver the explanation as a distinct thought update, keeping the two concerns separated.
+
+## Why This Matters
+
+Cleaner separation of title vs. context lets UIs display a readable, scannable permission prompt while still making the full details available in the appropriate place, improving the overall user experience when tools are executed.

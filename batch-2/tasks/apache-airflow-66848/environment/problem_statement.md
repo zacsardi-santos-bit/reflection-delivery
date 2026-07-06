@@ -1,5 +1,22 @@
-I'm digging into Airflow's partitioned asset scheduling and hit a wall with rollup mappers. Right now a downstream DAG that depends on partitioned assets through a rollup mapper always waits for every single expected partition key to show up before it fires, which is way too rigid. Upstream pipelines rarely deliver all partitions at once, so forcing 100% completeness just piles on latency. I want a pluggable wait policy system so pipeline authors can tune the freshness vs completeness tradeoff right in the DAG schedule. At minimum I need two modes, one positive-threshold flavor that fires once at least N keys have arrived (say 5 of 60), and a negative-threshold flavor that fires when at most |N| keys are still missing (like tolerate 3 stragglers of 60). Really it's one "wait for minimum count" policy that takes a positive int (fire when at least N arrived) or a negative int (fire when at most |N| absent). The default of waiting for everything stays put when no explicit policy is set.
+# Add configurable wait policies for rollup asset partition mappers
 
-There's also a correctness gap, if the configured threshold can never be met given the window's expected cardinality (like requiring more arrivals than the partition window can ever produce), the scheduler should notice, log a warning, and skip creating the dag run instead of blocking silently forever. That warning needs to be deduplicated per DAG/asset combo so it fires exactly once even when the scheduler re-checks repeatedly.
+## Description
 
-Both sides need these policy classes, the core scheduler side and the lighter task-SDK side. The policies should support equality, hashing, and a readable string repr, and passing zero as the threshold has to be rejected since it's a degenerate case. They also need to serialize and deserialize cleanly as part of the mapper config, and any custom policy subclass the serializer doesn't recognize should be rejected with a proper error rather than quietly emitting a broken payload.
+When a downstream DAG depends on partitioned assets via a rollup mapper, there is currently no option to configure when the rollup is considered "satisfied" — it always waits for every single expected partition key to arrive. This is too rigid for real-world scenarios where:
+
+- A pipeline wants to start processing as soon as a minimum number of upstream partitions have arrived (e.g., fire after 5 of 60 expected keys are ready), or
+- A pipeline is tolerant of a small number of stragglers and should fire when at most N partitions are still missing (e.g., fire when at most 3 of 60 keys are absent).
+
+Additionally, the system currently has no way to detect or report when a configured threshold is permanently impossible to satisfy (e.g., requiring more keys than the partition window can ever produce), and instead silently blocks the DAG run forever.
+
+## Expected Behavior
+
+- Users can attach a configurable wait policy to a rollup mapper when defining a DAG schedule.
+- A "wait for minimum count" policy accepts either a positive integer (fire when at least N keys have arrived) or a negative integer (fire when at most |N| keys are still missing).
+- The default behavior — waiting for all expected keys — remains unchanged when no explicit policy is configured.
+- When a configured policy can never be satisfied given the window's expected cardinality, the scheduler logs a warning exactly once per affected DAG/asset combination and does not create a dag run.
+- Wait policies must be serializable and survive round-trip encode/decode alongside the mapper configuration.
+
+## Why This Matters
+
+Upstream data pipelines rarely deliver all partitions simultaneously. Requiring 100% completeness before processing downstream adds unnecessary latency. This feature lets pipeline authors tune the trade-off between freshness and completeness directly in the DAG definition.

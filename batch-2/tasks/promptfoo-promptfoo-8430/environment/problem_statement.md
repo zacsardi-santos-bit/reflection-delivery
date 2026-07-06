@@ -1,7 +1,17 @@
-I'm cleaning up the cloud login command so it actually works for people who belong to teams across multiple orgs. Right now when I log in with an API key and pass a team name, the command does a remote API call to pick a default team instead of resolving it from the list of teams I can actually access, and there's no way to scope the login to a specific org, so if I'm in teams across several orgs I can't say which one to use.
+## Description
 
-What I want is to split the flow so credential validation and credential saving are two separate steps. Validate the API key first, then work out the right org and team context, and only then persist creds. If I pass an org flag that doesn't match any of my accessible teams, fail right away with a clear error that lists which orgs I do have access to, and don't save anything.
+The cloud authentication login command doesn't properly support users who belong to teams spread across multiple organizations. When a user specifies a team name during login, the command relies on a remote API call to determine which team to use as the default, and there's no way to scope the login to a specific organization. Additionally, credential validation and credential saving are coupled into a single operation, making it impossible to resolve the correct team and organization context before the credentials are committed.
 
-For team resolution: when I give a team without an org, search across all my accessible teams in every org and auto-switch to whichever org owns that team. When I do give an org, scope team selection to that org only, with exact display-name matches winning over slug matches. And for the fallback auto-select (CI, or when I cancel the interactive prompt) just pick the oldest team by creation date rather than firing another API call.
+## Expected Behavior
 
-Also, when my default org has no teams but I belong to teams in another org, detect and switch to that other org automatically, and log which org got selected so I know what happened. This all lives in the cloud auth login logic. The point is predictable control over org and team context, since silent fallbacks to the wrong org break downstream API calls.
+- When specifying a team by name or identifier during login, the command should search across all accessible teams in all organizations to find a match, then automatically switch to the organization that team belongs to.
+- When specifying an organization during login, team selection should be scoped to only teams within that organization.
+- When both an organization and a team are specified, exact display-name matches should take priority over slug matches.
+- When the user's default organization has no teams but they belong to teams in another organization, the login should automatically detect and switch to that organization and log which organization was selected.
+- When a specified organization cannot be found in the user's accessible teams, the login should fail with a clear error message listing which organizations are accessible, and should not persist any credentials.
+- When auto-selecting a default team (in non-interactive mode or when the user cancels interactive selection), the oldest team (by creation date) should be used instead of making an extra API call.
+- Credential validation and credential saving should be separate steps, so team and organization resolution can happen between them.
+
+## Why This Matters
+
+Users who belong to multiple organizations or who automate logins via CI need reliable, predictable control over which organization and team context is established during authentication. Ambiguous team resolution and silent fallbacks to incorrect organizations can cause downstream failures when the wrong context is used for subsequent API calls.

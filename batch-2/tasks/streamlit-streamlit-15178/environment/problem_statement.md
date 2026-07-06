@@ -1,5 +1,17 @@
-I'm building out the auth piece in Streamlit and hit a snag with the short-lived provider tokens we mint during OAuth sign-in, the ones that just carry which provider the user picked. Right now we lean on a single JWT library but the newer version of it pulled in an optional sub-library as a transitive dep, and depending on how someone installed Streamlit that sub-library may or may not be there. So I want the encode and decode logic to prefer that newer sub-library when it's importable and quietly fall back to the older library when it isn't, and if neither one is around, both encoding and decoding should raise a clear error telling the user exactly which install command to run to get the auth dependencies.
+## Description
 
-On decode I also need real validation, so it should check the token has a non-empty provider name and a valid integer expiration timestamp, and raise descriptive errors when those claims are missing, empty, or malformed, plus a distinct error when the token's already expired.
+The authentication module needs a reliable way to create and validate short-lived provider tokens that identify which OAuth provider a user selected during sign-in. Right now the module depends on a single JWT library, but a newer version of that library introduced an optional sub-library as a transitive dependency — users on older installations won't have it, which would break token creation and validation for them.
 
-Oh and the annoying part: the newer JWT sub-library spits out internal security warnings when the signing key is shorter than recommended, and I don't want those bubbling up to end users at all, so suppress them entirely. But we do still want visibility, so log a single informational warning through our own logger when the secret's below the 112-bit threshold, just once at key creation time, not every call. And the helper that installs that warning suppression needs to be idempotent so calling it repeatedly doesn't stack up duplicate filter entries. This all lives in the authentication module (`@lib/streamlit/auth_util.py` or wherever the token util code sits). The whole reason I care is folks who installed the auth extra before the sub-library existed would silently break on upgrade, and people on minimal installs would just see confusing library internals instead of a helpful "here's what to install" message.
+We need a dual-backend design that automatically picks the best available JWT library and silently falls back to the older one when the newer sub-library isn't installed. If neither is available, the error shown to the user should clearly say how to install the necessary dependencies.
+
+## Expected Behavior
+
+- Encoding and decoding provider tokens should work on both new installs (with the newer JWT sub-library) and older installs (with only the original library).
+- If neither JWT library is available, operations must fail with a clear error message pointing the user to the correct install command.
+- Decoding must validate that tokens contain a non-empty provider name and a valid integer expiration timestamp, and must raise a clear error for expired tokens or missing/malformed claims.
+- Internal library warnings about key length should not be surfaced to end users. Instead, a single informational message should be logged when the signing secret is shorter than the recommended 112-bit minimum — logged only once, not repeatedly.
+- Suppressing those internal warnings must be idempotent — calling the suppression logic multiple times should not add duplicate warning filters.
+
+## Why This Matters
+
+Users who installed the authentication extra before the JWT sub-library was introduced would silently break on upgrade, and users on minimal installs would see confusing internal library warnings instead of a clear message about what to install.

@@ -1,7 +1,15 @@
-I'm working on InLong Sort and hit a gap in our end-to-end test setup. We've started supporting a newer major version of the stream processing runtime (Flink), but all our existing e2e test modules target the older versions only, so there's no way to run integration tests for the data connectors against the new one. I need a new end-to-end test module that targets this newer runtime and builds with our standard Maven tooling, and it should activate as the default profile so CI picks it up without any extra flags or config.
+## Description
 
-The module needs the usual shared test utilities. In particular I want a utility class that resolves named placeholders in template strings, since our test SQL scripts (and some config files) use named tokens that have to be swapped for real runtime values before the scripts run. It should take a template string plus a map of replacement values and return the string with every placeholder token replaced, and it's gotta handle multiple named tokens in a single string, substituting each one with the matching value from the map at call time.
+The project currently provides end-to-end test infrastructure for older versions of its stream processing runtime, but it does not have a corresponding test module for the latest major version it now supports. This means integration tests for data connectors cannot be run against the newer runtime, leaving a gap in test coverage.
 
-Also the module needs the right container-based test environment classes for spinning up and managing a cluster during tests, with variants for the different JRE versions we run against. And one more thing, I need the format library dependencies reorganized under the new runtime version's build profile so that all the format modules the distribution artifact depends on are actually available when you build with the new version selected. Right now that structure isn't set up for the new profile so builds come up short on formats.
+## Expected Behavior
 
-Without this there's no automated way to catch integration-level regressions specific to the newer runtime, and the parameterized template util is what makes it practical to reuse test SQL across different scenarios.
+- A new end-to-end test module targeting the newer runtime version should exist and be buildable using the project's standard build tooling.
+- The module should activate automatically as the default profile so that CI can run it without extra configuration.
+- The module should include shared test utility classes, in particular a utility that resolves named placeholders in template strings (e.g., in SQL scripts or configuration files) by substituting values from a key-value map at runtime.
+- The placeholder resolver should handle multiple named tokens in a single string, replacing each one with the corresponding value supplied at call time.
+- The build dependency structure for format libraries should be reorganized so that all required format modules are available under the new runtime profile.
+
+## Why This Matters
+
+Without this module, the project has no automated way to catch integration-level regressions that are specific to the newer runtime version. Adding this infrastructure allows developers to write and run end-to-end tests for data pipeline connectors against the new version, and the parameterized template utility makes it practical to share and reuse test SQL scripts across different test scenarios.

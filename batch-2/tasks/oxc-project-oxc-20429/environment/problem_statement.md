@@ -1,7 +1,14 @@
-I'm getting a bunch of false positive warnings out of the variable shadowing lint rule and it's driving me nuts. When I turn on the option that also checks against built-in globals, it starts flagging local variables as shadowing globals even when those names aren't actually globals in the runtime environments I've configured. Like I'll declare a local variable inside a function and it warns me that it shadows a global, but that name doesn't exist in browser or node, which are the envs I've set up.
+## Description
 
-Feels like the rule is consulting some giant catch-all set of every possible environment's globals instead of just what I enabled. What I want is for it to only flag a variable as shadowing a built-in global if that name genuinely lives in one of my configured environments. If I set browser, check browser globals only. If I set both browser and node, check the union of those two sets, not everything under the sun. And variables that really do shadow a global from a configured env should still get flagged, that part's correct and I don't want to lose it, so setting both browser and node together should catch actual globals of those two and nothing unrelated.
+The variable shadowing lint rule is producing false positive warnings when the "check built-in globals" option is enabled. Specifically, the rule flags local variable declarations as shadowing built-in globals even when those variable names do not actually belong to any of the runtime environments the user has configured. For example, declaring a local variable inside a function causes a spurious warning claiming it shadows a global, even though that name is not a recognized global in the configured environment.
 
-While you're in there, some of the existing tests around browser-specific global behavior are running without the browser environment actually being set, so they're not really reflecting real usage. Those should be updated to properly configure the browser environment so they mean something.
+## Expected Behavior
 
-The whole point here is developers trust this rule to catch real naming conflicts, not to spam noise. Once it warns about stuff that isn't even a global in the target env, people start suppressing or ignoring it and then real shadowing bugs slip through. So the fix is making the check environment-aware and only surfacing what's relevant to the configured runtime.
+- When checking for shadowing of built-in globals, the rule should only consider globals that belong to the explicitly enabled runtime environments (e.g., browser, node).
+- Variable names that are not present in any configured environment's global list should NOT produce a warning, even when the "check built-in globals" option is enabled.
+- Variables that genuinely shadow a global from a configured environment should still be flagged correctly.
+- Checking both browser and node environments simultaneously should flag only variables that are actual globals of those environments, not unrelated names.
+
+## Why This Matters
+
+Developers rely on the shadowing lint rule to catch real naming conflicts, not false alarms. When the rule warns about variables that aren't actually globals in the target environment, it creates noise that erodes trust in the linter. Teams may start suppressing or ignoring these warnings, which risks missing real shadowing issues. The rule should be environment-aware and only flag what is actually relevant to the project's configured runtime.

@@ -1,5 +1,14 @@
-I'm cleaning up some edge cases in our language server's request handling and hitting a few rough spots. The core issue is that requests can arrive for files the server doesn't actually have open, since LSP clients send stuff in whatever order they want, and right now we don't degrade cleanly. When a hover request comes in for a document that isn't open, instead of returning a clean empty response the server hangs or does something weird, so I want it to just return an empty (null) hover in that case. Same deal for a document diagnostic request on an unavailable document, it should return a full diagnostic report but with zero items in the list rather than erroring or hanging.
+## Description
 
-The other spot is code action resolve. Not everything comes from Ruff, so a client might ask us to resolve some third-party code action that doesn't carry the data we expect. Today if the resolve request has data that can't be turned into a document reference we panic, which is bad. I want two cases covered here: if the code action has no data payload at all, just hand back the original action unchanged, and if it has a data payload that isn't a valid document reference (can't be interpreted as a document URL), again return the original action unchanged instead of crashing.
+The language server does not handle certain edge cases gracefully. When a client sends a hover request or a document diagnostic request for a file that is not currently open in the server, the server fails to return a proper empty response. Additionally, when a code action resolve request arrives with missing or unparseable data (i.e., the data field is absent or contains something that cannot be interpreted as a document reference), the server crashes or panics rather than returning the original action unchanged.
 
-So basically all four situations should fail soft. This lives in the language server request handling code (the hover, document diagnostic, and code action resolve request handlers), and the goal is compatibility with a wider range of clients without any panics.
+## Expected Behavior
+
+- A hover request for a file that is not open should return an empty (null) response, not hang or error.
+- A document diagnostic request for a file that is not open should return a full diagnostic report with an empty list of items.
+- A code action resolve request with no data payload should return the original code action unchanged.
+- A code action resolve request with a data payload that is not a valid document reference should return the original code action unchanged.
+
+## Why This Matters
+
+LSP clients may send requests in any order, and there are legitimate scenarios where a request arrives for a file the server does not have open. Similarly, not all code actions come from Ruff — a client may ask the server to resolve a third-party code action that lacks the expected data format. The server should handle these cases gracefully instead of failing, ensuring robustness and compatibility with a wider range of LSP clients.

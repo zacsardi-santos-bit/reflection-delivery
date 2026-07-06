@@ -1,9 +1,26 @@
-I'm cleaning up a bunch of related gaps in our SCIM server implementation and could use your help knocking them all out together since they touch overlapping code paths.
+# SCIM Server: Validation, Error Handling, and External Identifier Persistence Gaps
 
-First thing, our SCIM error type serializes to JSON fine but there's no way to read it back. The SCIM spec wants the HTTP status code written as a quoted string inside the error body, and right now any code trying to parse a SCIM error response into a structured object just fails because it can't turn that quoted string into an integer. I want proper deserialization that handles the status-as-string format, treats an absent or empty status field as a zero value, and rejects a non-numeric status string with an error.
+## Description
 
-Second, when we add members to a group (create, full update via PUT, or partial patch), the server starts mutating immediately without checking all requested members are valid first, so if the third member doesn't exist the first two are already added and the group's left half-updated. I want a pre-flight check that validates every member before any changes happen, and it should also reject any member that's itself a group type since we don't support nested groups. Return a 400 for unsupported member types and a 404 when a member's user ID isn't found.
+The SCIM server implementation has several related issues that need to be addressed together:
 
-Third, when a create or update request includes a changed external identifier and the group happens to get looked up by its internal ID rather than by display name, the new external id gets silently dropped instead of persisted, which leaves it stale and breaks federation.
+1. **Error responses can't be parsed back by clients.** The SCIM specification requires the HTTP status code to be written as a quoted string inside the error JSON body. Our error type already serializes correctly, but there is no way to deserialize an error response back into a typed struct — the status-as-string format is not handled during parsing. Any code that reads SCIM error responses back into structured objects fails.
 
-Finally, there are spots during user listing and individual user retrieval where an unexpected failure reading user metadata gets swallowed. If the attribute cache returns an error that's anything other than a plain not-found, I want the server to report a 500 to the client rather than quietly skipping that user, otherwise real infrastructure problems stay invisible. The relevant logic lives in the SCIM server crate under `@crates` alongside the SCIM error type and the group and user handlers, so wire the fixes into those paths.
+2. **Group member additions have no pre-flight validation.** When adding members to a group (during create, update, or patch operations), the server processes each addition one at a time without first verifying that all members are valid. If a problem is discovered partway through, some members have already been added, leaving the group in a partially-updated state. Nested groups (a group being referenced as a member of another group) are also not being rejected at the right point in the request lifecycle.
+
+3. **External identifier changes are silently dropped when a group is looked up by ID.** When a create or update request provides an external identifier that differs from what is stored, and the group is found by its internal identifier rather than by display name, the new external identifier is not persisted. This causes the group's external identifier to become stale.
+
+4. **Cache failures during user operations are swallowed.** When the user attribute cache returns an unexpected error during user listing or user retrieval, the server silently skips the affected user rather than reporting an error. This masks real infrastructure problems.
+
+## Expected Behavior
+
+- All SCIM error responses should carry a structured error body parseable as a typed object
+- Group member operations should validate all members before making any changes
+- Members that are groups (nested groups) should be rejected with an appropriate 400 error
+- Members whose user ID does not exist should be rejected with a 404 error
+- External identifier updates should be persisted even when the group is found by internal ID
+- Non-transient cache failures during user operations should return a 500 error to the client
+
+## Why This Matters
+
+These gaps create operational problems: partial group updates are hard to debug, clients cannot reliably distinguish error types, stale external identifiers break federation scenarios, and real infrastructure errors are invisible.

@@ -1,5 +1,14 @@
-I'm poking around the Flutter rendering layer and the fill-viewport sliver bugs me. Right now it's built out of a chain of internal wrappers, basically a layout builder that spins up a padding widget wrapped around a fixed-extent list, instead of being a real first-class render object like the other sliver adaptor widgets are. The annoying part is the debug output: when you dump the render tree for a fill-viewport sliver you get that internal layout builder class sitting at the root of the subtree instead of the actual fill-viewport component, and its children end up nested several levels deep through the intermediate padding and fixed-extent-list layers.
+## Description
 
-I want to refactor this so the fill-viewport widget directly creates and manages its own render object, no delegating through a layout builder or padding or fixed-extent-list wrappers in between. After the change the debug output should show the fill-viewport render object right at the top level with its children attached directly underneath it, and that render object should be a proper first-class render sliver that manages its children itself, consistent with how the other sliver adaptor render objects behave.
+The fill-viewport sliver widget is currently implemented by composing several internal wrappers — a layout builder, a padding layer, and a fixed-extent list — to achieve its behavior. This creates an unnecessarily deep rendering hierarchy with confusing debug output: when developers inspect the resulting render tree, they see an internal layout builder class at the root of the subtree instead of the actual fill-viewport render object.
 
-Oh and one more thing, the fill-viewport render object class is currently marked deprecated in the source but that's wrong, it should be a fully supported public-facing API that users and the framework can use directly, so drop the deprecation so it works without any warnings.
+## Expected Behavior
+
+- The fill-viewport sliver widget should directly create and manage its render object, without delegating through a layout builder or intermediate padding/fixed-extent-list wrappers.
+- The debug output of the render tree should show the fill-viewport render object at the top level, with its children attached directly underneath.
+- The fill-viewport render object should be a proper, first-class render sliver that directly manages its children, consistent with how other sliver adaptor render objects work.
+- The render object should not be marked as deprecated — it should be a fully supported, public-facing API that can be used directly.
+
+## Why This Matters
+
+The current indirect implementation makes the render tree harder to understand and debug. Developers who inspect the widget hierarchy see internal implementation details rather than the meaningful component name. Making the fill-viewport sliver a first-class render object simplifies the widget structure and makes the implementation consistent with how other sliver adaptor widgets work.

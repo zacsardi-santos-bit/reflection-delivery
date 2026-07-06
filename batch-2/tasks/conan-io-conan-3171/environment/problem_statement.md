@@ -1,7 +1,20 @@
-I'm hitting a really annoying wall with private deps in my package manager. So I've got a library that marks some of its internal deps as private, the whole point being that consumers of my lib shouldn't have to know or care about those internal things. But when I go to install a consumer package in an environment where those private deps don't have pre-built binaries lying around (maybe they got cleaned up, maybe they were never built locally), the entire install blows up with an error about missing binaries. That feels totally wrong to me, if a dependency is private then the consumer really shouldn't care whether its binary exists.
+## Description
 
-What I want instead: private deps that have no available binary should just get skipped during install, and reported as skipped in the output so I can see what happened, and (this is the important bit) they should be left out of the generated build configuration entirely so consumer packages don't even know they exist. One catch though, if the same package is referenced privately by one library but publicly or directly by some other package in the graph, then it should still be included properly, the public reference wins and the dep stays available and shows up in the build config. Installing a consumer of a package whose private deps lack binaries should succeed, not fail.
+When a library declares some of its dependencies as "private" (meaning they are internal implementation details that consumers of the library should not care about), and those private dependencies happen to lack pre-built binaries in the local cache, the package manager incorrectly fails the installation with an error instead of simply skipping those private dependencies.
 
-Oh and there's a related bug I noticed while poking at this. When a package is stored under the older directory layout convention (the one with a special hidden folder for sources) and it gets downloaded from a remote server and built locally, the directory merging step gets confused when the destination folder is actually a subdirectory of the source. It ends up either looping into itself or failing to copy the files, so the contents aren't where they're expected during the build. That merge logic needs to handle the dest-is-a-subdir-of-source case correctly.
+This is wrong behavior: a consumer of the library should never need to care about the library's private, internal dependencies. Whether or not those private dependencies have a pre-built binary available is completely irrelevant to the consumer.
 
-Both of these matter because folks publishing libraries with private deps shouldn't have to guarantee those private binaries exist in every consumer's environment, that defeats the whole purpose of marking them private, and it causes needless failures in CI where only the necessary binaries are around.
+## Expected Behavior
+
+- When a package has private dependencies and those private dependencies have no pre-built binary, installing a consumer of that package should succeed.
+- Private dependencies with no binary should be reported as skipped in the installation output.
+- Skipped private dependencies should not appear in the generated build configuration files — consumers should only see the libraries they actually need.
+- If the same dependency is referenced as private by one package but as public (or directly) by another, the public reference should win: the dep should be available and included in the build configuration.
+
+## Related Issue
+
+There is also a related problem with merging directories when the destination is a subdirectory of the source. This causes incorrect behavior when a package stored under a legacy internal directory layout is downloaded from a remote server and built locally — the merge step can loop into itself or fail to copy the expected files.
+
+## Why This Matters
+
+Users who publish libraries with private dependencies should not need to ensure that those private dependencies' binaries are always present in every consumer's environment. The whole point of marking a dependency as private is to keep it hidden from consumers. The current behavior defeats this purpose and causes unnecessary build failures in CI environments where only the necessary binaries are available.

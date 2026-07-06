@@ -1,5 +1,14 @@
-I'm trying to cut down database load from DAG authorization checks in Airflow. Right now every time we need to figure out which team owns a DAG, we hit the DB to resolve the DAG's bundle and then the associated team name, and this happens on every single auth check. The grid view polls continuously so the same team lookup for the same DAG gets fired off again and again which is just wasteful since team assignments basically never change.
+## Description
 
-What I want is in-memory caching for these DAG team name lookups, keyed by DAG ID so different DAGs cache independently, so that once a team's been resolved for a given DAG the next lookups just return the cached value and skip the database join against the team tables entirely. Oh and I also need a function I can call to explicitly clear the whole cache, that's handy for test isolation and for when a team reassignment needs to take effect right away without a stale value hanging around.
+Every time Airflow checks which team owns a DAG — for example, during authorization checks on API endpoints — it makes a database query to look up the DAG's bundle and resolve the associated team name. Since team assignments rarely change, this repeated querying is wasteful. High-frequency endpoints (like the grid view, which polls continuously) end up hammering the database with redundant team-resolution queries for the same DAGs over and over.
 
-One knock-on effect I'm expecting: bulk operations over task instances should end up doing fewer queries overall since the team lookup that used to need a DB round-trip is now served from cache. Specifically bulk task instance deletion should drop by exactly one query. This all lives in the team-aware authorization path, so the caching should slot in wherever the DAG-to-team resolution currently happens.
+## Expected Behavior
+
+- The result of a DAG's team name lookup should be cached in memory after the first resolution, so that subsequent lookups for the same DAG skip the database entirely.
+- The cache should be keyed by DAG ID so different DAGs are cached independently.
+- A function should be provided to explicitly clear the entire cache, allowing fresh lookups to be forced when needed (e.g., after a team reassignment or during test isolation).
+- Bulk operations over task instances should benefit from this caching by performing fewer total database queries — specifically, the overhead for bulk task instance deletion should drop by one query.
+
+## Why This Matters
+
+Without caching, every authorization check on a DAG causes a database join against the team tables. In busy deployments with many concurrent API requests or continuously polling UI components, this creates unnecessary database load. Caching the team name per DAG significantly reduces this pressure and improves response throughput for team-aware authorization checks.

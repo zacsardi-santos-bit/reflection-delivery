@@ -1,3 +1,16 @@
-I keep hitting a wall trying to use masked element selection and non-zero index lookup inside a JIT-compiled function. Both blow up at compile time because their output shapes are dynamic, they depend on how many elements actually match at runtime, and the compiler needs every tensor shape known statically before it runs, so any attempt to use these in a compiled graph just raises an error. That's blocking me from using them in performance-sensitive pipelines that are otherwise fully JIT-able.
+## Description
 
-What I want is an optional parameter on both ops that lets me specify a fixed output size up front. When I give a fixed size that's bigger than the number of matching elements, the extra slots should get filled with a configurable padding value that defaults to zero. When the fixed size is smaller than the match count, just truncate the output down to the size I asked for. Also important: the output dtype should always stay the same as the input tensor's type even if the fill value I pass has a different numeric type, so if I hand a float fill value to an integer tensor the result should still be integer, don't let the padding value promote it. And with a fixed size specified, both operations need to work correctly inside the JIT compiler and give right results across repeated compiled calls with varying inputs, not just the first one. Can you add this fixed-size mode to both the masked selection and the non-zero index lookup?
+The masked element selection and non-zero index lookup operations currently always produce outputs whose size depends on how many elements in the input satisfy the condition at runtime. This dynamic output shape makes them incompatible with the JIT compiler, which requires all tensor shapes to be known statically before execution.
+
+## Expected Behavior
+
+Both operations should gain an optional parameter that lets the caller specify a fixed output size up front:
+
+- When the fixed size is larger than the number of matching elements, the extra output slots should be filled with a configurable padding value (defaulting to zero).
+- When the fixed size is smaller, the output should be truncated to the specified size.
+- The output data type should always match the input tensor's type, even if the provided padding value has a different numeric type (e.g. providing a float fill value for an integer tensor must not change the output to float).
+- When a fixed size is specified, both operations should work correctly inside the JIT compiler and produce the right results across repeated compiled invocations with varying inputs.
+
+## Why This Matters
+
+Users who want to use masked selection or non-zero index lookup as part of a compiled execution graph are currently blocked: any attempt to do so raises an error because the dynamic output size requires a runtime value that cannot be resolved at compile time. Adding a fixed-size mode unlocks these operations for use in compiled pipelines, which is critical for performance-sensitive code that is otherwise fully JIT-able.

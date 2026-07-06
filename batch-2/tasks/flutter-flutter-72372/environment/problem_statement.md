@@ -1,5 +1,17 @@
-I'm working on the Flutter macOS desktop tooling and hitting a mess with how the engine and app frameworks get embedded. Older macOS Flutter projects manually link and embed FlutterMacOS.framework and the app framework straight in the Xcode `project.pbxproj` file, but with the newer Xcode build system that manual embedding is wrong now, it causes build errors or double-embedding, and the frameworks are supposed to come in via the build-time assembly script instead.
+## Description
 
-I want an automated project migration that opens the macOS Xcode project config and strips out the old manual framework link and embedding entries, and rewrites the build shell script phase so it invokes the assembly tool with an embed step instead of the old behavior of just writing the app filename. It needs to skip projects that are already migrated (the shell script already calls the assembly embed step, so no-op there) and also handle gracefully the case where the project file doesn't exist yet, don't blow up. Oh and after it tries to clean things up, if there are any unrecognized leftover framework references still hanging around, it should fail with a clear error message to the developer rather than silently leaving a broken project, and it should send an analytics event so we can track how often that failure happens.
+macOS Flutter projects currently embed the Flutter engine and app frameworks by manually linking them in the Xcode project file. With the newer Xcode build system and updated CocoaPods integration, this manual embedding approach is no longer correct — the frameworks should now be embedded via a build-time assembly script invocation instead. The old approach causes build errors or double-embedding issues with the new system.
 
-Also I need to update the existing macOS projects that live in the integration test and manual test directories so they reflect the correct post-migration state, meaning remove the manual framework references from those project files and update their build scripts to match. And the CocoaPods config that previously worked around the double-embedding issue can go, we don't need it anymore since the build system handles it. The whole point is projects get brought up to date automatically the next time they're built, so nobody ends up with a broken bundle.
+## Expected Behavior
+
+- An automated migration should detect and remove the manual framework link and embedding entries from macOS Xcode project configuration files.
+- The build shell script entry in the Xcode project should be updated to call the assembly tool with the embed command, replacing the old behavior of simply writing the app filename.
+- Projects that have already been updated to the new approach should be detected and skipped automatically without any modification.
+- If a project has unrecognized leftover framework references that cannot be automatically cleaned up, the migration should report an error to the developer rather than silently leaving the project in a broken state.
+- The failure case should record an analytics event so that the frequency of this scenario can be tracked.
+- The existing integration test and manual test macOS projects should be updated to reflect the correct post-migration state.
+- The CocoaPods workaround that was previously needed to prevent double-embedding should be removed, since the build system no longer requires it.
+
+## Why This Matters
+
+Without this migration, macOS Flutter projects built with the new Xcode build system may fail to compile or produce incorrectly structured app bundles. The migration ensures all existing projects are automatically brought up to date the next time they are built.

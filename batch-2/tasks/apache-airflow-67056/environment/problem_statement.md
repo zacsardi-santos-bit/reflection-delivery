@@ -1,7 +1,23 @@
-I'm trying to make remote task logging in Airflow less painful. Right now if you want logs going to some cloud storage provider you have to hand-write a custom logging config module and point Airflow at it, which is brittle and puts all the wiring burden on operators. There's no way for a provider to just say "hey, I handle logs at this URL scheme." I want a discovery mechanism so providers declare a remote logging handler in their provider metadata (basically a class path plus the URL scheme they support) and the providers manager picks those up automatically and registers them keyed by scheme so they're addressable at runtime.
+## Description
 
-I need this in both the core providers manager and the task-SDK runtime providers manager. Couple of rules: when two providers claim the same scheme, the first one registered wins and the dupe is silently ignored, and when a provider declares a class path that can't be imported, just skip that entry quietly, no error.
+Currently, setting up remote task logging in Airflow requires users to write and configure a custom logging module — a brittle, error-prone process that puts unnecessary burden on operators. There is no standard way for providers to advertise that they can handle remote log storage for a given URL scheme. As a result, each user has to manually wire up the connection between a log storage URL and the provider that handles it.
 
-Then I want a shared logging factory module that resolves the active remote log handler at runtime using a clear priority order. A user's custom logging module wins if they've set one, otherwise try to find a matching provider by URL scheme (only when remote logging is actually enabled), and finally fall back to the legacy config for backward compatibility. The factory should take the config, the providers manager, and an import helper as parameters and return the resolved handler plus the connection ID.
+We need a mechanism where providers can declare which URL scheme they support for remote task logging, and the providers manager discovers and registers these handlers automatically. The logging system can then select the right handler based on the configured log storage URL without requiring a custom logging module.
 
-On the core side the logging configuration module needs a cleaner cache-aware API: lazy-loading functions for the active remote log handler and the default connection ID, an internal function that calls the factory and caches its results so we're not doing redundant lookups, and a deprecated wrapper that keeps the existing public interface for loading logging config working but emits a deprecation warning. Oh, and hold the cache state in a dedicated class so it can be reset in tests. Net effect I'm after: users just configure a storage URL and the right provider handler activates automatically, no custom module needed in the common case.
+## Expected Behavior
+
+- Providers can declare remote logging handler metadata (a class path and a URL scheme) in their provider data.
+- The providers manager discovers these declarations and registers handlers by scheme, making them addressable at runtime.
+- If two providers register the same scheme, the first one registered wins and the duplicate is silently ignored.
+- If a provider's declared class path cannot be imported, that entry is skipped without error.
+- A shared logging factory resolves the active remote log handler using a clear priority order:
+  1. A user-defined logging module's configuration wins, if one has been set.
+  2. Automatic provider-based selection by URL scheme (when remote logging is enabled).
+  3. A legacy fallback for backward compatibility.
+- The logging system caches the resolved handler and connection ID to avoid redundant lookups.
+- A clean API exposes the active remote log handler and default connection ID, with lazy loading and explicit cache control.
+- The existing public API for loading the logging configuration is preserved but marked as deprecated with an appropriate warning.
+
+## Why This Matters
+
+This change makes remote logging setup self-service: users simply configure a storage URL, and the correct provider handler is activated automatically. It eliminates the need for custom logging modules in the common case, reduces configuration complexity, and gives provider authors a standard way to participate in Airflow's logging infrastructure.

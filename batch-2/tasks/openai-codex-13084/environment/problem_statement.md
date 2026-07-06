@@ -1,5 +1,14 @@
-I'm hitting a gap in the app server's thread API where thread objects don't tell you whether they're ephemeral or backed by a saved rollout on disk. Right now the only way to guess is to check whether the path field is set, which is fragile and couples clients to internal server behavior. I want every thread object returned from the server to carry an explicit boolean marking whether it's ephemeral, so clients can tell at a glance if a thread persists beyond the current session instead of relying on heuristics.
+## Description
 
-The behavior I want: threads created as ephemeral (not saved to disk) get the flag set to true, and threads that are backed by a persistent saved rollout get it set to false. This needs to be consistent everywhere a thread comes back, so thread creation, thread read, thread list, and thread resume responses all include it. And it can't just live in the typed API response, it has to show up in the serialized JSON wire format too so clients reading raw JSON see it as well.
+Thread objects returned by the server do not currently expose whether they represent a temporary, in-memory-only session or a persistent saved thread. Clients have no reliable way to distinguish between these two thread types from the thread data itself — they would have to infer it indirectly from the presence or absence of a file path, which is fragile.
 
-So basically a dedicated ephemeral boolean on the thread object, correctly true or false depending on whether the thread is temporary or saved, present across all four of those operations and in the JSON.
+## Expected Behavior
+
+- Every thread object returned from any server operation (thread creation, thread read, thread list, thread resume) should include an explicit boolean field indicating whether the thread is ephemeral or persistent.
+- For threads that are created as ephemeral (not saved to disk), this field should be true.
+- For threads that are backed by a saved rollout on disk, this field should be false.
+- This flag must be present both in the typed API response and in the serialized JSON wire format.
+
+## Why This Matters
+
+API clients need to be able to tell at a glance whether a given thread will persist beyond the current session. Without this explicit indicator, clients must rely on heuristics (like checking whether a path is set), which is error-prone and couples clients to internal server behavior. Making this distinction explicit improves the reliability and clarity of the API.

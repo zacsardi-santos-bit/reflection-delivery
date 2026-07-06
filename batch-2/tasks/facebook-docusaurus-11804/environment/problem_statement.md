@@ -1,5 +1,15 @@
-I'm cleaning up the git version control strategy in Docusaurus, the bit that reads file metadata like when a file was last updated or first created, and right now it's a shared global singleton which is a pain because I can't spin up separate instances per site or per test. I want to convert it into a factory function instead so every caller gets its own fresh, isolated instance with its own state. That's the main refactor.
+## Description
 
-The other thing that's been bugging me is the error handling when someone runs Docusaurus from a directory that isn't inside any git repo, like a fresh folder that was never `git init`'d, or a user who just doesn't use git at all. Right now it blows up with some cryptic thing that tells you nothing. I want the strategy to check upfront whether the site is actually inside a git worktree, and if it's not, throw a clear human-readable error that says the site is outside any git worktree and names the specific file it couldn't read. That message should surface whenever any file history lookup gets attempted.
+When a Docusaurus site is located in a directory that is not tracked by any version control system, the tool currently fails in a confusing or cryptic way when it tries to read file history (such as last-updated or creation dates). Users who don't use git — or who have created a fresh directory that hasn't been initialized as a repository — get an unclear error rather than a descriptive explanation of what went wrong.
 
-Also it's gotta keep working for projects using git submodules, so when a file lives inside a submodule directory it should still pull the correct last-updated and creation timestamps from that submodule's own git history, not choke on it. So basically: factory not singleton, proactive worktree detection with a descriptive error naming the file, and correct timestamp lookups for tracked files including ones nested in submodules. Without this, people debugging config in fresh dirs get zero actionable feedback, and the singleton just kills testability across multi-site and multi-locale setups.
+Additionally, the current version control strategy for reading git file metadata is implemented as a global singleton, which makes it impossible to create independent instances per test or per site. This is inconvenient for testing and for multi-site setups.
+
+## Expected Behavior
+
+- The version control strategy for git should be available as a factory function so that each caller gets a fresh, isolated instance with its own state.
+- When the site directory is inside a git repository (including projects using submodules), the strategy should correctly read last-updated and creation timestamps for any tracked file, including files that live inside git submodules.
+- When the site directory is **not** inside any git worktree, the strategy should detect this proactively and produce a clear, human-readable error message that identifies both the problem (site is outside a git worktree) and the specific file that could not be read.
+
+## Why This Matters
+
+Without these fixes, users without git, or those debugging configuration in fresh directories, receive no actionable feedback. The singleton design also limits testability and reusability in multi-site or multi-locale scenarios.

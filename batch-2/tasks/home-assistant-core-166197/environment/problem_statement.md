@@ -1,7 +1,19 @@
-I'm working on the ProxmoxVE integration in Home Assistant and I need to add API token auth alongside the existing username/password. Right now the config flow crams all the connection params and credentials into one step, which makes it awkward to conditionally ask for the right fields. Proxmox supports API tokens which are scoped and more secure (admins following least privilege create dedicated tokens instead of handing over the main account password), so I want to restructure the flow.
+## Description
 
-The idea is a two-step flow: first collect the server connection details plus the authentication type (password vs API token), then in a second step collect the appropriate credentials for whatever they picked. If they chose password with the default realm they just get asked for a password. If they chose API token they get asked for a token identifier and a token secret. And for folks on a non-default authentication realm, let them specify that realm during the credentials step. All four combos need to fully work: default realm + password, default realm + token, custom realm + password, custom realm + token.
+The ProxmoxVE integration currently only supports password-based authentication. Users who manage their Proxmox server using API tokens — a more secure, scoped authentication mechanism that avoids sharing the main account password — have no supported path to set up the integration with token credentials.
 
-Re-auth needs the same treatment, so when someone re-authenticates a token-based connection on a non-default realm they can update their realm, token identifier, and token secret, matching whatever auth type was previously configured.
+Additionally, the current setup flow collects all connection parameters and credentials in a single step, which makes it difficult to conditionally ask for different fields depending on the authentication type chosen. For example, token authentication requires a token name and secret instead of a password, and non-default authentication realms should only be prompted when they are actually relevant.
 
-Also existing configs that were set up with just a password have to be automatically migrated to the new format so they keep working, don't break the connection. The migration should add the new authentication method field derived from the existing realm value, and bump the config entry schema version to 3. This all lives in the proxmoxve integration under `@homeassistant/components/proxmoxve/`, mainly the config flow bits in `@homeassistant/components/proxmoxve/config_flow.py` and the migration logic in `@homeassistant/components/proxmoxve/__init__.py`.
+## Expected Behavior
+
+- The setup flow should be split into two stages: first collect server connection details and the desired authentication type (password vs. API token), then collect the appropriate credentials for that type.
+- Users choosing password authentication with the default realm should only be asked for a password.
+- Users choosing API token authentication should be asked for a token identifier and a token secret.
+- Users with a non-default authentication realm should be able to specify that realm during the credentials step.
+- All four combinations (default realm + password, default realm + token, custom realm + password, custom realm + token) should be fully supported.
+- Existing configurations must be automatically migrated to include the new authentication method field without breaking the existing connection.
+- Re-authentication flows should similarly prompt for updated credentials appropriate to the previously configured authentication type, including realm and token fields where applicable.
+
+## Why This Matters
+
+Many Proxmox administrators follow the principle of least privilege and create dedicated API tokens with limited permissions for integrations. Without token support, these users either have to use their full admin password or cannot use the integration at all. Supporting API tokens makes the integration significantly more secure and aligns with Proxmox best practices.

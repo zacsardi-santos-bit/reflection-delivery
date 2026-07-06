@@ -1,5 +1,14 @@
-I'm working on the Maven dependency scanner and hit a real gap: it reads Maven settings files to discover repo configs but totally ignores proxy entries. In a lot of corporate and CI setups all outbound HTTP has to go through a proxy to reach remote Maven repos, so right now we silently fail or skip fetching transitive or remote parent deps even though plain Maven would succeed using the proxy config from its settings. I want us to behave consistently with Maven here.
+## Description
 
-So what I need is for the settings reader to actually parse proxy entries from both the user-level settings file and the global-level one, and merge them the way Maven does, where if both levels define a proxy with the same id the user-level one wins on that duplicate. The merged proxy list should ride along on the settings struct that gets returned when we read Maven settings.
+When scanning Maven projects, the scanner reads Maven settings files to discover repository configurations. However, it currently ignores any proxy settings defined in those files. In environments that require network traffic to pass through a proxy server to reach remote Maven repositories, this means the scanner fails to fetch transitive or remote parent dependencies — even though Maven itself would succeed using the proxy configuration from its settings files.
 
-Then, given a target URL's protocol and hostname, I want a method on that settings struct that tells me which configured proxies apply. Filtering rules: a proxy counts as active if its active flag is true or just absent, and inactive only when it's explicitly false, so drop the inactive ones. Match on protocol case-insensitively and drop proxies configured for a different protocol. And handle hostname exclusions, oh and the excluded-hosts value is a pipe-separated list of glob patterns, so if any of those patterns matches the target host, skip that proxy for that host. That's the whole thing, parse from both files, merge with user precedence, expose the list, and filter by protocol plus host exclusions plus active state.
+## Expected Behavior
+
+- Proxy entries defined in user-level Maven settings files should be read and respected when fetching remote dependencies.
+- Proxy entries defined in global Maven settings files should also be read and respected.
+- When both user and global settings define a proxy with the same identifier, the user-level proxy should take precedence, matching Maven's own override behavior.
+- Given a target URL's protocol and hostname, the scanner should be able to determine which configured proxies apply — filtering out inactive proxies, proxies configured for a different protocol, and proxies whose hostname exclusion list covers the target host.
+
+## Why This Matters
+
+Without proxy support, the scanner silently fails or skips dependency resolution in proxy-constrained corporate or CI environments, producing incomplete or inaccurate results. Respecting Maven's proxy configuration allows the scanner to behave consistently with Maven in the same environment.

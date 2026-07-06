@@ -1,9 +1,16 @@
-I'm hacking on our CI dependency bot, the thing that auto-bumps important package versions, and right now it's got one global cooldown for everything: if a version dropped in the last four days (96 hours) we skip it. Fine as a default but too rigid. Sometimes a critical fix lands and I want to say "for this one package, only wait 6 hours" without dropping the safety net everywhere else. So I want per-package cooldown overrides driven by annotations in our config file, plus a few helpers to make it work.
+## Description
 
-First, a duration parser that turns human strings like "12 hours", "1 day", "30 minutes" into a number of hours. Anything it can't understand (ISO timestamps, random garbage, empty string) should come back with a sentinel failure value rather than throwing.
+The automated script that upgrades important package versions currently uses a single global cooldown window to decide whether a newly published version is too recent to adopt. This one-size-fits-all approach is inflexible: when a specific package needs to be upgraded sooner than the global window allows — for example, because a critical fix was just released — there is no way to configure a shorter per-package cooldown.
 
-Second, a function that takes the config file content and pulls out the manually added per-package overrides, handing back a dict mapping package name to cooldown hours. It should skip entries that just disable a package outright rather than giving a duration, those aren't overrides I care about here.
+We need to add support for per-package cooldown overrides in the project configuration file. Users should be able to annotate specific packages with a shorter duration, and the upgrade script should respect that override when evaluating whether to upgrade.
 
-Third, update the existing cooldown check so it takes an optional per-package cooldown arg. When that's passed, use it instead of the global window; when it's not, fall back to the usual 96-hour (4-day) behaviour so nothing changes for the untouched packages.
+## Expected Behavior
 
-Fourth, a removal function that strips a given package's override entry from the config, including any expiry reminder comments sitting right above it. It's gotta hit all the relevant sections of the file consistently, be idempotent (safe to call over and over), and if the package has no override entry just return the file unchanged and leave everything else alone. The upgrade helpers live alongside the rest of the CI tooling, so wire these in there.
+- A utility function should parse human-readable duration strings ("12 hours", "1 day", "30 minutes", etc.) into a numeric value representing hours. Unrecognised inputs (ISO timestamps, arbitrary text, empty strings) should return a sentinel value indicating failure.
+- A function should read the project's configuration file and extract any manually added per-package cooldown overrides, returning a mapping of package names to their durations in hours. Entries that disable a package entirely (rather than specifying a duration) should be ignored.
+- When checking whether a package version falls within the cooldown window, the check should accept an optional per-package cooldown parameter and apply it instead of the global default when provided.
+- A function should be able to remove a package's override entry (and any associated expiry reminder comments) from the configuration file. This removal must apply to all relevant sections of the file, be idempotent, and leave all other entries untouched.
+
+## Why This Matters
+
+Without per-package overrides, operators must either wait for the global cooldown to expire or manually intervene to upgrade a specific package sooner. Supporting per-package durations in the configuration file makes the upgrade automation more flexible and reduces manual intervention.

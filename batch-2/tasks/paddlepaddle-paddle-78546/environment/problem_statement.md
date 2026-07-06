@@ -1,5 +1,15 @@
-I'm hitting a crash on the backward pass when I combine gradient checkpointing (recompute) with pipeline parallelism. The problem is my recomputed function captures some tensors from the surrounding scope through its closure, and the pipeline stage frees those intermediate tensors' memory between the forward and backward passes as a memory optimization, which is totally normal and necessary in large-scale pipeline-parallel training. So when backward tries to re-run the forward, those closure-captured tensors are no longer valid and the recompute blows up. Without this the two memory-saving techniques just can't be combined, any model whose forward logic closes over external tensors silently fails.
+## Description
 
-What I want is for the gradient checkpointing utility to detect tensors captured in a function's closure at forward time and stash protected backup copies, then transparently restore any closure tensors the pipeline freed right before backward re-executes the forward. This needs to work for plain functions and also for layer objects whose forward method captures tensors in its closure, and it should hold regardless of whether RNG-state preservation is on or off, plus work under non-reentrant checkpointing mode. Gradients with this protection have to come out numerically identical to running without gradient checkpointing at all.
+When using gradient checkpointing (recompute) together with pipeline parallelism, training crashes during the backward pass if the recomputed function captures tensors from its surrounding scope (closures). Pipeline-parallel training routinely frees the memory of intermediate tensors after the forward pass as a memory optimization. When backward tries to re-run the forward, these closure-captured tensors are no longer valid, causing the recomputed forward to fail.
 
-Please handle the edge cases cleanly too so nothing throws: functions with no closure at all, closures holding non-tensor values, and closures with empty or already-released cells should all just pass through fine. Oh and I want the helper that actually does the restore step exposed publicly so it can be imported and used on its own, separate from the gradient checkpointing internals.
+## Expected Behavior
+
+- The gradient checkpointing utility should detect tensors captured in a function's closure at forward time and save protected backup copies.
+- When the backward pass is about to re-execute the forward function, any closure tensors that were freed by the pipeline should be transparently restored from their backups.
+- This protection should work for plain functions, for layer objects whose forward method captures tensors in its closure, and for all supported options (such as RNG-state preservation disabled, non-reentrant mode).
+- Gradients produced with this protection must be numerically identical to those produced without gradient checkpointing.
+- Edge cases must be handled gracefully: functions with no closure, closures holding non-tensor values, and closures with empty (already-released) cells should all complete without error.
+
+## Why This Matters
+
+In large-scale pipeline-parallel training, it is common and necessary to release intermediate tensor memory between stages. Without closure protection in the gradient checkpointing path, any model that defines its forward logic using closures over external tensors will silently fail or crash during backward, making it impossible to combine these two memory-saving techniques.

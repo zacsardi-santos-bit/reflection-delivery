@@ -1,7 +1,14 @@
-I'm working on Ray's monitoring system and want to fix up the per-component memory metrics the reporter agent emits. Right now the resident set size and unique set size are only reported in megabytes, which is a pain because our alerting and dashboarding stuff all works natively in bytes, so we're stuck multiplying by 1,000,000 everywhere and that's error-prone.
+## Description
 
-What I want is new byte-unit variants of both the component RSS and USS metrics living alongside the existing megabyte ones, so consumers can just pick whichever unit fits. The byte metrics should report the exact raw byte value with no rounding, scaling, or lossy conversion, just the number straight through. Keep the existing megabyte metrics emitting unchanged for backward compat, don't touch those. The reporter agent should emit both the megabyte and byte versions side by side for each component, which means the total number of metric records it produces goes up to account for the new ones.
+Ray currently reports per-component memory metrics (resident set size and unique set size) only in megabytes. This is inconvenient for monitoring systems, dashboards, and alerting rules that work natively in bytes — users have to manually multiply by 1,000,000 to get accurate byte values. Additionally, one of the shared memory metrics uses a legacy naming convention that does not match the byte-unit naming style used elsewhere.
 
-Oh and there's a shared memory metric that still uses a legacy naming convention that doesn't match the byte-unit naming style used elsewhere, so rename that to follow the same consistent convention as the new metrics. Make sure that rename is reflected anywhere the old name is currently referenced too, don't leave a dangling reference.
+## Expected Behavior
 
-This all lives in the reporter agent side of Ray's monitoring code where the component memory metrics get defined and recorded.
+- New byte-unit variants of the component resident set size and unique set size metrics should be available alongside the existing megabyte metrics, so consumers can choose the appropriate unit for their use case.
+- The byte-unit metrics should report the exact raw byte values with no lossy unit conversion.
+- The existing megabyte metrics should continue to be emitted unchanged for backward compatibility.
+- The shared memory metric should be renamed to follow the consistent byte-unit naming convention used by the new metrics.
+
+## Why This Matters
+
+Monitoring tools and alerting systems typically operate in bytes for memory thresholds. Having to convert megabytes to bytes in every query or rule is error-prone and adds unnecessary complexity. Providing byte-precision metrics directly from the reporter agent eliminates this overhead and improves the accuracy of memory-based alerts.

@@ -1,5 +1,17 @@
-I'm working on the network tab in the dev tools console of our desktop API client, and right now it shows all the HTTP requests from a session in a table but the column headers are dead. You can't click them to sort anything, so when a session racks up a ton of requests it's a pain to find stuff by method type, status code, or duration without eyeballing every row. I want to make those headers clickable so people can sort by method, status, duration, and the other columns too.
+## Description
 
-The behavior I'm after is a three-state cycle per header. First click sorts ascending, second click flips to descending, and a third click clears the sort entirely and puts the rows back in the exact original insertion order they arrived in. If someone clicks a different column while one's already sorted, it should reset and start fresh at ascending on that new column. Oh and I want a little directional arrow icon showing on the active column only (never more than one at a time) so it's obvious which way things are sorted.
+The network tab in the developer tools console displays a table of HTTP requests made during a session, but the column headers are not interactive — users cannot sort the list by any column. When there are many requests, it's difficult to quickly find requests by method type, status code, or duration without manually scanning every row.
 
-Couple of gotchas on the actual sort logic: method sorting needs to be case-insensitive so a lowercase "post" and an uppercase "POST" land in the same spot, and status sorting should compare the numeric status code, not string-wise. And again, clearing has to restore the original order precisely, not just an approximation. This'll make debugging API sessions way easier, like finding all the failing requests or grouping by method quickly.
+## Expected Behavior
+
+- Clicking a column header should sort the request list by that column in ascending order.
+- Clicking the same column header a second time should switch to descending order.
+- Clicking the same column header a third time should clear the sort and restore the original insertion order.
+- Clicking a different column header while another column is sorted should reset to ascending on the newly selected column.
+- A directional arrow icon should appear on the active sort column to indicate the current sort direction, and this icon should only appear on one column at a time.
+- Method sorting must be case-insensitive (lowercase and uppercase method names should sort identically).
+- Status sorting should be by numeric status code.
+
+## Why This Matters
+
+Without sortable columns, developers debugging API sessions must manually scan request lists to identify patterns — for example, finding all failing requests or grouping by method type. Sortable columns make the network tab significantly more useful for debugging and analysis.

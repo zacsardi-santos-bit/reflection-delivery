@@ -1,5 +1,15 @@
-I'm hitting a nasty hang with Flink jobs that read from RabbitMQ. When I try to stop a job with a savepoint (the usual savepoint-and-stop dance for controlled shutdowns and upgrades in prod), it just hangs forever and never completes. Digging in, it looks like the RabbitMQ source blocks indefinitely waiting for the next message to arrive and never checks whether the job's been asked to cancel or stop, so the cancellation signal just gets ignored while it sits there.
+## Description
 
-What I want is a configurable delivery timeout on the RabbitMQ connection config (over in the connector's connection setup), basically the max time the source waits for the next message before it unblocks and re-checks for cancellation. It should accept the timeout either as a plain number interpreted as milliseconds, or as a value with an explicit time unit for convenience. If nobody configures it, fall back to a sensible default of 30 seconds automatically. Oh and a negative timeout should be rejected right away with a clear error, don't let that slide through.
+The RabbitMQ source connector blocks indefinitely while waiting for the next message to arrive. Because there is no timeout on this wait, the source cannot respond to cancellation signals, which means stopping a Flink job that reads from RabbitMQ — for example, triggering a savepoint and stopping — may hang forever.
 
-Then on the source side, the connector needs to actually use this timeout when it waits for messages, so when a cancel or stop signal comes in it can break out of the wait and shut down cleanly, no exception thrown, just a graceful exit. That way I can finally stop these jobs gracefully.
+## Expected Behavior
+
+- Users should be able to configure a delivery timeout on the RabbitMQ connection so that the source periodically unblocks and checks for cancellation.
+- The timeout should be configurable in milliseconds, or with an explicit time unit for convenience.
+- If no timeout is configured, a sensible default (30 seconds) should be used.
+- Providing a negative timeout value should be rejected with a clear error.
+- When a job is stopped or cancelled, the RabbitMQ source should exit cleanly without throwing an exception.
+
+## Why This Matters
+
+Without a delivery timeout, Flink jobs using the RabbitMQ source cannot be stopped gracefully. This is particularly problematic in production environments where savepoint-based upgrades and controlled shutdowns are common. Adding a configurable timeout gives users control over how responsive the source is to job lifecycle events, while providing a safe default for users who do not need to customize it.

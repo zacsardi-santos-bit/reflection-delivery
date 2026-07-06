@@ -1,5 +1,20 @@
-I'm cleaning up Biome's ESLint migration tool and hitting a bunch of rules that just get dropped or lose their options when I convert a config over. Basically if someone's got jest, vitest, jsx-a11y, unicorn, or typescript-eslint rules with custom settings, running the migration leaves them with a Biome config missing stuff they relied on, so they have to hand-rebuild it after. I want these converted properly, same severity, options carried over faithfully.
+## Description
 
-Concretely: the test consistency rules from both jest and vitest should translate to the Biome equivalent, mapping the preferred function name and the within-describe preference as two separate options. The valid-ARIA-roles rule (jsx-a11y) should map its allowed-invalid-roles list and the ignore-non-DOM flag over. Restricted globals need to handle both plain string entries and named entries with custom messages, and for the plain string ones I want a placeholder message that hints a custom message should be added there. Array type syntax rules should carry the preferred syntax option, and type import style rules including the inline type import variant. Explicit member accessibility should bring over the accessibility level, though skip the per-member overrides since Biome has no equivalent for those.
+The ESLint-to-Biome migration tool does not handle several widely used lint rules when converting configurations. Specifically, rules from the jest, vitest, jsx-a11y, unicorn, and typescript-eslint plugin ecosystems that carry user-defined options are either ignored or produce incomplete output during migration. This means developers who run the migration command end up with a Biome configuration that is missing rules they previously relied on, forcing them to manually re-configure those rules after migration.
 
-The naming convention rules are the gnarly ones, map selectors, formats, prefix lists, and leading underscore policies into Biome's convention format, and when there's a generic "property" selector expand it into the relevant Biome-specific property kinds. Also filename casing (unicorn) needs converting, including the case where multiple casing styles are enabled at once. The migration code lives around `@crates/biome_cli/src/execute/migrate` (the eslint conversion side), so that's where the mappings should land. Point is projects switching over shouldn't silently lose lint coverage.
+## Expected Behavior
+
+When migrating an ESLint configuration that includes any of the following rule families, the tool should produce a Biome configuration that includes the equivalent Biome rule at the same severity level, with the user's custom options faithfully translated:
+
+- Rules for enforcing consistent test function naming (from both jest and vitest plugins), including preferred function names inside and outside of describe blocks
+- Rules for enforcing valid ARIA roles on JSX elements, including options for allowing specific invalid roles and ignoring non-DOM elements
+- Rules for restricting the use of global variables, preserving any custom messages associated with each restricted global
+- Rules for enforcing a consistent array type syntax, including the preferred syntax style
+- Rules for enforcing a consistent type import style, including the inline vs. separate import preference
+- Rules for requiring explicit member accessibility modifiers on class members
+- Rules for enforcing naming conventions across selectors like properties, interfaces, enum members, and variables
+- Rules for enforcing filename casing conventions, including support for specifying multiple allowed casing styles
+
+## Why This Matters
+
+Projects migrating from ESLint to Biome currently lose their configuration for these rules and must manually reconstruct them in the Biome format. Automating this translation reduces the migration burden and ensures no lint coverage is silently dropped during the switch.

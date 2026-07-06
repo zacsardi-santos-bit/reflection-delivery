@@ -1,7 +1,23 @@
-I'm dealing with a bug in our default Codex provider cache, the thing that keeps provider instances alive so we're not recreating them on every call. Problem is it doesn't isolate by credential at all. When the active credential changes, say a different API key gets set in the environment, the cache hands back the old providers instead of building new ones bound to the new key, so calls get silently routed through a provider configured for the wrong credential. I need each distinct resolved API credential to get its own isolated cached bundle. There are two recognized credential sources and when both are present the one that takes precedence should decide the cache partition, not the fallback slot, so this stays consistent with how the underlying provider actually resolves creds at call time.
+# Codex Default Provider Cache Does Not Isolate by Credential
 
-Also there's no upper bound on cache size, so in long-running processes or scripts that rotate through lots of credentials the providers just pile up forever wasting resources. I want it bounded, evict the least-recently-used entry once we go past a capacity of 32 bundles, and have those evicted providers shut down gracefully. Shutdown should be deferred so any in-flight requests can finish first, then it fires once those complete and a brief grace period passes.
+## Description
 
-Edge case that's biting me: if a caller is holding a direct reference to a provider that got evicted and fully shut down, and then calls it again, I don't want a silent bad response, I want the system to transparently resurrect it, re-register with the provider registry, and forward the call successfully. Oh and after resurrection it should re-enter the cleanup cycle so it doesn't leak indefinitely outside the cache.
+The system that caches default Codex provider instances does not properly distinguish between different API credentials. When the active credential changes — for example, when a different API key is set in the environment — the old cached providers are returned instead of creating new ones bound to the new credential. This means calls can be silently routed through a provider configured for a different key than the one currently active.
 
-Last thing, the credential availability check right now only looks at one of the two sources, which makes it inconsistent since the provider accepts a second source too. I want the availability check to recognize all supported credential sources so it returns true whenever the provider itself would actually be able to authenticate, otherwise it can wrongly report no credentials when a valid one is sitting under the alternate source.
+There is also no upper bound on how many provider instances the cache holds. In long-running processes or automation scripts that rotate through many credentials, providers accumulate indefinitely with no cleanup, wasting resources.
+
+Additionally, the credential availability check only considers one of the two recognized credential sources, making it inconsistent with how the underlying provider actually resolves credentials at call time.
+
+## Expected Behavior
+
+- Each distinct resolved API credential should receive its own isolated cached provider bundle.
+- The credential that takes precedence (when both sources are present) should determine the cache partition — not the fallback slot.
+- The cache should be bounded in size, with the oldest entry evicted when the limit is reached.
+- Evicted providers should be shut down gracefully after a brief grace window, but only once any in-flight requests have completed.
+- Callers holding a reference to an evicted and shut-down provider should still be able to make calls — the provider should transparently re-register itself and forward the call.
+- After resurrection, evicted providers should re-enter the cleanup cycle so they do not accumulate indefinitely outside the cache.
+- The credential availability check should recognize all supported credential sources, consistent with the provider's own resolution logic.
+
+## Why This Matters
+
+Without these fixes, credential rotation silently falls back to an old provider, re-registration leaks happen in long-running modes, and availability checks can incorrectly report no credentials when a valid one is present under an alternate source.

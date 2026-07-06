@@ -1,5 +1,21 @@
-I'm digging into making our Kafka Streams RocksDB state stores survive crashes better. Right now if the app dies or shuts down uncleanly there's no way to tell from the store itself whether it closed safely or got left in a half-written state, and that's genuinely dangerous under exactly-once processing because reopening a store with uncommitted data can silently corrupt results. On top of that we don't stash the committed changelog offsets inside RocksDB, so we can't recover the last consistent offset from the store alone.
+# RocksDB State Stores Should Track Lifecycle Status and Persist Committed Offsets
 
-What I want: each store should persistently track its own open/closed lifecycle status plus the committed offsets per changelog partition, and it should keep all of that in a dedicated internal column family inside the RocksDB db so none of the existing data column families are touched. That internal column family needs to actually exist in the database after any store operation, and its status key should read as closed once a clean shutdown happens. On a clean close we persist status "closed". On reopen, if the persisted status shows a clean close (or the store is brand new/fresh) it should open normally, but if the status shows it was left open (meaning a probable crash) then exactly-once deployments must refuse to open it and raise an error signaling invalid state, while at-least-once deployments are allowed to proceed anyway. And committed offsets written before the crash need to still be retrievable after reopening even when the prior shutdown was unclean, so recovery starts from the right spot.
+## Description
 
-Oh and one more thing, the atomic flush setting on the RocksDB config adapter is required for this offset tracking to work correctly, so users shouldn't be able to accidentally turn it off. If someone tries to disable atomic flush, just ignore the change and log a warning. The relevant code lives around the RocksDB store and config adapter internals in the streams module, so wire the column family handling, status persistence, offset storage, and the reopen checks in there.
+Currently, Kafka Streams' RocksDB-backed state stores do not persistently record whether a store was cleanly closed or crashed while open. When a store is reopened after an unclean shutdown, there is no way to detect that it may contain uncommitted data. This is particularly risky when running with exactly-once delivery guarantees, where reading uncommitted data could lead to incorrect results or data corruption.
+
+Additionally, the committed changelog offsets are not stored inside RocksDB, making it impossible to recover the last known consistent offset purely from the store itself.
+
+## Expected Behavior
+
+- Each state store should maintain a dedicated internal column family to track its open/closed lifecycle status and the committed offsets for each changelog partition.
+- When a store is cleanly closed, the status should be persisted as "closed."
+- When a store is reopened:
+  - If the persisted status indicates a clean close (or the store is fresh), the store should open normally.
+  - If the persisted status indicates the store was left open (indicating a potential crash), deployments with exactly-once semantics must refuse to open the store and raise an error indicating invalid state. Deployments without exactly-once guarantees should be allowed to proceed.
+- Committed offsets written to the store should be retrievable after reopening, even if the previous shutdown was unclean.
+- When a user attempts to disable the atomic flush setting on the RocksDB adapter, the request should be ignored and a warning should be logged, since atomic flush is required for correct operation.
+
+## Why This Matters
+
+Without this tracking, Kafka Streams has no reliable mechanism to detect corrupted or uncommitted state after a crash. Adding persistent lifecycle status and offset tracking enables safer recovery behavior — particularly for exactly-once workloads — and allows the system to recover the last committed state reliably after both clean and unclean restarts.

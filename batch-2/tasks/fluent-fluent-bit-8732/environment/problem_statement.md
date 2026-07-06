@@ -1,5 +1,18 @@
-I'm working on the CFL library (Common Fluent Library) that sits inside Fluent Bit, and I need to add "referenced" data support for string and byte variants. Right now whenever I store a string or byte in a variant or insert it into a key-value list, the code always deep-copies the buffer, which is wasteful when I already own stable memory (think parsed message pack data) that'll outlive the variant. I want a way to say "don't copy this, I'll manage the lifetime myself" to cut allocations in high-throughput log and trace pipelines.
+## Description
 
-Concretely, the functions that create or insert string and byte values need a new boolean parameter controlling copy vs reference. When it says referenced, the library should point straight at my buffer instead of allocating; when the variant gets destroyed it should free its own copy if it made one but leave my buffer alone if it was just referenced. I also need a new array function that appends a length-delimited string with an explicit size plus that same reference flag, and the existing raw-bytes array append should be updated to take the flag too.
+The CFL (Common Fluent Library) currently always makes deep copies of string and byte data when storing values in variants and key-value lists. This is wasteful in cases where the caller already owns the buffer and knows it will outlive the variant — there is no way to tell the library "use this existing buffer directly, don't copy it." Every string or byte insertion forces an allocation even when the data is already managed elsewhere.
 
-Also the array ops need to fully work across the board: creating arrays with zero or positive initial capacity, toggling dynamic resize on and off with the boundary detail that a resize triggered from a zero-capacity array yields exactly two available slots (so the first append after disabling resize succeeds but the second fails), and appending every supported element type: plain strings, length-delimited strings with and without referencing, raw bytes with and without referencing, opaque references, booleans, signed 64-bit ints, unsigned 64-bit ints, doubles, nulls, nested arrays, freshly created sub-arrays, and key-value lists. Elements should be removable by position index or by direct reference, and after a removal, fetching that former slot should return nothing. Wire this through the variant, kvlist, and array pieces under `@lib/cfl/src` with matching declarations in `@lib/cfl/include/cfl`.
+Additionally, there is no function to append a length-delimited string to a CFL array, and the function for appending raw bytes to an array does not support the referenced/copy choice that other typed-value functions should support.
+
+Finally, the array data structure lacks a comprehensive test suite covering all supported element types and the dynamic resizing behavior.
+
+## Expected Behavior
+
+- String and byte creation/insertion functions should accept an additional parameter that controls whether the data is copied or referenced from the caller's buffer.
+- A new function should be available for appending a length-delimited string (with explicit size and reference flag) to an array.
+- The raw-bytes array append function should accept the same reference flag.
+- Array operations should be fully covered, including creation with zero or non-zero capacity, toggling dynamic resize on and off, appending all supported value types, fetching by index, and removing elements by index or by reference.
+
+## Why This Matters
+
+Avoiding unnecessary copies can significantly reduce memory pressure in high-throughput log and trace processing pipelines. Callers that hold long-lived buffers (such as parsed message pack data) should be able to share that memory with CFL variants without duplication. The expanded array test coverage also ensures correctness of the resizable-array mechanism and all element type paths.

@@ -1,7 +1,18 @@
-I'm hitting a nasty data-loss bug with collections that combine cloud storage (local file storage disabled) and draft versioning. When I save a draft that includes a new file upload, two bad things happen: the currently published version of the document gets corrupted, its status gets flipped or overwritten with the draft content so editors lose their live content, and the published file sitting in the cloud storage backend gets a delete request and vanishes even though it's still live and in use.
+## Description
 
-What I actually want is for saving a draft with a new file to leave the published document completely untouched, so same status, same filename, same field values, no changes at all. Only the draft version should carry the new file and its own distinct data, kept separate from the published one. And the published file in cloud storage must not get deleted when a new draft file comes in, that delete request shouldn't fire at all while a draft is just being staged.
+When using a collection that combines cloud storage (with local file storage disabled) and draft versioning, saving a draft that includes a new file upload causes two serious bugs:
 
-Then later, when the draft actually gets published, that's the moment (and only then) the published document should adopt the draft's file and data.
+1. The currently published version of the document gets overwritten or its status changed — editors lose their published content.
+2. The cloud storage provider receives a delete request for the published file even though it's still needed — the published file disappears from the cloud.
 
-Oh and regular non-draft updates on these collections need to keep working like before, updating the main document with the new file and data without any issues. Content editors lean on this draft/publish flow to stage changes before they go live, so wrecking the published state and nuking the live cloud file as a side effect of a draft save is exactly the thing I need gone.
+## Expected Behavior
+
+- Saving a draft with a new file should leave the published document completely untouched: same status, same filename, same field values.
+- The published file in cloud storage must not be deleted when a new draft file is uploaded.
+- The draft document should have its own distinct file and data, separate from the published version.
+- When the draft is subsequently published, the published document should be updated to use the draft's file and data.
+- Normal (non-draft) updates with a new file should continue to update the main document as expected.
+
+## Why This Matters
+
+Content editors using cloud storage backends rely on the draft/publish workflow to stage changes before they go live. The current behavior corrupts the published state and deletes live files as a side effect of saving a draft — this is a data-loss bug. A working implementation must keep the published document and its cloud file intact while a draft with a new file is being prepared.

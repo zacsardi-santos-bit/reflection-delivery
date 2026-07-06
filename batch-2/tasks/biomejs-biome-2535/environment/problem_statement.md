@@ -1,7 +1,17 @@
-I want to add a new CSS lint rule to the biome CSS analyzer that catches unknown or invalid CSS units. CSS is super permissive, so if you typo a unit like "pix" instead of "px", or "remm" instead of "rem", the browser just silently ignores it and your layout breaks with no obvious error. There's currently nothing in the analyzer to catch this, and I want an automated check that flags any numeric dimension value whose unit isn't a recognized CSS unit.
+## Description
 
-It needs to work everywhere units can show up, so regular property values, function arguments (color functions, calc and other calculations, vendor-prefixed functions, whatever else), media query feature values, and CSS custom property values all need coverage. It should be case-insensitive when matching against known units, meaning valid units get accepted no matter the casing, but unknown ones written in any casing still get flagged. Oh and numbers in scientific notation followed by an unknown unit should get flagged too.
+CSS files sometimes contain measurement values with unit suffixes that are not recognized by browsers. This can happen due to typos (e.g., writing "remm" instead of "rem", or "pix" instead of "px"), or simply using made-up unit names. Browsers silently ignore unknown units, meaning broken layouts and visual errors can slip into production unnoticed.
 
-There's one tricky special case: the single-letter resolution unit "x". Normally it's not a valid length unit, but it IS valid specifically in resolution contexts, so inside image-set functions (and their vendor-prefixed versions), in the image-resolution property, and in resolution media queries. So only flag "x" when it's used outside those contexts.
+There is currently no lint rule in the CSS analyzer to catch these mistakes. We need a new lint rule that flags any numeric dimension value whose unit is not a recognized CSS unit.
 
-Also it's gotta be smart enough to not flag unit-like strings that aren't actually dimension values, so anything in comments, quoted string values, URL function arguments, CSS variable references, preprocessor variable references, selectors, or property names should be left alone. Only real numeric dimension values in the CSS value space get checked. This lives in the CSS analyzer lint rules, so it'll slot in alongside the other rules under `@crates/biome_css_analyze/src/lint/`.
+## Expected Behavior
+
+- The rule should flag unknown units regardless of where they appear: property values, function arguments (including color functions, calculations, vendor-prefixed functions, and other functions), media query features, and CSS custom property values.
+- The rule should be case-insensitive when checking against known units — valid units should be accepted regardless of letter casing, but unknown units written in any casing should still be flagged.
+- Numbers in scientific notation followed by unknown units should be flagged.
+- The single-letter resolution unit "x" is a special case: it is only valid in resolution-related contexts (image-set functions, the image-resolution property, and resolution media features). Using it anywhere else should be flagged.
+- The rule should NOT flag units that appear inside comments, quoted strings, URL references, CSS variable references, preprocessor variable references, selector or property names — only actual CSS dimension values should be checked.
+
+## Why This Matters
+
+Typos in CSS units silently produce broken styles. Automating detection of unknown units helps developers catch mistakes early, before they reach users.

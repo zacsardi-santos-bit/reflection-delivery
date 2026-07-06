@@ -1,3 +1,13 @@
-I'm poking at the config system for our plugin-based IDE and I hit this annoying gap where keyboard shortcut defaults never get validated when they're first registered. The deal is every shortcut key is supposed to be a two-part thing, a context area (which plugin or editor region the shortcut applies to) plus the action name, with exactly one separator between them. Right now if a plugin hands me a shortcut key with no separator at all (so there's no context prefix), or one with multiple separators (so the context/name boundary is ambiguous), the config just swallows it and moves on. Then later it blows up as some cryptic runtime error that's a pain to trace back to the actual malformed key.
+## Description
 
-What I want is for the user config initialization, where the shortcut defaults get set up, to validate each shortcut key right there as it's being loaded. So if any key is missing the separator or has too many separators, it raises an immediate, clear error at init time instead of failing silently way downstream. Basically walk through every shortcut default when the config first loads and check the format is exactly one separator. Plugin devs who fumble a shortcut definition should get feedback right away with a message that points at the problem, not some mystery failure elsewhere later. Makes catching these bugs during development so much easier.
+Keyboard shortcut defaults provided by plugins are not validated when the configuration is first loaded. Each shortcut key must follow a specific two-part format that separates the context (e.g., which plugin or editor area the shortcut applies to) from the action name. Currently, if a developer accidentally provides a shortcut key that is missing the separator, or has too many separators, the configuration is accepted silently and the error only surfaces later as a confusing runtime failure.
+
+## Expected Behavior
+
+- When initializing the user configuration with a set of shortcut defaults, the system should immediately validate that every shortcut key conforms to the required format of exactly one separator between context and name.
+- If any shortcut key is missing the separator (no context prefix), an error should be raised right away.
+- If any shortcut key has more than one separator (ambiguous context/name boundary), an error should be raised right away.
+
+## Why This Matters
+
+Plugin developers who accidentally provide malformed shortcut keys currently get no feedback at configuration load time. The mistake manifests as a runtime error elsewhere, making it hard to diagnose. Early validation with a clear error message at initialization time makes it far easier to catch and fix shortcut configuration bugs during development.

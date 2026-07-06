@@ -1,7 +1,16 @@
-I want to add a proper logout command to pnpm because right now there's just no clean way for people to revoke their registry auth token and clear it out of local config, they have to do it all by hand which is error-prone and honestly a bit of a security hole.
+## Description
 
-Here's how I want it to behave. When someone runs logout it should look up their stored auth token for the target registry, defaulting to the standard npm registry if they didn't pass one, then hit the registry to revoke that token, and after that strip it out of pnpm's local credential storage file automatically. If they're not actually logged in against that registry to begin with, it should bail with a clear error that names which registry has no active session, don't just fail silently.
+There is currently no logout command in pnpm. When users want to stop being authenticated against a registry, they have no clean way to revoke their token on the registry and remove it from local configuration files through pnpm itself — they have to do everything manually.
 
-Now the edge cases, which matter a lot here. If the registry is unreachable (network error) or it returns an error response, I still want the local token cleaned up and the user told what went wrong rather than the whole thing blowing up. If the token happens to live in an external config file that pnpm doesn't manage, go ahead and revoke it on the registry but warn them we couldn't remove it automatically so they'll need to do that manually. And if the registry call fails AND there's nothing local to remove either, that's a real failure, report it with a clear message explaining the situation.
+## Expected Behavior
 
-Couple of details, oh and make sure tokens with special characters get handled correctly when we contact the registry (encode them properly), also custom registry URLs including ones with path components need to work alongside the default, and registry URLs without a trailing slash should get normalized automatically so lookups line up. The goal is that people always end up in a consistent known state after running it.
+- Running the logout command against a registry where the user is not logged in should report an error clearly stating which registry has no active session.
+- When logged in, the command should contact the registry to revoke the authentication token and then remove it from pnpm's local credential storage automatically.
+- If the registry is unreachable (e.g., due to a network error), or if the registry returns an error response, the command should still clean up the local token and inform the user of the issue rather than failing completely.
+- If the token was stored in an external configuration file (not pnpm's own credential file), the command should still revoke it on the registry, but warn the user that the credential could not be automatically removed and must be cleaned up manually.
+- If the registry call fails and there is no local credential to remove either, the command should fail with a clear error message explaining the situation.
+- Custom registry URLs (including those with path components) should be supported in addition to the default registry.
+
+## Why This Matters
+
+Without a dedicated logout command, users cannot easily revoke credentials and clean up their local configuration, which is a security concern. The command should handle the most common edge cases gracefully so that users always end up in a consistent, known state after running it.

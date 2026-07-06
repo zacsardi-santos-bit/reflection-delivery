@@ -1,0 +1,7 @@
+I'm adding a WebAssembly build of tinymist so its core analysis can run in JS land, browsers and Node, not just as a native binary like today. I want a new core library crate that compiles to WebAssembly with the usual wasm-pack style tooling, packaged as an ES module I can import straight from JavaScript.
+
+The main thing I need working end to end is a version query. After I load and init the wasm binary, I should be able to call a version function from JS that hands back a string describing the build, and that string needs to include build timestamps, git metadata, and the target triple/platform info so I can tell exactly which build is actually running. It's a small feature but it's the smoke test that proves the module loads and the wasm/JS bindings actually work.
+
+One constraint that matters for me: it has to init by passing the raw binary data (a buffer) directly, no fetching from a URL, since I want this to work in Node and in the browser without network access. So the init path takes the WebAssembly bytes directly.
+
+Can you set up the new crate with the right Cargo config for wasm compilation, a build script that generates that build metadata (the timestamps, git info, target triple) at compile time so the version fn can return it, and the JS bindings that expose the version function? Basically wire up the crate, the build.rs metadata generation, and the wasm-bindgen exports so the whole thing initializes from a buffer and answers a version call.

@@ -1,5 +1,19 @@
-I'm adding CORS support to the Rust frontend of vLLM and right now there's basically nothing there, browser clients on a different origin just can't hit the API, and worse, passing CORS credential settings on the command line used to get rejected as unsupported, and shoving them through JSON config errored out too. I want proper CLI flags plus JSON config options so operators can say which origins, methods, and headers are allowed and whether browser credentials get forwarded, all threaded through the config struct that gets passed into the running server so the settings actually reach it.
+## Description
 
-Defaults should stay permissive to match the Python server, so allow all origins, all methods, all headers, and credentials off by default. When someone gives an explicit origin allowlist I want the server to reflect back the matched origin and add the vary-by-origin response header so browsers cache correctly, and origins that aren't on the list get no CORS headers at all, silently rejected. Oh and if credentials are turned on but the origin list is still a wildcard, reflect the actual request origin instead of the literal `*`, since browsers reject credentialed responses with a wildcard.
+The Rust frontend for the vLLM serving system does not support configuring cross-origin resource sharing (CORS) policies. When browser-based clients running on a different origin try to access the API, there is no way to configure which origins, HTTP methods, or headers are permitted. Previously, attempting to pass CORS credential settings via the command line was rejected as unsupported, and passing them via JSON configuration also produced errors.
 
-Also the preflight handling has to play nice with API key auth, OObviously OPTIONS preflight requests must bypass authentication so browsers can discover allowed methods before firing the real request, but regular unauthorized requests should still leak no CORS headers. And when the method list is configured as a wildcard, preflight responses should expand it to an explicit list of the standard HTTP verbs rather than passing through the literal wildcard. Explicit header lists should get unioned with the standard browser-safe header set and come back lowercased and sorted in a consistent order.
+This makes it impossible for operators to allow or restrict web clients on specific origins from accessing the API, which is essential for real-world deployments where the UI is served from a different domain than the API server.
+
+## Expected Behavior
+
+- The server should accept CORS configuration flags for permitted origins, methods, headers, and credential handling.
+- The defaults should be permissive (all origins, all methods, all headers, credentials off), matching the behavior of the existing Python-based server.
+- When an explicit list of allowed origins is provided, the server should reflect the matched origin back to the browser and set the appropriate cache-varying response header; unrecognized origins should be silently rejected.
+- When credentials are enabled alongside wildcard origins, the server must reflect the actual request origin rather than the literal wildcard, so browsers accept the response.
+- Browser preflight requests (OPTIONS) must bypass API key authentication so clients can probe allowed methods and headers before sending the real request.
+- Unauthorized requests must not leak CORS headers.
+- The wildcard method list should expand to an explicit set of standard HTTP methods in preflight responses, rather than passing through the literal wildcard.
+
+## Why This Matters
+
+Without CORS support in the Rust frontend, operators running browser-based applications against the API must fall back to the Python server or add a reverse proxy to inject CORS headers manually. Adding first-class CORS configuration makes the Rust frontend fully production-ready for browser clients.

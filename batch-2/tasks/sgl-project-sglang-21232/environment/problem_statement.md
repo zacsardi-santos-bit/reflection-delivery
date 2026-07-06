@@ -1,5 +1,18 @@
-I'm building out the expert load balancing (EPLB) piece of our distributed MoE inference stack and there are two algorithms missing that I need you to implement. First one's a balanced packing function: it takes a 2D weight tensor shaped layers by experts plus a group count, and it assigns every expert to a group and a rank within that group so the load is as even as possible, meaning it minimizes the maximum total weight any single group ends up handling. Think greedy bin-packing where the heavy experts get spread out instead of piled together, so weights like [9, 1, 1, 1] into 2 groups should land as totals [10, 2] and not [11, 1]. Every group has to get exactly the same number of experts per layer (uniform sizes), and each (group index, rank-within-group) slot gets used exactly once with a compact rank assignment, and the whole thing needs to be deterministic given the same inputs.
+## Description
 
-Second one's a locality-aware dispatch mapping. Given the full map of logical-to-physical expert replicas across the distributed setup, it figures out which specific physical expert each GPU should use for each logical expert. It's gotta prefer replicas hosted on the same GPU first, then same node, before reaching for remote ones, and it takes a seed so results are reproducible, oh and different seeds should actually produce different assignments when there are remote replicas to pick between (seeded randomization to break ties fairly). Output always needs to be fully resolved, no missing or invalid entries, so every logical expert at every layer maps to a valid physical expert ID.
+The expert load balancing (EPLB) module is missing two foundational algorithms needed for efficient expert routing in distributed mixture-of-experts inference:
 
-Both need to survive the edge cases too: single layer, single node, and the degenerate config where all physical experts are replicas of the same logical expert. This lives in the EPLB module, look at wherever the existing expert routing code sits so these slot in cleanly. Without them we can't assign experts to GPUs in a load-balanced locality-aware way and we end up with pointless cross-node chatter and lumpy compute when running big MoE models across many GPUs and nodes.
+1. A **balanced packing algorithm** that distributes experts across processing groups by minimizing the maximum total load (weight) any group must handle. This is a greedy bin-packing approach where heavier experts are spread evenly rather than concentrated together.
+
+2. A **locality-aware dispatch mapping** that, for each GPU in a multi-GPU/multi-node configuration, determines which physical replica of each logical expert that GPU should use. The assignment should prefer locally-hosted replicas first, then same-node replicas, and use seeded randomization to break ties fairly.
+
+## Expected Behavior
+
+- The balanced packing algorithm should distribute items across groups such that no group is overloaded relative to others. For example, items with weights [9, 1, 1, 1] split into 2 groups should produce groups with total weights [10, 2] — not [11, 1].
+- The packing must guarantee uniform group sizes (each group gets the same number of items per layer) and produce a compact rank assignment within each group.
+- The dispatch mapping must return a complete assignment with no unresolved entries — every logical expert at every layer must map to a valid physical expert ID.
+- Both algorithms must be deterministic given the same inputs (with seed for the dispatch mapping).
+
+## Why This Matters
+
+Without these algorithms, the framework cannot efficiently assign experts to GPUs in a load-balanced, locality-aware way. This leads to unnecessary cross-node communication and uneven compute distribution when running large mixture-of-experts models across multiple GPUs and nodes.

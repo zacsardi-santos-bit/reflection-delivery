@@ -1,3 +1,13 @@
-I'm chasing a correctness bug in our linter rule that flags mutable default values handed to a dictionary-from-keys call (the one that offers an autofix rewriting the call into a dict comprehension). Problem is the autofix always uses the same hardcoded loop variable name, so if the surrounding code already has a variable bound with that exact name, and the mutable value being passed to the call references that variable, the fix silently changes behavior. What happens is the comprehension's loop variable shadows the outer binding, so instead of computing the same values it did before, the rewritten code ends up operating on the loop variable itself rather than the original outer value. That's a nasty one because someone applies the suggested fix trusting it and quietly gets broken code.
+## Description
 
-What I want is for the fix to notice when its preferred loop variable name is already in use in the scope and automatically pick a fresh alternative that doesn't collide with any existing binding. When the base name is taken it should try suffixed variants, the base name followed by incrementing numeric suffixes starting at zero, walking through them in order until it lands on one that's free. The whole point is the rewritten comprehension has to preserve the semantics of the original code, so the fix stays safe to apply even when the code happens to contain names that overlap with whatever loop variable the rule would normally reach for.
+The linter rule that warns about mutable default values passed to dictionary-from-keys calls has a bug in its autofix. When the rule rewrites the call as a dictionary comprehension, it always uses the same hardcoded loop variable name. If the original code already has a variable with that same name in scope — and the mutable value being passed references that variable — the suggested fix silently changes the program's behavior. The comprehension's loop variable shadows the outer binding, so instead of computing the same values as before, the rewritten code operates on the loop variable itself rather than the original outer value.
+
+## Expected Behavior
+
+- When generating the comprehension fix, the rule should choose a loop variable name that does not conflict with any existing names in the surrounding scope.
+- If the preferred base name is already in use, the rule should try suffixed alternatives (e.g., the base name followed by incrementing numeric suffixes starting at zero) until a free name is found.
+- The resulting fix must preserve the semantics of the original code.
+
+## Why This Matters
+
+Users relying on the autofix feature could end up with silently broken code after applying the suggested fix, making this a correctness bug. The fix should be safe to apply even when the code contains variable names that overlap with the loop variable the rule would normally choose.

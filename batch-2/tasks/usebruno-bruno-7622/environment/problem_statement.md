@@ -1,9 +1,19 @@
-I need to add proper Swagger 2.0 import support to Bruno. Right now we handle OpenAPI 3.x fine but when I feed it an older Swagger 2.0 spec the import either errors out or gives me a garbage collection that's missing key info, and plenty of teams still maintain APIs in that older format so it's a real gap.
+## Description
 
-What I want is a dedicated converter that takes a Swagger 2.0 spec either as an already-parsed JSON object or as a raw YAML string and turns it into a valid Bruno collection. The existing import entry point should sniff out that it's a Swagger 2.0 spec and route it to this new converter without breaking the 3.x path.
+Bruno currently supports importing API collections from the newer OpenAPI 3.x format, but it has no dedicated support for the older Swagger 2.0 specification format. Many teams still maintain APIs described using Swagger 2.0, and there is currently no reliable way to import them into Bruno — the import either fails or produces incorrectly structured collections.
 
-It's gotta handle the full range of stuff. Auth definitions need translating: basic auth, API key in a header or in a query param, and all the OAuth 2.0 flows (implicit, authorization code, client credentials, and password). Request bodies should map based on content type, so JSON, XML, URL-encoded forms, multipart form data, and plain text. Parameters need full resolution with correct value selection where examples win over defaults which win over enum values, plus support for all the array serialization formats. Path-level parameters should be inherited by every operation under that path. Response examples should come from response schemas or from inline example objects.
+## Expected Behavior
 
-For organizing, requests go into folders by the operation's tags by default, or by URL path segments when I explicitly ask for that. Folder names and the tag names on each request both need sanitizing so spaces, dots, and other problematic characters get replaced or stripped, and any duplicates that sanitization produces should be deduped. When two operations share the same name, the dupe gets the HTTP method appended to keep it unique, though in path-based grouping that dedup only needs to happen within each folder, not globally.
+- Swagger 2.0 specs (provided as either a JSON object or a YAML string) should be accepted and converted into a valid Bruno collection.
+- The existing import entry point should detect Swagger 2.0 specs and route them through the new dedicated converter.
+- Authentication schemes should be correctly translated: basic auth, API key (in header or query), and all OAuth 2.0 flow types (implicit, authorization code, client credentials, and password).
+- Request bodies should map correctly based on the content type: JSON, XML, form-encoded, multipart form data, and plain text.
+- Parameters should be fully resolved, with correct value selection (examples take priority over defaults, which take priority over enum values) and support for all array serialization formats.
+- Requests should be organized into folders by tag or by URL path, with sanitized folder names.
+- Operation tags on each request should have invalid characters cleaned up for compatibility.
+- Response examples should be generated from response schemas and explicit example objects.
+- Schemas that contain circular references should be handled gracefully without crashing the import.
 
-Oh and one real-world thing, these specs often have schemas with circular references where a type points back at itself or at another type that loops back. Don't crash on those, just produce whatever partial structure you can. Relevant code lives around the import converters, look at where the OpenAPI 3.x converter sits and add the Swagger 2.0 sibling next to it.
+## Why This Matters
+
+Swagger 2.0 remains in wide use across many organizations and public APIs. Without proper support, Bruno users are blocked from importing a large category of real-world API specifications. A complete, robust Swagger 2.0 converter dramatically improves the usefulness of Bruno's import feature and lowers friction for teams migrating from legacy tooling.

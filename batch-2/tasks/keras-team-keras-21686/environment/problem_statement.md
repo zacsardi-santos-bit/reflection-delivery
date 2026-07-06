@@ -1,3 +1,17 @@
-I'm extending our 4-bit integer packing utilities and hitting two related problems. Right now the pack and unpack helpers are hardcoded for signed 8-bit integers only, so passing an unsigned tensor throws a type error and there's no way to pack or unpack while keeping an unsigned representation. I want both functions to take an optional dtype param that picks between signed and unsigned byte storage, defaulting to the current signed behavior so nothing breaks. Unsigned bytes are honestly the natural fit for packed 4-bit values since they live in [0, 15]. In signed mode the unpacked values should land in [-8, 7], and in unsigned mode they stay in [0, 15]. Both the packed and unpacked tensors need to come back with the requested dtype, and a pack-then-unpack round trip has to recover the original tensor exactly in both modes across various shapes and axes.
+## Description
 
-The other thing is 4-bit post-training quantization for fully-connected and einsum-based dense layers. When I quantize with 4-bit weight precision, the stored kernel should be packed two 4-bit values per byte, so it ends up exactly half the parameter count of the original, but that packing just isn't happening right now. And once a layer's calibrated, reading its kernel property should hand back the unpacked form at the correct shape and range, but it's returning the raw packed bytes instead. I need both the pack-on-store and unpack-on-access paths working, otherwise models on this path waste memory and anything inspecting the kernel gets garbage.
+The 4-bit integer packing and unpacking utilities currently only support signed 8-bit integer tensors. This is overly restrictive: unsigned 8-bit integers are a natural and common storage format for packed 4-bit values in the range [0, 15], and several quantization workflows rely on unsigned storage. Right now, passing unsigned tensors to these utilities causes a type error, and there is no way to pack or unpack values while retaining an unsigned representation.
+
+Additionally, when applying a post-training quantization algorithm with 4-bit weight precision to a fully-connected or einsum-based dense layer, the quantized weights are not being stored compactly. Two 4-bit values should be packed into a single byte (halving the kernel's parameter count), but this packing is currently not happening. As a result, the layer's kernel property also returns the wrong data — it currently returns the raw packed bytes instead of unpacking them back to the correct shape and value range.
+
+## Expected Behavior
+
+- The packing and unpacking utilities should accept an optional dtype parameter so callers can choose between signed and unsigned byte representation.
+- When using signed mode, unpacked values should fall in the range [-8, 7]; when using unsigned mode, values should remain in [0, 15].
+- A pack-then-unpack round trip must recover the original tensor exactly, for both signed and unsigned modes, across various tensor shapes and axes.
+- After applying 4-bit post-training quantization to a fully-connected or einsum-based dense layer, the stored quantized kernel must be exactly half the size of the original (two 4-bit values packed per byte).
+- After calibration, accessing the kernel property on a 4-bit quantized layer must return the unpacked form of the stored kernel, not the raw packed bytes.
+
+## Why This Matters
+
+These changes are necessary to support memory-efficient 4-bit weight quantization in practice. Without them, models that use this quantization path waste memory (no packing), and code inspecting or using the kernel property gets incorrect values.

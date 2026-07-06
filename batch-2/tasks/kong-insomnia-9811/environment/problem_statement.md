@@ -1,5 +1,17 @@
-I'm working on the Konnect sync feature in Insomnia and there are two gaps I keep hitting. First, when we sync routes from a Kong gateway control plane, routes with pattern-based paths (regex expressions) don't get turned into usable request URLs, the raw expression syntax just lands in the URL and those requests are useless for actual testing since there's no way to fill in the variable parts. I want the sync to convert these paths intelligently: if the pattern has named capture groups, each group should become a named URL path parameter the user can fill in. If the pattern's too complex to parse cleanly, fall back to a generic single path parameter placeholder, but keep the original pattern string as the request name so people can see what it was. On re-sync, any path param values the user already typed should be preserved as long as the route path hasn't changed. If the path changes meaningfully (say a capture group gets renamed) then replace the old request with a fresh one.
+## Description
 
-Second, the control plane API now returns proxy URL info per control plane. Right now we always create the proxy host environment variables as empty strings and make users fill them in by hand, oh and I want to pre-populate them from the proxy URL data when it's present. There are three variables, one for HTTP/HTTPS/WebSocket traffic, one for gRPC, and one for gRPC-TLS. If the user already entered a value for one of these, leave it alone even when proxy data is available. If it's empty and proxy data shows up on a later re-sync, fill it in at that point.
+When syncing routes from the Kong managed gateway platform into an Insomnia workspace, routes that use pattern-based path matching (regular expressions) are not being converted into a usable format. The raw expression syntax ends up in the request URL, making those requests effectively unusable for actual API testing. Developers have no way to fill in the variable parts of the path.
 
-Also, while I'm in here, I want the transformation logic pulled out into its own dedicated module instead of living in the sync or API modules. That means the path placeholder generation, the header and path parameter merging, region extraction, proxy defaults derivation, and the change-detection helpers should all move into a separate module. Look around `@packages/insomnia` for the Konnect sync code to see where this stuff currently lives.
+At the same time, the gateway control plane publishes proxy endpoint information that could be used to automatically populate environment variables, but the sync always creates those variables empty and forces users to look up and manually enter the values. On the other hand, once a user has filled in these values, subsequent syncs should never overwrite them.
+
+## Expected Behavior
+
+- Routes whose paths contain named capture group patterns should be translated into standard parameterized URLs with the capture group names becoming path parameters the user can fill in directly.
+- Routes whose paths use more complex regex syntax that cannot be cleanly parsed should fall back to a generic parameterized URL (with an appropriate path parameter placeholder), and the original pattern should be preserved in the request name for reference.
+- When the gateway control plane provides proxy URL information, the sync should use it to pre-populate the proxy host environment variables instead of leaving them blank.
+- If a user has already filled in a proxy host value manually, the sync must leave that value alone, even if the gateway provides a different one.
+- When syncing multiple times, user-entered path parameter values must be preserved as long as the underlying route path definition has not changed.
+
+## Why This Matters
+
+Without this improvement, developers syncing routes with pattern-based paths get requests they cannot immediately use — they must manually edit the URL to figure out what parameters to use. Pre-filling proxy host variables from available gateway metadata removes a friction point that previously required developers to look up connection information from a separate source.

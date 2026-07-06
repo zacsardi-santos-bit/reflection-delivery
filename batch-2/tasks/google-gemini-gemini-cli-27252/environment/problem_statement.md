@@ -1,5 +1,19 @@
-I'm wiring a policy engine into the session layer so tool confirmation requests coming from subagents actually get handled instead of hanging forever unanswered. Right now when a subagent wants to use a tool nothing picks up the confirmation request. What I want is for the session to subscribe to these tool confirmation requests on startup and route each one through the configured policy engine, then automatically publish the right response. A policy decision of allow should approve the tool use without bugging the user, deny should reject it without prompting, and ask-user should escalate so the person confirms manually.
+## Description
 
-Big thing: it's gotta fail safe, meaning deny by default whenever the policy engine is missing or throws, or when the tool can't be found in the registry, or when the tool name is empty. Also when looking up tool metadata for the policy eval, use registry-sourced data, not whatever the requesting subagent handed us, since that's the whole spoofing vector.
+The session management layer needs to automatically handle tool approval requests from subagents using the configured policy engine, instead of leaving all requests unanswered or requiring external handling. When a subagent wants to use a tool, the session should consult the policy engine and immediately return an approval, denial, or escalation to the user — rather than forcing every tool usage to require manual confirmation.
 
-Speaking of which, there's a real security hole in how the message bus handles requests from subagent-derived buses. A compromised subagent can embed a forced-decision override, spoof a server name, fake trusted tool annotations, or claim a different identity in the confirmation request it sends up. None of those fields should ever be trusted from the subagent. So when a subagent publishes a tool confirmation request through a derived bus, the bus needs to strip the forced-decision override, the server name claim, the tool annotation claims, and the display detail overrides before forwarding to the parent bus, and it should enforce the subagent's real identity by chaining the known subagent name as a prefix. That way the policy engine always sees verified, registry-sourced metadata instead of attacker-controlled values. Without this, every tool call interrupts the user even when policy already pre-approves it, and a bad subagent could just bypass the engine or impersonate a trusted component and blow up the whole approval flow.
+Additionally, the message bus used for subagent communication is vulnerable to metadata spoofing: a compromised or malicious subagent can craft a tool confirmation request that claims to be from a trusted identity, belongs to a known safe server, carries forged trusted annotations, or includes a forced decision override. The bus needs to strip these tamper-able fields and enforce the true identity of the subagent when forwarding requests to the parent bus.
+
+## Expected Behavior
+
+- The session should subscribe to tool confirmation requests on startup and route them through the policy engine automatically
+- Policy decisions of "allow" should result in automatic approval without user intervention
+- Policy decisions of "deny" should result in automatic rejection without prompting the user
+- Policy decisions of "ask user" should escalate to the user for manual confirmation
+- When looking up tool metadata for policy evaluation, the implementation must use registry-sourced data (not values supplied by the requesting subagent) to prevent spoofing
+- The session must fail safely (deny by default) when the policy engine is unavailable, throws an error, or when the tool is unknown or has a missing name
+- When a subagent publishes a tool confirmation request through a derived bus, the bus must strip any attached forced-decision overrides, server name claims, tool annotation claims, and display detail overrides before forwarding to the parent
+
+## Why This Matters
+
+Without automated policy-based approval, every tool call from a subagent interrupts the user unnecessarily, even when the tool is pre-approved by policy rules. And without metadata sanitization on the message bus, a compromised subagent could bypass the policy engine or impersonate a trusted component — undermining the security of the entire approval flow.

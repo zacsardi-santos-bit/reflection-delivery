@@ -1,5 +1,20 @@
-I'm cleaning up the Helion kernel registration in vLLM and hit two related snags I want fixed together. Right now registering a kernel is this awkward two-step dance where you build the wrapper first and then attach the config picker afterward in a separate call, so wrappers can sit in a half-initialized state and it's really easy to forget that second step entirely. I want the configuration picker to be a required argument at registration time so a wrapper is always fully complete the moment it's created, no dangling setup.
+## Description
 
-The nastier issue is what happens on hardware with no pre-tuned configs. Currently that failure only blows up when the kernel actually gets invoked, which could be deep in inference, instead of at setup. I want the wrapper to detect missing platform configs eagerly during construction and mark itself as disabled, storing a reason string that explains why, and then raise a clear descriptive error if anyone tries to call it directly (something that says it's disabled). But, and this is important, disabled wrappers should still support autotuning workflows so we can generate configs for previously unsupported hardware, and they should stay visible in the global kernel registry so tooling can discover them and act on them.
+The Helion kernel registration workflow has two usability problems that should be fixed together.
 
-Also while you're in there, all the GPU detection and config loading should happen at construction time rather than being deferred to the first call, and the config manager should be instantiable directly in tests, not only reachable through its singleton accessor. Net effect I'm after is that kernel setup failures show up right at startup instead of surprising us at inference time.
+**Two-step registration is fragile.** Currently, registering a kernel requires creating a wrapper first and then attaching a configuration picker afterward as a separate call. This means a wrapper can exist in a half-initialized state between those two steps, and it's easy to forget the second step entirely. The configuration picker should be a required argument at registration time so the wrapper is always complete when it's created.
+
+**Missing configs cause a runtime crash.** When a kernel is registered but no pre-tuned configurations exist for the current hardware platform, the failure only surfaces when the kernel is actually called — not at setup time. This makes it impossible to handle unsupported hardware gracefully or to run autotuning to generate missing configurations. Instead, the wrapper should detect missing configs eagerly at construction and mark itself as disabled with a clear explanation, raising a descriptive error if called directly.
+
+## Expected Behavior
+
+- The configuration picker must be provided at registration time, not separately afterward.
+- All GPU detection and config loading must happen at construction time, not on the first call.
+- A wrapper with no available platform configurations must be marked as disabled at construction, storing a reason string that explains why.
+- Calling a disabled wrapper directly must raise a clear error indicating it is disabled.
+- Disabled wrappers must still support autotuning workflows so configurations can be generated for unsupported hardware.
+- Disabled wrappers must remain visible in the global kernel registry.
+
+## Why This Matters
+
+This makes kernel setup failures visible immediately at startup rather than unexpectedly at inference time, enables autotuning as a path to support new hardware, and eliminates a class of bugs caused by incomplete two-step registration.

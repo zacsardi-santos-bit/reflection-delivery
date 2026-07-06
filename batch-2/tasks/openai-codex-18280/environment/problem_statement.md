@@ -1,5 +1,13 @@
-I hit a bug in the TUI part of this project around how session state gets built when we load a historical thread, either for metadata inspection or for replay hydration. Right now when the app reads a past thread to display or replay it, the session state it produces ends up inheriting the active primary session's permission configuration, and that's just wrong. Permission rules can be anchored to specific working directories, so if the thread I'm reading has a different working directory than the primary session, those directory-bound rules get silently reapplied against the wrong path and I get incorrect permission decisions for the replayed thread since the path-relative permissions no longer line up with that thread's actual filesystem context.
+## Description
 
-What I want is for sessions created from thread-read operations (both the metadata and the replay hydration paths) to carry no inherited permission profile at all. The field should be explicitly absent, not copied over from the primary session. The active running session keeps its own permission config, and the session state we build for a thread we're only reading should reflect that thread's own identity and working directory with no contamination from the primary session's permissions.
+When the TUI loads a thread for metadata inspection or replay purposes, it incorrectly reuses the active primary session's permission configuration in the resulting session state. Because permission configurations can be tied to specific working directories, carrying them over to a read/replay session that has a different working directory causes those directory-bound permission rules to be misinterpreted against the wrong path.
 
-While I'm at it, I also want to make sure the normal path still works, so when active sessions get set up (not via thread-read), the session state should properly capture a permission profile derived from that session's sandbox policy and working directory so it's available going forward. Basically active sessions get a populated profile, read/replay sessions get none.
+## Expected Behavior
+
+- Active, running sessions should have a properly populated permission profile derived from their sandbox policy and working directory.
+- Sessions created from reading a historical or replayed thread (metadata/replay hydration) must start with no inherited permission profile — the field should be explicitly absent rather than copied from the primary session.
+- The session state produced for a read thread must correctly reflect that thread's own identity and working directory, with no contamination from the primary session's permission configuration.
+
+## Why This Matters
+
+If a read thread's session state inherits the primary session's permission profile, any permission rules that were anchored to the primary session's working directory will be silently reapplied in the context of a different working directory. This can result in incorrect permission decisions for the replayed thread, since the path-relative permissions no longer match the actual file system context of the thread being read.

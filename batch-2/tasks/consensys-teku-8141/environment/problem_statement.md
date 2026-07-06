@@ -1,5 +1,18 @@
-I'm dealing with a spot in Teku where the beacon node has no clue that the old ETH1-based deposit mechanism has been superseded by the newer deposit approach that recent network upgrades brought in. So even after the network moves past that point, the node keeps polling for ETH1 deposits, logs warnings about missing deposit data that nobody needs anymore, keeps computing ETH1 votes, and keeps updating vote metrics. It's wasted work and it's misleading for operators who see log output implying deposits are missing when the network doesn't require them at all.
+## Description
 
-What I want is for us to detect when the former deposit mechanism is no longer active off the current beacon state and gracefully stop doing all that. When it's disabled the ETH1 data vote we return for a state should just reflect the state's own current ETH1 data instead of a cache-computed vote, and the vote-related metrics shouldn't get touched (the gauges should stay at zero), and we shouldn't log those deposit-availability warnings even when not all previously required deposits are present.
+With the introduction of a newer Ethereum deposit mechanism in more recent network upgrades, the old ETH1-based deposit polling approach becomes unnecessary once the network transitions past a certain point. However, the beacon node currently has no awareness of this transition: it continues polling for ETH1 deposits, logging alerts about missing deposits, computing ETH1 votes, and updating metrics as though the old mechanism were still required, even when the network has clearly moved beyond it.
 
-For the ETH1 polling service itself, it needs to take in the latest finalized state so at startup it can check whether to skip initializing the deposit manager entirely (if disabled, start up without any ETH1 deposit manager). And when a newly finalized checkpoint comes in that confirms the old mechanism is disabled, the service should shut itself down automatically rather than keep running. Oh and there's a background processing loop this service uses that needs to actually respect stop signals, so once it's told to stop it doesn't keep scheduling or invoking its advance step even after the configured delay expires.
+This creates unnecessary resource usage and potentially confusing operator logs about missing data that is no longer relevant.
+
+## Expected Behavior
+
+- When the current network state indicates that the former deposit mechanism has been disabled, the system should stop logging deposit-availability events — even when not all previously required deposits are present.
+- When the former deposit mechanism is disabled, the ETH1 data vote returned for a state should reflect the state's own current ETH1 data rather than a computed cache-based vote.
+- When the former deposit mechanism is disabled, vote-related metrics should not be updated (gauges should remain at zero).
+- When the ETH1 polling service starts up and detects (via the latest finalized state) that the former deposit mechanism is disabled, it should start without initializing any ETH1 deposit manager.
+- When a newly finalized checkpoint is processed and the former deposit mechanism is determined to be disabled, the ETH1 polling service should shut itself down automatically.
+- The background processing loop used by this service must properly respect stop signals so that it does not continue advancing after being told to stop.
+
+## Why This Matters
+
+Without these changes, nodes running the latest protocol upgrades will continue performing unnecessary ETH1 work and logging misleading warnings. Operators will see confusing output suggesting deposit data is missing, even though the network no longer requires it. Automatically disabling ETH1 polling when the new deposit mechanism takes over keeps the node efficient, correct, and easier to operate.

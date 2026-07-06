@@ -1,7 +1,21 @@
-I'm cleaning up the glossary term and tag detail pages in our data catalog frontend and the big problem is the glossary term detail page builds its whole tab config inline inside the main component, so different deployments can't customize or override the tab structure without hacking on the core component. I want that logic pulled out into a dedicated base class plus a standalone utility function so tab generation can be extended cleanly by subclassing.
+## Description
 
-The base class should have one method that builds the tab array by delegating to that utility function, and a separate method returning the list of standard tab identifiers, which is 5 tabs (overview, child terms, assets, activity feed, and custom properties, all non-editable with empty layouts). The utility function generates the complete array and handles ordering, so in normal view it returns all 5 tabs in the expected order but in version-view mode it returns only the overview tab. The activity feed tab's label needs to reflect whether it's the currently active tab and show the current feed count, and the custom properties tab has to compute edit access from the user's permissions combined with whether version-view mode is active.
+The glossary term detail page currently builds its entire tab configuration inline inside the main component. This tight coupling makes it impossible for different deployments to customize or override the tab structure without modifying the core component. We need to extract this logic into a dedicated base class and a standalone utility function so the tab generation can be extended cleanly via subclassing.
 
-For the tag detail page there's this hardcoded way of injecting an optional tab (it was for some recognizer feature), and I want to swap that for a general-purpose extension method on the tag base class that just returns an empty list by default, so subclasses can override it to add tabs without touching core tag logic. The tag page should call this method with the currently loaded/fetched tag when it builds its tab list.
+Similarly, the tag detail page has a hardcoded approach for injecting an optional tab (for a recognizer feature). This should be replaced with a general-purpose extension method on the base class that returns an empty list by default, allowing subclasses to add tabs without touching the core tag page logic.
 
-Oh and one behavioral bug: when someone's viewing a historical version of a glossary term, we still fetch the activity feed count on page load even though that data's irrelevant in version history context. Skip that fetch in version-view mode, it should only fire on the normal non-version-view rendering path. That avoids a pointless network request that can cause confusing behavior when browsing historical records.
+There is also a behavioral issue with the glossary term component: when a user is browsing a historical version of a glossary term, the activity feed count is fetched on page load even though that data is irrelevant in version history context. This unnecessary fetch should be skipped when the component is in version-view mode.
+
+## Expected Behavior
+
+- A base class for glossary term detail pages should provide a method that generates the tab array by delegating to a utility function, and a separate method that returns the list of standard tab identifiers (5 tabs: overview, child terms, assets, activity feed, and custom properties — all non-editable with empty layouts).
+- A standalone utility function should generate the complete tab array. In normal view, it returns all 5 tabs in the expected order. In version-view mode, it returns only the overview tab.
+- The activity feed tab's label should reflect whether it is the active tab, and should display the current feed count.
+- The custom properties tab should correctly compute edit access based on the user's permissions and whether version-view mode is active.
+- The tag detail page base class should expose an extension method for adding extra tabs, returning an empty list by default.
+- The tag detail page should invoke this extension method with the fetched tag when building the tab list.
+- The glossary term component must skip the activity feed count fetch when displaying a historical version.
+
+## Why This Matters
+
+Extracting the tab-building logic into overridable utility structures allows specialized deployments to customize the detail page experience without forking the core components. The version-view fix avoids an unnecessary network request that could cause confusing behavior when browsing historical records.

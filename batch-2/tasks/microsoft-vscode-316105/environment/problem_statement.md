@@ -1,5 +1,14 @@
-I'm cleaning up the Copilot chat quota notification behavior in VS Code and it's driving me nuts. Right now every time VS Code starts up or someone signs in, if their usage is already past a warning threshold like 75% or 90%, we immediately fire a threshold notification (something like "Credits at 75%") the moment quota data loads, even though the user didn't cross anything this session. It's just noise. What I actually want is for the system to silently set a baseline when the first quota data arrives after sign-in or after VS Code loads, no notification at all, and then only pop a threshold notification when usage actively increases past a threshold boundary during the session. So if someone's already at 80% at startup, they see nothing, but if usage climbs from 80% to 92% during that session, the 90% notification should fire. Basically only real in-session increases past a boundary should warn, never thresholds that were already exceeded before things started.
+## Description
 
-Also I need the quota service to support refreshing quota data on demand from the server, and that refresh capability should be exposed as part of the service's public interface. This means wiring in an extra dependency that handles the underlying API communication, and the quota data should get fetched asynchronously as part of the threshold-crossing flow.
+The Copilot chat quota notification system currently shows threshold warnings immediately on startup if usage already exceeds a threshold — even when no new threshold was crossed during the current session. For example, if a user is already at 80% usage when they open VS Code, they immediately see a "Credits at 75%" warning the moment quota data loads. This is surprising and potentially annoying, since the threshold was not crossed during this session.
 
-Oh and signing out needs to fully clear the baseline so the next sign-in re-establishes it fresh, meaning nobody gets stale notifications carried over from a previous session's threshold crossings. The whole point is making these warnings feel meaningful, reflecting actual usage the user drove this session rather than just whatever the usage state happened to be when VS Code started up.
+## Expected Behavior
+
+- When the first quota data arrives after sign-in or after VS Code loads, the system should silently establish a usage baseline without showing any warnings.
+- Threshold notifications should only appear when usage actively increases past a threshold boundary during a session — not for thresholds that were already exceeded before the session started.
+- After signing out, the baseline should be cleared so that signing back in re-establishes a fresh baseline (again, without showing notifications for already-crossed thresholds).
+- The quota service needs the ability to refresh quota data on demand, and this capability should be exposed as part of the service's public interface.
+
+## Why This Matters
+
+Users are seeing threshold warnings immediately on startup that don't represent any action they took in the current session. The notifications should feel meaningful — they should reflect actual usage increases, not just the state of usage when VS Code happened to start. This makes the quota warning system more signal-rich and less noisy.

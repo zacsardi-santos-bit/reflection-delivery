@@ -1,11 +1,18 @@
-I'm building out the AWS HealthOmics MCP server and it's missing anything for run caches, which is a real gap since run caches let genomics workflow runs stash and reuse expensive computation results so repeated runs cost less and finish faster. I want four tools added: create, get, list, and update.
+## Description
 
-For create, it takes a caching strategy plus a cloud storage location (both required), and optional name, description, tags, and a cross-account owner hint. Before it does anything remote it should validate the caching strategy against the list of accepted values and reject invalid ones up front, and also check that the storage location's bucket actually exists and is reachable so users get a meaningful error before any cache creation is attempted. If the bucket doesn't exist the error should say the bucket was not found, if access is denied it should say access was denied, and any other storage access error should describe the trouble accessing that specific bucket. It should generate a unique request identifier, only pass along the optional params that were actually provided, and return the new cache's id, ARN, and status.
+The AWS HealthOmics MCP server currently has no tools for managing run caches. Run caches allow genomics workflow runs to store and reuse computation results, which can significantly reduce both cost and execution time for repeated runs. Without these tools, users cannot create, inspect, list, or update run caches through the MCP server.
 
-For get, look up a cache by id and return all the fields the service gives back, with any timestamp fields converted to ISO 8601 strings.
+## Expected Behavior
 
-For list, support optional filtering by name, status, and caching strategy plus pagination via a token, put the caches under a designated key in the response, and only include a pagination token in the output if the service actually returned one.
+The server should expose four new operations for run cache management:
 
-For update, only send the fields explicitly provided (caching strategy, name, or description) and return the cache id plus a status showing the update succeeded.
+- **Create**: Accept a caching strategy and a cloud storage location as required inputs, along with optional metadata (name, description, tags, and owner account). Before creating the cache, the tool should validate the storage location format and verify the bucket is accessible. If the bucket does not exist, the user should receive a clear error indicating the bucket was not found; if access is denied, they should receive an error indicating access was denied; if another error occurs accessing the bucket, the message should describe the issue with accessing that specific bucket. Invalid caching strategies should be rejected before any remote calls are made. Successful creation returns the cache identifier, ARN, and status.
+- **Get**: Retrieve all details for a specific cache by ID. Any time-based fields in the response should be serialized as ISO 8601 strings.
+- **List**: Return a collection of caches under a designated key, with optional filtering by name, status, or caching strategy, and pagination support. The pagination token should be present in the output only when the underlying service includes one.
+- **Update**: Modify an existing cache's caching strategy, name, or description. Only the fields actually provided should be forwarded to the service. Returns the cache ID and a status indicating the update was successful.
 
-Oh and all four should catch exceptions from the underlying service and return a dict with an error key holding the exception message text instead of letting it propagate.
+All tools should return a structured error dictionary (with an error field whose value includes the error message text) when the underlying service raises an exception, rather than propagating the exception directly.
+
+## Why This Matters
+
+Without these tools, anyone using the MCP server to orchestrate genomics workflows has no way to leverage the run cache feature, even though the underlying service supports it. Adding these operations completes the server's coverage of core workflow management capabilities.

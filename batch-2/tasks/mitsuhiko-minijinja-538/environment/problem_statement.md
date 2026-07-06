@@ -1,5 +1,16 @@
-I'm hitting a weird bug in the template engine where including a template that uses inheritance breaks when the include sits inside a loop. Setup is: I've got a base template with a block, a child template that extends the base and overrides that block to print a loop variable, and a main template that includes the child inside a for loop. What I want is for each loop iteration to independently render the child and spit out the current item's value, so looping over three items should give me each of the three values in the output, one per iteration. Instead only the first iteration renders right, and later iterations either produce nothing or blow up entirely on the second pass.
+## Description
 
-Digging in, it looks like the engine's cycle detection is misfiring. When the same extended template gets included more than once across loop iterations, the include-state tracking treats the repeated inclusion as a circular reference even though there's no actual cycle. So the include state isn't being reset or scoped correctly per iteration when inheritance is in play, and the false-positive cycle guard kills the render.
+There is a bug in the template engine where including a template that uses template inheritance (i.e., a template that extends a base and overrides blocks) inside a loop does not work correctly after the first iteration.
 
-Inheritance and includes are both core to this engine and composing them, especially including an inherited template inside a loop, is a totally normal pattern, so I need this to just work. Can you fix how include state is tracked across loop iterations so each pass renders the extended child cleanly with the right loop variable, without falsely flagging a cycle?
+## Expected Behavior
+
+- When a child template extends a base template and overrides a block to display a loop variable, and that child template is included inside a for loop, each iteration should independently render the block with the current iteration's variable value.
+- For example, a loop over three items including an extended template should produce each item's value in the output, one per iteration.
+
+## Actual Behavior
+
+Only the first loop iteration appears to produce output (or the rendering fails entirely on the second iteration). Subsequent iterations do not correctly render because the engine's cycle detection incorrectly identifies the repeated inclusion as a circular reference, even though no actual cycle exists.
+
+## Why This Matters
+
+Template inheritance and template inclusion are both fundamental features of this template engine. Composing them together — particularly including an inherited template inside a loop — is a natural and useful pattern. This bug makes it impossible to use such a composition correctly, forcing workarounds or preventing users from leveraging the full power of template inheritance within loops.

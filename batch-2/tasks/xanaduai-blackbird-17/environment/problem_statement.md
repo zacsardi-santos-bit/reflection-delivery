@@ -1,7 +1,15 @@
-I'm working on the Blackbird quantum programming library and I want to move our internal array representation away from the third-party numerical array type over to plain Python nested lists. Right now array variables get stored using a library-specific array object and that implicit dependency is a pain to maintain and it's causing subtle bugs, some arithmetic on array vars fails or gives wrong answers depending on operand order, and there's no clean line between what's a valid array input to the serializer and what isn't.
+## Description
 
-A few things I need. First, I want a utility function that takes a 2D Python list plus a variable name and spits out the Blackbird script text for an array declaration, and it should sniff the element type on its own, integer vs float vs complex, and emit the right format for each. If the list has some element type we don't support, raise a clear error saying it's an unsupported type.
+The Blackbird Python library currently uses a third-party numerical array library as the internal representation for arrays throughout the system — in variable storage, expression evaluation, and program serialization. This creates an implicit type dependency that makes the code harder to maintain and leads to subtle bugs: certain arithmetic operations on array variables fail or produce wrong results depending on the order of operands, and there is no clear distinction between what array types are valid input to the serializer.
 
-Second, the program serializer needs to work with Python lists as array arguments instead of the numerical-library array type, producing the right array declarations. Oh and if someone accidentally hands it a raw library array object as an operation arg or kwarg, it should raise a type error about an unknown argument type rather than silently emitting garbage.
+## Expected Behavior
 
-Third, the expression evaluator has to handle all the arithmetic on array variables that are now stored as lists. Currently stuff like subtracting a scalar from an array var, dividing an array var by a scalar, or raising to a power don't work right when the array var is on the left, and power isn't supported for arrays at all. I want subtraction, division, and exponentiation to all return the correct element-wise result no matter which side the array variable is on. Making lists the canonical format keeps things portable and drops the hard external dep, and it makes the error messages actually actionable when the wrong type shows up.
+- A dedicated utility function should accept a plain Python nested list (rather than a library-specific array object) and convert it to the correct Blackbird script array declaration format, detecting the element type automatically (integer, float, or complex).
+- If a list with an unsupported element type is passed to this function, it should raise a clear error indicating an unsupported type.
+- The program serializer should accept array arguments represented as plain Python lists and correctly produce the corresponding array declarations.
+- When the serializer encounters an incompatible array type (a raw numerical-library array rather than a Python list) in an operation's arguments or keyword arguments, it should raise an error indicating an unknown argument type.
+- Arithmetic operations on array variables — including subtraction, division, and exponentiation — should produce correct results regardless of whether the array variable appears on the left or right side of the operator.
+
+## Why This Matters
+
+Shifting from a numerical-library array type to plain Python lists as the canonical internal format makes the system more portable and removes a hard external dependency. It also makes error messages more actionable when the wrong type is passed to the serializer, rather than silently producing malformed output.

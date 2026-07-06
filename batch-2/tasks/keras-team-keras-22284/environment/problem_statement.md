@@ -1,3 +1,14 @@
-I'm training a semantic segmentation model and I keep hitting a gap with the sparse categorical crossentropy metric. My dataset has one label value that stands for unlabeled or void regions, stuff that shouldn't count toward the training metric at all, but right now the metric has no way to skip a class so those void samples inflate my scores and make the numbers meaningless. Real-world tasks like segmentation deal with void/background/unlabeled classes all the time, and without native support people end up masking or filtering their data by hand before handing it to the metric, which is error-prone preprocessing I'd rather not deal with.
+## Description
 
-So what I want is an optional parameter on the sparse categorical crossentropy metric that names a single class label to ignore during computation. When I pass it, any sample whose ground-truth label matches that ignored class should be completely excluded, it shouldn't affect the computed score in any way at all. This needs to work both when my model outputs probabilities and when it outputs raw logits, since I switch between those. Oh and it also has to play nice with per-sample weights, because I use sample weighting in my training setup, so the ignore logic and the weighting have to combine correctly rather than one clobbering the other. Basically I create the metric with the ignore-class specified up front and from then on those void samples just vanish from the calculation.
+The sparse categorical crossentropy metric does not currently support ignoring a specific class during computation. In many real-world tasks — such as semantic segmentation — certain label values represent unlabeled, void, or background regions that should not contribute to the training metric. Right now, users have no built-in way to exclude these labels, and must implement custom workarounds.
+
+## Expected Behavior
+
+- The metric should accept an optional parameter that specifies a single class label to ignore during computation.
+- When this parameter is provided, any samples whose ground-truth label matches the ignored class should be completely excluded from the metric — they should not affect the computed score in any way.
+- This feature should work correctly when outputs are raw logits rather than probabilities.
+- This feature should also work correctly when per-sample weights are provided alongside the predictions.
+
+## Why This Matters
+
+Without this capability, users working on tasks with partially-labeled data (e.g., semantic segmentation with void/background classes) must manually filter or mask their data before passing it to the metric. Adding native support for a class-ignore parameter makes the metric more practical for these common use cases and avoids error-prone preprocessing workarounds.

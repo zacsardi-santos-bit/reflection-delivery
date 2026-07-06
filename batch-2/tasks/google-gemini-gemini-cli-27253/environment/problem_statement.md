@@ -1,3 +1,21 @@
-I'm hitting a resolver bug in our CLI tool that bundles a search binary and figures out its path at runtime. The current logic in the resolver handles a couple of deployment layouts but it whiffs on the "purely flattened" case where the binary sits directly next to the application file with no intermediate subdirectory, so when we ship a self-contained executable packaged that way it just can't find the binary. I want the resolver to try that flat layout first, then fall back to the existing vendor-subdirectory layout we already support, then try both Dev/Dist build-output variants (the one with the deeper source path that reflects how the source tree is structured when built, and the shallower one), and only then fall back to the system path. Also it should swallow any unexpected errors during resolution and fail gracefully with no result rather than crashing, which it doesn't do right now.
+## Description
 
-There's a related gap in the path-trust checker, the bit that decides whether a system binary path is safe to actually use. It doesn't recognize paths living under our internal build-system infrastructure prefix, so folks running inside those internal build environments can't use the bundled binary at all, oh and it should treat anything under that prefix as inherently trusted. On top of that, when a hermetic test runner is active (you can tell from certain well-known environment variables being set) the checker keeps rejecting binaries just because they sit near the working directory, which breaks tooling in those hermetic CI setups. So whenever those hermetic-env vars are present I want it to bypass the CWD proximity check entirely so the correct binary gets found. Right now users in internal build or hermetic environments either silently degrade or fail outright, and I need it working reliably across all those execution contexts.
+The tool that locates the bundled search binary does not correctly handle all deployment layouts. In particular, when the application is packaged as a self-contained executable with a "purely flattened" layout — where the binary sits directly alongside the application file with no intermediate subdirectory — the resolver fails to find it. The resolver needs to check this flat layout first, before falling back to the other paths it already knows about.
+
+There is also a related path that reflects how the build output is organized when the source tree has a particular directory depth; this Dev/Dist layout variant is not currently tried.
+
+Additionally, the path-trust checker that decides whether a system binary is safe to use has two gaps in its logic:
+
+1. It does not recognize paths that are inherently trusted in internal build-system and hermetic execution environments (paths under specific internal infrastructure directories).
+2. When a hermetic test runner is active — signaled by well-known environment variables — working-directory paths should be considered safe, but the current logic still rejects them.
+
+## Expected Behavior
+
+- The binary resolver should try the purely flattened layout first, then the vendor-subdirectory layout, then two Dev/Dist layout variants, and finally the system path.
+- If any unexpected error occurs during resolution, the function should fail gracefully with no result rather than crashing.
+- Paths located under the internal build-system infrastructure prefix should be trusted.
+- When recognized hermetic-test-runner environment variables are present, the CWD proximity check should be bypassed so that the correct binary can be found.
+
+## Why This Matters
+
+Users running the tool inside internal build environments or hermetic CI environments cannot use the bundled search binary, causing the tool to either silently degrade or fail. Supporting these deployment layouts ensures the tool works reliably across all supported execution contexts.

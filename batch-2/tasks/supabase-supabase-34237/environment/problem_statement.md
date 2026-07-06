@@ -1,7 +1,20 @@
-I'm building out a database metadata library and I keep hitting problems in the table data viewer when it fetches rows, so I want a dedicated SQL generation module that safely handles all the weird edge cases. Basically I need a function that builds a complete SELECT statement for any table-like entity, so regular tables, views, materialized views, and foreign tables should all flow through this one unified path, using the schema-qualified table name in the FROM clause.
+## Description
 
-The tricky part is large values crashing the browser client because of excessive memory allocation on the JS side, so I want truncation done at the database level. For text and JSON columns, truncate at a configurable character limit (default around 10KB) and append "..." when the value exceeds it, and the check should use byte length rather than character count. Arrays need special handling, oh and this includes arrays of custom enum types which currently don't generate correctly. If an array's total text size goes over the limit, return only the first N elements (configurable, default 50) with a "..." element appended as a truncation sentinel, otherwise just cast the array to a text array as-is. Everything else (integers, booleans, timestamps, enum values, etc.) stays unmodified in the SELECT.
+The table data viewer in the database management tool needs a dedicated SQL generation module that safely handles all the edge cases when fetching rows from any type of database object (tables, views, materialized views, foreign tables).
 
-Column names that contain spaces, hyphens, embedded quotes, or other special characters need to be properly quoted so they don't produce broken SQL. Also I want an optional list of filters (column plus operator plus value), an optional list of sort specs (column, table, direction, nulls placement), and page-based pagination (page number plus limit). When no explicit sorts are given, default to sorting by primary key ascending with nulls first.
+Currently, array columns — especially arrays of custom enum types — are not handled correctly when generating the row-fetch SQL. Large text values and large arrays can also cause memory issues or crashes in the browser. Additionally, column names containing special characters (spaces, hyphens, embedded quotes) can produce broken SQL.
 
-I also need a helper that figures out the default sort column(s), returning primary key columns if present, or the first column otherwise, or an empty array if neither exists. Both functions should live in a new dedicated module file alongside the existing query utilities and get exported from there.
+## Expected Behavior
+
+- Fetching rows from a table, view, materialized view, or foreign table should all work through a single, unified SQL generation function.
+- Text and JSON column values that exceed a character threshold should be automatically truncated in the query output, with an ellipsis suffix to indicate truncation.
+- Array columns (including arrays of custom enum types) that exceed the character threshold should have their elements limited to a maximum count, with a truncation sentinel string appended to the result array to signal truncation.
+- Arrays that are within the size threshold should be returned as-is, cast to a text array.
+- Non-text, non-array columns (numbers, booleans, timestamps, enums, etc.) should be returned unmodified.
+- Column names with spaces, dashes, or quotes should be correctly escaped.
+- The function should support optional filters, sort specifications, and page-based pagination.
+- Custom character limits and array size limits should be configurable as parameters.
+
+## Why This Matters
+
+Without proper truncation at the database query level, very large text or array values cause excessive memory allocation on the JavaScript side — potentially crashing the client. Handling this in the generated SQL keeps data transfer lean and the UI stable, even when tables contain columns with large or unbounded content.

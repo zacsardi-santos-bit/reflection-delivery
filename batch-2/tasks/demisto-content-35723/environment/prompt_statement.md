@@ -1,0 +1,9 @@
+I'm working on the Unit 42 ATOMs threat intel feed integration and the fetch command keeps returning fewer indicators than the raw feed actually has. The data comes in nested, top-level reports point at subordinate reports, and those sub-reports are the ones holding the real threat indicators. Right now some of those sub-reports get misclassified and skipped instead of getting processed and returned as indicator objects, so analysts end up with an incomplete picture and threat data just silently vanishes.
+
+What I need is to fix the report classification so it properly tells apart main reports (the ones whose references are entirely intrusion-sets and other reports) from sub-reports (the ones that directly reference indicators, malware, campaigns, and similar non-report objects). Both need to show up in the output in the end, the main reports and the sub-reports they reference, not just the top-level ones.
+
+Also the relationships we generate for these reports can end up carrying entity types that aren't in the platform's supported indicator type mapping, which breaks stuff downstream, so please make sure report relationships only use types the platform actually recognizes.
+
+Oh and there's a utility that splits an attack technique name into its id and display value at the colon separator, it's duplicated once in the feed integration and once in the shared TAXII2 API parser module. Kill the standalone copy in the feed integration and point all callers at the version on the shared parser class instead.
+
+Last thing, I want a method on the client class that looks up a specific report object by its ID, checking locally cached data first and then falling back to the API. If the API hands back multiple objects for the same ID, it should log a debug message and skip that result rather than returning ambiguous data.

@@ -1,9 +1,22 @@
-I'm building some debugging tooling for distributed model inference and I keep hitting a wall where I've got a tensor sharded across a bunch of parallel workers and no way to stitch it back into the full thing for comparison or analysis. I want to add utilities that reassemble sharded tensors from multiple worker ranks back into a single tensor, and I want it split into two steps.
+## Description
 
-First step is plan computation: given a description of which tensor dimensions are sharded across which parallelism axes, plus per-rank parallelism metadata about each worker's position in the group, I want to compute a structured reassembly plan that captures which world rank holds which slice and in what order the slices get concatenated. Second step is executing that plan against a mapping from world ranks to their actual tensor shards, looking them up by world rank and concatenating in the right axis-rank order to reconstruct the full tensor.
+When debugging distributed model inference, engineers often need to inspect the full tensor that is sharded across multiple parallel workers. Currently, there is no tooling to reassemble those shards back into a single tensor for comparison or analysis.
 
-Here's the tricky bit that actually bit me: the workers don't necessarily arrive in the order matching their logical slice positions. So world rank 0 might hold axis slice 2, rank 1 holds slice 0, etc, all scrambled. The reassembly has to handle that mapping correctly and still produce a tensor that's numerically identical to the original, not just close.
+This issue requests a new set of utilities for unsharding distributed tensors from multi-rank tensor dumps. The core capability needed is:
 
-Oh and I also need a helper to normalize rank/size metadata coming from different distributed training frameworks into one common internal format. Only axes that are actually parallelized (size greater than one) should show up, so ignore anything with size 1. And if metadata from more than one framework is present at the same time, that should raise an error rather than silently picking one.
+1. **Plan computation**: Given a description of which tensor dimensions are sharded across which parallelism axes, and per-rank parallelism metadata, compute a structured reassembly plan that identifies which rank holds which slice and in what order slices should be concatenated.
 
-The planning step needs to be strict about edge cases too, so raise appropriate errors for an empty list of rank metadata, for inconsistent axis sizes reported across different ranks, and for a sharded axis that has no corresponding metadata. Also multi-axis unsharding isn't supported yet, so if someone tries to unshard a tensor sharded across multiple independent parallelism axes simultaneously, raise an unsupported-operation error. The whole point is letting devs compare activations across different tensor-parallelism degrees without hand-assembling shards.
+2. **Plan execution**: Given the reassembly plan and a mapping from world ranks to their tensor shards, concatenate the shards in the correct axis-rank order to reconstruct the full tensor.
+
+3. **Metadata normalization**: Accept parallelism rank/size metadata from multiple distributed training frameworks into a common internal format. Axes with size 1 (non-parallelized) should be ignored.
+
+## Expected Behavior
+
+- When world ranks arrive in a different order than their logical axis positions ("scrambled"), the reconstructed tensor must still be numerically identical to the original.
+- If parallelism metadata from more than one framework is present simultaneously, an error should be raised.
+- Appropriate errors must be raised for invalid inputs such as empty rank lists, inconsistent axis sizes across ranks, or missing metadata for a sharded axis.
+- Attempting to unshard a tensor sharded across multiple independent parallelism axes simultaneously should raise an unsupported-operation error.
+
+## Why This Matters
+
+Developers comparing tensor activations across different distributed configurations (e.g., different tensor-parallelism degrees) cannot do so without first reassembling the per-rank shards into a full tensor. This tooling enables that workflow automatically.

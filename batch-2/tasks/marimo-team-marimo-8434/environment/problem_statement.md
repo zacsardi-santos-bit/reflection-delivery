@@ -1,5 +1,18 @@
-I'm embedding marimo inside a bigger web app, mounting the whole marimo ASGI app at some outer sub-path while the dynamic notebook directory browser is configured with a different inner path prefix. The problem is when I hit the combined URL (outer mount prefix plus the inner directory path plus the notebook name) I just get a 404 and nothing loads. It only works when the outer mount path and the inner directory path happen to be the exact same string, which is a weird and confusing limitation since people routinely mount marimo under one route prefix in their existing framework.
+## Description
 
-There's a related bug too: the URL that gets passed internally to each notebook sub-app for building its own links is actually a raw filesystem path instead of a proper web URL path, so asset loading breaks inside notebooks whenever the app is served under a nested URL structure.
+When mounting the marimo ASGI app inside a larger web framework at a sub-path that differs from the path configured for the dynamic directory, all requests to individual notebooks return 404. For example, configuring the directory browser for one URL prefix and mounting the whole marimo ASGI app under a different outer prefix means that any request to access a notebook fails silently instead of loading.
 
-What I want is for the directory browser routing to work regardless of how many layers of URL prefixes are stacked above it. So a request to the full outer-plus-inner path should resolve properly, the trailing-slash redirect should include the full correct URL path with all the outer prefixes baked in (not just the inner one), assets within a notebook should load when it's nested under multiple prefixes, and notebooks living in subdirectories should be reachable through the combined path too. The fix lives around the directory app routing logic, probably in the ASGI middleware layer under `@marimo/_server/asgi.py` where the sub-app URL gets computed, make sure that value is a real web URL path and not a filesystem path. Oh and one more thing, if someone configures the directory browser with no path prefix at all (empty), I'd like that to raise a clear descriptive error immediately instead of silently misbehaving later down the line.
+There is also a related bug: the URL passed internally to each notebook sub-app for constructing its own links is a raw filesystem path instead of a proper web URL path. This breaks asset loading and any navigation within the notebook when the app is served under a nested URL prefix.
+
+## Expected Behavior
+
+- When the dynamic directory browser is configured with one path and the whole app is mounted at a different outer prefix, notebooks should be accessible at the combined URL.
+- Trailing-slash redirects must include the full correct URL path including all outer prefixes.
+- Assets within a notebook must load when the app is nested under multiple URL prefixes.
+- Nested directory notebooks must be reachable through the combined URL.
+- The URL passed to each notebook app for building its own links must be a proper web URL path, not a filesystem path.
+- When the directory browser is configured without any path prefix at all, the system should raise a clear error immediately rather than silently misbehaving.
+
+## Why This Matters
+
+Users who integrate marimo into their existing web applications commonly mount the entire marimo ASGI app under a specific route prefix. This scenario was completely broken when the outer mount prefix and the inner directory path differed. The result was a confusing 404 on every notebook and broken internal URLs.

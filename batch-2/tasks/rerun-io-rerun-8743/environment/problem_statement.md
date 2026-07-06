@@ -1,7 +1,19 @@
-I'm bumping the GPU rendering library that the renderer crate depends on to its newest major release and there's a pile of breaking changes I need to work through so the crate compiles clean and all its existing tests still pass. Keeping this dep current gets us the bug fixes, perf wins, and ongoing platform support, and honestly some of these changes make the code nicer anyway.
+## Description
 
-The big one: the rendering context constructor used to want the GPU device and command queue wrapped in reference-counted smart pointers, but the new version takes them directly by value now, so ownership just transfers in. That means the struct fields holding the device and queue need to drop the ref-counted wrapper types, and anywhere the caller was wrapping them before passing them into construction, rip that wrapping out. It simplifies the whole construction path and kills a bunch of boilerplate.
+The rendering crate needs to be updated to work with the latest major release of the underlying GPU library. The new version introduces several breaking API changes that require updates across multiple files in the renderer.
 
-Then there's a family of type renames I've gotta chase down everywhere. The types describing copy operations between textures and buffers (texture copy info, buffer copy info, and the buffer layout type) all got renamed under a new naming convention. These show up across a lot of files in the renderer, the allocators, the draw phases, the resource managers, etc., so all of those references need updating.
+The most significant change is that GPU device and command queue objects no longer need to be wrapped in reference-counted smart pointers before being passed to the rendering context. Previously, callers had to manually wrap these objects before construction; now ownership can be transferred directly. This simplifies the construction API and removes unnecessary boilerplate.
 
-Couple smaller things too. The utility function that reads GPU backend preferences out of env vars moved to a different spot in the API surface, so fix that import/call site. GPU instance init now takes its descriptor (the config object) by reference instead of by value. Oh and one dependency that we used to pull in as its own standalone crate is now re-exported through the main library crate, so access it through that re-export instead. Once all this is done the renderer should build cleanly with everything green.
+The new version also renames a family of types used to describe texture and buffer copy operations. Texture copy info, buffer copy info, and buffer layout types are all renamed under a new naming convention throughout the API. There are also smaller changes to how GPU instances are initialized — the descriptor is now passed by reference rather than by value — and a utility function for reading backend preferences from environment variables has been moved to a different location in the API surface.
+
+## Expected Behavior
+
+- The rendering context should accept device and queue objects directly by value, without requiring the caller to wrap them in reference-counted pointers first
+- All texture and buffer copy operations throughout the renderer should use the updated type names from the new GPU library version
+- GPU instance creation should pass the configuration by reference
+- The backend selection utility should use the updated API location
+- All existing renderer tests should continue to pass after the upgrade
+
+## Why This Matters
+
+Keeping the GPU library dependency current ensures we benefit from bug fixes, performance improvements, and continued platform support. The API simplification (removing the need for reference-counted wrappers) also makes the code cleaner and easier to reason about.

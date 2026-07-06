@@ -1,5 +1,13 @@
-I'm poking at TiKV's config validation and hit a gap around the raft engine's batch compression threshold when async I/O is turned on. So the deal is async I/O gets enabled by setting a non-zero I/O thread pool size, and when that's active the batch compression threshold really should be tuned to something better than the raft engine library's stock default, which isn't great for the concurrent write patterns async I/O produces. Right now if someone flips on async I/O but never touches the compression threshold, we just keep riding the library default and they eat suboptimal write perf that they'd only ever catch after painful manual profiling.
+## Description
 
-What I want is for the validation step (the same place we already normalize and check config) to auto-tune this. When async I/O is enabled and the threshold is still sitting at the library default, meaning the user hasn't customized it, bump it to 4KB since that performs better under async I/O. But if the user has explicitly set the compression threshold to any value at all, leave it exactly as they set it, don't clobber their choice. And if async I/O is disabled, don't touch it, it should stay at the default even when it wasn't explicitly configured.
+When TiKV's async I/O feature is enabled (by setting a non-zero I/O thread pool size), the raft engine's batch compression threshold should be automatically tuned to a more appropriate value for optimal performance. Currently, if a user enables async I/O without explicitly configuring the compression threshold, the system continues using the library default, which is not tuned for concurrent async I/O workloads. This leads to suboptimal write performance that users would only discover after careful manual profiling and tuning.
 
-Basically the detection hinges on comparing the current threshold against the known library default to decide "did the user set this or not," and only rewriting it to 4KB in the enabled-plus-still-default case. Point is folks who enable async I/O get decent out-of-the-box performance without having to know anything about how async I/O and raft engine compression interact.
+## Expected Behavior
+
+- When async I/O is enabled and the user has not explicitly configured the raft engine's batch compression threshold, the configuration validation step should automatically set the threshold to 4KB, which has been shown to perform better under async I/O conditions.
+- When the user has explicitly configured the batch compression threshold to any value, that value should be preserved during validation — the auto-tuning should only apply to unconfigured (default) settings.
+- When async I/O is disabled, the batch compression threshold should remain at its default value even if it has not been explicitly configured.
+
+## Why This Matters
+
+Users who enable async I/O expect good out-of-the-box performance without needing to know about the interaction between async I/O and raft engine compression settings. The validation layer is the right place to apply this automatic tuning, so the system self-configures correctly based on the user's I/O configuration choices.

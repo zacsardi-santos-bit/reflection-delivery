@@ -1,5 +1,15 @@
-I'm poking at the hook system and hit a gap that's making it hard to correlate events. Right now when the stop hook or the user-prompt-submit hook fires, the JSON payload handed to the hook script has all the session-level stuff (session ID, transcript path, current working directory, model, and so on) but nothing that tells you which conversation turn is active. That's a problem because if a hook fires more than once inside a single turn, say the stop hook triggers several times, or a couple of prompts get submitted during the same turn, the hook script has no way to know those invocations all belong together, and no way to distinguish them from events in a different turn of a multi-turn session.
+## Description
 
-What I want is for both the stop hook and the user-prompt-submit hook to include a turn identifier in the data they receive. It should be a non-empty string so scripts can lean on it as a correlation key, and it needs to be the same value across every invocation that belongs to the same turn, so multiple stop-hook fires in one turn, or multiple prompt submissions in one turn, all carry the identical id. Different turns get different ids.
+Lifecycle hooks currently receive context about the active session (session ID, transcript path, current working directory, model, etc.) but nothing that identifies which conversation turn is active. This makes it impossible for hook scripts to correlate multiple invocations that belong to the same turn, or to distinguish events from different turns in a multi-turn session.
 
-Oh and one more thing on the prompt side: both blocked and accepted user prompts should trigger the user-prompt-submit hook, and each of those should carry the correct prompt text plus the right turn identifier. The point of all this is that once you've got a stable per-turn id, you can build logging or auditing integrations that actually understand the conversation's turn structure and group stop events and prompt submissions with the specific turn they came from.
+## Expected Behavior
+
+- The stop hook input should include a turn identifier so that hook scripts can know which turn triggered the stop event.
+- The user-prompt-submit hook input should include the same kind of turn identifier.
+- When the same turn triggers multiple hook invocations (e.g., a stop hook that fires several times in one turn, or several prompts submitted during the same turn), all those invocations should carry the same turn identifier.
+- The turn identifier should be a non-empty string so that hook scripts can reliably use it as a correlation key.
+- Both blocked and accepted user prompts should trigger the user-prompt-submit hook, each carrying the correct prompt text and the turn identifier.
+
+## Why This Matters
+
+Without a turn identifier, hook scripts have no reliable way to group related hook events together. Adding this field makes it possible to build integrations that understand the conversation's turn structure — for example, logging or auditing systems that need to associate stop events and prompt submissions with specific turns.

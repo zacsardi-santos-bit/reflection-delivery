@@ -1,5 +1,17 @@
-I'm hitting a bug in the SWC HTML toolchain when it processes invalid but browser-recoverable markup. If a block-level element sits directly inside an inline container (think a `<p>` dropped straight inside a `<span>`, which is technically invalid per the HTML spec but browsers handle it fine via error recovery), the parser recovers the structure okay, but the code generator and the minifier downstream both mangle it. They either corrupt the nesting or emit output that doesn't reflect what actually got parsed, and that's a real problem since tons of real-world pages have exactly this kind of invalid markup that browsers just quietly recover from, and silently changing structure during minification could break pages.
+## Description
 
-So here's what I want. When I regenerate one of these documents in normal codegen mode I'd expect the full document wrapper (html/head/body scaffolding) to come out correctly while the recovered nested element structure stays intact inside the body. When I run it through minified codegen mode I want the nested structure preserved exactly as it appeared in the input, no nesting altered or collapsed. And the minifier itself, including its error-recovery path for elements, should likewise round-trip the nested structure unchanged.
+The SWC HTML code generator and minifier produce incorrect output when they encounter HTML where a block-level element is nested directly inside an inline container element. This kind of markup is technically invalid per the HTML specification, but browsers perform error recovery to handle it gracefully. SWC's HTML parser similarly recovers from this, but the code generator and minifier downstream fail to handle the recovered structure correctly.
 
-The fix lives in the HTML codegen and minifier crates, so poke around `@crates/swc_html_codegen/src/lib.rs` and `@crates/swc_html_minifier/src/lib.rs` for the spots that handle element emission and the recovery path. Goal is faithful round-tripping of this block-in-inline case across all three outputs.
+## Expected Behavior
+
+- When regenerating such a document in normal mode, the full document structure should be emitted correctly with the nested element structure preserved inside the body.
+- When regenerating in minified mode, the nested structure should be preserved exactly as it appeared in the input — no element nesting should be altered or collapsed.
+- The HTML minifier's error-recovery path for elements should likewise preserve the nested structure unchanged.
+
+## Current Behavior
+
+The HTML code generator and minifier corrupt or incorrectly transform the element structure when a block-level element appears as a child of an inline element, resulting in output that does not match the parsed structure.
+
+## Why This Matters
+
+Real-world HTML documents frequently contain invalid markup that browsers recover from. SWC's HTML toolchain must handle such markup correctly and round-trip it faithfully, especially during minification where incorrect structural changes could silently break pages.

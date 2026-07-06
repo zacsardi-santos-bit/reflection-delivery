@@ -1,5 +1,17 @@
-I'm messing with the Schlage lock integration in Home Assistant and I want to manage PIN access codes straight from automations. Right now I can lock and unlock remotely but there's zero way to add or remove codes programmatically or even see what's currently on the lock, which is annoying because guest codes for example should be something I can spin up and tear down automatically instead of digging through the Schlage mobile app.
+## Description
 
-So I want three new services on the Schlage lock entities. First, an add-code service that takes a name and a numeric PIN and puts it on the lock, but it's gotta validate the PIN is strictly numeric and between 4 and 8 digits, rejecting anything that isn't all digits or falls outside that length. Also if a code with the same name or the same numeric value already exists it should be rejected with a proper validation error, don't let dupes through. Second, a delete-by-name service, and the name match needs to be case-insensitive, oh and if there's no code with that name it should just complete silently, no error raised. Third, a get-codes service that returns every programmed code with its name and numeric value, keyed by the lock's entity id, and when there are no codes it should hand back an empty result rather than blowing up.
+The Schlage lock integration in Home Assistant supports locking and unlocking doors remotely, but there is no way to manage the PIN access codes stored on the lock from within Home Assistant. Users and automation authors have no way to programmatically add new access codes, remove existing ones, or list which codes are currently programmed on the lock.
 
-All three need to surface meaningful, structured errors when the lock hardware or the cloud API fails mid-request so my automations can actually react to failures instead of silently breaking.
+## Expected Behavior
+
+The integration should expose three new services for Schlage lock entities:
+
+- **Add PIN code**: Given a unique name and a numeric PIN (between 4 and 8 digits), add a new access code to the lock. The service should reject codes that are not entirely numeric or outside the 4–8 digit length range. It should also silently enforce that the name and PIN value are not already in use on the lock.
+- **Delete PIN code**: Given a name, remove the matching access code from the lock. Name matching should be case-insensitive. If no code with the given name exists, the operation should complete silently without error.
+- **Get PIN codes**: Return all currently programmed access codes on the lock, including each code's name and numeric value, keyed by the lock's entity identifier.
+
+All three services should respond with clear, structured error information when a hardware or API failure occurs during the operation, so that automations can handle failures gracefully.
+
+## Why This Matters
+
+Many Schlage lock users want to manage access codes through automations — for example, creating a temporary code for a guest and removing it after their stay. Without these services, users are forced to manage codes through the Schlage mobile app, making it impossible to integrate code management into Home Assistant automations.

@@ -1,0 +1,9 @@
+Hitting a few separate bugs in MLflow that I need cleaned up in one pass. First one is the OpenAI autologging path: some versions of the OpenAI client hand back a "not-given" sentinel for the tools parameter instead of an actual list, and our trace logging blows up on it instead of just treating it as no tools. Wherever we parse tools for the OpenAI integration, I want any non-iterable value (that sentinel included) to gracefully fall back to an empty tool list rather than throwing.
+
+Second, Unity Catalog model registration. Models can declare their resource deps (serving endpoints, vector search indexes, functions, connections, tables) either via the old top-level resources field or via the newer authentication policy structure, and right now we only look at the top-level one so LangChain models using the auth policy format get their dependencies silently dropped. Both should work, so if the model has an authentication policy with system-level resources use those, otherwise fall back to top-level resources.
+
+Third, the async trace export queue drops pending trace data when the submitting process exits before the background workers drain everything. If submitting a task to the thread pool fails during shutdown (pool's gone), the queue should just run that task synchronously so nothing gets lost.
+
+Last thing, the env var that toggles MLflow's logging configuration needs renaming to match our conventions. The correct name should drive the logger level (INFO when true, WARNING when false), and the old name should still work but emit a deprecation warning pointing folks at the new one. Both names need to configure the mlflow logger level correctly.
+
+These are all production pain points, actual crashes and trace loss, plus better compat with newer UC model configs, so I want them all handled.

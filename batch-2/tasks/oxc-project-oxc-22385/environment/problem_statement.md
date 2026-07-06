@@ -1,7 +1,17 @@
-I'm hitting some wrong diagnostics out of the unused variable lint rule when it deals with rest parameters (the spread-style `...args` function params) in TypeScript, and I'm pretty sure there are two separate bugs here.
+## Description
 
-First one is about type-only usage. When a rest parameter's name shows up only inside a type annotation, like a self-referencing type query where the rest param's own type refers back to that same param's name, or when the name only appears in a return type predicate (a type guard), the rule flags it as never used. But it's not never used, it's used as a type. For regular non-rest parameters this case already works right and produces a diagnostic saying the param is only used as a type, with a suggestion to rename it following the unused-parameter naming convention. Rest params should behave identically, so a rest param used only in a type query in its own annotation, or only in a return type predicate, should get that same type-only usage classification instead of the "never used" one.
+The unused variable lint rule is producing incorrect diagnostic messages for rest parameters (spread-style function parameters) in TypeScript code. There are two distinct problems:
 
-Second bug is about ignore patterns. When I configure a custom ignore pattern specifically for function arguments (separate from the general variable ignore pattern), rest params that don't match it produce a diagnostic mentioning the wrong pattern. The rename suggestion points at the variable-level ignore pattern instead of the argument-specific one I actually configured. So a rest param that doesn't match the argument ignore pattern should surface a suggestion referencing that argument ignore pattern, not the variable one.
+1. **Wrong "used" classification for type-only usages**: When a rest parameter's name appears only in a type annotation — either as a reference in the parameter's own type (like a self-referencing type query) or in a return type predicate — the lint rule reports the parameter as never used. It should instead classify the parameter as being used only in a type context, which is the correct and more helpful classification.
 
-Can you make the rule treat rest parameters the same way it treats regular parameters for both of these? The fix lives in the unused variable rule handling, so wherever the param-vs-rest-param branching happens the rest case needs to pick up the same type-usage detection and the same argument-pattern lookup that regular params already use.
+2. **Wrong ignore pattern applied**: When developers configure a custom ignore pattern specifically for function arguments, rest parameters are not picking up that argument-specific pattern. Instead, the diagnostic message references a different (variable-level) ignore pattern, resulting in a confusing and incorrect suggestion for how to name the parameter.
+
+## Expected Behavior
+
+- A rest parameter whose name appears only in a type query within its own type annotation should produce a diagnostic classifying the parameter as type-only usage, with a suggestion to rename it following the convention for unused parameters.
+- A rest parameter whose name appears only in a return type predicate should produce the same type-only usage diagnostic.
+- A rest parameter that doesn't match the argument ignore pattern should produce a diagnostic that mentions the correct argument ignore pattern in the suggestion, not the variable ignore pattern.
+
+## Why This Matters
+
+Developers using TypeScript rest parameters in combination with type annotations or argument-specific ignore pattern configurations are getting misleading lint messages. The incorrect "never used" classification and wrong pattern reference make the diagnostic output inaccurate and confusing, potentially causing developers to suppress or misinterpret the warnings.

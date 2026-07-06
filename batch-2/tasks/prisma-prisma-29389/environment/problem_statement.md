@@ -1,7 +1,18 @@
-I'm working on Prisma Studio and I want to kill our dependency on external CDNs for the front-end assets. Right now the HTML shell Studio serves has an import map full of third-party CDN URLs, so Studio just breaks for anyone air-gapped or behind strict network policies, no internet means no Studio. I want to bundle the JS and CSS and serve them as local static files so the whole thing is self-contained.
+## Description
 
-Two pieces here. First, a dedicated server module that wraps the underlying HTTP server. It should take a request handler function and a port, call a callback once it's ready to listen, and hand back an object with a close method. It's gotta handle HEAD requests right (same status as the GET but no body), and when the handler throws it should return a 500 with the actual error message in the body, plus always slap permissive cross-origin headers on those error responses. Oh and log errors to the console with a recognizable prefix so we can spot them.
+Prisma Studio currently loads its front-end dependencies from external CDN services using an import map in the HTML shell. This creates a hard dependency on internet connectivity at runtime, which breaks Studio for users in air-gapped environments or with strict network policies. The HTML page references multiple third-party CDN URLs, meaning Studio cannot function without a live internet connection.
 
-Second, on the BFF side, every response (the HTML shell, the static assets, and the API replies) needs a permissive cross-origin header. The HTML shell should point at the local JS and CSS bundles, inject a config object for the active database adapter, and have zero leftover references to CDN URLs or import maps. Preflight (OPTIONS) requests should come back with the right CORS headers, an empty body, and a 204. Also the old adapter-specific script endpoint isn't needed anymore since adapters live in the unified bundle now, so it should just return 404.
+We should switch to a fully self-contained, bundled distribution: the Studio JavaScript and CSS assets should be pre-bundled and served directly from the local Prisma server instead of being fetched from the internet. The HTML shell should reference these local assets rather than external URLs, with no import maps or CDN references remaining.
 
-The point of all this is Studio works regardless of network access, and we stop being at the mercy of some CDN outage wrecking developer workflows.
+## Expected Behavior
+
+- The HTML page served by Studio must not contain any import maps, CDN references, or dynamically resolved module URLs.
+- A local JavaScript bundle and CSS bundle are served as static assets directly from the Studio server.
+- The HTML shell links to these local assets and injects a configuration object for the active database adapter.
+- All responses (HTML, assets, API calls) include permissive cross-origin headers so browser tooling can reach the Studio backend.
+- The Studio server also handles browser preflight requests correctly and returns informative error responses when the backend fails.
+- Fetching a previously available adapter-specific script endpoint now returns a not-found response, as adapters are now part of the unified bundle.
+
+## Why This Matters
+
+Users in restricted or offline environments are currently unable to use Studio at all. Bundling the assets locally makes Studio a fully self-contained tool that works regardless of network access, and removes the operational risk of third-party CDN outages affecting developer workflows.

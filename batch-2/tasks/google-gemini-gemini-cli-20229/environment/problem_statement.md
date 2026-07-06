@@ -1,9 +1,21 @@
-I'm hitting some concurrency and correctness bugs in our extension management system and could use your help. The core issue is that when extension loading gets triggered from multiple places at once (think startup where a few components all kick off loading), each caller spins up its own independent load instead of sharing the same in-progress operation. That means duplicate work and inconsistent state. What I want is for all concurrent callers to join the same loading operation and get back an identical result. And once loading has actually finished, if something tries to load again it should fail loudly with a clear error saying extensions were already loaded, not just quietly redo everything.
+## Description
 
-Also there's a missing edge case: if the extensions directory doesn't exist at all, loading should still complete fine and just return no extensions rather than blowing up.
+The extension loading system has two related problems that need to be fixed.
 
-Another gap, the system doesn't catch when two separate extension directories declare extensions with the same name, right now that conflict slips through silently which is bad. I need it to fail with an informative error that actually names the conflicting extension so we can debug the ambiguous config.
+First, if extension loading is triggered from multiple places simultaneously (for example, during startup when multiple components initiate loading), the system starts independent loading operations for each caller instead of sharing a single in-progress load. This can cause duplicate work and inconsistent state. Concurrent callers should all participate in the same loading operation and receive the same result.
 
-Oh and there's a method that loads a single extension from a given directory but it's currently private to the class. I need it made publicly accessible so external callers can use it, for example an install flow that just dropped a new extension on disk and wants to load it. The tricky part: if that single-extension loader gets called while a bulk load is still running, it can't just barge in, it needs to wait for the bulk load to finish first before adding the new extension, so both operations end up reflected in the final list rather than one clobbering the other.
+Second, the system does not currently detect when two different extension directories provide extensions that share the same name. When this happens, the conflict is silently ignored rather than raising an informative error.
 
-So to sum up what matters: concurrent loads coalesce into one shared op with the same result, a second load after completion errors clearly, a missing directory is a no-op that returns nothing, duplicate names across directories raise an error including the name, and the single-extension loader is public and coordinates with any in-flight bulk load.
+There is also a related need: a method that currently loads a single extension from a given directory is internal-only and cannot be called from outside the class. Making it accessible would allow external callers (such as an install flow) to load a newly installed extension safely, coordinating with any in-progress bulk load.
+
+## Expected Behavior
+
+- When extension loading is initiated concurrently from multiple places, all concurrent calls join the same operation and receive an identical result.
+- After extension loading has completed, attempting to load again raises a clear error indicating extensions have already been loaded.
+- If the extensions directory is missing, loading completes successfully and returns no extensions.
+- If two extension directories declare extensions with the same name, loading fails with a clear error identifying the conflicting name.
+- A single-extension loader method is accessible externally and waits for any in-progress bulk load to finish before adding a new extension.
+
+## Why This Matters
+
+Without these fixes, concurrent initialization can lead to extensions being loaded multiple times or not at all. The duplicate-name detection prevents ambiguous configurations from silently passing through. Making the single-extension loader accessible allows the install flow to add extensions safely without racing against startup.

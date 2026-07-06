@@ -1,5 +1,14 @@
-I'm deprecating that Tailwind glob-pattern helper in our Angular plugin, the function devs call in their Tailwind config files to auto-discover dependencies. Newer Tailwind versions don't need those content globs anymore so I want to warn people off it, but right now when someone calls it there's zero indication it's going away. I want a console warning to fire when the function runs, telling folks the module is deprecated and will be removed in an upcoming major version so they should migrate.
+## Description
 
-The catch, and this is the important bit, is the function can get called a bunch of times in a single build (different projects, multiple Tailwind config files, or just called in a loop), and I don't want the warning spamming the output every time. So it needs to log exactly once per process run no matter how many invocations happen. First call logs, every call after that stays quiet.
+The Angular plugin's Tailwind CSS glob-pattern utility is being deprecated because newer versions of Tailwind CSS no longer require these glob patterns for content detection. However, many users still call this utility in their Tailwind configuration files, and they currently receive no indication that it is deprecated.
 
-Can you wire up a one-time deprecation warning inside that Angular Tailwind glob-pattern utility? The message should make it clear the module's deprecated and going away, and it fires once and only once per process. Repeated warnings just clutter build output and annoy people, so please guard it with something like a module-level flag so subsequent calls skip the log.
+We need to add a deprecation warning that fires when the utility function is used, so developers know they should migrate away from it. The warning should mention that the module is deprecated and will be removed in an upcoming major version.
+
+## Expected Behavior
+
+- When a developer calls the glob-pattern utility from the Angular Tailwind module, a warning should be logged to the console indicating that the module is deprecated.
+- The warning must only appear **once per process run**, even if the function is called multiple times (e.g., when multiple Tailwind config files are processed or when the function is called in a loop). Repeated warnings would clutter build output.
+
+## Why This Matters
+
+Without a deprecation warning, developers have no indication that they need to update their Tailwind configuration. Adding a single, clear warning when the function is first used lets them know to migrate, without spamming the console on every build.

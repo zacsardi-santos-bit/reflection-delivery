@@ -1,5 +1,21 @@
-I want to add a Home Assistant integration that streams entity state changes to a cloud-hosted time-series analytics and query service (think Azure Data Explorer style). Right now there's no built-in way to push device and sensor data out for long-term storage and querying, so people end up writing custom scripts. I'd like a first-class integration instead.
+## Description
 
-It should be configurable through the standard UI config flow, asking for the cluster connection URI, database name, table name, the application registration ID and secret, and the authority ID, plus an optional flag to pick between ingestion modes. During setup it needs to test the connection and, if the service can't be reached or the credentials are wrong, show the appropriate error (like a cannot_connect or invalid_auth style message) and let me retry after fixing things. If any connection error, auth failure, or unexpected exception happens while setting up a config entry, the entry should get marked as failed so I know something broke.
+Home Assistant currently has no built-in way to stream entity state change events to a cloud-hosted time-series analytics and query service. Users who want to analyze, visualize, or run queries on their home automation data over time have no direct integration option.
 
-Once it's up, it should listen for state change events and batch them for periodic ingestion at a configurable interval. Two ingestion modes depending on account type: a managed streaming client and a queued ingestion client, selectable by me. I also want include and exclude rules for which entities get forwarded, by domain, glob pattern, or explicit entity ID, and this should work via YAML config too with the parsed filter stored and accessible in the integration's data store. Events that are too old, have a null or malformed or empty state value, or match excluded entities should just get silently dropped before ingestion. Oh and if ingestion fails during live operation (service outage, auth failure) it should log a clear error message rather than blow up. When the integration unloads, stop all listeners and scheduled work cleanly.
+## Expected Behavior
+
+A new integration should be added that:
+
+- Can be set up through the standard UI configuration flow, asking for cluster connection details (cluster URI, database, table, application registration ID and secret, authority ID) and an optional flag to select between ingestion modes
+- Validates the connection during setup and reports appropriate errors for connectivity failures or authentication problems
+- Batches and forwards state change events to the configured cloud analytics cluster at a configurable interval
+- Supports two ingestion client modes: a managed streaming mode and a queued ingestion mode, selectable by the user
+- Applies configurable entity filters (allowlist and denylist by domain, glob pattern, or explicit entity ID) so only relevant entities are forwarded
+- Skips events that are too old, have invalid or empty state values, or contain malformed characters
+- Logs meaningful error messages when the remote service or authentication fails during live operation
+- Supports YAML-based configuration for filter settings, storing the filter in the integration's data store
+- Properly handles entry unloading by stopping listeners and scheduled tasks
+
+## Why This Matters
+
+Teams and individuals who use Home Assistant and also have access to a cloud analytics platform want a first-class integration to push their device and sensor data for long-term storage and querying without needing custom scripts or workarounds.

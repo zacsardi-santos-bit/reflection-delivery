@@ -1,3 +1,13 @@
-I'm looking at the lint rule that disallows Node.js built-in modules and the diagnostic message it prints is grammatically wrong. It uses a plural verb form, but the subject is a gerund phrase (a verb form acting as a singular noun), so the plural verb just doesn't agree. It reads as unpolished to anyone who hits the diagnostic, and since error messages are basically part of the linter's user-facing interface, I want it to read naturally in correct English with proper subject-verb agreement.
+## Description
 
-Can you fix the subject-verb agreement in that message? The corrected wording needs to show up consistently across every detected violation, so whether the code pulls in the module via a CommonJS-style require or an ES module import (both the static import form and the dynamic import() form), the same fixed message should appear. Also it should trigger the same way for bare module specifiers and for ones that use the node: protocol prefix, so all those paths land on the corrected text.
+The lint rule that flags usage of Node.js built-in modules currently displays a grammatically incorrect diagnostic message. The message reads as if the subject is plural, but the subject is actually a gerund phrase — a verb form used as a noun — which is grammatically singular. This causes the error message to use an incorrect verb form.
+
+## Expected Behavior
+
+- When a violation is detected, the diagnostic message should read naturally in correct English with proper subject-verb agreement.
+- The corrected message should appear consistently across all detected violations, whether the code uses CommonJS-style requires or ES module imports (both static and dynamic).
+- Both bare module specifiers and those using the node protocol prefix should trigger the corrected message.
+
+## Why This Matters
+
+Error messages are part of the user-facing interface of the linter. A grammatically incorrect message looks unprofessional and may confuse developers who read it. Fixing the grammar ensures the diagnostic output is clear, correct, and polished.

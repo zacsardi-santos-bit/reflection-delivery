@@ -1,7 +1,23 @@
-I'm deep in the OpenAPI sync feature over in Bruno and hitting a real workflow blocker. Right now when I re-sync a collection against an updated spec, it nukes everything I've customized, the param values I typed in, my auth tokens, the environment variable placeholders I embedded in request bodies, and my test scripts all get wiped and replaced with the spec's blank template. All-or-nothing overwrite, super annoying.
+# OpenAPI Sync: Preserve User Customizations When Merging Spec Updates
 
-What I want is a set of merge helpers that intelligently combine spec changes with existing request data. The URL should always update to whatever the spec says, but for query params, headers, JSON body fields, and auth config, my current values should be preserved when the spec hasn't changed the structure. So if a param or header exists in both, keep my value; if the spec introduces a new one, add it with the spec's default; if the spec dropped it, drop it too. Same field-by-field logic for JSON bodies, preserve existing fields, add new spec fields, drop removed ones.
+## Description
 
-The tricky bit is request bodies often contain template variable syntax for environment variable refs, and those aren't valid JSON on their own, so the merge needs to temporarily mask them, parse and merge the JSON structure, then restore the original variable references, and the result has to stay structurally valid once the variables get filled in later.
+When users sync their Bruno requests against an updated OpenAPI specification, all of their customizations get lost. Parameter values they filled in, authentication credentials, environment variable placeholders embedded in request bodies, and test scripts are all wiped out and replaced with the spec's blank template values.
 
-For auth, preserve my config when the auth type hasn't changed; if the spec changes the auth mode, the spec wins outright. Also I need a full-reset option that takes everything from the spec (blowing away my values), plus a way to compare a spec version against the current request to detect what's actually changed so the UI can show a diff, and that comparison should treat same-mode auth with different config values as no structural difference. Oh and one hard rule across every mode including reset: scripts, pre-request hooks, and assertions attached to a request never get touched by the sync.
+Users want to be able to pull in structural changes from an updated spec (new parameters, removed fields, URL changes, auth mode changes) while keeping the values they've already entered. Right now that's simply not possible — it's an all-or-nothing overwrite.
+
+## Expected Behavior
+
+- When a parameter or header also exists in the updated spec, the user's current value should be kept
+- New parameters or headers introduced by the spec should be added with the spec's default value
+- Parameters or headers removed from the spec should be dropped
+- JSON request bodies should be merged field-by-field: user values are preserved for existing fields, new spec fields are added, removed spec fields are dropped
+- Template variable references embedded in request bodies (e.g. environment variables) must survive the merge intact and the resulting body must remain structurally valid
+- Authentication configuration should be preserved when the auth type hasn't changed; if the spec changes the auth type, the spec wins
+- Custom test scripts, pre-request scripts, and assertions attached to a request are never touched by the sync
+- A full-reset option should be available to completely overwrite all request values from the spec (still keeping scripts/tests/assertions)
+- A way to compare what has actually changed between a spec version and the current request should be available, so the UI can show a diff to the user
+
+## Why This Matters
+
+Users invest time customizing requests with real values and environment variable references. Losing all of that on every spec re-sync is a serious workflow blocker. Intelligent merging makes spec updates practical for teams that maintain living API specifications.

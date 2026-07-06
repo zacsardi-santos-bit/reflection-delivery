@@ -1,5 +1,13 @@
-I'm hitting a test ordering problem in the Quarkus test framework and could use a hand. The way our setup works, each Quarkus application profile gets its own classloader, so tests with different profiles end up being loaded by different classloaders. The existing orderer groups tests by profile and their test resource annotations, but it completely ignores classloader boundaries, so when the framework has already split tests into distinct classloaders the orderer will happily intermix those groups. That's bad because interleaving tests from different runtime environments forces the framework to start and stop applications more times than needed, and it can trigger subtle resource conflicts, basically slower runs and flakier failures.
+## Description
 
-What I want is for the orderer to detect when the test classes actually come from more than one distinct classloader, and when that's the case it should group all tests from the same classloader together, sorted alphabetically by classloader name, while still respecting whatever secondary ordering applies within each group (alphabetical class name order or an explicit ordering annotation, whatever's configured). If every test shares the same classloader, then nothing changes and it keeps using the existing profile- and resource-based logic exactly as before.
+When running a Quarkus test suite that contains tests belonging to different application contexts (each with its own classloader), the test class orderer does not account for classloader boundaries. The orderer only understands how to group tests by profile and test resources, so when the test framework has already assigned test classes to distinct classloaders, the orderer may intermix those groups — potentially triggering unnecessary application restarts or resource conflicts.
 
-Oh and as part of this I need four little placeholder test classes created in a new subpackage so the multi-classloader ordering tests have concrete classes to point at. They're just plain empty classes, but they have to live in their own package rather than being inner classes of the test file.
+## Expected Behavior
+
+- When test classes have been loaded by multiple distinct classloaders, the orderer should recognize this and group all tests from the same classloader together.
+- Within each classloader group, any configured secondary ordering (such as alphabetical class name order or an explicit ordering annotation) should still be respected.
+- When all test classes share the same classloader, the existing profile- and resource-based ordering should continue to work exactly as before.
+
+## Why This Matters
+
+Without this fix, tests that share a runtime environment can be interleaved with tests from a different runtime environment. This forces the framework to start and stop applications more times than necessary and can cause subtle resource conflicts. The fix ensures tests that belong together run consecutively, reducing both test execution time and the likelihood of environment-related failures.

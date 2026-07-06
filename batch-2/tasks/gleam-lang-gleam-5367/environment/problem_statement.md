@@ -1,5 +1,15 @@
-I keep hitting a nasty case in my Gleam project with a bunch of deps, where two different dependency packages both define a module with the same name and the compiler just doesn't catch it. Either it silently misses the clash or spits out something confusing that doesn't tell me which packages are fighting over the name, so I've got no way to actually fix it. I want the compiler to detect this and give me a clear error that names both packages claiming the same module name.
+## Description
 
-There's a related thing to sort out too. When a duplicate module conflict comes up, the error message needs to distinguish between two scenarios. If the two conflicting module definitions live in different packages, the error should name those two packages so I know which deps collide. But if the conflict is within the same package (two files in that same package resolving to the same module name), naming the package twice is useless, so in that case the error should show the two file paths involved instead to help me pinpoint the offending files.
+The Gleam compiler does not properly detect and report duplicate module definitions that arise from dependency conflicts. When two different packages in a project both define a module with the same name, the compiler should catch this and produce a clear, helpful error message — but currently this situation is either missed or produces a confusing error that doesn't identify which packages are in conflict.
 
-Oh and the existing within-package duplicate error messages should get updated to the cleaner phrasing that makes this distinction obvious, using distinct readable formats for each case (cross-package names packages, same-package shows paths). The relevant duplicate module detection and error rendering lives around the package compiler and error handling code in `@compiler-core/src`, so that's where the fix and the new error variants should go. Basically I just want, when a module name is defined by two different packages, a clear error stating which two packages claim it, and when it's defined twice inside one package, an error showing the two file paths, so either way I can immediately see what's conflicting.
+Additionally, when a duplicate module arises within the same package (two files in the same package resolving to the same module name), the error message should show the relevant file paths to help pinpoint the problem, rather than package names (which would be identical and therefore unhelpful).
+
+## Expected Behavior
+
+- When a module name is defined by two different packages, the compiler should produce an error that clearly states which two packages are both claiming that module name.
+- When a module name is defined twice within the same package, the compiler should produce an error that shows the two file paths involved.
+- The error messages should use distinct, readable formats for each case so developers can immediately understand the nature of the conflict.
+
+## Why This Matters
+
+Dependency conflicts involving duplicate module names can be extremely confusing to diagnose. Without a clear error, developers may see cryptic compilation failures or incorrect behavior without understanding the root cause. Providing distinct, informative error messages for both cross-package and within-package conflicts makes it much easier to identify and fix the problem.

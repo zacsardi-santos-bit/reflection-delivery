@@ -1,5 +1,17 @@
-I'm hitting a really annoying observability issue in my agent framework. We support tool deferral, where a tool can signal that it needs to run later or that it needs human approval before it proceeds, and that's a totally normal part of the workflow. Problem is the tracing/instrumentation layer treats these control-flow signals exactly like unexpected errors, so my dashboards get flooded with false-positive failures and I can't tell an actual tool crash apart from an intentional deferral anymore.
+## Description
 
-What I want is for the instrumentation that wraps tool execution to properly annotate the span when a tool defers instead of blowing up. So when a tool defers or requests approval, the span should record the type of deferral (which kind was signaled) plus any metadata the tool attached (a task ID or whatever context it included). If no metadata came along, don't put a metadata attribute on the span at all, just leave it off. And if the metadata has stuff that can't be serialized to the normal JSON-ish interchange format (custom objects with no standard serializable form, etc.), fall back gracefully to a string representation instead of throwing.
+When agent tools signal that their execution should be deferred or requires approval before continuing, the observability/tracing layer currently treats these control-flow signals the same as unexpected errors. This means trace spans for deferred tools get marked as failures, polluting dashboards with false-positive errors and making it impossible to distinguish between actual tool failures and intentional deferral behavior.
 
-The big one: in the current version of the instrumentation a deferred span should not be marked as an error, since deferral is intentional and not a failure. Oh and please keep the older/legacy instrumentation path behaving the way it does today, error-level and all, so backward compat doesn't break. This all lives in the tracing/instrumentation code that wraps tool calls, so that's where these span annotations and the error-vs-not-error decision need to happen.
+## Expected Behavior
+
+- When a tool defers its execution or requests approval, the corresponding trace span should be annotated with:
+  - The type of deferral (which kind of deferral was signaled)
+  - Any metadata the tool included with the deferral (e.g., a task ID or other context)
+- When no metadata is included with the deferral, the metadata annotation should be absent from the span entirely
+- When metadata cannot be serialized (e.g., contains custom objects with no standard serializable representation), it should fall back to a string representation
+- In newer versions of the instrumentation, a deferred tool span should NOT be flagged as an error — deferral is intentional, not a failure
+- In older/legacy instrumentation versions, the existing error-level behavior is preserved for backward compatibility
+
+## Why This Matters
+
+Developers using observability tools to monitor their AI agents need to distinguish between tools that failed unexpectedly and tools that intentionally deferred their execution. Without this distinction, monitoring dashboards show deferred tools as errors, making it difficult to understand agent behavior and diagnose actual problems.

@@ -1,5 +1,17 @@
-I'm poking at DuckDB's async query path, the pending (deferred) query stuff, and hitting a wall. Right now I can only create a pending query from a raw query string, there's no way to also hand over the bound parameter values at the same time, so anyone doing parameterized queries through the pending/streaming path is stuck either formatting values straight into the SQL string (injection risk, no reuse) or bailing out to a totally different execution pathway. I want a single call on the connection that takes the parameterized query string, a vector of values to bind against the placeholders, and a bool for whether streaming results are allowed, and it should give me back a pending result I can then execute to get correct rows.
+## Description
 
-A few behaviors I care about here. When there's a catalog error, like I reference a table that doesn't exist, I want that error to land directly on the pending result immediately, before I even call execute. But a value type conversion problem (say I try to bind a string into an integer column) should only surface later, when I actually execute the pending result. Oh and this needs to play nice with transactional statements too, like begin and commit, honoring normal isolation between concurrent connections so one connection doesn't see another's uncommitted work.
+DuckDB's asynchronous ("pending") query API currently does not support passing bound parameter values when creating a pending query. This means developers who want to use parameterized queries — which prevent SQL injection and allow efficient re-execution with different values — cannot do so through the pending execution path. Instead, they are forced to either format values directly into the query string or use a different execution pathway entirely.
 
-Separately but related, the error message when a prepared statement gets run without all its required parameter values is genuinely confusing right now, it either mumbles about a count mismatch or reports a mismatch without telling me what's actually wrong. I want it to clearly call out which specific parameter numbers have no values provided so I can just go fix those. This matters because parameterized queries are the safe, reusable way to hit the db, and clearer errors cut debugging time when I accidentally drop a param.
+Additionally, when a prepared statement is executed and some parameter values are missing, the current error messages are not informative enough. The existing messages either describe a count mismatch in vague terms or report a mismatch without identifying which parameters are missing. This makes it harder for developers to quickly understand and fix the issue.
+
+## Expected Behavior
+
+- It should be possible to create a pending (deferred) query by supplying both a parameterized query string and a vector of bound values in a single call. The pending result should be executable and return correct results.
+- Catalog-level errors (e.g., referencing a non-existent table) should be reported immediately on the pending result itself.
+- Value type incompatibilities should be surfaced when the pending result is actually executed.
+- Pending queries with bound parameters should work correctly with transactions, respecting isolation between concurrent connections.
+- When a prepared statement is run with fewer values than required, the error message should clearly identify which parameter numbers are missing their values, rather than just reporting a count mismatch.
+
+## Why This Matters
+
+Parameterized queries are a key tool for safe and efficient database access. Without support in the pending query API, developers using asynchronous or streaming workflows are blocked from using parameterized queries safely. Clearer error messages reduce debugging time when parameters are accidentally omitted.

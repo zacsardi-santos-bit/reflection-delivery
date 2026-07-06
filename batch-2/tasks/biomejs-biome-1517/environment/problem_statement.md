@@ -1,7 +1,15 @@
-I'm getting false positive lint errors from the hook-placement rule whenever I write React components inline inside my test files. Like if I define a component in a test function body and call hooks at the top level of that component, the linter flags those hooks as violations even though top-level hooks in a component are totally fine. It happens whether the component is a named function declaration or an arrow function assigned to a variable, doesn't matter, both get flagged. Same deal when I pass a hook straight to a render-helper callback in my tests (think render-hook style utilities), those get incorrectly flagged too even though that's a completely valid pattern.
+## Description
 
-The thing is the rule needs to recognize that a function matching the React component naming convention counts as a valid hook-calling context regardless of whether it's declared at the module top level or nested inside a test function body. It should use the standard naming conventions to decide what's a component versus what's a hook. So hooks at the top level of an inline-defined component should produce no diagnostic, and hooks used inside testing-helper callbacks should produce no diagnostic either.
+The lint rule that enforces correct placement of React hooks produces false positives when React components are defined inside test function bodies. If a developer writes a test that creates a React component inline — whether as a named function declaration or as an arrow function assigned to a variable — and uses hooks at the top level of that component, the linter incorrectly flags those hooks as violations.
 
-But I don't want to lose real coverage here. Hooks that are genuinely nested inside an inner, non-component function within a component (like an event handler) should still get flagged as a violation, even when that whole component is living inside a test function. That distinction is the whole point.
+Similarly, hooks passed directly as callbacks to test rendering helpers are also being incorrectly flagged, even though those patterns are entirely valid.
 
-Testing components inline is super common and valid, and right now the spurious errors force people to either suppress the rule or restructure tests in weird unnatural ways, so can you fix the hook-placement lint rule so it handles components and hooks defined inside other functions correctly?
+## Expected Behavior
+
+- Hooks called at the top level of a React component defined inside a test function body should be considered valid and should produce no lint diagnostic.
+- Hooks used inside testing-helper callbacks (e.g. passed to a render-hook utility) should produce no lint diagnostic.
+- Hooks that are genuinely called from inside a nested, non-component inner function within a React component should still be flagged as a violation, even when that component lives inside a test function.
+
+## Why This Matters
+
+Testing React components inline is a common and valid pattern. The current behavior causes developers to see spurious lint errors in their test files, forcing them to either suppress the rule or restructure their tests in unnatural ways. Fixing this allows the linter to accurately distinguish between valid hook usage and real violations, even in test code.

@@ -1,7 +1,19 @@
-I'm adding an "exists" operator to the eval results metadata filtering and could use a hand wiring it end to end. Right now on the eval results side I can only filter metadata where a field equals a value or contains a substring, but there's no way to just ask "is this field even here" regardless of value, which is a real gap since people often want to segment by whether some piece of metadata got recorded at all (like finding every run that has a `source` field set to anything) without caring what it holds.
+## Description
 
-Semantics I want: a field counts as existing if it's present in the metadata and has a meaningful value. So strings only count when they're non-empty and not just whitespace, but numbers (zero included), booleans (false included), arrays (even empty), and objects (even empty) all count as existing. A field that's missing entirely, or whose value is null, or an empty/whitespace-only string, should not count. Also, metadata field names can contain special characters like quotes or backslashes, so make sure those get escaped safely when building the DB query, otherwise things break.
+When filtering evaluation results by metadata, users can currently only match on specific values — checking whether a metadata field equals a string or contains a substring. There is no way to simply filter for results where a metadata field *exists* at all, regardless of what value it holds. This is a significant gap: users often want to segment results by whether a piece of metadata was recorded, without knowing or caring about its exact value.
 
-On the UI side, the "Exists" option should only show in the operator dropdown when the filter type is metadata, not for metrics or plugins or the other types. When "Exists" is picked there's no value to type so hide the value input, and selecting "Exists" should clear whatever value was previously set. Oh and if I switch the filter type away from metadata while "Exists" is active, reset the operator back to "Equals" so we don't end up in a weird state.
+## Expected Behavior
 
-For filter state, a metadata filter with the "Exists" operator and a field selected should count as an applied filter even though the value's empty, but only when the field's actually set. No field means it doesn't count as applied.
+- A new "Exists" filter operator should be available for metadata field filters, allowing users to find results where a metadata field is present and has a meaningful value.
+- The "Exists" operator should match records where the metadata field holds any non-empty value — numbers (including zero), booleans (including false), arrays and objects (including empty ones), and non-blank strings.
+- The "Exists" operator should NOT match records where the field is absent, null, an empty string, or a whitespace-only string.
+- Metadata field names that contain special characters (such as quotes or backslashes) must be handled correctly when filtering.
+- In the filter UI, the "Exists" option should only appear for metadata-type filters, not for other filter types (metrics, plugins, etc.).
+- When "Exists" is selected as the operator, the value input should be hidden since no value is needed.
+- Selecting the "Exists" operator should clear any previously entered filter value.
+- Switching the filter type away from metadata while "Exists" is selected should reset the operator to "Equals."
+- A metadata filter using the "Exists" operator with a field selected should count as an applied filter, even though no value is entered.
+
+## Why This Matters
+
+Without this feature, it is impossible to segment evaluation results based on metadata presence alone. For example, there is no way to quickly find all runs that have a "source" field set to any value, which makes metadata-based workflows harder to manage at scale.

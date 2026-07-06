@@ -1,5 +1,14 @@
-I'm hitting a bug with in-place assignment on slices of realized tensors. When I take a sub-range of a tensor that's already been realized and assign new computed values back into that slice, the parent tensor doesn't get updated the way I'd expect. Classic case: I've got a 4-element tensor, I slice out the last two elements, add 1 to them, and assign that back to the slice, and the parent just doesn't reflect the change. This is the pattern you hit all the time doing partial in-place updates, like a KV cache write or filling part of a buffer, so it really needs to work.
+## Description
 
-Can you fix the scheduling logic so partial and slice-based assignments actually land? A contiguous slice of a realized tensor assigned a new value should update only that slice's region in the parent and leave the rest untouched. When the computation reads from the same slice it's writing to (no real hazard), I want it done in a single computation step, no wasted intermediate copies.
+Assigning new values to a slice/view of an already-realized tensor does not work correctly. When you take a sub-range of a realized tensor and try to assign computed values back to that slice, the parent tensor is not updated as expected. This is a common pattern when, for example, updating only part of a tensor in-place (like a KV cache update or a partial buffer write).
 
-The trickier cases matter too. When two slices of the same parent overlap, so source and destination share some elements, that's a genuine read/write hazard and the result still needs to come out mathematically correct, using an extra step to handle it safely. Same deal for reversed or flipped views, they should support correct in-place assignment as well and can take the second step when there's an actual hazard. So the rule is basically: simple non-overlapping slice assignments finish in one step, genuinely hazardous overlapping ones use two. If this silently produces wrong results or burns extra steps when it doesn't need to, it's useless for the perf-sensitive paths I care about, so please get both the correctness and the step count right.
+## Expected Behavior
+
+- Taking a contiguous slice of a realized tensor and assigning a new value to that slice should update only the slice's region in the parent tensor, leaving the rest of the parent unchanged.
+- A simple slice assignment where the computation reads from the same slice being written should require only a single computation step (no unnecessary intermediate copies).
+- When two slices of the same parent tensor overlap (source and destination share some elements), the assignment should still produce the mathematically correct result, using an additional step to handle the hazard.
+- Reversed/flipped views should similarly support correct in-place assignment.
+
+## Why This Matters
+
+In-place partial updates to tensors are critical for memory-efficient workloads such as KV caches in language models. If slice-based assignment silently produces incorrect results or uses unnecessary computation steps, users cannot rely on this operation for performance-sensitive code paths.

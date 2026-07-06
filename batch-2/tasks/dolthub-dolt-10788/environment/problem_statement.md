@@ -1,5 +1,13 @@
-I'm hitting a nasty correctness bug in the table file pruning logic. When pruning runs to clean up obsolete table files on disk, it doesn't check whether any of those files are currently open by active readers. So if a file gets opened through the persister and then pruning kicks in before the file is closed, the file gets deleted right out from under the active reader, which then fails in ways that are really hard to diagnose. It's basically a race between pruning and active reads that can silently delete data that's still in use, and that's data loss in concurrent workloads which is not great.
+## Description
 
-What I want is for any table file that was opened through the persister and hasn't been closed yet to be automatically protected from deletion when pruning runs, even if that file isn't in the explicit "keep" list. Files that are neither open nor in the keep list should still get pruned like normal, no change there. The key is that the persister's open operation needs to register the file somehow so the pruning logic can detect it and skip it, so anything that opens a file and reads from it can finish successfully even if a prune happens in between.
+When the database prunes obsolete table files from disk, it does not account for table files that are currently open by active readers. If a pruning operation runs while a table file is being read, it can delete that file from disk — causing the open reader to fail unexpectedly, even though it was legitimately opened before the prune started.
 
-There's also some plumbing to fix, the lower-level file reader construction helpers need updated signatures to accept a reference-counting parameter so the persister can track the lifecycle of open files properly and know which ones are still in use. Btw make sure the reference count actually drives the protection so closing releases it and lets pruning proceed later.
+## Expected Behavior
+
+- When pruning runs, any table file that was opened through the persister and has not yet been closed should be protected from deletion, regardless of whether it appears in the "keep" list.
+- Table files that are not currently open and are not in the keep list should still be removed as usual.
+- Opening a table file through the persister should register it so that concurrent pruning operations know to preserve it.
+
+## Why This Matters
+
+This is a correctness issue: a race between pruning and active reads can silently delete data that is currently in use. Any code that opens a table file and then reads from it should be able to complete successfully, even if pruning runs in between. Protecting open files from pruning prevents unexpected failures and potential data loss in concurrent workloads.

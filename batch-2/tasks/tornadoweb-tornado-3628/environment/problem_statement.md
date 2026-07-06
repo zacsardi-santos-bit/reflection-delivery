@@ -1,9 +1,25 @@
-I've been going through Tornado and hit three separate security bugs I want fixed.
+## Description
 
-First one's in the HTTP client redirect handling. Right now when it auto-follows a redirect it just forwards all the original request headers to wherever the redirect points, even if that's a totally different host or port. That's an open-redirect credential leak waiting to happen, a malicious server could redirect me somewhere it controls and scoop up my auth tokens. So I want the client to figure out whether the redirect crosses an origin boundary (different scheme, host, or port counts as cross-origin), and when it does, strip the sensitive auth stuff before following: Authorization-style auth headers, cookie headers, and any username/password credentials embedded in the URL should all get dropped. Same-origin redirects should keep passing those through untouched, and non-sensitive headers should never get stripped no matter what.
+There are three independent security and correctness issues that need to be fixed:
 
-Second, the server-side gzip decompression has a hole in its body size enforcement. When it's set up to decompress incoming request bodies and enforce a max body size, the limit only ever gets applied to the raw compressed bytes, so a tiny compressed payload that balloons into a huge decompressed body sails right past. Classic decompression bomb. I need the decompressed size checked against that same configured limit too, and if the decompressed output blows past it the request gets rejected with an appropriate message logged.
+### 1. Sensitive headers forwarded on cross-origin redirects
 
-Third, the WebSocket masking functions don't validate the key length. The protocol says masking keys are exactly 4 bytes, but both the pure-Python implementation and the compiled C extension happily accept keys of any length, which can silently corrupt data or do something undefined. Both of them should raise a descriptive error immediately if the key isn't exactly 4 bytes.
+When the HTTP client automatically follows a redirect, it currently forwards all original request headers — including authentication credentials — to the redirect target, even when that target is a completely different server or port. A malicious server could exploit this by issuing redirects to a different host and harvesting credentials (auth tokens in headers, cookies, or URL-embedded usernames/passwords). The client should detect when a redirect crosses an origin boundary and strip sensitive auth-related headers before following it. Same-origin redirects should continue to pass these headers through unchanged.
 
-These are all real security-relevant correctness fixes (credential leakage on redirects, DoS via decompression bomb, protocol corruption on masking), so please handle all three.
+### 2. Gzip decompression ignores the body size limit
+
+When the server is configured to automatically decompress incoming request bodies and enforce a maximum body size, the size check is applied only to the compressed data. This allows a "decompression bomb": a tiny compressed payload that expands to a body far larger than the configured limit, effectively bypassing the guard. The size limit must also be enforced on the decompressed output, and requests that exceed it should be rejected with an appropriate log message.
+
+### 3. WebSocket masking function does not validate key length
+
+The WebSocket protocol mandates that masking keys are exactly 4 bytes long. The masking utility functions (both the pure-Python implementation and the compiled C extension) currently accept keys of any length without complaint. Passing a key that is not 4 bytes can produce silent data corruption or undefined behavior. These functions should immediately raise a descriptive error when given a key of the wrong length.
+
+## Expected Behavior
+
+- Cross-origin HTTP redirects should strip auth credentials from the forwarded request; same-origin redirects should preserve them
+- Decompressed request bodies must be measured against the configured size limit; oversized decompressed bodies must be rejected and logged
+- Both the Python and C WebSocket mask implementations must raise an error for any mask key that is not exactly 4 bytes long
+
+## Why This Matters
+
+These are security-relevant correctness issues. Credential leakage via open redirects is a known attack vector, and decompression bombs are a well-documented denial-of-service technique. The masking validation prevents incorrect protocol behavior that could silently corrupt data.

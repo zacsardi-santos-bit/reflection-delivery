@@ -1,7 +1,16 @@
-I'm hitting a few nasty problems with the external corpus loading in our speculative decoding system and I need them fixed together. The worst one: when a corpus load fails, say because it blows past the configured token budget, the error handler nukes all the previously loaded corpora instead of just the failed one. So a single bad load silently destroys everything I'd already loaded fine, which is brutal to debug. I need the failure path to only clean up the staged, in-progress data from the load that failed and leave every committed corpus fully intact and still available for matching afterward.
+## Description
 
-Related to that, there's no way right now to track the token budget across multiple loads and removals. I want to query how many tokens are still available before I kick off a new load, so I can tell up front whether it'll fit. The budget should drop when a corpus gets committed and go back up when a corpus is removed, so removing frees its tokens and that capacity comes back for future loads.
+Loading external corpora into the speculative decoding system has a serious correctness problem: if a corpus load fails for any reason — such as exceeding the configured token budget — all previously loaded corpora are wiped out, not just the one that failed. This is because the error-handling path currently clears the entire external corpus state rather than only rolling back the staged, in-progress load.
 
-Also, if I load a corpus with an ID that's already in use it just replaces the original without a peep. I need that rejected with a clear error saying the ID already exists, and the original corpus has to stay fully intact after the rejection, no modifications.
+Additionally, there is no mechanism to track how much of the token budget has already been consumed by previously loaded corpora, so it is impossible to know in advance whether a new load will exceed the limit. There is also no protection against loading a second corpus under an ID that already exists, which can silently replace the original data.
 
-To make all this work I think the load operation should split into two steps: the actual loading step that returns a token count, and a separate commit step that records that token count into the budget tracking. That way the budget only updates after a load is confirmed good, and a failed load never corrupts the budget state. Fix the error-handling rollback so it's scoped to just the staged data, and wire up the remaining-capacity query plus the free-on-remove behavior. This stuff matters because folks running in resource-constrained setups need reliable budget accounting and safe error recovery to build real pipelines on top of this.
+## Expected Behavior
+
+- A failed corpus load must only clean up its own staged data. All previously committed corpora must remain intact and available for matching after a failed load.
+- Duplicate corpus IDs must be explicitly rejected with a clear error. Attempting to load a corpus with an ID that is already in use must raise an error without modifying the existing corpus.
+- The system must expose the remaining token capacity so callers can check how much budget is left before initiating a new load.
+- Removing a corpus must free its tokens from the budget so that capacity becomes available again for future loads.
+
+## Why This Matters
+
+Without these fixes, a single failed load can silently destroy all previously loaded corpora, leading to hard-to-debug correctness issues. Users operating in resource-constrained environments need reliable budget tracking and safe error recovery to build production-quality pipelines on top of this API.

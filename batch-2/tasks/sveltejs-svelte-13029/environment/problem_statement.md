@@ -1,5 +1,23 @@
-I'm upgrading testing deps in the Svelte repo and a bunch of tests broke after the bump. Two separate things going on and I need both fixed so the suite goes green with the new versions.
+## Description
 
-First, tons of the legacy runtime tests that check inline styles and CSS rules are failing because they read computed color values off elements in the simulated browser env, and the old tests expected human-readable color names back. After the browser simulation library upgrade those same computed properties now come back as normalized numeric RGB. So where a test styled something "red" and expected "red", it now gets the rgb() numeric form instead. Also transparent background colors that used to come back as an empty string now return a proper normalized RGBA value instead of "". I need all the affected expected values across those runtime style/CSS tests updated to the normalized numeric color format the new environment produces, so computed color assertions use rgb() notation not named colors, and transparent bg reports as an rgba() value rather than empty string.
+The Svelte test suite has grown out of sync with the behavior of its testing dependencies, causing a significant number of tests to fail after a dependency upgrade. The tests need to be updated to match how the upgraded environment actually behaves.
 
-Second, the preprocessor tests that diff source map output against saved JSON snapshots are failing because the upgraded source map generation library now sticks an extra metadata field into its output that wasn't there before, so the actual map doesn't match the saved fixtures which don't have it. I want the comparison logic to strip that new extra field out of the actual source map before it's compared to the expected snapshot, so the diff ignores it. Can you sort out both? These failures are blocking the whole dependency upgrade.
+Two distinct issues arise:
+
+**CSS Color Normalization**
+
+The simulated browser environment used for testing previously returned CSS color values exactly as they were specified — for example, querying the computed color of an element styled as "red" would return the named color string. After upgrading the browser simulation library, the same query now returns the normalized numeric RGB form. Similarly, a transparent background color that previously returned an empty string now returns a proper RGBA value. Dozens of inline style and CSS tests across the legacy runtime test suite fail because they still expect the old named-color format rather than the normalized numeric form.
+
+**Source Map Field Handling**
+
+The library used for generating source maps during preprocessing was also updated. The newer version includes an extra field in the source map output that wasn't there before. Tests that compare preprocessor source map output against saved JSON fixtures fail because the extra field is not present in the saved snapshots. The comparison logic needs to strip this new field before performing the comparison.
+
+## Expected Behavior
+
+- Computed color style assertions should use normalized numeric RGB notation rather than named color strings
+- A transparent background color should report as a proper RGBA value, not an empty string
+- Source map comparisons in the preprocessor test suite must ignore the new extra field added by the updated source map library
+
+## Why This Matters
+
+These test failures block the dependency upgrade. Getting the suite green again is necessary to ship the dependency updates and keep the project on current tooling.

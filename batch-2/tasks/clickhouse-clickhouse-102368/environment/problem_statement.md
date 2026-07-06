@@ -1,3 +1,14 @@
-I'm chasing down a silent data loss thing with ClickHouse reading files out of Google Cloud Storage through the object storage table function. When GCS serves a file using decompressive transcoding (which kicks in when the object was stored compressed), it strips the file size out of the HTTP response headers because it doesn't know the decompressed size ahead of time. Trouble is ClickHouse treats that missing size as if the file is zero bytes, and then the skip-empty-files optimization quietly drops it and hands me back zero rows. No error, no warning, just wrong results, which is brutal to diagnose because nothing tells you anything went sideways.
+## Description
 
-What I want is for the object storage reader to actually tell the difference between a file the server explicitly reports as zero bytes versus one where the size just wasn't reported at all. When the size is genuinely unknown (header absent), don't skip, go ahead and read the response body and return all the available data. The empty-file optimization should only trigger when the server explicitly says size is zero. So the behavior split is: size present and zero means skip is fine, size absent means read everything and return every record. Please make sure querying a GCS-hosted compressed file through the table function comes back with all its rows instead of an empty set.
+When querying files stored in Google Cloud Storage that were uploaded with compression, GCS can perform "decompressive transcoding" — transparently decompressing the object before delivering it to the client. Because the final uncompressed size is not known ahead of time, GCS omits the file size from its HTTP response headers entirely.
+
+ClickHouse's object storage reader currently treats a missing size header as a file size of zero. This interacts badly with the "skip empty files" optimization, which silently skips the file and returns zero rows without any error or warning.
+
+## Expected Behavior
+
+- When ClickHouse queries a file via the object storage table function and the server's response does not include a size header, ClickHouse should read and return all available data from the response body.
+- The empty-file optimization should only apply when the server explicitly reports a size of zero — not when the size is simply absent.
+
+## Why This Matters
+
+Users querying GCS-hosted compressed files through ClickHouse get silently empty result sets. There is no error, no warning — just missing data. This makes the bug particularly hard to diagnose. The fix should ensure that all records are returned when the remote server does not provide a size hint.

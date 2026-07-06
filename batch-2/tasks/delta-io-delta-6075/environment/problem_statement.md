@@ -1,3 +1,16 @@
-I'm building out the DSv2 streaming connector for Delta Lake and I need to lay the groundwork for Change Data Capture streaming. Right now the internal file-tracking structure the streaming reader uses only knows about two things: a positional marker entry (a sentinel with no backing file) and a plain data file entry. There's no way to represent a CDC file that carries both the underlying file reference and its change metadata, like the change type (insert, update, delete) and the commit timestamp, so I can't push that info through the streaming path at all. That's blocking CDC-enabled Delta tables on DSv2, and consumers who want row-level change data through the DSv2 API just can't get it today, whereas the DSv1 path already does this, so I'm trying to match that behavior.
+## Description
 
-So I want a new class that wraps a regular data file together with its CDC metadata (the change type and the commit timestamp) so the streaming path can carry it alongside the file reference. And while I'm in there, I want to clean up how the sentinel entries get made, because right now the code passes null into the constructor to mean "no file" which is fragile and doesn't say what it means. Instead the existing file entry class should use explicit named static factory methods, three distinct ones: one for sentinels (no file action), one for regular data file entries, and one for CDC file entries. Sentinels shouldn't have a meaningful file size, so trying to read the size off a sentinel should raise an error rather than return something bogus. Also the string representation of each entry type should clearly show which kind it is along with its key fields, so it's obvious at a glance whether you're looking at a sentinel, a regular file, or a CDC file.
+The DSv2 streaming connector for Delta Lake needs support for Change Data Capture (CDC) reads. Currently, the internal file tracking structure used by the streaming reader has no concept of CDC file entries — it can only distinguish between positional marker entries (sentinels) and plain data file entries. This makes it impossible to carry CDC-specific metadata such as the type of change (insert, update, delete) and the commit timestamp through the streaming pipeline.
+
+Additionally, creating sentinel entries currently requires passing null to the class constructor, which is error-prone and does not clearly express intent.
+
+## Expected Behavior
+
+- A new type of file entry should wrap a regular file with CDC metadata (change type and commit timestamp), enabling the streaming path to carry that metadata alongside the file reference.
+- The internal file representation should use explicit, named factory methods for the three distinct entry types: positional markers (sentinels), regular data file entries, and CDC data file entries.
+- Sentinel entries should not expose a file size — attempting to access the size of a sentinel should result in an error.
+- The string representation of each entry type should clearly identify which kind of entry it is and its key fields.
+
+## Why This Matters
+
+Without this foundation, the DSv2 streaming connector cannot support CDC-enabled Delta tables. Consumers that need to stream row-level change data (inserts, updates, deletes) through the DSv2 API have no way to receive or interpret that information today. These changes provide the building blocks needed to match the CDC streaming behavior available through the DSv1 path.

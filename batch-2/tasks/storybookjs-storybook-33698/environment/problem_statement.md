@@ -1,5 +1,16 @@
-I'm working on Storybook's TypeScript file loader and want to fix how it resolves import paths in `@code/core/src`. Right now the loader figures out whether a candidate file exists by calling a per-file existence check for each possible extension, so an extensionless import triggers a bunch of separate filesystem calls, and when a file has tons of imports that adds up fast. I'd rather read the whole directory's contents once and cache that, so we only hit the filesystem a single time per directory instead of once per candidate file. Oh and I need a way to clear that cache too, some kind of reset function callers can invoke so state doesn't bleed between operations.
+## Description
 
-There's also an actual correctness bug. A lot of our users' TypeScript projects are set up with modern module resolution, which means they write their import paths with a `.js` extension even though the real files on disk are `.ts`. Our loader currently just ignores those `.js`-extension imports and leaves them as-is, so it can't find the right source files. I want it to detect when a `.js` import has a matching TypeScript source file (same base name, same directory) and rewrite the import to use the `.ts` extension instead. Important bit: this rewrite should be totally silent, no deprecation warning, because it's an intentional pattern in those projects, not a mistake.
+Storybook's TypeScript loader currently checks whether each candidate file exists by making individual filesystem calls per file. This is inefficient when processing files with many imports — each extensionless import triggers multiple separate existence checks. We should batch these into directory-level reads and cache the results.
 
-To be clear on the edges: imports that already have a TypeScript extension, or some other extension we can't remap, should be left completely untouched. Extensionless imports should keep working exactly like before, still getting resolved and still triggering the existing deprecation warning. It's only the `.js`-to-`.ts` case that's new and silent, and the caching plus reset that changes how we talk to the filesystem.
+Additionally, many TypeScript projects using modern module resolution are configured to write import paths with `.js` extensions even though the actual source files are `.ts`. The loader currently leaves these `.js`-extension imports untouched, which means it cannot resolve them to the correct TypeScript source files. We need the loader to detect when a `.js` import corresponds to an existing `.ts` source file and rewrite the import path accordingly — without triggering a deprecation warning, since this is a legitimate pattern, not an oversight.
+
+## Expected Behavior
+
+- Import paths that use a `.js` extension should be rewritten to `.ts` when a TypeScript source file with the same base name exists in the same directory.
+- Imports that already carry a TypeScript or other non-remappable extension should be left unchanged.
+- Extensionless imports should continue to be resolved and trigger a deprecation warning as before.
+- Directory contents should be read once per directory and cached internally. A mechanism to clear this cache must be provided so that callers can reset state between operations.
+
+## Why This Matters
+
+TypeScript projects configured with modern module resolution settings write `.js` extension imports in source files even though the actual files on disk use `.ts` extensions. Without this fix, Storybook's loader cannot handle those projects correctly. The caching improvement also reduces unnecessary filesystem I/O when the same directory is referenced by multiple imports.

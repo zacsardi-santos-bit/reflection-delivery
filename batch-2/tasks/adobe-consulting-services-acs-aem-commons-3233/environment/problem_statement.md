@@ -1,3 +1,14 @@
-So I've been poking at the annotation processor in our AEM Commons project, the one that auto-generates the OSGi component registration boilerplate for our dialog-provider classes, and it's throwing build warnings the second anyone compiles with Java 11 or newer. The reason is it only advertises support for Java 8 right now, and I want it to declare support for the latest source version available at compile time instead so those warnings go away for good. While you're in there, the generated source files are writing hardcoded Unix newlines, which bites us across platforms, so please switch that over to the system line separator (whatever the JVM reports as the platform native one) so the output is consistent whether someone's on Windows, macOS, or Linux.
+## Description
 
-Behavior-wise here's the deal: the processor should generate a registration class, dropped into a sub-package named "impl" relative to the annotated class's own package, whenever that annotated class actually provides a resource type. And "provides a resource type" can happen three ways, either through a dedicated method, or via a field, or as an attribute carried on another annotation that's applied to the class. If none of those paths give us a resource type, then don't generate anything at all, no file for that class. Oh and the processor needs to correctly report which annotation it handles too, alongside reporting the latest supported source version. Basically I want the getSupportedAnnotationTypes side and the getSupportedSourceVersion side both behaving right.
+The annotation processor that automatically generates dialog resource provider registration classes for AEM components is causing build warnings on Java 11 and higher. These warnings appear because the processor currently declares support only for Java 8, even though developers are now building with newer Java versions. Additionally, the generated registration classes contain hardcoded Unix-style line endings, which can produce inconsistent results across different operating systems.
+
+## Expected Behavior
+
+- The annotation processor should declare support for the latest Java version available during compilation, rather than being limited to Java 8. This removes the warnings seen on Java 11 and higher.
+- The code generator should use the platform-native line separator when writing generated source files, ensuring consistent results on Windows, macOS, and Linux.
+- When a class annotated to be a dialog provider does not expose a resource type (either through a method, a field, or another annotation's attribute), the processor should generate no additional source file for that class.
+- When a class does expose a resource type via any of these mechanisms (a dedicated method, a field, or from another annotation that carries the resource type), the processor should generate a registration class in the appropriate sub-package.
+
+## Why This Matters
+
+Developers building with Java 11+ currently see unnecessary build warnings because of this outdated Java version declaration. Fixing both the version declaration and the line-separator issue brings the annotation processor in line with current best practices and makes generated code portable across different development environments.

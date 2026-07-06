@@ -1,7 +1,14 @@
-I'm cleaning up our container replication service and I want to kill the dual-mode data transfer thing once and for all. Right now the service picks between two transfer modes based on a boolean flag passed into the constructor, and honestly it's been a pain because it forced us to duplicate the entire test suite, one run for the standard path and one for the optimized "zero-copy" path. The way we shared logic between the two was an abstract base class with two concrete subclasses, which just adds complexity without buying us anything real.
+## Description
 
-So here's what I want. The replication service constructor should stop accepting that boolean flag for selecting transfer mode, it just operates as a single unified implementation now, no callers picking a mode. And the config option that enabled or disabled the optimized transfer mode needs to come out of the service setup code entirely.
+The container replication service currently supports two modes of data transfer, controlled by a boolean flag passed at construction time. This dual-mode design has caused the entire test suite for this service to be duplicated: once for the standard mode and once for the optimized transfer mode. The abstract base class pattern used to share test logic between the two variants adds unnecessary complexity without providing real value.
 
-On the test side, please delete the duplicate zero-copy variant tests, both the replication service test subclass and the EC key output stream variant. Oh and the EC key output stream test class shouldn't extend the abstract base anymore, I want it refactored into a standalone concrete class that sets up its own config without any zero-copy toggle.
+## Expected Behavior
 
-The whole point here is we're maintaining two parallel code paths and two parallel test suites for the same functionality, which is just maintenance burden and slower test cycles. Consolidating into one implementation drops the duplication, simplifies the API, and makes this easier to live with going forward.
+- The replication service should operate as a single, unified implementation without requiring callers to select a transfer mode via a boolean parameter.
+- The configuration for enabling or disabling the optimized transfer mode should be removed from the service setup.
+- All tests that exercised the duplicate "zero-copy" variant (separate subclasses for both the replication service and the EC key output stream tests) should be removed.
+- The EC key output stream test class should stand on its own as a concrete class rather than extending an abstract base.
+
+## Why This Matters
+
+Maintaining two parallel code paths and test suites for the same functionality adds maintenance burden and slows down the test cycle. Removing the feature toggle and consolidating into a single implementation reduces duplication, simplifies the API, and makes the codebase easier to maintain going forward.

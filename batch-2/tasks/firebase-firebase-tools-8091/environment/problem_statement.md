@@ -1,3 +1,14 @@
-I'm bumping the JSON schema validation library we use for firebase config validation up to a newer major version because I need it to play nice with newer TypeScript tooling, but the upgrade broke things. The new major changed its error object API on me, specifically the property that used to tell you where in the config a validation error happened got renamed, and the path format switched from dot notation to forward-slash notation. So our validator code and the surrounding tests still reference the old property name and the old dot-separated paths, which is why the firebase config validation is currently broken.
+## Description
 
-I want the validator updated to work against the new library version. After the upgrade, validation errors should report the problem location using the new property name the updated library introduced, and the location string should use slash separators instead of dots, so a nested field that used to show up in dot notation now shows up slash-separated, and a root-level error should come back with an empty path string. Everything else about the validation logic needs to keep working exactly as before, so it should still flag unknown top-level fields, catch missing required properties, and detect fields with the wrong type. It's really just the way error locations get reported that's changing here, the detection behavior stays the same.
+The firebase config validation tests are broken because the JSON schema validation library has been updated to a newer major version, and the new version changed the API for reporting error locations. Specifically, the property on error objects that identifies where in the config a problem occurred was renamed, and the path format it uses was also updated. Our existing code and tests still reference the old property name and old path format.
+
+## Expected Behavior
+
+- Validation errors should report the location of the problem using the new property name introduced by the updated library version
+- The path format in error objects should use forward-slash separators instead of the old dot-separated format
+- For root-level errors, the path should be an empty string
+- All existing validation logic (detecting unknown fields, missing required properties, wrong types) must continue to work correctly
+
+## Why This Matters
+
+The validation library upgrade is necessary for compatibility with newer TypeScript versions, but the upgrade introduced breaking API changes. Without updating the code to use the new error object format, the config validation feature is broken — errors cannot be properly reported or tested.

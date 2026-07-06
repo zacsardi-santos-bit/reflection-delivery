@@ -1,5 +1,15 @@
-I'm adding Microsoft Edge as a web target device in the Flutter tooling and right now it just never shows up in the list of available web devices, even on Windows where a modern Chromium-based Edge is installed. Developers building Flutter web apps want to test across multiple browsers, and now that Edge is based on the same engine as Chrome it's a legit deployment target, so I want it discoverable through the standard device workflow without any manual config.
+## Description
 
-Here's the behavior I'm after. On Windows the tool should detect whether a sufficiently modern (Chromium-based) version of Edge is installed by actually querying the installed version from the system, and only if that version meets the minimum requirement for the Chromium transition should Edge appear in the available web devices list. If the installed version is too old (predating the Chromium switch to the older EdgeHTML-era builds) then it shouldn't be listed at all. Also on Linux and macOS Edge should never appear since it's not supported there. And obviously if Edge isn't installed, or can't be launched for whatever reason, it shouldn't show up either. When it does get listed it should report its name as "Edge".
+Flutter's web tooling should support Microsoft Edge (the modern Chromium-based version) as a discoverable and usable web development target on Windows. Currently, Edge never appears in the list of available web devices, even on Windows systems where a compatible version of Edge is installed. This means developers cannot select Edge for running or testing their Flutter web applications through the standard device workflow.
 
-The web device detection logic lives around `@packages/flutter_tools/lib/src/web/web_device.dart` so that's where the Edge device support and the version-check gating should go.
+## Expected Behavior
+
+- On Windows, the tool should automatically detect whether a sufficiently modern (Chromium-based) version of Edge is installed by querying the installed version from the system.
+- If the installed version meets the minimum requirement for Chromium-based Edge, it should appear in the list of available web devices.
+- If the installed version is too old (predating the Chromium transition), Edge should not be listed.
+- On Linux and macOS, Edge should never appear in the device list since it is not supported on those platforms.
+- If Edge is not installed or cannot be launched, it should not appear in the device list.
+
+## Why This Matters
+
+Developers building Flutter web apps want to test across multiple browsers. Edge is a major browser on Windows and, now that it's based on the same engine as Chrome, it is a legitimate and useful deployment target. Exposing it as an available device gives developers a convenient way to run and debug their apps in Edge without extra manual configuration.

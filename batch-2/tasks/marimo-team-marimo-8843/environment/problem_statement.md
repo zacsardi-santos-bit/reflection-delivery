@@ -1,5 +1,14 @@
-I'm reworking how our notebook backend tells the frontend (and other downstream consumers) about structural changes, because the current setup is too coarse. Right now when a cell gets added, deleted, or modified we fire off separate low-level notifications that carry bulk state, full arrays of codes, cell IDs, configs, that kind of thing, and the receiving side has to diff before/after to figure out what actually happened. It's a pain and it's ambiguous, e.g. you can't always tell if something was an update or a reorder.
+## Description
 
-What I want instead is for each batch of edits to get packaged as a single transaction notification containing discrete, typed operation records, one per event: create cell, delete cell, update code, update config, and reorder. Consumers should just iterate the ops and apply them directly, no state diffing. The transaction needs to serialize to plain structured data so anyone can inspect and act on it, and importantly every transaction has to include the full new cell ordering as a reorder operation so consumers can always reconstruct the current document order.
+The current mechanism for notifying the frontend (and any downstream consumers) about notebook structural changes is too coarse-grained. When cells are added, deleted, or updated, separate notifications are emitted carrying bulk state — full lists of codes, cell IDs, and configurations — rather than precise descriptions of *what changed*. This makes it difficult for receiving parties to reconstruct exactly what happened and apply those changes efficiently.
 
-Also the context that manages these ops currently derives the initial notebook snapshot from the kernel, but I'd rather feed it an explicit, settable document object so it knows the starting state before any changes land. Oh and one more thing, the cell name field should default to an empty string when no name's been assigned rather than returning something absent, so callers can always safely treat it as a string.
+## Expected Behavior
+
+- Structural operations on a notebook (create cell, delete cell, update code, update config, reorder) should be represented as discrete, typed operation records bundled together in a single transaction notification.
+- A transaction notification should be serializable to plain structured data that consumers can inspect and act on.
+- Each transaction must include the complete new ordering of cells as a reorder operation, so consumers can always reconstruct the current document order.
+- The cell name field should consistently default to an empty string when no name has been set, so callers never need to handle an absent value.
+
+## Why This Matters
+
+With a structured, operation-based protocol, the frontend and other consumers can apply the exact operations that were performed rather than diffing old and new state. This enables cleaner replication, better collaboration support, and removes ambiguity about whether a change was an update or a structural reorganization.

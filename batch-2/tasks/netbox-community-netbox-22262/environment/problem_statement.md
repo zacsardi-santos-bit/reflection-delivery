@@ -1,7 +1,16 @@
-I'm hitting a data-correctness bug in cable filtering. When I filter cables by site or location, any cable that has one or both endpoints connected via a circuit termination just silently disappears from the results, even when that circuit termination clearly belongs to the site or location I'm querying. Cables whose endpoints are other types like device ports or racks show up fine, so it's specific to circuit terminations.
+## Description
 
-The way I understand it, we cache site and location info on each cable endpoint record so the site and location filters can run efficiently against that cached data. The problem is that when the endpoint is a circuit termination, the caching logic only grabs the site, and it's even doing that via the wrong field, and it completely ignores the location. So those cables end up invisible to both filters.
+When filtering cables by site or location, any cable that has one or more endpoints connected via a circuit termination is silently omitted from the results, even when that circuit termination genuinely belongs to the queried site or location.
 
-What I want is for both the site and the location of a circuit termination to get captured and stored on the corresponding cable endpoint record. If a circuit termination is associated with a specific location, any cable attached to it should come back when I filter by that location. And if it's associated with a site (whether directly or through its location), the cable should come back when I filter by that site too. Basically the cached values need to be correct for circuit termination endpoints just like they already are for the other endpoint types, so a cable terminated on either end via a circuit shows up in the filtered results.
+This is a data-correctness bug. The system maintains cached site and location information on each cable endpoint record so that site/location filters can run efficiently. However, when the endpoint is a circuit termination, the caching logic only captures the site (and even then, via the wrong field), while completely ignoring the location. As a result, cables whose endpoints are circuit terminations are effectively invisible to site and location filters.
 
-This matters because network managers rely on these filters to see the complete cabling picture in a given area, and silently dropping circuit-connected cables leaves them planning and troubleshooting with incomplete data.
+## Expected Behavior
+
+- A cable connected on one or both ends via a circuit termination should appear in results when filtering cables by the site or location associated with that circuit termination.
+- Both the site and the location of a circuit termination must be captured and stored on the corresponding cable endpoint record.
+- A circuit termination that is associated with a specific location should cause any attached cable to be retrievable by that location filter.
+- A circuit termination that is associated with a specific site (directly or through a location) should cause any attached cable to be retrievable by that site filter.
+
+## Why This Matters
+
+Network managers rely on site and location filters to get a complete picture of the cabling in a given area. When cables connected to circuits are silently excluded, those managers are working with incomplete data, which can cause confusion and errors during infrastructure planning and troubleshooting.

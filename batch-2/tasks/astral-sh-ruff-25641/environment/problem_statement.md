@@ -1,5 +1,15 @@
-I'm hitting a formatting bug with our Python formatter that's messing up Quarto cell options. Quarto uses these special comments where a pipe character comes right after the hash with no space, like `#|`, to mark cell-level metadata (stuff like whether to echo output, figure dimensions, etc.), and some external notebook and document authoring tools depend on that exact format. Problem is, the formatter's comment normalization pass, which inserts a single leading space after the hash when one's missing, is happily rewriting `#|` into `# |` and breaking those tools.
+## Description
 
-The formatter already knows how to leave certain special comment prefixes alone. Shebang-style, Sphinx-style, pweave-style, and double-hash comments all get preserved verbatim today, so I want the pipe-prefixed style added to that same exempt list. Any comment where the pipe sits immediately after the hash with no intervening space should be left completely untouched, exactly as written.
+The Python formatter normalizes comments by inserting a single leading space after the hash character when one is missing. However, certain special comment prefixes are intentionally exempt from this normalization and must be preserved verbatim, because external tools rely on the exact format of those comments.
 
-This has to work in both directions, so when I run it on a standalone `.py` file and when I run it on Python code blocks embedded in Quarto markdown documents. And the key subtlety: if a code block has both a pipe-prefixed cell option comment and regular Python code, only the Python should get reformatted normally. The cell option comment itself stays put, no space inserted, no changes at all.
+Currently, the formatter already preserves shebang-style, Sphinx-style, pweave-style, and double-hash comments unchanged. However, it does not yet preserve pipe-prefixed comments (those with a pipe character immediately after the hash), which are used by some notebook and document authoring tools as structured cell-level metadata markers. When the formatter encounters a pipe-prefixed comment, it incorrectly rewrites it by inserting a space, breaking compatibility with those tools.
+
+## Expected Behavior
+
+- Pipe-prefixed comments (those starting with a pipe character immediately after the hash, with no intervening space) should be left completely untouched by the formatter, just like the other special comment prefix types.
+- This preservation should apply when formatting both standalone Python files and Python code blocks embedded in Quarto markdown documents.
+- Python code within the same block as these cell option comments should still be reformatted normally — only the pipe-prefixed comments themselves are exempt.
+
+## Why This Matters
+
+Quarto documents use pipe-prefixed comments to specify cell-level options (like whether to echo output, set figure dimensions, etc.). If the formatter modifies these comments, it breaks the document's functionality. Users formatting Quarto-related Python files or Quarto documents should be able to do so without the formatter corrupting their cell option annotations.

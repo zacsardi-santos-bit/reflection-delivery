@@ -1,7 +1,16 @@
-I've got a bunch of endpoints and training jobs that were spun up through JumpStart, and it's annoying that I still have to hand the SDK the model id and version every time I want a predictor or want to attach to a job. JumpStart already tags these resources with the model identity when it creates them, so the SDK should just read those tags and configure itself. What I want is this: when I call the predictor retrieval helper for an existing endpoint I should be able to leave out the model identifier and have it inferred from the endpoint's tags, and same deal when attaching to a completed training job, pull the model id from the training job's tags instead of me supplying it. If the resource wasn't created by JumpStart, or the tags aren't there or are ambiguous, don't silently build a misconfigured predictor or estimator, raise an error instead so I know inference failed.
+## Description
 
-The other big gap is the newer inference-component style endpoints (not the traditional model-based hosting). Right now predictor retrieval just fails for those even when JumpStart made them. So handle it: if there's exactly one inference component, discover it automatically, if there are multiple, make me specify which inference component name to use, and if I already passed an inference component name explicitly, just use that directly without doing extra lookups.
+When working with endpoints or training jobs that were originally deployed or run using JumpStart, users currently have to manually supply the model identifier and version to retrieve a predictor or attach to a training job. This is inconvenient because JumpStart already tags these resources with the model identity at creation time — the SDK should be able to read those tags automatically and configure itself without requiring the user to supply information it can already infer.
 
-Oh and there's a helper that maps an AWS region name to its partition that's currently private, I'd like that promoted to the public API since it's genuinely useful on its own.
+Additionally, the SDK does not yet support the newer style of endpoint that uses inference components (rather than traditional model-based hosting), so predictor retrieval fails for such endpoints even when they were created by JumpStart.
 
-This all matters because I want to resume working with stuff I deployed earlier without tracking and re-passing the original model identifier, and because inference-component endpoints are becoming the norm so they need to just work.
+## Expected Behavior
+
+- When retrieving a predictor for an existing endpoint, the model identifier should be inferred automatically from the endpoint's tags if it is not explicitly provided. If the endpoint uses inference components, the SDK should handle this correctly, discovering the appropriate inference component automatically when there is exactly one, or requiring the user to specify it when there are multiple.
+- When attaching to an existing training job, the model identifier should be inferred from the training job's tags if it is not explicitly provided.
+- An error should be raised when the model identity cannot be inferred (e.g., the resource was not created by JumpStart or has no recognizable tags).
+- A utility function for determining the AWS partition from a region name should be available as part of the public API.
+
+## Why This Matters
+
+These improvements reduce friction for users who want to resume working with previously deployed JumpStart resources without needing to track and re-supply the original model identifier. They also ensure compatibility with inference-component-based endpoints, which are becoming more common.

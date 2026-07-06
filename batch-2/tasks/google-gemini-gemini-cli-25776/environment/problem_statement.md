@@ -1,5 +1,15 @@
-I'm poking at the agent-to-agent comms layer in the CLI and hit two things I want cleaned up.
+## Description
 
-First one's about status messages. When we're talking to a remote agent, that agent streams intermediate status messages while it chews on a request, and right now we collect those internally but never actually show them. The user just stares at a generic "working" placeholder the whole time no matter how many messages came through. I want each message the agent sends during a session to surface as its own separate, completed activity item, so when the current activity list gets queried it returns one finished entry per message instead of that single static spinner. Basically let people see what the agent was saying as it worked.
+When the CLI is communicating with a remote agent, that agent can send intermediate status messages during processing to signal its progress and thoughts. These messages are currently being collected internally but are never surfaced individually to the user as distinct activity entries. As a result, users see only a generic "working" placeholder regardless of how many status messages the agent has sent.
 
-Second thing, the method that refreshes the agent registry after a config change (the one that re-registers or unregisters agents) is private, so there's no clean way to trigger a reload from outside the class. I want a proper public reload interface on the registry so callers and tests don't have to reach into private internals. Oh and there's a bug in that reload path: init runs twice, once in the reload itself and once again in a post-reload callback, which corrupts the registered agent state. The symptom is agents that got disabled and then re-enabled don't show up correctly after a reload. Kill the double-initialization so a reload actually reflects the latest config, meaning disabled agents get unregistered and re-enabled ones get properly registered, no weird side effects.
+Additionally, the mechanism for reloading the agent registry — which is responsible for re-registering or unregistering agents when the configuration changes — is only reachable as a private implementation detail. This makes it impossible to trigger cleanly from outside the class. There is also a bug in the reload flow: when the reload is triggered, the registry ends up being initialized twice (once during the reload itself and once in the post-reload callback), which corrupts the registered agent state. This causes agents that were disabled and then re-enabled to not appear correctly after a reload.
+
+## Expected Behavior
+
+- Each status message received from a remote agent during a session should be returned as a separate, completed activity item when the current activity list is queried.
+- The agent registry should expose a public reload interface so that callers can trigger re-registration without accessing private internals.
+- After triggering a reload, agents that were disabled should be unregistered and agents that were re-enabled should be properly registered, with no double-initialization side effects.
+
+## Why This Matters
+
+Users should be able to see the intermediate messages an agent sends while it works, rather than a static spinner. Hiding the reload mechanism as a private detail also makes the agent registry difficult to use correctly from external code and tests, and the double-initialization bug silently prevents re-enabled agents from becoming available after a configuration change.

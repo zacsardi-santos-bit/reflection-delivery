@@ -1,5 +1,16 @@
-I've got two small cleanups to knock out in the ClickHouse repo, both maintenance stuff.
+## Description
 
-First one, there's a CI script that exports code coverage data and it hands a row-read limit option to the database client through the client options string. We don't need that limit for this use case anymore, and honestly if the server stops accepting it that could start throwing errors, so I just want it gone from the options string in that coverage exporter script. Nothing else in the script should change, just drop that one option.
+Two separate maintenance cleanups are needed in the repository:
 
-Second thing is an integration test helper that polls until enough refresh cycles have finished. The original version tracked a max timestamp value pulled from the batch log to build a kind of frontier, but that turned out to be flaky because when the dependency cycle re-ran a wave you'd get duplicate rows landing without the timestamp actually advancing, so the wait check couldn't be trusted. It's been reworked to just count rows instead, which is way simpler and doesn't have that duplicate problem. I need the function renamed so its name reflects the row-counting behavior rather than the old timestamp-tracking idea, and every usage in the file has to be updated too. The old timestamp-based name shouldn't show up anywhere in that test file once you're done.
+1. **Remove an unnecessary query option from the coverage exporter**: The CI script that exports code coverage data passes a row-read limit option to the database client. This option is no longer needed for this use case and should be removed from the client options string.
+
+2. **Rename a fragile integration test helper**: An integration test helper function that polls until a sufficient number of refresh cycles have completed was originally implemented by tracking a maximum timestamp value from the batch log. This approach was fragile — when the dependency cycle re-ran a wave, duplicate rows could appear without advancing the timestamp, making the check unreliable. The function has been reworked to simply count rows, which is simpler and more robust. The function should be renamed to reflect its new row-counting behavior rather than its old timestamp-tracking identity. All usages of the old name must also be updated.
+
+## Expected Behavior
+
+- The coverage exporter script no longer references the now-unnecessary row-read limit option.
+- The integration test helper function has a name that reflects counting rows, and the old timestamp-based name no longer appears anywhere in that test file.
+
+## Why This Matters
+
+These changes remove a deprecated option from the CI pipeline (preventing potential errors if the server no longer accepts it) and make the integration test helper less fragile by switching from a timestamp-frontier approach to a straightforward row count.

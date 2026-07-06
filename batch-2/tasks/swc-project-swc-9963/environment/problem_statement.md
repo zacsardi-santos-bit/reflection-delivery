@@ -1,5 +1,20 @@
-I'm pulling an external string interning library in-tree as a new internal crate and I want it to live at `@crates/hstr` and be wired into the workspace so we can iterate on it alongside everything else. It gives us an immutable string type (think atoms) optimized for fast hashing and equality, plus a companion store that manages collections of these strings efficiently, and I need both the immutable string type and the store type exposed as public exports from the crate.
+## Description
 
-The behavior I really care about getting right: when I create two atoms from the same string content in the same store, they should be pointer-identical internally, so same store plus same content means shared internal representation. But when I intern the same content across two different stores, the resulting atoms should use separate internal storage (different addresses) while still comparing as equal and producing the same hash, that way cross-store use in hash-based collections stays reliable. Oh and the same string should always hash to the same value no matter which store it came from.
+The hstr crate — a high-performance string interning library — currently exists as an external dependency. We want to bring it directly into this repository as an internal crate so it can be developed, tested, and iterated on alongside the rest of the codebase.
 
-Also important, atoms have to outlive their store. Even after I drop the store that created them, the atom values should stay valid, cloneable, and comparable. Implementing it from scratch here means we can test all this directly in our own CI.
+The library provides an immutable string type optimized for fast hashing and comparison, and a companion store that manages groups of these strings. The key design properties are:
+
+- Strings created within the same store for the same content share the same internal representation (pointer identity).
+- Strings created in different stores for the same content use different internal storage but still compare as equal and hash consistently, making cross-store use in hash-based collections reliable.
+- String values remain valid and usable even after the store that created them has been freed.
+
+## Expected Behavior
+
+- Creating two atoms from the same string in the same store should yield atoms that are pointer-identical internally.
+- Creating atoms for the same string from two different stores should yield atoms that differ internally (different addresses) but are still semantically equal.
+- The same string, regardless of which store it came from, should always produce the same hash value.
+- Atoms should remain alive and cloneable after their originating store is dropped.
+
+## Why This Matters
+
+Having the crate in-tree enables easier maintenance, benchmarking, and iteration without coordinating external releases. It also allows the internal string type's behavior to be tested directly within the main repository's CI pipeline.

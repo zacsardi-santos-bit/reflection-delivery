@@ -1,5 +1,15 @@
-I'm working on the weight loading path for big mixture-of-experts models with expert parallelism, and right now it's dumb about I/O: every rank reads all the expert weights from storage even though each rank only ever uses its own assigned slice of experts. For models with hundreds of experts the expert weights are basically the whole model (like 85-90% of the parameter bytes), so every rank is burning most of its storage I/O loading tensors it'll never touch. I want to filter that out at read time.
+## Description
 
-Can you add utilities for this. First, given the total number of experts, the parallelism group size, and the rank index, figure out which expert IDs belong to that rank, and support both contiguous block assignment (each rank gets a consecutive chunk) and interleaved round-robin assignment (experts striped across ranks). Second, pull the expert ID out of a weight tensor name, returning nothing for anything that isn't a per-expert weight, so attention layers, embeddings, layernorms, shared experts, and fused tensors that don't carry a numeric per-expert identifier all come back as no ID. Third, a helper that decides whether a given weight should be skipped based on whether it's a non-local expert.
+When loading very large mixture-of-experts (MoE) language models with expert parallelism enabled, every GPU rank currently reads all expert weights from storage — even though each rank only uses a small fraction of the total experts. For models with hundreds of experts, this means each rank wastes the majority of its storage I/O loading tensors it will never use. Expert weights dominate the total parameter count in these models (often 85–90%), so this unnecessary loading is a serious bottleneck.
 
-Then wire this into the safetensors weight iterator so it takes an optional set of local expert IDs, and when that's passed it skips any non-local expert weights before they get read off disk. Two things to be careful about: fused expert tensors with no numeric per-expert ID in their name must never be skipped since the model slices them internally later, and non-expert weights always pass through no matter what the filter says.
+## Expected Behavior
+
+- A utility should be available to determine which expert IDs belong to a given rank, given the total number of experts, the parallelism size, and the rank index.
+- Both contiguous block assignment and interleaved (round-robin) expert placement strategies should be supported.
+- A utility should be able to classify any weight tensor name as either a local expert weight, a non-local expert weight, or a non-expert weight (dense, shared expert, or fused tensor with no per-expert ID).
+- The safetensors weight loading iterator should support an optional parameter that, when provided, causes non-local expert weights to be skipped before being read from disk.
+- Fused expert tensors that store all experts in a single tensor without a per-expert numeric identifier in the name must never be filtered out — they require later slicing by the model.
+
+## Why This Matters
+
+This optimization can dramatically reduce storage I/O during model loading for large MoE models under expert parallelism, improving startup time and reducing unnecessary memory pressure.

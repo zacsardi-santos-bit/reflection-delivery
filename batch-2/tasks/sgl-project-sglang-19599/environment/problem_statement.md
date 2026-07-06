@@ -1,7 +1,16 @@
-I'm building out a tensor comparison tool for debugging model outputs across multiple forward passes and right now the multi-step behavior is annoying. When I compare tensors over several steps I get one separate comparison result per step, which clutters everything and makes it hard to tell if the data lines up overall. What I want is a new "concat steps" mode that just concatenates the tensors from all steps in step order into one combined tensor and compares that, so I end up with a single comparison record per logical tensor name instead of one per step.
+## Description
 
-The concatenation has to happen along the token or sequence dimension and it should figure out the right one automatically, preferring a named token dimension first, falling back to a named sequence dimension, and using dim 0 when there's no such dimension annotation. Oh and when the two sides come out with different total lengths after concatenating, truncate both down to the minimum length before comparing.
+The tensor comparison tool currently treats each forward-pass step independently, so comparing tensors across multiple steps produces one separate comparison result per step. This works for single-step comparisons, but for multi-step scenarios it clutters the output and makes it harder to see whether data aligns overall. A simpler mode is needed that just concatenates the tensors from all steps into a single tensor and compares that one combined result.
 
-The existing smart alignment mode (the sequence-aware one that uses auxiliary tensors to match tokens across frameworks and sequences) needs to stay and be explicitly selectable, but concat steps should become the default now. While you're in there, reorganize the token-aligner internals that back the smart alignment into their own dedicated sub-package so they're cleanly separated from the new concat-steps code.
+## Expected Behavior
 
-Also I need a standalone helper that loads per-step sequence lengths straight from dump files without running the full alignment pipeline. It should handle both supported dump formats: for one it reads a sequence-lengths tensor directly, and for the other it derives the lengths from a cumulative sequence-length tensor by taking consecutive differences. It returns a mapping from step index to a list of per-sequence lengths, or returns nothing when the required data isn't present or the framework can't be recognized.
+- A new "concat steps" operating mode should be available. When enabled, tensors from multiple forward passes are concatenated in step order into one combined tensor before comparison, yielding a single comparison record per logical tensor name.
+- Concatenation must happen along the token or sequence dimension. The correct dimension should be inferred automatically: a named token dimension takes priority, a named sequence dimension is the fallback, and dim 0 is used when no such dimension annotation exists.
+- When the two sides have different total lengths after concatenation, both are truncated to the minimum length before comparison.
+- The existing smart alignment mode (which uses auxiliary tensors to match tokens across sequences) must remain available and should be explicitly selectable.
+- The token-aligner internals used by the smart alignment mode should be organized under a dedicated sub-package to cleanly separate them from the new concat-steps logic.
+- A helper utility for loading per-step sequence lengths from dump files must be provided. It should support both recognized dump formats, return a mapping from step index to a list of per-sequence lengths, and return nothing when the required metadata or recognized framework cannot be found.
+
+## Why This Matters
+
+Users running multi-step model comparisons should be able to get a single, easy-to-interpret result instead of one entry per step, without having to manually merge data. The new concat mode makes this the default behavior, while the more sophisticated alignment mode is preserved for cross-framework or sequence-reordering use cases.

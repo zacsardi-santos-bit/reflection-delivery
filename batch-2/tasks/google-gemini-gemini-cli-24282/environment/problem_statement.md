@@ -1,5 +1,15 @@
-I want to promote plan mode out of the experimental corner and make it a real general setting. For context, plan mode is the thing that keeps the AI in read-only territory until I've reviewed and approved its plan before it starts making changes, and it's honestly ready for general availability. Right now it's a mess to configure because enabling it means setting a flag buried in the experimental section of the config while the directory where plan files get saved lives in a totally separate part of the config. So I have to touch two different places just to get it working, which makes the whole thing hard to discover and confusing to set up.
+## Description
 
-What I want is all the plan-related settings living together under general settings, both whether it's enabled and where plans are saved, in one place. It shouldn't be marked experimental anymore, it should show up in the general settings category. Also please update the description text for the plan mode toggle so it actually explains what it does, the read-only safety during the planning phase bit.
+Plan mode — which prevents the AI from making changes until the user reviews and approves its plan — is currently gated behind an experimental feature flag. This means users must enable it in an "experimental" section of the configuration file, while related settings (like where plan files are saved) live in a separate part of the configuration. This split makes plan mode harder to discover and confusing to configure.
 
-There's a behavioral thing too. If I previously had plan mode set as my default session mode and then I disable the feature, right now the tool just errors out on me, which is annoying. Instead it should quietly fall back to the standard mode. But heads up, the explicit command-line flag for plan mode should still error when the feature's disabled, that part's intentional so don't touch it. Basically the difference is a stale default gets a graceful fallback while an explicit request gets a proper error message.
+## Expected Behavior
+
+- All plan mode configuration should be consolidated into the general settings section, allowing users to enable/disable the feature and set the plan directory in one place.
+- The feature should no longer be marked as experimental; it should appear in the general settings category.
+- The description for the plan mode toggle should be updated to better communicate its purpose (read-only safety during planning).
+- When a user has plan mode set as their default session mode but the feature is disabled, the tool should gracefully fall back to standard mode rather than failing with an error.
+- When a user explicitly requests plan mode via a command-line argument but the feature is disabled, the tool should still produce an appropriate error message.
+
+## Why This Matters
+
+Plan mode provides an important safety mechanism that is ready for general availability. Keeping it hidden in experimental settings reduces discoverability and creates a confusing split in configuration. Consolidating and promoting it improves the user experience and makes the feature easier to adopt.

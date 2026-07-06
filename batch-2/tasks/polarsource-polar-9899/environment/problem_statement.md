@@ -1,7 +1,16 @@
-Our org review system uses an AI agent to decide approve vs deny at submission and when payment activity crosses a threshold, and right now the agent has zero memory of past decisions. So if a human reviewer overrode a denial and approved an org, the next review flags all the same stuff again, which is annoying and makes us look inconsistent to legit orgs that already passed manual review. I want to feed prior review history into the agent's context so it can see what was decided, who decided it, what risk assessment was assigned, and any reasoning, and explicitly not re-raise concerns that were already handled.
+## Description
 
-Couple pieces to this. First I need a way to pull all past review decisions for a given org from the database, ordered chronologically, scoped to that one org, skipping anything soft-deleted, with the linked agent review data eagerly loaded so we don't hit lazy-load surprises. Then I need a function that turns those raw db records into a structured summary, capturing actor type (automated vs human), the decision, the review context, the agent's prior risk assessment, violated sections, dimension-level findings, and reviewer reasoning. It's gotta handle the cases where agent review data is missing or fails to parse without blowing up, just degrade gracefully.
+When an AI agent reviews an organization — either at initial submission or when payment activity crosses a threshold — it currently has no visibility into prior review decisions. This means the agent may repeatedly flag issues that a human reviewer has already investigated and resolved, creating unnecessary friction and inconsistent outcomes.
 
-Then the agent's review prompt should include a dedicated section summarizing all the prior decisions when they exist, with guidance telling it not to re-raise already-resolved concerns. When there are no prior decisions, drop that section entirely, don't leave an empty header hanging around.
+We need to collect historical review decisions (both automated and human) from the database and inject them into the agent's review context. This allows the reviewing agent to see what was decided before, who made the decision, what risk assessment was assigned, and any reasoning provided — and to explicitly avoid re-raising concerns that have already been addressed.
 
-Oh and the snapshot structures we persist need to carry this prior feedback history too. Important bit: make it backward-compatible so existing stored records that don't have the field still deserialize fine, don't break old data.
+## Expected Behavior
+
+- Prior review decisions (both automated and human) for an organization should be fetchable from the database in chronological order, excluding any soft-deleted records.
+- Each decision record should be transformable into a structured summary including actor type, decision, review context, the agent's prior risk assessment, violated sections, dimension-level findings, and any reviewer reasoning.
+- The agent's review prompt should include a dedicated section summarizing all prior decisions when they exist, with guidance not to re-raise already-resolved concerns. If no prior decisions exist, this section should be omitted entirely.
+- The data structures used to persist review snapshots should accommodate prior feedback history in a backward-compatible way, so that existing stored records without this data continue to deserialize correctly.
+
+## Why This Matters
+
+Without this context, the review agent operates in isolation each time, causing redundant denials and eroding trust with legitimate organizations that have already passed manual review. Including prior decision history makes the review process more consistent and reduces unnecessary escalations.

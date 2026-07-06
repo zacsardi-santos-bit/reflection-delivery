@@ -1,5 +1,15 @@
-I'm running into a cardinality problem with our metrics and I want to fix it at instrument creation time instead of registering views for everything. Right now the only way to filter which attribute keys land in a metric's data points is to set up a view, which feels way too heavy when I already know at instrumentation time exactly which dimensions matter for a given instrument. So what I'd like is an experimental option I can pass directly when I create any kind of instrument, counters, gauges, histograms, up-down-counters, their observable/async variants too, and for both int64 and float64 flavors, that says "these are the attribute keys allowed by default." If I hand it a list of keys, then only those keys should survive into the recorded data points and anything else the measurement carries gets stripped. If I pass an empty list, drop all attributes so the data points come out with an empty attribute set. And if I don't pass the option at all, behavior stays exactly like it is today, nothing filtered.
+## Description
 
-One important bit: views stay authoritative. If a view explicitly matches the instrument and configures its own attribute settings, the view wins and overrides whatever per-instrument default allowlist I specified. So the per-instrument thing is really just a default that view config can override.
+There is currently no way to declare, at instrument creation time, which attribute keys should be retained in metric data points for a specific instrument. Developers who want to reduce metric cardinality for a particular instrument must rely on global view-level attribute filters, which apply broadly rather than at the individual instrument level. A per-instrument default attribute allowlist would give developers fine-grained control over which attribute dimensions are recorded for each instrument without requiring them to write and register views.
 
-Since this could evolve, I want it living in a new experimental sub-package separate from the stable metrics API, so it doesn't lock existing users into anything. The motivation here is real, high-cardinality attributes blow up backends and cost money, and devs usually know upfront which attributes are meaningful, so let's let them express that intent right when they build the instrument rather than forcing a separate view registration dance.
+## Expected Behavior
+
+- When creating any metric instrument (synchronous or asynchronous, integer or float, counter/gauge/histogram/up-down-counter), a developer should be able to specify which attribute keys are "allowed by default."
+- Measurements recorded with additional attributes beyond the allowed set should produce data points containing only the allowed keys.
+- Calling this option with no keys should result in all attributes being dropped (empty attribute set on data points).
+- If a view explicitly matches the instrument and configures its own attribute settings, the view's configuration should take precedence over the per-instrument defaults.
+- The feature should be available as an experimental option, separate from the stable metrics API.
+
+## Why This Matters
+
+High-cardinality attributes attached to metric instruments can overwhelm backends and increase cost. Developers often know at instrumentation time which attributes are meaningful, and should be able to express that intent directly when creating an instrument rather than relying on separate view configuration.

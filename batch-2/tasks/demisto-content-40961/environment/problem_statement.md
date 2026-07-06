@@ -1,5 +1,22 @@
-I'm building out case management for our security ops platform and there's a few gaps I need filled. First up, I want a script that searches cases by creation time range. Analysts should be able to hand it human-friendly date strings for start and end, both absolute ISO timestamps and relative stuff like "1 day ago" or "now", and it translates those into the internal creation-time filter fields the underlying search command expects. If someone passes an end time but no start time, raise an error saying start time is required. If only start is given, default end to now. Anything that can't be parsed as a date should just get silently ignored, don't blow up on it. On success return the results, and on any error surface a readable message.
+## Description
 
-Second, I need a script that pulls detailed info for a specific case, including the IDs of any linked sub-issues plus network and file artifacts. It should call the case detail command, pull the relevant fields out, and hand back a flat dict. When there's no sub-issue data the sub-issue IDs list comes back empty, and when artifact data is missing those fields should be null rather than erroring.
+We need two new automation scripts for case management, plus an extension to our core integration to support retrieving cases.
 
-Third, extend the core integration with a new command for retrieving cases. It needs to take a case ID list that can come in as either an int or a string, cap results at 100 and ignore any higher limit the caller asks for, raise a clear error if no filter params are given at all, and raise an error if conflicting modification-time filter params are both set. Oh and it has to translate the internal API field names (they use different terminology internally) into the user-facing terms we use externally, so the response normalization replaces "incident" with "case" and "alert" with "issue" throughout the output. This is all so analysts can automate case investigation without hand-rolling logic around these API quirks and field name mismatches.
+**Search Cases:** There is currently no dedicated script to search for cases using time-based filters. Analysts need to be able to look up cases by creation time range using flexible date inputs (ISO timestamps, relative expressions like "1 day ago", or absolute dates). The script should translate human-readable time inputs into the internal time filter format the API expects. If an end time is specified without a start time, the script should return a clear error indicating that a start time is required.
+
+**Get Case Extra Data:** There is no single automated way to fetch the full context for a specific case — including its linked sub-issues, network artifacts, and file artifacts — in one operation. A new script should retrieve all this information and return it in a structured, consistent format. When sub-issues or artifact data is absent from the API response, those fields should gracefully default to empty or null values rather than failing.
+
+**Core Integration — Get Cases Command:** The core integration lacks a dedicated command for retrieving cases. A new command should wrap the existing incident-fetching capability and normalize the response field names for external consumers (mapping internal API terminology to the user-facing terms "case" and "issue"). The command must enforce a maximum result limit to prevent excessive queries, validate that at least one filter is provided before querying, and detect conflicting time filter arguments.
+
+## Expected Behavior
+
+- Searching by time range maps human-readable date inputs to the correct internal filter fields.
+- Providing an end time without a start time produces a descriptive error.
+- Fetching case extra data returns a flat dict with the case fields plus extracted sub-issue IDs, network artifacts, and file artifacts.
+- Missing fields in the case extra data response default to empty list (for sub-issue IDs) or null (for artifact collections).
+- The core integration's case-retrieval command normalizes field names (translating internal terminology to user-facing terms) and caps the result count at 100.
+- Calling the case-retrieval command without any filter parameters raises a descriptive error.
+
+## Why This Matters
+
+These additions enable analysts to automate case investigation workflows without writing custom logic to handle API quirks and field name inconsistencies.

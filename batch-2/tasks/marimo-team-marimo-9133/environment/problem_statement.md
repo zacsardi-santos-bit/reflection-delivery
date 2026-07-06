@@ -1,5 +1,22 @@
-I'm fixing a security hole in the marimo frontend where a few of our plugin components blindly inject script and link elements using whatever URL shows up in widget config or HTML attributes, no validation at all. The affected ones are the interactive chart plugin, the widget module/binding loader, and the panel extension loader. Problem is if someone can get a crafted HTML element into a notebook (embedding it in a markdown cell, say) they can point those plugins at a remote server or embed a payload as a data URI and the browser just runs it. Legit resources all come through our virtual file system anyway, so the fix is to only allow internal virtual file paths and reject everything else.
+## Security Vulnerability: Plugins Load Scripts from Arbitrary URLs
 
-I want a single shared validation utility that all three plugins call, so the allowlist lives in one place. It should accept only paths whose first meaningful segment is the virtual file prefix, and reject absolute http and https URLs, protocol-relative links (the // form), dangerous schemes like inline javascript: and data: URIs (including base64 JS payloads), local file system paths, and blob: URIs. Also reject virtual file paths that got tampered with, so anything with a query string or a fragment appended, since those can smuggle redirect targets past a naive prefix check. Near-miss stuff has to fail too: a path with a parent-directory traversal in front of the virtual file segment, an extra subdirectory before it, the bare prefix with no filename, or a misspelled variant of the prefix. And non-string values should always be treated as untrusted.
+### Description
 
-Then each plugin needs to call that check before it creates or inserts any element, and if it fails, log an error with a message flagging the URL as untrusted and skip the DOM mutation entirely, don't create the element at all. Oh and for the script loader specifically, even for trusted inputs the URL has to be set as the element's source reference (src) rather than as inline body content, because using inner content as a script sink was the original vuln and I don't want that path to exist anymore.
+Several marimo frontend plugins load external JavaScript and CSS resources by inserting script and link elements directly into the page, using URLs that come from widget configuration or HTML attributes. These plugins perform no validation on those URLs before injecting them into the DOM. This means an attacker who can embed a crafted HTML element into a notebook (for example, via a markdown cell) can supply an arbitrary URL — including an absolute address pointing to a remote server, an inline data URI, or a dangerous scheme — and the browser will faithfully load and execute whatever is at that URL.
+
+### Impact
+
+Because the URL is never checked, any value that looks like a script or stylesheet source is accepted: absolute HTTP and HTTPS addresses, protocol-relative links, data URIs containing base64-encoded JavaScript, inline script scheme URIs, local file system paths, and blob URIs. One class of affected plugins also uses the URL content directly as script body text rather than as a source reference, compounding the risk.
+
+### Expected Behavior
+
+- There should be a shared URL validation utility that accepts only internal virtual file paths (paths whose first meaningful segment is the virtual file prefix) and rejects everything else.
+- Any URL that is not a recognized virtual file path should be rejected before any DOM element is created, and an error should be logged.
+- Virtual file paths that include query strings or fragments should also be rejected, since these can be used to smuggle redirect parameters.
+- Non-string inputs should be treated as untrusted.
+- The affected plugins — the interactive chart plugin, the widget binding loader, and the panel extension loader — should each be updated to run this check before inserting any element.
+- When a script element is inserted for a trusted URL, the URL must be set as the source reference rather than inlined as script body content.
+
+### Why This Matters
+
+Without this fix, a malicious actor only needs to get a notebook to render an HTML element with a crafted URL attribute to execute arbitrary JavaScript in the viewer's browser. Fixing this closes the injection path without breaking legitimate notebook functionality, since all legitimate resources are served through the virtual file system anyway.

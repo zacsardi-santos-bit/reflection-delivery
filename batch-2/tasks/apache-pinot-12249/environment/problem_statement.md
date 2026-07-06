@@ -1,5 +1,15 @@
-I'm working on the Kafka stream ingestion plugin in Apache Pinot and hitting a real pain point with SSL. Right now when we connect to a Kafka cluster that requires SSL/TLS auth, operators have to hand-build the trust store and key store files themselves and keep them maintained, which is miserable during cert rotation because every renewal means manual filesystem work plus reconfiguring or restarting the consumers. I want to add an SSL utility to the relevant Kafka plugin that reads raw certificate and key material straight out of the stream consumer configuration properties (Base64-encoded cert and private key data) and automatically creates or updates the trust store and key store files at the configured locations.
+## Description
 
-The trust store should get built from the server certificate, and the key store from the client certificate plus private key. Oh and it needs to handle renewal cleanly: if the init logic runs again with freshly rotated cert data, the stores get updated without accumulating duplicate entries. For backward compat, if the cert properties are just missing on a later init call, leave any existing store files completely alone, don't touch them. One edge case though, when key store properties are present but there's no trust store certificate configured, the init should fail with a file-not-found style error, because the trust store file doesn't exist yet at that point.
+When Apache Pinot ingests data from a Kafka cluster that requires SSL/TLS authentication, operators must manually create and maintain trust store and key store files containing the appropriate certificates and private keys. There is currently no mechanism to supply raw certificate and key material directly through Kafka consumer configuration properties and have Pinot automatically construct and manage those store files.
 
-The whole point here is enabling cert rotation with zero manual filesystem operations for SSL-secured Kafka pipelines. Can you implement this?
+## Expected Behavior
+
+- Operators should be able to include Base64-encoded certificate and private key data directly in the stream consumer configuration properties.
+- When the configuration is applied, the system should automatically create the trust store and key store files at the specified locations and populate them with the provided certificate/key material.
+- Calling the initialization logic a second time with newly rotated certificate data should update the stores cleanly, without leaving duplicate entries.
+- If the certificate properties are absent during a subsequent initialization call, any already-existing stores should be left completely untouched.
+- When a trust store certificate is not provided but a key store is configured, the initialization should fail with a clear error indicating the trust store file could not be found.
+
+## Why This Matters
+
+Certificate rotation is a common operational requirement. Without this feature, every certificate renewal requires manual intervention to rebuild store files and restart or reconfigure Pinot's Kafka consumers. Automating store management from configuration properties enables certificate rotation with no manual file-system operations and improves operational reliability for SSL-secured Kafka pipelines.

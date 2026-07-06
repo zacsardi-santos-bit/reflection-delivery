@@ -1,5 +1,17 @@
-I'm building out the Cortex REST API integration pack and need a new script that pulls the tasks from a specific incident's playbook execution. The script we already have in this pack only filters tasks by state, which is too limited, so I want something that lets users filter by task name, by task tag, and by task state, any combination of those. When nobody passes a state filter I want all tasks returned regardless of state. There's also this quirk where filtering on the generic "error" state should actually match both error and loop-error task states, so please handle that mapping.
+## Description
 
-The big thing the current script gets wrong is nested sub-playbooks, oh and that's the main reason I'm writing this. When a task is itself a sub-playbook, I need to traverse into it and pull the tasks inside, and those nested tasks should show up in the results before their parent task. Right now all of those are silently dropped which gives responders an incomplete picture of what actually ran, what failed, and who completed each step.
+We need a new script in the Cortex REST API pack that retrieves and filters the tasks from a specific incident's playbook execution. The existing script in this pack only supports filtering tasks by state, but users often need to find tasks by name or tag as well. Additionally, the existing script does not handle nested sub-playbooks — tasks that run inside a sub-playbook are invisible to it.
 
-For output I want a structured list of task objects carrying the relevant metadata (task id, name, type, owner, state, the script reference, the relevant dates, the parent playbook reference, and who completed the task). Also produce a clean human-readable markdown table summarizing the matching tasks that shows at minimum the id, name, and state, but drop any columns that are entirely empty so it stays readable. And mark the old state-only script as deprecated in favor of this new one.
+## Expected Behavior
+
+- Users should be able to query all tasks for a given incident, optionally filtering by task name, task tag, and/or task state.
+- When no state filter is provided, all tasks regardless of state should be returned.
+- When filtering by the generic "error" state, both error and loop-error tasks should be included.
+- Tasks nested inside sub-playbooks should be traversed and included in the results, not just the top-level tasks.
+- The output should include a structured list of task objects with relevant fields (id, name, type, owner, state, script reference, dates, parent playbook reference, and who completed the task).
+- A formatted human-readable table should be produced summarizing matching tasks.
+- The older state-only script should be deprecated in favor of this new one.
+
+## Why This Matters
+
+Incident responders frequently need to inspect specific tasks within a complex playbook to understand what ran, what failed, or who completed a step. Without name and tag filtering, they must manually sift through all tasks. Without sub-playbook traversal, nested tasks are silently omitted, giving an incomplete picture of playbook execution.

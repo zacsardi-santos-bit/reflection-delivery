@@ -1,5 +1,16 @@
-I'm adding telemetry around tool invocations in Claude Code chat sessions and right now there's a gap. When a tool result comes back and we match it to a pending tool call in the message processing pipeline, nothing gets reported to telemetry, so we've got zero visibility into whether tools are succeeding, failing, or getting cancelled, and how long they run. Teams want to watch reliability and usage patterns in production and diagnose issues, and without this there's just no way to see any of it.
+## Description
 
-What I want is: every time a matched tool result gets processed, emit a telemetry event capturing the outcome, which is basically one of three states, success, error, or user cancellation. Also record whether the tool is a built-in one or one served by a third-party provider (MCP server), plus the session identifier tied to the invocation. And oh, the duration too, how long the tool took to run, but only when that timing info is actually available. If there's no timing info, just leave the duration measurement off the event entirely, don't stick a zero or null in there.
+When Claude Code tools finish executing within a chat session, there is currently no telemetry emitted to track the outcome or duration of those tool invocations. This makes it difficult to understand how tools are being used, how often they succeed or fail, and how long they take to run. We need observability into tool execution outcomes as part of the standard message processing pipeline.
 
-The one important edge case: if a tool result doesn't match any pending tool call, don't emit anything at all, no telemetry for those. So the emit only happens on the matched path. This should slot into the standard message processing flow where tool results get reconciled against pending calls (the same place matching already happens), and I just want the event fired as part of that reconciliation when a match is found.
+## Expected Behavior
+
+- When a tool result is processed (matched to a pending tool call), a telemetry event should be emitted that records:
+  - Whether the tool completed successfully, encountered an error, or was cancelled by the user
+  - Whether the tool was a built-in tool or came from a third-party server (MCP)
+  - The session identifier associated with the invocation
+  - How long the tool took to run (when timing information is available)
+- When a tool result has no matching pending tool call, no telemetry should be emitted for it
+
+## Why This Matters
+
+Teams need visibility into tool execution within Claude Code sessions to monitor reliability, understand usage patterns, and diagnose issues. Without this telemetry, there is no way to observe whether tools are succeeding or failing in production and how long they are taking to complete.

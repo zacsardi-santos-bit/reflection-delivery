@@ -1,7 +1,18 @@
-I'm hitting a wall importing a TensorFlow neural net into Vespa's ranking expression system. The import breaks whenever the model uses activation functions that involve broadcasting, where a small scalar or constant gets applied element-wise across a bigger multi-dimensional tensor. Classic case is leaky ReLU, which multiplies each element by a small constant and then takes the element-wise maximum with the original value.
+## Description
 
-Two things are broken here. First, the importer stops at the wrong output node, it lands on an intermediate layer (the bias-add step) instead of following the computation graph all the way through to the true final output, which in this case is the element-wise maximum op that actually makes up the activation. So I want it to keep traversing to the real final output node even when that node is an element-wise max.
+The TensorFlow model importer cannot correctly handle neural network layers that use certain activation functions, particularly those involving broadcasting — where a small scalar or constant is applied element-wise across a larger multi-dimensional tensor. A common example is leaky ReLU, which multiplies each element by a small constant and takes the element-wise maximum with the original value.
 
-Second, for element-wise join operations between tensors of different ranks (the broadcasting situation), the operands come out in the wrong order and the generated expression is missing a dimension-reduction step that Vespa needs before the join can be applied. So the larger-ranked tensor has to come first in the join, and when the smaller tensor has size-1 dimensions that'd get broadcast against the larger tensor's dimensions, those size-1 dims need to be reduced away via summation before the join happens.
+When such a model is imported, two issues occur:
+1. The importer stops at the wrong output node (an intermediate layer rather than the actual final activation output).
+2. For element-wise operations between tensors of different ranks, the operands are placed in the wrong order, and the required dimension-reduction step for the smaller tensor is omitted.
 
-Net result I'm after: the imported ranking expression should compute the same numerical result as running the original TF model directly. Right now these models either fail at eval time or spit out wrong numbers, which blocks a whole class of trained networks from being deployable. The fix lives in the TensorFlow importer side of the ranking code, so wire up the graph traversal to find the true final node plus fix the join operand ordering and the pre-join reduce for broadcasting, and make sure the output matches numerically.
+## Expected Behavior
+
+- The importer should follow the model's computation graph to its true final output node, even when that node is an element-wise maximum.
+- For element-wise join operations between a larger-ranked tensor and a smaller-ranked one (broadcasting), the larger tensor must come first in the generated expression.
+- When the smaller tensor contains dimensions of size 1 that would be broadcast against the larger tensor's dimensions, those size-1 dimensions must be reduced (via summation) before the join operation is applied.
+- The resulting expression must produce numerical results equal to the original TensorFlow model.
+
+## Why This Matters
+
+Neural networks commonly use activation functions that require broadcasting, such as leaky ReLU. Without this fix, such models produce incorrect ranking expressions during import, causing them to fail at evaluation time or produce wrong results. This blocks users from deploying a significant class of trained neural network models in Vespa.

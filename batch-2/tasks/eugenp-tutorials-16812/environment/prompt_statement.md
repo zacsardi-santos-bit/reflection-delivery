@@ -1,0 +1,7 @@
+I want to add a new Spring Security tutorial module showing how to catch compromised passwords during user registration, since we don't have anything in the tutorials repo demonstrating this and a lot of apps happily accept previously-leaked passwords which just sets users up for credential-stuffing attacks. I want a real copy-paste-ready reference pattern at both the REST layer and the validation layer.
+
+It should be a standalone Spring Boot app with an in-memory database exposing a user creation endpoint. When someone posts a registration request with an email and password, the app checks whether that password is compromised. If it is, reject with a 400 Bad Request whose body is the standard problem-detail format, so a numeric status field set to 400 and a detail field carrying a message saying the password is compromised and can't be used. If the password's fine, create the user and return 200 OK.
+
+Beyond the endpoint I also want the same check wired up as a reusable bean-validation constraint I can slap directly on the password field of a request DTO. When that constraint's violated (password is compromised) validation should produce a constraint violation with a message saying the password is compromised and can't be used, same idea as the endpoint.
+
+Oh and the endpoint itself needs to be publicly accessible, no auth required to call it, and use stateless session management with CSRF disabled. Also make sure the module gets wired into the existing parent build so it compiles and tests as part of the repo.

@@ -1,5 +1,14 @@
-I'm working on the Flutter web build tooling and hit a gap with release builds that use locally-bundled assets instead of CDN-hosted ones. When I flip a release build to bundle assets locally (CDN disabled), the output doesn't include a local fallback Roboto font, so in places without CDN access, offline setups, corporate networks that block CDN stuff, air-gapped deployments, text that relies on Roboto renders wrong or silently falls back to system fonts. It's the kind of thing you only notice after you've already deployed, which is a rough experience.
+## Description
 
-What I want is for the web release build to detect when the locally-bundled assets mode is on and, in that case, automatically copy the Roboto font out of the Flutter engine source tree into the build output and register it in the font manifest. The manifest entry needs to identify the Roboto family and point at the bundled font file at the right asset path (a predictable, well-known location in the output assets so the Flutter runtime can actually find and load it). Oh and if Roboto's already in the manifest, don't add it again, just skip it so we don't double-register.
+When building a Flutter web application for release with CDN-hosted assets disabled, the build system does not automatically include a local fallback Roboto font. This means apps that rely on Roboto for text rendering may display text incorrectly or fall back to system fonts in environments where CDN resources are unavailable — such as offline environments, corporate networks with CDN restrictions, or air-gapped deployments.
 
-The whole thing should happen transparently, no extra config or steps for developers opting into fully self-contained web deployments. The goal is that this local-assets build mode produces a complete self-contained artifact with proper Roboto fallback baked in automatically.
+## Expected Behavior
+
+- When a release web build is configured to use locally-bundled assets instead of CDN assets, the build should automatically bundle a local Roboto font as a fallback.
+- The bundled font file should appear at a predictable location in the output assets.
+- The font should be registered in the font manifest with the correct family name and asset path so the Flutter runtime can discover and load it.
+- The bundling should happen automatically without any extra developer configuration.
+
+## Why This Matters
+
+Developers opting into fully self-contained web deployments (no CDN dependencies) currently have no built-in way to ensure Roboto is available. They may notice missing or wrong fonts only after deploying, which is a poor experience. This change makes the local-assets build mode produce a complete, self-contained artifact with proper font fallback support automatically.

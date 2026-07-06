@@ -1,5 +1,15 @@
-I want to be able to slap key-value tags onto an eval run straight from the CLI, stuff like the environment name or a CI build identifier, without editing my shared config file every time. Right now the only way to attach tags is to hardcode them in the project config, which is useless when I need them to vary per run (think different CI pipelines or environments). So I'd like to pass one or more tags when I kick off an evaluation, and accepting multiple tags in a single invocation should just work.
+## Description
 
-The merge behavior is the important bit: runtime tags from the command line should combine with whatever tags already live in the project config, and when the same key shows up in both, the command-line value wins. Oh and I also want the config to support declaring tag defaults that sit in the middle, so priority goes base config tags, then those config-level defaults, then the explicitly provided runtime tags on top. Runtime tags override the defaults on key collisions.
+When running evaluations in CI or other automated environments, it's useful to attach run-specific metadata — like the environment name or a build identifier — directly from the command line, without having to edit the shared configuration file. Currently, there's no way to pass such tags at runtime; the only option is to hardcode them in the config, which makes it impossible to vary them per run.
 
-One more thing, it should actually be an error to pass runtime tags when I'm resuming or retrying an existing evaluation, since those operations have to preserve the original tags. Trying to override them there should bail out with a clear, actionable error message rather than silently doing the wrong thing. And once everything's merged, the resulting tags need to land on both the saved evaluation record and the test suite that actually gets run, so they stay consistent across both. This makes it way easier to annotate each run with the context it ran in and filter/track results later without anyone touching the shared config.
+## Expected Behavior
+
+- Users should be able to pass one or more key-value tags when invoking an evaluation from the command line. Multiple tags should be accepted in a single run.
+- Runtime tags specified on the command line should be merged with any tags already present in the project configuration. When the same key exists in both, the command-line tag should take precedence.
+- The project configuration should also support specifying tag defaults that apply before any explicitly provided runtime tags. Runtime tags override these defaults when keys collide.
+- Attempting to apply runtime tags while resuming or retrying a previous evaluation should be rejected with a clear error message, since those operations need to preserve the original tags.
+- The merged tags should be reflected in both the saved evaluation record and the test suite that is executed.
+
+## Why This Matters
+
+Without this feature, teams running evaluations across multiple environments or CI pipelines must maintain separate config files or resort to post-processing to tag results correctly. Supporting runtime tags makes it easy to annotate each run with the context it was executed in, enabling better filtering and tracking of results without touching shared configuration.

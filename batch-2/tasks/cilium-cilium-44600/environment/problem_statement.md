@@ -1,5 +1,15 @@
-I'm working on the DNS proxy in cilium and I want to clean up how DNS message data flows through the pipeline. Right now the raw DNS protocol messages get passed all the way from the proxy core down into the message handlers, so every handler ends up re-parsing the same thing to pull out query names, IP addresses, TTL values, CNAME chains, response codes, record types, etc. It's redundant work and it's a leaky abstraction, consumers shouldn't have to know DNS wire format internals. Worse, there's this ambiguity between requests and responses: a handler holding a raw message has to figure out which fields are actually valid based on direction, and nothing stops response-specific data from being read out of a request that's been spoofed with an answer section.
+## Description
 
-So what I want is one well-defined structured type that carries the pre-parsed DNS info, extracted once and passed downstream instead of the raw message. There should be two separate extraction functions, one for request messages and one for response messages, since they carry different meaningful fields. For request extraction the response-specific stuff (resolved IPs, TTL, CNAME chains, answer record types) must stay unset even if the raw request message actually contains an answer section, that's the anti-spoofing bit and it matters. For response extraction all those fields should get populated from the answer section.
+The DNS proxy pipeline currently passes raw DNS protocol messages through its internal components, requiring every handler to re-parse the same message to extract relevant information — query names, IP addresses, TTL values, CNAME chains, response codes, and record types. This creates redundant work and an implicit interface that is hard to reason about. More importantly, it creates an ambiguity between DNS requests and responses: a handler receiving a raw message must determine which fields are valid based on message direction, and there is no enforcement preventing response-specific data from being read out of a request message that has been spoofed with an answer section.
 
-Then update all the internal notification callbacks and handler methods that currently take a raw DNS message so they accept this pre-parsed struct instead. Oh and handlers should explicitly deal with edge cases, like a nil endpoint should return an error rather than crashing or silently producing wrong output, and empty or zero-value parsed structures need to be handled gracefully too. The whole point is enforcing correctness at the type boundary so request handlers can't accidentally touch fabricated response data.
+## Expected Behavior
+
+- A single, well-defined structured type should be used to pass parsed DNS information through the pipeline instead of raw messages.
+- There should be separate extraction functions for DNS requests and DNS responses, each populating only the fields that are valid for that direction.
+- When a DNS request is parsed, response-specific fields (resolved IPs, CNAME chains, TTL, answer record types) should remain unset — even if the raw request message contains a spoofed answer section.
+- Downstream handlers should work with this pre-parsed structure rather than parsing the raw message themselves.
+- Handlers that receive a nil endpoint should return an error rather than silently producing incorrect output.
+
+## Why This Matters
+
+Passing raw DNS messages between components creates a leaky abstraction that forces consumers to understand DNS wire format internals. Separating request parsing from response parsing enforces correctness at the type boundary and prevents request spoofing by ensuring request handlers cannot accidentally access fabricated response data.
