@@ -1,0 +1,447 @@
+diff --git a/compiler-core/src/language_server/tests/action.rs b/compiler-core/src/language_server/tests/action.rs
+index 34f54b6fb..5c960e58e 100644
+--- a/compiler-core/src/language_server/tests/action.rs
++++ b/compiler-core/src/language_server/tests/action.rs
+@@ -52,6 +52,7 @@ fn engine_response(src: &str, line: u32) -> engine::Response<Option<Vec<lsp_type
+ 
+ const REMOVE_UNUSED_IMPORTS: &str = "Remove unused imports";
+ const REMOVE_REDUNDANT_TUPLES: &str = "Remove redundant tuples";
++const CONVERT_TO_CASE: &str = "Convert to case";
+ 
+ fn apply_first_code_action_with_title(src: &str, line: u32, title: &str) -> String {
+     let response = engine_response(src, line)
+@@ -589,6 +590,167 @@ fn rename_invalid_case_variable_discard() {
+     ));
+ }
+ 
++#[test]
++fn test_convert_assert_result_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++  let assert Ok(value) = Ok(1)
++}
++",
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_to_case_indented() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++  {
++    let assert Ok(value) = Ok(1)
++  }
++}
++",
++        3,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_to_case_multi_variables() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++  let assert [var1, var2, _var3, var4] = [1, 2, 3, 4]
++}
++",
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_to_case_discard() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++  let assert [_elem] = [6]
++}
++",
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_to_case_no_variables() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++  let assert [] = []
++}
++",
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_alias_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++  let assert 10 as ten = 10
++}
++",
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_tuple_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++   let assert #(first, 10, third) = #(5, 10, 15)
++}
++",
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_bit_array_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        "
++pub fn main() {
++  let assert <<bits1, bits2>> = <<73, 98>>
++}
++",
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_string_prefix_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        r#"
++pub fn main() {
++  let assert "_" <> thing = "_Hello"
++}"#,
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_let_assert_string_prefix_pattern_alias_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        r#"pub fn main() {
++    let assert "123" as one_two_three <> rest = "123456"
++}"#,
++        1,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_inner_let_assert_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        r#"pub fn main() {
++    let assert [wibble] = {
++        let assert Ok(wobble) = {
++            Ok(1)
++        }
++        [wobble]
++    }
++}"#,
++        2,
++        CONVERT_TO_CASE
++    ));
++}
++
++#[test]
++fn test_convert_outer_let_assert_to_case() {
++    insta::assert_snapshot!(apply_first_code_action_with_title(
++        r#"pub fn main() {
++    let assert [wibble] = {
++        let assert Ok(wobble) = {
++            Ok(1)
++        }
++        [wobble]
++    }
++}"#,
++        1,
++        CONVERT_TO_CASE
++    ));
++}
++
+ /* TODO: implement qualified unused location
+ #[test]
+ fn test_remove_unused_qualified_action() {
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_assert_result_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_assert_result_to_case.snap
+new file mode 100644
+index 000000000..1afe51b01
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_assert_result_to_case.snap
+@@ -0,0 +1,11 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++assertion_line: 595
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert Ok(value) = Ok(1)\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let value = case Ok(1) {
++    Ok(value) -> value
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_assert_result_to_case_indented.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_assert_result_to_case_indented.snap
+new file mode 100644
+index 000000000..020b17d4e
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_assert_result_to_case_indented.snap
+@@ -0,0 +1,12 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(code, 3, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  {
++    let foo = case Ok(1) {
++      Ok(foo) -> foo
++      _ -> panic
++    }
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_inner_let_assert_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_inner_let_assert_to_case.snap
+new file mode 100644
+index 000000000..35b353eef
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_inner_let_assert_to_case.snap
+@@ -0,0 +1,15 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(r#\"pub fn main() {\n    let assert [wibble] = {\n        let assert Ok(wobble) = {\n            Ok(1)\n        }\n        [wobble]\n    }\n}\"#,\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++    let assert [wibble] = {
++        let wobble = case {
++            Ok(1)
++        } {
++          Ok(wobble) -> wobble
++          _ -> panic
++        }
++        [wobble]
++    }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_alias_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_alias_to_case.snap
+new file mode 100644
+index 000000000..5c6d2dda3
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_alias_to_case.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert 10 as ten = 10\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let ten = case 10 {
++    10 as ten -> ten
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_bit_array_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_bit_array_to_case.snap
+new file mode 100644
+index 000000000..dc44c5e38
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_bit_array_to_case.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert <<bits1, bits2>> = <<73, 98>>\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let #(bits1, bits2) = case <<73, 98>> {
++    <<bits1, bits2>> -> #(bits1, bits2)
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_string_prefix_pattern_alias_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_string_prefix_pattern_alias_to_case.snap
+new file mode 100644
+index 000000000..3bbeb1197
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_string_prefix_pattern_alias_to_case.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(r#\"pub fn main() {\n    let assert \"123\" as one_two_three <> rest = \"123456\"\n}\"#,\n    1, CONVERT_TO_CASE)"
++---
++pub fn main() {
++    let #(one_two_three, rest) = case "123456" {
++      "123" as one_two_three <> rest -> #(one_two_three, rest)
++      _ -> panic
++    }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_string_prefix_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_string_prefix_to_case.snap
+new file mode 100644
+index 000000000..56e169d57
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_string_prefix_to_case.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(r#\"\npub fn main() {\n  let assert \"_\" <> thing = \"_Hello\"\n}\"#,\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let thing = case "_Hello" {
++    "_" <> thing -> thing
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case.snap
+new file mode 100644
+index 000000000..cb2f1679f
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert Ok(value) = Ok(1)\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let value = case Ok(1) {
++    Ok(value) -> value
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_discard.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_discard.snap
+new file mode 100644
+index 000000000..ec403a340
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_discard.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert [_elem] = [6]\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let _ = case [6] {
++    [_elem] -> Nil
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_indented.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_indented.snap
+new file mode 100644
+index 000000000..0d3fb2cf8
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_indented.snap
+@@ -0,0 +1,12 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  {\n    let assert Ok(value) = Ok(1)\n  }\n}\n\",\n    3, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  {
++    let value = case Ok(1) {
++      Ok(value) -> value
++      _ -> panic
++    }
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_multi_variables.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_multi_variables.snap
+new file mode 100644
+index 000000000..85f7b3b61
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_multi_variables.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert [var1, var2, _var3, var4] = [1, 2, 3, 4]\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let #(var1, var2, var4) = case [1, 2, 3, 4] {
++    [var1, var2, _var3, var4] -> #(var1, var2, var4)
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_no.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_no.snap
+new file mode 100644
+index 000000000..ec403a340
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_no.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert [_elem] = [6]\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let _ = case [6] {
++    [_elem] -> Nil
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_no_variables.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_no_variables.snap
+new file mode 100644
+index 000000000..0f2d4af0d
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_to_case_no_variables.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n  let assert [] = []\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++  let _ = case [] {
++    [] -> Nil
++    _ -> panic
++  }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_tuple_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_tuple_to_case.snap
+new file mode 100644
+index 000000000..b1e72141e
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_let_assert_tuple_to_case.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(\"\npub fn main() {\n   let assert #(first, 10, third) = #(5, 10, 15)\n}\n\",\n    2, CONVERT_TO_CASE)"
++---
++pub fn main() {
++   let #(first, third) = case #(5, 10, 15) {
++     #(first, 10, third) -> #(first, third)
++     _ -> panic
++   }
++}
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_outer_let_assert_to_case.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_outer_let_assert_to_case.snap
+new file mode 100644
+index 000000000..39882ae3a
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__convert_outer_let_assert_to_case.snap
+@@ -0,0 +1,15 @@
++---
++source: compiler-core/src/language_server/tests/action.rs
++expression: "apply_first_code_action_with_title(r#\"pub fn main() {\n    let assert [wibble] = {\n        let assert Ok(wobble) = {\n            Ok(1)\n        }\n        [wobble]\n    }\n}\"#,\n    1, CONVERT_TO_CASE)"
++---
++pub fn main() {
++    let wibble = case {
++        let assert Ok(wobble) = {
++            Ok(1)
++        }
++        [wobble]
++    } {
++      [wibble] -> wibble
++      _ -> panic
++    }
++}
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case20.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case20.snap
+index 7cc56068f..9c84933ef 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case20.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case20.snap
+@@ -6,7 +6,7 @@ error: Type mismatch
+   ┌─ /src/one/two.gleam:1:18
+   │
+ 1 │ case [1] { [x] | [] as x -> 1 }
+-  │                  ^
++  │                  ^^
+ 
+ Expected type:

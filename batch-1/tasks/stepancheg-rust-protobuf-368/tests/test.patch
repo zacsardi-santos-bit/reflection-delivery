@@ -1,0 +1,14 @@
+diff --git a/protoc-rust/src/lib.rs b/protoc-rust/src/lib.rs
+--- a/protoc-rust/src/lib.rs
++++ b/protoc-rust/src/lib.rs
+@@ -149,3 +149,10 @@
+         assert_eq!(None, super::remove_path_prefix("xxx/abc.proto", "yyy/"));
+     }
++
++    #[test]
++    fn test_multi_dot_slash() {
++        let result = super::remove_path_prefix("abc.proto", "././");
++        assert!(result.is_some(), "expected Some but got None");
++        assert_eq!(result.unwrap(), "abc.proto");
++    }
+ }

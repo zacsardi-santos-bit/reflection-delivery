@@ -1,0 +1,483 @@
+diff --git a/test/integration/circuit-breaker.spec.js b/test/integration/circuit-breaker.spec.js
+index d16f6724..ca00b11a 100644
+--- a/test/integration/circuit-breaker.spec.js
++++ b/test/integration/circuit-breaker.spec.js
+@@ -2,6 +2,7 @@ const Promise = require("bluebird");
+ const ServiceBroker = require("../../src/service-broker");
+ const FakeTransporter = require("../../src/transporters/fake");
+ const { MoleculerError, ServiceNotAvailable } = require("../../src/errors");
++const { protectReject } = require("../unit/utils");
+ 
+ const lolex = require("lolex");
+ 
+@@ -14,12 +15,17 @@ describe("Test circuit breaker", () => {
+ 		nodeID: "master-1",
+ 		circuitBreaker: {
+ 			enabled: true,
+-			maxFailures: 2,
++			threshold: 0.5,
++			minRequestCount: 5,
++			windowTime: 30,
+ 			halfOpenTime: 5 * 1000,
+ 			failureOnReject: true
+ 		}
+ 	});
+ 
++	const cbOpenedHandler = jest.fn();
++	master1.localBus.on("$circuit-breaker.opened", cbOpenedHandler);
++
+ 	const slave1 = new ServiceBroker({
+ 		logger: false,
+ 		transporter: new FakeTransporter(),
+@@ -68,50 +74,128 @@ describe("Test circuit breaker", () => {
+ 			.then(res => expect(res).toBe("OK"));
+ 	});
+ 
+-	it("should return 'angry' with MoleculerError", () => {
++	it("should call 'angry' and throw MoleculerError", () => {
+ 		return master1.call("cb.angry")
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry", { please: true }))
++			.then(res => expect(res).toBe("Just for you!"))
++			.catch(protectReject)
++
++			.then(() => master1.call("cb.angry", { please: true }))
++			.then(res => expect(res).toBe("Just for you!"))
++			.catch(protectReject)
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
+ 			.catch(err => {
+-				expect(err.name).toBe("MoleculerError");
+-				return master1.call("cb.angry");
+-			})
+-			.catch(err => {
+-				expect(err.name).toBe("MoleculerError");
+-				return master1.call("cb.angry");
+-			})
+-			// Circuit-breaker opened
+-			.catch(err => {
+-				expect(err).toBeInstanceOf(ServiceNotAvailable);
+-				return "done";
+-			})
+-			.then(res => {
+-				expect(res).toBe("done");
++				expect(err.name).toBe("ServiceNotAvailable");
++				expect(cbOpenedHandler).toHaveBeenCalledTimes(1);
++				expect(cbOpenedHandler).toHaveBeenCalledWith({
++					nodeID: "slave-1",
++					action: "cb.angry",
++					failures: 3,
++					reqCount: 5,
++					rate: 0.6
++				});
+ 			});
+ 	});
+ 
+ 	it("should switched to half-open and again open", () => {
++		cbOpenedHandler.mockClear();
+ 		clock.tick(6000);
+ 		return master1.call("cb.angry")
+-			.catch(err => {
+-				expect(err.name).toBe("MoleculerError");
+-				return "done";
+-			})
+-			.then(res => expect(res).toBe("done"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
+ 
+ 			.then(() => master1.call("cb.angry", { please: true }))
++			.then(protectReject)
+ 			.catch(err => {
+-				expect(err).toBeInstanceOf(ServiceNotAvailable);
+-				return "done2";
+-			})
+-			.then(res => expect(res).toBe("done2"));
++				expect(err.name).toBe("ServiceNotAvailable");
++				expect(cbOpenedHandler).toHaveBeenCalledTimes(1);
++				expect(cbOpenedHandler).toHaveBeenCalledWith({
++					nodeID: "slave-1",
++					action: "cb.angry",
++					failures: 4,
++					reqCount: 6,
++					rate: 0.6666666666666666
++				});
++			});
+ 	});
+ 
+ 	it("should switched to half-open and close", () => {
+ 		clock.tick(6000);
+ 		return master1.call("cb.angry", { please: true })
+-			.then(res => {
+-				expect(res).toBe("Just for you!");
++			.then(res => expect(res).toBe("Just for you!"))
++			.catch(protectReject)
++
++			.then(() => master1.call("cb.angry", { please: true }))
++			.then(res => expect(res).toBe("Just for you!"))
++			.catch(protectReject);
++	});
++
++	/*
++		TODO: Not working because timer created before lolex install.
++
++	it("should reset values by window timer", () => {
++		return master1.call("cb.angry")
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			// Reset
++			.then(() => clock.tick(35 * 1000))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => expect(err.name).toBe("MoleculerError"))
++
++			.then(() => master1.call("cb.angry"))
++			.then(protectReject)
++			.catch(err => {
++				expect(err.message).toBe("ServiceNotAvailable");
++				expect(cbOpenedHandler).toHaveBeenCalledTimes(1);
++				expect(cbOpenedHandler).toHaveBeenCalledWith({
++					node: jasmine.any(Object),
++					action: jasmine.any(Object),
++					failures: 4,
++					passes: 2,
++				});
+ 			});
+ 	});
+ 
++*/
+ });
+ 
+diff --git a/test/unit/registry/endpoint-cb.spec.js b/test/unit/registry/endpoint-cb.spec.js
+index 06da0253..02b28e6b 100644
+--- a/test/unit/registry/endpoint-cb.spec.js
++++ b/test/unit/registry/endpoint-cb.spec.js
+@@ -4,7 +4,7 @@ const lolex = require("lolex");
+ let ActionEndpointCB = require("../../../src/registry/endpoint-cb");
+ let ServiceBroker = require("../../../src/service-broker");
+ let { RequestTimeoutError, MoleculerError } = require("../../../src/errors");
+-const { CIRCUIT_CLOSE, CIRCUIT_HALF_OPEN, CIRCUIT_OPEN } = require("../../../src/constants");
++const { CIRCUIT_CLOSE, CIRCUIT_HALF_OPEN, CIRCUIT_HALF_OPEN_WAIT, CIRCUIT_OPEN } = require("../../../src/constants");
+ 
+ describe("Test ActionEndpoint", () => {
+ 
+@@ -28,10 +28,12 @@ describe("Test ActionEndpoint", () => {
+ 		expect(ep.service).toBe(service);
+ 		expect(ep.action).toBe(action);
+ 
+-		expect(ep.opts).toBe(registry.opts.circuitBreaker);
++		expect(ep.opts).toEqual({"enabled": false, "failureOnReject": true, "failureOnTimeout": true, "halfOpenTime": 10000, "minRequestCount": 20, "threshold": 0.5, "windowTime": 60});
+ 		expect(ep.state).toBe(CIRCUIT_CLOSE);
+ 		expect(ep.failures).toBe(0);
++		expect(ep.reqCount).toBe(0);
+ 		expect(ep.cbTimer).toBeNull();
++		expect(ep.windowTimer).toBeDefined();
+ 
+ 		expect(ep.isAvailable).toBe(true);
+ 	});
+@@ -42,7 +44,8 @@ describe("Test ActionEndpoint circuit-breaker", () => {
+ 	let broker = new ServiceBroker({
+ 		logger: false,
+ 		circuitBreaker: {
+-			maxFailures: 2,
++			threshold: 0.5,
++			minRequestCount: 2,
+ 			halfOpenTime: 5 * 1000
+ 		},
+ 		metrics: true
+@@ -64,6 +67,9 @@ describe("Test ActionEndpoint circuit-breaker", () => {
+ 		ep.state = CIRCUIT_HALF_OPEN;
+ 		expect(ep.isAvailable).toBe(true);
+ 
++		ep.state = CIRCUIT_HALF_OPEN_WAIT;
++		expect(ep.isAvailable).toBe(false);
++
+ 		ep.state = CIRCUIT_OPEN;
+ 		expect(ep.isAvailable).toBe(false);
+ 
+@@ -71,7 +77,21 @@ describe("Test ActionEndpoint circuit-breaker", () => {
+ 		expect(ep.isAvailable).toBe(true);
+ 	});
+ 
++	it("test reqCount", () => {
++		expect(ep.reqCount).toBe(0);
++
++		ep.success();
++		expect(ep.reqCount).toBe(1);
++
++		ep.success();
++		expect(ep.reqCount).toBe(2);
++
++		ep.failure();
++		expect(ep.reqCount).toBe(3);
++	});
++
+ 	it("test failure", () => {
++		ep.opts.minRequestCount = 5;
+ 		ep.circuitOpen = jest.fn();
+ 
+ 		expect(ep.failures).toBe(0);
+@@ -102,7 +122,131 @@ describe("Test ActionEndpoint circuit-breaker", () => {
+ 		ep.opts.failureOnReject = true;
+ 		ep.failure(new MoleculerError("Server error"));
+ 		expect(ep.failures).toBe(2);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError("Server error"));
++		expect(ep.failures).toBe(3);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError("Server error"));
++		expect(ep.failures).toBe(4);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(1);
++	});
++
++	it("test failure min request count", () => {
++		ep.opts.minRequestCount = 5;
++		ep.opts.failureOnReject = true;
++
++		ep.circuitOpen = jest.fn();
++
++		expect(ep.failures).toBe(0);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(1);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(2);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(3);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(4);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(5);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(1);
++	});
++
++	it("test failure threshold", () => {
++		ep.opts.minRequestCount = 5;
++		ep.opts.threshold = 0.3;
++		ep.opts.failureOnReject = true;
++
++		ep.circuitOpen = jest.fn();
++
++		expect(ep.reqCount).toBe(0);
++		expect(ep.failures).toBe(0);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.reqCount).toBe(1);
++		expect(ep.failures).toBe(1);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.reqCount).toBe(2);
++		expect(ep.failures).toBe(2);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.success();
++		expect(ep.reqCount).toBe(3);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.success();
++		expect(ep.reqCount).toBe(4);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.success();
++		expect(ep.reqCount).toBe(5);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(1);
++	});
++
++	it("test window reset", () => {
++		const clock = lolex.install();
++
++		const ep = new ActionEndpointCB(registry, broker, node, service, action);
++		ep.opts.minRequestCount = 5;
++		ep.opts.threshold = 0.5;
++		ep.opts.failureOnReject = true;
++
++		ep.circuitOpen = jest.fn();
++
++		expect(ep.failures).toBe(0);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(1);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(2);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(3);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		clock.tick(62 * 1000);
++		expect(ep.failures).toBe(0);
++		expect(ep.reqCount).toBe(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(1);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(2);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(3);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(4);
++		expect(ep.circuitOpen).toHaveBeenCalledTimes(0);
++
++		ep.failure(new MoleculerError());
++		expect(ep.failures).toBe(5);
+ 		expect(ep.circuitOpen).toHaveBeenCalledTimes(1);
++
++		clock.uninstall();
+ 	});
+ 
+ 	it("test circuitOpen", () => {
+@@ -111,15 +255,18 @@ describe("Test ActionEndpoint circuit-breaker", () => {
+ 		ep.state = CIRCUIT_CLOSE;
+ 		ep.circuitHalfOpen = jest.fn();
+ 
++		ep.failures = 3;
++		ep.reqCount = 6;
++
+ 		ep.circuitOpen();
+ 
+ 		expect(ep.state).toBe(CIRCUIT_OPEN);
+ 		expect(ep.isAvailable).toBe(false);
+ 		expect(ep.cbTimer).toBeDefined();
+ 		expect(broker.broadcastLocal).toHaveBeenCalledTimes(1);
+-		expect(broker.broadcastLocal).toHaveBeenCalledWith("$circuit-breaker.opened", { node, action, failures: 0 });
++		expect(broker.broadcastLocal).toHaveBeenCalledWith("$circuit-breaker.opened", { nodeID: "server-1", action: "user.list", failures: 3, reqCount: 6, rate: 0.5 });
+ 		expect(broker.emit).toHaveBeenCalledTimes(1);
+-		expect(broker.emit).toHaveBeenCalledWith("metrics.circuit-breaker.opened", { nodeID: "server-1", action: "user.list", failures: 0 });
++		expect(broker.emit).toHaveBeenCalledWith("metrics.circuit-breaker.opened", { nodeID: "server-1", action: "user.list", failures: 3, reqCount: 6, rate: 0.5 });
+ 
+ 		// circuitHalfOpen
+ 		expect(ep.circuitHalfOpen).toHaveBeenCalledTimes(0);
+@@ -141,23 +288,24 @@ describe("Test ActionEndpoint circuit-breaker", () => {
+ 		expect(ep.state).toBe(CIRCUIT_HALF_OPEN);
+ 		expect(ep.isAvailable).toBe(true);
+ 		expect(broker.broadcastLocal).toHaveBeenCalledTimes(1);
+-		expect(broker.broadcastLocal).toHaveBeenCalledWith("$circuit-breaker.half-opened", { node, action });
++		expect(broker.broadcastLocal).toHaveBeenCalledWith("$circuit-breaker.half-opened", { nodeID: "server-1", action: "user.list" });
+ 		expect(broker.emit).toHaveBeenCalledTimes(1);
+ 		expect(broker.emit).toHaveBeenCalledWith("metrics.circuit-breaker.half-opened", { nodeID: "server-1", action: "user.list" });
+ 
+ 	});
+ 
+-	it("test circuitOpen", () => {
++	it("test circuitClose", () => {
+ 		broker.broadcastLocal.mockClear();
+ 		broker.emit.mockClear();
+ 
+-		ep.state = CIRCUIT_HALF_OPEN;
++		ep.state = CIRCUIT_HALF_OPEN_WAIT;
+ 		ep.failures = 5;
+ 
+ 		ep.success();
+ 
+ 		expect(ep.state).toBe(CIRCUIT_CLOSE);
+ 		expect(ep.failures).toBe(0);
++		expect(ep.reqCount).toBe(1);
+ 		expect(ep.isAvailable).toBe(true);
+ 		expect(broker.broadcastLocal).toHaveBeenCalledTimes(1);
+ 		expect(broker.broadcastLocal).toHaveBeenCalledWith("$circuit-breaker.closed", { node, action });
+diff --git a/test/unit/registry/registry.spec.js b/test/unit/registry/registry.spec.js
+index f0d07c47..6bc75cb4 100644
+--- a/test/unit/registry/registry.spec.js
++++ b/test/unit/registry/registry.spec.js
+@@ -17,7 +17,7 @@ describe("Test Registry constructor", () => {
+ 		expect(registry.broker).toBe(broker);
+ 		expect(registry.logger).toBeDefined();
+ 
+-		expect(registry.opts).toEqual({ "circuitBreaker": {"enabled": false, "failureOnReject": true, "failureOnTimeout": true, "halfOpenTime": 10000, "maxFailures": 3}, "preferLocal": true, strategy: "RoundRobin"});
++		expect(registry.opts).toEqual({ "circuitBreaker": {"enabled": false, "threshold": 0.5, "windowTime": 60, "minRequestCount": 20, "failureOnReject": true, "failureOnTimeout": true, "halfOpenTime": 10000}, "preferLocal": true, strategy: "RoundRobin"});
+ 		expect(registry.StrategyFactory).toBe(Strategies.RoundRobin);
+ 		expect(registry.nodes).toBeDefined();
+ 		expect(registry.services).toBeDefined();
+@@ -35,7 +35,7 @@ describe("Test Registry constructor", () => {
+ 		});
+ 		let registry = new Registry(broker);
+ 
+-		expect(registry.opts).toEqual({ "circuitBreaker": {"enabled": false, "failureOnReject": true, "failureOnTimeout": true, "halfOpenTime": 10000, "maxFailures": 3}, "preferLocal": false, strategy: "Random"});
++		expect(registry.opts).toEqual({ "circuitBreaker": {"enabled": false, "threshold": 0.5, "windowTime": 60, "minRequestCount": 20, "failureOnReject": true, "failureOnTimeout": true, "halfOpenTime": 10000}, "preferLocal": false, strategy: "Random"});
+ 		expect(registry.StrategyFactory).toBe(Strategies.Random);
+ 	});
+ 
+diff --git a/test/unit/service-broker.spec.js b/test/unit/service-broker.spec.js
+index a5aa35a1..b81e7736 100644
+--- a/test/unit/service-broker.spec.js
++++ b/test/unit/service-broker.spec.js
+@@ -95,7 +95,8 @@ describe("Test ServiceBroker constructor", () => {
+ 			},
+ 			circuitBreaker: {
+ 				enabled: true,
+-				maxFailures: 2,
++				threshold: 0.3,
++				minRequestCount: 10,
+ 				failureOnReject: false
+ 			},
+ 			validation: false,
+@@ -128,7 +129,9 @@ describe("Test ServiceBroker constructor", () => {
+ 
+ 			circuitBreaker: {
+ 				enabled: true,
+-				maxFailures: 2,
++				threshold: 0.3,
++				windowTime: 60,
++				minRequestCount: 10,
+ 				halfOpenTime: 10 * 1000,
+ 				failureOnTimeout: true,
+ 				failureOnReject: false

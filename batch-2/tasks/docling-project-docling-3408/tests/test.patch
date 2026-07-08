@@ -1,0 +1,16 @@
+diff --git a/tests/test_cli.py b/tests/test_cli.py
+index 64506fd2..f51af8b4 100644
+--- a/tests/test_cli.py
++++ b/tests/test_cli.py
+@@ -13,6 +13,11 @@ runner = CliRunner()
+ def test_cli_help():
+     result = runner.invoke(app, ["--help"])
+     assert result.exit_code == 0
++    assert "Input formats to" in result.output
++    assert "all supported" in result.output
++    assert "layout clusters" in result.output
++    assert "layour" not in result.output
++    assert "input_sources" not in result.output
+ 
+ 
+ def test_cli_version():

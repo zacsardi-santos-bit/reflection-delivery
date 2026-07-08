@@ -1,0 +1,17 @@
+diff --git a/src/vmm/src/devices/virtio/queue.rs b/src/vmm/src/devices/virtio/queue.rs
+--- a/src/vmm/src/devices/virtio/queue.rs
++++ b/src/vmm/src/devices/virtio/queue.rs
+@@ -1730,3 +1730,13 @@ mod tests {
+         let _ = format!("{}{:?}", err, err);
+     }
++
++    #[test]
++    fn test_add_used_batches_ring_idx() {
++        let m = &default_mem();
++        let vq = VirtQueue::new(GuestAddress(0), m, 16);
++
++        let mut q = vq.create_queue();
++        q.add_used(1, 0x1000).unwrap();
++        assert_eq!(vq.used.idx.get(), 0);
++    }
+ }

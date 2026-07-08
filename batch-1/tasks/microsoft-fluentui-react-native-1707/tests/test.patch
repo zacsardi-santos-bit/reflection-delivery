@@ -1,0 +1,34 @@
+diff --git a/packages/experimental/Avatar/src/__tests__/__snapshots__/JSAvatar.test.jsx.snap b/packages/experimental/Avatar/src/__tests__/__snapshots__/JSAvatar.test.jsx.snap
+index ee57290e4..8ca46c0ec 100644
+--- a/packages/experimental/Avatar/src/__tests__/__snapshots__/JSAvatar.test.jsx.snap
++++ b/packages/experimental/Avatar/src/__tests__/__snapshots__/JSAvatar.test.jsx.snap
+@@ -2,6 +2,9 @@
+ 
+ exports[`Avatar rendering renders Avatar 1`] = `
+ <View
++  accessibilityLabel=""
++  accessibilityRole="image"
++  accessible={true}
+   shape="circular"
+   style={
+     Object {
+@@ -17,6 +20,7 @@ exports[`Avatar rendering renders Avatar 1`] = `
+   }
+ >
+   <View
++    accessible={false}
+     style={
+       Object {
+         "alignItems": "center",
+diff --git a/packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap b/packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap
+index f484a1c26..4dc19b7bb 100644
+--- a/packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap
++++ b/packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap
+@@ -26,6 +26,7 @@ exports[`Badge component tests Badge all props 1`] = `
+   }
+ >
+   <Text
++    accessible={true}
+     style={
+       Object {
+         "color": "#fff",

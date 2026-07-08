@@ -1,0 +1,20 @@
+diff --git a/crates/tinymist-core/tests/simple.mjs b/crates/tinymist-core/tests/simple.mjs
+new file mode 100644
+index 00000000..100f9e04
+--- /dev/null
++++ b/crates/tinymist-core/tests/simple.mjs
+@@ -0,0 +1,14 @@
++import tinymist_init from "../pkg/tinymist_core.js";
++import * as tinymist from "../pkg/tinymist_core.js";
++import fs from "fs";
++
++const wasmData = fs.readFileSync("pkg/tinymist_core_bg.wasm");
++
++async function main() {
++  await tinymist_init({
++    module_or_path: new Uint8Array(wasmData),
++  });
++  console.log(tinymist.version());
++}
++
++main().catch(console.error);

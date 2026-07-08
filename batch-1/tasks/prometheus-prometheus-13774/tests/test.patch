@@ -1,0 +1,849 @@
+diff --git a/discovery/linode/linode_test.go b/discovery/linode/linode_test.go
+index a6a16d82a..3c1065065 100644
+--- a/discovery/linode/linode_test.go
++++ b/discovery/linode/linode_test.go
+@@ -28,159 +28,236 @@ import (
+ 	"github.com/prometheus/prometheus/discovery"
+ )
+ 
+-type LinodeSDTestSuite struct {
+-	Mock *SDMock
+-}
+-
+-func (s *LinodeSDTestSuite) TearDownSuite() {
+-	s.Mock.ShutdownServer()
+-}
+-
+-func (s *LinodeSDTestSuite) SetupTest(t *testing.T) {
+-	s.Mock = NewSDMock(t)
+-	s.Mock.Setup()
+-
+-	s.Mock.HandleLinodeInstancesList()
+-	s.Mock.HandleLinodeNeworkingIPs()
+-	s.Mock.HandleLinodeAccountEvents()
+-}
+-
+ func TestLinodeSDRefresh(t *testing.T) {
+-	sdmock := &LinodeSDTestSuite{}
+-	sdmock.SetupTest(t)
+-	t.Cleanup(sdmock.TearDownSuite)
++	sdmock := NewSDMock(t)
++	sdmock.Setup()
+ 
+-	cfg := DefaultSDConfig
+-	cfg.HTTPClientConfig.Authorization = &config.Authorization{
+-		Credentials: tokenID,
+-		Type:        "Bearer",
++	tests := map[string]struct {
++		region      string
++		targetCount int
++		want        []model.LabelSet
++	}{
++		"no_region": {region: "", targetCount: 4, want: []model.LabelSet{
++			{
++				"__address__":                        model.LabelValue("45.33.82.151:80"),
++				"__meta_linode_instance_id":          model.LabelValue("26838044"),
++				"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-1"),
++				"__meta_linode_image":                model.LabelValue("linode/arch"),
++				"__meta_linode_private_ipv4":         model.LabelValue("192.168.170.51"),
++				"__meta_linode_public_ipv4":          model.LabelValue("45.33.82.151"),
++				"__meta_linode_public_ipv6":          model.LabelValue("2600:3c03::f03c:92ff:fe1a:1382"),
++				"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
++				"__meta_linode_public_ipv4_rdns":     model.LabelValue("li1028-151.members.linode.com"),
++				"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
++				"__meta_linode_region":               model.LabelValue("us-east"),
++				"__meta_linode_type":                 model.LabelValue("g6-standard-2"),
++				"__meta_linode_status":               model.LabelValue("running"),
++				"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
++				"__meta_linode_group":                model.LabelValue(""),
++				"__meta_linode_gpus":                 model.LabelValue("0"),
++				"__meta_linode_hypervisor":           model.LabelValue("kvm"),
++				"__meta_linode_backups":              model.LabelValue("disabled"),
++				"__meta_linode_specs_disk_bytes":     model.LabelValue("85899345920"),
++				"__meta_linode_specs_memory_bytes":   model.LabelValue("4294967296"),
++				"__meta_linode_specs_vcpus":          model.LabelValue("2"),
++				"__meta_linode_specs_transfer_bytes": model.LabelValue("4194304000"),
++				"__meta_linode_extra_ips":            model.LabelValue(",96.126.108.16,192.168.201.25,"),
++			},
++			{
++				"__address__":                        model.LabelValue("139.162.196.43:80"),
++				"__meta_linode_instance_id":          model.LabelValue("26848419"),
++				"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-2"),
++				"__meta_linode_image":                model.LabelValue("linode/debian10"),
++				"__meta_linode_private_ipv4":         model.LabelValue(""),
++				"__meta_linode_public_ipv4":          model.LabelValue("139.162.196.43"),
++				"__meta_linode_public_ipv6":          model.LabelValue("2a01:7e00::f03c:92ff:fe1a:9976"),
++				"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
++				"__meta_linode_public_ipv4_rdns":     model.LabelValue("li1359-43.members.linode.com"),
++				"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
++				"__meta_linode_region":               model.LabelValue("eu-west"),
++				"__meta_linode_type":                 model.LabelValue("g6-standard-2"),
++				"__meta_linode_status":               model.LabelValue("running"),
++				"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
++				"__meta_linode_group":                model.LabelValue(""),
++				"__meta_linode_gpus":                 model.LabelValue("0"),
++				"__meta_linode_hypervisor":           model.LabelValue("kvm"),
++				"__meta_linode_backups":              model.LabelValue("disabled"),
++				"__meta_linode_specs_disk_bytes":     model.LabelValue("85899345920"),
++				"__meta_linode_specs_memory_bytes":   model.LabelValue("4294967296"),
++				"__meta_linode_specs_vcpus":          model.LabelValue("2"),
++				"__meta_linode_specs_transfer_bytes": model.LabelValue("4194304000"),
++			},
++			{
++				"__address__":                        model.LabelValue("192.53.120.25:80"),
++				"__meta_linode_instance_id":          model.LabelValue("26837938"),
++				"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-3"),
++				"__meta_linode_image":                model.LabelValue("linode/ubuntu20.04"),
++				"__meta_linode_private_ipv4":         model.LabelValue(""),
++				"__meta_linode_public_ipv4":          model.LabelValue("192.53.120.25"),
++				"__meta_linode_public_ipv6":          model.LabelValue("2600:3c04::f03c:92ff:fe1a:fb68"),
++				"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
++				"__meta_linode_public_ipv4_rdns":     model.LabelValue("li2216-25.members.linode.com"),
++				"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
++				"__meta_linode_region":               model.LabelValue("ca-central"),
++				"__meta_linode_type":                 model.LabelValue("g6-standard-1"),
++				"__meta_linode_status":               model.LabelValue("running"),
++				"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
++				"__meta_linode_group":                model.LabelValue(""),
++				"__meta_linode_gpus":                 model.LabelValue("0"),
++				"__meta_linode_hypervisor":           model.LabelValue("kvm"),
++				"__meta_linode_backups":              model.LabelValue("disabled"),
++				"__meta_linode_specs_disk_bytes":     model.LabelValue("53687091200"),
++				"__meta_linode_specs_memory_bytes":   model.LabelValue("2147483648"),
++				"__meta_linode_specs_vcpus":          model.LabelValue("1"),
++				"__meta_linode_specs_transfer_bytes": model.LabelValue("2097152000"),
++				"__meta_linode_ipv6_ranges":          model.LabelValue(",2600:3c04:e001:456::/64,"),
++			},
++			{
++				"__address__":                        model.LabelValue("66.228.47.103:80"),
++				"__meta_linode_instance_id":          model.LabelValue("26837992"),
++				"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-4"),
++				"__meta_linode_image":                model.LabelValue("linode/ubuntu20.04"),
++				"__meta_linode_private_ipv4":         model.LabelValue("192.168.148.94"),
++				"__meta_linode_public_ipv4":          model.LabelValue("66.228.47.103"),
++				"__meta_linode_public_ipv6":          model.LabelValue("2600:3c03::f03c:92ff:fe1a:fb4c"),
++				"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
++				"__meta_linode_public_ipv4_rdns":     model.LabelValue("li328-103.members.linode.com"),
++				"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
++				"__meta_linode_region":               model.LabelValue("us-east"),
++				"__meta_linode_type":                 model.LabelValue("g6-nanode-1"),
++				"__meta_linode_status":               model.LabelValue("running"),
++				"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
++				"__meta_linode_group":                model.LabelValue(""),
++				"__meta_linode_gpus":                 model.LabelValue("0"),
++				"__meta_linode_hypervisor":           model.LabelValue("kvm"),
++				"__meta_linode_backups":              model.LabelValue("disabled"),
++				"__meta_linode_specs_disk_bytes":     model.LabelValue("26843545600"),
++				"__meta_linode_specs_memory_bytes":   model.LabelValue("1073741824"),
++				"__meta_linode_specs_vcpus":          model.LabelValue("1"),
++				"__meta_linode_specs_transfer_bytes": model.LabelValue("1048576000"),
++				"__meta_linode_extra_ips":            model.LabelValue(",172.104.18.104,"),
++				"__meta_linode_ipv6_ranges":          model.LabelValue(",2600:3c03:e000:123::/64,"),
++			},
++		}},
++		"us-east": {region: "us-east", targetCount: 2, want: []model.LabelSet{
++			{
++				"__address__":                        model.LabelValue("45.33.82.151:80"),
++				"__meta_linode_instance_id":          model.LabelValue("26838044"),
++				"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-1"),
++				"__meta_linode_image":                model.LabelValue("linode/arch"),
++				"__meta_linode_private_ipv4":         model.LabelValue("192.168.170.51"),
++				"__meta_linode_public_ipv4":          model.LabelValue("45.33.82.151"),
++				"__meta_linode_public_ipv6":          model.LabelValue("2600:3c03::f03c:92ff:fe1a:1382"),
++				"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
++				"__meta_linode_public_ipv4_rdns":     model.LabelValue("li1028-151.members.linode.com"),
++				"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
++				"__meta_linode_region":               model.LabelValue("us-east"),
++				"__meta_linode_type":                 model.LabelValue("g6-standard-2"),
++				"__meta_linode_status":               model.LabelValue("running"),
++				"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
++				"__meta_linode_group":                model.LabelValue(""),
++				"__meta_linode_gpus":                 model.LabelValue("0"),
++				"__meta_linode_hypervisor":           model.LabelValue("kvm"),
++				"__meta_linode_backups":              model.LabelValue("disabled"),
++				"__meta_linode_specs_disk_bytes":     model.LabelValue("85899345920"),
++				"__meta_linode_specs_memory_bytes":   model.LabelValue("4294967296"),
++				"__meta_linode_specs_vcpus":          model.LabelValue("2"),
++				"__meta_linode_specs_transfer_bytes": model.LabelValue("4194304000"),
++				"__meta_linode_extra_ips":            model.LabelValue(",96.126.108.16,192.168.201.25,"),
++			},
++			{
++				"__address__":                        model.LabelValue("66.228.47.103:80"),
++				"__meta_linode_instance_id":          model.LabelValue("26837992"),
++				"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-4"),
++				"__meta_linode_image":                model.LabelValue("linode/ubuntu20.04"),
++				"__meta_linode_private_ipv4":         model.LabelValue("192.168.148.94"),
++				"__meta_linode_public_ipv4":          model.LabelValue("66.228.47.103"),
++				"__meta_linode_public_ipv6":          model.LabelValue("2600:3c03::f03c:92ff:fe1a:fb4c"),
++				"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
++				"__meta_linode_public_ipv4_rdns":     model.LabelValue("li328-103.members.linode.com"),
++				"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
++				"__meta_linode_region":               model.LabelValue("us-east"),
++				"__meta_linode_type":                 model.LabelValue("g6-nanode-1"),
++				"__meta_linode_status":               model.LabelValue("running"),
++				"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
++				"__meta_linode_group":                model.LabelValue(""),
++				"__meta_linode_gpus":                 model.LabelValue("0"),
++				"__meta_linode_hypervisor":           model.LabelValue("kvm"),
++				"__meta_linode_backups":              model.LabelValue("disabled"),
++				"__meta_linode_specs_disk_bytes":     model.LabelValue("26843545600"),
++				"__meta_linode_specs_memory_bytes":   model.LabelValue("1073741824"),
++				"__meta_linode_specs_vcpus":          model.LabelValue("1"),
++				"__meta_linode_specs_transfer_bytes": model.LabelValue("1048576000"),
++				"__meta_linode_extra_ips":            model.LabelValue(",172.104.18.104,"),
++				"__meta_linode_ipv6_ranges":          model.LabelValue(",2600:3c03:e000:123::/64,"),
++			},
++		}},
++		"us-central": {region: "ca-central", targetCount: 1, want: []model.LabelSet{
++			{
++				"__address__":                        model.LabelValue("192.53.120.25:80"),
++				"__meta_linode_instance_id":          model.LabelValue("26837938"),
++				"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-3"),
++				"__meta_linode_image":                model.LabelValue("linode/ubuntu20.04"),
++				"__meta_linode_private_ipv4":         model.LabelValue(""),
++				"__meta_linode_public_ipv4":          model.LabelValue("192.53.120.25"),
++				"__meta_linode_public_ipv6":          model.LabelValue("2600:3c04::f03c:92ff:fe1a:fb68"),
++				"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
++				"__meta_linode_public_ipv4_rdns":     model.LabelValue("li2216-25.members.linode.com"),
++				"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
++				"__meta_linode_region":               model.LabelValue("ca-central"),
++				"__meta_linode_type":                 model.LabelValue("g6-standard-1"),
++				"__meta_linode_status":               model.LabelValue("running"),
++				"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
++				"__meta_linode_group":                model.LabelValue(""),
++				"__meta_linode_gpus":                 model.LabelValue("0"),
++				"__meta_linode_hypervisor":           model.LabelValue("kvm"),
++				"__meta_linode_backups":              model.LabelValue("disabled"),
++				"__meta_linode_specs_disk_bytes":     model.LabelValue("53687091200"),
++				"__meta_linode_specs_memory_bytes":   model.LabelValue("2147483648"),
++				"__meta_linode_specs_vcpus":          model.LabelValue("1"),
++				"__meta_linode_specs_transfer_bytes": model.LabelValue("2097152000"),
++				"__meta_linode_ipv6_ranges":          model.LabelValue(",2600:3c04:e001:456::/64,"),
++			},
++		}},
+ 	}
+ 
+-	reg := prometheus.NewRegistry()
+-	refreshMetrics := discovery.NewRefreshMetrics(reg)
+-	metrics := cfg.NewDiscovererMetrics(reg, refreshMetrics)
+-	require.NoError(t, metrics.Register())
+-	defer metrics.Unregister()
+-	defer refreshMetrics.Unregister()
++	for _, tc := range tests {
++		cfg := DefaultSDConfig
++		if tc.region != "" {
++			cfg.Region = tc.region
++		}
++		cfg.HTTPClientConfig.Authorization = &config.Authorization{
++			Credentials: tokenID,
++			Type:        "Bearer",
++		}
++
++		reg := prometheus.NewRegistry()
++		refreshMetrics := discovery.NewRefreshMetrics(reg)
++		metrics := cfg.NewDiscovererMetrics(reg, refreshMetrics)
++		require.NoError(t, metrics.Register())
++		defer metrics.Unregister()
++		defer refreshMetrics.Unregister()
+ 
+-	d, err := NewDiscovery(&cfg, log.NewNopLogger(), metrics)
+-	require.NoError(t, err)
+-	endpoint, err := url.Parse(sdmock.Mock.Endpoint())
+-	require.NoError(t, err)
+-	d.client.SetBaseURL(endpoint.String())
++		d, err := NewDiscovery(&cfg, log.NewNopLogger(), metrics)
++		require.NoError(t, err)
++		endpoint, err := url.Parse(sdmock.Endpoint())
++		require.NoError(t, err)
++		d.client.SetBaseURL(endpoint.String())
+ 
+-	tgs, err := d.refresh(context.Background())
+-	require.NoError(t, err)
++		tgs, err := d.refresh(context.Background())
++		require.NoError(t, err)
+ 
+-	require.Len(t, tgs, 1)
++		require.Len(t, tgs, 1)
+ 
+-	tg := tgs[0]
+-	require.NotNil(t, tg)
+-	require.NotNil(t, tg.Targets)
+-	require.Len(t, tg.Targets, 4)
++		tg := tgs[0]
++		require.NotNil(t, tg)
++		require.NotNil(t, tg.Targets)
++		require.Len(t, tg.Targets, tc.targetCount)
+ 
+-	for i, lbls := range []model.LabelSet{
+-		{
+-			"__address__":                        model.LabelValue("45.33.82.151:80"),
+-			"__meta_linode_instance_id":          model.LabelValue("26838044"),
+-			"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-1"),
+-			"__meta_linode_image":                model.LabelValue("linode/arch"),
+-			"__meta_linode_private_ipv4":         model.LabelValue("192.168.170.51"),
+-			"__meta_linode_public_ipv4":          model.LabelValue("45.33.82.151"),
+-			"__meta_linode_public_ipv6":          model.LabelValue("2600:3c03::f03c:92ff:fe1a:1382"),
+-			"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
+-			"__meta_linode_public_ipv4_rdns":     model.LabelValue("li1028-151.members.linode.com"),
+-			"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
+-			"__meta_linode_region":               model.LabelValue("us-east"),
+-			"__meta_linode_type":                 model.LabelValue("g6-standard-2"),
+-			"__meta_linode_status":               model.LabelValue("running"),
+-			"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
+-			"__meta_linode_group":                model.LabelValue(""),
+-			"__meta_linode_gpus":                 model.LabelValue("0"),
+-			"__meta_linode_hypervisor":           model.LabelValue("kvm"),
+-			"__meta_linode_backups":              model.LabelValue("disabled"),
+-			"__meta_linode_specs_disk_bytes":     model.LabelValue("85899345920"),
+-			"__meta_linode_specs_memory_bytes":   model.LabelValue("4294967296"),
+-			"__meta_linode_specs_vcpus":          model.LabelValue("2"),
+-			"__meta_linode_specs_transfer_bytes": model.LabelValue("4194304000"),
+-			"__meta_linode_extra_ips":            model.LabelValue(",96.126.108.16,192.168.201.25,"),
+-		},
+-		{
+-			"__address__":                        model.LabelValue("139.162.196.43:80"),
+-			"__meta_linode_instance_id":          model.LabelValue("26848419"),
+-			"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-2"),
+-			"__meta_linode_image":                model.LabelValue("linode/debian10"),
+-			"__meta_linode_private_ipv4":         model.LabelValue(""),
+-			"__meta_linode_public_ipv4":          model.LabelValue("139.162.196.43"),
+-			"__meta_linode_public_ipv6":          model.LabelValue("2a01:7e00::f03c:92ff:fe1a:9976"),
+-			"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
+-			"__meta_linode_public_ipv4_rdns":     model.LabelValue("li1359-43.members.linode.com"),
+-			"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
+-			"__meta_linode_region":               model.LabelValue("eu-west"),
+-			"__meta_linode_type":                 model.LabelValue("g6-standard-2"),
+-			"__meta_linode_status":               model.LabelValue("running"),
+-			"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
+-			"__meta_linode_group":                model.LabelValue(""),
+-			"__meta_linode_gpus":                 model.LabelValue("0"),
+-			"__meta_linode_hypervisor":           model.LabelValue("kvm"),
+-			"__meta_linode_backups":              model.LabelValue("disabled"),
+-			"__meta_linode_specs_disk_bytes":     model.LabelValue("85899345920"),
+-			"__meta_linode_specs_memory_bytes":   model.LabelValue("4294967296"),
+-			"__meta_linode_specs_vcpus":          model.LabelValue("2"),
+-			"__meta_linode_specs_transfer_bytes": model.LabelValue("4194304000"),
+-		},
+-		{
+-			"__address__":                        model.LabelValue("192.53.120.25:80"),
+-			"__meta_linode_instance_id":          model.LabelValue("26837938"),
+-			"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-3"),
+-			"__meta_linode_image":                model.LabelValue("linode/ubuntu20.04"),
+-			"__meta_linode_private_ipv4":         model.LabelValue(""),
+-			"__meta_linode_public_ipv4":          model.LabelValue("192.53.120.25"),
+-			"__meta_linode_public_ipv6":          model.LabelValue("2600:3c04::f03c:92ff:fe1a:fb68"),
+-			"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
+-			"__meta_linode_public_ipv4_rdns":     model.LabelValue("li2216-25.members.linode.com"),
+-			"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
+-			"__meta_linode_region":               model.LabelValue("ca-central"),
+-			"__meta_linode_type":                 model.LabelValue("g6-standard-1"),
+-			"__meta_linode_status":               model.LabelValue("running"),
+-			"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
+-			"__meta_linode_group":                model.LabelValue(""),
+-			"__meta_linode_gpus":                 model.LabelValue("0"),
+-			"__meta_linode_hypervisor":           model.LabelValue("kvm"),
+-			"__meta_linode_backups":              model.LabelValue("disabled"),
+-			"__meta_linode_specs_disk_bytes":     model.LabelValue("53687091200"),
+-			"__meta_linode_specs_memory_bytes":   model.LabelValue("2147483648"),
+-			"__meta_linode_specs_vcpus":          model.LabelValue("1"),
+-			"__meta_linode_specs_transfer_bytes": model.LabelValue("2097152000"),
+-		},
+-		{
+-			"__address__":                        model.LabelValue("66.228.47.103:80"),
+-			"__meta_linode_instance_id":          model.LabelValue("26837992"),
+-			"__meta_linode_instance_label":       model.LabelValue("prometheus-linode-sd-exporter-4"),
+-			"__meta_linode_image":                model.LabelValue("linode/ubuntu20.04"),
+-			"__meta_linode_private_ipv4":         model.LabelValue("192.168.148.94"),
+-			"__meta_linode_public_ipv4":          model.LabelValue("66.228.47.103"),
+-			"__meta_linode_public_ipv6":          model.LabelValue("2600:3c03::f03c:92ff:fe1a:fb4c"),
+-			"__meta_linode_private_ipv4_rdns":    model.LabelValue(""),
+-			"__meta_linode_public_ipv4_rdns":     model.LabelValue("li328-103.members.linode.com"),
+-			"__meta_linode_public_ipv6_rdns":     model.LabelValue(""),
+-			"__meta_linode_region":               model.LabelValue("us-east"),
+-			"__meta_linode_type":                 model.LabelValue("g6-nanode-1"),
+-			"__meta_linode_status":               model.LabelValue("running"),
+-			"__meta_linode_tags":                 model.LabelValue(",monitoring,"),
+-			"__meta_linode_group":                model.LabelValue(""),
+-			"__meta_linode_gpus":                 model.LabelValue("0"),
+-			"__meta_linode_hypervisor":           model.LabelValue("kvm"),
+-			"__meta_linode_backups":              model.LabelValue("disabled"),
+-			"__meta_linode_specs_disk_bytes":     model.LabelValue("26843545600"),
+-			"__meta_linode_specs_memory_bytes":   model.LabelValue("1073741824"),
+-			"__meta_linode_specs_vcpus":          model.LabelValue("1"),
+-			"__meta_linode_specs_transfer_bytes": model.LabelValue("1048576000"),
+-			"__meta_linode_extra_ips":            model.LabelValue(",172.104.18.104,"),
+-		},
+-	} {
+-		t.Run(fmt.Sprintf("item %d", i), func(t *testing.T) {
+-			require.Equal(t, lbls, tg.Targets[i])
+-		})
++		for i, lbls := range tc.want {
++			t.Run(fmt.Sprintf("item %d", i), func(t *testing.T) {
++				require.Equal(t, lbls, tg.Targets[i])
++			})
++		}
+ 	}
+ }
+diff --git a/discovery/linode/mock_test.go b/discovery/linode/mock_test.go
+index ea0e8e0a8..50f0572ec 100644
+--- a/discovery/linode/mock_test.go
++++ b/discovery/linode/mock_test.go
+@@ -14,12 +14,17 @@
+ package linode
+ 
+ import (
++	"encoding/json"
+ 	"fmt"
+ 	"net/http"
+ 	"net/http/httptest"
++	"os"
++	"path/filepath"
+ 	"testing"
+ )
+ 
++const tokenID = "7b2c56dd51edd90952c1b94c472b94b176f20c5c777e376849edd8ad1c6c03bb"
++
+ // SDMock is the interface for the Linode mock.
+ type SDMock struct {
+ 	t      *testing.T
+@@ -43,412 +48,34 @@ func (m *SDMock) Endpoint() string {
+ func (m *SDMock) Setup() {
+ 	m.Mux = http.NewServeMux()
+ 	m.Server = httptest.NewServer(m.Mux)
++	m.t.Cleanup(m.Server.Close)
++	m.SetupHandlers()
+ }
+ 
+-// ShutdownServer creates the mock server.
+-func (m *SDMock) ShutdownServer() {
+-	m.Server.Close()
+-}
+-
+-const tokenID = "7b2c56dd51edd90952c1b94c472b94b176f20c5c777e376849edd8ad1c6c03bb"
+-
+-// HandleLinodeInstancesList mocks linode instances list.
+-func (m *SDMock) HandleLinodeInstancesList() {
+-	m.Mux.HandleFunc("/v4/linode/instances", func(w http.ResponseWriter, r *http.Request) {
+-		if r.Header.Get("Authorization") != fmt.Sprintf("Bearer %s", tokenID) {
+-			w.WriteHeader(http.StatusUnauthorized)
+-			return
+-		}
+-
+-		w.Header().Set("content-type", "application/json; charset=utf-8")
+-		w.WriteHeader(http.StatusOK)
+-
+-		fmt.Fprint(w, `
+-{
+-  "data": [
+-    {
+-      "id": 26838044,
+-      "label": "prometheus-linode-sd-exporter-1",
+-      "group": "",
+-      "status": "running",
+-      "created": "2021-05-12T04:23:44",
+-      "updated": "2021-05-12T04:23:44",
+-      "type": "g6-standard-2",
+-      "ipv4": [
+-        "45.33.82.151",
+-        "96.126.108.16",
+-        "192.168.170.51",
+-        "192.168.201.25"
+-      ],
+-      "ipv6": "2600:3c03::f03c:92ff:fe1a:1382/128",
+-      "image": "linode/arch",
+-      "region": "us-east",
+-      "specs": {
+-        "disk": 81920,
+-        "memory": 4096,
+-        "vcpus": 2,
+-        "gpus": 0,
+-        "transfer": 4000
+-      },
+-      "alerts": {
+-        "cpu": 180,
+-        "network_in": 10,
+-        "network_out": 10,
+-        "transfer_quota": 80,
+-        "io": 10000
+-      },
+-      "backups": {
+-        "enabled": false,
+-        "schedule": {
+-          "day": null,
+-          "window": null
+-        },
+-        "last_successful": null
+-      },
+-      "hypervisor": "kvm",
+-      "watchdog_enabled": true,
+-      "tags": [
+-        "monitoring"
+-      ]
+-    },
+-    {
+-      "id": 26848419,
+-      "label": "prometheus-linode-sd-exporter-2",
+-      "group": "",
+-      "status": "running",
+-      "created": "2021-05-12T12:41:49",
+-      "updated": "2021-05-12T12:41:49",
+-      "type": "g6-standard-2",
+-      "ipv4": [
+-        "139.162.196.43"
+-      ],
+-      "ipv6": "2a01:7e00::f03c:92ff:fe1a:9976/128",
+-      "image": "linode/debian10",
+-      "region": "eu-west",
+-      "specs": {
+-        "disk": 81920,
+-        "memory": 4096,
+-        "vcpus": 2,
+-        "gpus": 0,
+-        "transfer": 4000
+-      },
+-      "alerts": {
+-        "cpu": 180,
+-        "network_in": 10,
+-        "network_out": 10,
+-        "transfer_quota": 80,
+-        "io": 10000
+-      },
+-      "backups": {
+-        "enabled": false,
+-        "schedule": {
+-          "day": null,
+-          "window": null
+-        },
+-        "last_successful": null
+-      },
+-      "hypervisor": "kvm",
+-      "watchdog_enabled": true,
+-      "tags": [
+-        "monitoring"
+-      ]
+-    },
+-    {
+-      "id": 26837938,
+-      "label": "prometheus-linode-sd-exporter-3",
+-      "group": "",
+-      "status": "running",
+-      "created": "2021-05-12T04:20:11",
+-      "updated": "2021-05-12T04:20:11",
+-      "type": "g6-standard-1",
+-      "ipv4": [
+-        "192.53.120.25"
+-      ],
+-      "ipv6": "2600:3c04::f03c:92ff:fe1a:fb68/128",
+-      "image": "linode/ubuntu20.04",
+-      "region": "ca-central",
+-      "specs": {
+-        "disk": 51200,
+-        "memory": 2048,
+-        "vcpus": 1,
+-        "gpus": 0,
+-        "transfer": 2000
+-      },
+-      "alerts": {
+-        "cpu": 90,
+-        "network_in": 10,
+-        "network_out": 10,
+-        "transfer_quota": 80,
+-        "io": 10000
+-      },
+-      "backups": {
+-        "enabled": false,
+-        "schedule": {
+-          "day": null,
+-          "window": null
+-        },
+-        "last_successful": null
+-      },
+-      "hypervisor": "kvm",
+-      "watchdog_enabled": true,
+-      "tags": [
+-        "monitoring"
+-      ]
+-    },
+-    {
+-      "id": 26837992,
+-      "label": "prometheus-linode-sd-exporter-4",
+-      "group": "",
+-      "status": "running",
+-      "created": "2021-05-12T04:22:06",
+-      "updated": "2021-05-12T04:22:06",
+-      "type": "g6-nanode-1",
+-      "ipv4": [
+-        "66.228.47.103",
+-        "172.104.18.104",
+-        "192.168.148.94"
+-      ],
+-      "ipv6": "2600:3c03::f03c:92ff:fe1a:fb4c/128",
+-      "image": "linode/ubuntu20.04",
+-      "region": "us-east",
+-      "specs": {
+-        "disk": 25600,
+-        "memory": 1024,
+-        "vcpus": 1,
+-        "gpus": 0,
+-        "transfer": 1000
+-      },
+-      "alerts": {
+-        "cpu": 90,
+-        "network_in": 10,
+-        "network_out": 10,
+-        "transfer_quota": 80,
+-        "io": 10000
+-      },
+-      "backups": {
+-        "enabled": false,
+-        "schedule": {
+-          "day": null,
+-          "window": null
+-        },
+-        "last_successful": null
+-      },
+-      "hypervisor": "kvm",
+-      "watchdog_enabled": true,
+-      "tags": [
+-        "monitoring"
+-      ]
+-    }
+-  ],
+-  "page": 1,
+-  "pages": 1,
+-  "results": 4
+-}`,
+-		)
+-	})
+-}
+-
+-// HandleLinodeNeworkingIPs mocks linode networking ips endpoint.
+-func (m *SDMock) HandleLinodeNeworkingIPs() {
+-	m.Mux.HandleFunc("/v4/networking/ips", func(w http.ResponseWriter, r *http.Request) {
+-		if r.Header.Get("Authorization") != fmt.Sprintf("Bearer %s", tokenID) {
+-			w.WriteHeader(http.StatusUnauthorized)
+-			return
+-		}
+-
+-		w.Header().Set("content-type", "application/json; charset=utf-8")
+-		w.WriteHeader(http.StatusOK)
+-
+-		fmt.Fprint(w, `
+-{
+-  "page": 1,
+-  "pages": 1,
+-  "results": 13,
+-  "data": [
+-    {
+-      "address": "192.53.120.25",
+-      "gateway": "192.53.120.1",
+-      "subnet_mask": "255.255.255.0",
+-      "prefix": 24,
+-      "type": "ipv4",
+-      "public": true,
+-      "rdns": "li2216-25.members.linode.com",
+-      "linode_id": 26837938,
+-      "region": "ca-central"
+-    },
+-    {
+-      "address": "66.228.47.103",
+-      "gateway": "66.228.47.1",
+-      "subnet_mask": "255.255.255.0",
+-      "prefix": 24,
+-      "type": "ipv4",
+-      "public": true,
+-      "rdns": "li328-103.members.linode.com",
+-      "linode_id": 26837992,
+-      "region": "us-east"
+-    },
+-    {
+-      "address": "172.104.18.104",
+-      "gateway": "172.104.18.1",
+-      "subnet_mask": "255.255.255.0",
+-      "prefix": 24,
+-      "type": "ipv4",
+-      "public": true,
+-      "rdns": "li1832-104.members.linode.com",
+-      "linode_id": 26837992,
+-      "region": "us-east"
+-    },
+-    {
+-      "address": "192.168.148.94",
+-      "gateway": null,
+-      "subnet_mask": "255.255.128.0",
+-      "prefix": 17,
+-      "type": "ipv4",
+-      "public": false,
+-      "rdns": null,
+-      "linode_id": 26837992,
+-      "region": "us-east"
+-    },
+-    {
+-      "address": "192.168.170.51",
+-      "gateway": null,
+-      "subnet_mask": "255.255.128.0",
+-      "prefix": 17,
+-      "type": "ipv4",
+-      "public": false,
+-      "rdns": null,
+-      "linode_id": 26838044,
+-      "region": "us-east"
+-    },
+-    {
+-      "address": "96.126.108.16",
+-      "gateway": "96.126.108.1",
+-      "subnet_mask": "255.255.255.0",
+-      "prefix": 24,
+-      "type": "ipv4",
+-      "public": true,
+-      "rdns": "li365-16.members.linode.com",
+-      "linode_id": 26838044,
+-      "region": "us-east"
+-    },
+-    {
+-      "address": "45.33.82.151",
+-      "gateway": "45.33.82.1",
+-      "subnet_mask": "255.255.255.0",
+-      "prefix": 24,
+-      "type": "ipv4",
+-      "public": true,
+-      "rdns": "li1028-151.members.linode.com",
+-      "linode_id": 26838044,
+-      "region": "us-east"
+-    },
+-    {
+-      "address": "192.168.201.25",
+-      "gateway": null,
+-      "subnet_mask": "255.255.128.0",
+-      "prefix": 17,
+-      "type": "ipv4",
+-      "public": false,
+-      "rdns": null,
+-      "linode_id": 26838044,
+-      "region": "us-east"
+-    },
+-    {
+-      "address": "139.162.196.43",
+-      "gateway": "139.162.196.1",
+-      "subnet_mask": "255.255.255.0",
+-      "prefix": 24,
+-      "type": "ipv4",
+-      "public": true,
+-      "rdns": "li1359-43.members.linode.com",
+-      "linode_id": 26848419,
+-      "region": "eu-west"
+-    },
+-    {
+-      "address": "2600:3c04::f03c:92ff:fe1a:fb68",
+-      "gateway": "fe80::1",
+-      "subnet_mask": "ffff:ffff:ffff:ffff::",
+-      "prefix": 64,
+-      "type": "ipv6",
+-      "rdns": null,
+-      "linode_id": 26837938,
+-      "region": "ca-central",
+-      "public": true
+-    },
+-    {
+-      "address": "2600:3c03::f03c:92ff:fe1a:fb4c",
+-      "gateway": "fe80::1",
+-      "subnet_mask": "ffff:ffff:ffff:ffff::",
+-      "prefix": 64,
+-      "type": "ipv6",
+-      "rdns": null,
+-      "linode_id": 26837992,
+-      "region": "us-east",
+-      "public": true
+-    },
+-    {
+-      "address": "2600:3c03::f03c:92ff:fe1a:1382",
+-      "gateway": "fe80::1",
+-      "subnet_mask": "ffff:ffff:ffff:ffff::",
+-      "prefix": 64,
+-      "type": "ipv6",
+-      "rdns": null,
+-      "linode_id": 26838044,
+-      "region": "us-east",
+-      "public": true
+-    },
+-    {
+-      "address": "2a01:7e00::f03c:92ff:fe1a:9976",
+-      "gateway": "fe80::1",
+-      "subnet_mask": "ffff:ffff:ffff:ffff::",
+-      "prefix": 64,
+-      "type": "ipv6",
+-      "rdns": null,
+-      "linode_id": 26848419,
+-      "region": "eu-west",
+-      "public": true
+-    }
+-  ]
+-}`,
+-		)
+-	})
+-}
+-
+-// HandleLinodeAccountEvents mocks linode the account/events endpoint.
+-func (m *SDMock) HandleLinodeAccountEvents() {
+-	m.Mux.HandleFunc("/v4/account/events", func(w http.ResponseWriter, r *http.Request) {
+-		if r.Header.Get("Authorization") != fmt.Sprintf("Bearer %s", tokenID) {
+-			w.WriteHeader(http.StatusUnauthorized)
+-			return
+-		}
+-
+-		if r.Header.Get("X-Filter") == "" {
+-			// This should never happen; if the client sends an events request without
+-			// a filter, cause it to fail. The error below is not a real response from
+-			// the API, but should aid in debugging failed tests.
+-			w.WriteHeader(http.StatusBadRequest)
+-			fmt.Fprint(w, `
+-{
+-	"errors": [
+-		{
+-			"reason": "Request missing expected X-Filter headers"
+-		}
+-	]
+-}`,
+-			)
+-			return
+-		}
+-
+-		w.Header().Set("content-type", "application/json; charset=utf-8")
+-		w.WriteHeader(http.StatusOK)
+-
+-		fmt.Fprint(w, `
+-{
+-	"data": [],
+-	"results": 0,
+-	"pages": 1,
+-	"page": 1
+-}`,
+-		)
+-	})
++// SetupHandlers for endpoints of interest.
++func (m *SDMock) SetupHandlers() {
++	for _, handler := range []string{"/v4/account/events", "/v4/linode/instances", "/v4/networking/ips", "/v4/networking/ipv6/ranges"} {
++		m.Mux.HandleFunc(handler, func(w http.ResponseWriter, r *http.Request) {
++			if r.Header.Get("Authorization") != fmt.Sprintf("Bearer %s", tokenID) {
++				w.WriteHeader(http.StatusUnauthorized)
++				return
++			}
++			xFilter := struct {
++				Region string `json:"region"`
++			}{}
++			json.Unmarshal([]byte(r.Header.Get("X-Filter")), &xFilter)
++
++			directory := "testdata/no_region_filter"
++			if xFilter.Region != "" { // Validate region filter matches test criteria.
++				directory = "testdata/" + xFilter.Region
++			}
++			if response, err := os.ReadFile(filepath.Join(directory, r.URL.Path+".json")); err == nil {
++				w.Header().Add("content-type", "application/json; charset=utf-8")
++				w.WriteHeader(http.StatusOK)
++				w.Write(response)
++				return
++			}
++			w.WriteHeader(http.StatusInternalServerError)
++		})
++	}
+ }

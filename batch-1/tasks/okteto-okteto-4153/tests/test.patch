@@ -1,0 +1,15 @@
+diff --git a/pkg/deps/deps_test.go b/pkg/deps/deps_test.go
+index 3a4206af..139a9816 100644
+--- a/pkg/deps/deps_test.go
++++ b/pkg/deps/deps_test.go
+@@ -17,10 +17,10 @@ import (
+ 	"testing"
+ 	"time"
+ 
++	giturls "github.com/chainguard-dev/git-urls"
+ 	"github.com/okteto/okteto/pkg/env"
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	giturls "github.com/whilp/git-urls"
+ 	"gopkg.in/yaml.v2"
+ )

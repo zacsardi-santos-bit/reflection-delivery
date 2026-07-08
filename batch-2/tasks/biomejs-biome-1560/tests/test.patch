@@ -1,0 +1,622 @@
+diff --git a/crates/biome_cli/tests/cases/included_files.rs b/crates/biome_cli/tests/cases/included_files.rs
+index f2f0ee8ae4..f415893064 100644
+--- a/crates/biome_cli/tests/cases/included_files.rs
++++ b/crates/biome_cli/tests/cases/included_files.rs
+@@ -1,7 +1,7 @@
+ use crate::run_cli;
+ use crate::snap_test::{assert_cli_snapshot, assert_file_contents, SnapshotPayload};
+ use biome_console::BufferConsole;
+-use biome_fs::{FileSystemExt, MemoryFileSystem};
++use biome_fs::MemoryFileSystem;
+ use biome_service::DynRef;
+ use bpaf::Args;
+ use std::path::Path;
+@@ -115,42 +115,6 @@ fn does_not_handle_included_files_if_overridden_by_ignore() {
+     ));
+ }
+ 
+-#[test]
+-fn does_handle_if_included_in_formatter() {
+-    let mut console = BufferConsole::default();
+-    let mut fs = MemoryFileSystem::default();
+-    let file_path = Path::new("biome.json");
+-    fs.insert(
+-        file_path.into(),
+-        r#"{
+-  "files": { "ignore": ["test.js"] }, "formatter": { "include": ["test.js"] }
+-}
+-"#
+-        .as_bytes(),
+-    );
+-
+-    let test = Path::new("test.js");
+-    fs.insert(test.into(), UNFORMATTED.as_bytes());
+-
+-    let result = run_cli(
+-        DynRef::Borrowed(&mut fs),
+-        &mut console,
+-        Args::from([("format"), ("--write"), test.as_os_str().to_str().unwrap()].as_slice()),
+-    );
+-
+-    assert!(result.is_ok(), "run_cli returned {result:?}");
+-
+-    assert_file_contents(&fs, test, FORMATTED);
+-
+-    assert_cli_snapshot(SnapshotPayload::new(
+-        module_path!(),
+-        "does_handle_if_included_in_formatter",
+-        fs,
+-        console,
+-        result,
+-    ));
+-}
+-
+ #[test]
+ fn does_not_handle_included_files_if_overridden_by_ignore_formatter() {
+     let mut console = BufferConsole::default();
+@@ -200,55 +164,6 @@ fn does_not_handle_included_files_if_overridden_by_ignore_formatter() {
+     ));
+ }
+ 
+-#[test]
+-fn does_lint_included_files() {
+-    let mut fs = MemoryFileSystem::default();
+-    let mut console = BufferConsole::default();
+-
+-    let file_path = Path::new("biome.json");
+-    fs.insert(
+-        file_path.into(),
+-        r#"{
+-  "files": { "ignore": ["test.js"] }, "linter": { "include": ["test.js"] }
+-}
+-"#,
+-    );
+-
+-    let file_path = Path::new("test.js");
+-    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+-
+-    let result = run_cli(
+-        DynRef::Borrowed(&mut fs),
+-        &mut console,
+-        Args::from(
+-            [
+-                ("lint"),
+-                ("--apply"),
+-                file_path.as_os_str().to_str().unwrap(),
+-            ]
+-            .as_slice(),
+-        ),
+-    );
+-
+-    assert!(result.is_ok(), "run_cli returned {result:?}");
+-
+-    let mut buffer = String::new();
+-    fs.open(file_path)
+-        .unwrap()
+-        .read_to_string(&mut buffer)
+-        .unwrap();
+-
+-    assert_eq!(buffer, FIX_AFTER);
+-
+-    assert_cli_snapshot(SnapshotPayload::new(
+-        module_path!(),
+-        "does_lint_included_files",
+-        fs,
+-        console,
+-        result,
+-    ));
+-}
+-
+ #[test]
+ fn does_not_handle_included_files_if_overridden_by_ignore_linter() {
+     let mut console = BufferConsole::default();
+@@ -298,57 +213,6 @@ fn does_not_handle_included_files_if_overridden_by_ignore_linter() {
+     ));
+ }
+ 
+-#[test]
+-fn does_organize_imports_of_included_files() {
+-    let mut fs = MemoryFileSystem::default();
+-    let mut console = BufferConsole::default();
+-
+-    let file_path = Path::new("biome.json");
+-    fs.insert(
+-        file_path.into(),
+-        r#"{
+-  "formatter": { "enabled": false },
+-  "linter": { "enabled": false },
+-   "files": { "ignore": ["test2.js", "test.js"] }, "organizeImports": { "include": ["test.js"] }
+-}
+-"#,
+-    );
+-
+-    let test = Path::new("test.js");
+-    fs.insert(test.into(), UNORGANIZED.as_bytes());
+-
+-    let test2 = Path::new("test2.js");
+-    fs.insert(test2.into(), UNORGANIZED.as_bytes());
+-
+-    let result = run_cli(
+-        DynRef::Borrowed(&mut fs),
+-        &mut console,
+-        Args::from(
+-            [
+-                ("check"),
+-                ("--apply"),
+-                test.as_os_str().to_str().unwrap(),
+-                test2.as_os_str().to_str().unwrap(),
+-            ]
+-            .as_slice(),
+-        ),
+-    );
+-
+-    assert!(result.is_ok(), "run_cli returned {result:?}");
+-
+-    assert_file_contents(&fs, test2, UNORGANIZED);
+-
+-    assert_file_contents(&fs, test, ORGANIZED);
+-
+-    assert_cli_snapshot(SnapshotPayload::new(
+-        module_path!(),
+-        "does_organize_imports_of_included_files",
+-        fs,
+-        console,
+-        result,
+-    ));
+-}
+-
+ #[test]
+ fn does_not_handle_included_files_if_overridden_by_organize_imports() {
+     let mut console = BufferConsole::default();
+diff --git a/crates/biome_cli/tests/commands/format.rs b/crates/biome_cli/tests/commands/format.rs
+index 064b1db208..60d6d0ab7d 100644
+--- a/crates/biome_cli/tests/commands/format.rs
++++ b/crates/biome_cli/tests/commands/format.rs
+@@ -1341,18 +1341,14 @@ fn does_not_format_ignored_directories() {
+ }
+ 
+ #[test]
+-fn does_not_format_non_included_and_ignored_files() {
++fn does_not_format_ignored_file_in_included_directory() {
+     let config = r#"{
+-        "files": {
+-          "include": ["file1.js", "file2.js", "file3.js"],
+-          "ignore": ["file2.js"]
+-        },
+         "formatter": {
+-          "include": ["file2.js"],
+-          "ignore": ["file3.js"]
++          "include": ["src"],
++          "ignore": ["src/file2.js"]
+         }
+     }"#;
+-    let files = [("file1.js", true), ("file2.js", true), ("file3.js", false)];
++    let files = [("src/file1.js", true), ("src/file2.js", false)];
+ 
+     let mut console = BufferConsole::default();
+     let mut fs = MemoryFileSystem::default();
+@@ -1381,7 +1377,7 @@ fn does_not_format_non_included_and_ignored_files() {
+ 
+     assert_cli_snapshot(SnapshotPayload::new(
+         module_path!(),
+-        "does_not_format_non_included_and_ignored_files",
++        "does_not_format_ignored_file_in_included_directory",
+         fs,
+         console,
+         result,
+@@ -1389,14 +1385,27 @@ fn does_not_format_non_included_and_ignored_files() {
+ }
+ 
+ #[test]
+-fn does_not_format_ignored_file_in_included_directory() {
++fn include_ignore_cascade() {
++    // Only `file1.js` will be formatted:
++    // - `file2.js` is ignored at top-level
++    // - `file3.js` is ignored at formatter-level
++    // - `file4.js` is not included at top-level
+     let config = r#"{
++        "files": {
++          "include": ["file1.js", "file2.js", "file3.js"],
++          "ignore": ["file2.js"]
++        },
+         "formatter": {
+-          "include": ["src"],
+-          "ignore": ["src/file2.js"]
++          "include": ["file1.js", "file2.js"],
++          "ignore": ["file3.js"]
+         }
+     }"#;
+-    let files = [("src/file1.js", true), ("src/file2.js", false)];
++    let files = [
++        ("file1.js", true),
++        ("file2.js", false),
++        ("file3.js", false),
++        ("file4.js", false),
++    ];
+ 
+     let mut console = BufferConsole::default();
+     let mut fs = MemoryFileSystem::default();
+@@ -1425,7 +1434,7 @@ fn does_not_format_ignored_file_in_included_directory() {
+ 
+     assert_cli_snapshot(SnapshotPayload::new(
+         module_path!(),
+-        "does_not_format_ignored_file_in_included_directory",
++        "include_ignore_cascade",
+         fs,
+         console,
+         result,
+@@ -1879,6 +1888,118 @@ file2.js
+     ));
+ }
+ 
++#[test]
++fn include_vcs_ignore_cascade() {
++    // Only `file1.js` will be formatted:
++    // - `file2.js` is ignored at top-level
++    // - `file3.js` is ignored at formatter-level
++    // - `file4.js` is ignored in `.gitignore`
++    let git_ignore = r#"file4.js"#;
++    let config = r#"{
++        "vcs": {
++            "enabled": true,
++            "clientKind": "git",
++            "useIgnoreFile": true
++        },
++        "files": {
++          "ignore": ["file2.js"]
++        },
++        "formatter": {
++          "include": ["file1.js", "file2.js", "file4.js"],
++          "ignore": ["file3.js"]
++        }
++    }"#;
++    let files = [
++        ("file1.js", true),
++        ("file2.js", false),
++        ("file3.js", false),
++        ("file4.js", false),
++    ];
++
++    let mut console = BufferConsole::default();
++    let mut fs = MemoryFileSystem::default();
++    let gitignore_file = Path::new(".gitignore");
++    fs.insert(gitignore_file.into(), git_ignore.as_bytes());
++    let file_path = Path::new("biome.json");
++    fs.insert(file_path.into(), config);
++    for (file_path, _) in files {
++        let file_path = Path::new(file_path);
++        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
++    }
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from([("format"), ("."), ("--write")].as_slice()),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    for (file_path, expect_formatted) in files {
++        let expected = if expect_formatted {
++            FORMATTED
++        } else {
++            UNFORMATTED
++        };
++        assert_file_contents(&fs, Path::new(file_path), expected);
++    }
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "include_vcs_ignore_cascade",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn vcs_absolute_path() {
++    let git_ignore = r#"file.js"#;
++    let config = r#"{
++        "vcs": {
++            "enabled": true,
++            "clientKind": "git",
++            "useIgnoreFile": true
++        }
++    }"#;
++    let files = [("/symbolic/link/to/path.js", true)];
++
++    let mut console = BufferConsole::default();
++    let mut fs = MemoryFileSystem::default();
++    let gitignore_file = Path::new(".gitignore");
++    fs.insert(gitignore_file.into(), git_ignore.as_bytes());
++    let file_path = Path::new("biome.json");
++    fs.insert(file_path.into(), config);
++    for (file_path, _) in files {
++        let file_path = Path::new(file_path);
++        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
++    }
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from([("format"), ("."), ("--write")].as_slice()),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    for (file_path, expect_formatted) in files {
++        let expected = if expect_formatted {
++            FORMATTED
++        } else {
++            UNFORMATTED
++        };
++        assert_file_contents(&fs, Path::new(file_path), expected);
++    }
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "vcs_absolute_path",
++        fs,
++        console,
++        result,
++    ));
++}
++
+ #[test]
+ fn ignores_unknown_file() {
+     let mut fs = MemoryFileSystem::default();
+@@ -2525,3 +2646,46 @@ const a = {
+         result,
+     ));
+ }
++
++#[test]
++fn override_don_t_affect_ignored_files() {
++    let config = r#"{
++        "overrides": [{
++            "ignore": ["file2.js"]
++        }]
++    }"#;
++    let files = [("file1.js", true), ("file2.js", true)];
++
++    let mut console = BufferConsole::default();
++    let mut fs = MemoryFileSystem::default();
++    let file_path = Path::new("biome.json");
++    fs.insert(file_path.into(), config);
++    for (file_path, _) in files {
++        let file_path = Path::new(file_path);
++        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
++    }
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from([("format"), ("."), ("--write")].as_slice()),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    for (file_path, expect_formatted) in files {
++        let expected = if expect_formatted {
++            FORMATTED
++        } else {
++            UNFORMATTED
++        };
++        assert_file_contents(&fs, Path::new(file_path), expected);
++    }
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "override_don_t_affect_ignored_files",
++        fs,
++        console,
++        result,
++    ));
++}
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_format/include_ignore_cascade.snap b/crates/biome_cli/tests/snapshots/main_commands_format/include_ignore_cascade.snap
+new file mode 100644
+index 0000000000..7ee5a0e760
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_format/include_ignore_cascade.snap
+@@ -0,0 +1,51 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `biome.json`
++
++```json
++{
++  "files": {
++    "include": ["file1.js", "file2.js", "file3.js"],
++    "ignore": ["file2.js"]
++  },
++  "formatter": {
++    "include": ["file1.js", "file2.js"],
++    "ignore": ["file3.js"]
++  }
++}
++```
++
++## `file1.js`
++
++```js
++statement();
++
++```
++
++## `file2.js`
++
++```js
++  statement(  )  
++```
++
++## `file3.js`
++
++```js
++  statement(  )  
++```
++
++## `file4.js`
++
++```js
++  statement(  )  
++```
++
++# Emitted Messages
++
++```block
++Formatted 2 file(s) in <TIME>
++```
++
++
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_format/include_vcs_ignore_cascade.snap b/crates/biome_cli/tests/snapshots/main_commands_format/include_vcs_ignore_cascade.snap
+new file mode 100644
+index 0000000000..b874c22d8d
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_format/include_vcs_ignore_cascade.snap
+@@ -0,0 +1,61 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `biome.json`
++
++```json
++{
++  "vcs": {
++    "enabled": true,
++    "clientKind": "git",
++    "useIgnoreFile": true
++  },
++  "files": {
++    "ignore": ["file2.js"]
++  },
++  "formatter": {
++    "include": ["file1.js", "file2.js", "file4.js"],
++    "ignore": ["file3.js"]
++  }
++}
++```
++
++## `.gitignore`
++
++```gitignore
++file4.js
++```
++
++## `file1.js`
++
++```js
++statement();
++
++```
++
++## `file2.js`
++
++```js
++  statement(  )  
++```
++
++## `file3.js`
++
++```js
++  statement(  )  
++```
++
++## `file4.js`
++
++```js
++  statement(  )  
++```
++
++# Emitted Messages
++
++```block
++Formatted 2 file(s) in <TIME>
++```
++
++
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_format/override_don_t_affect_ignored_files.snap b/crates/biome_cli/tests/snapshots/main_commands_format/override_don_t_affect_ignored_files.snap
+new file mode 100644
+index 0000000000..d1ca6b9aa3
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_format/override_don_t_affect_ignored_files.snap
+@@ -0,0 +1,37 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `biome.json`
++
++```json
++{
++  "overrides": [
++    {
++      "ignore": ["file2.js"]
++    }
++  ]
++}
++```
++
++## `file1.js`
++
++```js
++statement();
++
++```
++
++## `file2.js`
++
++```js
++statement();
++
++```
++
++# Emitted Messages
++
++```block
++Formatted 3 file(s) in <TIME>
++```
++
++
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_format/vcs_absolute_path.snap b/crates/biome_cli/tests/snapshots/main_commands_format/vcs_absolute_path.snap
+new file mode 100644
+index 0000000000..7dc74c520e
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_format/vcs_absolute_path.snap
+@@ -0,0 +1,36 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `biome.json`
++
++```json
++{
++  "vcs": {
++    "enabled": true,
++    "clientKind": "git",
++    "useIgnoreFile": true
++  }
++}
++```
++
++## `.gitignore`
++
++```gitignore
++file.js
++```
++
++## `/symbolic/link/to/path.js`
++
++```js
++statement();
++
++```
++
++# Emitted Messages
++
++```block
++Formatted 2 file(s) in <TIME>
++```
++
++

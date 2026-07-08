@@ -1,0 +1,1339 @@
+diff --git a/pkg/workloadendpointmanager/workloadendpoint_manager_test.go b/pkg/workloadendpointmanager/workloadendpoint_manager_test.go
+index 1003aa469..13d892026 100644
+--- a/pkg/workloadendpointmanager/workloadendpoint_manager_test.go
++++ b/pkg/workloadendpointmanager/workloadendpoint_manager_test.go
+@@ -7,6 +7,7 @@ import (
+ 	"context"
+ 	"fmt"
+ 	"sync/atomic"
++	"time"
+ 
+ 	"github.com/agiledragon/gomonkey/v2"
+ 	. "github.com/onsi/ginkgo/v2"
+@@ -639,5 +640,83 @@ var _ = Describe("WorkloadEndpointManager", Label("workloadendpoint_manager_test
+ 				Expect(ipAllocationDetails).To(HaveLen(2))
+ 			})
+ 		})
++
++		Describe("ReleaseEndpointAndFinalizer", func() {
++
++			It("failed to release EndpointAndFinalizer due to getting non-existent Endpoint", func() {
++				err := endpointManager.ReleaseEndpointAndFinalizer(ctx, namespace, endpointName, constant.IgnoreCache)
++				Expect(err).To(BeNil())
++			})
++
++			It("should return an error if getting the endpoint fails with an unknown error", func() {
++				patches := gomonkey.ApplyMethodReturn(fakeClient, "Get", constant.ErrUnknown)
++				defer patches.Reset()
++
++				err := endpointManager.ReleaseEndpointAndFinalizer(ctx, namespace, endpointName, constant.IgnoreCache)
++				Expect(err).To(MatchError(constant.ErrUnknown))
++			})
++
++			It("should delete the endpoint if DeletionTimestamp is nil", func() {
++				err := fakeClient.Create(ctx, endpointT)
++				Expect(err).NotTo(HaveOccurred())
++
++				patches := gomonkey.ApplyMethodReturn(fakeClient, "Delete", nil)
++				defer patches.Reset()
++
++				err = endpointManager.ReleaseEndpointAndFinalizer(ctx, namespace, endpointName, constant.IgnoreCache)
++				Expect(err).NotTo(HaveOccurred())
++			})
++
++			It("should return an error if DeleteEndpoint fails", func() {
++				patches := gomonkey.ApplyMethodReturn(endpointManager, "GetEndpointByName", endpointT, nil)
++				defer patches.Reset()
++
++				patchDelete := gomonkey.ApplyMethodReturn(endpointManager, "DeleteEndpoint", constant.ErrUnknown)
++				defer patchDelete.Reset()
++
++				err := endpointManager.ReleaseEndpointAndFinalizer(ctx, namespace, endpointName, constant.IgnoreCache)
++				Expect(err).To(MatchError(constant.ErrUnknown))
++			})
++
++			It("should remove the finalizer if the endpoint was successfully deleted", func() {
++				controllerutil.AddFinalizer(endpointT, constant.SpiderFinalizer)
++				err := fakeClient.Create(ctx, endpointT)
++				Expect(err).NotTo(HaveOccurred())
++
++				patches := gomonkey.ApplyMethodReturn(fakeClient, "Update", nil)
++				defer patches.Reset()
++
++				err = endpointManager.ReleaseEndpointAndFinalizer(ctx, namespace, endpointName, constant.IgnoreCache)
++				Expect(err).NotTo(HaveOccurred())
++			})
++
++			It("should succeed to release finalizer when there is no error", func() {
++				controllerutil.AddFinalizer(endpointT, constant.SpiderFinalizer)
++				endpointT.DeletionTimestamp = &metav1.Time{Time: time.Now()}
++
++				patches := gomonkey.ApplyMethodReturn(endpointManager, "GetEndpointByName", endpointT, nil)
++				defer patches.Reset()
++
++				patchRemoveFinalizer := gomonkey.ApplyMethodReturn(endpointManager, "RemoveFinalizer", nil)
++				defer patchRemoveFinalizer.Reset()
++
++				err := endpointManager.ReleaseEndpointAndFinalizer(ctx, namespace, endpointName, constant.IgnoreCache)
++				Expect(err).NotTo(HaveOccurred())
++			})
++
++			It("should return an error if RemoveFinalizer fails", func() {
++				controllerutil.AddFinalizer(endpointT, constant.SpiderFinalizer)
++				endpointT.DeletionTimestamp = &metav1.Time{Time: time.Now()}
++
++				patches := gomonkey.ApplyMethodReturn(endpointManager, "GetEndpointByName", endpointT, nil)
++				defer patches.Reset()
++
++				patchRemoveFinalizer := gomonkey.ApplyMethodReturn(endpointManager, "RemoveFinalizer", constant.ErrUnknown)
++				defer patchRemoveFinalizer.Reset()
++
++				err := endpointManager.ReleaseEndpointAndFinalizer(ctx, namespace, endpointName, constant.IgnoreCache)
++				Expect(err).To(MatchError(constant.ErrUnknown))
++			})
++		})
+ 	})
+ })
+diff --git a/test/doc/reclaim.md b/test/doc/reclaim.md
+index 27fcc1441..e49d42590 100644
+--- a/test/doc/reclaim.md
++++ b/test/doc/reclaim.md
+@@ -11,3 +11,6 @@
+ | G00007  | A dirty IP record (pod name is right but container ID is wrong) in the IPPool should be auto clean by Spiderpool                           | p3       |       | done   |       |
+ | G00008  | The Spiderpool component recovery from repeated reboot, and could correctly reclaim IP                                                     | p3       |       | done   |       |
+ | G00009  | stateless workload IP could be released with node not ready                                                                                | p3       |       | done   |       |
++| G00010  | IP addresses not used by statefulSet can be released by gc all ready                                                                       | p3       |       | done   |       |
++| G00011  | The IPPool is used by 2 statefulSets and scaling up/down the replicas, gc works normally and there is no IP conflict in statefulset.       | p2       |       | done   |       |
++| G00012  | Multiple resource types compete for a single IPPool. In scenarios of creation, scaling up/down, and deletion, GC all can correctly handle IP addresses.       | p2       |       | done   |       |
+diff --git a/test/e2e/common/constant.go b/test/e2e/common/constant.go
+index a9f426b39..a79256ad5 100644
+--- a/test/e2e/common/constant.go
++++ b/test/e2e/common/constant.go
+@@ -53,8 +53,9 @@ const (
+ // Network configurations
+ var (
+ 	// multus CNI
+-	MultusDefaultNetwork = "v1.multus-cni.io/default-network"
+-	MultusNetworks       = "k8s.v1.cni.cncf.io/networks"
++	MultusDefaultNetwork    = "v1.multus-cni.io/default-network"
++	MultusNetworks          = "k8s.v1.cni.cncf.io/networks"
++	PodMultusNetworksStatus = "k8s.v1.cni.cncf.io/networks-status"
+ 
+ 	CalicoCNIName               string = "k8s-pod-network"
+ 	CiliumCNIName               string = "cilium"
+diff --git a/test/e2e/common/kruise.go b/test/e2e/common/kruise.go
+index cb6c318ca..fa87eebe9 100644
+--- a/test/e2e/common/kruise.go
++++ b/test/e2e/common/kruise.go
+@@ -146,3 +146,31 @@ func DeleteKruiseStatefulSetByName(f *frame.Framework, name, namespace string, o
+ 	}
+ 	return f.DeleteResource(statefulSet, opts...)
+ }
++
++func GetKruiseStatefulSet(f *frame.Framework, namespace, name string) (*kruisev1.StatefulSet, error) {
++	kruiseStatefulSet := &kruisev1.StatefulSet{
++		ObjectMeta: metav1.ObjectMeta{
++			Namespace: namespace,
++			Name:      name,
++		},
++	}
++	key := client.ObjectKeyFromObject(kruiseStatefulSet)
++	existing := &kruisev1.StatefulSet{}
++	e := f.GetResource(key, existing)
++	if e != nil {
++		return nil, e
++	}
++	return existing, e
++}
++func ScaleKruiseStatefulSet(f *frame.Framework, kruiseStatefulSet *kruisev1.StatefulSet, replicas int32) (*kruisev1.StatefulSet, error) {
++	if kruiseStatefulSet == nil {
++		return nil, errors.New("wrong input")
++	}
++
++	kruiseStatefulSet.Spec.Replicas = ptr.To(replicas)
++	err := f.UpdateResource(kruiseStatefulSet)
++	if err != nil {
++		return nil, err
++	}
++	return kruiseStatefulSet, nil
++}
+diff --git a/test/e2e/common/pod.go b/test/e2e/common/pod.go
+index 6e1acb9ab..ddadadda7 100644
+--- a/test/e2e/common/pod.go
++++ b/test/e2e/common/pod.go
+@@ -5,6 +5,7 @@ package common
+ import (
+ 	"context"
+ 	"encoding/json"
++	"fmt"
+ 	"time"
+ 
+ 	"github.com/spidernet-io/spiderpool/pkg/constant"
+@@ -128,3 +129,17 @@ func CheckPodIpReadyByLabel(frame *e2e.Framework, label map[string]string, v4Poo
+ func DeletePods(frame *e2e.Framework, opts ...client.DeleteAllOfOption) error {
+ 	return frame.KClient.DeleteAllOf(context.TODO(), &corev1.Pod{}, opts...)
+ }
++
++func ValidatePodIPConflict(podList *corev1.PodList) error {
++	isIPConflictMap := make(map[string]string)
++	for _, pod := range podList.Items {
++		for _, ip := range pod.Status.PodIPs {
++			ipStr := ip.IP
++			if existingPod, ok := isIPConflictMap[ipStr]; ok {
++				return fmt.Errorf("the ip address: %v of pod %v conflicts with the ip address: %v of pod %v", ipStr, existingPod, ipStr, pod.Name)
++			}
++			isIPConflictMap[ipStr] = pod.Name
++		}
++	}
++	return nil
++}
+diff --git a/test/e2e/common/spiderpool.go b/test/e2e/common/spiderpool.go
+index 81102a13b..00c3ed562 100644
+--- a/test/e2e/common/spiderpool.go
++++ b/test/e2e/common/spiderpool.go
+@@ -13,6 +13,7 @@ import (
+ 	v1 "github.com/spidernet-io/spiderpool/pkg/k8s/apis/spiderpool.spidernet.io/v2beta1"
+ 	"github.com/spidernet-io/spiderpool/pkg/lock"
+ 	"github.com/spidernet-io/spiderpool/pkg/utils/convert"
++	"k8s.io/client-go/tools/cache"
+ 
+ 	"github.com/asaskevich/govalidator"
+ 	. "github.com/onsi/ginkgo/v2"
+@@ -832,3 +833,178 @@ func WaitWebhookReady(ctx context.Context, f *frame.Framework, webhookPort strin
+ 		}
+ 	}
+ }
++
++func GetSpiderControllerEnvValue(f *frame.Framework, envName string) (string, error) {
++	deployment, err := f.GetDeployment(constant.SpiderpoolController, MultusNs)
++	if err != nil {
++		return "", fmt.Errorf("failed to get deployment: %v", err)
++	}
++
++	if len(deployment.Spec.Template.Spec.Containers) != 1 {
++		return "", fmt.Errorf("expected 1 container in the deployment, found %d", len(deployment.Spec.Template.Spec.Containers))
++	}
++
++	for _, env := range deployment.Spec.Template.Spec.Containers[0].Env {
++		if env.Name == envName {
++			return env.Value, nil
++		}
++	}
++
++	return "", fmt.Errorf("environment variable %s not found in Spiderpool Controller", envName)
++}
++
++type NetworkStatus struct {
++	Name      string   `json:"name"`
++	Interface string   `json:"interface"`
++	IPs       []string `json:"ips"`
++	MAC       string   `json:"mac"`
++	Default   bool     `json:"default"`
++}
++
++// ParsePodNetworkAnnotation parses the 'PodMultusNetworksStatus' annotation from the given Pod
++// and extracts all IP addresses associated with the Pod's network interfaces.
++func ParsePodNetworkAnnotation(f *frame.Framework, pod *corev1.Pod) ([]string, error) {
++	var podIPs []string
++
++	if pod.Annotations[PodMultusNetworksStatus] != "" {
++		var networksStatus []NetworkStatus
++
++		// Unmarshal the JSON from the annotation into a slice of NetworkStatus
++		err := json.Unmarshal([]byte(pod.Annotations[PodMultusNetworksStatus]), &networksStatus)
++		if err != nil {
++			return nil, fmt.Errorf("failed to parse IP(s) from the annotation for Multus CNI: %v", err)
++		}
++
++		for _, net := range networksStatus {
++			podIPs = append(podIPs, net.IPs...)
++		}
++	} else {
++		return nil, fmt.Errorf("network status annotation %v does not exist in pod %s/%s", PodMultusNetworksStatus, pod.Namespace, pod.Name)
++	}
++
++	return podIPs, nil
++}
++
++// CheckIppoolSanity checks the integrity and correctness of the IP pool's allocation status.
++// It ensures that each IP in the pool is:
++// 1. Allocated to a single Pod, whose UID matches the record in the IP pool.
++// 2. Correctly tracked by its associated endpoint, confirming that the Pod's UID matches the endpoint's UID.
++// 3. The actual number of IPs in use is compared against the IP pool's reported usage count to ensure consistency.
++func CheckIppoolSanity(f *frame.Framework, poolName string) error {
++	// Retrieve the IPPool by name
++	ippool, err := GetIppoolByName(f, poolName)
++	if err != nil {
++		if api_errors.IsNotFound(err) {
++			return fmt.Errorf("ippool %s does not exist", poolName)
++		}
++		return fmt.Errorf("failed to get ippool %s, error %v", poolName, err)
++	}
++
++	// Parse the allocated IPs from the IP pool status
++	poolAllocatedIPs, err := convert.UnmarshalIPPoolAllocatedIPs(ippool.Status.AllocatedIPs)
++	if err != nil {
++		return fmt.Errorf("failed to parse IPPool '%v' status AllocatedIPs, error: %v", ippool, err)
++	}
++
++	// Track the actual number of IPs in use
++	actualIPUsageCount := 0
++	isSanity := true
++	for poolIP, poolIPAllocation := range poolAllocatedIPs {
++		// The total number of assigned IP addresses
++		actualIPUsageCount++
++
++		// Split the pod NamespacedName to get the namespace and pod name
++		podNS, podName, err := cache.SplitMetaNamespaceKey(poolIPAllocation.NamespacedName)
++		if err != nil {
++			return fmt.Errorf("failed to split pod NamespacedName %s, error: %v", poolIPAllocation.NamespacedName, err)
++		}
++
++		// Retrieve the Pod object by its name and namespace
++		podYaml, err := f.GetPod(podName, podNS)
++		if err != nil {
++			if api_errors.IsNotFound(err) {
++				GinkgoLogr.Error(fmt.Errorf("pod %s/%s does not exist", podNS, podName), "Failed")
++			} else {
++				return fmt.Errorf("failed to get pod %s/%s, error: %v", podNS, podName, err)
++			}
++		}
++
++		podNetworkIPs, err := ParsePodNetworkAnnotation(f, podYaml)
++		if nil != err {
++			return fmt.Errorf("failed to parse pod %s/%s network annotation \n pod yaml %v, \n error: %v ", podNS, podName, podYaml, err)
++		}
++
++		ipINPodCounts := 0
++		isIPExistedPod := false
++		for _, podNetworkIP := range podNetworkIPs {
++			if poolIP == podNetworkIP {
++				isIPExistedPod = true
++				ipINPodCounts++
++			}
++		}
++
++		if !isIPExistedPod {
++			isSanity = false
++			GinkgoLogr.Error(fmt.Errorf("the IP %s in ippool %s does not exist in the pod %s/%s NetworkAnnotation %v", poolIP, poolName, podNS, podName, podNetworkIPs), "Failed")
++		} else if ipINPodCounts > 1 {
++			isSanity = false
++			GinkgoLogr.Error(fmt.Errorf("the IP %s from the IPPool %s appears multiple times in the NetworkAnnotation %+v of the Pod %s/%s", poolIP, poolName, podNetworkIPs, podNS, podName), "Failed")
++		} else {
++			GinkgoWriter.Printf("The IP %s in the IPPool %s exist in the Pods %s/%s NetworkAnnotation %v and is unique. \n", poolIP, poolName, podNS, podName, podNetworkIPs)
++		}
++
++		if string(podYaml.UID) == poolIPAllocation.PodUID {
++			GinkgoWriter.Printf("Succeed: Pod %s/%s UID %s matches IPPool %s UID %s \n", podNS, podName, string(podYaml.UID), poolName, poolIPAllocation.PodUID)
++		} else {
++			isSanity = false
++			GinkgoLogr.Error(fmt.Errorf("pod %s/%s UID %s does not match the IPPool %s UID %s", podNS, podName, string(podYaml.UID), poolName, poolIPAllocation.PodUID), "Failed")
++		}
++
++		wep, err := GetWorkloadByName(f, podYaml.Namespace, podYaml.Name)
++		if err != nil {
++			if api_errors.IsNotFound(err) {
++				GinkgoLogr.Error(fmt.Errorf("endpoint %s/%s dose not exist", podYaml.Namespace, podYaml.Name), "Failed")
++			}
++			return fmt.Errorf("failed to get endpoint %s/%s, error %v", podYaml.Namespace, podYaml.Name, err)
++		}
++
++		podUsedIPs := convert.GroupIPAllocationDetails(wep.Status.Current.UID, wep.Status.Current.IPs)
++		for tmpPoolName, tmpIPs := range podUsedIPs {
++			if tmpPoolName == poolName {
++				for idx := range tmpIPs {
++					if tmpIPs[idx].UID != poolIPAllocation.PodUID {
++						isSanity = false
++						GinkgoLogr.Error(fmt.Errorf("the UID %s recorded in IPPool %s for the Pod does not match the UID %s in the endpoint %s/%s", poolIPAllocation.PodUID, poolName, tmpIPs[idx].UID, podNS, podName), "Failed")
++					} else if tmpIPs[idx].IP != poolIP {
++						isSanity = false
++						GinkgoLogr.Error(fmt.Errorf("the IP %s recorded in IPPool %s for the Pod %s/%s does not match the IP %s in the endpoint %s/%s", poolIP, poolName, podNS, podName, tmpIPs[idx].IP, podNS, podName), "Failed")
++					} else {
++						GinkgoWriter.Printf("Succeed: The IP %s and UID %s recorded for the Pod %s/%s in IPPool %s are the same as the UID %s and IP %s in the endpoint %s/%s \n",
++							poolIP, poolIPAllocation.PodUID, podNS, podName, poolName, tmpIPs[idx].UID, tmpIPs[idx].IP, podNS, podName)
++					}
++				}
++			}
++		}
++	}
++
++	if *ippool.Status.AllocatedIPCount > *ippool.Status.TotalIPCount {
++		GinkgoWriter.Printf(
++			"allocated IP count (%v) exceeds total IP count (%v) \n",
++			*ippool.Status.AllocatedIPCount, *ippool.Status.TotalIPCount,
++		)
++		isSanity = false
++	}
++
++	// Ensure that the IP pool's reported usage matches the actual usage
++	if actualIPUsageCount != int(*ippool.Status.AllocatedIPCount) {
++		GinkgoWriter.Printf("IPPool %s usage count mismatch: expected %d, got %d \n", poolName, actualIPUsageCount, *ippool.Status.AllocatedIPCount)
++		isSanity = false
++	}
++
++	if !isSanity {
++		return fmt.Errorf("IPPool %s sanity check failed", poolName)
++	}
++
++	GinkgoWriter.Printf("Successfully checked IPPool %s sanity, IPPool record information is correct \n", poolName)
++	return nil
++}
+diff --git a/test/e2e/common/statefulset.go b/test/e2e/common/statefulset.go
+index b0f7bd997..d507b4b5e 100644
+--- a/test/e2e/common/statefulset.go
++++ b/test/e2e/common/statefulset.go
+@@ -14,6 +14,7 @@ import (
+ 	corev1 "k8s.io/api/core/v1"
+ 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ 	"k8s.io/utils/ptr"
++	"sigs.k8s.io/controller-runtime/pkg/client"
+ )
+ 
+ func GenerateExampleStatefulSetYaml(stsName, namespace string, replica int32) *appsv1.StatefulSet {
+@@ -94,3 +95,85 @@ func ScaleStatefulsetUntilExpectedReplicas(ctx context.Context, frame *e2e.Frame
+ 		time.Sleep(ForcedWaitingTime)
+ 	}
+ }
++
++func PatchStatefulSet(frame *e2e.Framework, desiredStatefulSet, originalStatefulSet *appsv1.StatefulSet, opts ...client.PatchOption) error {
++	if desiredStatefulSet == nil || frame == nil || originalStatefulSet == nil {
++		return e2e.ErrWrongInput
++	}
++
++	mergePatch := client.MergeFrom(originalStatefulSet)
++	d, err := mergePatch.Data(desiredStatefulSet)
++	GinkgoWriter.Printf("the patch is: %v. \n", string(d))
++	if err != nil {
++		return fmt.Errorf("failed to generate patch, err is %v", err)
++	}
++
++	return frame.PatchResource(desiredStatefulSet, mergePatch, opts...)
++}
++
++func RestartAndValidateStatefulSetPodIP(frame *e2e.Framework, label map[string]string) error {
++
++	stsPodList, err := frame.GetPodListByLabel(label)
++	if err != nil {
++		return err
++	}
++
++	if len(stsPodList.Items) == 0 {
++		return nil
++	}
++
++	oldIPList, err := recordStatefulSetPodIP(stsPodList)
++	if err != nil {
++		return err
++	}
++	GinkgoWriter.Printf("statefulset old IP list %v \n", oldIPList)
++
++	if err := frame.DeletePodList(stsPodList); err != nil {
++		GinkgoWriter.Printf("statefulset old IP list %v \n", oldIPList)
++	}
++
++	newStsPodList, err := frame.GetPodListByLabel(label)
++	if err != nil {
++		return err
++	}
++
++	ctx, cancel := context.WithTimeout(context.Background(), PodReStartTimeout)
++	defer cancel()
++	err = frame.WaitPodListRunning(label, len(stsPodList.Items), ctx)
++	if err != nil {
++		return err
++	}
++
++	newIPList, err := recordStatefulSetPodIP(newStsPodList)
++	if err != nil {
++		return err
++	}
++	GinkgoWriter.Printf("statefulset new IP list %v \n", newIPList)
++
++	if len(oldIPList) != len(newIPList) {
++		return fmt.Errorf("oldIPList and newIPList have different lengths: %d vs %d", len(oldIPList), len(newIPList))
++	}
++
++	for key, oldValue := range oldIPList {
++		if newValue, ok := newIPList[key]; !ok || newValue != oldValue {
++			return fmt.Errorf("oldIPList and newIPList differ at key %s: old value = %v, new value = %v", key, oldIPList, newIPList)
++		}
++	}
++
++	return nil
++}
++
++func recordStatefulSetPodIP(podList *corev1.PodList) (map[string]string, error) {
++	recordIPMap := make(map[string]string)
++	for _, pod := range podList.Items {
++		for _, ip := range pod.Status.PodIPs {
++			ipStr := ip.IP
++			if existingPod, ok := recordIPMap[ipStr]; ok {
++				return nil, fmt.Errorf("the IP address: %v of Pod %v conflicts with the IP address: %v of Pod %v", ipStr, existingPod, ipStr, pod.Name)
++			} else {
++				recordIPMap[ipStr] = pod.Name
++			}
++		}
++	}
++	return recordIPMap, nil
++}
+diff --git a/test/e2e/common/tools.go b/test/e2e/common/tools.go
+index a4c6b3383..c44988532 100644
+--- a/test/e2e/common/tools.go
++++ b/test/e2e/common/tools.go
+@@ -129,3 +129,17 @@ func SelectIpFromIps(version types.IPVersion, ips []net.IP, ipNum int) ([]string
+ 	}
+ 	return ipRanges, nil
+ }
++
++// GenerateRandomNumbers Given a number and a specified count of sub-numbers,
++// generate the specified number of sub-numbers by randomly partitioning the given number.
++func GenerateRandomNumbers(sum, user int) []int {
++	numbers := make([]int, user)
++
++	r := rand.New(rand.NewSource(time.Now().UnixNano()))
++	for i := 0; i < user-1; i++ {
++		numbers[i] = r.Intn(sum)
++		sum -= numbers[i]
++	}
++	numbers[user-1] += sum
++	return numbers
++}
+diff --git a/test/e2e/reclaim/chaos_test.go b/test/e2e/reclaim/chaos_test.go
+new file mode 100644
+index 000000000..5f49fda47
+--- /dev/null
++++ b/test/e2e/reclaim/chaos_test.go
+@@ -0,0 +1,658 @@
++// Copyright 2024 Authors of spidernet-io
++// SPDX-License-Identifier: Apache-2.0
++package reclaim_test
++
++import (
++	"fmt"
++	"math/rand"
++	"strconv"
++	"sync"
++	"time"
++
++	. "github.com/onsi/ginkgo/v2"
++	. "github.com/onsi/gomega"
++	"github.com/spidernet-io/e2eframework/tools"
++	"golang.org/x/net/context"
++	api_errors "k8s.io/apimachinery/pkg/api/errors"
++	"k8s.io/utils/ptr"
++	"sigs.k8s.io/controller-runtime/pkg/client"
++
++	"github.com/spidernet-io/spiderpool/pkg/constant"
++	spiderpool "github.com/spidernet-io/spiderpool/pkg/k8s/apis/spiderpool.spidernet.io/v2beta1"
++	"github.com/spidernet-io/spiderpool/test/e2e/common"
++	corev1 "k8s.io/api/core/v1"
++	"k8s.io/kubectl/pkg/util/podutils"
++)
++
++var _ = Describe("Chaos Testing of GC", Label("reclaim"), func() {
++
++	Context("GC correctly handles ip addresses", func() {
++		var (
++			gcNamespace                    string = "sts-ns" + tools.RandomName()
++			replicasNum                    int32  = 5
++			v4PoolName, v6PoolName         string
++			v4PoolObj, v6PoolObj           *spiderpool.SpiderIPPool
++			v4PoolNameList, v6PoolNameList []string
++			err                            error
++		)
++
++		BeforeEach(func() {
++
++			err = frame.CreateNamespaceUntilDefaultServiceAccountReady(gcNamespace, common.ServiceAccountReadyTimeout)
++			Expect(err).NotTo(HaveOccurred(), "failed to create namespace %v", gcNamespace)
++
++			Eventually(func() error {
++				if frame.Info.IpV4Enabled {
++					v4PoolName, v4PoolObj = common.GenerateExampleIpv4poolObject(5)
++					err = common.CreateIppool(frame, v4PoolObj)
++					if err != nil {
++						GinkgoWriter.Printf("Failed to create v4 IPPool %v: %v \n", v4PoolName, err)
++						return err
++					}
++					v4PoolNameList = append(v4PoolNameList, v4PoolName)
++				}
++				if frame.Info.IpV6Enabled {
++					v6PoolName, v6PoolObj = common.GenerateExampleIpv6poolObject(5)
++					err = common.CreateIppool(frame, v6PoolObj)
++					if err != nil {
++						GinkgoWriter.Printf("Failed to create v6 IPPool %v: %v \n", v6PoolName, err)
++						return err
++					}
++					v6PoolNameList = append(v6PoolNameList, v6PoolName)
++				}
++				return err
++			}).WithTimeout(time.Minute).WithPolling(time.Second * 3).Should(BeNil())
++
++			DeferCleanup(func() {
++				defer GinkgoRecover()
++				if CurrentSpecReport().Failed() {
++					GinkgoWriter.Println("If the use case fails, the cleanup step will be skipped")
++					return
++				}
++
++				Expect(frame.DeleteNamespace(gcNamespace)).NotTo(HaveOccurred(), "failed to delete namespace %v", gcNamespace)
++				if frame.Info.IpV4Enabled {
++					Expect(common.DeleteIPPoolByName(frame, v4PoolName)).NotTo(HaveOccurred())
++				}
++				if frame.Info.IpV6Enabled {
++					Expect(common.DeleteIPPoolByName(frame, v6PoolName)).NotTo(HaveOccurred())
++				}
++			})
++		})
++
++		It("The IPPool is used by 2 statefulSets and scaling up/down the replicas, gc works normally and there is no IP conflict in statefulset.", Label("G00011"), func() {
++			var (
++				stsNameOne string = "sts-1-" + tools.RandomName()
++				stsNameTwo string = "sts-2-" + tools.RandomName()
++			)
++
++			// 1. Using the default pool, create a statefulset application with 5 replicas and check if spiderpool has assigned it an IP address.
++			var annotations = make(map[string]string)
++			podIppoolAnnoStr := common.GeneratePodIPPoolAnnotations(frame, common.NIC1, v4PoolNameList, v6PoolNameList)
++			annotations[constant.AnnoPodIPPool] = podIppoolAnnoStr
++			annotations[common.MultusDefaultNetwork] = fmt.Sprintf("%s/%s", common.MultusNs, common.MacvlanUnderlayVlan0)
++			stsOneYaml := common.GenerateExampleStatefulSetYaml(stsNameOne, gcNamespace, replicasNum)
++			stsOneYaml.Spec.Template.Annotations = annotations
++			GinkgoWriter.Printf("Try to create first StatefulSet %v/%v \n", gcNamespace, stsNameOne)
++			Expect(frame.CreateStatefulSet(stsOneYaml)).To(Succeed(), "failed to create first StatefulSet %v/%v \n", gcNamespace, stsNameOne)
++
++			var podList *corev1.PodList
++			Eventually(func() bool {
++				podList, err = frame.GetPodListByLabel(stsOneYaml.Spec.Template.Labels)
++				if nil != err || len(podList.Items) == 0 || len(podList.Items) != int(*stsOneYaml.Spec.Replicas) {
++					return false
++				}
++				return frame.CheckPodListRunning(podList)
++			}, common.PodStartTimeout, common.ForcedWaitingTime).Should(BeTrue())
++			ok, _, _, err := common.CheckPodIpRecordInIppool(frame, v4PoolNameList, v6PoolNameList, podList)
++			Expect(err).NotTo(HaveOccurred())
++			Expect(ok).To(BeTrue())
++
++			// 2. Reduce the number of replicas of the first statefulset 5 to 0.
++			// Since statefulset deletes Pods one by one, it is expected that when there are 3 replicas left,
++			// additional statefulset applications will be created.
++			stsOneObj, err := frame.GetStatefulSet(stsNameOne, gcNamespace)
++			Expect(err).NotTo(HaveOccurred())
++			desiredStsOneObj := stsOneObj.DeepCopy()
++			desiredStsOneObj.Spec.Replicas = ptr.To(int32(0))
++			Expect(common.PatchStatefulSet(frame, desiredStsOneObj, stsOneObj)).NotTo(HaveOccurred())
++			GinkgoWriter.Printf("Reduce the number of application replicas of the first statefulset %v/%v from 5 to 0 \n", gcNamespace, stsNameOne)
++
++			Eventually(func() bool {
++				podList, err = frame.GetPodListByLabel(desiredStsOneObj.Spec.Template.Labels)
++				if nil != err || len(podList.Items) > 3 {
++					return false
++				}
++
++				GinkgoWriter.Printf("When the first statefulset replica is scaled down to 3, current replicas: %v , perform other operations. \n", len(podList.Items))
++				return true
++			}, common.PodStartTimeout, common.ForcedWaitingTime).Should(BeTrue())
++
++			// 3. Create another statefulset application and use the same IPPool.
++			stsTwoYaml := common.GenerateExampleStatefulSetYaml(stsNameTwo, gcNamespace, replicasNum)
++			stsTwoYaml.Spec.Template.Annotations = annotations
++			GinkgoWriter.Printf("Try to create second StatefulSet %v/%v \n", gcNamespace, stsNameTwo)
++			Expect(frame.CreateStatefulSet(stsTwoYaml)).To(Succeed(), "failed to create second StatefulSet %v/%v \n", gcNamespace, stsNameTwo)
++
++			// 4. Restore the number of replicas of the first statefulset application from 0 to 5.
++			stsOneObj, err = frame.GetStatefulSet(stsNameOne, gcNamespace)
++			Expect(err).NotTo(HaveOccurred())
++			desiredStsOneObj = stsOneObj.DeepCopy()
++			desiredStsOneObj.Spec.Replicas = ptr.To(int32(5))
++			Expect(common.PatchStatefulSet(frame, desiredStsOneObj, stsOneObj)).NotTo(HaveOccurred())
++			GinkgoWriter.Printf("Restore the number of application replicas of the first statefulset %v/%v from 0 to 5 \n", gcNamespace, stsNameOne)
++
++			// 5. It is expected that there are only 5 Pods in 2 statefulsets that can run normally and their IP addresses have no conflicts.
++			timeout := 1 * time.Minute
++			startTime := time.Now()
++			var runningPodList corev1.PodList
++			for {
++				// The time of GC error collection is uncertain, so we set a time of 1 minutes.
++				// In CI, GC All is triggered every two minutes.
++				// It is expected that GC All and tracePod_worker processes will be triggered multiple times within 1 minutes to check whether the IP address is incorrectly collected by GC,
++				// resulting in an IP address conflict.
++				if time.Since(startTime) >= timeout {
++					fmt.Println("3 minutes have passed, IP conflict check passed, exiting.")
++					break
++				}
++				GinkgoWriter.Printf("Start checking for IP conflicts, time: %v \n", time.Since(startTime))
++				runningPodList = corev1.PodList{}
++				podList, err = frame.GetPodList(client.InNamespace(gcNamespace))
++				Expect(err).NotTo(HaveOccurred(), "failed to get podList, error: %v \n", err)
++
++				isIPConflict := make(map[corev1.PodIP]string)
++				for _, pod := range podList.Items {
++					if !podutils.IsPodReady(&pod) {
++						continue
++					}
++
++					runningPodList.Items = append(runningPodList.Items, pod)
++					// Check if there is any conflict in the recorded IPv4 or IPv6 address
++					for _, ip := range pod.Status.PodIPs {
++						if _, ok := isIPConflict[ip]; ok {
++							errorString := fmt.Sprintf("The IP address:%v of Pod %v conflicts with the IP address: %v of Pod %v \n", ip, isIPConflict[ip], pod.Status.PodIPs, pod.Name)
++							Fail(errorString)
++						} else {
++							isIPConflict[ip] = pod.Name
++						}
++					}
++				}
++				time.Sleep(10 * time.Second)
++			}
++
++			// Check that the number of Pods running correctly is the expected 5 (because the pool is limited to 5 IPs)
++			GinkgoWriter.Printf("Start checking whether the number of Pods is equal to 5, Pod replicas: %v \n", len(runningPodList.Items))
++			Expect(len(runningPodList.Items)).To(Equal(5), "expected 5 Pods in running state, found %d running Pods \n", len(runningPodList.Items))
++
++			// Check that all Pods are assigned IPs in the expected IPPool.
++			GinkgoWriter.Printf("Start checking that the Pod IPs are recorded in the desired v4 pool %v and v6 pool %v \n", v4PoolNameList, v6PoolNameList)
++			ok, _, _, err = common.CheckPodIpRecordInIppool(frame, v4PoolNameList, v6PoolNameList, &runningPodList)
++			Expect(ok).To(BeTrue())
++			Expect(err).NotTo(HaveOccurred(), "error: %v \n", err)
++		})
++	})
++
++	Context("Chaos Testing of GC", func() {
++		var (
++			chaosNamespace                 string = "gc-chaos-ns-" + tools.RandomName()
++			replicasNum                    int32  = 3
++			testUser                       int    = 6
++			ipNumInIPPool                  int    = testUser * int(replicasNum)
++			v4PoolName, v6PoolName         string
++			v4PoolObj, v6PoolObj           *spiderpool.SpiderIPPool
++			v4PoolNameList, v6PoolNameList []string
++			gcDefaultIntervalDuration      string
++			err                            error
++		)
++		const SPIDERPOOL_GC_DEFAULT_INTERVAL_DURATION = "SPIDERPOOL_GC_DEFAULT_INTERVAL_DURATION"
++
++		BeforeEach(func() {
++			gcDefaultIntervalDuration, err = common.GetSpiderControllerEnvValue(frame, SPIDERPOOL_GC_DEFAULT_INTERVAL_DURATION)
++			Expect(err).NotTo(HaveOccurred())
++			GinkgoWriter.Printf("SPIDERPOOL_GC_DEFAULT_INTERVAL_DURATION: %s \n", gcDefaultIntervalDuration)
++
++			err = frame.CreateNamespaceUntilDefaultServiceAccountReady(chaosNamespace, common.ServiceAccountReadyTimeout)
++			Expect(err).NotTo(HaveOccurred(), "failed to create namespace %v", chaosNamespace)
++			GinkgoWriter.Printf("succeed to create namespace %s \n", chaosNamespace)
++
++			Eventually(func() error {
++				if frame.Info.IpV4Enabled {
++					v4PoolName, v4PoolObj = common.GenerateExampleIpv4poolObject(ipNumInIPPool)
++					err = common.CreateIppool(frame, v4PoolObj)
++					if err != nil {
++						GinkgoWriter.Printf("Failed to create v4 IPPool %v: %v \n", v4PoolName, err)
++						return err
++					}
++					v4PoolNameList = append(v4PoolNameList, v4PoolName)
++					GinkgoWriter.Printf("succeed to create v4 IPPool %s \n", v4PoolName)
++				}
++				if frame.Info.IpV6Enabled {
++					v6PoolName, v6PoolObj = common.GenerateExampleIpv6poolObject(ipNumInIPPool)
++					err = common.CreateIppool(frame, v6PoolObj)
++					if err != nil {
++						GinkgoWriter.Printf("Failed to create v6 IPPool %v: %v \n", v6PoolName, err)
++						return err
++					}
++					v6PoolNameList = append(v6PoolNameList, v6PoolName)
++					GinkgoWriter.Printf("succeed to create v6 IPPool %s \n", v6PoolName)
++				}
++				return err
++			}).WithTimeout(time.Minute).WithPolling(time.Second * 3).Should(BeNil())
++
++			DeferCleanup(func() {
++				if CurrentSpecReport().Failed() {
++					GinkgoWriter.Println("If the use case fails, the cleanup step will be skipped")
++					return
++				}
++
++				// Finally, we need to recheck the running status of the spiderpoolController. The expected status is: running.
++				ctx, cancel := context.WithTimeout(context.Background(), common.PodReStartTimeout)
++				defer cancel()
++				err = frame.WaitPodListRunning(map[string]string{"app.kubernetes.io/component": constant.SpiderpoolController}, len(frame.Info.KindNodeList), ctx)
++				Expect(err).NotTo(HaveOccurred(), "The restarted spiderpool-controller did not recover correctly.")
++
++				// clean all
++				Expect(frame.DeleteNamespace(chaosNamespace)).NotTo(HaveOccurred(), "failed to delete namespace %v", chaosNamespace)
++				GinkgoWriter.Printf("succeed to delete namespace %s \n", chaosNamespace)
++
++				if frame.Info.IpV4Enabled {
++					Expect(common.DeleteIPPoolByName(frame, v4PoolName)).NotTo(HaveOccurred())
++					GinkgoWriter.Printf("succeed to delete v4 IPPool %s \n", v4PoolName)
++				}
++				if frame.Info.IpV6Enabled {
++					Expect(common.DeleteIPPoolByName(frame, v6PoolName)).NotTo(HaveOccurred())
++					GinkgoWriter.Printf("succeed to delete v6 IPPool %s \n", v6PoolName)
++				}
++			})
++		})
++
++		It("Multiple resource types compete for a single IPPool. In scenarios of creation, scaling up/down, and deletion, GC all can correctly handle IP addresses.", Serial, Label("G00012"), func() {
++			var (
++				stsNameOne       string = "gc-chaos-sts-1-" + tools.RandomName()
++				stsNameTwo       string = "gc-chaos-sts-2-" + tools.RandomName()
++				deployNameOne    string = "gc-chaos-deploy-1-" + tools.RandomName()
++				deployNameTwo    string = "gc-chaos-deploy-2-" + tools.RandomName()
++				kruiseStsNameOne string = "gc-chaos-kruise-sts-1-" + tools.RandomName()
++				kruiseStsNameTwo string = "gc-chaos-kruise-sts-2-" + tools.RandomName()
++			)
++
++			// 1. Use the spiderpool annotation to specify the same IPPool for all users, allowing them to compete for IP resources.
++			var annotations = map[string]string{
++				constant.AnnoPodIPPool:      common.GeneratePodIPPoolAnnotations(frame, common.NIC1, v4PoolNameList, v6PoolNameList),
++				common.MultusDefaultNetwork: fmt.Sprintf("%s/%s", common.MultusNs, common.MacvlanUnderlayVlan0),
++			}
++			GinkgoWriter.Printf("succeed to generate annotations %s \n", annotations)
++
++			// 2. Create 6 groups of applications, including 2 groups of statefulset, 2 groups of deployment, and 2 groups of kurise statefulset
++			// Users of the same type form competition, and users of different types form competition.
++			// Define the creation time of the resource, which will occur at a random point within 30 seconds.
++			createPodSet := func(createFunc func() error, createName string, duration time.Duration) error {
++				time.Sleep(time.Duration(rand.Intn(int(duration.Seconds()))) * time.Second)
++
++				startTime := time.Now()
++				err := createFunc()
++				if err != nil {
++					return fmt.Errorf("failed to create %s/%s, at time %v, error %v", chaosNamespace, createName, startTime, err)
++				}
++
++				GinkgoWriter.Printf("Succeeded in creating %s/%s at time %v \n", chaosNamespace, createName, startTime)
++				return nil
++			}
++
++			createFuncs := map[string]func() error{
++				stsNameOne: func() error {
++					stsOneYaml := common.GenerateExampleStatefulSetYaml(stsNameOne, chaosNamespace, replicasNum)
++					stsOneYaml.Spec.Template.Annotations = annotations
++					stsOneYaml.Spec.Template.Labels = map[string]string{
++						"app":       stsOneYaml.Name,
++						"namespace": chaosNamespace,
++					}
++					return frame.CreateStatefulSet(stsOneYaml)
++				},
++				stsNameTwo: func() error {
++					stsTwoYaml := common.GenerateExampleStatefulSetYaml(stsNameTwo, chaosNamespace, replicasNum)
++					stsTwoYaml.Spec.Template.Annotations = annotations
++					stsTwoYaml.Spec.Template.Labels = map[string]string{
++						"app":       stsTwoYaml.Name,
++						"namespace": chaosNamespace,
++					}
++					return frame.CreateStatefulSet(stsTwoYaml)
++				},
++				deployNameOne: func() error {
++					deployOneYaml := common.GenerateExampleDeploymentYaml(deployNameOne, chaosNamespace, replicasNum)
++					deployOneYaml.Spec.Template.Annotations = annotations
++					deployOneYaml.Spec.Template.Labels = map[string]string{
++						"app":       deployOneYaml.Name,
++						"namespace": chaosNamespace,
++					}
++					return frame.CreateDeployment(deployOneYaml)
++				},
++				deployNameTwo: func() error {
++					deployTwoYaml := common.GenerateExampleDeploymentYaml(deployNameTwo, chaosNamespace, replicasNum)
++					deployTwoYaml.Spec.Template.Annotations = annotations
++					deployTwoYaml.Spec.Template.Labels = map[string]string{
++						"app":       deployTwoYaml.Name,
++						"namespace": chaosNamespace,
++					}
++					return frame.CreateDeployment(deployTwoYaml)
++				},
++				kruiseStsNameOne: func() error {
++					kruiseStsOneYaml := common.GenerateExampleKruiseStatefulSetYaml(kruiseStsNameOne, chaosNamespace, replicasNum)
++					kruiseStsOneYaml.Spec.Template.Annotations = annotations
++					kruiseStsOneYaml.Spec.Template.Labels = map[string]string{
++						"app":       kruiseStsOneYaml.Name,
++						"namespace": chaosNamespace,
++					}
++					return common.CreateKruiseStatefulSet(frame, kruiseStsOneYaml)
++				},
++				kruiseStsNameTwo: func() error {
++					kruiseStsTwoYaml := common.GenerateExampleKruiseStatefulSetYaml(kruiseStsNameTwo, chaosNamespace, replicasNum)
++					kruiseStsTwoYaml.Spec.Template.Annotations = annotations
++					kruiseStsTwoYaml.Spec.Template.Labels = map[string]string{
++						"app":       kruiseStsTwoYaml.Name,
++						"namespace": chaosNamespace,
++					}
++					return common.CreateKruiseStatefulSet(frame, kruiseStsTwoYaml)
++				},
++			}
++
++			var createWg sync.WaitGroup
++			createWg.Add(len(createFuncs))
++			for name, createFunc := range createFuncs {
++				go func(name string, createFunc func() error) {
++					defer GinkgoRecover()
++					defer createWg.Done()
++					err := createPodSet(createFunc, name, 30*time.Second)
++					Expect(err).NotTo(HaveOccurred())
++				}(name, createFunc)
++			}
++			createWg.Wait()
++
++			// waitForPodsAndCheckPoolSanity is a function that performs a series of checks after waiting for a
++			// specified gc all interval. It first sleeps for a duration calculated from `gcDefaultIntervalDuration` plus
++			// an additional 20 seconds. After the sleep period, it ensures that all Pods within the specified
++			// namespace are running as expected by using a timeout context.
++			// it also verifies the sanity of the associated IP pools
++			gcDefaultIntervalDuration, err := strconv.Atoi(gcDefaultIntervalDuration)
++			Expect(err).NotTo(HaveOccurred())
++			waitForPodsAndCheckPoolSanity := func() {
++				time.Sleep(time.Duration(gcDefaultIntervalDuration+20) * time.Second)
++				ctx, cancel := context.WithTimeout(context.Background(), common.PodStartTimeout)
++				defer cancel()
++				Expect(frame.WaitPodListRunning(map[string]string{"namespace": chaosNamespace}, ipNumInIPPool, ctx)).NotTo(HaveOccurred(),
++					"failed to check pod status in namespace %s, error %v", chaosNamespace, err)
++				GinkgoWriter.Printf("all Pods in the namespace %s are running normally. \n", chaosNamespace)
++				podList, err := frame.GetPodListByLabel(map[string]string{"namespace": chaosNamespace})
++				Expect(err).NotTo(HaveOccurred())
++				Expect(common.ValidatePodIPConflict(podList)).NotTo(HaveOccurred())
++				if frame.Info.IpV4Enabled {
++					Expect(common.CheckIppoolSanity(frame, v4PoolName)).NotTo(HaveOccurred(), "error %v", err)
++					GinkgoWriter.Printf("successfully checked sanity of spiderpool %v \n", v4PoolName)
++				}
++				if frame.Info.IpV6Enabled {
++					Expect(common.CheckIppoolSanity(frame, v6PoolName)).NotTo(HaveOccurred(), "error %v", err)
++					GinkgoWriter.Printf("successfully checked sanity of spiderpool %v \n", v6PoolName)
++				}
++			}
++
++			// 3. Verify that all Pods are running normally, their IP addresses do not conflict, and the Pod UID match those in the IPPool and endpoint.
++			GinkgoWriter.Println("create: starting to check the pod running status and the sanity of the IPs in the IPPool.")
++			waitForPodsAndCheckPoolSanity()
++
++			// 4. Scale up or down all applications randomly, with a random number of replicas.
++			randNumbers := common.GenerateRandomNumbers(testUser*int(replicasNum), testUser)
++			GinkgoWriter.Printf("Randomly scale the number of replicas: %v \n", randNumbers)
++
++			// randomly scale up and down the replicas of the six Pod groups
++			// The default replica number for all resources is replicasNum: 3
++			scalePodSet := func(scaleFunc func(scale int32) error, scaleName string, scale int32, duration time.Duration) error {
++				time.Sleep(time.Duration(rand.Intn(int(duration.Seconds()))) * time.Second)
++
++				startTime := time.Now()
++				err := scaleFunc(scale)
++				if err != nil {
++					return fmt.Errorf("failed to scale %s/%s replicas to %d at time %v, error %v", chaosNamespace, scaleName, scale, startTime, err)
++				}
++
++				GinkgoWriter.Printf("Succeeded in scaling %s/%s to %d replicas at time %v\n", chaosNamespace, scaleName, scale, startTime)
++				return nil
++			}
++
++			getAndScaleStatefulSet := func(scaleName string, scale int32) error {
++				stsObj, err := frame.GetStatefulSet(scaleName, chaosNamespace)
++				if err != nil {
++					return err
++				}
++				_, err = frame.ScaleStatefulSet(stsObj, scale)
++				if err != nil {
++					return fmt.Errorf("failed to scale %s/%s replicas to %d, error: %v", chaosNamespace, scaleName, scale, err)
++				}
++				return nil
++			}
++
++			getAndScaleDeployment := func(scaleName string, scale int32) error {
++				deployObj, err := frame.GetDeployment(scaleName, chaosNamespace)
++				if err != nil {
++					return err
++				}
++				_, err = frame.ScaleDeployment(deployObj, scale)
++				if err != nil {
++					return fmt.Errorf("failed to scale %s/%s replicas to %d, error: %v", chaosNamespace, scaleName, scale, err)
++				}
++				return nil
++			}
++
++			getAndScaleKruiseStatefulSet := func(scaleName string, scale int32) error {
++				kruiseStsObj, err := common.GetKruiseStatefulSet(frame, chaosNamespace, scaleName)
++				if err != nil {
++					return err
++				}
++				_, err = common.ScaleKruiseStatefulSet(frame, kruiseStsObj, scale)
++				if err != nil {
++					return fmt.Errorf("failed to scale %s/%s replicas to %d, error: %v", chaosNamespace, scaleName, scale, err)
++				}
++				return nil
++			}
++
++			scaleFuncs := map[string]func(scale int32) error{
++				stsNameOne:       func(scale int32) error { return getAndScaleStatefulSet(stsNameOne, scale) },
++				stsNameTwo:       func(scale int32) error { return getAndScaleStatefulSet(stsNameTwo, scale) },
++				deployNameOne:    func(scale int32) error { return getAndScaleDeployment(deployNameOne, scale) },
++				deployNameTwo:    func(scale int32) error { return getAndScaleDeployment(deployNameTwo, scale) },
++				kruiseStsNameOne: func(scale int32) error { return getAndScaleKruiseStatefulSet(kruiseStsNameOne, scale) },
++				kruiseStsNameTwo: func(scale int32) error { return getAndScaleKruiseStatefulSet(kruiseStsNameTwo, scale) },
++			}
++
++			scaleWg := sync.WaitGroup{}
++			scaleWg.Add(len(scaleFuncs) + 1)
++			// This goroutine randomly selects a Spiderpool Controller Pod and restarts it to trigger a failover.
++			// The process involves a random delay of up to 30 seconds before selecting and deleting the Pod.
++			go func() {
++				defer GinkgoRecover()
++				defer scaleWg.Done()
++				time.Sleep(time.Duration(rand.Intn(30)) * time.Second)
++
++				podList, err := frame.GetPodListByLabel(map[string]string{"app.kubernetes.io/component": constant.SpiderpoolController})
++				Expect(err).NotTo(HaveOccurred())
++
++				if len(podList.Items) <= 1 {
++					Skip("Only one replica of Spiderpool Controller is present, skipping test.")
++				}
++
++				// Randomly select a Pod from the list for deletion
++				randomPod := podList.Items[rand.Intn(len(podList.Items))]
++				err = frame.DeletePod(randomPod.Name, randomPod.Namespace)
++				Expect(err).NotTo(HaveOccurred())
++
++				// Log the details of the selected Pod for debugging and verification purposes
++				GinkgoWriter.Printf("Randomly selected and deleted Spiderpool Controller Pod: %s/%s to trigger a restart.\n", randomPod.Namespace, randomPod.Name)
++			}()
++
++			i := 0
++			for name, scaleFunc := range scaleFuncs {
++				currentIndex := i
++				i++
++				go func(name string, currentIndex int) {
++					defer GinkgoRecover()
++					defer scaleWg.Done()
++					err := scalePodSet(scaleFunc, name, int32(randNumbers[currentIndex]), 30*time.Second)
++					Expect(err).NotTo(HaveOccurred())
++					GinkgoWriter.Printf("Succeed to scale %s/%s replicas to %d \n", chaosNamespace, name, randNumbers[currentIndex])
++				}(name, currentIndex)
++			}
++			scaleWg.Wait()
++
++			// 5. Check the status of pods and ippools after scaling
++			// We obtained the GC interval, but the GC execution still requires time.
++			// We will proceed with the next steps after waiting for the GC to complete.
++			GinkgoWriter.Println("scale: starting to check the pod running status and the sanity of the IPs in the IPPool.")
++			waitForPodsAndCheckPoolSanity()
++
++			// 6. restart all Pods
++			restartPodSet := func(restartFunc func() error, restartName string, duration time.Duration) error {
++				time.Sleep(time.Duration(rand.Intn(int(duration.Seconds()))) * time.Second)
++
++				strartTime := time.Now()
++				err := restartFunc()
++				if err != nil {
++					return fmt.Errorf("failed to restart %s/%s at time %v, error %v", chaosNamespace, restartName, strartTime, err)
++				}
++
++				GinkgoWriter.Printf("Succeeded in restarting %s/%s at time %v \n", chaosNamespace, restartName, strartTime)
++				return nil
++			}
++
++			restartFuncs := map[string]func() error{
++				stsNameOne: func() error {
++					return common.RestartAndValidateStatefulSetPodIP(frame, map[string]string{"app": stsNameOne})
++				},
++				stsNameTwo: func() error {
++					return common.RestartAndValidateStatefulSetPodIP(frame, map[string]string{"app": stsNameTwo})
++				},
++				deployNameOne: func() error {
++					return frame.DeletePodListByLabel(map[string]string{"app": deployNameOne})
++				},
++				deployNameTwo: func() error {
++					return frame.DeletePodListByLabel(map[string]string{"app": deployNameTwo})
++				},
++				kruiseStsNameOne: func() error {
++					return frame.DeletePodListByLabel(map[string]string{"app": kruiseStsNameOne})
++				},
++				kruiseStsNameTwo: func() error {
++					return frame.DeletePodListByLabel(map[string]string{"app": kruiseStsNameTwo})
++				},
++			}
++
++			restartWg := sync.WaitGroup{}
++			restartWg.Add(len(restartFuncs))
++			for name, restartFunc := range restartFuncs {
++				go func(name string, restartFunc func() error) {
++					defer GinkgoRecover()
++					defer restartWg.Done()
++					err := restartPodSet(restartFunc, name, 30*time.Second)
++					Expect(err).NotTo(HaveOccurred())
++					GinkgoWriter.Printf("Succeed to restart %s/%s \n", chaosNamespace, name)
++				}(name, restartFunc)
++			}
++			restartWg.Wait()
++
++			// 7. Check the status of the pod and ippool after restarting the pod
++			// We obtained the GC interval, but the GC execution still requires time.
++			// We will proceed with the next steps after waiting for the GC to complete.
++			GinkgoWriter.Println("restart: starting to check the pod running status and the sanity of the IPs in the IPPool.")
++			waitForPodsAndCheckPoolSanity()
++
++			// Get all Pods in advance to check if ippool and endpoint are deleted
++			podList, err := frame.GetPodList(client.InNamespace(chaosNamespace))
++			Expect(err).NotTo(HaveOccurred(), "before deleting, failed to get Pod list %v", err)
++
++			// 8. Randomly delete Pods to verify that IPPool and endpoints can be recycled
++			deletePodSet := func(deleteFun func() error, deleteName string, duration time.Duration) error {
++				time.Sleep(time.Duration(rand.Intn(int(duration.Seconds()))) * time.Second)
++
++				startTime := time.Now()
++				err := deleteFun()
++				if err != nil {
++					GinkgoWriter.Printf("Failed to delete %s/%s at time %v, error %s \n", chaosNamespace, deleteName, startTime, err)
++					return err
++				}
++
++				GinkgoWriter.Printf("Succeeded in deleting %s/%s at time %v \n", chaosNamespace, deleteName, startTime)
++				return nil
++			}
++
++			deleteFuncs := map[string]func() error{
++				stsNameOne: func() error {
++					return frame.DeleteStatefulSet(stsNameOne, chaosNamespace)
++				},
++				stsNameTwo: func() error {
++					return frame.DeleteStatefulSet(stsNameTwo, chaosNamespace)
++				},
++				deployNameOne: func() error {
++					return frame.DeleteDeployment(deployNameOne, chaosNamespace)
++				},
++				deployNameTwo: func() error {
++					return frame.DeleteDeployment(deployNameTwo, chaosNamespace)
++				},
++				kruiseStsNameOne: func() error {
++					return common.DeleteKruiseStatefulSetByName(frame, kruiseStsNameOne, chaosNamespace)
++				},
++				kruiseStsNameTwo: func() error {
++					return common.DeleteKruiseStatefulSetByName(frame, kruiseStsNameTwo, chaosNamespace)
++				},
++			}
++
++			var deleteWg sync.WaitGroup
++			for name, deleteFunc := range deleteFuncs {
++				deleteWg.Add(1)
++				go func(name string, deleteFunc func() error) {
++					defer GinkgoRecover()
++					defer deleteWg.Done()
++					err := deletePodSet(deleteFunc, name, 30*time.Second)
++					Expect(err).NotTo(HaveOccurred())
++				}(name, deleteFunc)
++			}
++			deleteWg.Wait()
++
++			// Check that spiderpool and endpoint resources are recycled
++			Eventually(func() error {
++				defer GinkgoRecover()
++				if frame.Info.IpV4Enabled {
++					ippool, err := common.GetIppoolByName(frame, v4PoolName)
++					if err != nil {
++						if api_errors.IsNotFound(err) {
++							return fmt.Errorf("v4 ippool %s dose not exist", v4PoolName)
++						}
++						return fmt.Errorf("failed to get v4 ippool %s, error %v", v4PoolName, err)
++					}
++					if ippool.Status.AllocatedIPs != nil || *ippool.Status.AllocatedIPCount != int64(0) {
++						return fmt.Errorf("The IP address %v in the v4 ippool %v is not completely released", *ippool.Status.AllocatedIPs, v4PoolName)
++					}
++				}
++				if frame.Info.IpV6Enabled {
++					ippool, err := common.GetIppoolByName(frame, v6PoolName)
++					if err != nil {
++						if api_errors.IsNotFound(err) {
++							return fmt.Errorf("ippool %s dose not exist", v4PoolName)
++						}
++						return fmt.Errorf("failed to get ippool %s, error %v", v6PoolName, err)
++					}
++					if ippool.Status.AllocatedIPs != nil || *ippool.Status.AllocatedIPCount != int64(0) {
++						return fmt.Errorf("The IP address %v in the v6 ippool %v is not completely released", *ippool.Status.AllocatedIPs, v6PoolName)
++					}
++				}
++
++				for _, pod := range podList.Items {
++					_, err := common.GetWorkloadByName(frame, pod.Namespace, pod.Name)
++					if err != nil {
++						if api_errors.IsNotFound(err) {
++							return nil
++						}
++						return fmt.Errorf("failed to get endpoint %s/%s, error %v", pod.Namespace, pod.Name, err)
++					}
++				}
++				return nil
++			}).WithTimeout(common.ResourceDeleteTimeout).WithPolling(time.Second * 10).Should(BeNil())
++		})
++	})
++})
+diff --git a/test/e2e/reclaim/reclaim_suite_test.go b/test/e2e/reclaim/reclaim_suite_test.go
+index 4ae7636be..40fb0352d 100644
+--- a/test/e2e/reclaim/reclaim_suite_test.go
++++ b/test/e2e/reclaim/reclaim_suite_test.go
+@@ -9,6 +9,7 @@ import (
+ 
+ 	. "github.com/onsi/ginkgo/v2"
+ 	. "github.com/onsi/gomega"
++	kruiseapi "github.com/openkruise/kruise-api"
+ 	e2e "github.com/spidernet-io/e2eframework/framework"
+ 	"k8s.io/apimachinery/pkg/runtime"
+ )
+@@ -23,6 +24,7 @@ var frame *e2e.Framework
+ var _ = BeforeSuite(func() {
+ 	defer GinkgoRecover()
+ 	var e error
+-	frame, e = e2e.NewFramework(GinkgoT(), []func(*runtime.Scheme) error{spiderpool.AddToScheme})
++	frame, e = e2e.NewFramework(GinkgoT(), []func(*runtime.Scheme) error{kruiseapi.AddToScheme, spiderpool.AddToScheme})
++
+ 	Expect(e).NotTo(HaveOccurred())
+ })
+diff --git a/test/e2e/reclaim/reclaim_test.go b/test/e2e/reclaim/reclaim_test.go
+index 3ce84da25..2f7b6d77d 100644
+--- a/test/e2e/reclaim/reclaim_test.go
++++ b/test/e2e/reclaim/reclaim_test.go
+@@ -27,6 +27,7 @@ import (
+ 	"github.com/spidernet-io/spiderpool/pkg/openapi"
+ 	"github.com/spidernet-io/spiderpool/pkg/utils/convert"
+ 	"github.com/spidernet-io/spiderpool/test/e2e/common"
++	api_errors "k8s.io/apimachinery/pkg/api/errors"
+ )
+ 
+ var _ = Describe("test ip with reclaim ip case", Label("reclaim"), func() {
+@@ -560,22 +561,6 @@ var _ = Describe("test ip with reclaim ip case", Label("reclaim"), func() {
+ 					Expect(ok).To(BeTrue())
+ 					Expect(record).To(Equal(*dirtyIPv6Record))
+ 				}
+-				// restart spiderpool controller to trigger gc
+-				GinkgoWriter.Printf("now time: %s, restart spiderpool controller \n", time.Now().Format(time.RFC3339Nano))
+-				spiderpoolControllerPodList, err := frame.GetPodListByLabel(map[string]string{"app.kubernetes.io/component": "spiderpool-controller"})
+-				Expect(err).NotTo(HaveOccurred())
+-				Expect(spiderpoolControllerPodList).NotTo(BeNil(), "failed to get spiderpool controller podList \n")
+-				Expect(spiderpoolControllerPodList.Items).NotTo(BeEmpty(), "failed to get spiderpool controller podList \n")
+-				spiderpoolControllerPodList, err = frame.DeletePodListUntilReady(spiderpoolControllerPodList, common.PodReStartTimeout)
+-				Expect(err).NotTo(HaveOccurred())
+-				Expect(spiderpoolControllerPodList).NotTo(BeNil(), "failed to get spiderpool controller podList after restart \n")
+-				Expect(spiderpoolControllerPodList.Items).NotTo(HaveLen(0), "failed to get spiderpool controller podList \n")
+-
+-				// Check wbehook service ready after restarting the controller
+-				ctx, cancel := context.WithTimeout(context.Background(), common.PodReStartTimeout)
+-				defer cancel()
+-				Expect(common.WaitWebhookReady(ctx, frame, common.WebhookPort)).NotTo(HaveOccurred())
+-				GinkgoWriter.Printf("now time: %s, succeed to restart spiderpool controller pods \n", time.Now().Format(time.RFC3339Nano))
+ 
+ 				// check the real pod ip should be recorded in spiderpool, the dirty ip record should be reclaimed from spiderpool
+ 				GinkgoWriter.Printf("check if the pod %v/%v ip recorded in ippool, check if the dirty ip record reclaimed from ippool\n", namespace, podName)
+@@ -583,7 +568,7 @@ var _ = Describe("test ip with reclaim ip case", Label("reclaim"), func() {
+ 					// check if dirty IPv4 data reclaimed successfully
+ 					ctx, cancel := context.WithTimeout(context.Background(), common.IPReclaimTimeout)
+ 					defer cancel()
+-					Expect(common.WaitIppoolStatusConditionByAllocatedIPs(ctx, frame, v4poolName, dirtyIPv6, false)).NotTo(HaveOccurred())
++					Expect(common.WaitIppoolStatusConditionByAllocatedIPs(ctx, frame, v4poolName, dirtyIPv4, false)).NotTo(HaveOccurred())
+ 				}
+ 				if frame.Info.IpV6Enabled {
+ 					// check if dirty IPv6 data reclaimed successfully
+@@ -804,4 +789,96 @@ var _ = Describe("test ip with reclaim ip case", Label("reclaim"), func() {
+ 			}).WithTimeout(3 * time.Minute).WithPolling(time.Second * 10).Should(BeNil())
+ 		})
+ 	})
++
++	It("IP addresses not used by statefulSet can be released by gc all", Label("G00010", "overlay"), func() {
++		if !common.CheckRunOverlayCNI() {
++			Skip("overlay CNI is not installed , ignore this case")
++		}
++
++		var (
++			stsName        string = "sts-" + tools.RandomName()
++			stsReplicasNum int32  = 2
++		)
++
++		// 1. Using the default pool, create a set of statefulset applications and check that spiderpool assigns it an IP address.
++		var annotations = make(map[string]string)
++		podIppoolAnnoStr := common.GeneratePodIPPoolAnnotations(frame, common.NIC1, globalDefaultV4IPPoolList, globalDefaultV6IPPoolList)
++		annotations[constant.AnnoPodIPPool] = podIppoolAnnoStr
++		annotations[common.MultusDefaultNetwork] = fmt.Sprintf("%s/%s", common.MultusNs, common.MacvlanUnderlayVlan0)
++		stsYaml := common.GenerateExampleStatefulSetYaml(stsName, namespace, stsReplicasNum)
++		stsYaml.Spec.Template.Annotations = annotations
++		GinkgoWriter.Printf("Try to create StatefulSet %v/%v \n", namespace, stsName)
++		Expect(frame.CreateStatefulSet(stsYaml)).To(Succeed(), "failed to create StatefulSet %v/%v \n", namespace, stsName)
++
++		var podList *corev1.PodList
++		Eventually(func() bool {
++			podList, err = frame.GetPodListByLabel(stsYaml.Spec.Template.Labels)
++			if nil != err || len(podList.Items) == 0 {
++				return false
++			}
++			return frame.CheckPodListRunning(podList)
++		}, common.PodStartTimeout, common.ForcedWaitingTime).Should(BeTrue())
++		GinkgoWriter.Printf("Check that the Pod IP record is in the expected v4 pool %v , v6 pool %v \n", globalDefaultV4IPPoolList, globalDefaultV6IPPoolList)
++		ok, _, _, err := common.CheckPodIpRecordInIppool(frame, globalDefaultV4IPPoolList, globalDefaultV6IPPoolList, podList)
++		Expect(err).NotTo(HaveOccurred())
++		Expect(ok).To(BeTrue())
++
++		// 2. Remove the spiderpool annotation of the statefulset
++		stsObj, err := frame.GetStatefulSet(stsName, namespace)
++		Expect(err).NotTo(HaveOccurred())
++		desiredStsObj := stsObj.DeepCopy()
++		desiredStsObj.Spec.Template.Annotations = map[string]string{}
++		Expect(common.PatchStatefulSet(frame, desiredStsObj, stsObj)).NotTo(HaveOccurred())
++		GinkgoWriter.Printf("Successfully removed statefulset's %v/%v annotations: %v about spiderpool \n", namespace, stsName, annotations)
++
++		// 3. If the statefulSet does not use spiderpool resources, the spiderpool resources will be released in the gc all phase
++		// The interval of gc all in CI is 30s, and we expect that the resources must be reclaimed within 5 minutes.
++		Eventually(func() bool {
++			newPodList, err := frame.GetPodListByLabel(stsObj.Spec.Template.Labels)
++			if nil != err || len(newPodList.Items) == 0 || len(newPodList.Items) != int(stsReplicasNum) {
++				return false
++			}
++
++			if !frame.CheckPodListRunning(newPodList) {
++				return false
++			}
++
++			// Expected endpoint does not exist
++			GinkgoWriter.Println("Start waiting for gc all to recycle spiderendpoint \n")
++
++			for _, pod := range podList.Items {
++				stsEndpoint, err := common.GetWorkloadByName(frame, namespace, pod.Name)
++				if err != nil {
++					if api_errors.IsNotFound(err) {
++						GinkgoWriter.Printf("The statefulSet endpoint %v/%v has been recycled yet \n", namespace, pod.Name)
++						continue
++					} else {
++						GinkgoWriter.Printf("failed to get endpoint %v/%v \n", namespace, pod.Name)
++						return false
++					}
++				} else {
++					GinkgoWriter.Printf("The statefulSet endpoint %v/%v has not been recycled yet, waiting... \n", namespace, stsEndpoint.Name)
++					return false
++				}
++			}
++			// The expected IP address does not exist in the pool
++			ok, _, _, _ := common.CheckPodIpRecordInIppool(frame, globalDefaultV4IPPoolList, globalDefaultV6IPPoolList, podList)
++			if ok {
++				GinkgoWriter.Printf("The historical IP of statefulSet %v/%v in ippool has not been recycled yet, waiting... \n", namespace, stsName)
++				return false
++			}
++			GinkgoWriter.Printf("Check if the statefulset %v/%v IP address does not exist in the v4 pool %v and v6 pool %v \n", namespace, stsName, globalDefaultV4IPPoolList, globalDefaultV6IPPoolList)
++
++			return true
++		}, common.IPReclaimTimeout, 10*common.ForcedWaitingTime).Should(BeTrue())
++
++		DeferCleanup(func() {
++			if CurrentSpecReport().Failed() {
++				GinkgoWriter.Println("If the use case fails, the cleanup step will be skipped")
++				return
++			}
++
++			Expect(frame.DeleteStatefulSet(stsName, namespace)).NotTo(HaveOccurred())
++		})
++	})
+ })
+diff --git a/test/e2e/spidermultus/spidermultus_test.go b/test/e2e/spidermultus/spidermultus_test.go
+index 8376fc8ef..bef6d8758 100644
+--- a/test/e2e/spidermultus/spidermultus_test.go
++++ b/test/e2e/spidermultus/spidermultus_test.go
+@@ -24,7 +24,7 @@ import (
+ 	"github.com/spidernet-io/spiderpool/test/e2e/common"
+ )
+ 
+-var _ = Describe("test spidermultus", Label("SpiderMultusConfig", "overlay"), func() {
++var _ = Describe("test spidermultus", Label("SpiderMultusConfig"), func() {
+ 	var namespace string
+ 
+ 	BeforeEach(func() {

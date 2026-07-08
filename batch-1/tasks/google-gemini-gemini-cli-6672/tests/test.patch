@@ -1,0 +1,845 @@
+diff --git a/packages/cli/src/config/settings.test.ts b/packages/cli/src/config/settings.test.ts
+index 7101a1910..65a556be7 100644
+--- a/packages/cli/src/config/settings.test.ts
++++ b/packages/cli/src/config/settings.test.ts
+@@ -1270,7 +1270,6 @@ describe('Settings Loading and Merging', () => {
+       expect(loadedSettings.workspace.settings.contextFileName).toBe(
+         'MY_AGENTS.md',
+       );
+-      // This test assumes a trusted workspace, so the workspace setting should apply.
+       expect(loadedSettings.merged.contextFileName).toBe('MY_AGENTS.md');
+       expect(loadedSettings.merged.theme).toBe('matrix'); // User setting should still be there
+       expect(fs.writeFileSync).toHaveBeenCalledWith(
+diff --git a/packages/cli/src/gemini.test.tsx b/packages/cli/src/gemini.test.tsx
+index c51167fcb..c4de8308a 100644
+--- a/packages/cli/src/gemini.test.tsx
++++ b/packages/cli/src/gemini.test.tsx
+@@ -35,10 +35,6 @@ vi.mock('./config/settings.js', async (importOriginal) => {
+   };
+ });
+ 
+-vi.mock('./config/trustedFolders.js', () => ({
+-  isWorkspaceTrusted: vi.fn(),
+-}));
+-
+ vi.mock('./config/config.js', () => ({
+   loadCliConfig: vi.fn().mockResolvedValue({
+     config: {
+@@ -153,7 +149,6 @@ describe('gemini.tsx main function', () => {
+       userSettingsFile,
+       workspaceSettingsFile,
+       [settingsError],
+-      true,
+     );
+ 
+     loadSettingsMock.mockReturnValue(mockLoadedSettings);
+diff --git a/packages/cli/src/ui/App.test.tsx b/packages/cli/src/ui/App.test.tsx
+index 2547714c0..6a019ab69 100644
+--- a/packages/cli/src/ui/App.test.tsx
++++ b/packages/cli/src/ui/App.test.tsx
+@@ -278,7 +278,6 @@ describe('App UI', () => {
+       user?: Partial<Settings>;
+       workspace?: Partial<Settings>;
+     } = {},
+-    isTrusted = true,
+   ): LoadedSettings => {
+     const systemSettingsFile: SettingsFile = {
+       path: '/system/settings.json',
+@@ -297,7 +296,6 @@ describe('App UI', () => {
+       userSettingsFile,
+       workspaceSettingsFile,
+       [],
+-      isTrusted,
+     );
+   };
+ 
+@@ -379,9 +377,9 @@ describe('App UI', () => {
+       const { unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -405,9 +403,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -435,9 +433,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -465,9 +463,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -499,9 +497,9 @@ describe('App UI', () => {
+       const { unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -528,9 +526,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -547,9 +545,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -583,9 +581,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -611,9 +609,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -632,9 +630,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve(); // Wait for any async updates
+@@ -653,9 +651,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -674,9 +672,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -701,9 +699,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -726,9 +724,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -747,9 +745,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -771,9 +769,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -793,9 +791,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -806,9 +804,9 @@ describe('App UI', () => {
+     const { unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -816,21 +814,18 @@ describe('App UI', () => {
+   });
+ 
+   it('should not display Tips component when hideTips is true', async () => {
+-    mockSettings = createMockSettings(
+-      {
+-        workspace: {
+-          hideTips: true,
+-        },
++    mockSettings = createMockSettings({
++      workspace: {
++        hideTips: true,
+       },
+-      true,
+-    );
++    });
+ 
+     const { unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -842,9 +837,9 @@ describe('App UI', () => {
+     const { unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -860,9 +855,9 @@ describe('App UI', () => {
+     const { unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -873,9 +868,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -911,9 +906,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -931,9 +926,9 @@ describe('App UI', () => {
+     const { unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     await Promise.resolve();
+@@ -961,9 +956,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -976,9 +971,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -991,9 +986,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     expect(lastFrame()).toMatchSnapshot();
+@@ -1011,9 +1006,9 @@ describe('App UI', () => {
+     const { lastFrame, unmount } = renderWithProviders(
+       <App
+         config={mockConfig as unknown as ServerConfig}
++        settings={mockSettings}
+         version={mockVersion}
+       />,
+-      mockSettings,
+     );
+     currentUnmount = unmount;
+     expect(lastFrame()).toMatchSnapshot();
+@@ -1041,9 +1036,9 @@ describe('App UI', () => {
+       const { unmount, rerender } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -1051,6 +1046,7 @@ describe('App UI', () => {
+       rerender(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+       );
+@@ -1082,9 +1078,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+       await Promise.resolve();
+@@ -1108,9 +1104,9 @@ describe('App UI', () => {
+       const { unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -1130,9 +1126,9 @@ describe('App UI', () => {
+       const { unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -1150,9 +1146,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+       expect(lastFrame()).toMatchSnapshot();
+@@ -1176,9 +1172,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+@@ -1198,9 +1194,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+       await Promise.resolve();
+@@ -1218,9 +1214,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+       await Promise.resolve();
+@@ -1238,9 +1234,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+       await Promise.resolve();
+@@ -1487,9 +1483,9 @@ describe('App UI', () => {
+       const { lastFrame, unmount } = renderWithProviders(
+         <App
+           config={mockConfig as unknown as ServerConfig}
++          settings={mockSettings}
+           version={mockVersion}
+         />,
+-        mockSettings,
+       );
+       currentUnmount = unmount;
+ 
+diff --git a/packages/cli/src/ui/hooks/useEditorSettings.test.tsx b/packages/cli/src/ui/hooks/useEditorSettings.test.ts
+similarity index 79%
+rename from packages/cli/src/ui/hooks/useEditorSettings.test.tsx
+rename to packages/cli/src/ui/hooks/useEditorSettings.test.ts
+index f1d650560..7b056c2a9 100644
+--- a/packages/cli/src/ui/hooks/useEditorSettings.test.tsx
++++ b/packages/cli/src/ui/hooks/useEditorSettings.test.ts
+@@ -23,8 +23,6 @@ import {
+   checkHasEditorType,
+   allowEditorTypeInSandbox,
+ } from '@google/gemini-cli-core';
+-import { SettingsContext } from '../contexts/SettingsContext.js';
+-import { type ReactNode } from 'react';
+ 
+ vi.mock('@google/gemini-cli-core', async () => {
+   const actual = await vi.importActual('@google/gemini-cli-core');
+@@ -45,23 +43,13 @@ describe('useEditorSettings', () => {
+     (item: Omit<HistoryItem, 'id'>, timestamp: number) => void
+   >;
+ 
+-  const wrapper = ({ children }: { children: ReactNode }) => (
+-    <SettingsContext.Provider
+-      value={{ settings: mockLoadedSettings, recomputeSettings: () => {} }}
+-    >
+-      {children}
+-    </SettingsContext.Provider>
+-  );
+-
+   beforeEach(() => {
+     vi.resetAllMocks();
+-    mockLoadedSettings = new LoadedSettings(
+-      { path: '', settings: {} },
+-      { path: '', settings: {} },
+-      { path: '', settings: {} },
+-      [],
+-    );
+-    mockLoadedSettings.setValue = vi.fn();
++
++    mockLoadedSettings = {
++      setValue: vi.fn(),
++    } as unknown as LoadedSettings;
++
+     mockSetEditorError = vi.fn();
+     mockAddItem = vi.fn();
+ 
+@@ -75,18 +63,16 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should initialize with dialog closed', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     expect(result.current.isEditorDialogOpen).toBe(false);
+   });
+ 
+   it('should open editor dialog when openEditorDialog is called', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     act(() => {
+@@ -97,9 +83,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should close editor dialog when exitEditorDialog is called', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+     act(() => {
+       result.current.openEditorDialog();
+@@ -109,9 +94,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should handle editor selection successfully', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     const editorType: EditorType = 'vscode';
+@@ -141,9 +125,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should handle clearing editor preference (undefined editor)', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     const scope = SettingScope.Workspace;
+@@ -172,9 +155,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should handle different editor types', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     const editorTypes: EditorType[] = ['cursor', 'windsurf', 'vim'];
+@@ -202,9 +184,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should handle different setting scopes', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     const editorType: EditorType = 'vscode';
+@@ -232,9 +213,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should not set preference for unavailable editors', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     mockCheckHasEditorType.mockReturnValue(false);
+@@ -253,9 +233,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should not set preference for editors not allowed in sandbox', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     mockAllowEditorTypeInSandbox.mockReturnValue(false);
+@@ -274,9 +253,8 @@ describe('useEditorSettings', () => {
+   });
+ 
+   it('should handle errors during editor selection', () => {
+-    const { result } = renderHook(
+-      () => useEditorSettings(mockSetEditorError, mockAddItem),
+-      { wrapper },
++    const { result } = renderHook(() =>
++      useEditorSettings(mockLoadedSettings, mockSetEditorError, mockAddItem),
+     );
+ 
+     const errorMessage = 'Failed to save settings';
+diff --git a/packages/cli/src/ui/utils/MarkdownDisplay.test.tsx b/packages/cli/src/ui/utils/MarkdownDisplay.test.tsx
+index 3472f1e98..dba6bb6d1 100644
+--- a/packages/cli/src/ui/utils/MarkdownDisplay.test.tsx
++++ b/packages/cli/src/ui/utils/MarkdownDisplay.test.tsx
+@@ -30,9 +30,7 @@ describe('<MarkdownDisplay />', () => {
+ 
+   it('renders nothing for empty text', () => {
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text="" />
+       </SettingsContext.Provider>,
+     );
+@@ -42,9 +40,7 @@ describe('<MarkdownDisplay />', () => {
+   it('renders a simple paragraph', () => {
+     const text = 'Hello, world.';
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -59,9 +55,7 @@ describe('<MarkdownDisplay />', () => {
+ #### Header 4
+ `;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -71,9 +65,7 @@ describe('<MarkdownDisplay />', () => {
+   it('renders a fenced code block with a language', () => {
+     const text = '```javascript\nconst x = 1;\nconsole.log(x);\n```';
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -83,9 +75,7 @@ describe('<MarkdownDisplay />', () => {
+   it('renders a fenced code block without a language', () => {
+     const text = '```\nplain text\n```';
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -95,9 +85,7 @@ describe('<MarkdownDisplay />', () => {
+   it('handles unclosed (pending) code blocks', () => {
+     const text = '```typescript\nlet y = 2;';
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} isPending={true} />
+       </SettingsContext.Provider>,
+     );
+@@ -111,9 +99,7 @@ describe('<MarkdownDisplay />', () => {
+ + item C
+ `;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -127,9 +113,7 @@ describe('<MarkdownDisplay />', () => {
+     * Level 3
+ `;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -142,9 +126,7 @@ describe('<MarkdownDisplay />', () => {
+ 2. Second item
+ `;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -160,9 +142,7 @@ World
+ Test
+ `;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -177,9 +157,7 @@ Test
+ | Cell 3   | Cell 4   |
+ `;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -190,12 +168,10 @@ Test
+     const text = `
+ Some text before.
+ | A | B |
+-|---| 
++|---|
+ | 1 | 2 |`;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -207,9 +183,7 @@ Some text before.
+ 
+ Paragraph 2.`;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -232,9 +206,7 @@ some code
+ Another paragraph.
+ `;
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -251,9 +223,7 @@ Another paragraph.
+     );
+ 
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={settings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );
+@@ -264,9 +234,7 @@ Another paragraph.
+   it('shows line numbers in code blocks by default', () => {
+     const text = '```javascript\nconst x = 1;\n```';
+     const { lastFrame } = render(
+-      <SettingsContext.Provider
+-        value={{ settings: mockSettings, recomputeSettings: () => {} }}
+-      >
++      <SettingsContext.Provider value={mockSettings}>
+         <MarkdownDisplay {...baseProps} text={text} />
+       </SettingsContext.Provider>,
+     );

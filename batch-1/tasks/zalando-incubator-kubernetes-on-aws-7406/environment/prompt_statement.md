@@ -1,5 +1,7 @@
-I'm updating our Kubernetes cluster to a newer version and need to make some adjustments to our cluster configuration defaults file. Specifically, I need to add configuration parameters for controlling the thresholds at which the node agent begins and stops cleaning up unused container images — there should be both a high threshold (at which garbage collection kicks in) and a low threshold (at which it stops). These settings don't currently exist in our defaults file.
+I'm bumping our Kubernetes cluster to a newer version and I need to fix up our cluster config defaults file to match. Two things here.
 
-At the same time, there's a configuration flag for enabling time zone support in scheduled jobs that I need to remove entirely from the defaults file, because this is now always enabled in the newer Kubernetes version we're targeting and the flag is no longer needed or recognized.
+First, I need to add image garbage collection thresholds for the node agent (kubelet). Right now we don't have any defaults set for controlling when it starts and stops cleaning up unused container images, which honestly could bite us with unexpected disk behavior. So I want both knobs in there, the high threshold that triggers GC when disk usage climbs past it, and the low threshold where it stops cleaning up. Both need actual default values configured since they're currently missing entirely.
 
-Both changes should be made in the cluster's configuration defaults file.
+Second thing, there's this feature flag we've been carrying to opt into time zone support for scheduled jobs (CronJobs). In the version we're targeting that's just standard behavior now, always on, and the flag isn't recognized anymore, so I want it removed completely from the defaults. Leaving it around is just gonna cause confusion or weird behavior down the line.
+
+Both edits land in the same cluster configuration defaults file. Basically I want the defaults to stay in sync with what this Kubernetes version actually supports, so the high and low image GC thresholds show up for the node agent and the CronJob time zone flag is gone.

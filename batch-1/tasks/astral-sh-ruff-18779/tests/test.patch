@@ -1,0 +1,11 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_pytest_style/PT023.py b/crates/ruff_linter/resources/test/fixtures/flake8_pytest_style/PT023.py
+index 91a0605942..b212ded929 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_pytest_style/PT023.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_pytest_style/PT023.py
+@@ -1,3 +1,8 @@
++@pytest.mark.foo(scope="module")
++def ok_due_to_missing_import():
++    pass
++
++
+ import pytest

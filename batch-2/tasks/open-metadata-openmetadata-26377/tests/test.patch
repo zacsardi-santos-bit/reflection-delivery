@@ -1,0 +1,1071 @@
+diff --git a/openmetadata-spec/src/main/resources/elasticsearch/en/test_case_index_mapping.json b/openmetadata-spec/src/main/resources/elasticsearch/en/test_case_index_mapping.json
+index 615f02e8a7..a5a236752f 100644
+--- a/openmetadata-spec/src/main/resources/elasticsearch/en/test_case_index_mapping.json
++++ b/openmetadata-spec/src/main/resources/elasticsearch/en/test_case_index_mapping.json
+@@ -488,7 +488,8 @@
+           "state": {
+             "type": "keyword"
+           }
+-        }
++        },
++        "type": "nested"
+       },
+       "tier": {
+         "properties": {
+diff --git a/openmetadata-spec/src/main/resources/elasticsearch/jp/test_case_index_mapping.json b/openmetadata-spec/src/main/resources/elasticsearch/jp/test_case_index_mapping.json
+index 3355efd3e9..5bca530034 100644
+--- a/openmetadata-spec/src/main/resources/elasticsearch/jp/test_case_index_mapping.json
++++ b/openmetadata-spec/src/main/resources/elasticsearch/jp/test_case_index_mapping.json
+@@ -260,7 +260,8 @@
+           "state": {
+             "type": "keyword"
+           }
+-        }
++        },
++        "type": "nested"
+       },
+       "tier": {
+         "properties": {
+diff --git a/openmetadata-spec/src/main/resources/elasticsearch/ru/test_case_index_mapping.json b/openmetadata-spec/src/main/resources/elasticsearch/ru/test_case_index_mapping.json
+index 84d133b5bd..17b2db51d5 100644
+--- a/openmetadata-spec/src/main/resources/elasticsearch/ru/test_case_index_mapping.json
++++ b/openmetadata-spec/src/main/resources/elasticsearch/ru/test_case_index_mapping.json
+@@ -505,7 +505,8 @@
+           "state": {
+             "type": "keyword"
+           }
+-        }
++        },
++        "type": "nested"
+       },
+       "tier": {
+         "properties": {
+diff --git a/openmetadata-spec/src/main/resources/elasticsearch/zh/test_case_index_mapping.json b/openmetadata-spec/src/main/resources/elasticsearch/zh/test_case_index_mapping.json
+index 5b989eda27..12bf499f5b 100644
+--- a/openmetadata-spec/src/main/resources/elasticsearch/zh/test_case_index_mapping.json
++++ b/openmetadata-spec/src/main/resources/elasticsearch/zh/test_case_index_mapping.json
+@@ -169,7 +169,8 @@
+           "state": {
+             "type": "keyword"
+           }
+-        }
++        },
++        "type": "nested"
+       },
+       "tier": {
+         "properties": {
+diff --git a/openmetadata-ui/src/main/resources/ui/src/components/Glossary/GlossaryTerms/GlossaryTermsV1.test.tsx b/openmetadata-ui/src/main/resources/ui/src/components/Glossary/GlossaryTerms/GlossaryTermsV1.test.tsx
+index 0f80095d4c..2cfd4768e8 100644
+--- a/openmetadata-ui/src/main/resources/ui/src/components/Glossary/GlossaryTerms/GlossaryTermsV1.test.tsx
++++ b/openmetadata-ui/src/main/resources/ui/src/components/Glossary/GlossaryTerms/GlossaryTermsV1.test.tsx
+@@ -20,6 +20,8 @@ import {
+   MOCK_ASSETS_DATA,
+   MOCK_PERMISSIONS,
+ } from '../../../mocks/Glossary.mock';
++import * as CommonUtils from '../../../utils/CommonUtils';
++import glossaryTermClassBase from '../../../utils/Glossary/GlossaryTermClassBase';
+ import { useRequiredParams } from '../../../utils/useRequiredParams';
+ import GlossaryTerms from './GlossaryTermsV1.component';
+ 
+@@ -123,6 +125,22 @@ jest.mock('../../../utils/GlossaryTerm/GlossaryTermUtil', () => ({
+   getTabLabelMap: jest.fn().mockReturnValue({}),
+ }));
+ 
++jest.mock('../../../hooks/useCustomPages', () => ({
++  useCustomPages: jest
++    .fn()
++    .mockReturnValue({ customizedPage: null, isLoading: false }),
++}));
++
++jest.mock('../../../utils/CustomizePage/CustomizePageUtils', () => ({
++  checkIfExpandViewSupported: jest.fn().mockReturnValue(false),
++  getDetailsTabWithNewLabel: jest.fn().mockImplementation((items) => items),
++  getTabLabelMapFromTabs: jest.fn().mockReturnValue({}),
++}));
++
++jest.mock('../useGlossary.store', () => ({
++  useGlossaryStore: jest.fn().mockReturnValue({ onAddGlossaryTerm: jest.fn() }),
++}));
++
+ jest.mock('../../Customization/GenericProvider/GenericProvider', () => {
+   return {
+     useGenericContext: jest.fn().mockImplementation(() => ({
+@@ -175,4 +193,63 @@ describe('Test Glossary-term component', () => {
+       'label.custom-property-plural',
+     ]);
+   });
++
++  it('should call getGlossaryTermDetailPageTabs without onExtensionUpdate', async () => {
++    const spy = jest.spyOn(
++      glossaryTermClassBase,
++      'getGlossaryTermDetailPageTabs'
++    );
++    const useRequiredParamsMock = useRequiredParams as jest.Mock;
++    useRequiredParamsMock.mockReturnValue({
++      tab: EntityTabs.OVERVIEW,
++      version: undefined,
++    });
++
++    render(<GlossaryTerms {...mockProps} />);
++
++    await screen.findByTestId('glossary-term');
++
++    expect(spy).toHaveBeenCalled();
++    expect(spy.mock.calls[0][0]).not.toHaveProperty('onExtensionUpdate');
++
++    spy.mockRestore();
++  });
++
++  it('should call getFeedCounts on mount when not in version view', async () => {
++    const getFeedCountsSpy = jest
++      .spyOn(CommonUtils, 'getFeedCounts')
++      .mockImplementation(jest.fn());
++    const useRequiredParamsMock = useRequiredParams as jest.Mock;
++    useRequiredParamsMock.mockReturnValue({
++      tab: EntityTabs.OVERVIEW,
++      version: undefined,
++    });
++
++    render(<GlossaryTerms {...mockProps} isVersionView={false} />);
++
++    await screen.findByTestId('glossary-term');
++
++    expect(getFeedCountsSpy).toHaveBeenCalled();
++
++    getFeedCountsSpy.mockRestore();
++  });
++
++  it('should not call getFeedCounts when in version view', async () => {
++    const getFeedCountsSpy = jest
++      .spyOn(CommonUtils, 'getFeedCounts')
++      .mockImplementation(jest.fn());
++    const useRequiredParamsMock = useRequiredParams as jest.Mock;
++    useRequiredParamsMock.mockReturnValue({
++      tab: EntityTabs.OVERVIEW,
++      version: '0.1',
++    });
++
++    render(<GlossaryTerms {...mockProps} isVersionView />);
++
++    await screen.findByTestId('glossary-term');
++
++    expect(getFeedCountsSpy).not.toHaveBeenCalled();
++
++    getFeedCountsSpy.mockRestore();
++  });
+ });
+diff --git a/openmetadata-ui/src/main/resources/ui/src/pages/TagPage/TagPage.test.tsx b/openmetadata-ui/src/main/resources/ui/src/pages/TagPage/TagPage.test.tsx
+index 1d9db3cc3a..bf34b970b9 100644
+--- a/openmetadata-ui/src/main/resources/ui/src/pages/TagPage/TagPage.test.tsx
++++ b/openmetadata-ui/src/main/resources/ui/src/pages/TagPage/TagPage.test.tsx
+@@ -15,8 +15,38 @@ import { render, waitFor } from '@testing-library/react';
+ import { useFqn } from '../../hooks/useFqn';
+ import { searchQuery } from '../../rest/searchAPI';
+ import { getTagByFqn } from '../../rest/tagAPI';
++import tagClassBase from '../../utils/TagClassBase';
+ import TagPage from './TagPage';
+ 
++jest.mock('../../hooks/useCustomPages', () => ({
++  useCustomPages: jest
++    .fn()
++    .mockReturnValue({ customizedPage: null, isLoading: false }),
++}));
++
++jest.mock(
++  '../../context/RuleEnforcementProvider/RuleEnforcementProvider',
++  () => ({
++    useRuleEnforcementProvider: jest.fn().mockReturnValue({
++      fetchRulesForEntity: jest.fn(),
++      getRulesForEntity: jest.fn(),
++      getEntityRuleValidation: jest.fn(),
++    }),
++  })
++);
++
++jest.mock('../../utils/TagClassBase', () => ({
++  __esModule: true,
++  default: {
++    getAdditionalTagDetailPageTabs: jest.fn().mockReturnValue([]),
++    getTagDetailPageTabsIds: jest.fn().mockReturnValue([]),
++    getDefaultLayout: jest.fn().mockReturnValue([]),
++    getWidgetHeight: jest.fn().mockReturnValue(0),
++    getClassificationFields: jest.fn().mockReturnValue([]),
++    getTags: jest.fn().mockResolvedValue({ data: [], paging: { total: 0 } }),
++  },
++}));
++
+ jest.mock('../../rest/tagAPI', () => ({
+   getTagByFqn: jest.fn().mockResolvedValue({
+     name: 'NonSensitive',
+@@ -149,6 +179,26 @@ jest.mock(
+ );
+ 
+ describe('TagPage', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    (tagClassBase.getAdditionalTagDetailPageTabs as jest.Mock).mockReturnValue(
++      []
++    );
++  });
++
++  it('should call getAdditionalTagDetailPageTabs with the fetched tag', async () => {
++    (useFqn as jest.Mock).mockReturnValue({ fqn: 'PII.NonSensitive' });
++
++    render(<TagPage />);
++
++    await waitFor(() => {
++      expect(tagClassBase.getAdditionalTagDetailPageTabs).toHaveBeenCalledWith(
++        expect.objectContaining({ fullyQualifiedName: 'PII.NonSensitive' }),
++        expect.any(String)
++      );
++    });
++  });
++
+   it('should call getTagData and fetchClassificationTagAssets when tagFqn changes', async () => {
+     (useFqn as jest.Mock).mockReturnValue({ fqn: 'PII.NonSensitive' });
+ 
+diff --git a/openmetadata-ui/src/main/resources/ui/src/utils/Glossary/GlossaryTermClassBase.test.ts b/openmetadata-ui/src/main/resources/ui/src/utils/Glossary/GlossaryTermClassBase.test.ts
+new file mode 100644
+index 0000000000..aed33edc2a
+--- /dev/null
++++ b/openmetadata-ui/src/main/resources/ui/src/utils/Glossary/GlossaryTermClassBase.test.ts
+@@ -0,0 +1,126 @@
++/*
++ *  Copyright 2025 Collate.
++ *  Licensed under the Apache License, Version 2.0 (the "License");
++ *  you may not use this file except in compliance with the License.
++ *  You may obtain a copy of the License at
++ *  http://www.apache.org/licenses/LICENSE-2.0
++ *  Unless required by applicable law or agreed to in writing, software
++ *  distributed under the License is distributed on an "AS IS" BASIS,
++ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ *  See the License for the specific language governing permissions and
++ *  limitations under the License.
++ */
++
++import { EntityTabs } from '../../enums/entity.enum';
++import glossaryTermClassBase, {
++  GlossaryTermClassBase,
++  GlossaryTermDetailPageTabProps,
++} from './GlossaryTermClassBase';
++import { getGlossaryTermDetailPageTabs } from './GlossaryTermUtils';
++
++jest.mock('./GlossaryTermUtils', () => ({
++  getGlossaryTermDetailPageTabs: jest
++    .fn()
++    .mockReturnValue([{ key: 'mock-tab' }]),
++}));
++
++jest.mock('../../utils/CustomizePage/CustomizePageUtils', () => ({
++  getTabLabelFromId: jest.fn((tab: string) => tab),
++}));
++
++const mockProps = {} as GlossaryTermDetailPageTabProps;
++
++describe('GlossaryTermClassBase', () => {
++  let instance: GlossaryTermClassBase;
++
++  beforeEach(() => {
++    jest.clearAllMocks();
++    instance = new GlossaryTermClassBase();
++  });
++
++  describe('getGlossaryTermDetailPageTabs', () => {
++    it('delegates to getGlossaryTermDetailPageTabs util', () => {
++      const result = instance.getGlossaryTermDetailPageTabs(mockProps);
++
++      expect(getGlossaryTermDetailPageTabs).toHaveBeenCalledWith(mockProps);
++      expect(result).toEqual([{ key: 'mock-tab' }]);
++    });
++  });
++
++  describe('getGlossaryTermDetailPageTabsIds', () => {
++    it('returns all 5 expected tab IDs', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      expect(tabs).toHaveLength(5);
++    });
++
++    it('includes OVERVIEW tab', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      expect(tabs.find((t) => t.id === EntityTabs.OVERVIEW)).toBeDefined();
++    });
++
++    it('includes GLOSSARY_TERMS tab', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      expect(
++        tabs.find((t) => t.id === EntityTabs.GLOSSARY_TERMS)
++      ).toBeDefined();
++    });
++
++    it('includes ASSETS tab', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      expect(tabs.find((t) => t.id === EntityTabs.ASSETS)).toBeDefined();
++    });
++
++    it('includes ACTIVITY_FEED tab', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      expect(tabs.find((t) => t.id === EntityTabs.ACTIVITY_FEED)).toBeDefined();
++    });
++
++    it('includes CUSTOM_PROPERTIES tab', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      expect(
++        tabs.find((t) => t.id === EntityTabs.CUSTOM_PROPERTIES)
++      ).toBeDefined();
++    });
++
++    it('all tabs have editable set to false', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      tabs.forEach((tab) => {
++        expect(tab.editable).toBe(false);
++      });
++    });
++
++    it('all tabs have empty layout array', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++
++      tabs.forEach((tab) => {
++        expect(tab.layout).toEqual([]);
++      });
++    });
++
++    it('tabs are in correct order', () => {
++      const tabs = instance.getGlossaryTermDetailPageTabsIds();
++      const ids = tabs.map((t) => t.id);
++
++      expect(ids).toEqual([
++        EntityTabs.OVERVIEW,
++        EntityTabs.GLOSSARY_TERMS,
++        EntityTabs.ASSETS,
++        EntityTabs.ACTIVITY_FEED,
++        EntityTabs.CUSTOM_PROPERTIES,
++      ]);
++    });
++  });
++
++  describe('singleton export', () => {
++    it('default export is an instance of GlossaryTermClassBase', () => {
++      expect(glossaryTermClassBase).toBeInstanceOf(GlossaryTermClassBase);
++    });
++  });
++});
+diff --git a/openmetadata-ui/src/main/resources/ui/src/utils/Glossary/GlossaryTermUtils.test.tsx b/openmetadata-ui/src/main/resources/ui/src/utils/Glossary/GlossaryTermUtils.test.tsx
+new file mode 100644
+index 0000000000..19084449f9
+--- /dev/null
++++ b/openmetadata-ui/src/main/resources/ui/src/utils/Glossary/GlossaryTermUtils.test.tsx
+@@ -0,0 +1,253 @@
++/*
++ *  Copyright 2025 Collate.
++ *  Licensed under the Apache License, Version 2.0 (the "License");
++ *  you may not use this file except in compliance with the License.
++ *  You may obtain a copy of the License at
++ *  http://www.apache.org/licenses/LICENSE-2.0
++ *  Unless required by applicable law or agreed to in writing, software
++ *  distributed under the License is distributed on an "AS IS" BASIS,
++ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ *  See the License for the specific language governing permissions and
++ *  limitations under the License.
++ */
++
++import React from 'react';
++import { FEED_COUNT_INITIAL_DATA } from '../../constants/entity.constants';
++import { EntityTabs } from '../../enums/entity.enum';
++import { GlossaryTermDetailPageTabProps } from './GlossaryTermClassBase';
++import { getGlossaryTermDetailPageTabs } from './GlossaryTermUtils';
++
++jest.mock(
++  '../../components/ActivityFeed/ActivityFeedTab/ActivityFeedTab.component',
++  () => ({ ActivityFeedTab: () => null })
++);
++
++jest.mock(
++  '../../components/common/CustomPropertyTable/CustomPropertyTable',
++  () => ({ CustomPropertyTable: () => null })
++);
++
++jest.mock('../../components/common/ResizablePanels/ResizablePanels', () => ({
++  __esModule: true,
++  default: () => null,
++}));
++
++jest.mock('../../components/common/TabsLabel/TabsLabel.component', () => ({
++  __esModule: true,
++  default: () => null,
++}));
++
++jest.mock('../../components/Customization/GenericTab/GenericTab', () => ({
++  GenericTab: () => null,
++}));
++
++jest.mock(
++  '../../components/Explore/EntitySummaryPanel/EntitySummaryPanel.component',
++  () => ({ __esModule: true, default: () => null })
++);
++
++jest.mock(
++  '../../components/Glossary/GlossaryTerms/tabs/AssetsTabs.component',
++  () => ({ __esModule: true, default: () => null })
++);
++
++jest.mock(
++  '../../components/Glossary/GlossaryTermTab/GlossaryTermTab.component',
++  () => ({ __esModule: true, default: () => null })
++);
++
++jest.mock('../../utils/CommonUtils', () => ({
++  ...jest.requireActual('../../utils/CommonUtils'),
++  getCountBadge: jest.fn().mockReturnValue(null),
++}));
++
++const mockGlossaryTerm: GlossaryTermDetailPageTabProps['glossaryTerm'] = {
++  id: 'glossary-term-id',
++  name: 'Revenue',
++  description: 'Revenue glossary term',
++  glossary: {
++    id: 'glossary-id',
++    type: 'glossary',
++    name: 'Finance',
++  },
++  fullyQualifiedName: 'Finance.Revenue',
++  childrenCount: 3,
++  reviewers: [],
++};
++
++const mockProps: GlossaryTermDetailPageTabProps = {
++  glossaryTerm: mockGlossaryTerm,
++  activeTab: EntityTabs.OVERVIEW,
++  isVersionView: false,
++  assetCount: 5,
++  feedCount: { ...FEED_COUNT_INITIAL_DATA, totalCount: 2 },
++  permissions: {
++    EditAll: true,
++    EditCustomFields: true,
++  } as GlossaryTermDetailPageTabProps['permissions'],
++  assetPermissions: {} as GlossaryTermDetailPageTabProps['assetPermissions'],
++  viewCustomPropertiesPermission: true,
++  assetTabRef: { current: null },
++  tabLabelMap: {},
++  handleAssetClick: jest.fn(),
++  handleAssetSave: jest.fn(),
++  getEntityFeedCount: jest.fn(),
++  setAssetModalVisible: jest.fn(),
++  setPreviewAsset: jest.fn(),
++};
++
++describe('getGlossaryTermDetailPageTabs', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++  });
++
++  describe('non-version view', () => {
++    it('returns 5 tabs when isVersionView is false', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++
++      expect(tabs).toHaveLength(5);
++    });
++
++    it('first tab key is OVERVIEW', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++
++      expect(tabs[0].key).toBe(EntityTabs.OVERVIEW);
++    });
++
++    it('includes GLOSSARY_TERMS tab', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++
++      expect(
++        tabs.find((t) => t.key === EntityTabs.GLOSSARY_TERMS)
++      ).toBeDefined();
++    });
++
++    it('includes ASSETS tab', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++
++      expect(tabs.find((t) => t.key === EntityTabs.ASSETS)).toBeDefined();
++    });
++
++    it('includes ACTIVITY_FEED tab', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++
++      expect(
++        tabs.find((t) => t.key === EntityTabs.ACTIVITY_FEED)
++      ).toBeDefined();
++    });
++
++    it('includes CUSTOM_PROPERTIES tab', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++
++      expect(
++        tabs.find((t) => t.key === EntityTabs.CUSTOM_PROPERTIES)
++      ).toBeDefined();
++    });
++
++    it('tabs are in correct order', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++      const keys = tabs.map((t) => t.key);
++
++      expect(keys).toEqual([
++        EntityTabs.OVERVIEW,
++        EntityTabs.GLOSSARY_TERMS,
++        EntityTabs.ASSETS,
++        EntityTabs.ACTIVITY_FEED,
++        EntityTabs.CUSTOM_PROPERTIES,
++      ]);
++    });
++  });
++
++  describe('version view', () => {
++    it('returns only 1 tab when isVersionView is true', () => {
++      const tabs = getGlossaryTermDetailPageTabs({
++        ...mockProps,
++        isVersionView: true,
++      });
++
++      expect(tabs).toHaveLength(1);
++    });
++
++    it('only OVERVIEW tab is returned in version view', () => {
++      const tabs = getGlossaryTermDetailPageTabs({
++        ...mockProps,
++        isVersionView: true,
++      });
++
++      expect(tabs[0].key).toBe(EntityTabs.OVERVIEW);
++    });
++
++    it('GLOSSARY_TERMS tab is absent in version view', () => {
++      const tabs = getGlossaryTermDetailPageTabs({
++        ...mockProps,
++        isVersionView: true,
++      });
++
++      expect(
++        tabs.find((t) => t.key === EntityTabs.GLOSSARY_TERMS)
++      ).toBeUndefined();
++    });
++  });
++
++  describe('ACTIVITY_FEED tab label', () => {
++    it('label isActive is true when activeTab is ACTIVITY_FEED', () => {
++      const tabs = getGlossaryTermDetailPageTabs({
++        ...mockProps,
++        activeTab: EntityTabs.ACTIVITY_FEED,
++      });
++      const activityTab = tabs.find((t) => t.key === EntityTabs.ACTIVITY_FEED);
++      const labelProps = (activityTab?.label as React.ReactElement).props;
++
++      expect(labelProps.isActive).toBe(true);
++    });
++
++    it('label isActive is false when activeTab is not ACTIVITY_FEED', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++      const activityTab = tabs.find((t) => t.key === EntityTabs.ACTIVITY_FEED);
++      const labelProps = (activityTab?.label as React.ReactElement).props;
++
++      expect(labelProps.isActive).toBe(false);
++    });
++
++    it('label count reflects feedCount.totalCount', () => {
++      const tabs = getGlossaryTermDetailPageTabs({
++        ...mockProps,
++        feedCount: { ...FEED_COUNT_INITIAL_DATA, totalCount: 7 },
++      });
++      const activityTab = tabs.find((t) => t.key === EntityTabs.ACTIVITY_FEED);
++      const labelProps = (activityTab?.label as React.ReactElement).props;
++
++      expect(labelProps.count).toBe(7);
++    });
++  });
++
++  describe('CUSTOM_PROPERTIES tab', () => {
++    it('hasEditAccess is true when not version view and has EditAll', () => {
++      const tabs = getGlossaryTermDetailPageTabs(mockProps);
++      const customPropsTab = tabs.find(
++        (t) => t.key === EntityTabs.CUSTOM_PROPERTIES
++      );
++      const childProps = (customPropsTab?.children as React.ReactElement).props;
++
++      expect(childProps.hasEditAccess).toBe(true);
++    });
++
++    it('hasEditAccess is false when EditAll and EditCustomFields are both false', () => {
++      const tabs = getGlossaryTermDetailPageTabs({
++        ...mockProps,
++        isVersionView: false,
++        permissions: {
++          ...mockProps.permissions,
++          EditAll: false,
++          EditCustomFields: false,
++        },
++      });
++      const customPropsTab = tabs.find(
++        (t) => t.key === EntityTabs.CUSTOM_PROPERTIES
++      );
++      const childProps = (customPropsTab?.children as React.ReactElement).props;
++
++      expect(childProps.hasEditAccess).toBe(false);
++    });
++  });
++});
+diff --git a/openmetadata-ui/src/main/resources/ui/src/utils/TagClassBase.test.ts b/openmetadata-ui/src/main/resources/ui/src/utils/TagClassBase.test.ts
+index cf8ba75832..6d51d50760 100644
+--- a/openmetadata-ui/src/main/resources/ui/src/utils/TagClassBase.test.ts
++++ b/openmetadata-ui/src/main/resources/ui/src/utils/TagClassBase.test.ts
+@@ -10,8 +10,12 @@
+  *  See the License for the specific language governing permissions and
+  *  limitations under the License.
+  */
++import React from 'react';
+ import { queryFilterToRemoveSomeClassification } from '../constants/Tag.constants';
++import { DetailPageWidgetKeys } from '../enums/CustomizeDetailPage.enum';
++import { EntityTabs, EntityType, TabSpecificField } from '../enums/entity.enum';
+ import { SearchIndex } from '../enums/search.enum';
++import { Tag } from '../generated/entity/classification/tag';
+ import { searchQuery } from '../rest/searchAPI';
+ import tagClassBase, { TagClassBase } from './TagClassBase';
+ 
+@@ -22,6 +26,29 @@ jest.mock('./StringsUtils', () => ({
+   escapeESReservedCharacters: jest.fn().mockReturnValue('test'),
+ }));
+ 
++jest.mock('./CustomizePage/CustomizePageUtils', () => ({
++  getTabLabelFromId: jest.fn().mockReturnValue('Tab Label'),
++}));
++
++jest.mock('../components/DataAssets/CommonWidgets/CommonWidgets', () => ({
++  CommonWidgets: 'CommonWidgets',
++}));
++
++jest.mock('../components/DataAssets/DomainLabelV2/DomainLabelV2', () => ({
++  DomainLabelV2: 'DomainLabelV2',
++}));
++
++jest.mock('../components/DataAssets/OwnerLabelV2/OwnerLabelV2', () => ({
++  OwnerLabelV2: 'OwnerLabelV2',
++}));
++
++const mockSearchResponse = (fqn: string) => ({
++  hits: {
++    hits: [{ _source: { fullyQualifiedName: fqn } }],
++    total: { value: 1 },
++  },
++});
++
+ describe('TagClassBase', () => {
+   beforeEach(() => {
+     (searchQuery as jest.Mock).mockClear();
+@@ -31,79 +58,346 @@ describe('TagClassBase', () => {
+     expect(tagClassBase).toBeInstanceOf(TagClassBase);
+   });
+ 
+-  it('should call searchQuery with correct parameters', async () => {
+-    const searchText = 'test';
+-    const page = 1;
++  describe('getTags', () => {
++    it('calls searchQuery with classification-merged queryFilter by default', async () => {
++      (searchQuery as jest.Mock).mockResolvedValue(mockSearchResponse('test'));
+ 
+-    const mockResponse = {
+-      hits: {
+-        hits: [
+-          {
+-            _source: {
+-              fullyQualifiedName: 'test',
++      await tagClassBase.getTags('test', 1);
++
++      expect(searchQuery).toHaveBeenCalledWith({
++        query: '*test*',
++        pageNumber: 1,
++        pageSize: 10,
++        queryFilter: {
++          query: {
++            bool: {
++              must: [{ term: { disabled: 'false' } }],
++              must_not:
++                queryFilterToRemoveSomeClassification.query.bool.must_not,
+             },
+           },
+-        ],
+-        total: {
+-          value: 1,
+         },
+-      },
+-    };
+-
+-    (searchQuery as jest.Mock).mockResolvedValue(mockResponse);
+-    await tagClassBase.getTags(searchText, page);
+-
+-    expect(searchQuery).toHaveBeenCalledWith({
+-      query: `*${searchText}*`,
+-      pageNumber: page,
+-      pageSize: 10, // Assuming PAGE_SIZE is 10
+-      queryFilter: {
+-        query: {
+-          bool: {
+-            must: [{ term: { disabled: 'false' } }],
+-            must_not: queryFilterToRemoveSomeClassification.query.bool.must_not,
++        searchIndex: SearchIndex.TAG,
++      });
++    });
++
++    it('calls searchQuery with only disabled filter when emptyQueryFilter is true', async () => {
++      (searchQuery as jest.Mock).mockResolvedValue(mockSearchResponse('test'));
++
++      await tagClassBase.getTags('test', 1, true);
++
++      expect(searchQuery).toHaveBeenCalledWith(
++        expect.objectContaining({
++          queryFilter: {
++            query: {
++              bool: {
++                must: [{ term: { disabled: 'false' } }],
++              },
++            },
+           },
+-        },
+-      },
+-      searchIndex: SearchIndex.TAG,
++        })
++      );
+     });
+-  });
+ 
+-  it('should return correct data structure', async () => {
+-    const searchText = 'test';
+-    const page = 1;
+-    const mockResponse = {
+-      hits: {
+-        hits: [
++    it('returns correct data shape from searchQuery response', async () => {
++      (searchQuery as jest.Mock).mockResolvedValue(mockSearchResponse('test'));
++
++      const result = await tagClassBase.getTags('test', 1);
++
++      expect(result).toEqual({
++        data: [
+           {
+-            _source: {
+-              fullyQualifiedName: 'test',
+-            },
++            label: 'test',
++            value: 'test',
++            data: { fullyQualifiedName: 'test' },
+           },
+         ],
+-        total: {
+-          value: 1,
+-        },
+-      },
+-    };
++        paging: { total: 1 },
++      });
++    });
+ 
+-    (searchQuery as jest.Mock).mockResolvedValue(mockResponse);
++    it('returns empty string label/value when fullyQualifiedName is missing', async () => {
++      (searchQuery as jest.Mock).mockResolvedValue({
++        hits: { hits: [{ _source: {} }], total: { value: 1 } },
++      });
+ 
+-    const result = await tagClassBase.getTags(searchText, page);
++      const result = await tagClassBase.getTags('', 1);
+ 
+-    expect(result).toEqual({
+-      data: [
+-        {
+-          label: 'test',
+-          value: 'test',
+-          data: {
+-            fullyQualifiedName: 'test',
+-          },
+-        },
+-      ],
+-      paging: {
+-        total: 1,
+-      },
++      expect(result.data[0].label).toBe('');
++      expect(result.data[0].value).toBe('');
++    });
++  });
++
++  describe('getTagDetailPageTabsIds', () => {
++    it('returns 4 tabs', () => {
++      const tabs = tagClassBase.getTagDetailPageTabsIds();
++
++      expect(tabs).toHaveLength(4);
++    });
++
++    it('returns tabs in expected order', () => {
++      const tabs = tagClassBase.getTagDetailPageTabsIds();
++      const ids = tabs.map((t) => t.id);
++
++      expect(ids).toEqual([
++        EntityTabs.OVERVIEW,
++        EntityTabs.ASSETS,
++        EntityTabs.ACTIVITY_FEED,
++        EntityTabs.CUSTOM_PROPERTIES,
++      ]);
++    });
++
++    it('only OVERVIEW tab is editable', () => {
++      const tabs = tagClassBase.getTagDetailPageTabsIds();
++
++      const editableIds = tabs.filter((t) => t.editable).map((t) => t.id);
++
++      expect(editableIds).toEqual([EntityTabs.OVERVIEW]);
++    });
++
++    it('non-OVERVIEW tabs are not editable', () => {
++      const tabs = tagClassBase.getTagDetailPageTabsIds();
++
++      tabs
++        .filter((t) => t.id !== EntityTabs.OVERVIEW)
++        .forEach((t) => expect(t.editable).toBe(false));
++    });
++  });
++
++  describe('getDefaultLayout', () => {
++    it('returns 3 widget configs when tab is OVERVIEW', () => {
++      const layout = tagClassBase.getDefaultLayout(EntityTabs.OVERVIEW);
++
++      expect(layout).toHaveLength(3);
++    });
++
++    it('returns 3 widget configs when no tab is given', () => {
++      const layout = tagClassBase.getDefaultLayout();
++
++      expect(layout).toHaveLength(3);
++    });
++
++    it('returns empty array for non-OVERVIEW tab', () => {
++      expect(tagClassBase.getDefaultLayout(EntityTabs.ASSETS)).toEqual([]);
++      expect(tagClassBase.getDefaultLayout(EntityTabs.ACTIVITY_FEED)).toEqual(
++        []
++      );
++      expect(
++        tagClassBase.getDefaultLayout(EntityTabs.CUSTOM_PROPERTIES)
++      ).toEqual([]);
++    });
++
++    it('OVERVIEW layout includes LEFT_PANEL, DOMAIN, and OWNERS widgets', () => {
++      const layout = tagClassBase.getDefaultLayout(EntityTabs.OVERVIEW);
++      const keys = layout.map((w) => w.i);
++
++      expect(keys).toContain(DetailPageWidgetKeys.LEFT_PANEL);
++      expect(keys).toContain(DetailPageWidgetKeys.DOMAIN);
++      expect(keys).toContain(DetailPageWidgetKeys.OWNERS);
++    });
++
++    it('LEFT_PANEL widget is static', () => {
++      const layout = tagClassBase.getDefaultLayout(EntityTabs.OVERVIEW);
++      const leftPanel = layout.find(
++        (w) => w.i === DetailPageWidgetKeys.LEFT_PANEL
++      );
++
++      expect(leftPanel?.static).toBe(true);
++    });
++  });
++
++  describe('getCommonWidgetList', () => {
++    it('returns 3 widgets', () => {
++      const widgets = tagClassBase.getCommonWidgetList();
++
++      expect(widgets).toHaveLength(3);
++    });
++
++    it('first widget is DESCRIPTION', () => {
++      const widgets = tagClassBase.getCommonWidgetList();
++
++      expect(widgets[0].fullyQualifiedName).toBe(
++        DetailPageWidgetKeys.DESCRIPTION
++      );
++    });
++
++    it('includes DOMAIN and OWNERS widgets', () => {
++      const widgets = tagClassBase.getCommonWidgetList();
++      const keys = widgets.map((w) => w.fullyQualifiedName);
++
++      expect(keys).toContain(DetailPageWidgetKeys.DOMAIN);
++      expect(keys).toContain(DetailPageWidgetKeys.OWNERS);
++    });
++  });
++
++  describe('getWidgetHeight', () => {
++    it('returns height for DESCRIPTION widget', () => {
++      const height = tagClassBase.getWidgetHeight(
++        DetailPageWidgetKeys.DESCRIPTION
++      );
++
++      expect(height).toBe(4);
++    });
++
++    it('returns height for OWNERS widget', () => {
++      const height = tagClassBase.getWidgetHeight(DetailPageWidgetKeys.OWNERS);
++
++      expect(height).toBe(1.5);
++    });
++
++    it('returns height for DOMAIN widget', () => {
++      const height = tagClassBase.getWidgetHeight(DetailPageWidgetKeys.DOMAIN);
++
++      expect(height).toBe(1.5);
++    });
++
++    it('returns 1 for unknown widget key', () => {
++      const height = tagClassBase.getWidgetHeight('unknown-widget');
++
++      expect(height).toBe(1);
++    });
++  });
++
++  describe('getDummyData', () => {
++    it('returns a Tag object with required fields', () => {
++      const tag = tagClassBase.getDummyData();
++
++      expect(tag).toMatchObject({
++        id: expect.any(String),
++        name: expect.any(String),
++        fullyQualifiedName: expect.any(String),
++      });
++    });
++
++    it('returns a tag that is not disabled', () => {
++      const tag = tagClassBase.getDummyData();
++
++      expect(tag.disabled).toBe(false);
++    });
++
++    it('returns a tag that is not deprecated', () => {
++      const tag = tagClassBase.getDummyData();
++
++      expect(tag.deprecated).toBe(false);
++    });
++  });
++
++  describe('getRightPanelForOverviewTab', () => {
++    it('returns a React element', () => {
++      const element = tagClassBase.getRightPanelForOverviewTab({
++        editOwnerPermission: true,
++        editDomainPermission: true,
++      });
++
++      expect(React.isValidElement(element)).toBe(true);
++    });
++
++    it('passes editDomainPermission to DomainLabelV2', () => {
++      const element = tagClassBase.getRightPanelForOverviewTab({
++        editOwnerPermission: false,
++        editDomainPermission: true,
++      });
++
++      const domainChild = (element.props as { children: React.ReactElement[] })
++        .children[0];
++
++      expect(domainChild.props.hasPermission).toBe(true);
++    });
++
++    it('passes editOwnerPermission to OwnerLabelV2', () => {
++      const element = tagClassBase.getRightPanelForOverviewTab({
++        editOwnerPermission: true,
++        editDomainPermission: false,
++      });
++
++      const ownerChild = (element.props as { children: React.ReactElement[] })
++        .children[1];
++
++      expect(ownerChild.props.hasPermission).toBe(true);
++    });
++  });
++
++  describe('getWidgetsFromKey', () => {
++    it('returns a React element wrapping CommonWidgets', () => {
++      const widgetConfig = {
++        i: DetailPageWidgetKeys.DESCRIPTION,
++        x: 0,
++        y: 0,
++        w: 6,
++        h: 4,
++      };
++
++      const element = tagClassBase.getWidgetsFromKey(widgetConfig);
++
++      expect(React.isValidElement(element)).toBe(true);
++      expect(element.props).toMatchObject({
++        entityType: EntityType.TAG,
++        showTaskHandler: false,
++        widgetConfig,
++      });
++    });
++  });
++
++  describe('getAutoClassificationComponent', () => {
++    it('returns null', () => {
++      expect(tagClassBase.getAutoClassificationComponent(true)).toBeNull();
++      expect(tagClassBase.getAutoClassificationComponent(false)).toBeNull();
++    });
++  });
++
++  describe('getRecognizerFeedbackPopup', () => {
++    it('returns null', () => {
++      const result = tagClassBase.getRecognizerFeedbackPopup(
++        {} as never,
++        'entity.fqn',
++        React.createElement('span')
++      );
++
++      expect(result).toBeNull();
++    });
++  });
++
++  describe('getClassificationReviewerWidget', () => {
++    it('returns null', () => {
++      expect(tagClassBase.getClassificationReviewerWidget()).toBeNull();
++    });
++  });
++
++  describe('getClassificationFields', () => {
++    it('returns the correct set of fields', () => {
++      const fields = tagClassBase.getClassificationFields();
++
++      expect(fields).toEqual([
++        TabSpecificField.OWNERS,
++        TabSpecificField.USAGE_COUNT,
++        TabSpecificField.TERM_COUNT,
++        TabSpecificField.DOMAINS,
++      ]);
++    });
++
++    it('returns 4 fields', () => {
++      expect(tagClassBase.getClassificationFields()).toHaveLength(4);
++    });
++  });
++
++  describe('getAdditionalTagDetailPageTabs', () => {
++    it('returns an empty array by default', () => {
++      const mockTag = { fullyQualifiedName: 'PII.Sensitive' } as unknown as Tag;
++
++      expect(
++        tagClassBase.getAdditionalTagDetailPageTabs(mockTag, 'overview')
++      ).toEqual([]);
++    });
++
++    it('returns an empty array regardless of activeTab value', () => {
++      const mockTag = { fullyQualifiedName: 'PII.Sensitive' } as unknown as Tag;
++
++      expect(
++        tagClassBase.getAdditionalTagDetailPageTabs(mockTag, 'assets')
++      ).toEqual([]);
++      expect(
++        tagClassBase.getAdditionalTagDetailPageTabs(mockTag, 'activity_feed')
++      ).toEqual([]);
+     });
+   });
+ });

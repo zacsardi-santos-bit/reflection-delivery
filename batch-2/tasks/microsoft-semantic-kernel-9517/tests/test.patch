@@ -1,0 +1,191 @@
+diff --git a/python/tests/unit/data/conftest.py b/python/tests/unit/data/conftest.py
+index 467b72ad0..61110ebfc 100644
+--- a/python/tests/unit/data/conftest.py
++++ b/python/tests/unit/data/conftest.py
+@@ -10,18 +10,18 @@ from pydantic import BaseModel, Field
+ from pytest import fixture
+ 
+ from semantic_kernel.data import (
++    KernelSearchResults,
++    VectorizableTextSearchMixin,
++    VectorizedSearchMixin,
++    VectorSearchBase,
++    VectorSearchResult,
+     VectorStoreRecordDataField,
+     VectorStoreRecordDefinition,
+     VectorStoreRecordKeyField,
+     VectorStoreRecordVectorField,
++    VectorTextSearchMixin,
+     vectorstoremodel,
+ )
+-from semantic_kernel.data.kernel_search_results import KernelSearchResults
+-from semantic_kernel.data.vector_search.vector_search import VectorSearchBase
+-from semantic_kernel.data.vector_search.vector_search_result import VectorSearchResult
+-from semantic_kernel.data.vector_search.vector_text_search import VectorTextSearchMixin
+-from semantic_kernel.data.vector_search.vectorizable_text_search import VectorizableTextSearchMixin
+-from semantic_kernel.data.vector_search.vectorized_search import VectorizedSearchMixin
+ 
+ 
+ @fixture
+diff --git a/python/tests/unit/data/test_filter.py b/python/tests/unit/data/test_filter.py
+index 0ca7eadf0..463f8333c 100644
+--- a/python/tests/unit/data/test_filter.py
++++ b/python/tests/unit/data/test_filter.py
+@@ -1,8 +1,7 @@
+ # Copyright (c) Microsoft. All rights reserved.
+ 
++from semantic_kernel.data import TextSearchFilter, VectorSearchFilter
+ from semantic_kernel.data.search_filter import SearchFilter
+-from semantic_kernel.data.text_search.text_search_filter import TextSearchFilter
+-from semantic_kernel.data.vector_search.vector_search_filter import VectorSearchFilter
+ 
+ 
+ def test_filter():
+diff --git a/python/tests/unit/data/test_text_search.py b/python/tests/unit/data/test_text_search.py
+index b5b254b2f..9381513de 100644
+--- a/python/tests/unit/data/test_text_search.py
++++ b/python/tests/unit/data/test_text_search.py
+@@ -7,17 +7,20 @@ import pytest
+ from pydantic import BaseModel
+ 
+ from semantic_kernel import Kernel
+-from semantic_kernel.data.const import DEFAULT_DESCRIPTION, DEFAULT_FUNCTION_NAME
+-from semantic_kernel.data.kernel_search_results import KernelSearchResults
+-from semantic_kernel.data.search_options import SearchOptions
+-from semantic_kernel.data.text_search.text_search import TextSearch
+-from semantic_kernel.data.text_search.text_search_options import TextSearchOptions
+-from semantic_kernel.data.text_search.text_search_result import TextSearchResult
+-from semantic_kernel.data.text_search.utils import create_options, default_options_update_function
+-from semantic_kernel.data.vector_search.vector_search_options import VectorSearchOptions
+-from semantic_kernel.exceptions.function_exceptions import TextSearchException
+-from semantic_kernel.functions.kernel_arguments import KernelArguments
+-from semantic_kernel.functions.kernel_parameter_metadata import KernelParameterMetadata
++from semantic_kernel.data import (
++    DEFAULT_DESCRIPTION,
++    DEFAULT_FUNCTION_NAME,
++    KernelSearchResults,
++    SearchOptions,
++    TextSearch,
++    TextSearchOptions,
++    TextSearchResult,
++    VectorSearchOptions,
++    create_options,
++    default_options_update_function,
++)
++from semantic_kernel.exceptions import TextSearchException
++from semantic_kernel.functions import KernelArguments, KernelParameterMetadata
+ 
+ 
+ def test_text_search():
+diff --git a/python/tests/unit/data/test_vector_store_model_decorator.py b/python/tests/unit/data/test_vector_store_model_decorator.py
+index 894688963..0a49530ec 100644
+--- a/python/tests/unit/data/test_vector_store_model_decorator.py
++++ b/python/tests/unit/data/test_vector_store_model_decorator.py
+@@ -8,14 +8,14 @@ from pydantic import BaseModel
+ from pydantic.dataclasses import dataclass as pydantic_dataclass
+ from pytest import raises
+ 
+-from semantic_kernel.data.record_definition.vector_store_model_decorator import vectorstoremodel
+-from semantic_kernel.data.record_definition.vector_store_model_definition import VectorStoreRecordDefinition
+-from semantic_kernel.data.record_definition.vector_store_record_fields import (
++from semantic_kernel.data import (
+     VectorStoreRecordDataField,
++    VectorStoreRecordDefinition,
+     VectorStoreRecordKeyField,
+     VectorStoreRecordVectorField,
++    vectorstoremodel,
+ )
+-from semantic_kernel.exceptions.memory_connector_exceptions import VectorStoreModelException
++from semantic_kernel.exceptions import VectorStoreModelException
+ 
+ 
+ def test_vanilla():
+diff --git a/python/tests/unit/data/test_vector_store_record_collection.py b/python/tests/unit/data/test_vector_store_record_collection.py
+index 176bc67d5..7f3c74e7c 100644
+--- a/python/tests/unit/data/test_vector_store_record_collection.py
++++ b/python/tests/unit/data/test_vector_store_record_collection.py
+@@ -7,8 +7,8 @@ import numpy as np
+ from pandas import DataFrame
+ from pytest import fixture, mark, raises
+ 
+-from semantic_kernel.data.vector_storage.vector_store_record_collection import VectorStoreRecordCollection
+-from semantic_kernel.exceptions.memory_connector_exceptions import (
++from semantic_kernel.data import VectorStoreRecordCollection
++from semantic_kernel.exceptions import (
+     MemoryConnectorException,
+     VectorStoreModelDeserializationException,
+     VectorStoreModelSerializationException,
+diff --git a/python/tests/unit/data/test_vector_store_record_definition.py b/python/tests/unit/data/test_vector_store_record_definition.py
+index 4f0c8a167..897623c95 100644
+--- a/python/tests/unit/data/test_vector_store_record_definition.py
++++ b/python/tests/unit/data/test_vector_store_record_definition.py
+@@ -2,12 +2,12 @@
+ 
+ from pytest import raises
+ 
+-from semantic_kernel.data.record_definition.vector_store_model_definition import VectorStoreRecordDefinition
+-from semantic_kernel.data.record_definition.vector_store_record_fields import (
++from semantic_kernel.data import (
+     VectorStoreRecordDataField,
++    VectorStoreRecordDefinition,
+     VectorStoreRecordKeyField,
+ )
+-from semantic_kernel.exceptions.memory_connector_exceptions import VectorStoreModelException
++from semantic_kernel.exceptions import VectorStoreModelException
+ 
+ 
+ def test_vector_store_record_definition():
+diff --git a/python/tests/unit/data/test_vector_store_record_utils.py b/python/tests/unit/data/test_vector_store_record_utils.py
+index a4576c6ae..0f0a5896e 100644
+--- a/python/tests/unit/data/test_vector_store_record_utils.py
++++ b/python/tests/unit/data/test_vector_store_record_utils.py
+@@ -4,15 +4,15 @@ from unittest.mock import AsyncMock, MagicMock
+ 
+ from pytest import mark, raises
+ 
+-from semantic_kernel.data.record_definition.vector_store_model_definition import VectorStoreRecordDefinition
+-from semantic_kernel.data.record_definition.vector_store_record_fields import (
++from semantic_kernel import Kernel
++from semantic_kernel.data import (
+     VectorStoreRecordDataField,
++    VectorStoreRecordDefinition,
+     VectorStoreRecordKeyField,
++    VectorStoreRecordUtils,
+     VectorStoreRecordVectorField,
+ )
+-from semantic_kernel.data.record_definition.vector_store_record_utils import VectorStoreRecordUtils
+-from semantic_kernel.exceptions.memory_connector_exceptions import VectorStoreModelException
+-from semantic_kernel.kernel import Kernel
++from semantic_kernel.exceptions import VectorStoreModelException
+ 
+ 
+ @mark.asyncio
+diff --git a/python/tests/unit/data/test_vector_store_text_search.py b/python/tests/unit/data/test_vector_store_text_search.py
+index 9cb8a20ca..d96931e2a 100644
+--- a/python/tests/unit/data/test_vector_store_text_search.py
++++ b/python/tests/unit/data/test_vector_store_text_search.py
+@@ -4,8 +4,9 @@ from unittest.mock import patch
+ 
+ from pytest import fixture, mark, raises
+ 
+-from semantic_kernel.connectors.ai.open_ai.services.azure_text_embedding import AzureTextEmbedding
+-from semantic_kernel.data.text_search.vector_store_text_search import VectorStoreTextSearch
++from semantic_kernel.connectors.ai.open_ai import AzureTextEmbedding
++from semantic_kernel.data import VectorStoreTextSearch
++from semantic_kernel.exceptions import VectorStoreTextSearchValidationError
+ 
+ 
+ @fixture
+@@ -62,10 +63,10 @@ async def test_from_vectorized_search(vector_collection, azure_openai_unit_test_
+ 
+ 
+ def test_validation_no_embedder_for_vectorized_search(vector_collection):
+-    with raises(ValueError):
++    with raises(VectorStoreTextSearchValidationError):
+         VectorStoreTextSearch(vectorized_search=vector_collection)
+ 
+ 
+ def test_validation_no_collections():
+-    with raises(ValueError):
++    with raises(VectorStoreTextSearchValidationError):
+         VectorStoreTextSearch()

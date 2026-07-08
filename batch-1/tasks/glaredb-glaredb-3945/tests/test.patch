@@ -1,0 +1,24 @@
+diff --git a/crates/glaredb_core/src/functions/table/builtin/series.rs b/crates/glaredb_core/src/functions/table/builtin/series.rs
+--- a/crates/glaredb_core/src/functions/table/builtin/series.rs
++++ b/crates/glaredb_core/src/functions/table/builtin/series.rs
+@@ -400,4 +400,20 @@ mod tests {
+         assert_eq!(PollExecute::NeedsMore, poll);
+         assert_eq!(0, output.num_rows());
+     }
++
++    #[test]
++    fn test_poll_execute_with_bind_state() {
++        let mut state = GenerateSeriesI64PartitionState::default();
++        let mut input = generate_batch!([1_i64], [5_i64], [1_i64]);
++        let mut output = Batch::new([DataType::int64()], 5).unwrap();
++        let _poll = GenerateSeriesI64::poll_execute(
++            &mut noop_context(),
++            &(),
++            &(),
++            &mut state,
++            &mut input,
++            &mut output,
++        )
++        .unwrap();
++    }
+ }

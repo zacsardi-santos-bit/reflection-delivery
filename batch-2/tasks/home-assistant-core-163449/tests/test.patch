@@ -1,0 +1,461 @@
+diff --git a/tests/components/powerfox_local/__init__.py b/tests/components/zinvolt/__init__.py
+similarity index 63%
+rename from tests/components/powerfox_local/__init__.py
+rename to tests/components/zinvolt/__init__.py
+index 7a4241dffff..7befc059ec2 100644
+--- a/tests/components/powerfox_local/__init__.py
++++ b/tests/components/zinvolt/__init__.py
+@@ -1,16 +1,12 @@
+-"""Tests for the Powerfox Local integration."""
++"""Tests for the Zinvolt integration."""
+ 
+ from homeassistant.core import HomeAssistant
+ 
+ from tests.common import MockConfigEntry
+ 
+-MOCK_HOST = "1.1.1.1"
+-MOCK_API_KEY = "9x9x1f12xx3x"
+-MOCK_DEVICE_ID = MOCK_API_KEY
+-
+ 
+ async def setup_integration(hass: HomeAssistant, config_entry: MockConfigEntry) -> None:
+-    """Fixture for setting up the integration."""
++    """Method for setting up the component."""
+     config_entry.add_to_hass(hass)
+ 
+     await hass.config_entries.async_setup(config_entry.entry_id)
+diff --git a/tests/components/zinvolt/conftest.py b/tests/components/zinvolt/conftest.py
+new file mode 100644
+index 00000000000..c7d07427b4a
+--- /dev/null
++++ b/tests/components/zinvolt/conftest.py
+@@ -0,0 +1,57 @@
++"""Common fixtures for the Zinvolt tests."""
++
++from collections.abc import Generator
++from unittest.mock import AsyncMock, patch
++
++import pytest
++from zinvolt.models import BatteryListResponse, BatteryState
++
++from homeassistant.components.zinvolt.const import DOMAIN
++from homeassistant.const import CONF_ACCESS_TOKEN
++
++from .const import TOKEN
++
++from tests.common import MockConfigEntry, load_fixture
++
++
++@pytest.fixture
++def mock_setup_entry() -> Generator[AsyncMock]:
++    """Override async_setup_entry."""
++    with patch(
++        "homeassistant.components.zinvolt.async_setup_entry", return_value=True
++    ) as mock_setup_entry:
++        yield mock_setup_entry
++
++
++@pytest.fixture
++def mock_config_entry() -> MockConfigEntry:
++    """Mock config entry."""
++    return MockConfigEntry(
++        domain=DOMAIN,
++        title="test@test.com",
++        unique_id="a0226b8f-98fe-4524-b369-272b466b8797",
++        data={CONF_ACCESS_TOKEN: TOKEN},
++    )
++
++
++@pytest.fixture
++def mock_zinvolt_client() -> Generator[AsyncMock]:
++    """Mock Zinvolt client."""
++    with (
++        patch(
++            "homeassistant.components.zinvolt.ZinvoltClient", autospec=True
++        ) as mock_client,
++        patch(
++            "homeassistant.components.zinvolt.config_flow.ZinvoltClient",
++            new=mock_client,
++        ),
++    ):
++        client = mock_client.return_value
++        client.login.return_value = TOKEN
++        client.get_batteries.return_value = BatteryListResponse.from_json(
++            load_fixture("batteries.json", DOMAIN)
++        ).batteries
++        client.get_battery_status.return_value = BatteryState.from_json(
++            load_fixture("current_state.json", DOMAIN)
++        )
++        yield client
+diff --git a/tests/components/zinvolt/const.py b/tests/components/zinvolt/const.py
+new file mode 100644
+index 00000000000..b61911baa29
+--- /dev/null
++++ b/tests/components/zinvolt/const.py
+@@ -0,0 +1,3 @@
++"""Constants for the Zinvolt tests."""
++
++TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZXZhLWJhY2tvZmZpY2Uub25tb29ubHkuYXBwL2FwaS9wdWJsaWMvdjIvbG9naW4iLCJpYXQiOjE3NjA3OTM0NjEsIm5iZiI6MTc2MDc5MzQ2MSwianRpIjoiYjY5U0J4bVVscU5WcmlKQyIsInN1YiI6ImEwMjI2YjhmLTk4ZmUtNDUyNC1iMzY5LTI3MmI0NjZiODc5NyIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJkZXZpY2VzIjpbeyJzZXJpYWxfbnVtYmVyIjoiQUxHMDAxMTI0MTAwMTA3Iiwic3VwcGxpZXIiOiJhbHBoYWVzcyIsImRldmljZWFibGVfdHlwZSI6IkFwcFxcTW9kZWxzXFxCYWxjb255QmF0dGVyeSJ9XSwibmFtZSI6IkludGVncmF0aW9uIE5hbWUiLCJhYmlsaXRpZXMiOlsiYXBpOnB1YmxpYyJdfQ.UumLlVUkGBHnO0ZVtpfENy-edf_d5LV4gOctNan2M5w"
+diff --git a/tests/components/zinvolt/fixtures/batteries.json b/tests/components/zinvolt/fixtures/batteries.json
+new file mode 100644
+index 00000000000..4746c40c3be
+--- /dev/null
++++ b/tests/components/zinvolt/fixtures/batteries.json
+@@ -0,0 +1,9 @@
++{
++  "batteries": [
++    {
++      "id": "a0226fa5-bfdf-4192-9dd5-81d0ad085f29",
++      "name": "Zinvolt Batterij",
++      "serial_number": "ALG001124100107"
++    }
++  ]
++}
+diff --git a/tests/components/zinvolt/fixtures/current_state.json b/tests/components/zinvolt/fixtures/current_state.json
+new file mode 100644
+index 00000000000..36e5e5b2942
+--- /dev/null
++++ b/tests/components/zinvolt/fixtures/current_state.json
+@@ -0,0 +1,51 @@
++{
++  "sn": "ALG001124100107",
++  "name": "Zinvolt Batterij",
++  "longitude": 4.8936,
++  "latitude": 52.3792,
++  "onlineStatus": "ONLINE",
++  "currentPower": {
++    "soc": 4,
++    "coc": 0.04,
++    "pbt": 0,
++    "ppv": 0,
++    "pso": 0,
++    "onGrid": true,
++    "onlineStatus": "ONLINE",
++    "smp": 800,
++    "isDormancy": false
++  },
++  "smartMode": "DYNAMIC",
++  "globalSettings": {
++    "maxOutput": 800,
++    "maxOutputLimit": 800,
++    "maxOutputUnlocked": false,
++    "batHighCap": 100,
++    "batUseCap": 25,
++    "maxChargePower": 900,
++    "feedModePower": {
++      "modeType": "FIXED",
++      "fixedPower": 200,
++      "pvFeedLimitPower": 800,
++      "equips": []
++    },
++    "haveElectricityPrices": true,
++    "standbyTime": 60
++  },
++  "tips": [],
++  "bpd": 493,
++  "updating": {
++    "units": []
++  },
++  "statistic": {
++    "co2": 0,
++    "saveAmount": 0,
++    "totalCapacity": 0
++  },
++  "isShowStatistic": false,
++  "meterReaders": [],
++  "isHomeDisplay": false,
++  "dynamicPriceStatus": "CONFIGURED",
++  "dynamicStrategyStatus": "CONFIGURED",
++  "remindManualSocCalibration": true
++}
+diff --git a/tests/components/zinvolt/snapshots/test_init.ambr b/tests/components/zinvolt/snapshots/test_init.ambr
+new file mode 100644
+index 00000000000..54e89898d1a
+--- /dev/null
++++ b/tests/components/zinvolt/snapshots/test_init.ambr
+@@ -0,0 +1,32 @@
++# serializer version: 1
++# name: test_device
++  DeviceRegistryEntrySnapshot({
++    'area_id': None,
++    'config_entries': <ANY>,
++    'config_entries_subentries': <ANY>,
++    'configuration_url': None,
++    'connections': set({
++    }),
++    'disabled_by': None,
++    'entry_type': None,
++    'hw_version': None,
++    'id': <ANY>,
++    'identifiers': set({
++      tuple(
++        'zinvolt',
++        'ALG001124100107',
++      ),
++    }),
++    'labels': set({
++    }),
++    'manufacturer': 'Zinvolt',
++    'model': None,
++    'model_id': None,
++    'name': 'Zinvolt Batterij',
++    'name_by_user': None,
++    'primary_config_entry': <ANY>,
++    'serial_number': 'ALG001124100107',
++    'sw_version': None,
++    'via_device_id': None,
++  })
++# ---
+diff --git a/tests/components/zinvolt/snapshots/test_sensor.ambr b/tests/components/zinvolt/snapshots/test_sensor.ambr
+new file mode 100644
+index 00000000000..77d2d510d48
+--- /dev/null
++++ b/tests/components/zinvolt/snapshots/test_sensor.ambr
+@@ -0,0 +1,52 @@
++# serializer version: 1
++# name: test_all_entities[sensor.zinvolt_batterij_battery-entry]
++  EntityRegistryEntrySnapshot({
++    'aliases': set({
++    }),
++    'area_id': None,
++    'capabilities': None,
++    'config_entry_id': <ANY>,
++    'config_subentry_id': <ANY>,
++    'device_class': None,
++    'device_id': <ANY>,
++    'disabled_by': None,
++    'domain': 'sensor',
++    'entity_category': <EntityCategory.DIAGNOSTIC: 'diagnostic'>,
++    'entity_id': 'sensor.zinvolt_batterij_battery',
++    'has_entity_name': True,
++    'hidden_by': None,
++    'icon': None,
++    'id': <ANY>,
++    'labels': set({
++    }),
++    'name': None,
++    'object_id_base': 'Battery',
++    'options': dict({
++    }),
++    'original_device_class': <SensorDeviceClass.BATTERY: 'battery'>,
++    'original_icon': None,
++    'original_name': 'Battery',
++    'platform': 'zinvolt',
++    'previous_unique_id': None,
++    'suggested_object_id': None,
++    'supported_features': 0,
++    'translation_key': None,
++    'unique_id': 'ALG001124100107.state_of_charge',
++    'unit_of_measurement': '%',
++  })
++# ---
++# name: test_all_entities[sensor.zinvolt_batterij_battery-state]
++  StateSnapshot({
++    'attributes': ReadOnlyDict({
++      'device_class': 'battery',
++      'friendly_name': 'Zinvolt Batterij Battery',
++      'unit_of_measurement': '%',
++    }),
++    'context': <ANY>,
++    'entity_id': 'sensor.zinvolt_batterij_battery',
++    'last_changed': <ANY>,
++    'last_reported': <ANY>,
++    'last_updated': <ANY>,
++    'state': '4.0',
++  })
++# ---
+diff --git a/tests/components/zinvolt/test_config_flow.py b/tests/components/zinvolt/test_config_flow.py
+new file mode 100644
+index 00000000000..4e37ed8f061
+--- /dev/null
++++ b/tests/components/zinvolt/test_config_flow.py
+@@ -0,0 +1,110 @@
++"""Test the Zinvolt config flow."""
++
++from unittest.mock import AsyncMock
++
++import pytest
++from zinvolt.exceptions import ZinvoltAuthenticationError, ZinvoltError
++
++from homeassistant.components.zinvolt.const import DOMAIN
++from homeassistant.config_entries import SOURCE_USER
++from homeassistant.const import CONF_ACCESS_TOKEN, CONF_EMAIL, CONF_PASSWORD
++from homeassistant.core import HomeAssistant
++from homeassistant.data_entry_flow import FlowResultType
++
++from .const import TOKEN
++
++from tests.common import MockConfigEntry
++
++
++@pytest.mark.usefixtures("mock_zinvolt_client")
++async def test_full_flow(hass: HomeAssistant, mock_setup_entry: AsyncMock) -> None:
++    """Test the full flow."""
++    result = await hass.config_entries.flow.async_init(
++        DOMAIN, context={"source": SOURCE_USER}
++    )
++    assert result["type"] is FlowResultType.FORM
++    assert result["errors"] == {}
++
++    result = await hass.config_entries.flow.async_configure(
++        result["flow_id"],
++        {
++            CONF_EMAIL: "test@test.com",
++            CONF_PASSWORD: "yes",
++        },
++    )
++
++    assert result["type"] is FlowResultType.CREATE_ENTRY
++    assert result["title"] == "test@test.com"
++    assert result["data"] == {CONF_ACCESS_TOKEN: TOKEN}
++    assert result["result"].unique_id == "a0226b8f-98fe-4524-b369-272b466b8797"
++    assert len(mock_setup_entry.mock_calls) == 1
++
++
++@pytest.mark.parametrize(
++    ("exception", "error"),
++    [
++        (ZinvoltAuthenticationError, "invalid_auth"),
++        (ZinvoltError, "cannot_connect"),
++        (Exception, "unknown"),
++    ],
++)
++async def test_form_errors(
++    hass: HomeAssistant,
++    mock_zinvolt_client: AsyncMock,
++    mock_setup_entry: AsyncMock,
++    exception: Exception,
++    error: str,
++) -> None:
++    """Test we handle invalid auth."""
++    result = await hass.config_entries.flow.async_init(
++        DOMAIN, context={"source": SOURCE_USER}
++    )
++
++    mock_zinvolt_client.login.side_effect = exception
++
++    result = await hass.config_entries.flow.async_configure(
++        result["flow_id"],
++        {
++            CONF_EMAIL: "test@test.com",
++            CONF_PASSWORD: "yes",
++        },
++    )
++
++    assert result["type"] is FlowResultType.FORM
++    assert result["errors"] == {"base": error}
++
++    mock_zinvolt_client.login.side_effect = None
++
++    result = await hass.config_entries.flow.async_configure(
++        result["flow_id"],
++        {
++            CONF_EMAIL: "test@test.com",
++            CONF_PASSWORD: "yes",
++        },
++    )
++
++    assert result["type"] is FlowResultType.CREATE_ENTRY
++    assert len(mock_setup_entry.mock_calls) == 1
++
++
++@pytest.mark.usefixtures("mock_zinvolt_client")
++async def test_duplicate_entry(
++    hass: HomeAssistant, mock_config_entry: MockConfigEntry
++) -> None:
++    """Test we handle duplicate entries."""
++    mock_config_entry.add_to_hass(hass)
++
++    result = await hass.config_entries.flow.async_init(
++        DOMAIN, context={"source": SOURCE_USER}
++    )
++
++    result = await hass.config_entries.flow.async_configure(
++        result["flow_id"],
++        {
++            CONF_EMAIL: "test@test.com",
++            CONF_PASSWORD: "yes",
++        },
++    )
++
++    assert result["type"] is FlowResultType.ABORT
++    assert result["reason"] == "already_configured"
+diff --git a/tests/components/zinvolt/test_init.py b/tests/components/zinvolt/test_init.py
+new file mode 100644
+index 00000000000..825caca10c6
+--- /dev/null
++++ b/tests/components/zinvolt/test_init.py
+@@ -0,0 +1,27 @@
++"""Test the Zinvolt initialization."""
++
++from unittest.mock import AsyncMock
++
++from syrupy.assertion import SnapshotAssertion
++
++from homeassistant.components.zinvolt.const import DOMAIN
++from homeassistant.core import HomeAssistant
++from homeassistant.helpers import device_registry as dr
++
++from . import setup_integration
++
++from tests.common import MockConfigEntry
++
++
++async def test_device(
++    hass: HomeAssistant,
++    device_registry: dr.DeviceRegistry,
++    mock_config_entry: MockConfigEntry,
++    mock_zinvolt_client: AsyncMock,
++    snapshot: SnapshotAssertion,
++) -> None:
++    """Test the Zinvolt device."""
++    await setup_integration(hass, mock_config_entry)
++    device = device_registry.async_get_device({(DOMAIN, "ALG001124100107")})
++    assert device
++    assert device == snapshot
+diff --git a/tests/components/iometer/test_sensor.py b/tests/components/zinvolt/test_sensor.py
+similarity index 54%
+rename from tests/components/iometer/test_sensor.py
+rename to tests/components/zinvolt/test_sensor.py
+index 4c29a9ff3b4..20e5e5c029b 100644
+--- a/tests/components/iometer/test_sensor.py
++++ b/tests/components/zinvolt/test_sensor.py
+@@ -1,29 +1,27 @@
+-"""Test the sensors provided by the Powerfox integration."""
++"""Tests for the Zinvolt sensor."""
+ 
+-from __future__ import annotations
++from unittest.mock import AsyncMock, patch
+ 
+-import pytest
+ from syrupy.assertion import SnapshotAssertion
+ 
+ from homeassistant.const import Platform
+ from homeassistant.core import HomeAssistant
+ from homeassistant.helpers import entity_registry as er
+ 
+-from . import setup_platform
++from . import setup_integration
+ 
+ from tests.common import MockConfigEntry, snapshot_platform
+-from tests.components.conftest import AsyncMock
+ 
+ 
+-@pytest.mark.usefixtures("entity_registry_enabled_by_default")
+-async def test_all_sensors(
++async def test_all_entities(
+     hass: HomeAssistant,
+-    mock_iometer_client: AsyncMock,
++    snapshot: SnapshotAssertion,
++    mock_zinvolt_client: AsyncMock,
+     mock_config_entry: MockConfigEntry,
+     entity_registry: er.EntityRegistry,
+-    snapshot: SnapshotAssertion,
+ ) -> None:
+-    """Test the Iometer sensors."""
+-    await setup_platform(hass, mock_config_entry, [Platform.SENSOR])
++    """Test all entities."""
++    with patch("homeassistant.components.zinvolt._PLATFORMS", [Platform.SENSOR]):
++        await setup_integration(hass, mock_config_entry)
+ 
+     await snapshot_platform(hass, entity_registry, snapshot, mock_config_entry.entry_id)

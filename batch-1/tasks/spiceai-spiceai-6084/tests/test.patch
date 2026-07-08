@@ -1,0 +1,19 @@
+diff --git a/crates/db_connection_pool/src/dbconnection/snowflakeconn.rs b/crates/db_connection_pool/src/dbconnection/snowflakeconn.rs
+--- a/crates/db_connection_pool/src/dbconnection/snowflakeconn.rs
++++ b/crates/db_connection_pool/src/dbconnection/snowflakeconn.rs
+@@ -766,5 +766,15 @@ mod tests {
+         }
+
+         Arc::new(builder.finish()) as ArrayRef
+     }
++
++    #[test]
++    fn test_snowflake_int64_timestamp_handling() {
++        let mut builder = Int64Builder::new();
++        builder.append_values(&[1_696_164_330], &[true]);
++        let timestamp_array = Arc::new(builder.finish()) as Arc<dyn Array>;
++
++        let result = cast_sf_timestamp_to_arrow_timestamp(&timestamp_array, false);
++        assert!(result.is_ok(), "Expected Ok but got Err");
++    }
+ }

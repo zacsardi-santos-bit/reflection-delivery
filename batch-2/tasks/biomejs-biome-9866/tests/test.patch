@@ -1,0 +1,1004 @@
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.css
+new file mode 100644
+index 0000000000..938790c34b
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.css
+@@ -0,0 +1,4 @@
++/* should generate diagnostics */
++.foo .bar {}
++.foo, .bar.baz {}
++div.foo.bar {}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.css.snap
+new file mode 100644
+index 0000000000..044eb67f5c
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.css.snap
+@@ -0,0 +1,74 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++expression: invalid.css
++---
++# Input
++```css
++/* should generate diagnostics */
++.foo .bar {}
++.foo, .bar.baz {}
++div.foo.bar {}
++
++```
++
++# Diagnostics
++```
++invalid.css:2:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 1 class selector, but found 2.
++  
++    1 │ /* should generate diagnostics */
++  > 2 │ .foo .bar {}
++      │ ^^^^^^^^^
++    3 │ .foo, .bar.baz {}
++    4 │ div.foo.bar {}
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.css:3:7 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 1 class selector, but found 2.
++  
++    1 │ /* should generate diagnostics */
++    2 │ .foo .bar {}
++  > 3 │ .foo, .bar.baz {}
++      │       ^^^^^^^^
++    4 │ div.foo.bar {}
++    5 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.css:4:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 1 class selector, but found 2.
++  
++    2 │ .foo .bar {}
++    3 │ .foo, .bar.baz {}
++  > 4 │ div.foo.bar {}
++      │ ^^^^^^^^^^^
++    5 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.css
+new file mode 100644
+index 0000000000..7d000c8b68
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.css
+@@ -0,0 +1,8 @@
++/* should generate diagnostics */
++.ab.cd.ef {}
++:not(.ab.cd.ef) {}
++.ab.cd :not(.ef.gh) {}
++.ab .cd .ef {}
++.ab,
++.cd.ef.gh {}
++.ab.cd.ef :not(.gh) {}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.css.snap
+new file mode 100644
+index 0000000000..ea0626f206
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.css.snap
+@@ -0,0 +1,142 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++assertion_line: 103
++expression: invalid.max2.css
++---
++# Input
++```css
++/* should generate diagnostics */
++.ab.cd.ef {}
++:not(.ab.cd.ef) {}
++.ab.cd :not(.ef.gh) {}
++.ab .cd .ef {}
++.ab,
++.cd.ef.gh {}
++.ab.cd.ef :not(.gh) {}
++
++```
++
++# Diagnostics
++```
++invalid.max2.css:2:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 2 class selectors, but found 3.
++  
++    1 │ /* should generate diagnostics */
++  > 2 │ .ab.cd.ef {}
++      │ ^^^^^^^^^
++    3 │ :not(.ab.cd.ef) {}
++    4 │ .ab.cd :not(.ef.gh) {}
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.max2.css:3:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 2 class selectors, but found 3.
++  
++    1 │ /* should generate diagnostics */
++    2 │ .ab.cd.ef {}
++  > 3 │ :not(.ab.cd.ef) {}
++      │ ^^^^^^^^^^^^^^^
++    4 │ .ab.cd :not(.ef.gh) {}
++    5 │ .ab .cd .ef {}
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.max2.css:4:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 2 class selectors, but found 4.
++  
++    2 │ .ab.cd.ef {}
++    3 │ :not(.ab.cd.ef) {}
++  > 4 │ .ab.cd :not(.ef.gh) {}
++      │ ^^^^^^^^^^^^^^^^^^^
++    5 │ .ab .cd .ef {}
++    6 │ .ab,
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.max2.css:5:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 2 class selectors, but found 3.
++  
++    3 │ :not(.ab.cd.ef) {}
++    4 │ .ab.cd :not(.ef.gh) {}
++  > 5 │ .ab .cd .ef {}
++      │ ^^^^^^^^^^^
++    6 │ .ab,
++    7 │ .cd.ef.gh {}
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.max2.css:7:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 2 class selectors, but found 3.
++  
++    5 │ .ab .cd .ef {}
++    6 │ .ab,
++  > 7 │ .cd.ef.gh {}
++      │ ^^^^^^^^^
++    8 │ .ab.cd.ef :not(.gh) {}
++    9 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.max2.css:8:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 2 class selectors, but found 4.
++  
++    6 │ .ab,
++    7 │ .cd.ef.gh {}
++  > 8 │ .ab.cd.ef :not(.gh) {}
++      │ ^^^^^^^^^^^^^^^^^^^
++    9 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.options.json b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.options.json
+new file mode 100644
+index 0000000000..9d22755050
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.max2.options.json
+@@ -0,0 +1,15 @@
++{
++  "$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
++  "linter": {
++    "rules": {
++      "nursery": {
++        "noExcessiveSelectorClasses": {
++          "level": "error",
++          "options": {
++            "maxClasses": 2
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.css
+new file mode 100644
+index 0000000000..34739bd07b
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.css
+@@ -0,0 +1,8 @@
++/* should generate diagnostics */
++.foo {
++  &.bar {}
++}
++
++.foo, .bar {
++  &.baz {}
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.css.snap
+new file mode 100644
+index 0000000000..b3d727e687
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.css.snap
+@@ -0,0 +1,120 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++expression: invalid.nested.css
++---
++# Input
++```css
++/* should generate diagnostics */
++.foo {
++  &.bar {}
++}
++
++.foo, .bar {
++  &.baz {}
++}
++
++```
++
++# Diagnostics
++```
++invalid.nested.css:2:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    1 │ /* should generate diagnostics */
++  > 2 │ .foo {
++      │ ^^^^
++    3 │   &.bar {}
++    4 │ }
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.nested.css:3:3 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    1 │ /* should generate diagnostics */
++    2 │ .foo {
++  > 3 │   &.bar {}
++      │   ^^^^^
++    4 │ }
++    5 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.nested.css:6:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    4 │ }
++    5 │ 
++  > 6 │ .foo, .bar {
++      │ ^^^^
++    7 │   &.baz {}
++    8 │ }
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.nested.css:6:7 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    4 │ }
++    5 │ 
++  > 6 │ .foo, .bar {
++      │       ^^^^
++    7 │   &.baz {}
++    8 │ }
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.nested.css:7:3 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    6 │ .foo, .bar {
++  > 7 │   &.baz {}
++      │   ^^^^^
++    8 │ }
++    9 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.options.json b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.options.json
+new file mode 100644
+index 0000000000..08efd7d769
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.nested.options.json
+@@ -0,0 +1,15 @@
++{
++  "$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
++  "linter": {
++    "rules": {
++      "nursery": {
++        "noExcessiveSelectorClasses": {
++          "level": "error",
++          "options": {
++            "maxClasses": 0
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.options.json b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.options.json
+new file mode 100644
+index 0000000000..da7b357835
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.options.json
+@@ -0,0 +1,15 @@
++{
++  "$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
++  "linter": {
++    "rules": {
++      "nursery": {
++        "noExcessiveSelectorClasses": {
++          "level": "error",
++          "options": {
++            "maxClasses": 1
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.css
+new file mode 100644
+index 0000000000..a3e5ff70f9
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.css
+@@ -0,0 +1,5 @@
++/* should generate diagnostics */
++:is(.foo, .bar.baz) {}
++:not(.foo.bar) {}
++:has(.foo .bar) {}
++:nth-child(2n of .foo.bar) {}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.css.snap
+new file mode 100644
+index 0000000000..64828428ea
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.css.snap
+@@ -0,0 +1,96 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++expression: invalid.pseudo.css
++---
++# Input
++```css
++/* should generate diagnostics */
++:is(.foo, .bar.baz) {}
++:not(.foo.bar) {}
++:has(.foo .bar) {}
++:nth-child(2n of .foo.bar) {}
++
++```
++
++# Diagnostics
++```
++invalid.pseudo.css:2:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 1 class selector, but found 3.
++  
++    1 │ /* should generate diagnostics */
++  > 2 │ :is(.foo, .bar.baz) {}
++      │ ^^^^^^^^^^^^^^^^^^^
++    3 │ :not(.foo.bar) {}
++    4 │ :has(.foo .bar) {}
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.pseudo.css:3:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 1 class selector, but found 2.
++  
++    1 │ /* should generate diagnostics */
++    2 │ :is(.foo, .bar.baz) {}
++  > 3 │ :not(.foo.bar) {}
++      │ ^^^^^^^^^^^^^^
++    4 │ :has(.foo .bar) {}
++    5 │ :nth-child(2n of .foo.bar) {}
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.pseudo.css:4:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 1 class selector, but found 2.
++  
++    2 │ :is(.foo, .bar.baz) {}
++    3 │ :not(.foo.bar) {}
++  > 4 │ :has(.foo .bar) {}
++      │ ^^^^^^^^^^^^^^^
++    5 │ :nth-child(2n of .foo.bar) {}
++    6 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.pseudo.css:5:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 1 class selector, but found 2.
++  
++    3 │ :not(.foo.bar) {}
++    4 │ :has(.foo .bar) {}
++  > 5 │ :nth-child(2n of .foo.bar) {}
++      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
++    6 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.options.json b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.options.json
+new file mode 100644
+index 0000000000..da7b357835
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.pseudo.options.json
+@@ -0,0 +1,15 @@
++{
++  "$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
++  "linter": {
++    "rules": {
++      "nursery": {
++        "noExcessiveSelectorClasses": {
++          "level": "error",
++          "options": {
++            "maxClasses": 1
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.css
+new file mode 100644
+index 0000000000..0f288b85e3
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.css
+@@ -0,0 +1,10 @@
++/* should generate diagnostics */
++.foo {}
++div.foo {}
++
++/* a comment */
++.foo, /* a comment */
++.bar,
++/* a comment */
++.foo
++{}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.css.snap
+new file mode 100644
+index 0000000000..32bdacd680
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.css.snap
+@@ -0,0 +1,122 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++expression: invalid.zero.css
++---
++# Input
++```css
++/* should generate diagnostics */
++.foo {}
++div.foo {}
++
++/* a comment */
++.foo, /* a comment */
++.bar,
++/* a comment */
++.foo
++{}
++
++```
++
++# Diagnostics
++```
++invalid.zero.css:2:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    1 │ /* should generate diagnostics */
++  > 2 │ .foo {}
++      │ ^^^^
++    3 │ div.foo {}
++    4 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.zero.css:3:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    1 │ /* should generate diagnostics */
++    2 │ .foo {}
++  > 3 │ div.foo {}
++      │ ^^^^^^^
++    4 │ 
++    5 │ /* a comment */
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.zero.css:6:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    5 │ /* a comment */
++  > 6 │ .foo, /* a comment */
++      │ ^^^^
++    7 │ .bar,
++    8 │ /* a comment */
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.zero.css:7:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    5 │ /* a comment */
++    6 │ .foo, /* a comment */
++  > 7 │ .bar,
++      │ ^^^^
++    8 │ /* a comment */
++    9 │ .foo
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.zero.css:9:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++     7 │ .bar,
++     8 │ /* a comment */
++   > 9 │ .foo
++       │ ^^^^
++    10 │ {}
++    11 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.options.json b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.options.json
+new file mode 100644
+index 0000000000..08efd7d769
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.options.json
+@@ -0,0 +1,15 @@
++{
++  "$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
++  "linter": {
++    "rules": {
++      "nursery": {
++        "noExcessiveSelectorClasses": {
++          "level": "error",
++          "options": {
++            "maxClasses": 0
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.scss b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.scss
+new file mode 100644
+index 0000000000..66c5225166
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.scss
+@@ -0,0 +1,3 @@
++/* should generate diagnostics */
++.foo { margin: { left: 0; top: 0; }; }
++@include test { .foo {} }
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.scss.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.scss.snap
+new file mode 100644
+index 0000000000..a10f1252c0
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/invalid.zero.scss.snap
+@@ -0,0 +1,53 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++assertion_line: 103
++expression: invalid.zero.scss
++---
++# Input
++```css
++/* should generate diagnostics */
++.foo { margin: { left: 0; top: 0; }; }
++@include test { .foo {} }
++
++```
++
++# Diagnostics
++```
++invalid.zero.scss:2:1 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    1 │ /* should generate diagnostics */
++  > 2 │ .foo { margin: { left: 0; top: 0; }; }
++      │ ^^^^
++    3 │ @include test { .foo {} }
++    4 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
++
++```
++invalid.zero.scss:3:17 lint/nursery/noExcessiveSelectorClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  i Expected this selector to have no more than 0 class selectors, but found 1.
++  
++    1 │ /* should generate diagnostics */
++    2 │ .foo { margin: { left: 0; top: 0; }; }
++  > 3 │ @include test { .foo {} }
++      │                 ^^^^
++    4 │ 
++  
++  i Selectors with too many chained classes are harder to read, override, and reuse.
++  
++  i Reduce the number of class selectors in this selector, or split it into simpler selectors.
++  
++  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
++  
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.css
+new file mode 100644
+index 0000000000..d3a267a3f3
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.css
+@@ -0,0 +1,6 @@
++/* should not generate diagnostics */
++div {}
++.foo {}
++#id[attr]:hover::before {}
++:nth-child(2n) {}
++.foo.bar.baz {}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.css.snap
+new file mode 100644
+index 0000000000..2dd301d526
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.css.snap
+@@ -0,0 +1,15 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++assertion_line: 103
++expression: valid.css
++---
++# Input
++```css
++/* should not generate diagnostics */
++div {}
++.foo {}
++#id[attr]:hover::before {}
++:nth-child(2n) {}
++.foo.bar.baz {}
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.css
+new file mode 100644
+index 0000000000..6b0e963b17
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.css
+@@ -0,0 +1,16 @@
++/* should not generate diagnostics */
++.ab {}
++.ab.cd {}
++.ab .cd {}
++.ab,
++.cd {}
++.ab.cd,
++.ef.gh {}
++.ab.cd[disabled]:hover {}
++.ab { .cd {} }
++.ab { .cd > & {} }
++.ab, .cd { & > .ef {} }
++.ab { &:hover > .ef.gh {} }
++.ab { @include test { .ef { &:hover .gh {} } } }
++@media print { .ab.cd {} }
++.ab { @media print { .cd {} } }
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.css.snap
+new file mode 100644
+index 0000000000..e472969843
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.css.snap
+@@ -0,0 +1,25 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++assertion_line: 103
++expression: valid.max2.css
++---
++# Input
++```css
++/* should not generate diagnostics */
++.ab {}
++.ab.cd {}
++.ab .cd {}
++.ab,
++.cd {}
++.ab.cd,
++.ef.gh {}
++.ab.cd[disabled]:hover {}
++.ab { .cd {} }
++.ab { .cd > & {} }
++.ab, .cd { & > .ef {} }
++.ab { &:hover > .ef.gh {} }
++.ab { @include test { .ef { &:hover .gh {} } } }
++@media print { .ab.cd {} }
++.ab { @media print { .cd {} } }
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.options.json b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.options.json
+new file mode 100644
+index 0000000000..9d22755050
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.max2.options.json
+@@ -0,0 +1,15 @@
++{
++  "$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
++  "linter": {
++    "rules": {
++      "nursery": {
++        "noExcessiveSelectorClasses": {
++          "level": "error",
++          "options": {
++            "maxClasses": 2
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.css b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.css
+new file mode 100644
+index 0000000000..c8912ae2c9
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.css
+@@ -0,0 +1,3 @@
++/* should not generate diagnostics */
++:root { --foo: 1px; }
++html { --foo: 1px; }
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.css.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.css.snap
+new file mode 100644
+index 0000000000..fe677be163
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.css.snap
+@@ -0,0 +1,12 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++assertion_line: 103
++expression: valid.zero.css
++---
++# Input
++```css
++/* should not generate diagnostics */
++:root { --foo: 1px; }
++html { --foo: 1px; }
++
++```
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.options.json b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.options.json
+new file mode 100644
+index 0000000000..08efd7d769
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.options.json
+@@ -0,0 +1,15 @@
++{
++  "$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
++  "linter": {
++    "rules": {
++      "nursery": {
++        "noExcessiveSelectorClasses": {
++          "level": "error",
++          "options": {
++            "maxClasses": 0
++          }
++        }
++      }
++    }
++  }
++}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.scss b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.scss
+new file mode 100644
+index 0000000000..202e87327c
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.scss
+@@ -0,0 +1,3 @@
++/* should not generate diagnostics */
++.foo #{$test} {}
++.foo.bar #{$test} {}
+diff --git a/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.scss.snap b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.scss.snap
+new file mode 100644
+index 0000000000..dadf5eff46
+--- /dev/null
++++ b/crates/biome_css_analyze/tests/specs/nursery/noExcessiveSelectorClasses/valid.zero.scss.snap
+@@ -0,0 +1,12 @@
++---
++source: crates/biome_css_analyze/tests/spec_tests.rs
++assertion_line: 103
++expression: valid.zero.scss
++---
++# Input
++```css
++/* should not generate diagnostics */
++.foo #{$test} {}
++.foo.bar #{$test} {}
++
++```

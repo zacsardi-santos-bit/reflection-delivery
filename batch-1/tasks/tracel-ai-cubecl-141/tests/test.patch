@@ -1,0 +1,22 @@
+diff --git a/crates/cubecl-core/tests/frontend/struct.rs b/crates/cubecl-core/tests/frontend/struct.rs
+index 2d60a809..9e3d8d15 100644
+--- a/crates/cubecl-core/tests/frontend/struct.rs
++++ b/crates/cubecl-core/tests/frontend/struct.rs
+@@ -10,6 +10,18 @@ pub struct EmptyType {}
+ #[derive(CubeLaunch)]
+ pub struct UnitLaunch;
+ 
++#[derive(CubeLaunch)]
++pub struct WithField {
++    lhs: Array<f32>,
++    rhs: Array<f32>,
++}
++
++#[derive(CubeLaunch)]
++pub struct WithFieldGeneric<F: Float> {
++    lhs: Array<F>,
++    rhs: Array<F>,
++}
++
+ #[derive(CubeType)]
+ pub struct UnitType;

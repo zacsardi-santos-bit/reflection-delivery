@@ -1,0 +1,21 @@
+diff --git a/core/tests/acl/src/lib.rs b/core/tests/acl/src/lib.rs
+index 72db2e977..4eb6fff22 100644
+--- a/core/tests/acl/src/lib.rs
++++ b/core/tests/acl/src/lib.rs
+@@ -12,7 +12,7 @@ mod tests {
+   };
+ 
+   use tauri_utils::{
+-    acl::{build::parse_capabilities, plugin::Manifest, resolved::Resolved},
++    acl::{build::parse_capabilities, manifest::Manifest, resolved::Resolved},
+     platform::Target,
+   };
+ 
+@@ -29,6 +29,7 @@ mod tests {
+         &format!("{}/*.toml", plugin_path.display()),
+         plugin,
+         &out_dir,
++        |_| true,
+       )
+       .expect("failed to define permissions");
+       let manifest = Manifest::new(permission_files, None);

@@ -1,0 +1,24 @@
+diff --git a/lib/common/memory/src/mmap_ops.rs b/lib/common/memory/src/mmap_ops.rs
+--- a/lib/common/memory/src/mmap_ops.rs
++++ b/lib/common/memory/src/mmap_ops.rs
+@@ -192,3 +192,20 @@
+ pub fn transmute_to_u8_slice<T>(v: &[T]) -> &[u8] {
+     unsafe { std::slice::from_raw_parts(v.as_ptr().cast::<u8>(), mem::size_of_val(v)) }
+ }
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++    use crate::madvise;
++    use crate::mmap_type_readonly::MmapSliceReadOnly;
++    use tempfile::Builder;
++
++    #[test]
++    fn test_mmap_read_only_slice() {
++        let tempfile = Builder::new().prefix("test.").suffix(".mmap").tempfile().unwrap();
++        tempfile.as_file().set_len(1024).unwrap();
++        let mmap = open_read_mmap(tempfile.path(), madvise::AdviceSetting::Global, false).unwrap();
++        let slice = unsafe { MmapSliceReadOnly::<u64>::try_from(mmap).unwrap() };
++        assert_eq!(slice.len(), 1024 / std::mem::size_of::<u64>());
++    }
++}

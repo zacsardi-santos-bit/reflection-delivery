@@ -1,0 +1,386 @@
+diff --git a/server/events_test.go b/server/events_test.go
+index b48d49431..35faf02d5 100644
+--- a/server/events_test.go
++++ b/server/events_test.go
+@@ -1417,77 +1417,6 @@ func (sr *slowAccResolver) Fetch(name string) (string, error) {
+ 	return sr.AccountResolver.Fetch(name)
+ }
+ 
+-func TestFetchAccountRace(t *testing.T) {
+-	sa, oa, sb, ob, _ := runTrustedGateways(t)
+-	defer sa.Shutdown()
+-	defer sb.Shutdown()
+-
+-	// Let's create a user account.
+-	okp, _ := nkeys.FromSeed(oSeed)
+-	akp, _ := nkeys.CreateAccount()
+-	pub, _ := akp.PublicKey()
+-	nac := jwt.NewAccountClaims(pub)
+-	jwt, _ := nac.Encode(okp)
+-	userAcc := pub
+-
+-	// Replace B's account resolver with one that introduces
+-	// delay during the Fetch()
+-	sac := &slowAccResolver{AccountResolver: sb.AccountResolver()}
+-	sb.SetAccountResolver(sac)
+-
+-	// Add the account in sa and sb
+-	addAccountToMemResolver(sa, userAcc, jwt)
+-	addAccountToMemResolver(sb, userAcc, jwt)
+-
+-	// Tell the slow account resolver which account to slow down
+-	sac.Lock()
+-	sac.acc = userAcc
+-	sac.Unlock()
+-
+-	urlA := fmt.Sprintf("nats://%s:%d", oa.Host, oa.Port)
+-	urlB := fmt.Sprintf("nats://%s:%d", ob.Host, ob.Port)
+-
+-	nca, err := nats.Connect(urlA, createUserCreds(t, sa, akp))
+-	if err != nil {
+-		t.Fatalf("Error connecting to A: %v", err)
+-	}
+-	defer nca.Close()
+-
+-	// Since there is an optimistic send, this message will go to B
+-	// and on processing this message, B will lookup/fetch this
+-	// account, which can produce race with the fetch of this
+-	// account from A's system account that sent a notification
+-	// about this account, or with the client connect just after
+-	// that.
+-	nca.Publish("foo", []byte("hello"))
+-
+-	// Now connect and create a subscription on B
+-	ncb, err := nats.Connect(urlB, createUserCreds(t, sb, akp))
+-	if err != nil {
+-		t.Fatalf("Error connecting to A: %v", err)
+-	}
+-	defer ncb.Close()
+-	sub, err := ncb.SubscribeSync("foo")
+-	if err != nil {
+-		t.Fatalf("Error on subscribe: %v", err)
+-	}
+-
+-	// Now send messages from A and B should ultimately start to receive
+-	// them (once the subscription has been correctly registered)
+-	ok := false
+-	for i := 0; i < 10; i++ {
+-		nca.Publish("foo", []byte("hello"))
+-		if _, err := sub.NextMsg(100 * time.Millisecond); err != nil {
+-			continue
+-		}
+-		ok = true
+-		break
+-	}
+-	if !ok {
+-		t.Fatalf("B should be able to receive messages")
+-	}
+-}
+-
+ func TestConnectionUpdatesTimerProperlySet(t *testing.T) {
+ 	origEventsHBInterval := eventsHBInterval
+ 	eventsHBInterval = 50 * time.Millisecond
+diff --git a/server/jwt_test.go b/server/jwt_test.go
+index a2d66b6cf..186889008 100644
+--- a/server/jwt_test.go
++++ b/server/jwt_test.go
+@@ -1829,6 +1829,176 @@ func TestJWTAccountImportSignerRemoved(t *testing.T) {
+ 	checkShadow(0)
+ }
+ 
++func TestJWTAccountImportSignerDeadlock(t *testing.T) {
++	s := opTrustBasicSetup()
++	defer s.Shutdown()
++	buildMemAccResolver(s)
++
++	okp, _ := nkeys.FromSeed(oSeed)
++
++	// Exporter keys
++	srvKP, _ := nkeys.CreateAccount()
++	srvPK, _ := srvKP.PublicKey()
++	srvSignerKP, _ := nkeys.CreateAccount()
++	srvSignerPK, _ := srvSignerKP.PublicKey()
++
++	// Importer keys
++	clientKP, _ := nkeys.CreateAccount()
++	clientPK, _ := clientKP.PublicKey()
++
++	createSrvJwt := func(signingKeys ...string) (string, *jwt.AccountClaims) {
++		ac := jwt.NewAccountClaims(srvPK)
++		ac.SigningKeys.Add(signingKeys...)
++		ac.Exports.Add(&jwt.Export{Subject: "foo", Type: jwt.Service, TokenReq: true})
++		ac.Exports.Add(&jwt.Export{Subject: "bar", Type: jwt.Stream, TokenReq: true})
++		token, err := ac.Encode(okp)
++		if err != nil {
++			t.Fatalf("Error generating exporter JWT: %v", err)
++		}
++		return token, ac
++	}
++
++	createImportToken := func(sub string, kind jwt.ExportType) string {
++		actC := jwt.NewActivationClaims(clientPK)
++		actC.IssuerAccount = srvPK
++		actC.ImportType = kind
++		actC.ImportSubject = jwt.Subject(sub)
++		token, err := actC.Encode(srvSignerKP)
++		if err != nil {
++			t.Fatal(err)
++		}
++		return token
++	}
++
++	createClientJwt := func() string {
++		ac := jwt.NewAccountClaims(clientPK)
++		ac.Imports.Add(&jwt.Import{Account: srvPK, Subject: "foo", Type: jwt.Service, Token: createImportToken("foo", jwt.Service)})
++		ac.Imports.Add(&jwt.Import{Account: srvPK, Subject: "bar", Type: jwt.Stream, Token: createImportToken("bar", jwt.Stream)})
++		token, err := ac.Encode(okp)
++		if err != nil {
++			t.Fatalf("Error generating importer JWT: %v", err)
++		}
++		return token
++	}
++
++	srvJWT, _ := createSrvJwt(srvSignerPK)
++	addAccountToMemResolver(s, srvPK, srvJWT)
++
++	clientJWT := createClientJwt()
++	addAccountToMemResolver(s, clientPK, clientJWT)
++
++	acc, _ := s.LookupAccount(srvPK)
++	// Have a go routine that constantly gets/releases the acc's write lock.
++	// There was a bug that could cause AddServiceImportWithClaim to deadlock.
++	ch := make(chan bool, 1)
++	wg := sync.WaitGroup{}
++	wg.Add(1)
++	go func() {
++		defer wg.Done()
++		for {
++			select {
++			case <-ch:
++				return
++			default:
++				acc.mu.Lock()
++				acc.mu.Unlock()
++				time.Sleep(time.Millisecond)
++			}
++		}
++	}()
++
++	// Create a client that will send the request
++	client, clientReader, clientCS := createClient(t, s, clientKP)
++	clientParser, clientCh := genAsyncParser(client)
++	defer func() { clientCh <- true }()
++	clientParser(clientCS)
++	expectPong(t, clientReader)
++
++	close(ch)
++	wg.Wait()
++}
++
++func TestJWTAccountImportWrongIssuerAccount(t *testing.T) {
++	s := opTrustBasicSetup()
++	defer s.Shutdown()
++	buildMemAccResolver(s)
++
++	l := &captureErrorLogger{errCh: make(chan string, 2)}
++	s.SetLogger(l, false, false)
++
++	okp, _ := nkeys.FromSeed(oSeed)
++
++	// Exporter keys
++	srvKP, _ := nkeys.CreateAccount()
++	srvPK, _ := srvKP.PublicKey()
++	srvSignerKP, _ := nkeys.CreateAccount()
++	srvSignerPK, _ := srvSignerKP.PublicKey()
++
++	// Importer keys
++	clientKP, _ := nkeys.CreateAccount()
++	clientPK, _ := clientKP.PublicKey()
++
++	createSrvJwt := func(signingKeys ...string) (string, *jwt.AccountClaims) {
++		ac := jwt.NewAccountClaims(srvPK)
++		ac.SigningKeys.Add(signingKeys...)
++		ac.Exports.Add(&jwt.Export{Subject: "foo", Type: jwt.Service, TokenReq: true})
++		ac.Exports.Add(&jwt.Export{Subject: "bar", Type: jwt.Stream, TokenReq: true})
++		token, err := ac.Encode(okp)
++		if err != nil {
++			t.Fatalf("Error generating exporter JWT: %v", err)
++		}
++		return token, ac
++	}
++
++	createImportToken := func(sub string, kind jwt.ExportType) string {
++		actC := jwt.NewActivationClaims(clientPK)
++		// Reference ourselves, which is wrong.
++		actC.IssuerAccount = clientPK
++		actC.ImportType = kind
++		actC.ImportSubject = jwt.Subject(sub)
++		token, err := actC.Encode(srvSignerKP)
++		if err != nil {
++			t.Fatal(err)
++		}
++		return token
++	}
++
++	createClientJwt := func() string {
++		ac := jwt.NewAccountClaims(clientPK)
++		ac.Imports.Add(&jwt.Import{Account: srvPK, Subject: "foo", Type: jwt.Service, Token: createImportToken("foo", jwt.Service)})
++		ac.Imports.Add(&jwt.Import{Account: srvPK, Subject: "bar", Type: jwt.Stream, Token: createImportToken("bar", jwt.Stream)})
++		token, err := ac.Encode(okp)
++		if err != nil {
++			t.Fatalf("Error generating importer JWT: %v", err)
++		}
++		return token
++	}
++
++	srvJWT, _ := createSrvJwt(srvSignerPK)
++	addAccountToMemResolver(s, srvPK, srvJWT)
++
++	clientJWT := createClientJwt()
++	addAccountToMemResolver(s, clientPK, clientJWT)
++
++	// Create a client that will send the request
++	client, clientReader, clientCS := createClient(t, s, clientKP)
++	clientParser, clientCh := genAsyncParser(client)
++	defer func() { clientCh <- true }()
++	clientParser(clientCS)
++	expectPong(t, clientReader)
++
++	for i := 0; i < 2; i++ {
++		select {
++		case e := <-l.errCh:
++			if !strings.HasPrefix(e, fmt.Sprintf("Invalid issuer account %q in activation claim", clientPK)) {
++				t.Fatalf("Unexpected error: %v", e)
++			}
++		case <-time.After(2 * time.Second):
++			t.Fatalf("Did not get error regarding issuer account")
++		}
++	}
++}
++
+ func TestJWTUserRevokedOnAccountUpdate(t *testing.T) {
+ 	nac := newJWTTestAccountClaims()
+ 	s, akp, c, cr := setupJWTTestWitAccountClaims(t, nac, "+OK")
+diff --git a/server/norace_test.go b/server/norace_test.go
+index 6d0a30918..bcc68cd5a 100644
+--- a/server/norace_test.go
++++ b/server/norace_test.go
+@@ -25,7 +25,9 @@ import (
+ 	"testing"
+ 	"time"
+ 
++	"github.com/nats-io/jwt"
+ 	"github.com/nats-io/nats.go"
++	"github.com/nats-io/nkeys"
+ )
+ 
+ // IMPORTANT: Tests in this file are not executed when running with the -race flag.
+@@ -717,3 +719,89 @@ func TestNoRaceRouteCache(t *testing.T) {
+ 		})
+ 	}
+ }
++
++func TestNoRaceFetchAccountDoesNotRegisterAccountTwice(t *testing.T) {
++	sa, oa, sb, ob, _ := runTrustedGateways(t)
++	defer sa.Shutdown()
++	defer sb.Shutdown()
++
++	// Let's create a user account.
++	okp, _ := nkeys.FromSeed(oSeed)
++	akp, _ := nkeys.CreateAccount()
++	pub, _ := akp.PublicKey()
++	nac := jwt.NewAccountClaims(pub)
++	jwt, _ := nac.Encode(okp)
++	userAcc := pub
++
++	// Replace B's account resolver with one that introduces
++	// delay during the Fetch()
++	sac := &slowAccResolver{AccountResolver: sb.AccountResolver()}
++	sb.SetAccountResolver(sac)
++
++	// Add the account in sa and sb
++	addAccountToMemResolver(sa, userAcc, jwt)
++	addAccountToMemResolver(sb, userAcc, jwt)
++
++	// Tell the slow account resolver which account to slow down
++	sac.Lock()
++	sac.acc = userAcc
++	sac.Unlock()
++
++	urlA := fmt.Sprintf("nats://%s:%d", oa.Host, oa.Port)
++	urlB := fmt.Sprintf("nats://%s:%d", ob.Host, ob.Port)
++
++	nca, err := nats.Connect(urlA, createUserCreds(t, sa, akp))
++	if err != nil {
++		t.Fatalf("Error connecting to A: %v", err)
++	}
++	defer nca.Close()
++
++	// Since there is an optimistic send, this message will go to B
++	// and on processing this message, B will lookup/fetch this
++	// account, which can produce race with the fetch of this
++	// account from A's system account that sent a notification
++	// about this account, or with the client connect just after
++	// that.
++	nca.Publish("foo", []byte("hello"))
++
++	// Now connect and create a subscription on B
++	ncb, err := nats.Connect(urlB, createUserCreds(t, sb, akp))
++	if err != nil {
++		t.Fatalf("Error connecting to A: %v", err)
++	}
++	defer ncb.Close()
++	sub, err := ncb.SubscribeSync("foo")
++	if err != nil {
++		t.Fatalf("Error on subscribe: %v", err)
++	}
++	ncb.Flush()
++
++	// Now send messages from A and B should ultimately start to receive
++	// them (once the subscription has been correctly registered)
++	ok := false
++	for i := 0; i < 10; i++ {
++		nca.Publish("foo", []byte("hello"))
++		if _, err := sub.NextMsg(100 * time.Millisecond); err != nil {
++			continue
++		}
++		ok = true
++		break
++	}
++	if !ok {
++		t.Fatalf("B should be able to receive messages")
++	}
++
++	checkTmpAccounts := func(t *testing.T, s *Server) {
++		t.Helper()
++		empty := true
++		s.tmpAccounts.Range(func(_, _ interface{}) bool {
++			empty = false
++			return false
++		})
++		if !empty {
++			t.Fatalf("tmpAccounts is not empty")
++		}
++	}
++	checkTmpAccounts(t, sa)
++	checkTmpAccounts(t, sb)
++}
+diff --git a/test/tls_test.go b/test/tls_test.go
+index 43727bc34..e5a27d186 100644
+--- a/test/tls_test.go
++++ b/test/tls_test.go
+@@ -716,8 +716,12 @@ func TestTLSGatewaysCertificateCNBasedAuth(t *testing.T) {
+ 	srvC := RunServer(optsC)
+ 	defer srvC.Shutdown()
+ 
+-	waitForOutboundGateways(t, srvA, 1, 2*time.Second)
+-	waitForOutboundGateways(t, srvB, 1, 2*time.Second)
++	// Because we need to use "localhost" in the gw URLs (to match
++	// hostname in the user/CN), the server may try to connect to
++	// a [::1], etc.. that may or may not work, so give a lot of
++	// time for that to complete ok.
++	waitForOutboundGateways(t, srvA, 1, 5*time.Second)
++	waitForOutboundGateways(t, srvB, 1, 5*time.Second)
+ 
+ 	nc1, err := nats.Connect(srvA.Addr().String(), nats.Name("A"))
+ 	if err != nil {

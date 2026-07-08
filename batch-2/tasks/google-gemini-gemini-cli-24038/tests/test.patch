@@ -1,0 +1,549 @@
+diff --git a/packages/core/src/config/config.test.ts b/packages/core/src/config/config.test.ts
+index 1e5a5d526..d79f21874 100644
+--- a/packages/core/src/config/config.test.ts
++++ b/packages/core/src/config/config.test.ts
+@@ -253,6 +253,10 @@ vi.mock('../core/tokenLimits.js', () => ({
+ vi.mock('../code_assist/codeAssist.js');
+ vi.mock('../code_assist/experiments/experiments.js');
+ 
++afterEach(() => {
++  vi.clearAllMocks();
++});
++
+ describe('Server Config (config.ts)', () => {
+   const MODEL = DEFAULT_GEMINI_MODEL;
+   const SANDBOX: SandboxConfig = createMockSandboxConfig({
+@@ -1613,6 +1617,31 @@ describe('Server Config (config.ts)', () => {
+       expect(config.getSandboxAllowedPaths()).toEqual(['/only/this']);
+       expect(config.getSandboxNetworkAccess()).toBe(false);
+     });
++
++    it('lazily resolves forbidden paths when first accessed', async () => {
++      const config = new Config({
++        ...baseParams,
++        sandbox: { enabled: true, command: 'docker' },
++      });
++
++      const fileService = config.getFileService();
++      vi.spyOn(fileService, 'getIgnoredPaths').mockResolvedValue([
++        '/tmp/forbidden',
++      ]);
++
++      await config.initialize();
++      expect(fileService.getIgnoredPaths).not.toHaveBeenCalled();
++
++      // Access resolved paths via the internal resolver
++      const resolved = await (
++        config as unknown as {
++          getSandboxForbiddenPaths: () => Promise<string[]>;
++        }
++      ).getSandboxForbiddenPaths();
++
++      expect(fileService.getIgnoredPaths).toHaveBeenCalled();
++      expect(resolved).toEqual(['/tmp/forbidden']);
++    });
+   });
+ 
+   it('should have independent TopicState across instances', () => {
+diff --git a/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts b/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts
+index 1a687b915..55d11e0ce 100644
+--- a/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts
++++ b/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts
+@@ -420,7 +420,7 @@ describe('LinuxSandboxManager', () => {
+ 
+         const customManager = new LinuxSandboxManager({
+           workspace,
+-          forbiddenPaths: ['/tmp/cache', '/opt/secret.txt'],
++          forbiddenPaths: async () => ['/tmp/cache', '/opt/secret.txt'],
+         });
+ 
+         const bwrapArgs = await getBwrapArgs(
+@@ -452,7 +452,7 @@ describe('LinuxSandboxManager', () => {
+ 
+         const customManager = new LinuxSandboxManager({
+           workspace,
+-          forbiddenPaths: ['/tmp/forbidden-symlink'],
++          forbiddenPaths: async () => ['/tmp/forbidden-symlink'],
+         });
+ 
+         const bwrapArgs = await getBwrapArgs(
+@@ -480,7 +480,7 @@ describe('LinuxSandboxManager', () => {
+ 
+         const customManager = new LinuxSandboxManager({
+           workspace,
+-          forbiddenPaths: ['/tmp/not-here.txt'],
++          forbiddenPaths: async () => ['/tmp/not-here.txt'],
+         });
+ 
+         const bwrapArgs = await getBwrapArgs(
+@@ -509,7 +509,7 @@ describe('LinuxSandboxManager', () => {
+ 
+         const customManager = new LinuxSandboxManager({
+           workspace,
+-          forbiddenPaths: ['/tmp/dir-link'],
++          forbiddenPaths: async () => ['/tmp/dir-link'],
+         });
+ 
+         const bwrapArgs = await getBwrapArgs(
+@@ -534,7 +534,7 @@ describe('LinuxSandboxManager', () => {
+ 
+         const customManager = new LinuxSandboxManager({
+           workspace,
+-          forbiddenPaths: ['/tmp/conflict'],
++          forbiddenPaths: async () => ['/tmp/conflict'],
+         });
+ 
+         const bwrapArgs = await getBwrapArgs(
+@@ -550,12 +550,14 @@ describe('LinuxSandboxManager', () => {
+           customManager,
+         );
+ 
+-        const bindTryIdx = bwrapArgs.indexOf('--bind-try');
+-        const tmpfsIdx = bwrapArgs.lastIndexOf('--tmpfs');
++        // Conflict should have been filtered out of allow list (--bind-try)
++        expect(bwrapArgs).not.toContain('--bind-try');
++        expect(bwrapArgs).not.toContain('--bind-try-ro');
+ 
+-        expect(bwrapArgs[bindTryIdx + 1]).toBe('/tmp/conflict');
+-        expect(bwrapArgs[tmpfsIdx + 1]).toBe('/tmp/conflict');
+-        expect(tmpfsIdx).toBeGreaterThan(bindTryIdx);
++        // It should only appear as a forbidden path (via --tmpfs)
++        const conflictIdx = bwrapArgs.indexOf('/tmp/conflict');
++        expect(conflictIdx).toBeGreaterThan(0);
++        expect(bwrapArgs[conflictIdx - 1]).toBe('--tmpfs');
+       });
+     });
+   });
+diff --git a/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts b/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts
+index e49a062d1..c0fdcbab6 100644
+--- a/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts
++++ b/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts
+@@ -67,7 +67,7 @@ describe('MacOsSandboxManager', () => {
+       expect(seatbeltArgsBuilder.buildSeatbeltProfile).toHaveBeenCalledWith({
+         workspace: mockWorkspace,
+         allowedPaths: mockAllowedPaths,
+-        forbiddenPaths: undefined,
++        forbiddenPaths: [],
+         networkAccess: mockNetworkAccess,
+         workspaceWrite: false,
+         additionalPermissions: {
+@@ -218,7 +218,7 @@ describe('MacOsSandboxManager', () => {
+       it('should parameterize forbidden paths and explicitly deny them', async () => {
+         const customManager = new MacOsSandboxManager({
+           workspace: mockWorkspace,
+-          forbiddenPaths: ['/tmp/forbidden1'],
++          forbiddenPaths: async () => ['/tmp/forbidden1'],
+         });
+         await customManager.prepareCommand({
+           command: 'echo',
+@@ -238,7 +238,7 @@ describe('MacOsSandboxManager', () => {
+       it('explicitly denies non-existent forbidden paths to prevent creation', async () => {
+         const customManager = new MacOsSandboxManager({
+           workspace: mockWorkspace,
+-          forbiddenPaths: ['/tmp/does-not-exist'],
++          forbiddenPaths: async () => ['/tmp/does-not-exist'],
+         });
+         await customManager.prepareCommand({
+           command: 'echo',
+@@ -258,7 +258,7 @@ describe('MacOsSandboxManager', () => {
+       it('should override allowed paths if a path is also in forbidden paths', async () => {
+         const customManager = new MacOsSandboxManager({
+           workspace: mockWorkspace,
+-          forbiddenPaths: ['/tmp/conflict'],
++          forbiddenPaths: async () => ['/tmp/conflict'],
+         });
+         await customManager.prepareCommand({
+           command: 'echo',
+@@ -273,7 +273,7 @@ describe('MacOsSandboxManager', () => {
+ 
+         expect(seatbeltArgsBuilder.buildSeatbeltProfile).toHaveBeenCalledWith(
+           expect.objectContaining({
+-            allowedPaths: ['/tmp/conflict'],
++            allowedPaths: [],
+             forbiddenPaths: ['/tmp/conflict'],
+           }),
+         );
+diff --git a/packages/core/src/sandbox/macos/seatbeltArgsBuilder.test.ts b/packages/core/src/sandbox/macos/seatbeltArgsBuilder.test.ts
+index 647b7cb85..45f1c6772 100644
+--- a/packages/core/src/sandbox/macos/seatbeltArgsBuilder.test.ts
++++ b/packages/core/src/sandbox/macos/seatbeltArgsBuilder.test.ts
+@@ -38,6 +38,8 @@ describe('seatbeltArgsBuilder', () => {
+ 
+       const profile = buildSeatbeltProfile({
+         workspace: '/Users/test/workspace',
++        allowedPaths: [],
++        forbiddenPaths: [],
+       });
+ 
+       expect(profile).toContain('(version 1)');
+@@ -51,6 +53,8 @@ describe('seatbeltArgsBuilder', () => {
+       vi.mocked(fsUtils.tryRealpath).mockImplementation((p) => p);
+       const profile = buildSeatbeltProfile({
+         workspace: '/test',
++        allowedPaths: [],
++        forbiddenPaths: [],
+         networkAccess: true,
+       });
+       expect(profile).toContain('(allow network-outbound)');
+@@ -70,6 +74,8 @@ describe('seatbeltArgsBuilder', () => {
+ 
+         const profile = buildSeatbeltProfile({
+           workspace: '/test/workspace',
++          allowedPaths: [],
++          forbiddenPaths: [],
+         });
+ 
+         expect(profile).toContain(
+@@ -96,7 +102,11 @@ describe('seatbeltArgsBuilder', () => {
+             }) as unknown as fs.Stats,
+         );
+ 
+-        const profile = buildSeatbeltProfile({ workspace: '/test/workspace' });
++        const profile = buildSeatbeltProfile({
++          workspace: '/test/workspace',
++          allowedPaths: [],
++          forbiddenPaths: [],
++        });
+ 
+         expect(profile).toContain(
+           `(deny file-write* (literal "/test/workspace/.gitignore"))`,
+@@ -117,6 +127,7 @@ describe('seatbeltArgsBuilder', () => {
+         const profile = buildSeatbeltProfile({
+           workspace: '/test',
+           allowedPaths: ['/custom/path1', '/test/symlink'],
++          forbiddenPaths: [],
+         });
+ 
+         expect(profile).toContain(`(subpath "/custom/path1")`);
+@@ -130,6 +141,7 @@ describe('seatbeltArgsBuilder', () => {
+ 
+         const profile = buildSeatbeltProfile({
+           workspace: '/test',
++          allowedPaths: [],
+           forbiddenPaths: ['/secret/path'],
+         });
+ 
+@@ -148,6 +160,7 @@ describe('seatbeltArgsBuilder', () => {
+ 
+         const profile = buildSeatbeltProfile({
+           workspace: '/test',
++          allowedPaths: [],
+           forbiddenPaths: ['/test/symlink'],
+         });
+ 
+@@ -161,6 +174,7 @@ describe('seatbeltArgsBuilder', () => {
+ 
+         const profile = buildSeatbeltProfile({
+           workspace: '/test',
++          allowedPaths: [],
+           forbiddenPaths: ['/test/missing-dir/missing-file.txt'],
+         });
+ 
+diff --git a/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts b/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts
+index 1279c1708..fe1d59550 100644
+--- a/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts
++++ b/packages/core/src/sandbox/windows/WindowsSandboxManager.test.ts
+@@ -38,7 +38,7 @@ describe('WindowsSandboxManager', () => {
+     manager = new WindowsSandboxManager({
+       workspace: testCwd,
+       modeConfig: { readonly: false, allowOverrides: true },
+-      forbiddenPaths: [],
++      forbiddenPaths: async () => [],
+     });
+   });
+ 
+@@ -107,7 +107,7 @@ describe('WindowsSandboxManager', () => {
+     const planManager = new WindowsSandboxManager({
+       workspace: testCwd,
+       modeConfig: { readonly: true, allowOverrides: false },
+-      forbiddenPaths: [],
++      forbiddenPaths: async () => [],
+     });
+     const req: SandboxRequest = {
+       command: 'curl',
+@@ -139,7 +139,7 @@ describe('WindowsSandboxManager', () => {
+       workspace: testCwd,
+       modeConfig: { allowOverrides: true, network: false },
+       policyManager: mockPolicyManager,
+-      forbiddenPaths: [],
++      forbiddenPaths: async () => [],
+     });
+ 
+     const req: SandboxRequest = {
+@@ -369,7 +369,7 @@ describe('WindowsSandboxManager', () => {
+ 
+     const managerWithForbidden = new WindowsSandboxManager({
+       workspace: testCwd,
+-      forbiddenPaths: [missingPath],
++      forbiddenPaths: async () => [missingPath],
+     });
+ 
+     const req: SandboxRequest = {
+@@ -397,7 +397,7 @@ describe('WindowsSandboxManager', () => {
+     try {
+       const managerWithForbidden = new WindowsSandboxManager({
+         workspace: testCwd,
+-        forbiddenPaths: [forbiddenPath],
++        forbiddenPaths: async () => [forbiddenPath],
+       });
+ 
+       const req: SandboxRequest = {
+@@ -427,7 +427,7 @@ describe('WindowsSandboxManager', () => {
+     try {
+       const managerWithForbidden = new WindowsSandboxManager({
+         workspace: testCwd,
+-        forbiddenPaths: [conflictPath],
++        forbiddenPaths: async () => [conflictPath],
+       });
+ 
+       const req: SandboxRequest = {
+@@ -458,12 +458,9 @@ describe('WindowsSandboxManager', () => {
+           call[1][0] === path.resolve(conflictPath),
+       );
+ 
+-      // Both should have been called
+-      expect(allowCallIndex).toBeGreaterThan(-1);
++      // Conflict should have been filtered out of allow calls
++      expect(allowCallIndex).toBe(-1);
+       expect(denyCallIndex).toBeGreaterThan(-1);
+-
+-      // Verify order: explicitly denying must happen after the explicit allow
+-      expect(allowCallIndex).toBeLessThan(denyCallIndex);
+     } finally {
+       fs.rmSync(conflictPath, { recursive: true, force: true });
+     }
+diff --git a/packages/core/src/services/sandboxManager.integration.test.ts b/packages/core/src/services/sandboxManager.integration.test.ts
+index cf68f255b..7dab4edd2 100644
+--- a/packages/core/src/services/sandboxManager.integration.test.ts
++++ b/packages/core/src/services/sandboxManager.integration.test.ts
+@@ -274,7 +274,10 @@ describe('SandboxManager Integration', () => {
+         try {
+           const osManager = createSandboxManager(
+             { enabled: true },
+-            { workspace: tempWorkspace, forbiddenPaths: [forbiddenDir] },
++            {
++              workspace: tempWorkspace,
++              forbiddenPaths: async () => [forbiddenDir],
++            },
+           );
+           const { command, args } = Platform.touch(testFile);
+ 
+@@ -306,7 +309,10 @@ describe('SandboxManager Integration', () => {
+         try {
+           const osManager = createSandboxManager(
+             { enabled: true },
+-            { workspace: tempWorkspace, forbiddenPaths: [forbiddenDir] },
++            {
++              workspace: tempWorkspace,
++              forbiddenPaths: async () => [forbiddenDir],
++            },
+           );
+           const { command, args } = Platform.cat(nestedFile);
+ 
+@@ -335,7 +341,10 @@ describe('SandboxManager Integration', () => {
+         try {
+           const osManager = createSandboxManager(
+             { enabled: true },
+-            { workspace: tempWorkspace, forbiddenPaths: [conflictDir] },
++            {
++              workspace: tempWorkspace,
++              forbiddenPaths: async () => [conflictDir],
++            },
+           );
+           const { command, args } = Platform.touch(testFile);
+ 
+@@ -365,7 +374,10 @@ describe('SandboxManager Integration', () => {
+         try {
+           const osManager = createSandboxManager(
+             { enabled: true },
+-            { workspace: tempWorkspace, forbiddenPaths: [nonExistentPath] },
++            {
++              workspace: tempWorkspace,
++              forbiddenPaths: async () => [nonExistentPath],
++            },
+           );
+           const { command, args } = Platform.echo('survived');
+           const sandboxed = await osManager.prepareCommand({
+@@ -397,7 +409,10 @@ describe('SandboxManager Integration', () => {
+         try {
+           const osManager = createSandboxManager(
+             { enabled: true },
+-            { workspace: tempWorkspace, forbiddenPaths: [nonExistentFile] },
++            {
++              workspace: tempWorkspace,
++              forbiddenPaths: async () => [nonExistentFile],
++            },
+           );
+ 
+           // We use touch to attempt creation of the file
+@@ -436,7 +451,10 @@ describe('SandboxManager Integration', () => {
+         try {
+           const osManager = createSandboxManager(
+             { enabled: true },
+-            { workspace: tempWorkspace, forbiddenPaths: [symlinkFile] },
++            {
++              workspace: tempWorkspace,
++              forbiddenPaths: async () => [symlinkFile],
++            },
+           );
+ 
+           // Attempt to read the target file directly
+diff --git a/packages/core/src/services/sandboxManager.test.ts b/packages/core/src/services/sandboxManager.test.ts
+index 0454581aa..8b2da94b6 100644
+--- a/packages/core/src/services/sandboxManager.test.ts
++++ b/packages/core/src/services/sandboxManager.test.ts
+@@ -14,6 +14,9 @@ import {
+   findSecretFiles,
+   isSecretFile,
+   tryRealpath,
++  resolveSandboxPaths,
++  getPathIdentity,
++  type SandboxRequest,
+ } from './sandboxManager.js';
+ import { createSandboxManager } from './sandboxManagerFactory.js';
+ import { LinuxSandboxManager } from '../sandbox/linux/LinuxSandboxManager.js';
+@@ -121,8 +124,10 @@ describe('SandboxManager', () => {
+   afterEach(() => vi.restoreAllMocks());
+ 
+   describe('sanitizePaths', () => {
+-    it('should return undefined if no paths are provided', () => {
+-      expect(sanitizePaths(undefined)).toBeUndefined();
++    it('should return an empty array if no paths are provided', () => {
++      expect(sanitizePaths(undefined)).toEqual([]);
++      expect(sanitizePaths(null)).toEqual([]);
++      expect(sanitizePaths([])).toEqual([]);
+     });
+ 
+     it('should deduplicate paths and return them', () => {
+@@ -133,6 +138,20 @@ describe('SandboxManager', () => {
+       ]);
+     });
+ 
++    it('should deduplicate case-insensitively on Windows and macOS', () => {
++      vi.spyOn(os, 'platform').mockReturnValue('win32');
++      const paths = ['/workspace/foo', '/WORKSPACE/FOO'];
++      expect(sanitizePaths(paths)).toEqual(['/workspace/foo']);
++
++      vi.spyOn(os, 'platform').mockReturnValue('darwin');
++      const macPaths = ['/tmp/foo', '/tmp/FOO'];
++      expect(sanitizePaths(macPaths)).toEqual(['/tmp/foo']);
++
++      vi.spyOn(os, 'platform').mockReturnValue('linux');
++      const linuxPaths = ['/tmp/foo', '/tmp/FOO'];
++      expect(sanitizePaths(linuxPaths)).toEqual(['/tmp/foo', '/tmp/FOO']);
++    });
++
+     it('should throw an error if a path is not absolute', () => {
+       const paths = ['/workspace/foo', 'relative/path'];
+       expect(() => sanitizePaths(paths)).toThrow(
+@@ -141,6 +160,110 @@ describe('SandboxManager', () => {
+     });
+   });
+ 
++  describe('getPathIdentity', () => {
++    it('should normalize slashes and strip trailing slashes', () => {
++      expect(getPathIdentity('/foo/bar//baz/')).toBe(
++        path.normalize('/foo/bar/baz'),
++      );
++    });
++
++    it('should handle case sensitivity correctly per platform', () => {
++      vi.spyOn(os, 'platform').mockReturnValue('win32');
++      expect(getPathIdentity('/Workspace/Foo')).toBe('/workspace/foo');
++
++      vi.spyOn(os, 'platform').mockReturnValue('darwin');
++      expect(getPathIdentity('/Tmp/Foo')).toBe('/tmp/foo');
++
++      vi.spyOn(os, 'platform').mockReturnValue('linux');
++      expect(getPathIdentity('/Tmp/Foo')).toBe('/Tmp/Foo');
++    });
++  });
++
++  describe('resolveSandboxPaths', () => {
++    it('should resolve allowed and forbidden paths', async () => {
++      const options = {
++        workspace: '/workspace',
++        forbiddenPaths: async () => ['/workspace/forbidden'],
++      };
++      const req = {
++        command: 'ls',
++        args: [],
++        cwd: '/workspace',
++        env: {},
++        policy: {
++          allowedPaths: ['/workspace/allowed'],
++        },
++      };
++
++      const result = await resolveSandboxPaths(options, req as SandboxRequest);
++
++      expect(result.allowed).toEqual(['/workspace/allowed']);
++      expect(result.forbidden).toEqual(['/workspace/forbidden']);
++    });
++
++    it('should filter out workspace from allowed paths', async () => {
++      const options = {
++        workspace: '/workspace',
++      };
++      const req = {
++        command: 'ls',
++        args: [],
++        cwd: '/workspace',
++        env: {},
++        policy: {
++          allowedPaths: ['/workspace', '/workspace/', '/other/path'],
++        },
++      };
++
++      const result = await resolveSandboxPaths(options, req as SandboxRequest);
++
++      expect(result.allowed).toEqual(['/other/path']);
++    });
++
++    it('should prioritize forbidden paths over allowed paths', async () => {
++      const options = {
++        workspace: '/workspace',
++        forbiddenPaths: async () => ['/workspace/secret'],
++      };
++      const req = {
++        command: 'ls',
++        args: [],
++        cwd: '/workspace',
++        env: {},
++        policy: {
++          allowedPaths: ['/workspace/secret', '/workspace/normal'],
++        },
++      };
++
++      const result = await resolveSandboxPaths(options, req as SandboxRequest);
++
++      expect(result.allowed).toEqual(['/workspace/normal']);
++      expect(result.forbidden).toEqual(['/workspace/secret']);
++    });
++
++    it('should handle case-insensitive conflicts on supported platforms', async () => {
++      vi.spyOn(os, 'platform').mockReturnValue('darwin');
++      const options = {
++        workspace: '/workspace',
++        forbiddenPaths: async () => ['/workspace/SECRET'],
++      };
++      const req = {
++        command: 'ls',
++        args: [],
++        cwd: '/workspace',
++        env: {},
++        policy: {
++          allowedPaths: ['/workspace/secret'],
++        },
++      };
++
++      const result = await resolveSandboxPaths(options, req as SandboxRequest);
++
++      expect(result.allowed).toEqual([]);
++      expect(result.forbidden).toEqual(['/workspace/SECRET']);
++    });
++  });
++
+   describe('tryRealpath', () => {
+     beforeEach(() => {
+       vi.clearAllMocks();

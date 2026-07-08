@@ -1,0 +1,330 @@
+diff --git a/packages/cli/src/ui/components/ContextUsageDisplay.test.tsx b/packages/cli/src/ui/components/ContextUsageDisplay.test.tsx
+index ae272d614..bcd5fd62b 100644
+--- a/packages/cli/src/ui/components/ContextUsageDisplay.test.tsx
++++ b/packages/cli/src/ui/components/ContextUsageDisplay.test.tsx
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { render } from '../../test-utils/render.js';
++import { renderWithProviders } from '../../test-utils/render.js';
+ import { ContextUsageDisplay } from './ContextUsageDisplay.js';
+ import { describe, it, expect, vi } from 'vitest';
+ 
+@@ -17,18 +17,9 @@ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
+   };
+ });
+ 
+-vi.mock('../../config/settings.js', () => ({
+-  DEFAULT_MODEL_CONFIGS: {},
+-  LoadedSettings: class {
+-    constructor() {
+-      // this.merged = {};
+-    }
+-  },
+-}));
+-
+ describe('ContextUsageDisplay', () => {
+-  it('renders correct percentage left', async () => {
+-    const { lastFrame, waitUntilReady, unmount } = render(
++  it('renders correct percentage used', async () => {
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
+       <ContextUsageDisplay
+         promptTokenCount={5000}
+         model="gemini-pro"
+@@ -37,27 +28,56 @@ describe('ContextUsageDisplay', () => {
+     );
+     await waitUntilReady();
+     const output = lastFrame();
+-    expect(output).toContain('50% context left');
++    expect(output).toContain('50% context used');
++    unmount();
++  });
++
++  it('renders correctly when usage is 0%', async () => {
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
++      <ContextUsageDisplay
++        promptTokenCount={0}
++        model="gemini-pro"
++        terminalWidth={120}
++      />,
++    );
++    await waitUntilReady();
++    const output = lastFrame();
++    expect(output).toContain('0% context used');
+     unmount();
+   });
+ 
+-  it('renders short label when terminal width is small', async () => {
+-    const { lastFrame, waitUntilReady, unmount } = render(
++  it('renders abbreviated label when terminal width is small', async () => {
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
+       <ContextUsageDisplay
+         promptTokenCount={2000}
+         model="gemini-pro"
+         terminalWidth={80}
+       />,
++      { width: 80 },
++    );
++    await waitUntilReady();
++    const output = lastFrame();
++    expect(output).toContain('20%');
++    expect(output).not.toContain('context used');
++    unmount();
++  });
++
++  it('renders 80% correctly', async () => {
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
++      <ContextUsageDisplay
++        promptTokenCount={8000}
++        model="gemini-pro"
++        terminalWidth={120}
++      />,
+     );
+     await waitUntilReady();
+     const output = lastFrame();
+-    expect(output).toContain('80%');
+-    expect(output).not.toContain('context left');
++    expect(output).toContain('80% context used');
+     unmount();
+   });
+ 
+-  it('renders 0% when full', async () => {
+-    const { lastFrame, waitUntilReady, unmount } = render(
++  it('renders 100% when full', async () => {
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
+       <ContextUsageDisplay
+         promptTokenCount={10000}
+         model="gemini-pro"
+@@ -66,7 +86,7 @@ describe('ContextUsageDisplay', () => {
+     );
+     await waitUntilReady();
+     const output = lastFrame();
+-    expect(output).toContain('0% context left');
++    expect(output).toContain('100% context used');
+     unmount();
+   });
+ });
+diff --git a/packages/cli/src/ui/components/Footer.test.tsx b/packages/cli/src/ui/components/Footer.test.tsx
+index 01cf46ef3..718724024 100644
+--- a/packages/cli/src/ui/components/Footer.test.tsx
++++ b/packages/cli/src/ui/components/Footer.test.tsx
+@@ -174,7 +174,7 @@ describe('<Footer />', () => {
+     );
+     await waitUntilReady();
+     expect(lastFrame()).toContain(defaultProps.model);
+-    expect(lastFrame()).toMatch(/\d+% context left/);
++    expect(lastFrame()).toMatch(/\d+% context used/);
+     unmount();
+   });
+ 
+@@ -229,7 +229,7 @@ describe('<Footer />', () => {
+       },
+     );
+     await waitUntilReady();
+-    expect(lastFrame()).not.toContain('Usage remaining');
++    expect(lastFrame()).not.toContain('used');
+     expect(lastFrame()).toMatchSnapshot();
+     unmount();
+   });
+@@ -262,7 +262,7 @@ describe('<Footer />', () => {
+     unmount();
+   });
+ 
+-  it('displays the model name and abbreviated context percentage', async () => {
++  it('displays the model name and abbreviated context used label on narrow terminals', async () => {
+     const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
+       <Footer />,
+       {
+@@ -280,6 +280,7 @@ describe('<Footer />', () => {
+     await waitUntilReady();
+     expect(lastFrame()).toContain(defaultProps.model);
+     expect(lastFrame()).toMatch(/\d+%/);
++    expect(lastFrame()).not.toContain('context used');
+     unmount();
+   });
+ 
+@@ -477,7 +478,7 @@ describe('<Footer />', () => {
+       );
+       await waitUntilReady();
+       expect(lastFrame()).toContain(defaultProps.model);
+-      expect(lastFrame()).not.toMatch(/\d+% context left/);
++      expect(lastFrame()).not.toMatch(/\d+% context used/);
+       unmount();
+     });
+     it('shows the context percentage when hideContextPercentage is false', async () => {
+@@ -497,7 +498,7 @@ describe('<Footer />', () => {
+       );
+       await waitUntilReady();
+       expect(lastFrame()).toContain(defaultProps.model);
+-      expect(lastFrame()).toMatch(/\d+% context left/);
++      expect(lastFrame()).toMatch(/\d+% context used/);
+       unmount();
+     });
+     it('renders complete footer in narrow terminal (baseline narrow)', async () => {
+diff --git a/packages/cli/src/ui/components/StatusDisplay.test.tsx b/packages/cli/src/ui/components/StatusDisplay.test.tsx
+index ce5f09442..4e0402820 100644
+--- a/packages/cli/src/ui/components/StatusDisplay.test.tsx
++++ b/packages/cli/src/ui/components/StatusDisplay.test.tsx
+@@ -89,11 +89,12 @@ const renderStatusDisplay = async (
+ };
+ 
+ describe('StatusDisplay', () => {
+-  const originalEnv = process.env;
++  beforeEach(() => {
++    vi.stubEnv('GEMINI_SYSTEM_MD', '');
++  });
+ 
+   afterEach(() => {
+-    process.env = { ...originalEnv };
+-    delete process.env['GEMINI_SYSTEM_MD'];
++    vi.unstubAllEnvs();
+     vi.restoreAllMocks();
+   });
+ 
+@@ -112,7 +113,7 @@ describe('StatusDisplay', () => {
+   });
+ 
+   it('renders system md indicator if env var is set', async () => {
+-    process.env['GEMINI_SYSTEM_MD'] = 'true';
++    vi.stubEnv('GEMINI_SYSTEM_MD', 'true');
+     const { lastFrame, unmount } = await renderStatusDisplay();
+     expect(lastFrame()).toMatchSnapshot();
+     unmount();
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.test.tsx b/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
+index df8c17bd2..b5da495b3 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
++++ b/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
+@@ -50,6 +50,7 @@ import { MessageType, StreamingState } from '../types.js';
+ 
+ import type { LoadedSettings } from '../../config/settings.js';
+ import { findLastSafeSplitPoint } from '../utils/markdownUtilities.js';
++import { theme } from '../semantic-colors.js';
+ 
+ // --- MOCKS ---
+ const mockSendMessageStream = vi
+@@ -2300,14 +2301,14 @@ describe('useGeminiStream', () => {
+           requestTokens: 20,
+           remainingTokens: 80,
+           expectedMessage:
+-            'Sending this message (20 tokens) might exceed the remaining context window limit (80 tokens).',
++            'Sending this message (20 tokens) might exceed the context window limit (80 tokens left).',
+         },
+         {
+           name: 'with suggestion when remaining tokens are < 75% of limit',
+           requestTokens: 30,
+           remainingTokens: 70,
+           expectedMessage:
+-            'Sending this message (30 tokens) might exceed the remaining context window limit (70 tokens). Please try reducing the size of your message or use the `/compress` command to compress the chat history.',
++            'Sending this message (30 tokens) might exceed the context window limit (70 tokens left). Please try reducing the size of your message or use the `/compress` command to compress the chat history.',
+         },
+       ])(
+         'should add message $name',
+@@ -2388,6 +2389,43 @@ describe('useGeminiStream', () => {
+       });
+     });
+ 
++    it('should add informational messages when ChatCompressed event is received', async () => {
++      vi.mocked(tokenLimit).mockReturnValue(10000);
++      // Setup mock to return a stream with ChatCompressed event
++      mockSendMessageStream.mockReturnValue(
++        (async function* () {
++          yield {
++            type: ServerGeminiEventType.ChatCompressed,
++            value: {
++              originalTokenCount: 1000,
++              newTokenCount: 500,
++              compressionStatus: 'compressed',
++            },
++          };
++        })(),
++      );
++
++      const { result } = renderHookWithDefaults();
++
++      // Submit a query
++      await act(async () => {
++        await result.current.submitQuery('Test compression');
++      });
++
++      // Check that the succinct info message was added
++      await waitFor(() => {
++        expect(mockAddItem).toHaveBeenCalledWith(
++          expect.objectContaining({
++            type: MessageType.INFO,
++            text: 'Context compressed from 10% to 5%.',
++            secondaryText: 'Change threshold in /settings.',
++            color: theme.status.warning,
++          }),
++          expect.any(Number),
++        );
++      });
++    });
++
+     it.each([
+       {
+         reason: 'STOP',
+diff --git a/packages/cli/src/utils/settingsUtils.test.ts b/packages/cli/src/utils/settingsUtils.test.ts
+index d06743a4e..a1f662af4 100644
+--- a/packages/cli/src/utils/settingsUtils.test.ts
++++ b/packages/cli/src/utils/settingsUtils.test.ts
+@@ -735,5 +735,59 @@ describe('SettingsUtils', () => {
+         expect(result).toBe('false');
+       });
+     });
++
++    describe('getDisplayValue with units', () => {
++      it('should format percentage correctly when unit is %', () => {
++        vi.mocked(getSettingsSchema).mockReturnValue({
++          model: {
++            properties: {
++              compressionThreshold: {
++                type: 'number',
++                label: 'Context Compression Threshold',
++                category: 'Model',
++                requiresRestart: true,
++                default: 0.5,
++                unit: '%',
++              },
++            },
++          },
++        } as unknown as SettingsSchemaType);
++
++        const settings = makeMockSettings({
++          model: { compressionThreshold: 0.8 },
++        });
++        const result = getDisplayValue(
++          'model.compressionThreshold',
++          settings,
++          makeMockSettings({}),
++        );
++        expect(result).toBe('0.8 (80%)*');
++      });
++
++      it('should append unit for non-% units', () => {
++        vi.mocked(getSettingsSchema).mockReturnValue({
++          ui: {
++            properties: {
++              pollingInterval: {
++                type: 'number',
++                label: 'Polling Interval',
++                category: 'UI',
++                requiresRestart: false,
++                default: 60,
++                unit: 's',
++              },
++            },
++          },
++        } as unknown as SettingsSchemaType);
++
++        const settings = makeMockSettings({ ui: { pollingInterval: 30 } });
++        const result = getDisplayValue(
++          'ui.pollingInterval',
++          settings,
++          makeMockSettings({}),
++        );
++        expect(result).toBe('30s*');
++      });
++    });
+   });
+ });

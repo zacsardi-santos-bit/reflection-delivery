@@ -1,0 +1,35 @@
+diff --git a/tokio-stream/tests/stream_stream_map.rs b/tokio-stream/tests/stream_stream_map.rs
+index 5acceb5c..6290f85c 100644
+--- a/tokio-stream/tests/stream_stream_map.rs
++++ b/tokio-stream/tests/stream_stream_map.rs
+@@ -225,6 +225,30 @@ fn size_hint_without_upper() {
+     assert_eq!(size_hint, (3, None));
+ }
+ 
++#[test]
++fn size_hint_overflow() {
++    struct Monster;
++
++    impl Stream for Monster {
++        type Item = ();
++
++        fn poll_next(self: Pin<&mut Self>, _cx: &mut std::task::Context<'_>) -> Poll<Option<()>> {
++            panic!()
++        }
++
++        fn size_hint(&self) -> (usize, Option<usize>) {
++            (usize::MAX, Some(usize::MAX))
++        }
++    }
++
++    let mut map = StreamMap::new();
++
++    map.insert("a", Monster);
++    map.insert("b", Monster);
++
++    assert_eq!(map.size_hint(), (usize::MAX, None));
++}
++
+ #[test]
+ fn new_capacity_zero() {
+     let map = StreamMap::<&str, stream::Pending<()>>::new();

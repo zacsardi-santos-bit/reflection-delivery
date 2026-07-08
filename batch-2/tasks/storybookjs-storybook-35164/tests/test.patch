@@ -1,0 +1,321 @@
+diff --git a/code/core/src/cli/ai/mcp/client.test.ts b/code/core/src/cli/ai/mcp/client.test.ts
+index a9702e9f9de..1a1fa6e9e51 100644
+--- a/code/core/src/cli/ai/mcp/client.test.ts
++++ b/code/core/src/cli/ai/mcp/client.test.ts
+@@ -2,7 +2,13 @@ import { versions } from 'storybook/internal/common';
+ 
+ import { describe, expect, it, vi } from 'vitest';
+ 
+-import { MCP_CLIENT_INFO, McpJsonRpcError, callMcpTool, listMcpTools } from './client.ts';
++import {
++  MCP_CLIENT_INFO,
++  McpJsonRpcError,
++  callMcpTool,
++  listMcpTools,
++  listMcpToolsWithServerMetadata,
++} from './client.ts';
+ import type { StorybookInstanceRecord } from './types.ts';
+ 
+ const record: StorybookInstanceRecord = {
+@@ -21,10 +27,10 @@ const jsonResponse = (body: unknown, status = 200, headers: Record<string, strin
+     headers: { 'Content-Type': 'application/json', ...headers },
+   });
+ 
+-const sseResponse = (body: string, status = 200) =>
++const sseResponse = (body: string, status = 200, headers: Record<string, string> = {}) =>
+   new Response(body, {
+     status,
+-    headers: { 'Content-Type': 'text/event-stream' },
++    headers: { 'Content-Type': 'text/event-stream', ...headers },
+   });
+ 
+ /**
+@@ -222,12 +228,37 @@ describe('listMcpTools', () => {
+ });
+ 
+ describe('initialize handshake (clientInfo for telemetry segmentation)', () => {
+-  const initializeResponse = (sessionId?: string) =>
++  const initializeResponse = (sessionId?: string, instructions?: unknown) =>
+     jsonResponse(
+-      { jsonrpc: '2.0', id: 'init', result: { protocolVersion: '2025-06-18', serverInfo: {} } },
++      {
++        jsonrpc: '2.0',
++        id: 'init',
++        result: {
++          protocolVersion: '2025-06-18',
++          serverInfo: {},
++          ...(instructions !== undefined ? { instructions } : {}),
++        },
++      },
++      200,
++      sessionId ? { 'mcp-session-id': sessionId } : {}
++    );
++
++  const initializeSseResponse = (sessionId: string | undefined, instructions: unknown) => {
++    const envelope = {
++      jsonrpc: '2.0',
++      id: 'init',
++      result: {
++        protocolVersion: '2025-06-18',
++        serverInfo: {},
++        instructions,
++      },
++    };
++    return sseResponse(
++      `event: message\ndata: ${JSON.stringify(envelope)}\n\n`,
+       200,
+       sessionId ? { 'mcp-session-id': sessionId } : {}
+     );
++  };
+ 
+   const toolResult = () =>
+     jsonResponse({
+@@ -236,6 +267,13 @@ describe('initialize handshake (clientInfo for telemetry segmentation)', () => {
+       result: { content: [{ type: 'text', text: 'hi' }] },
+     });
+ 
++  const toolListResult = (tools: unknown[] = []) =>
++    jsonResponse({
++      jsonrpc: '2.0',
++      id: 'list',
++      result: { tools },
++    });
++
+   it('sends initialize with the storybook-cli clientInfo before the actual request', async () => {
+     const fetchImpl = vi
+       .fn()
+@@ -299,10 +337,16 @@ describe('initialize handshake (clientInfo for telemetry segmentation)', () => {
+   });
+ 
+   it('ignores the session id of a non-ok handshake response', async () => {
++    let canceled = false;
++    const initBody = new ReadableStream<Uint8Array>({
++      cancel() {
++        canceled = true;
++      },
++    });
+     const fetchImpl = vi
+       .fn()
+       .mockResolvedValueOnce(
+-        new Response('boom', { status: 500, headers: { 'mcp-session-id': 'session-broken' } })
++        new Response(initBody, { status: 500, headers: { 'mcp-session-id': 'session-broken' } })
+       )
+       .mockResolvedValueOnce(toolResult()) as unknown as typeof fetch;
+ 
+@@ -310,6 +354,7 @@ describe('initialize handshake (clientInfo for telemetry segmentation)', () => {
+ 
+     const headers = (lastCall(fetchImpl)[1] as RequestInit).headers as Record<string, string>;
+     expect(headers).not.toHaveProperty('Mcp-Session-Id');
++    expect(canceled).toBe(true);
+   });
+ 
+   it('drains the handshake response body before sending the actual request', async () => {
+@@ -360,4 +405,88 @@ describe('initialize handshake (clientInfo for telemetry segmentation)', () => {
+     >;
+     expect(headers['Mcp-Session-Id']).toBe('session-7');
+   });
++
++  it('returns server instructions from the initialize response alongside tools/list results', async () => {
++    const tools = [{ name: 'get-documentation', description: 'Get docs' }];
++    const fetchImpl = vi
++      .fn()
++      .mockResolvedValueOnce(initializeResponse('session-1', '  Follow the story workflow.  '))
++      .mockResolvedValueOnce(
++        jsonResponse({ jsonrpc: '2.0', id: 'x', result: { tools } })
++      ) as unknown as typeof fetch;
++
++    await expect(listMcpToolsWithServerMetadata(record, fetchImpl)).resolves.toEqual({
++      tools,
++      serverMetadata: { instructions: 'Follow the story workflow.' },
++    });
++  });
++
++  it('returns server instructions from an SSE initialize response', async () => {
++    const tools = [{ name: 'get-documentation', description: 'Get docs' }];
++    const fetchImpl = vi
++      .fn()
++      .mockResolvedValueOnce(initializeSseResponse('session-1', '  Follow the story workflow.  '))
++      .mockResolvedValueOnce(toolListResult(tools)) as unknown as typeof fetch;
++
++    await expect(listMcpToolsWithServerMetadata(record, fetchImpl)).resolves.toEqual({
++      tools,
++      serverMetadata: { instructions: 'Follow the story workflow.' },
++    });
++  });
++
++  it.each([undefined, '', '   ', 123])(
++    'omits server instructions when initialize returns %j',
++    async (instructions) => {
++      const fetchImpl = vi
++        .fn()
++        .mockResolvedValueOnce(initializeResponse('session-1', instructions))
++        .mockResolvedValueOnce(
++          jsonResponse({ jsonrpc: '2.0', id: 'x', result: { tools: [] } })
++        ) as unknown as typeof fetch;
++
++      await expect(listMcpToolsWithServerMetadata(record, fetchImpl)).resolves.toEqual({
++        tools: [],
++        serverMetadata: {},
++      });
++    }
++  );
++
++  it.each([
++    [
++      'malformed JSON',
++      () =>
++        new Response('not json', {
++          status: 200,
++          headers: { 'Content-Type': 'application/json', 'mcp-session-id': 'session-1' },
++        }),
++    ],
++    [
++      'a JSON-RPC error',
++      () => jsonResponse({ jsonrpc: '2.0', id: 'init', error: { code: -32000, message: 'bad' } }),
++    ],
++    ['no result', () => jsonResponse({ jsonrpc: '2.0', id: 'init' })],
++  ])('keeps tools/list working when initialize returns %s', async (_label, initResponse) => {
++    const tools = [{ name: 'get-documentation', description: 'Get docs' }];
++    const fetchImpl = vi
++      .fn()
++      .mockResolvedValueOnce(initResponse())
++      .mockResolvedValueOnce(toolListResult(tools)) as unknown as typeof fetch;
++
++    await expect(listMcpToolsWithServerMetadata(record, fetchImpl)).resolves.toEqual({
++      tools,
++      serverMetadata: {},
++    });
++  });
++
++  it('keeps listMcpTools returning only the tool descriptors', async () => {
++    const tools = [{ name: 'get-documentation', description: 'Get docs' }];
++    const fetchImpl = vi
++      .fn()
++      .mockResolvedValueOnce(initializeResponse('session-1', 'Follow the story workflow.'))
++      .mockResolvedValueOnce(
++        jsonResponse({ jsonrpc: '2.0', id: 'x', result: { tools } })
++      ) as unknown as typeof fetch;
++
++    await expect(listMcpTools(record, fetchImpl)).resolves.toEqual(tools);
++  });
+ });
+diff --git a/code/core/src/cli/ai/mcp/run-tool.test.ts b/code/core/src/cli/ai/mcp/run-tool.test.ts
+index cafd00a6e87..aec1aca829a 100644
+--- a/code/core/src/cli/ai/mcp/run-tool.test.ts
++++ b/code/core/src/cli/ai/mcp/run-tool.test.ts
+@@ -1,6 +1,11 @@
+ import { beforeEach, describe, expect, it, vi } from 'vitest';
+ 
+-import { McpJsonRpcError, callMcpTool, listMcpTools } from './client.ts';
++import {
++  McpJsonRpcError,
++  callMcpTool,
++  listMcpTools,
++  listMcpToolsWithServerMetadata,
++} from './client.ts';
+ import { readRegistry } from './registry.ts';
+ import { buildStorybookCommandsHelp, runAiTool, runAiToolHelp } from './run-tool.ts';
+ import type { StorybookInstanceRecord } from './types.ts';
+@@ -26,6 +31,12 @@ beforeEach(() => {
+   vi.mocked(listMcpTools)
+     .mockReset()
+     .mockResolvedValue([{ name: 'list-all-documentation', description: 'List docs' }]);
++  vi.mocked(listMcpToolsWithServerMetadata)
++    .mockReset()
++    .mockResolvedValue({
++      tools: [{ name: 'list-all-documentation', description: 'List docs' }],
++      serverMetadata: { instructions: 'Follow the story workflow.' },
++    });
+ });
+ 
+ describe('runAiTool', () => {
+@@ -240,24 +251,55 @@ describe('runAiTool', () => {
+ 
+ describe('buildStorybookCommandsHelp', () => {
+   it('lists each tool with the first line of its description', async () => {
+-    vi.mocked(listMcpTools).mockResolvedValue([
+-      {
+-        name: 'get-documentation',
+-        description: 'Get docs for a component.\n\nLong details that should not appear.',
+-      },
+-      { name: 'list-all-documentation' },
+-    ]);
++    vi.mocked(listMcpToolsWithServerMetadata).mockResolvedValue({
++      tools: [
++        {
++          name: 'get-documentation',
++          description: 'Get docs for a component.\n\nLong details that should not appear.',
++        },
++        { name: 'list-all-documentation' },
++      ],
++      serverMetadata: { instructions: 'Follow the story workflow.' },
++    });
+ 
+     const section = await buildStorybookCommandsHelp({ cwd: '/projects/foo' });
+     expect(section).toContain(
+-      'Storybook commands (from the Storybook running at http://localhost:6006):'
++      'Storybook help from the Storybook running at http://localhost:6006:'
+     );
++    expect(section).toContain('# Storybook commands');
+     expect(section).toContain('get-documentation');
+     expect(section).toContain('Get docs for a component.');
+     expect(section).not.toContain('Long details');
+     expect(section).toContain("Run 'storybook ai <command> --help'");
+   });
+ 
++  it('prints workflow instructions before the dynamic commands list when initialize provides them', async () => {
++    vi.mocked(listMcpToolsWithServerMetadata).mockResolvedValue({
++      tools: [{ name: 'get-documentation', description: 'Get docs for a component.' }],
++      serverMetadata: {
++        instructions: 'Use existing stories as examples.\nRun tests after writing stories.',
++      },
++    });
++
++    const section = await buildStorybookCommandsHelp({ cwd: '/projects/foo' });
++    expect(section).toBe(
++      [
++        'Storybook help from the Storybook running at http://localhost:6006:',
++        '',
++        '# Storybook workflow instructions',
++        '',
++        'Use existing stories as examples.',
++        'Run tests after writing stories.',
++        '',
++        '# Storybook commands',
++        '',
++        '  get-documentation  Get docs for a component.',
++        '',
++        "Run 'storybook ai <command> --help' for a command's description and arguments.",
++      ].join('\n')
++    );
++  });
++
+   it('degrades to a note when no Storybook is running (help must not fail)', async () => {
+     vi.mocked(readRegistry).mockResolvedValue([]);
+     const section = await buildStorybookCommandsHelp({ cwd: '/projects/foo' });
+@@ -300,19 +342,22 @@ describe('buildStorybookCommandsHelp', () => {
+     vi.mocked(readRegistry).mockResolvedValue([{ ...record, storybookVersion: '10.5.0' }]);
+     const section = await buildStorybookCommandsHelp({ cwd: '/projects/foo' });
+     expect(section).toContain(
+-      'Storybook commands (from the Storybook running at http://localhost:6006, Storybook 10.5.0):'
++      'Storybook help from the Storybook running at http://localhost:6006, Storybook 10.5.0:'
+     );
+   });
+ 
+   it('degrades to a note when the MCP server is unreachable', async () => {
+-    vi.mocked(listMcpTools).mockRejectedValue(new Error('connection refused'));
++    vi.mocked(listMcpToolsWithServerMetadata).mockRejectedValue(new Error('connection refused'));
+     const section = await buildStorybookCommandsHelp({ cwd: '/projects/foo' });
+     expect(section).toContain('Storybook commands: (unavailable');
+     expect(section).toContain('could not be reached');
+   });
+ 
+   it('degrades to a note when no tools are exposed', async () => {
+-    vi.mocked(listMcpTools).mockResolvedValue([]);
++    vi.mocked(listMcpToolsWithServerMetadata).mockResolvedValue({
++      tools: [],
++      serverMetadata: {},
++    });
+     const section = await buildStorybookCommandsHelp({ cwd: '/projects/foo' });
+     expect(section).toContain('provides no commands');
+   });

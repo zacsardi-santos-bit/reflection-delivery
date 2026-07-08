@@ -1,0 +1,14 @@
+diff --git a/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs b/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
+index e7d62a9eb3..c7ed3a4cce 100644
+--- a/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
++++ b/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
+@@ -1143,6 +1143,9 @@ fn test_arguments() {
+         ("function foo(a) {} foo()", None),
+         ("function foo(a: number) {} foo()", None),
+         ("function foo({ a }, b) { return b } foo()", Some(json!([{ "args": "after-used" }]))),
++        ("function foo(...args: typeof args) {} foo()", None),
++        ("function foo(...args: unknown[]): args is string[] { return true } foo()", None),
++        ("function foo(...unused) {} foo()", Some(json!([{ "argsIgnorePattern": "^ignored" }]))),
+     ];
+ 
+     Tester::new(NoUnusedVars::NAME, NoUnusedVars::PLUGIN, pass, fail)

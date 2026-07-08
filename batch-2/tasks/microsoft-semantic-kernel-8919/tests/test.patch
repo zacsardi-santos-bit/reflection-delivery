@@ -1,0 +1,19 @@
+diff --git a/dotnet/samples/Concepts/ChatCompletion/ConceptsTests.cs b/dotnet/samples/Concepts/ChatCompletion/ConceptsTests.cs
+new file mode 100644
+index 000000000..0000001
+--- /dev/null
++++ b/dotnet/samples/Concepts/ChatCompletion/ConceptsTests.cs
+@@ -0,0 +1,13 @@
++// Copyright (c) Microsoft. All rights reserved.
++
++namespace ChatCompletion;
++
++public class ConceptsTests
++{
++    [Fact]
++    public void AzureOpenAI_CustomClientClassExists()
++    {
++        var type = typeof(AzureOpenAI_CustomClient);
++        Assert.NotNull(type);
++    }
++}

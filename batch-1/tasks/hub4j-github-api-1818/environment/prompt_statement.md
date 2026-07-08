@@ -1,13 +1,7 @@
-I'm building a GitHub webhook handler using this Java library and I'm running into several gaps in event payload support.
+I'm building a GitHub webhook handler on top of this Java library and I keep hitting gaps in the event payload models. First off, membership events (someone added to or removed from an org team) have no model class at all, so parsing one should give me the action, the affected member, the team (with its privacy setting and the org it's linked to), and the organization itself. Same deal with team lifecycle events (team created, deleted, edited), there's no class for those either, and parsing one should expose the action plus team details like name, description, privacy, and organization. For edit actions specifically I need a structured changes object that tells me what got modified and what the previous value was, so it should cover changes to the description, the name, the privacy setting, or the permissions on a linked repository.
 
-First, when I receive a membership event (someone being added to or removed from a team), there's no model class to parse that webhook payload — I can't get the team, the member, or the organization from it.
+Also the existing member event class doesn't tell me what changed. When a collaborator's permission on a repo gets updated I want a changes object showing the permission before and after, and when a member is newly added the "before" permission should be null since there wasn't one.
 
-Second, team lifecycle events (like when a team is created or edited) also have no model class. For edit events especially, I need to know what changed — was it the description? The name? The privacy setting? The permissions on a linked repository? I need a structured "changes" object that tells me the previous value for whatever was modified.
+Oh and the team_add event parser is missing fields, the parsed team is dropping its node ID, description, and privacy, and it's not linked back to the organization, so please fill those in.
 
-Third, the existing member event class doesn't expose what changed. When a collaborator's permission is updated on a repository, I can see the event happened, but I can't see what the old permission was or what the new permission is.
-
-Fourth, for team-add events, the parsed team object is missing key fields like its node ID, description, and privacy setting — and it's not linked back to the organization.
-
-On top of all that, the library currently crashes if GitHub sends a privacy value or permission level it doesn't recognize. It should instead fall back to a safe unknown/default value so my application doesn't break.
-
-Could you add support for these event payload types and fix the fragile enum handling?
+Last thing, and this one bites me in production, the library currently blows up if GitHub sends a team privacy value or an org permission level it doesn't recognize. Instead of throwing it should fall back to a safe unknown/default sentinel value so my app keeps running when GitHub introduces something new. Basically add the membership, team, and member change support, round out team_add, and make that enum handling not fragile.

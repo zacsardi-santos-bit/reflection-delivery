@@ -1,0 +1,592 @@
+diff --git a/test/account.test.ts b/test/account.test.ts
+index 651114f0f..01d58ba4d 100644
+--- a/test/account.test.ts
++++ b/test/account.test.ts
+@@ -1,4 +1,4 @@
+-import { beforeEach, describe, expect, it, vi } from 'vitest';
++import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+ import { getAuthor, getUserEmail, setUserEmail } from '../src/globalConfig/accounts';
+ import { readGlobalConfig, writeGlobalConfigPartial } from '../src/globalConfig/globalConfig';
+ 
+@@ -10,9 +10,16 @@ vi.mock('../src/globalConfig/globalConfig', () => ({
+ 
+ describe('accounts module', () => {
+   beforeEach(() => {
+-    delete process.env.PROMPTFOO_AUTHOR;
++    vi.stubEnv('PROMPTFOO_API_KEY', undefined);
++    vi.stubEnv('PROMPTFOO_AUTHOR', undefined);
+     vi.resetModules();
+     vi.clearAllMocks();
++    vi.mocked(readGlobalConfig).mockReset();
++  });
++
++  afterEach(() => {
++    vi.resetAllMocks();
++    vi.unstubAllEnvs();
+   });
+ 
+   describe('getUserEmail', () => {
+@@ -41,12 +48,14 @@ describe('accounts module', () => {
+   });
+ 
+   describe('getAuthor', () => {
+-    it('should return the author from environment variable', () => {
+-      process.env.PROMPTFOO_AUTHOR = 'envAuthor';
++    it('should fall back to PROMPTFOO_AUTHOR env var when no email is set', () => {
++      vi.stubEnv('PROMPTFOO_AUTHOR', 'envAuthor');
++      vi.mocked(readGlobalConfig).mockReturnValue({ id: 'test-id' });
+       expect(getAuthor()).toBe('envAuthor');
+     });
+ 
+-    it('should return the email if environment variable is not set', () => {
++    it('should prefer email over PROMPTFOO_AUTHOR env var', () => {
++      vi.stubEnv('PROMPTFOO_AUTHOR', 'envAuthor');
+       vi.mocked(readGlobalConfig).mockReturnValue({
+         id: 'test-id',
+         account: { email: 'test@example.com' },
+@@ -54,10 +63,16 @@ describe('accounts module', () => {
+       expect(getAuthor()).toBe('test@example.com');
+     });
+ 
+-    it('should return null if neither environment variable nor email is set', () => {
++    it('should return the email if environment variable is not set', () => {
+       vi.mocked(readGlobalConfig).mockReturnValue({
+         id: 'test-id',
++        account: { email: 'test@example.com' },
+       });
++      expect(getAuthor()).toBe('test@example.com');
++    });
++
++    it('should return null if neither environment variable nor email is set', () => {
++      vi.mocked(readGlobalConfig).mockReturnValue({ id: 'test-id' });
+       expect(getAuthor()).toBeNull();
+     });
+   });
+diff --git a/test/commands/eval.test.ts b/test/commands/eval.test.ts
+index 7a71f1ac0..85e532fdf 100644
+--- a/test/commands/eval.test.ts
++++ b/test/commands/eval.test.ts
+@@ -11,6 +11,7 @@ import {
+ import { evaluate } from '../../src/evaluator';
+ import {
+   checkEmailStatusAndMaybeExit,
++  getAuthor,
+   promptForEmailUnverified,
+ } from '../../src/globalConfig/accounts';
+ import { cloudConfig } from '../../src/globalConfig/cloud';
+@@ -111,6 +112,7 @@ describe('evalCommand', () => {
+       },
+       basePath: path.resolve('/'),
+     });
++    vi.mocked(getAuthor).mockReturnValue(null);
+     vi.mocked(promptForEmailUnverified).mockResolvedValue({ emailNeedsValidation: false });
+     vi.mocked(checkEmailStatusAndMaybeExit).mockResolvedValue('ok');
+   });
+@@ -137,6 +139,30 @@ describe('evalCommand', () => {
+     );
+   });
+ 
++  it('should apply resolved author when --no-write is used', async () => {
++    const cmdObj = { table: false, write: false };
++    const config = {} as UnifiedConfig;
++    let capturedEvalRecord: Eval | undefined;
++
++    vi.mocked(resolveConfigs).mockResolvedValue({
++      config,
++      testSuite: {
++        prompts: [],
++        providers: [],
++      },
++      basePath: path.resolve('/'),
++    });
++    vi.mocked(getAuthor).mockReturnValue('ci-author@example.com');
++    vi.mocked(evaluate).mockImplementation(async (_testSuite, evalRecord) => {
++      capturedEvalRecord = evalRecord as Eval;
++      return evalRecord as Eval;
++    });
++
++    await doEval(cmdObj, config, defaultConfigPath, {});
++
++    expect(capturedEvalRecord?.author).toBe('ci-author@example.com');
++  });
++
+   it('should load cloud eval config when config is a single UUID', async () => {
+     const cloudConfigUuid = '12345678-1234-4234-8234-123456789abc';
+     const cloudConfig = {
+diff --git a/test/commands/import.test.ts b/test/commands/import.test.ts
+index 6b40d7bf7..60b6e2688 100644
+--- a/test/commands/import.test.ts
++++ b/test/commands/import.test.ts
+@@ -169,6 +169,31 @@ describe('importCommand', () => {
+       // Verify author is preserved from metadata
+       expect(importedEval!.author).toBe(sampleData.metadata.author);
+     });
++
++    it('should preserve imported author even when the local user is cloud-authed as someone else', async () => {
++      // Simulate a cloud-authed importer with a different local identity. The
++      // imported eval's historical author must still win — this is a
++      // regression test for PR #7760.
++      const originalApiKey = process.env.PROMPTFOO_API_KEY;
++      process.env.PROMPTFOO_API_KEY = 'fake-test-api-key';
++      try {
++        const sampleFilePath = path.join(__dirname, '../__fixtures__/sample-export.json');
++        const sampleData = JSON.parse(fs.readFileSync(sampleFilePath, 'utf-8'));
++
++        importCommand(program);
++        await program.parseAsync(['node', 'test', 'import', sampleFilePath]);
++
++        const importedEval = await Eval.findById(sampleData.evalId);
++        expect(importedEval).toBeDefined();
++        expect(importedEval!.author).toBe(sampleData.metadata.author);
++      } finally {
++        if (originalApiKey === undefined) {
++          delete process.env.PROMPTFOO_API_KEY;
++        } else {
++          process.env.PROMPTFOO_API_KEY = originalApiKey;
++        }
++      }
++    });
+   });
+ 
+   describe('collision handling', () => {
+diff --git a/test/commands/modelScan.test.ts b/test/commands/modelScan.test.ts
+index 23300713f..bcc8fe65f 100644
+--- a/test/commands/modelScan.test.ts
++++ b/test/commands/modelScan.test.ts
+@@ -18,6 +18,9 @@ vi.mock('../../src/globalConfig/cloud', () => ({
+     isEnabled: vi.fn().mockReturnValue(false),
+   },
+ }));
++vi.mock('../../src/globalConfig/accounts', () => ({
++  getAuthor: vi.fn().mockReturnValue(null),
++}));
+ vi.mock('../../src/models/modelAudit', () => ({
+   __esModule: true,
+   default: {
+diff --git a/test/globalConfig/accounts.test.ts b/test/globalConfig/accounts.test.ts
+index 95c7581f7..4551b701b 100644
+--- a/test/globalConfig/accounts.test.ts
++++ b/test/globalConfig/accounts.test.ts
+@@ -1,6 +1,6 @@
+ import input from '@inquirer/input';
+ import chalk from 'chalk';
+-import { beforeEach, describe, expect, it, vi } from 'vitest';
++import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+ import { getEnvString, isCI } from '../../src/envars';
+ import {
+   checkEmailStatus,
+@@ -49,9 +49,15 @@ vi.mock('../../src/logger');
+ 
+ describe('accounts', () => {
+   beforeEach(() => {
++    vi.stubEnv('PROMPTFOO_API_KEY', undefined);
+     vi.clearAllMocks();
+   });
+ 
++  afterEach(() => {
++    vi.resetAllMocks();
++    vi.unstubAllEnvs();
++  });
++
+   describe('getUserId', () => {
+     it('should return existing ID from global config', () => {
+       const existingId = 'existing-test-id';
+@@ -196,12 +202,13 @@ describe('accounts', () => {
+   });
+ 
+   describe('getAuthor', () => {
+-    it('should return env var if set', () => {
+-      vi.mocked(getEnvString).mockReturnValue('author@env.com');
+-      expect(getAuthor()).toBe('author@env.com');
++    it('should use override when not logged into cloud', () => {
++      vi.mocked(getEnvString).mockReturnValue('');
++      vi.mocked(readGlobalConfig).mockReturnValue({ id: 'test-id' });
++      expect(getAuthor('override@example.com')).toBe('override@example.com');
+     });
+ 
+-    it('should fall back to user email if no env var', () => {
++    it('should fall back to user email when no override and not logged into cloud', () => {
+       vi.mocked(getEnvString).mockReturnValue('');
+       vi.mocked(readGlobalConfig).mockReturnValue({
+         id: 'test-id',
+@@ -210,10 +217,61 @@ describe('accounts', () => {
+       expect(getAuthor()).toBe('test@example.com');
+     });
+ 
++    it('should fall back to env var when no override and no user email', () => {
++      vi.mocked(getEnvString).mockReturnValue('author@env.com');
++      vi.mocked(readGlobalConfig).mockReturnValue({ id: 'test-id' });
++      expect(getAuthor()).toBe('author@env.com');
++    });
++
+     it('should return null if no author found', () => {
++      vi.mocked(getEnvString).mockReturnValue('');
++      vi.mocked(readGlobalConfig).mockReturnValue({ id: 'test-id' });
++      expect(getAuthor()).toBeNull();
++    });
++
++    it('should prefer cloud identity over override when logged into cloud', () => {
+       vi.mocked(getEnvString).mockReturnValue('');
+       vi.mocked(readGlobalConfig).mockReturnValue({
+         id: 'test-id',
++        account: { email: 'cloud@example.com' },
++        cloud: { apiKey: 'test-api-key' },
++      });
++      expect(getAuthor('override@example.com')).toBe('cloud@example.com');
++    });
++
++    it('should prefer cloud identity over env var when logged into cloud', () => {
++      vi.mocked(getEnvString).mockReturnValue('author@env.com');
++      vi.mocked(readGlobalConfig).mockReturnValue({
++        id: 'test-id',
++        account: { email: 'cloud@example.com' },
++        cloud: { apiKey: 'test-api-key' },
++      });
++      expect(getAuthor()).toBe('cloud@example.com');
++    });
++
++    it('should fall back to override when logged into cloud but no stored email', () => {
++      vi.mocked(getEnvString).mockReturnValue('');
++      vi.mocked(readGlobalConfig).mockReturnValue({
++        id: 'test-id',
++        cloud: { apiKey: 'test-api-key' },
++      });
++      expect(getAuthor('override@example.com')).toBe('override@example.com');
++    });
++
++    it('should fall back to env var when logged into cloud but no stored email', () => {
++      vi.mocked(getEnvString).mockReturnValue('author@env.com');
++      vi.mocked(readGlobalConfig).mockReturnValue({
++        id: 'test-id',
++        cloud: { apiKey: 'test-api-key' },
++      });
++      expect(getAuthor()).toBe('author@env.com');
++    });
++
++    it('should return null when logged into cloud, no stored email, no override, no env', () => {
++      vi.mocked(getEnvString).mockReturnValue('');
++      vi.mocked(readGlobalConfig).mockReturnValue({
++        id: 'test-id',
++        cloud: { apiKey: 'test-api-key' },
+       });
+       expect(getAuthor()).toBeNull();
+     });
+@@ -310,10 +368,11 @@ describe('accounts', () => {
+   });
+ 
+   describe('checkEmailStatusAndMaybeExit', () => {
+-    const mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
++    let mockExit: ReturnType<typeof vi.spyOn>;
+ 
+     beforeEach(() => {
+       vi.clearAllMocks();
++      mockExit = vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
+     });
+ 
+     it('should bypass email verification checks for the CI placeholder email', async () => {
+diff --git a/test/index.test.ts b/test/index.test.ts
+index 6f514c109..9fc3b1703 100644
+--- a/test/index.test.ts
++++ b/test/index.test.ts
+@@ -49,6 +49,17 @@ vi.mock('../src/evaluator', async () => {
+     }),
+   };
+ });
++vi.mock('../src/globalConfig/accounts', async () => {
++  const originalModule = await vi.importActual<typeof import('../src/globalConfig/accounts')>(
++    '../src/globalConfig/accounts',
++  );
++  return {
++    ...originalModule,
++    // Pass the override through so tests can verify the full propagation chain.
++    // Individual tests can override this with mockImplementationOnce.
++    getAuthor: vi.fn((override?: string | null) => override ?? null),
++  };
++});
+ vi.mock('../src/migrate');
+ vi.mock('../src/prompts', async () => {
+   const originalModule = await vi.importActual<typeof import('../src/prompts')>('../src/prompts');
+@@ -406,7 +417,75 @@ describe('evaluate function', () => {
+ 
+     await evaluate(testSuite);
+ 
+-    expect(createEvalSpy).toHaveBeenCalledWith(expect.anything(), expect.anything());
++    expect(createEvalSpy).toHaveBeenCalledWith(
++      expect.anything(),
++      expect.anything(),
++      expect.objectContaining({ author: null }),
++    );
++
++    createEvalSpy.mockRestore();
++  });
++
++  it('should not persist evaluate-only author in config', async () => {
++    const createEvalSpy = vi.spyOn(Eval, 'create');
++
++    const testSuite = {
++      prompts: ['test'],
++      providers: [],
++      writeLatestResults: true,
++      author: 'author@example.com',
++    };
++
++    await evaluate(testSuite);
++
++    expect(createEvalSpy.mock.calls[0][0]).not.toHaveProperty('author');
++
++    createEvalSpy.mockRestore();
++  });
++
++  it('should propagate the testSuite author through getAuthor to Eval.create', async () => {
++    const { getAuthor } = await import('../src/globalConfig/accounts');
++    const createEvalSpy = vi.spyOn(Eval, 'create');
++
++    const testSuite = {
++      prompts: ['test'],
++      providers: [],
++      writeLatestResults: true,
++      author: 'programmatic@example.com',
++    };
++
++    await evaluate(testSuite);
++
++    expect(vi.mocked(getAuthor)).toHaveBeenCalledWith('programmatic@example.com');
++    expect(createEvalSpy).toHaveBeenCalledWith(
++      expect.anything(),
++      expect.anything(),
++      expect.objectContaining({ author: 'programmatic@example.com' }),
++    );
++
++    createEvalSpy.mockRestore();
++  });
++
++  it('should let cloud identity win over the testSuite author when cloud auth is active', async () => {
++    const { getAuthor } = await import('../src/globalConfig/accounts');
++    vi.mocked(getAuthor).mockReturnValueOnce('cloud@example.com');
++    const createEvalSpy = vi.spyOn(Eval, 'create');
++
++    const testSuite = {
++      prompts: ['test'],
++      providers: [],
++      writeLatestResults: true,
++      author: 'override@example.com',
++    };
++
++    await evaluate(testSuite);
++
++    expect(vi.mocked(getAuthor)).toHaveBeenCalledWith('override@example.com');
++    expect(createEvalSpy).toHaveBeenCalledWith(
++      expect.anything(),
++      expect.anything(),
++      expect.objectContaining({ author: 'cloud@example.com' }),
++    );
+ 
+     createEvalSpy.mockRestore();
+   });
+diff --git a/test/models/eval.test.ts b/test/models/eval.test.ts
+index d2f0eb4c3..9038a07a3 100644
+--- a/test/models/eval.test.ts
++++ b/test/models/eval.test.ts
+@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm';
+ import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+ import { getDb } from '../../src/database/index';
+ import { updateSignalFile } from '../../src/database/signal';
+-import { getUserEmail } from '../../src/globalConfig/accounts';
++import { getAuthor } from '../../src/globalConfig/accounts';
+ import { runDbMigrations } from '../../src/migrate';
+ import Eval, {
+   buildSafeJsonPath,
+@@ -20,6 +20,7 @@ vi.mock('../../src/globalConfig/accounts', async () => {
+   return {
+     ...actual,
+     getUserEmail: vi.fn(),
++    getAuthor: vi.fn(),
+   };
+ });
+ 
+@@ -37,6 +38,7 @@ describe('evaluator', () => {
+   });
+ 
+   beforeEach(async () => {
++    vi.mocked(getAuthor).mockReset();
+     vi.mocked(updateSignalFile).mockClear();
+ 
+     // Clear all tables before each test
+@@ -50,6 +52,10 @@ describe('evaluator', () => {
+     await db.run('DELETE FROM evals');
+   });
+ 
++  afterEach(() => {
++    vi.resetAllMocks();
++  });
++
+   describe('addPrompts', () => {
+     it('should notify watchers when persisted prompt metadata changes', async () => {
+       const eval_ = await EvalFactory.create({ numResults: 0 });
+@@ -227,26 +233,59 @@ describe('evaluator', () => {
+   describe('create', () => {
+     it('should use provided author when available', async () => {
+       const providedAuthor = 'provided@example.com';
++      // Spy must not be called — opts.author is explicit, so getAuthor() is bypassed.
++      vi.mocked(getAuthor).mockReturnValue('should-not-be-used@example.com');
+       const config = { description: 'Test eval' };
+       const renderedPrompts: Prompt[] = [
+         { raw: 'Test prompt', display: 'Test prompt', label: 'Test label' } as Prompt,
+       ];
+       const evaluation = await Eval.create(config, renderedPrompts, { author: providedAuthor });
+       expect(evaluation.author).toBe(providedAuthor);
++      expect(vi.mocked(getAuthor)).not.toHaveBeenCalled();
+       const persistedEval = await Eval.findById(evaluation.id);
+       expect(persistedEval?.author).toBe(providedAuthor);
+     });
+ 
+-    it('should use default author from getUserEmail when not provided', async () => {
+-      const mockEmail = 'default@example.com';
+-      vi.mocked(getUserEmail).mockReturnValue(mockEmail);
++    it('should honor an explicit author even when the current user is cloud-authed (import regression)', async () => {
++      // Simulate cloud-authed user with a different identity than the imported eval.
++      vi.mocked(getAuthor).mockReturnValue('current-cloud-user@example.com');
++      const config = { description: 'Imported eval' };
++      const renderedPrompts: Prompt[] = [
++        { raw: 'Test prompt', display: 'Test prompt', label: 'Test label' } as Prompt,
++      ];
++      const evaluation = await Eval.create(config, renderedPrompts, {
++        author: 'original-author@example.com',
++      });
++      expect(evaluation.author).toBe('original-author@example.com');
++      expect(vi.mocked(getAuthor)).not.toHaveBeenCalled();
++      const persistedEval = await Eval.findById(evaluation.id);
++      expect(persistedEval?.author).toBe('original-author@example.com');
++    });
++
++    it('should persist null when author is explicitly null', async () => {
++      vi.mocked(getAuthor).mockReturnValue('should-not-be-used@example.com');
++      const config = { description: 'Test eval' };
++      const renderedPrompts: Prompt[] = [
++        { raw: 'Test prompt', display: 'Test prompt', label: 'Test label' } as Prompt,
++      ];
++      const evaluation = await Eval.create(config, renderedPrompts, { author: null });
++      expect(evaluation.author).toBeNull();
++      expect(vi.mocked(getAuthor)).not.toHaveBeenCalled();
++      const persistedEval = await Eval.findById(evaluation.id);
++      expect(persistedEval?.author).toBeNull();
++    });
++
++    it('should fall back to getAuthor when author is not provided', async () => {
++      const mockAuthor = 'default@example.com';
++      vi.mocked(getAuthor).mockReturnValue(mockAuthor);
+       const config = { description: 'Test eval' };
+       const renderedPrompts: Prompt[] = [
+         { raw: 'Test prompt', display: 'Test prompt', label: 'Test label' } as Prompt,
+       ];
+       const evaluation = await Eval.create(config, renderedPrompts);
++      expect(evaluation.author).toBe(mockAuthor);
+       const persistedEval = await Eval.findById(evaluation.id);
+-      expect(persistedEval?.author).toBe(mockEmail);
++      expect(persistedEval?.author).toBe(mockAuthor);
+     });
+   });
+ 
+diff --git a/test/share.test.ts b/test/share.test.ts
+index c63d77cf6..68a76afbc 100644
+--- a/test/share.test.ts
++++ b/test/share.test.ts
+@@ -55,6 +55,7 @@ function buildMockEval(): Partial<Eval> {
+ }
+ 
+ const mockFetch = vi.fn();
++const originalIsTTY = process.stdout.isTTY;
+ 
+ vi.mock('../src/globalConfig/cloud', () => {
+   const cloudConfig = {
+@@ -141,6 +142,11 @@ describe('stripAuthFromUrl', () => {
+   });
+ });
+ 
++afterEach(() => {
++  vi.resetAllMocks();
++  process.stdout.isTTY = originalIsTTY;
++});
++
+ describe('isSharingEnabled', () => {
+   beforeEach(() => {
+     vi.clearAllMocks();
+@@ -213,6 +219,7 @@ describe('determineShareDomain', () => {
+   beforeEach(() => {
+     vi.clearAllMocks();
+     vi.mocked(envars.getEnvString).mockImplementation((_key: string) => '');
++    vi.mocked(constants.getDefaultShareViewBaseUrl).mockReturnValue('https://promptfoo.app');
+   });
+ 
+   it('should use DEFAULT_SHARE_VIEW_BASE_URL when no custom domain is specified', () => {
+@@ -298,6 +305,9 @@ describe('createShareableUrl', () => {
+     vi.mocked(envars.getEnvString).mockImplementation((_key: string) => '');
+     vi.mocked(envars.isCI).mockReturnValue(false);
+     vi.mocked(envars.getEnvBool).mockReturnValue(false);
++    vi.mocked(constants.getShareApiBaseUrl).mockReturnValue('https://api.promptfoo.app');
++    vi.mocked(constants.getDefaultShareViewBaseUrl).mockReturnValue('https://promptfoo.app');
++    vi.mocked(constants.getShareViewBaseUrl).mockReturnValue('https://promptfoo.app');
+     mockFetch.mockReset();
+     // Mock process.stdout.isTTY
+     process.stdout.isTTY = false;
+@@ -404,6 +414,61 @@ describe('createShareableUrl', () => {
+     expect(result2).not.toEqual(result);
+   });
+ 
++  it('skips email collection when author is already set', async () => {
++    vi.mocked(cloudConfig.isEnabled).mockReturnValue(false);
++    process.stdout.isTTY = true;
++    vi.mocked(envars.isCI).mockReturnValue(false);
++    vi.mocked(envars.getEnvBool).mockReturnValue(false);
++
++    const mockEval = buildMockEval();
++    mockEval.author = 'preset-author@example.com';
++
++    // Mock the initial eval send
++    mockFetch.mockResolvedValueOnce({
++      ok: true,
++      json: () => Promise.resolve({ id: mockEval.id }),
++    });
++    // Mock the chunk send
++    mockFetch.mockResolvedValueOnce({
++      ok: true,
++      json: () => Promise.resolve({}),
++    });
++
++    await createShareableUrl(mockEval as Eval);
++
++    // getUserEmail should not have been called since author was already set
++    expect(getUserEmail).not.toHaveBeenCalled();
++    // The author should remain unchanged
++    expect(mockEval.author).toBe('preset-author@example.com');
++  });
++
++  it('still backfills author from stored email when author is null in a TTY', async () => {
++    vi.mocked(cloudConfig.isEnabled).mockReturnValue(false);
++    process.stdout.isTTY = true;
++    vi.mocked(envars.isCI).mockReturnValue(false);
++    vi.mocked(envars.getEnvBool).mockReturnValue(false);
++    vi.mocked(getUserEmail).mockReturnValue('stored@example.com');
++
++    const mockEval = buildMockEval();
++    mockEval.author = null as any;
++
++    mockFetch.mockResolvedValueOnce({
++      ok: true,
++      json: () => Promise.resolve({ id: mockEval.id }),
++    });
++    mockFetch.mockResolvedValueOnce({
++      ok: true,
++      json: () => Promise.resolve({}),
++    });
++
++    await createShareableUrl(mockEval as Eval);
++
++    // getUserEmail must have been consulted since no author was set.
++    expect(getUserEmail).toHaveBeenCalled();
++    expect(mockEval.author).toBe('stored@example.com');
++    expect(mockEval.save).toHaveBeenCalled();
++  });
++
+   describe('chunked sending', () => {
+     let mockEval: Partial<Eval>;

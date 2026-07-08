@@ -1,0 +1,580 @@
+diff --git a/tests/components/gardena_bluetooth/snapshots/test_sensor.ambr b/tests/components/gardena_bluetooth/snapshots/test_sensor.ambr
+index 775e05fc108..687cd63b191 100644
+--- a/tests/components/gardena_bluetooth/snapshots/test_sensor.ambr
++++ b/tests/components/gardena_bluetooth/snapshots/test_sensor.ambr
+@@ -92,7 +92,9 @@
+       None,
+     ]),
+     'area_id': None,
+-    'capabilities': None,
++    'capabilities': dict({
++      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
++    }),
+     'config_entry_id': <ANY>,
+     'config_subentry_id': <ANY>,
+     'device_class': None,
+@@ -127,6 +129,7 @@
+   StateSnapshot({
+     'attributes': ReadOnlyDict({
+       'friendly_name': 'Mock Title Current distance',
++      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+       'unit_of_measurement': '%',
+     }),
+     'context': <ANY>,
+@@ -143,7 +146,9 @@
+       None,
+     ]),
+     'area_id': None,
+-    'capabilities': None,
++    'capabilities': dict({
++      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
++    }),
+     'config_entry_id': <ANY>,
+     'config_subentry_id': <ANY>,
+     'device_class': None,
+@@ -182,6 +187,7 @@
+     'attributes': ReadOnlyDict({
+       'device_class': 'volume_flow_rate',
+       'friendly_name': 'Mock Title Current flow',
++      'state_class': <SensorStateClass.MEASUREMENT: 'measurement'>,
+       'unit_of_measurement': <UnitOfVolumeFlowRate.LITERS_PER_MINUTE: 'L/min'>,
+     }),
+     'context': <ANY>,
+@@ -399,7 +405,7 @@
+         'suggested_display_precision': 2,
+       }),
+     }),
+-    'original_device_class': <SensorDeviceClass.VOLUME: 'volume'>,
++    'original_device_class': <SensorDeviceClass.WATER: 'water'>,
+     'original_icon': None,
+     'original_name': 'Overall flow',
+     'platform': 'gardena_bluetooth',
+@@ -414,7 +420,7 @@
+ # name: test_sensors[aqua_contour][sensor.mock_title_overall_flow-state]
+   StateSnapshot({
+     'attributes': ReadOnlyDict({
+-      'device_class': 'volume',
++      'device_class': 'water',
+       'friendly_name': 'Mock Title Overall flow',
+       'state_class': <SensorStateClass.TOTAL_INCREASING: 'total_increasing'>,
+       'unit_of_measurement': <UnitOfVolume.LITERS: 'L'>,
+diff --git a/tests/components/google_generative_ai_conversation/test_helpers.py b/tests/components/google_generative_ai_conversation/test_helpers.py
+new file mode 100644
+index 00000000000..bcca396ad2a
+--- /dev/null
++++ b/tests/components/google_generative_ai_conversation/test_helpers.py
+@@ -0,0 +1,28 @@
++"""Tests for the Google Generative AI Conversation helpers."""
++
++from __future__ import annotations
++
++import pytest
++
++from homeassistant.components.google_generative_ai_conversation.helpers import (
++    _parse_audio_mime_type,
++)
++from homeassistant.exceptions import HomeAssistantError
++
++
++def test_parse_audio_mime_type_uppercase() -> None:
++    """Test parsing uppercase MIME type audio/L16;rate=24000."""
++    result = _parse_audio_mime_type("audio/L16;rate=24000")
++    assert result == {"bits_per_sample": 16, "rate": 24000}
++
++
++def test_parse_audio_mime_type_lowercase() -> None:
++    """Test parsing lowercase MIME type audio/l16; rate=24000; channels=1."""
++    result = _parse_audio_mime_type("audio/l16; rate=24000; channels=1")
++    assert result == {"bits_per_sample": 16, "rate": 24000}
++
++
++def test_parse_audio_mime_type_unsupported_raises() -> None:
++    """Test that an unsupported MIME type raises HomeAssistantError."""
++    with pytest.raises(HomeAssistantError):
++        _parse_audio_mime_type("video/mp4")
+diff --git a/tests/components/http/test_auth.py b/tests/components/http/test_auth.py
+index 095ae8ad17a..6997b78d8e4 100644
+--- a/tests/components/http/test_auth.py
++++ b/tests/components/http/test_auth.py
+@@ -592,6 +592,91 @@ async def test_local_only_user_rejected(
+         assert req.status == HTTPStatus.UNAUTHORIZED
+ 
+ 
++async def test_auth_access_signed_path_with_local_only_user(
++    hass: HomeAssistant,
++    app: web.Application,
++    aiohttp_client: ClientSessionGenerator,
++    hass_access_token: str,
++) -> None:
++    """Test access with signed url for a local-only user."""
++    app.router.add_post("/", mock_handler)
++    app.router.add_get("/another_path", mock_handler)
++    await async_setup_auth(hass, app)
++    set_mock_ip = mock_real_ip(app)
++    client = await aiohttp_client(app)
++
++    refresh_token = hass.auth.async_validate_access_token(hass_access_token)
++    refresh_token.user.local_only = True
++
++    signed_path = async_sign_path(
++        hass, "/", timedelta(seconds=5), refresh_token_id=refresh_token.id
++    )
++
++    # Local IP is allowed for local-only user
++    set_mock_ip("192.168.1.123")
++
++    req = await client.head(signed_path)
++    assert req.status == HTTPStatus.OK
++
++    req = await client.get(signed_path)
++    assert req.status == HTTPStatus.OK
++    data = await req.json()
++    assert data["user_id"] == refresh_token.user.id
++
++    # Remote IP is rejected for local-only user
++    for remote_addr in EXTERNAL_ADDRESSES:
++        set_mock_ip(remote_addr)
++        signed_path = async_sign_path(
++            hass, "/", timedelta(seconds=5), refresh_token_id=refresh_token.id
++        )
++
++        req = await client.head(signed_path)
++        assert req.status == HTTPStatus.UNAUTHORIZED
++
++        req = await client.get(signed_path)
++        assert req.status == HTTPStatus.UNAUTHORIZED
++
++
++async def test_auth_access_signed_path_with_inactive_user(
++    hass: HomeAssistant,
++    app: web.Application,
++    aiohttp_client: ClientSessionGenerator,
++    hass_access_token: str,
++) -> None:
++    """Test access with signed url for an inactive user."""
++    app.router.add_post("/", mock_handler)
++    app.router.add_get("/another_path", mock_handler)
++    await async_setup_auth(hass, app)
++    client = await aiohttp_client(app)
++
++    refresh_token = hass.auth.async_validate_access_token(hass_access_token)
++
++    signed_path = async_sign_path(
++        hass, "/", timedelta(seconds=5), refresh_token_id=refresh_token.id
++    )
++
++    # Active user is allowed
++    req = await client.head(signed_path)
++    assert req.status == HTTPStatus.OK
++
++    req = await client.get(signed_path)
++    assert req.status == HTTPStatus.OK
++    data = await req.json()
++    assert data["user_id"] == refresh_token.user.id
++    signed_path = async_sign_path(
++        hass, "/", timedelta(seconds=5), refresh_token_id=refresh_token.id
++    )
++
++    # Inactive user is rejected
++    refresh_token.user.is_active = False
++
++    req = await client.head(signed_path)
++    assert req.status == HTTPStatus.UNAUTHORIZED
++
++    req = await client.get(signed_path)
++    assert req.status == HTTPStatus.UNAUTHORIZED
++
++
+ async def test_async_user_not_allowed_do_auth(
+     hass: HomeAssistant, app: web.Application
+ ) -> None:
+diff --git a/tests/components/imap/test_init.py b/tests/components/imap/test_init.py
+index dc5727991c1..55c8499ee5b 100644
+--- a/tests/components/imap/test_init.py
++++ b/tests/components/imap/test_init.py
+@@ -538,6 +538,7 @@ async def test_lost_connection_with_imap_push(
+ ) -> None:
+     """Test error handling when the connection is lost."""
+     # Mock an error in waiting for a pushed update
++    mock_imap_protocol.idle_start.return_value = asyncio.Future()
+     mock_imap_protocol.wait_server_push.side_effect = imap_wait_server_push_exception
+     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
+     config_entry.add_to_hass(hass)
+@@ -550,6 +551,10 @@ async def test_lost_connection_with_imap_push(
+     assert state is not None
+     assert state.state == "0"
+ 
++    async_fire_time_changed(hass, utcnow() + timedelta(seconds=30))
++    await hass.async_block_till_done()
++    assert "Canceling IDLE wait for imap.server.com" in caplog.text
++
+ 
+ @pytest.mark.parametrize("imap_has_capability", [True], ids=["push"])
+ async def test_fetch_number_of_messages(
+diff --git a/tests/components/mqtt/test_light_json.py b/tests/components/mqtt/test_light_json.py
+index 6ea2cb3a9d4..0cf412ccfa3 100644
+--- a/tests/components/mqtt/test_light_json.py
++++ b/tests/components/mqtt/test_light_json.py
+@@ -565,6 +565,63 @@ async def test_single_color_mode_turn_on(
+     assert state.state == STATE_ON
+ 
+ 
++@pytest.mark.parametrize(
++    "hass_config",
++    [
++        {
++            mqtt.DOMAIN: {
++                light.DOMAIN: {
++                    "schema": "json",
++                    "name": "test",
++                    "command_topic": "test_light/set",
++                    "supported_color_modes": ["brightness"],
++                }
++            }
++        },
++        {
++            mqtt.DOMAIN: {
++                light.DOMAIN: {
++                    "schema": "json",
++                    "name": "test",
++                    "command_topic": "test_light/set",
++                    "supported_color_modes": ["color_temp"],
++                }
++            }
++        },
++    ],
++)
++async def test_restore_state_with_none_color_mode(
++    hass: HomeAssistant, mqtt_mock_entry: MqttMockHAClientGenerator
++) -> None:
++    """Test restoring state with a None color_mode does not break turn_on.
++
++    Regression test: When an optimistic light was off at the time the state
++    was last saved, `state_attributes` stores `color_mode: None`. On restart,
++    the restore path would overwrite the correctly initialized color_mode with
++    None, causing turn_on to raise "does not report a color mode".
++    """
++    fake_state = State(
++        "light.test",
++        STATE_OFF,
++        {"color_mode": None, "brightness": None},
++    )
++    mock_restore_cache(hass, (fake_state,))
++
++    mqtt_mock = await mqtt_mock_entry()
++
++    state = hass.states.get("light.test")
++    assert state.state == STATE_OFF
++
++    # This should not raise "does not report a color mode"
++    await common.async_turn_on(hass, "light.test")
++    mqtt_mock.async_publish.assert_called_once_with(
++        "test_light/set", '{"state":"ON"}', 0, False
++    )
++    state = hass.states.get("light.test")
++    assert state.state == STATE_ON
++    assert state.attributes.get("color_mode") is not None
++
++
+ @pytest.mark.parametrize(
+     "hass_config",
+     [
+diff --git a/tests/components/roborock/test_vacuum.py b/tests/components/roborock/test_vacuum.py
+index 953c390b8e1..9342df57fa7 100644
+--- a/tests/components/roborock/test_vacuum.py
++++ b/tests/components/roborock/test_vacuum.py
+@@ -142,6 +142,29 @@ async def test_commands(
+     assert vacuum_command.send.call_args == call(command, params=called_params)
+ 
+ 
++@pytest.mark.parametrize(
++    "entity_id",
++    [
++        ENTITY_ID,
++        Q7_ENTITY_ID,
++        Q10_ENTITY_ID,
++    ],
++)
++async def test_set_fan_speed_invalid(
++    hass: HomeAssistant,
++    setup_entry: MockConfigEntry,
++    entity_id: str,
++) -> None:
++    """Test calling set_fan_speed with an invalid mode."""
++    with pytest.raises(ServiceValidationError, match="Invalid fan speed: some-mode"):
++        await hass.services.async_call(
++            VACUUM_DOMAIN,
++            SERVICE_SET_FAN_SPEED,
++            {ATTR_ENTITY_ID: entity_id, "fan_speed": "some-mode"},
++            blocking=True,
++        )
++
++
+ @pytest.mark.parametrize(
+     ("in_cleaning_int", "in_returning_int", "expected_command"),
+     [
+@@ -880,25 +903,6 @@ async def test_q10_set_fan_speed_command(
+     assert q10_vacuum_api.vacuum.set_fan_level.call_args[0] == (YXFanLevel.QUIET,)
+ 
+ 
+-async def test_q10_set_invalid_fan_speed(
+-    hass: HomeAssistant,
+-    setup_entry: MockConfigEntry,
+-    q10_vacuum_api: Mock,
+-) -> None:
+-    """Test that setting an invalid fan speed raises an error."""
+-    vacuum = hass.states.get(Q10_ENTITY_ID)
+-    assert vacuum
+-
+-    with pytest.raises(ServiceValidationError):
+-        await hass.services.async_call(
+-            VACUUM_DOMAIN,
+-            SERVICE_SET_FAN_SPEED,
+-            {ATTR_ENTITY_ID: Q10_ENTITY_ID, "fan_speed": "invalid_speed"},
+-            blocking=True,
+-        )
+-    assert q10_vacuum_api.vacuum.set_fan_level.call_count == 0
+-
+-
+ @pytest.mark.parametrize(
+     "command",
+     [
+diff --git a/tests/components/tractive/conftest.py b/tests/components/tractive/conftest.py
+index 1a9a865c1c1..c4a03a081e7 100644
+--- a/tests/components/tractive/conftest.py
++++ b/tests/components/tractive/conftest.py
+@@ -89,6 +89,10 @@ def mock_tractive_client() -> Generator[AsyncMock]:
+         patch(
+             "homeassistant.components.tractive.aiotractive.Tractive", autospec=True
+         ) as mock_client,
++        patch(
++            "homeassistant.components.tractive.asyncio.sleep",
++            new_callable=AsyncMock,
++        ),
+     ):
+         client = mock_client.return_value
+         client.authenticate.return_value = {"user_id": "12345"}
+diff --git a/tests/components/victron_ble/fixtures.py b/tests/components/victron_ble/fixtures.py
+index c6efeb4112b..cacbeda0188 100644
+--- a/tests/components/victron_ble/fixtures.py
++++ b/tests/components/victron_ble/fixtures.py
+@@ -201,6 +201,22 @@ VICTRON_DC_DC_CONVERTER_UNKNOWN_OFF_REASON_SERVICE_INFO = BluetoothServiceInfo(
+     source="local",
+ )
+ 
++# Same Victron manufacturer data prefix but with an unrecognized mode byte
++# (0xEE at offset 4).  detect_device_type returns None for this payload,
++# so validate_advertisement_key would also return False.  The reauth logic
++# must treat this as neutral (not a key failure).
++VICTRON_VEBUS_UNRECOGNIZED_MODE_SERVICE_INFO = BluetoothServiceInfo(
++    name="Inverter Charger",
++    address="01:02:03:04:05:06",
++    rssi=-60,
++    manufacturer_data={
++        0x02E1: bytes.fromhex("10038027ee1252dad26f0b8eb39162074d140df410")
++    },
++    service_data={},
++    service_uuids=[],
++    source="local",
++)
++
+ VICTRON_VEBUS_SENSORS = {
+     "inverter_charger_device_state": "float",
+     "inverter_charger_battery_voltage": "14.45",
+diff --git a/tests/components/victron_ble/test_sensor.py b/tests/components/victron_ble/test_sensor.py
+index b987b5b3653..4990dfa96a9 100644
+--- a/tests/components/victron_ble/test_sensor.py
++++ b/tests/components/victron_ble/test_sensor.py
+@@ -41,6 +41,7 @@ from .fixtures import (
+     VICTRON_VEBUS_BAD_KEY_SERVICE_INFO,
+     VICTRON_VEBUS_SERVICE_INFO,
+     VICTRON_VEBUS_TOKEN,
++    VICTRON_VEBUS_UNRECOGNIZED_MODE_SERVICE_INFO,
+ )
+ 
+ from tests.common import MockConfigEntry, snapshot_platform
+@@ -165,6 +166,28 @@ def _inject_bad_advertisement(hass: HomeAssistant, seq: int = 0) -> None:
+     )
+ 
+ 
++def _inject_unrecognized_mode_advertisement(hass: HomeAssistant, seq: int = 0) -> None:
++    """Inject a Victron advertisement with an unrecognized mode byte.
++
++    detect_device_type returns None for this payload so the reauth guard
++    must treat it as neutral (neither increment nor reset the failure counter).
++    """
++    info = VICTRON_VEBUS_UNRECOGNIZED_MODE_SERVICE_INFO
++    raw = bytearray(info.manufacturer_data[VICTRON_IDENTIFIER])
++    raw[-1] = seq & 0xFF
++    device = generate_ble_device(address=info.address, name=info.name, details={})
++    adv = generate_advertisement_data(
++        local_name=info.name,
++        manufacturer_data={VICTRON_IDENTIFIER: bytes(raw)},
++        service_data=info.service_data,
++        service_uuids=info.service_uuids,
++        rssi=-60,
++    )
++    inject_advertisement_with_time_and_source_connectable(
++        hass, device, adv, time.monotonic(), "local", True
++    )
++
++
+ @pytest.mark.usefixtures("enable_bluetooth")
+ async def test_reauth_triggered_after_consecutive_failures(
+     hass: HomeAssistant,
+@@ -323,3 +346,76 @@ async def test_charger_error_state(
+     state = hass.states.get("sensor.solar_charger_charger_error")
+     assert state is not None
+     assert state.state == expected_state
++
++
++@pytest.mark.usefixtures("enable_bluetooth")
++async def test_reauth_not_triggered_on_unrecognized_mode(
++    hass: HomeAssistant,
++    mock_config_entry_added_to_hass: MockConfigEntry,
++) -> None:
++    """Test reauth is NOT triggered by advertisements with unrecognized mode bytes.
++
++    Some Victron devices broadcast advertisements with mode bytes that
++    detect_device_type does not recognize (returns None).
++    validate_advertisement_key also returns False for these, but that does
++    not mean the encryption key is wrong.
++
++    Regression test for https://github.com/home-assistant/core/issues/168019
++    """
++    entry = mock_config_entry_added_to_hass
++
++    assert await hass.config_entries.async_setup(entry.entry_id)
++    await hass.async_block_till_done()
++
++    # First inject a valid advertisement so update.devices is populated
++    inject_bluetooth_service_info(hass, VICTRON_VEBUS_SERVICE_INFO)
++    await hass.async_block_till_done()
++
++    # Now send many unrecognized-mode advertisements
++    for i in range(REAUTH_AFTER_FAILURES + 5):
++        _inject_unrecognized_mode_advertisement(hass, seq=i)
++        await hass.async_block_till_done()
++
++    flows = hass.config_entries.flow.async_progress_by_handler(DOMAIN)
++    assert len(flows) == 0
++
++
++@pytest.mark.usefixtures("enable_bluetooth")
++async def test_reauth_still_triggers_across_unrecognized_mode(
++    hass: HomeAssistant,
++    mock_config_entry_added_to_hass: MockConfigEntry,
++) -> None:
++    """Test that unrecognized-mode advertisements are neutral for the failure counter.
++
++    The sequence bad → bad → unrecognized → bad must still trigger reauth
++    because unrecognized advertisements should neither increment nor reset the
++    consecutive failure counter.
++
++    Regression test for https://github.com/home-assistant/core/issues/168019
++    """
++    entry = mock_config_entry_added_to_hass
++
++    assert await hass.config_entries.async_setup(entry.entry_id)
++    await hass.async_block_till_done()
++
++    # First inject a valid advertisement so update.devices is populated
++    inject_bluetooth_service_info(hass, VICTRON_VEBUS_SERVICE_INFO)
++    await hass.async_block_till_done()
++
++    # bad, bad (2 failures)
++    _inject_bad_advertisement(hass, seq=100)
++    await hass.async_block_till_done()
++    _inject_bad_advertisement(hass, seq=101)
++    await hass.async_block_till_done()
++
++    # unrecognized mode — should be neutral
++    _inject_unrecognized_mode_advertisement(hass, seq=50)
++    await hass.async_block_till_done()
++
++    # one more bad → 3 consecutive failures → reauth
++    _inject_bad_advertisement(hass, seq=102)
++    await hass.async_block_till_done()
++
++    flows = hass.config_entries.flow.async_progress_by_handler(DOMAIN)
++    assert len(flows) == 1
++    assert flows[0]["context"]["source"] == "reauth"
+diff --git a/tests/components/websocket_api/test_auth.py b/tests/components/websocket_api/test_auth.py
+index 09ff36c4ce0..b86bf63fc10 100644
+--- a/tests/components/websocket_api/test_auth.py
++++ b/tests/components/websocket_api/test_auth.py
+@@ -23,6 +23,7 @@ from homeassistant.core import HomeAssistant, callback
+ from homeassistant.helpers.dispatcher import async_dispatcher_connect
+ from homeassistant.setup import async_setup_component
+ 
++from tests.test_util import mock_real_ip
+ from tests.typing import ClientSessionGenerator
+ 
+ 
+@@ -151,6 +152,66 @@ async def test_auth_active_user_inactive(
+         assert auth_msg["type"] == TYPE_AUTH_INVALID
+ 
+ 
++async def test_auth_local_only_user_rejected_remote(
++    hass: HomeAssistant,
++    hass_client_no_auth: ClientSessionGenerator,
++    hass_access_token: str,
++) -> None:
++    """Test that a local-only user cannot authenticate from a remote IP."""
++    refresh_token = hass.auth.async_validate_access_token(hass_access_token)
++    refresh_token.user.local_only = True
++
++    assert await async_setup_component(hass, "websocket_api", {})
++    await hass.async_block_till_done()
++
++    set_mock_ip = mock_real_ip(hass.http.app)
++    set_mock_ip("198.51.100.1")
++
++    client = await hass_client_no_auth()
++
++    with patch(
++        "homeassistant.components.websocket_api.auth.process_wrong_login",
++    ) as mock_process_wrong_login:
++        async with client.ws_connect(URL) as ws:
++            auth_msg = await ws.receive_json()
++            assert auth_msg["type"] == TYPE_AUTH_REQUIRED
++
++            await ws.send_json({"type": TYPE_AUTH, "access_token": hass_access_token})
++
++            auth_msg = await ws.receive_json()
++            assert auth_msg["type"] == TYPE_AUTH_INVALID
++            assert auth_msg["message"] == "User cannot authenticate remotely"
++
++    assert mock_process_wrong_login.called
++
++
++async def test_auth_local_only_user_allowed_local(
++    hass: HomeAssistant,
++    hass_client_no_auth: ClientSessionGenerator,
++    hass_access_token: str,
++) -> None:
++    """Test that a local-only user can authenticate from a local IP."""
++    refresh_token = hass.auth.async_validate_access_token(hass_access_token)
++    refresh_token.user.local_only = True
++
++    assert await async_setup_component(hass, "websocket_api", {})
++    await hass.async_block_till_done()
++
++    set_mock_ip = mock_real_ip(hass.http.app)
++    set_mock_ip("192.168.1.100")
++
++    client = await hass_client_no_auth()
++
++    async with client.ws_connect(URL) as ws:
++        auth_msg = await ws.receive_json()
++        assert auth_msg["type"] == TYPE_AUTH_REQUIRED
++
++        await ws.send_json({"type": TYPE_AUTH, "access_token": hass_access_token})
++
++        auth_msg = await ws.receive_json()
++        assert auth_msg["type"] == TYPE_AUTH_OK
++
++
+ async def test_auth_active_with_password_not_allow(
+     hass: HomeAssistant, hass_client_no_auth: ClientSessionGenerator
+ ) -> None:

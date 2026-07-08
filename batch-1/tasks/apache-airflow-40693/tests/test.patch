@@ -1,0 +1,368 @@
+diff --git a/tests/datasets/test_dataset.py b/tests/datasets/test_dataset.py
+index 4ce9b01ada..19dbcf4b53 100644
+--- a/tests/datasets/test_dataset.py
++++ b/tests/datasets/test_dataset.py
+@@ -25,8 +25,15 @@ from unittest.mock import patch
+ import pytest
+ from sqlalchemy.sql import select
+ 
+-from airflow.datasets import BaseDataset, Dataset, DatasetAll, DatasetAny, _sanitize_uri
+-from airflow.models.dataset import DatasetDagRunQueue, DatasetModel
++from airflow.datasets import (
++    BaseDataset,
++    Dataset,
++    DatasetAll,
++    DatasetAny,
++    _DatasetAliasCondition,
++    _sanitize_uri,
++)
++from airflow.models.dataset import DatasetAliasModel, DatasetDagRunQueue, DatasetModel
+ from airflow.models.serialized_dag import SerializedDagModel
+ from airflow.operators.empty import EmptyOperator
+ from airflow.serialization.serialized_objects import BaseSerialization, SerializedDAG
+@@ -470,3 +477,60 @@ def test__sanitize_uri_raises_exception():
+         _sanitize_uri("postgres://localhost:5432/database.schema.table")
+     assert isinstance(e_info.value, ValueError)
+     assert str(e_info.value) == "Incorrect URI format"
++
++
++@pytest.mark.db_test
++@pytest.mark.usefixtures("clear_datasets")
++class Test_DatasetAliasCondition:
++    @pytest.fixture
++    def ds_1(self, session):
++        """Example dataset links to dataset alias resolved_dsa_2."""
++        ds_uri = "test_uri"
++        ds_1 = DatasetModel(id=1, uri=ds_uri)
++
++        session.add(ds_1)
++        session.commit()
++
++        return ds_1
++
++    @pytest.fixture
++    def dsa_1(self, session):
++        """Example dataset alias links to no datasets."""
++        dsa_name = "test_name"
++        dsa_1 = DatasetAliasModel(name=dsa_name)
++
++        session.add(dsa_1)
++        session.commit()
++
++        return dsa_1
++
++    @pytest.fixture
++    def resolved_dsa_2(self, session, ds_1):
++        """Example dataset alias links to no dataset dsa_1."""
++        dsa_name = "test_name_2"
++        dsa_2 = DatasetAliasModel(name=dsa_name)
++        dsa_2.datasets.append(ds_1)
++
++        session.add(dsa_2)
++        session.commit()
++
++        return dsa_2
++
++    def test_init(self, dsa_1, ds_1, resolved_dsa_2):
++        cond = _DatasetAliasCondition(name=dsa_1.name)
++        assert cond.objects == []
++
++        cond = _DatasetAliasCondition(name=resolved_dsa_2.name)
++        assert cond.objects == [Dataset(uri=ds_1.uri)]
++
++    def test_as_expression(self, dsa_1, resolved_dsa_2):
++        for dsa in (dsa_1, resolved_dsa_2):
++            cond = _DatasetAliasCondition(dsa.name)
++            assert cond.as_expression() == {"alias": dsa.name}
++
++    def test_evalute(self, dsa_1, resolved_dsa_2, ds_1):
++        cond = _DatasetAliasCondition(dsa_1.name)
++        assert cond.evaluate({ds_1.uri: True}) is False
++
++        cond = _DatasetAliasCondition(resolved_dsa_2.name)
++        assert cond.evaluate({ds_1.uri: True}) is True
+diff --git a/tests/models/test_dag.py b/tests/models/test_dag.py
+index 056d4aaeab..959bd90d49 100644
+--- a/tests/models/test_dag.py
++++ b/tests/models/test_dag.py
+@@ -3024,6 +3024,54 @@ class TestDagModel:
+         dag_models = query.all()
+         assert dag_models == [dag_model]
+ 
++    def test_dags_needing_dagruns_dataset_aliases(self, dag_maker, session):
++        # link dataset_alias hello_alias to dataset hello
++        dataset_model = DatasetModel(uri="hello")
++        dataset_alias_model = DatasetAliasModel(name="hello_alias")
++        dataset_alias_model.datasets.append(dataset_model)
++        session.add_all([dataset_model, dataset_alias_model])
++        session.commit()
++
++        with dag_maker(
++            session=session,
++            dag_id="my_dag",
++            max_active_runs=1,
++            schedule=[DatasetAlias(name="hello_alias")],
++            start_date=pendulum.now().add(days=-2),
++        ):
++            EmptyOperator(task_id="dummy")
++
++        # there's no queue record yet, so no runs needed at this time.
++        query, _ = DagModel.dags_needing_dagruns(session)
++        dag_models = query.all()
++        assert dag_models == []
++
++        # add queue records so we'll need a run
++        dag_model = dag_maker.dag_model
++        dataset_model: DatasetModel = dag_model.schedule_datasets[0]
++        session.add(DatasetDagRunQueue(dataset_id=dataset_model.id, target_dag_id=dag_model.dag_id))
++        session.flush()
++        query, _ = DagModel.dags_needing_dagruns(session)
++        dag_models = query.all()
++        assert dag_models == [dag_model]
++
++        # create run so we don't need a run anymore (due to max active runs)
++        dag_maker.create_dagrun(
++            run_type=DagRunType.DATASET_TRIGGERED,
++            state=DagRunState.QUEUED,
++            execution_date=pendulum.now("UTC"),
++        )
++        query, _ = DagModel.dags_needing_dagruns(session)
++        dag_models = query.all()
++        assert dag_models == []
++
++        # increase max active runs and we should now need another run
++        dag_maker.dag_model.max_active_runs = 2
++        session.flush()
++        query, _ = DagModel.dags_needing_dagruns(session)
++        dag_models = query.all()
++        assert dag_models == [dag_model]
++
+     def test_max_active_runs_not_none(self):
+         dag = DAG(dag_id="test_max_active_runs_not_none", start_date=timezone.datetime(2038, 1, 1))
+         EmptyOperator(task_id="dummy", dag=dag, owner="airflow")
+@@ -3215,6 +3263,7 @@ class TestDagModel:
+                     Dataset("s3://dag2/output_1.txt", {"hi": "bye"}),
+                     Dataset("s3://dag3/output_3.txt", {"hi": "bye"}),
+                 ),
++                DatasetAlias(name="test_name"),
+             ),
+             start_date=datetime.datetime.min,
+         )
+@@ -3225,6 +3274,7 @@ class TestDagModel:
+             "any": [
+                 "s3://dag1/output_1.txt",
+                 {"all": ["s3://dag2/output_1.txt", "s3://dag3/output_3.txt"]},
++                {"alias": "test_name"},
+             ]
+         }
+ 
+diff --git a/tests/models/test_taskinstance.py b/tests/models/test_taskinstance.py
+index 577c2a7330..a52a35cad6 100644
+--- a/tests/models/test_taskinstance.py
++++ b/tests/models/test_taskinstance.py
+@@ -56,7 +56,7 @@ from airflow.models.connection import Connection
+ from airflow.models.dag import DAG
+ from airflow.models.dagbag import DagBag
+ from airflow.models.dagrun import DagRun
+-from airflow.models.dataset import DatasetDagRunQueue, DatasetEvent, DatasetModel
++from airflow.models.dataset import DatasetAliasModel, DatasetDagRunQueue, DatasetEvent, DatasetModel
+ from airflow.models.expandinput import EXPAND_INPUT_EMPTY, NotFullyPopulated
+ from airflow.models.param import process_params
+ from airflow.models.pool import Pool
+@@ -2495,6 +2495,14 @@ class TestTaskInstance:
+         assert producer_event.extra == {}
+         assert producer_event.source_aliases[0].name == dsa_name_1
+ 
++        ds_obj = session.scalar(select(DatasetModel).where(DatasetModel.uri == ds_uri))
++        assert len(ds_obj.aliases) == 1
++        assert ds_obj.aliases[0].name == dsa_name_1
++
++        dsa_obj = session.scalar(select(DatasetAliasModel).where(DatasetAliasModel.name == dsa_name_1))
++        assert len(dsa_obj.datasets) == 1
++        assert dsa_obj.datasets[0].uri == ds_uri
++
+     def test_outlet_multiple_dataset_alias(self, dag_maker, session):
+         from airflow.datasets import Dataset, DatasetAlias
+ 
+@@ -2545,24 +2553,32 @@ class TestTaskInstance:
+                 assert len(producer_event.source_aliases) == 1
+                 assert producer_event.source_aliases[0].name == dsa_name_3
+ 
++        ds_obj = session.scalar(select(DatasetModel).where(DatasetModel.uri == ds_uri))
++        assert len(ds_obj.aliases) == 3
++        assert {alias.name for alias in ds_obj.aliases} == {dsa_name_1, dsa_name_2, dsa_name_3}
++
++        dsa_objs = session.scalars(select(DatasetAliasModel)).all()
++        assert len(dsa_objs) == 3
++        for dsa_obj in dsa_objs:
++            assert len(dsa_obj.datasets) == 1
++            assert dsa_obj.datasets[0].uri == ds_uri
++
+     def test_outlet_dataset_alias_through_metadata(self, dag_maker, session):
+         from airflow.datasets import DatasetAlias
+         from airflow.datasets.metadata import Metadata
+ 
++        ds_uri = "test_outlet_dataset_alias_through_metadata_ds"
+         dsa_name = "test_outlet_dataset_alias_through_metadata_dsa"
+ 
+         ds1 = DatasetModel(id=1, uri="test_outlet_dataset_alias_through_metadata_ds")
+         session.add(ds1)
+         session.commit()
++
+         with dag_maker(dag_id="producer_dag", schedule=None, session=session) as dag:
+ 
+             @task(outlets=DatasetAlias(dsa_name))
+             def producer(*, outlet_events):
+-                yield Metadata(
+-                    "test_outlet_dataset_alias_through_metadata_ds",
+-                    extra={"key": "value"},
+-                    alias=dsa_name,
+-                )
++                yield Metadata(ds_uri, extra={"key": "value"}, alias=dsa_name)
+ 
+             producer()
+ 
+@@ -2572,28 +2588,36 @@ class TestTaskInstance:
+             ti.refresh_from_task(dag.get_task(ti.task_id))
+             ti.run(session=session)
+ 
+-        producer_event = dict(iter(session.execute(select(DatasetEvent.source_task_id, DatasetEvent))))[
+-            "producer"
+-        ]
++        producer_event = session.scalar(select(DatasetEvent).where(DatasetEvent.source_task_id == "producer"))
+ 
+         assert producer_event.source_task_id == "producer"
+         assert producer_event.source_dag_id == "producer_dag"
+         assert producer_event.source_run_id == "test"
+         assert producer_event.source_map_index == -1
+-        assert producer_event.dataset.uri == "test_outlet_dataset_alias_through_metadata_ds"
++        assert producer_event.dataset.uri == ds_uri
+         assert producer_event.extra == {"key": "value"}
+         assert len(producer_event.source_aliases) == 1
+         assert producer_event.source_aliases[0].name == dsa_name
+ 
++        ds_obj = session.scalar(select(DatasetModel).where(DatasetModel.uri == ds_uri))
++        assert len(ds_obj.aliases) == 1
++        assert ds_obj.aliases[0].name == dsa_name
++
++        dsa_obj = session.scalar(select(DatasetAliasModel))
++        assert len(dsa_obj.datasets) == 1
++        assert dsa_obj.datasets[0].uri == ds_uri
++
+     def test_outlet_dataset_alias_dataset_not_exists(self, dag_maker, session):
+         from airflow.datasets import Dataset, DatasetAlias
+ 
+         dsa_name = "test_outlet_dataset_alias_dataset_not_exists_dsa"
++        ds_uri = "did_not_exists"
++
+         with dag_maker(dag_id="producer_dag", schedule=None, session=session) as dag:
+ 
+             @task(outlets=DatasetAlias(dsa_name))
+             def producer(*, outlet_events):
+-                outlet_events[dsa_name].add(Dataset("did_not_exists"), extra={"key": "value"})
++                outlet_events[dsa_name].add(Dataset(ds_uri), extra={"key": "value"})
+ 
+             producer()
+ 
+@@ -2603,19 +2627,25 @@ class TestTaskInstance:
+             ti.refresh_from_task(dag.get_task(ti.task_id))
+             ti.run(session=session)
+ 
+-        producer_event = dict(iter(session.execute(select(DatasetEvent.source_task_id, DatasetEvent))))[
+-            "producer"
+-        ]
++        producer_event = session.scalar(select(DatasetEvent).where(DatasetEvent.source_task_id == "producer"))
+ 
+         assert producer_event.source_task_id == "producer"
+         assert producer_event.source_dag_id == "producer_dag"
+         assert producer_event.source_run_id == "test"
+         assert producer_event.source_map_index == -1
+-        assert producer_event.dataset.uri == "did_not_exists"
++        assert producer_event.dataset.uri == ds_uri
+         assert producer_event.extra == {"key": "value"}
+         assert len(producer_event.source_aliases) == 1
+         assert producer_event.source_aliases[0].name == dsa_name
+ 
++        ds_obj = session.scalar(select(DatasetModel).where(DatasetModel.uri == ds_uri))
++        assert len(ds_obj.aliases) == 1
++        assert ds_obj.aliases[0].name == dsa_name
++
++        dsa_obj = session.scalar(select(DatasetAliasModel))
++        assert len(dsa_obj.datasets) == 1
++        assert dsa_obj.datasets[0].uri == ds_uri
++
+     def test_inlet_dataset_extra(self, dag_maker, session):
+         from airflow.datasets import Dataset
+ 
+diff --git a/tests/test_utils/db.py b/tests/test_utils/db.py
+index b5ef1c57fb..1d91edea55 100644
+--- a/tests/test_utils/db.py
++++ b/tests/test_utils/db.py
+@@ -40,6 +40,7 @@ from airflow.models.dagcode import DagCode
+ from airflow.models.dagwarning import DagWarning
+ from airflow.models.dataset import (
+     DagScheduleDatasetReference,
++    DatasetAliasModel,
+     DatasetDagRunQueue,
+     DatasetEvent,
+     DatasetModel,
+@@ -73,6 +74,7 @@ def clear_db_datasets():
+         session.query(DatasetDagRunQueue).delete()
+         session.query(DagScheduleDatasetReference).delete()
+         session.query(TaskOutletDatasetReference).delete()
++        session.query(DatasetAliasModel).delete()
+ 
+ 
+ def clear_db_dags():
+diff --git a/tests/timetables/test_datasets_timetable.py b/tests/timetables/test_datasets_timetable.py
+index 68928a568d..6f77cb3b0c 100644
+--- a/tests/timetables/test_datasets_timetable.py
++++ b/tests/timetables/test_datasets_timetable.py
+@@ -18,18 +18,21 @@
+ 
+ from __future__ import annotations
+ 
+-from typing import Any
++from typing import TYPE_CHECKING, Any
+ 
+ import pytest
+ from pendulum import DateTime
+ 
+-from airflow.datasets import Dataset
+-from airflow.models.dataset import DatasetEvent
++from airflow.datasets import Dataset, DatasetAlias
++from airflow.models.dataset import DatasetAliasModel, DatasetEvent, DatasetModel
+ from airflow.timetables.base import DagRunInfo, DataInterval, TimeRestriction, Timetable
+ from airflow.timetables.datasets import DatasetOrTimeSchedule
+ from airflow.timetables.simple import DatasetTriggeredTimetable
+ from airflow.utils.types import DagRunType
+ 
++if TYPE_CHECKING:
++    from sqlalchemy import Session
++
+ 
+ class MockTimetable(Timetable):
+     """
+@@ -253,3 +256,22 @@ def test_run_ordering_inheritance(dataset_timetable: DatasetOrTimeSchedule) -> N
+     assert (
+         dataset_timetable.run_ordering == parent_run_ordering
+     ), "run_ordering does not match the parent class"
++
++
++@pytest.mark.db_test
++def test_summary(session: Session) -> None:
++    dataset_model = DatasetModel(uri="test_dataset")
++    dataset_alias_model = DatasetAliasModel(name="test_dataset_alias")
++    session.add_all([dataset_model, dataset_alias_model])
++    session.commit()
++
++    dataset_alias = DatasetAlias("test_dataset_alias")
++    table = DatasetTriggeredTimetable(dataset_alias)
++    assert table.summary == "unresolved DatasetAlias"
++
++    dataset_alias_model.datasets.append(dataset_model)
++    session.add(dataset_alias_model)
++    session.commit()
++
++    table = DatasetTriggeredTimetable(dataset_alias)
++    assert table.summary == "Dataset"

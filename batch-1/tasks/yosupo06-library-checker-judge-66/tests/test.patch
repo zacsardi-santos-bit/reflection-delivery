@@ -1,0 +1,159 @@
+diff --git a/api/main_test.go b/api/main_test.go
+new file mode 100644
+index 0000000..9d8dc1a
+--- /dev/null
++++ b/api/main_test.go
+@@ -0,0 +1,64 @@
++package main
++
++import (
++	"os"
++	"strings"
++	"google.golang.org/grpc"
++	pb "github.com/yosupo06/library-checker-judge/api/proto"
++	"testing"
++	"context"
++	"log"
++)
++
++var client pb.LibraryCheckerServiceClient
++
++func TestLangList(t *testing.T) {
++	ctx := context.Background()
++	list, err := client.LangList(ctx, &pb.LangListRequest{})
++	if err != nil {
++		t.Fatal(err)
++	}
++	if len(list.Langs) == 0 {
++		t.Fatal(err)
++	}
++}
++
++func TestSubmitBig(t *testing.T) {
++	ctx := context.Background()
++	bigSrc := strings.Repeat("a", 3 * 1000 * 1000) // 3 MB
++	_, err := client.Submit(ctx, &pb.SubmitRequest{
++		Problem: "aplusb",
++		Source: bigSrc,
++		Lang: "cpp",
++	})	
++	if err == nil {
++		t.Fatal("Success to submit big source")
++	}
++	t.Log(err)
++}
++
++type loginCreds struct{}
++
++func (c *loginCreds) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
++	dict := map[string]string{}
++	if token, ok := ctx.Value("token").(string); ok && token != "" {
++		dict["authorization"] = "bearer " + token
++	}
++	return dict, nil
++}
++
++func (c *loginCreds) RequireTransportSecurity() bool {
++	return false
++}
++
++func TestMain(m *testing.M) {
++	options := []grpc.DialOption{grpc.WithBlock(), grpc.WithPerRPCCredentials(&loginCreds{}), grpc.WithInsecure()}
++	conn, err := grpc.Dial("localhost:50051", options...)
++	if err != nil {
++		log.Fatal(err)
++	}
++	defer conn.Close()
++	client = pb.NewLibraryCheckerServiceClient(conn)
++
++	os.Exit(m.Run())
++}
+diff --git a/test/cloudbuild.yaml b/test/cloudbuild.yaml
+index 47ff2a5..a92e544 100644
+--- a/test/cloudbuild.yaml
++++ b/test/cloudbuild.yaml
+@@ -1,10 +1,22 @@
+ steps:
++  - id: clone-problems
++    name:	gcr.io/cloud-builders/git
++    volumes:
++    - name: library-checker-problems
++      path: /library-checker-problems
++    dir: /
++    args:
++      - clone
++      - https://github.com/yosupo06/library-checker-problems/
+   - id: test
+     name:	gcr.io/cloud-builders/gcloud
++    volumes:
++    - name: library-checker-problems
++      path: /library-checker-problems
+     entrypoint: bash
++    dir: test
+     args:
+-      - '-c'
+-      - 'cd test && ./gce_test.sh'
++      - './gce_test.sh'
+     env:
+       - 'TEST_COMMIT=$COMMIT_SHA'
+ 
+diff --git a/test/gce_test.sh b/test/gce_test.sh
+index aec4f2c..d6f9e5b 100755
+--- a/test/gce_test.sh
++++ b/test/gce_test.sh
+@@ -2,7 +2,7 @@
+ 
+ set -e
+ 
+-NAME=lib-judge-test-$(cat /dev/urandom | tr -d -c '[:lower:]' | fold -w 10 | head -n 1)
++NAME=lib-judge-test-$(cat /dev/urandom | LC_CTYPE=C tr -d -c '[:lower:]' | fold -w 10 | head -n 1)
+ ZONE=asia-northeast1-c
+ 
+ echo "Create ${NAME}"
+@@ -34,24 +34,41 @@ until gcpexec "ls /root/can_start > /dev/null"; do
+     sleep 10
+ done
+ 
++echo "Make problems.tar.gz(compressed library-checker-problems)"
++(cd ../../library-checker-problems && tar -cf problems.tar.gz $(git ls-files))
++echo "Copy problems.tar.gz"
++gcpexec "cd /root/ && mkdir library-checker-problems"
++gcloud compute scp --zone ${ZONE} ../../library-checker-problems/problems.tar.gz root@${NAME}:/root/library-checker-problems/problems.tar.gz
++echo "Extract problems.tar.gx"
++gcpexec "cd /root/library-checker-problems && tar -xf problems.tar.gz"
++
++echo "Install pip"
++gcpexec "cd /root/library-checker-problems && pip3 install -r requirements.txt"
++
+ echo "Copy library-checker-judge : $(cd .. && pwd)"
+ gcloud compute scp --zone ${ZONE} --recurse $(cd .. && pwd) root@${NAME}:/root/library-checker-judge
+ 
++echo "Install pip"
++gcpexec "pip3 install psutil psycopg2"
++
+ echo "Make Secret"
+ gcpexec "cd /root/library-checker-judge/judge && ./make_secret.sh"
+ 
+ echo "Install compilers"
+-gcpexec "cd /root/library-checker-judge/compiler && ./install.sh"
+-
+-echo 'Start generate.py test'
+-gcpexec "ulimit -s unlimited && cd /root/library-checker-problems && ./generate.py problems.toml"
++gcpexec "cd /root/library-checker-judge/deploy && ./install.sh"
+ 
+ echo 'Start executor.py test'
+ gcpexec "cd /root/library-checker-judge/judge/executor && ./executor_test.py"
+ 
++echo 'Start generate.py test'
++gcpexec "ulimit -s unlimited && cd /root/library-checker-problems && ./generate.py problems.toml"
++
+ echo 'Start docker test'
+-gcpexec "cd /root/library-checker-judge/local && ./launch.sh"
++gcpexec "cd /root/library-checker-judge && ./launch_local.sh"
+ 
+ echo 'Start judge test'
+ gcpexec "cd /root/library-checker-judge/judge && go test . -v"
+ 
++echo 'Start API test'
++gcpexec "cd /root/library-checker-judge/api && go test ."
++

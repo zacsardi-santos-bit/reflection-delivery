@@ -1,0 +1,9 @@
+diff --git a/CODE-OF-CONDUCT.md b/CODE-OF-CONDUCT.md
+index 1234567..abcdefg 100644
+--- a/CODE-OF-CONDUCT.md
++++ b/CODE-OF-CONDUCT.md
+@@ -3,3 +3,4 @@
+ This project has adopted the code of conduct defined by the Contributor Covenant
+ to clarify expected behavior in our community.
+ For more information, see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
++

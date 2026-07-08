@@ -1,0 +1,24 @@
+diff --git a/pkg/ingress/ingress_test.go b/pkg/ingress/ingress_test.go
+--- a/pkg/ingress/ingress_test.go
++++ b/pkg/ingress/ingress_test.go
+@@ -3,7 +3,8 @@ package ingress
+ import (
++	"os"
+ 	"reflect"
+ 	"testing"
+
+ 	networkingv1 "k8s.io/api/networking/v1"
+ 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ )
+@@ -58,3 +59,11 @@ func TestIngressWithClass(t *testing.T) {
+ 		})
+ 	}
+ }
++
++func TestActivitiesApiDevNoIrsaFile(t *testing.T) {
++	irsaPath := "../../namespaces/live.cloud-platform.service.justice.gov.uk/activities-api-dev/resources/irsa.tf"
++	_, err := os.Stat(irsaPath)
++	if err == nil {
++		t.Errorf("irsa.tf should not exist in activities-api-dev namespace: file found at %s", irsaPath)
++	}
++}

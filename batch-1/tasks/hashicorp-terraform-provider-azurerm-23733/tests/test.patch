@@ -1,0 +1,1362 @@
+diff --git a/internal/services/netapp/netapp_account_data_source_test.go b/internal/services/netapp/netapp_account_data_source_test.go
+index eb3a972c03..fc66691291 100644
+--- a/internal/services/netapp/netapp_account_data_source_test.go
++++ b/internal/services/netapp/netapp_account_data_source_test.go
+@@ -13,7 +13,7 @@ import (
+ 
+ type NetAppAccountDataSource struct{}
+ 
+-func testAccDataSourceNetAppAccount_basic(t *testing.T) {
++func TestAccDataSourceNetAppAccount_basic(t *testing.T) {
+ 	data := acceptance.BuildTestData(t, "data.azurerm_netapp_account", "test")
+ 	r := NetAppAccountDataSource{}
+ 
+@@ -28,6 +28,22 @@ func testAccDataSourceNetAppAccount_basic(t *testing.T) {
+ 	})
+ }
+ 
++func TestAccDataSourceNetAppAccount_systemAssignedManagedIdentity(t *testing.T) {
++	data := acceptance.BuildTestData(t, "data.azurerm_netapp_account", "test")
++	r := NetAppAccountDataSource{}
++
++	data.DataSourceTest(t, []acceptance.TestStep{
++		{
++			Config: r.systemAssignedManagedIdentityConfig(data),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).Key("resource_group_name").Exists(),
++				check.That(data.ResourceName).Key("name").Exists(),
++				check.That(data.ResourceName).Key("identity.0.type").HasValue("SystemAssigned"),
++			),
++		},
++	})
++}
++
+ func (r NetAppAccountDataSource) basicConfig(data acceptance.TestData) string {
+ 	return fmt.Sprintf(`
+ %s
+@@ -38,3 +54,14 @@ data "azurerm_netapp_account" "test" {
+ }
+ `, NetAppAccountResource{}.basicConfig(data))
+ }
++
++func (r NetAppAccountDataSource) systemAssignedManagedIdentityConfig(data acceptance.TestData) string {
++	return fmt.Sprintf(`
++%s
++
++data "azurerm_netapp_account" "test" {
++  resource_group_name = azurerm_netapp_account.test.resource_group_name
++  name                = azurerm_netapp_account.test.name
++}
++`, NetAppAccountResource{}.systemAssignedManagedIdentity(data))
++}
+diff --git a/internal/services/netapp/netapp_account_encryption_data_source_test.go b/internal/services/netapp/netapp_account_encryption_data_source_test.go
+new file mode 100644
+index 0000000000..f678038945
+--- /dev/null
++++ b/internal/services/netapp/netapp_account_encryption_data_source_test.go
+@@ -0,0 +1,43 @@
++// Copyright (c) HashiCorp, Inc.
++// SPDX-License-Identifier: MPL-2.0
++
++package netapp_test
++
++import (
++	"fmt"
++	"os"
++	"testing"
++
++	"github.com/hashicorp/terraform-provider-azurerm/internal/acceptance"
++	"github.com/hashicorp/terraform-provider-azurerm/internal/acceptance/check"
++)
++
++type NetAppAccountEncryptionDataSource struct{}
++
++func TestAccNetAppAccountEncryptionDataSource_basic(t *testing.T) {
++	data := acceptance.BuildTestData(t, "data.azurerm_netapp_account_encryption", "test")
++	d := NetAppAccountEncryptionDataSource{}
++
++	tenantID := os.Getenv("ARM_TENANT_ID")
++
++	data.DataSourceTest(t, []acceptance.TestStep{
++		{
++			Config: d.basic(data, tenantID),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).Key("netapp_account_id").Exists(),
++				check.That(data.ResourceName).Key("system_assigned_identity_principal_id").IsSet(),
++				check.That(data.ResourceName).Key("encryption_key").IsSet(),
++			),
++		},
++	})
++}
++
++func (d NetAppAccountEncryptionDataSource) basic(data acceptance.TestData, tenantID string) string {
++	return fmt.Sprintf(`
++%s
++
++data "azurerm_netapp_account_encryption" "test" {
++  netapp_account_id = azurerm_netapp_account_encryption.test.netapp_account_id
++}
++`, NetAppAccountEncryptionResource{}.cmkSystemAssigned(data, tenantID))
++}
+diff --git a/internal/services/netapp/netapp_account_encryption_resource_test.go b/internal/services/netapp/netapp_account_encryption_resource_test.go
+new file mode 100644
+index 0000000000..2e7012ea74
+--- /dev/null
++++ b/internal/services/netapp/netapp_account_encryption_resource_test.go
+@@ -0,0 +1,535 @@
++// Copyright (c) HashiCorp, Inc.
++// SPDX-License-Identifier: MPL-2.0
++
++package netapp_test
++
++import (
++	"context"
++	"fmt"
++	"os"
++	"regexp"
++	"testing"
++
++	"github.com/hashicorp/go-azure-sdk/resource-manager/netapp/2023-05-01/netappaccounts"
++	"github.com/hashicorp/terraform-plugin-testing/terraform"
++	"github.com/hashicorp/terraform-provider-azurerm/internal/acceptance"
++	"github.com/hashicorp/terraform-provider-azurerm/internal/acceptance/check"
++	"github.com/hashicorp/terraform-provider-azurerm/internal/clients"
++	"github.com/hashicorp/terraform-provider-azurerm/utils"
++)
++
++type NetAppAccountEncryptionResource struct{}
++
++func TestAccNetAppAccountEncryption_cmkSystemAssigned(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_account_encryption", "test")
++	r := NetAppAccountEncryptionResource{}
++
++	tenantID := os.Getenv("ARM_TENANT_ID")
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.cmkSystemAssigned(data, tenantID),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++				check.That(data.ResourceName).Key("encryption_key").IsSet(),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
++func TestAccNetAppAccountEncryption_cmkUserAssigned(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_account_encryption", "test")
++	r := NetAppAccountEncryptionResource{}
++
++	tenantID := os.Getenv("ARM_TENANT_ID")
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.cmkUserAssigned(data, tenantID),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++				check.That(data.ResourceName).Key("encryption_key").IsSet(),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
++func TestAccNetAppAccountEncryption_updateKey(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_account_encryption", "test")
++	r := NetAppAccountEncryptionResource{}
++
++	tenantID := os.Getenv("ARM_TENANT_ID")
++
++	regexInitialKey := regexp.MustCompile(`anfenckey\d+$`)
++	regexNewKey := regexp.MustCompile(`.*anfenckey-new.*`)
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.keyUpdate1(data, tenantID),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++				check.That(data.ResourceName).Key("encryption_key").MatchesRegex(regexInitialKey),
++			),
++		},
++		data.ImportStep(),
++		{
++			Config: r.keyUpdate2(data, tenantID),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++				check.That(data.ResourceName).Key("encryption_key").MatchesRegex(regexNewKey),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
++func (t NetAppAccountEncryptionResource) Exists(ctx context.Context, clients *clients.Client, state *terraform.InstanceState) (*bool, error) {
++	id, err := netappaccounts.ParseNetAppAccountID(state.ID)
++	if err != nil {
++		return nil, err
++	}
++
++	resp, err := clients.NetApp.AccountClient.AccountsGet(ctx, *id)
++	if err != nil {
++		return nil, fmt.Errorf("reading Netapp Account (%s): %+v", id.String(), err)
++	}
++
++	return utils.Bool(resp.Model != nil), nil
++}
++
++func (r NetAppAccountEncryptionResource) cmkSystemAssigned(data acceptance.TestData, tenantID string) string {
++	return fmt.Sprintf(`
++%[1]s
++
++data "azurerm_client_config" "current" {
++}
++
++resource "azurerm_key_vault" "test" {
++  name                            = "anfakv%[2]d"
++  location                        = azurerm_resource_group.test.location
++  resource_group_name             = azurerm_resource_group.test.name
++  enabled_for_disk_encryption     = true
++  enabled_for_deployment          = true
++  enabled_for_template_deployment = true
++  purge_protection_enabled        = true
++  tenant_id                       = "%[3]s"
++
++  sku_name = "standard"
++}
++
++resource "azurerm_key_vault_access_policy" "test-currentuser" {
++  key_vault_id = azurerm_key_vault.test.id
++  tenant_id    = azurerm_netapp_account.test.identity.0.tenant_id
++  object_id    = data.azurerm_client_config.current.object_id
++
++  key_permissions = [
++    "Get",
++    "Create",
++    "Delete",
++    "WrapKey",
++    "UnwrapKey",
++    "GetRotationPolicy",
++    "SetRotationPolicy",
++  ]
++}
++
++resource "azurerm_key_vault_key" "test" {
++  name         = "anfenckey%[2]d"
++  key_vault_id = azurerm_key_vault.test.id
++  key_type     = "RSA"
++  key_size     = 2048
++
++  key_opts = [
++    "decrypt",
++    "encrypt",
++    "sign",
++    "unwrapKey",
++    "verify",
++    "wrapKey",
++  ]
++
++  depends_on = [
++    azurerm_key_vault_access_policy.test-currentuser
++  ]
++}
++
++resource "azurerm_netapp_account" "test" {
++  name                = "acctest-NetAppAccount-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++
++  identity {
++    type = "SystemAssigned"
++  }
++}
++
++resource "azurerm_key_vault_access_policy" "test-systemassigned" {
++  key_vault_id = azurerm_key_vault.test.id
++  tenant_id    = azurerm_netapp_account.test.identity.0.tenant_id
++  object_id    = azurerm_netapp_account.test.identity.0.principal_id
++
++  key_permissions = [
++    "Get",
++    "Encrypt",
++    "Decrypt"
++  ]
++}
++
++resource "azurerm_netapp_account_encryption" "test" {
++  netapp_account_id = azurerm_netapp_account.test.id
++
++  system_assigned_identity_principal_id = azurerm_netapp_account.test.identity.0.principal_id
++
++  encryption_key = azurerm_key_vault_key.test.versionless_id
++
++  depends_on = [
++    azurerm_key_vault_access_policy.test-systemassigned
++  ]
++}
++`, r.template(data), data.RandomInteger, tenantID)
++}
++
++func (r NetAppAccountEncryptionResource) cmkUserAssigned(data acceptance.TestData, tenantID string) string {
++	return fmt.Sprintf(`
++%[1]s
++
++resource "azurerm_user_assigned_identity" "test" {
++  name                = "user-assigned-identity-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++}
++
++data "azurerm_client_config" "current" {
++}
++
++resource "azurerm_key_vault" "test" {
++  name                            = "anfakv%[2]d"
++  location                        = azurerm_resource_group.test.location
++  resource_group_name             = azurerm_resource_group.test.name
++  enabled_for_disk_encryption     = true
++  enabled_for_deployment          = true
++  enabled_for_template_deployment = true
++  purge_protection_enabled        = true
++  tenant_id                       = "%[3]s"
++
++  sku_name = "standard"
++
++  access_policy {
++    tenant_id = "%[3]s"
++    object_id = data.azurerm_client_config.current.object_id
++
++    key_permissions = [
++      "Get",
++      "Create",
++      "Delete",
++      "WrapKey",
++      "UnwrapKey",
++      "GetRotationPolicy",
++      "SetRotationPolicy",
++    ]
++  }
++
++  access_policy {
++    tenant_id = "%[3]s"
++    object_id = azurerm_user_assigned_identity.test.principal_id
++
++    key_permissions = [
++      "Get",
++      "Encrypt",
++      "Decrypt"
++    ]
++  }
++}
++
++resource "azurerm_key_vault_key" "test" {
++  name         = "anfenckey%[2]d"
++  key_vault_id = azurerm_key_vault.test.id
++  key_type     = "RSA"
++  key_size     = 2048
++
++  key_opts = [
++    "decrypt",
++    "encrypt",
++    "sign",
++    "unwrapKey",
++    "verify",
++    "wrapKey",
++  ]
++}
++
++resource "azurerm_netapp_account" "test" {
++  name                = "acctest-NetAppAccount-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++
++  identity {
++    type = "UserAssigned"
++    identity_ids = [
++      azurerm_user_assigned_identity.test.id
++    ]
++  }
++}
++
++resource "azurerm_netapp_account_encryption" "test" {
++  netapp_account_id = azurerm_netapp_account.test.id
++
++  user_assigned_identity_id = azurerm_user_assigned_identity.test.id
++
++  encryption_key = azurerm_key_vault_key.test.versionless_id
++}
++`, r.template(data), data.RandomInteger, tenantID)
++}
++
++func (r NetAppAccountEncryptionResource) keyUpdate1(data acceptance.TestData, tenantID string) string {
++	return fmt.Sprintf(`
++%[1]s
++
++data "azurerm_client_config" "current" {
++}
++
++resource "azurerm_key_vault" "test" {
++  name                            = "anfakv%[2]d"
++  location                        = azurerm_resource_group.test.location
++  resource_group_name             = azurerm_resource_group.test.name
++  enabled_for_disk_encryption     = true
++  enabled_for_deployment          = true
++  enabled_for_template_deployment = true
++  purge_protection_enabled        = true
++  tenant_id                       = "%[3]s"
++
++  sku_name = "standard"
++}
++
++resource "azurerm_key_vault_access_policy" "test-currentuser" {
++  key_vault_id = azurerm_key_vault.test.id
++  tenant_id    = azurerm_netapp_account.test.identity.0.tenant_id
++  object_id    = data.azurerm_client_config.current.object_id
++
++  key_permissions = [
++    "Get",
++    "Create",
++    "Delete",
++    "WrapKey",
++    "UnwrapKey",
++    "GetRotationPolicy",
++    "SetRotationPolicy",
++  ]
++}
++
++resource "azurerm_key_vault_key" "test" {
++  name         = "anfenckey%[2]d"
++  key_vault_id = azurerm_key_vault.test.id
++  key_type     = "RSA"
++  key_size     = 2048
++
++  key_opts = [
++    "decrypt",
++    "encrypt",
++    "sign",
++    "unwrapKey",
++    "verify",
++    "wrapKey",
++  ]
++
++  depends_on = [
++    azurerm_key_vault_access_policy.test-currentuser
++  ]
++}
++
++resource "azurerm_key_vault_key" "test-new-key" {
++  name         = "anfenckey-new%[2]d"
++  key_vault_id = azurerm_key_vault.test.id
++  key_type     = "RSA"
++  key_size     = 2048
++
++  key_opts = [
++    "decrypt",
++    "encrypt",
++    "sign",
++    "unwrapKey",
++    "verify",
++    "wrapKey",
++  ]
++
++  depends_on = [
++    azurerm_key_vault_key.test,
++    azurerm_key_vault_access_policy.test-currentuser
++  ]
++}
++
++resource "azurerm_netapp_account" "test" {
++  name                = "acctest-NetAppAccount-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++
++  identity {
++    type = "SystemAssigned"
++  }
++}
++
++resource "azurerm_key_vault_access_policy" "test-systemassigned" {
++  key_vault_id = azurerm_key_vault.test.id
++  tenant_id    = azurerm_netapp_account.test.identity.0.tenant_id
++  object_id    = azurerm_netapp_account.test.identity.0.principal_id
++
++  key_permissions = [
++    "Get",
++    "Encrypt",
++    "Decrypt"
++  ]
++}
++
++resource "azurerm_netapp_account_encryption" "test" {
++  netapp_account_id = azurerm_netapp_account.test.id
++
++  system_assigned_identity_principal_id = azurerm_netapp_account.test.identity.0.principal_id
++
++  encryption_key = azurerm_key_vault_key.test.versionless_id
++
++  depends_on = [
++    azurerm_key_vault_access_policy.test-systemassigned
++  ]
++}
++`, r.template(data), data.RandomInteger, tenantID)
++}
++
++func (r NetAppAccountEncryptionResource) keyUpdate2(data acceptance.TestData, tenantID string) string {
++	return fmt.Sprintf(`
++%[1]s
++
++data "azurerm_client_config" "current" {
++}
++
++resource "azurerm_key_vault" "test" {
++  name                            = "anfakv%[2]d"
++  location                        = azurerm_resource_group.test.location
++  resource_group_name             = azurerm_resource_group.test.name
++  enabled_for_disk_encryption     = true
++  enabled_for_deployment          = true
++  enabled_for_template_deployment = true
++  purge_protection_enabled        = true
++  tenant_id                       = "%[3]s"
++
++  sku_name = "standard"
++}
++
++resource "azurerm_key_vault_access_policy" "test-currentuser" {
++  key_vault_id = azurerm_key_vault.test.id
++  tenant_id    = azurerm_netapp_account.test.identity.0.tenant_id
++  object_id    = data.azurerm_client_config.current.object_id
++
++  key_permissions = [
++    "Get",
++    "Create",
++    "Delete",
++    "WrapKey",
++    "UnwrapKey",
++    "GetRotationPolicy",
++    "SetRotationPolicy",
++  ]
++}
++
++resource "azurerm_key_vault_key" "test" {
++  name         = "anfenckey%[2]d"
++  key_vault_id = azurerm_key_vault.test.id
++  key_type     = "RSA"
++  key_size     = 2048
++
++  key_opts = [
++    "decrypt",
++    "encrypt",
++    "sign",
++    "unwrapKey",
++    "verify",
++    "wrapKey",
++  ]
++
++  depends_on = [
++    azurerm_key_vault_access_policy.test-currentuser
++  ]
++}
++
++resource "azurerm_key_vault_key" "test-new-key" {
++  name         = "anfenckey-new%[2]d"
++  key_vault_id = azurerm_key_vault.test.id
++  key_type     = "RSA"
++  key_size     = 2048
++
++  key_opts = [
++    "decrypt",
++    "encrypt",
++    "sign",
++    "unwrapKey",
++    "verify",
++    "wrapKey",
++  ]
++
++  depends_on = [
++    azurerm_key_vault_key.test,
++    azurerm_key_vault_access_policy.test-currentuser
++  ]
++}
++
++resource "azurerm_netapp_account" "test" {
++  name                = "acctest-NetAppAccount-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++
++  identity {
++    type = "SystemAssigned"
++  }
++}
++
++resource "azurerm_key_vault_access_policy" "test-systemassigned" {
++  key_vault_id = azurerm_key_vault.test.id
++  tenant_id    = azurerm_netapp_account.test.identity.0.tenant_id
++  object_id    = azurerm_netapp_account.test.identity.0.principal_id
++
++  key_permissions = [
++    "Get",
++    "Encrypt",
++    "Decrypt"
++  ]
++}
++
++resource "azurerm_netapp_account_encryption" "test" {
++  netapp_account_id = azurerm_netapp_account.test.id
++
++  system_assigned_identity_principal_id = azurerm_netapp_account.test.identity.0.principal_id
++
++  encryption_key = azurerm_key_vault_key.test-new-key.versionless_id
++
++  depends_on = [
++    azurerm_key_vault_access_policy.test-systemassigned
++  ]
++}
++`, r.template(data), data.RandomInteger, tenantID)
++}
++
++func (NetAppAccountEncryptionResource) template(data acceptance.TestData) string {
++	return fmt.Sprintf(`
++provider "azurerm" {
++  features {
++    resource_group {
++      prevent_deletion_if_contains_resources = false
++    }
++
++    key_vault {
++      purge_soft_delete_on_destroy       = false
++      purge_soft_deleted_keys_on_destroy = false
++    }
++  }
++}
++
++resource "azurerm_resource_group" "test" {
++  name     = "acctestRG-netapp-%[1]d"
++  location = "%[2]s"
++
++  tags = {
++    "SkipNRMSNSG" = "true"
++  }
++}
++`, data.RandomInteger, data.Locations.Primary)
++}
+diff --git a/internal/services/netapp/netapp_account_resource_test.go b/internal/services/netapp/netapp_account_resource_test.go
+index b5100cb2bd..d99bf29571 100644
+--- a/internal/services/netapp/netapp_account_resource_test.go
++++ b/internal/services/netapp/netapp_account_resource_test.go
+@@ -29,9 +29,6 @@ func TestAccNetAppAccount(t *testing.T) {
+ 			"complete":       testAccNetAppAccount_complete,
+ 			"update":         testAccNetAppAccount_update,
+ 		},
+-		"DataSource": {
+-			"basic": testAccDataSourceNetAppAccount_basic,
+-		},
+ 	}
+ 
+ 	for group, m := range testCases {
+@@ -122,6 +119,59 @@ func testAccNetAppAccount_update(t *testing.T) {
+ 	})
+ }
+ 
++func TestAccNetAppAccount_systemAssignedManagedIdentity(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_account", "test")
++	r := NetAppAccountResource{}
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.systemAssignedManagedIdentity(data),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
++func TestAccNetAppAccount_userAssignedManagedIdentity(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_account", "test")
++	r := NetAppAccountResource{}
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.userAssignedManagedIdentity(data),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
++func TestAccNetAppAccount_updateManagedIdentity(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_account", "test")
++	r := NetAppAccountResource{}
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.systemAssignedManagedIdentity(data),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++				check.That(data.ResourceName).Key("identity.0.type").HasValue("SystemAssigned"),
++			),
++		},
++		data.ImportStep(),
++		{
++			Config: r.userAssignedManagedIdentity(data),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).Key("identity.0.type").HasValue("UserAssigned"),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
+ func (t NetAppAccountResource) Exists(ctx context.Context, clients *clients.Client, state *pluginsdk.InstanceState) (*bool, error) {
+ 	id, err := netappaccounts.ParseNetAppAccountID(state.ID)
+ 	if err != nil {
+@@ -136,19 +186,12 @@ func (t NetAppAccountResource) Exists(ctx context.Context, clients *clients.Clie
+ 	return utils.Bool(resp.Model != nil), nil
+ }
+ 
+-func (NetAppAccountResource) basicConfig(data acceptance.TestData) string {
++func (r NetAppAccountResource) basicConfig(data acceptance.TestData) string {
+ 	return fmt.Sprintf(`
+-provider "azurerm" {
+-  features {}
+-}
+-
+-resource "azurerm_resource_group" "test" {
+-  name     = "acctestRG-netapp-%d"
+-  location = "%s"
+-}
++%[1]s
+ 
+ resource "azurerm_netapp_account" "test" {
+-  name                = "acctest-NetAppAccount-%d"
++  name                = "acctest-NetAppAccount-%[2]d"
+   location            = azurerm_resource_group.test.location
+   resource_group_name = azurerm_resource_group.test.name
+ 
+@@ -156,7 +199,7 @@ resource "azurerm_netapp_account" "test" {
+     "CreatedOnDate" = "2022-07-08T23:50:21Z",
+   }
+ }
+-`, data.RandomInteger, data.Locations.Primary, data.RandomInteger)
++`, r.template(data), data.RandomInteger)
+ }
+ 
+ func (r NetAppAccountResource) requiresImportConfig(data acceptance.TestData) string {
+@@ -175,19 +218,12 @@ resource "azurerm_netapp_account" "import" {
+ `, r.basicConfig(data))
+ }
+ 
+-func (NetAppAccountResource) completeConfig(data acceptance.TestData) string {
++func (r NetAppAccountResource) completeConfig(data acceptance.TestData) string {
+ 	return fmt.Sprintf(`
+-provider "azurerm" {
+-  features {}
+-}
+-
+-resource "azurerm_resource_group" "test" {
+-  name     = "acctestRG-netapp-%d"
+-  location = "%s"
+-}
++%[1]s
+ 
+ resource "azurerm_netapp_account" "test" {
+-  name                = "acctest-NetAppAccount-%d"
++  name                = "acctest-NetAppAccount-%[2]d"
+   location            = azurerm_resource_group.test.location
+   resource_group_name = azurerm_resource_group.test.name
+ 
+@@ -205,5 +241,88 @@ resource "azurerm_netapp_account" "test" {
+     "FoO"           = "BaR"
+   }
+ }
+-`, data.RandomInteger, data.Locations.Primary, data.RandomInteger)
++`, r.template(data), data.RandomInteger)
++}
++
++func (r NetAppAccountResource) systemAssignedManagedIdentity(data acceptance.TestData) string {
++	return fmt.Sprintf(`
++%[1]s
++
++resource "azurerm_netapp_account" "test" {
++  name                = "acctest-NetAppAccount-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++
++  identity {
++    type = "SystemAssigned"
++  }
++
++  tags = {
++    "CreatedOnDate" = "2022-07-08T23:50:21Z",
++    "FoO"           = "BaR"
++  }
++}
++`, r.template(data), data.RandomInteger)
++}
++
++func (r NetAppAccountResource) userAssignedManagedIdentity(data acceptance.TestData) string {
++	return fmt.Sprintf(`
++%[1]s
++
++resource "azurerm_user_assigned_identity" "test" {
++  name                = "user-assigned-identity-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++
++  tags = {
++    CreatedOnDate = "2023-10-03T19:58:43.6509795Z"
++  }
++}
++
++resource "azurerm_netapp_account" "test" {
++  name                = "acctest-NetAppAccount-%[2]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++
++  identity {
++    type = "UserAssigned"
++    identity_ids = [
++      azurerm_user_assigned_identity.test.id
++    ]
++  }
++
++  tags = {
++    "CreatedOnDate" = "2022-07-08T23:50:21Z"
++  }
++}
++`, r.template(data), data.RandomInteger)
++}
++
++func (NetAppAccountResource) template(data acceptance.TestData) string {
++	return fmt.Sprintf(`
++provider "azurerm" {
++  features {
++    resource_group {
++      prevent_deletion_if_contains_resources = false
++    }
++
++    key_vault {
++      purge_soft_delete_on_destroy       = false
++      purge_soft_deleted_keys_on_destroy = false
++    }
++  }
++}
++
++resource "azurerm_resource_group" "test" {
++  name     = "acctestRG-netapp-%[1]d"
++  location = "%[2]s"
++
++  tags = {
++    "CreatedOnDate" = "2022-07-08T23:50:21Z",
++    "SkipNRMSNSG"   = "true"
++  }
++}
++
++
++`, data.RandomInteger, data.Locations.Primary)
+ }
+diff --git a/internal/services/netapp/netapp_pool_resource_test.go b/internal/services/netapp/netapp_pool_resource_test.go
+index b389a93286..e9ba6d6eb2 100644
+--- a/internal/services/netapp/netapp_pool_resource_test.go
++++ b/internal/services/netapp/netapp_pool_resource_test.go
+@@ -133,6 +133,10 @@ provider "azurerm" {
+ resource "azurerm_resource_group" "test" {
+   name     = "acctestRG-netapp-%d"
+   location = "%s"
++
++  tags = {
++    "SkipNRMSNSG" = "true"
++  }
+ }
+ 
+ resource "azurerm_netapp_account" "test" {
+@@ -179,6 +183,10 @@ provider "azurerm" {
+ resource "azurerm_resource_group" "test" {
+   name     = "acctestRG-netapp-%d"
+   location = "%s"
++
++  tags = {
++    "SkipNRMSNSG" = "true"
++  }
+ }
+ 
+ resource "azurerm_netapp_account" "test" {
+@@ -218,6 +226,10 @@ provider "azurerm" {
+ resource "azurerm_resource_group" "test" {
+   name     = "acctestRG-netapp-%d"
+   location = "%s"
++
++  tags = {
++    "SkipNRMSNSG" = "true"
++  }
+ }
+ 
+ resource "azurerm_netapp_account" "test" {
+diff --git a/internal/services/netapp/netapp_snapshot_policy_test.go b/internal/services/netapp/netapp_snapshot_policy_test.go
+index 96c5c96b75..6728c2c036 100644
+--- a/internal/services/netapp/netapp_snapshot_policy_test.go
++++ b/internal/services/netapp/netapp_snapshot_policy_test.go
+@@ -385,6 +385,10 @@ provider "azurerm" {
+ resource "azurerm_resource_group" "test" {
+   name     = "acctestRG-netapp-%d"
+   location = "%s"
++
++  tags = {
++    "SkipNRMSNSG" = "true"
++  }
+ }
+ 
+ resource "azurerm_netapp_account" "test" {
+diff --git a/internal/services/netapp/netapp_snapshot_resource_test.go b/internal/services/netapp/netapp_snapshot_resource_test.go
+index edfb040c16..498587b033 100644
+--- a/internal/services/netapp/netapp_snapshot_resource_test.go
++++ b/internal/services/netapp/netapp_snapshot_resource_test.go
+@@ -134,6 +134,10 @@ provider "azurerm" {
+ resource "azurerm_resource_group" "test" {
+   name     = "acctestRG-netapp-%d"
+   location = "%s"
++
++  tags = {
++    "SkipNRMSNSG" = "true"
++  }
+ }
+ 
+ resource "azurerm_virtual_network" "test" {
+diff --git a/internal/services/netapp/netapp_volume_data_source_test.go b/internal/services/netapp/netapp_volume_data_source_test.go
+index 094487b239..9319ae4230 100644
+--- a/internal/services/netapp/netapp_volume_data_source_test.go
++++ b/internal/services/netapp/netapp_volume_data_source_test.go
+@@ -28,6 +28,7 @@ func TestAccDataSourceNetAppVolume_basic(t *testing.T) {
+ 				check.That(data.ResourceName).Key("storage_quota_in_gb").Exists(),
+ 				check.That(data.ResourceName).Key("protocols.0").Exists(),
+ 				check.That(data.ResourceName).Key("mount_ip_addresses.#").HasValue("1"),
++				check.That(data.ResourceName).Key("encryption_key_source").HasValue("Microsoft.NetApp"),
+ 			),
+ 		},
+ 	})
+diff --git a/internal/services/netapp/netapp_volume_resource_test.go b/internal/services/netapp/netapp_volume_resource_test.go
+index 3fdca39497..195da0a711 100644
+--- a/internal/services/netapp/netapp_volume_resource_test.go
++++ b/internal/services/netapp/netapp_volume_resource_test.go
+@@ -147,6 +147,22 @@ func TestAccNetAppVolume_nfsv3SnapshotDirectoryVisibleFalse(t *testing.T) {
+ 	})
+ }
+ 
++func TestAccNetAppVolume_nfsv3SnapshotDirectoryVisibleTrue(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_volume", "test_snapshot_directory_visible_true")
++	r := NetAppVolumeResource{}
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.nfsv3SnapshotDirectoryVisibleTrue(data),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++				check.That(data.ResourceName).Key("snapshot_directory_visible").HasValue("true"),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
+ func TestAccNetAppVolume_requiresImport(t *testing.T) {
+ 	data := acceptance.BuildTestData(t, "azurerm_netapp_volume", "test")
+ 	r := NetAppVolumeResource{}
+@@ -276,6 +292,40 @@ func TestAccNetAppVolume_updateExportPolicyRule(t *testing.T) {
+ 	})
+ }
+ 
++func TestAccNetAppVolume_volEncryptionCmkUserAssigned(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_volume", "test")
++	r := NetAppVolumeResource{}
++
++	tenantID := os.Getenv("ARM_TENANT_ID")
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.volEncryptionCmkUserAssigned(data, tenantID),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
++func TestAccNetAppVolume_volEncryptionCmkSystemAssigned(t *testing.T) {
++	data := acceptance.BuildTestData(t, "azurerm_netapp_volume", "test")
++	r := NetAppVolumeResource{}
++
++	tenantID := os.Getenv("ARM_TENANT_ID")
++
++	data.ResourceTest(t, r, []acceptance.TestStep{
++		{
++			Config: r.volEncryptionCmkSystemAssigned(data, tenantID),
++			Check: acceptance.ComposeTestCheckFunc(
++				check.That(data.ResourceName).ExistsInAzure(r),
++			),
++		},
++		data.ImportStep(),
++	})
++}
++
+ func (t NetAppVolumeResource) Exists(ctx context.Context, clients *clients.Client, state *pluginsdk.InstanceState) (*bool, error) {
+ 	id, err := volumes.ParseVolumeID(state.ID)
+ 	if err != nil {
+@@ -290,6 +340,148 @@ func (t NetAppVolumeResource) Exists(ctx context.Context, clients *clients.Clien
+ 	return utils.Bool(resp.Model != nil), nil
+ }
+ 
++func (NetAppVolumeResource) volEncryptionCmkUserAssigned(data acceptance.TestData, tenantID string) string {
++	cmkUserAssginedTemplate := NetAppAccountEncryptionResource{}.cmkUserAssigned(data, tenantID)
++	networkTemplate := NetAppVolumeResource{}.networkTemplate(data)
++	return fmt.Sprintf(`
++%[1]s
++
++%[2]s
++
++resource "azurerm_private_endpoint" "test" {
++  name                = "acctest-pe-akv-%[3]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++  subnet_id           = azurerm_subnet.test-non-delegated.id
++
++  private_service_connection {
++    name                           = "acctest-pe-sc-akv-%[3]d"
++    private_connection_resource_id = azurerm_key_vault.test.id
++    is_manual_connection           = false
++    subresource_names              = ["Vault"]
++  }
++
++  tags = {
++    CreatedOnDate = "2023-10-03T19:58:43.6509795Z"
++  }
++}
++
++resource "azurerm_netapp_pool" "test" {
++  name                = "acctest-NetAppPool-%[3]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++  account_name        = azurerm_netapp_account.test.name
++  service_level       = "Standard"
++  size_in_tb          = 4
++
++  tags = {
++    "CreatedOnDate"    = "2022-07-08T23:50:21Z",
++    "SkipASMAzSecPack" = "true"
++  }
++
++  depends_on = [
++    azurerm_netapp_account_encryption.test
++  ]
++}
++
++resource "azurerm_netapp_volume" "test" {
++  name                          = "acctest-NetAppVolume-%[3]d"
++  location                      = azurerm_resource_group.test.location
++  resource_group_name           = azurerm_resource_group.test.name
++  account_name                  = azurerm_netapp_account.test.name
++  pool_name                     = azurerm_netapp_pool.test.name
++  volume_path                   = "my-unique-file-path-%[3]d"
++  service_level                 = "Standard"
++  subnet_id                     = azurerm_subnet.test-delegated.id
++  storage_quota_in_gb           = 100
++  network_features              = "Standard"
++  encryption_key_source         = "Microsoft.KeyVault"
++  key_vault_private_endpoint_id = azurerm_private_endpoint.test.id
++
++  tags = {
++    "CreatedOnDate"    = "2022-07-08T23:50:21Z",
++    "SkipASMAzSecPack" = "true"
++  }
++
++  depends_on = [
++    azurerm_netapp_account_encryption.test,
++    azurerm_private_endpoint.test
++  ]
++}
++`, cmkUserAssginedTemplate, networkTemplate, data.RandomInteger)
++}
++
++func (NetAppVolumeResource) volEncryptionCmkSystemAssigned(data acceptance.TestData, tenantID string) string {
++	cmkUserAssginedTemplate := NetAppAccountEncryptionResource{}.cmkSystemAssigned(data, tenantID)
++	networkTemplate := NetAppVolumeResource{}.networkTemplate(data)
++	return fmt.Sprintf(`
++%[1]s
++
++%[2]s
++
++resource "azurerm_private_endpoint" "test" {
++  name                = "acctest-pe-akv-%[3]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++  subnet_id           = azurerm_subnet.test-non-delegated.id
++
++  private_service_connection {
++    name                           = "acctest-pe-sc-akv-%[3]d"
++    private_connection_resource_id = azurerm_key_vault.test.id
++    is_manual_connection           = false
++    subresource_names              = ["Vault"]
++  }
++
++  tags = {
++    CreatedOnDate = "2023-10-03T19:58:43.6509795Z"
++  }
++}
++
++resource "azurerm_netapp_pool" "test" {
++  name                = "acctest-NetAppPool-%[3]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++  account_name        = azurerm_netapp_account.test.name
++  service_level       = "Standard"
++  size_in_tb          = 4
++
++  tags = {
++    "CreatedOnDate"    = "2022-07-08T23:50:21Z",
++    "SkipASMAzSecPack" = "true"
++  }
++
++  depends_on = [
++    azurerm_netapp_account_encryption.test
++  ]
++}
++
++resource "azurerm_netapp_volume" "test" {
++  name                          = "acctest-NetAppVolume-%[3]d"
++  location                      = azurerm_resource_group.test.location
++  resource_group_name           = azurerm_resource_group.test.name
++  account_name                  = azurerm_netapp_account.test.name
++  pool_name                     = azurerm_netapp_pool.test.name
++  volume_path                   = "my-unique-file-path-%[3]d"
++  service_level                 = "Standard"
++  subnet_id                     = azurerm_subnet.test-delegated.id
++  storage_quota_in_gb           = 100
++  network_features              = "Standard"
++  encryption_key_source         = "Microsoft.KeyVault"
++  key_vault_private_endpoint_id = azurerm_private_endpoint.test.id
++
++  tags = {
++    "CreatedOnDate"    = "2022-07-08T23:50:21Z",
++    "SkipASMAzSecPack" = "true"
++  }
++
++  depends_on = [
++    azurerm_netapp_account_encryption.test,
++    azurerm_private_endpoint.test
++  ]
++}
++`, cmkUserAssginedTemplate, networkTemplate, data.RandomInteger)
++}
++
+ func (NetAppVolumeResource) basic(data acceptance.TestData) string {
+ 	template := NetAppVolumeResource{}.template(data)
+ 	return fmt.Sprintf(`
+@@ -455,17 +647,18 @@ func (NetAppVolumeResource) crossRegionReplication(data acceptance.TestData) str
+ %[1]s
+ 
+ resource "azurerm_netapp_volume" "test_primary" {
+-  name                = "acctest-NetAppVolume-primary-%[2]d"
+-  location            = azurerm_resource_group.test.location
+-  resource_group_name = azurerm_resource_group.test.name
+-  account_name        = azurerm_netapp_account.test.name
+-  pool_name           = azurerm_netapp_pool.test.name
+-  volume_path         = "my-unique-file-path-primary-%[2]d"
+-  service_level       = "Standard"
+-  subnet_id           = azurerm_subnet.test.id
+-  protocols           = ["NFSv3"]
+-  storage_quota_in_gb = 100
+-  throughput_in_mibps = 1.562
++  name                       = "acctest-NetAppVolume-primary-%[2]d"
++  location                   = azurerm_resource_group.test.location
++  resource_group_name        = azurerm_resource_group.test.name
++  account_name               = azurerm_netapp_account.test.name
++  pool_name                  = azurerm_netapp_pool.test.name
++  volume_path                = "my-unique-file-path-primary-%[2]d"
++  service_level              = "Standard"
++  subnet_id                  = azurerm_subnet.test.id
++  protocols                  = ["NFSv3"]
++  storage_quota_in_gb        = 100
++  snapshot_directory_visible = false
++  throughput_in_mibps        = 1.562
+ 
+   export_policy_rule {
+     rule_index        = 1
+@@ -588,6 +781,41 @@ resource "azurerm_netapp_volume" "test_snapshot_vol" {
+ `, template, data.RandomInteger)
+ }
+ 
++func (NetAppVolumeResource) nfsv3SnapshotDirectoryVisibleTrue(data acceptance.TestData) string {
++	template := NetAppVolumeResource{}.template(data)
++	return fmt.Sprintf(`
++%[1]s
++
++resource "azurerm_netapp_volume" "test_snapshot_directory_visible_true" {
++  name                       = "acctest-NetAppVolume-%[2]d"
++  location                   = azurerm_resource_group.test.location
++  resource_group_name        = azurerm_resource_group.test.name
++  account_name               = azurerm_netapp_account.test.name
++  pool_name                  = azurerm_netapp_pool.test.name
++  volume_path                = "my-unique-file-path-%[2]d"
++  service_level              = "Standard"
++  subnet_id                  = azurerm_subnet.test.id
++  protocols                  = ["NFSv3"]
++  storage_quota_in_gb        = 100
++  snapshot_directory_visible = true
++  throughput_in_mibps        = 1.562
++
++  export_policy_rule {
++    rule_index        = 1
++    allowed_clients   = ["1.2.3.0/24"]
++    protocols_enabled = ["NFSv3"]
++    unix_read_only    = false
++    unix_read_write   = true
++  }
++
++  tags = {
++    "CreatedOnDate"    = "2022-07-08T23:50:21Z",
++    "SkipASMAzSecPack" = "true"
++  }
++}
++`, template, data.RandomInteger)
++}
++
+ func (NetAppVolumeResource) nfsv3SnapshotDirectoryVisibleFalse(data acceptance.TestData) string {
+ 	template := NetAppVolumeResource{}.template(data)
+ 	return fmt.Sprintf(`
+@@ -1028,6 +1256,7 @@ resource "azurerm_resource_group" "test" {
+   tags = {
+     "CreatedOnDate"    = "2022-07-08T23:50:21Z",
+     "SkipASMAzSecPack" = "true"
++    "SkipNRMSNSG"      = "true"
+   }
+ }
+ 
+@@ -1098,3 +1327,42 @@ resource "azurerm_netapp_pool" "test" {
+ }
+ `, data.RandomInteger, "westus2", data.RandomInteger, data.RandomInteger, data.RandomInteger, data.RandomInteger, data.RandomInteger)
+ }
++
++func (NetAppVolumeResource) networkTemplate(data acceptance.TestData) string {
++	return fmt.Sprintf(`
++resource "azurerm_virtual_network" "test" {
++  name                = "acctest-VirtualNetwork-%[1]d"
++  location            = azurerm_resource_group.test.location
++  resource_group_name = azurerm_resource_group.test.name
++  address_space       = ["10.6.0.0/16"]
++
++  tags = {
++    "CreatedOnDate"    = "2022-07-08T23:50:21Z",
++    "SkipASMAzSecPack" = "true"
++  }
++}
++
++resource "azurerm_subnet" "test-delegated" {
++  name                 = "acctest-Delegated-Subnet-%[1]d"
++  resource_group_name  = azurerm_resource_group.test.name
++  virtual_network_name = azurerm_virtual_network.test.name
++  address_prefixes     = ["10.6.1.0/24"]
++
++  delegation {
++    name = "testdelegation"
++
++    service_delegation {
++      name    = "Microsoft.Netapp/volumes"
++      actions = ["Microsoft.Network/networkinterfaces/*", "Microsoft.Network/virtualNetworks/subnets/join/action"]
++    }
++  }
++}
++
++resource "azurerm_subnet" "test-non-delegated" {
++  name                 = "acctest-Non-Delegated-Subnet-%[1]d"
++  resource_group_name  = azurerm_resource_group.test.name
++  virtual_network_name = azurerm_virtual_network.test.name
++  address_prefixes     = ["10.6.0.0/24"]
++}
++`, data.RandomInteger)
++}
+diff --git a/internal/services/netapp/validate/account_id_test.go b/internal/services/netapp/validate/account_id_test.go
+new file mode 100644
+index 0000000000..443ea97127
+--- /dev/null
++++ b/internal/services/netapp/validate/account_id_test.go
+@@ -0,0 +1,77 @@
++// Copyright (c) HashiCorp, Inc.
++// SPDX-License-Identifier: MPL-2.0
++
++package validate
++
++import "testing"
++
++func TestDataFlowID(t *testing.T) {
++	cases := []struct {
++		Input string
++		Valid bool
++	}{
++
++		{
++			// empty
++			Input: "",
++			Valid: false,
++		},
++
++		{
++			// missing SubscriptionId
++			Input: "/",
++			Valid: false,
++		},
++
++		{
++			// missing value for SubscriptionId
++			Input: "/subscriptions/",
++			Valid: false,
++		},
++
++		{
++			// missing ResourceGroup
++			Input: "/subscriptions/12345678-1234-9876-4563-123456789012/",
++			Valid: false,
++		},
++
++		{
++			// missing value for ResourceGroup
++			Input: "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/",
++			Valid: false,
++		},
++
++		{
++			// missing netAppAccounts
++			Input: "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/resGroup1/providers/Microsoft.NetApp/",
++			Valid: false,
++		},
++
++		{
++			// missing value for Account Name
++			Input: "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/resGroup1/providers/Microsoft.NetApp/netAppAccounts/",
++			Valid: false,
++		},
++
++		{
++			// valid
++			Input: "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/resGroup1/providers/Microsoft.NetApp/netAppAccounts/account1",
++			Valid: true,
++		},
++
++		{
++			// upper-cased
++			Input: "/SUBSCRIPTIONS/12345678-1234-9876-4563-123456789012/RESOURCEGROUPS/RESGROUP1/PROVIDERS/MICROSOFT.NETAPP/NETAPPACCOUNTS/ACCOUNT1",
++			Valid: false,
++		},
++	}
++	for _, tc := range cases {
++		t.Logf("[DEBUG] Testing Value %s", tc.Input)
++		_, errors := ValidateNetAppAccountID(tc.Input, "test")
++		valid := len(errors) == 0
++
++		if tc.Valid != valid {
++			t.Fatalf("Expected %t but got %t", tc.Valid, valid)
++		}
++	}
++}

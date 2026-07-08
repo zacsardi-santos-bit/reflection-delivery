@@ -1,0 +1,8 @@
+diff --git a/codex-rs/README.md b/codex-rs/README.md
+--- a/codex-rs/README.md
++++ b/codex-rs/README.md
+@@ -1,4 +1,5 @@
++
+ # Codex CLI (Rust Implementation)
+
+ We provide Codex CLI as a standalone executable to ensure a zero-dependency install.

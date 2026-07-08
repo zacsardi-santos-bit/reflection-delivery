@@ -1,13 +1,7 @@
-I'm working on the Braintree Android SDK's 3D Secure module and need to address several robustness and API consistency issues.
+I'm digging into the Braintree Android SDK's 3D Secure module and hitting a bunch of null-safety and API consistency rough edges that make failures really hard to diagnose. Basically when required objects go missing mid-flow the SDK just falls over without telling anyone what happened, so I want to tighten a few things up.
 
-First, when the lookup continuation step is called without a challenge observer, the code currently doesn't guard against this null case. It should throw a clear exception immediately with a descriptive message instead of proceeding in an undefined state.
+First, in the lookup continuation step, when it's called without a challenge observer the code just barrels ahead in an undefined state. I want it to throw a clear exception right away with a descriptive message instead. Second, during tokenization, if the payment authentication result is missing either the security parameters object or the authentication token, I want it to catch that early and return a descriptive failure result rather than crashing later, and it should record the right failure analytics events while it's at it.
 
-Second, during the tokenization step, if the payment authentication result is missing either the security parameters object or the authentication token, the code should detect this early and return a descriptive failure result, while also recording the appropriate failure analytics events — rather than proceeding and likely crashing.
+Third, the method we use to send HTTP POST requests all over the module got its signature changed so there's now an extra map of headers sitting between the body and the response callback, so all the internal callers need to move to that new four-arg form. Fourth, the analytics event method also picked up a second argument, an analytics parameters object, so every call to it across the module needs to pass a new instance of that params object.
 
-Third, the method used to send HTTP POST requests throughout the module had its signature updated to include an additional map of headers between the body and the response callback. All calls within the module need to be updated to use this new four-argument form.
-
-Fourth, the analytics event method was also updated to accept a second argument — an analytics parameters object. Every call to this method across the module needs to pass a new instance of this parameters object.
-
-Fifth, the launcher component used to expose an internal field for the activity result launcher directly, allowing callers to assign to it. This should be replaced with a proper setter method.
-
-Finally, a core data class used throughout the flow previously allowed all its fields to default to null, which meant it could be constructed with no arguments. The defaults should be removed so that all three fields must be provided explicitly by callers.
+Fifth, the launcher component used to just expose an internal field for the activity result launcher so callers could assign to it directly, and I'd rather that be hidden behind a proper setter method. And finally, there's a core data class used throughout the flow that let all three of its fields default to null, meaning you could construct it with no args at all, oh and that's caused confusion, so drop the defaults so callers have to pass all three fields explicitly. It's really about making failures visible and actionable and keeping the internal APIs carrying all the context they need.

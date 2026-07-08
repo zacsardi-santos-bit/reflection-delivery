@@ -1,0 +1,1498 @@
+diff --git a/crates/biome_cli/tests/commands/check.rs b/crates/biome_cli/tests/commands/check.rs
+index b59a6dcfcb..cdda5f1d0b 100644
+--- a/crates/biome_cli/tests/commands/check.rs
++++ b/crates/biome_cli/tests/commands/check.rs
+@@ -2922,3 +2922,371 @@ fn lint_error_without_file_paths() {
+         result,
+     ));
+ }
++
++#[test]
++fn fix_ok() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--fix"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    let mut buffer = String::new();
++    fs.open(file_path)
++        .unwrap()
++        .read_to_string(&mut buffer)
++        .unwrap();
++    assert_eq!(buffer, FIX_AFTER);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_ok",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_unsafe_ok() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--fix"),
++                ("--unsafe"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    let mut buffer = String::new();
++    fs.open(file_path)
++        .unwrap()
++        .read_to_string(&mut buffer)
++        .unwrap();
++
++    assert_eq!(buffer, FIX_AFTER);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_unsafe_ok",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_noop() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_AFTER.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--fix"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_noop",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_suggested_error() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--fix"),
++                ("--apply"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++    assert!(result.is_err(), "run_cli returned {result:?}");
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_suggested_error",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_unsafe_with_error() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    // last line doesn't have code fix
++    let source = "let a = 4;
++debugger;
++console.log(a);
++function f() { arguments; }
++";
++
++    let expected = "const a = 4;
++console.log(a);
++function f() {\n\targuments;\n}
++";
++
++    let test1 = Path::new("test1.js");
++    fs.insert(test1.into(), source.as_bytes());
++    let test2 = Path::new("test2.js");
++    fs.insert(test2.into(), source.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--fix"),
++                ("--unsafe"),
++                test1.as_os_str().to_str().unwrap(),
++                test2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++    assert_file_contents(&fs, test1, expected);
++    assert_file_contents(&fs, test2, expected);
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_unsafe_with_error",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn write_ok() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--write"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    let mut buffer = String::new();
++    fs.open(file_path)
++        .unwrap()
++        .read_to_string(&mut buffer)
++        .unwrap();
++    assert_eq!(buffer, FIX_AFTER);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "write_ok",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn write_unsafe_ok() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--write"),
++                ("--unsafe"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    let mut buffer = String::new();
++    fs.open(file_path)
++        .unwrap()
++        .read_to_string(&mut buffer)
++        .unwrap();
++
++    assert_eq!(buffer, FIX_AFTER);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "write_unsafe_ok",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn write_noop() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_AFTER.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--write"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "write_noop",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn write_suggested_error() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--write"),
++                ("--apply"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++    assert!(result.is_err(), "run_cli returned {result:?}");
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "write_suggested_error",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn write_unsafe_with_error() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    // last line doesn't have code fix
++    let source = "let a = 4;
++debugger;
++console.log(a);
++function f() { arguments; }
++";
++
++    let expected = "const a = 4;
++console.log(a);
++function f() {\n\targuments;\n}
++";
++
++    let test1 = Path::new("test1.js");
++    fs.insert(test1.into(), source.as_bytes());
++    let test2 = Path::new("test2.js");
++    fs.insert(test2.into(), source.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                ("--write"),
++                ("--unsafe"),
++                test1.as_os_str().to_str().unwrap(),
++                test2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++    assert_file_contents(&fs, test1, expected);
++    assert_file_contents(&fs, test2, expected);
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "write_unsafe_with_error",
++        fs,
++        console,
++        result,
++    ));
++}
+diff --git a/crates/biome_cli/tests/commands/format.rs b/crates/biome_cli/tests/commands/format.rs
+index a1278472aa..85fd113d62 100644
+--- a/crates/biome_cli/tests/commands/format.rs
++++ b/crates/biome_cli/tests/commands/format.rs
+@@ -3688,3 +3688,34 @@ fn format_without_file_paths() {
+         result,
+     ));
+ }
++
++#[test]
++fn fix() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("format.js");
++    fs.insert(file_path.into(), UNFORMATTED.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("format"),
++                ("--fix"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++    assert_file_contents(&fs, file_path, FORMATTED);
++    assert_eq!(console.out_buffer.len(), 1);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "formatter_fix",
++        fs,
++        console,
++        result,
++    ));
++}
+diff --git a/crates/biome_cli/tests/commands/lint.rs b/crates/biome_cli/tests/commands/lint.rs
+index ce2d49034d..5c37c50091 100644
+--- a/crates/biome_cli/tests/commands/lint.rs
++++ b/crates/biome_cli/tests/commands/lint.rs
+@@ -3656,3 +3656,162 @@ fn lint_rule_filter_group_with_disabled_rule() {
+         result,
+     ));
+ }
++
++#[test]
++fn fix_ok() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from([("lint"), ("--fix"), file_path.as_os_str().to_str().unwrap()].as_slice()),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    let mut buffer = String::new();
++    fs.open(file_path)
++        .unwrap()
++        .read_to_string(&mut buffer)
++        .unwrap();
++    assert_eq!(buffer, FIX_AFTER);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_ok",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_noop() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), FIX_AFTER.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from([("lint"), ("--fix"), file_path.as_os_str().to_str().unwrap()].as_slice()),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_noop",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_suggested_error() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("lint"),
++                ("--fix"),
++                ("--write"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++    assert!(result.is_err(), "run_cli returned {result:?}");
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_suggested_error",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_suggested() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    let file_path = Path::new("fix.js");
++    fs.insert(file_path.into(), APPLY_SUGGESTED_BEFORE.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("lint"),
++                ("--fix"),
++                ("--unsafe"),
++                file_path.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    let mut buffer = String::new();
++    fs.open(file_path)
++        .unwrap()
++        .read_to_string(&mut buffer)
++        .unwrap();
++    assert_eq!(buffer, APPLY_SUGGESTED_AFTER);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_suggested",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn fix_unsafe_with_error() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++    // last line doesn't have code fix
++    let source = "let a = 4;
++debugger;
++console.log(a);
++function f() { arguments; }
++";
++
++    let expected = "const a = 4;
++console.log(a);
++function f() { arguments; }
++";
++    let test1 = Path::new("test1.js");
++    fs.insert(test1.into(), source.as_bytes());
++    let test2 = Path::new("test2.js");
++    fs.insert(test2.into(), source.as_bytes());
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("lint"),
++                ("--fix"),
++                ("--unsafe"),
++                test1.as_os_str().to_str().unwrap(),
++                test2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++    assert!(result.is_err(), "run_cli returned {result:?}");
++    assert_file_contents(&fs, test1, expected);
++    assert_file_contents(&fs, test2, expected);
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "fix_unsafe_with_error",
++        fs,
++        console,
++        result,
++    ));
++}
+diff --git a/crates/biome_cli/tests/commands/migrate.rs b/crates/biome_cli/tests/commands/migrate.rs
+index 46e0bd75bc..e8b8e60c93 100644
+--- a/crates/biome_cli/tests/commands/migrate.rs
++++ b/crates/biome_cli/tests/commands/migrate.rs
+@@ -132,3 +132,29 @@ fn should_create_biome_json_file() {
+         result,
+     ));
+ }
++
++#[test]
++fn should_emit_incompatible_arguments_error() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let configuration = r#"{ "linter": { "enabled": true } }"#;
++    let configuration_path = Path::new("biome.json");
++    fs.insert(configuration_path.into(), configuration.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from([("migrate"), "--write", "--fix"].as_slice()),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "should_suggest_error_incompatible_arguments",
++        fs,
++        console,
++        result,
++    ));
++}
+diff --git a/crates/biome_cli/tests/commands/migrate_eslint.rs b/crates/biome_cli/tests/commands/migrate_eslint.rs
+index e5071301f1..8c3aa0b1b2 100644
+--- a/crates/biome_cli/tests/commands/migrate_eslint.rs
++++ b/crates/biome_cli/tests/commands/migrate_eslint.rs
+@@ -112,6 +112,59 @@ fn migrate_eslintrcjson_write() {
+     ));
+ }
+ 
++#[test]
++fn migrate_eslintrcjson_fix() {
++    let biomejson = r#"{ "linter": { "enabled": true } }"#;
++    let eslintrc = r#"{
++        "ignorePatterns": [
++            "**/*.test.js", // trailing comma amd comment
++        ],
++        "globals": {
++            "var1": "writable",
++            "var2": "readonly"
++        },
++        "rules": {
++            "dot-notation": 0,
++            "default-param-last": "off",
++            "eqeqeq": "warn",
++            "getter-return": [2,
++                // support unknown options
++                { "allowImplicit": true }
++            ],
++            "no-eval": 1,
++            "no-extra-label": ["error"]
++        },
++        "overrides": [{
++            "files": ["bin/*.js", "lib/*.js"],
++            "excludedFiles": "*.test.js",
++            "rules": {
++                "eqeqeq": ["off"]
++            }
++        }],
++        "unknownField": "ignored"
++    }"#;
++
++    let mut fs = MemoryFileSystem::default();
++    fs.insert(Path::new("biome.json").into(), biomejson.as_bytes());
++    fs.insert(Path::new(".eslintrc.json").into(), eslintrc.as_bytes());
++
++    let mut console = BufferConsole::default();
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(["migrate", "eslint", "--fix"].as_slice()),
++    );
++
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "migrate_eslintrcjson_fix",
++        fs,
++        console,
++        result,
++    ));
++}
++
+ #[test]
+ fn migrate_eslintrcjson_override_existing_config() {
+     let biomejson = r#"{ "linter": { "rules": { "recommended": true, "suspicious": { "noDoubleEquals": "error" } } } }"#;
+diff --git a/crates/biome_cli/tests/commands/migrate_prettier.rs b/crates/biome_cli/tests/commands/migrate_prettier.rs
+index 40b5ea4f2f..6beb2a812f 100644
+--- a/crates/biome_cli/tests/commands/migrate_prettier.rs
++++ b/crates/biome_cli/tests/commands/migrate_prettier.rs
+@@ -230,6 +230,37 @@ fn prettier_migrate_write() {
+     ));
+ }
+ 
++#[test]
++fn prettier_migrate_fix() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let configuration = r#"{ "linter": { "enabled": true } }"#;
++    let prettier = r#"{ "useTabs": false, "semi": true, "singleQuote": true }"#;
++
++    let configuration_path = Path::new("biome.json");
++    fs.insert(configuration_path.into(), configuration.as_bytes());
++
++    let prettier_path = Path::new(".prettierrc");
++    fs.insert(prettier_path.into(), prettier.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from([("migrate"), "prettier", "--fix"].as_slice()),
++    );
++
++    assert!(result.is_ok(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "prettier_migrate_fix",
++        fs,
++        console,
++        result,
++    ));
++}
++
+ #[test]
+ fn prettierjson_migrate_write() {
+     let mut fs = MemoryFileSystem::default();
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap b/crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap
+index bb77ee96cc..8d895a94e8 100644
+--- a/crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap
+@@ -7,7 +7,7 @@ expression: content
+ ```block
+ Runs formatter, linter and import sorting to the requested files.
+ 
+-Usage: check [--apply] [--apply-unsafe] [--staged] [--changed] [--since=REF] [PATH]...
++Usage: check [--write] [--unsafe] [--staged] [--changed] [--since=REF] [PATH]...
+ 
+ The configuration that is contained inside the file `biome.json`
+         --vcs-client-kind=<git>  The kind of client.
+@@ -123,8 +123,12 @@ Available positional items:
+     PATH                      Single file, single path or list of paths
+ 
+ Available options:
+-        --apply               Apply safe fixes, formatting and import sorting
+-        --apply-unsafe        Apply safe fixes and unsafe fixes, formatting and import sorting
++        --write               Writes safe fixes, formatting and import sorting
++        --unsafe              Allow to do unsafe fixes, should be used with `--write` or `--fix`
++        --fix                 Alias for `--write`, writes safe fixes, formatting and import sorting
++        --apply               Alias for `--write`, writes safe fixes, formatting and import sorting
++        --apply-unsafe        Alias for `--write --unsafe`, writes safe and unsafe fixes, formatting
++                              and import sorting
+         --formatter-enabled=<true|false>  Allow to enable or disable the formatter check.
+         --linter-enabled=<true|false>  Allow to enable or disable the linter check.
+         --organize-imports-enabled=<true|false>  Allow to enable or disable the organize imports.
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/fix_noop.snap b/crates/biome_cli/tests/snapshots/main_commands_check/fix_noop.snap
+new file mode 100644
+index 0000000000..df8a93b056
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/fix_noop.snap
+@@ -0,0 +1,16 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++1 >= 0;
++
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. No fixes needed.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/fix_ok.snap b/crates/biome_cli/tests/snapshots/main_commands_check/fix_ok.snap
+new file mode 100644
+index 0000000000..932af07981
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/fix_ok.snap
+@@ -0,0 +1,16 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++1 >= 0;
++
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. Fixed 1 file.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/fix_suggested_error.snap b/crates/biome_cli/tests/snapshots/main_commands_check/fix_suggested_error.snap
+new file mode 100644
+index 0000000000..757e09655b
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/fix_suggested_error.snap
+@@ -0,0 +1,23 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++let a = 4;
++debugger;
++console.log(a);
++
++```
++
++# Termination Message
++
++```block
++flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Incompatible arguments --apply and --fix
++  
++
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/fix_unsafe_ok.snap b/crates/biome_cli/tests/snapshots/main_commands_check/fix_unsafe_ok.snap
+new file mode 100644
+index 0000000000..932af07981
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/fix_unsafe_ok.snap
+@@ -0,0 +1,16 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++1 >= 0;
++
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. Fixed 1 file.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/fix_unsafe_with_error.snap b/crates/biome_cli/tests/snapshots/main_commands_check/fix_unsafe_with_error.snap
+new file mode 100644
+index 0000000000..31d9788576
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/fix_unsafe_with_error.snap
+@@ -0,0 +1,75 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `test1.js`
++
++```js
++const a = 4;
++console.log(a);
++function f() {
++	arguments;
++}
++
++```
++
++## `test2.js`
++
++```js
++const a = 4;
++console.log(a);
++function f() {
++	arguments;
++}
++
++```
++
++# Termination Message
++
++```block
++check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++test1.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Use the rest parameters instead of arguments.
++  
++    1 │ const a = 4;
++    2 │ console.log(a);
++  > 3 │ function f() { arguments; }
++      │                ^^^^^^^^^
++    4 │ 
++  
++  i arguments does not have Array.prototype methods and can be inconvenient to use.
++  
++
++```
++
++```block
++test2.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Use the rest parameters instead of arguments.
++  
++    1 │ const a = 4;
++    2 │ console.log(a);
++  > 3 │ function f() { arguments; }
++      │                ^^^^^^^^^
++    4 │ 
++  
++  i arguments does not have Array.prototype methods and can be inconvenient to use.
++  
++
++```
++
++```block
++Checked 2 files in <TIME>. Fixed 2 files.
++Found 2 errors.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/write_noop.snap b/crates/biome_cli/tests/snapshots/main_commands_check/write_noop.snap
+new file mode 100644
+index 0000000000..df8a93b056
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/write_noop.snap
+@@ -0,0 +1,16 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++1 >= 0;
++
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. No fixes needed.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/write_ok.snap b/crates/biome_cli/tests/snapshots/main_commands_check/write_ok.snap
+new file mode 100644
+index 0000000000..932af07981
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/write_ok.snap
+@@ -0,0 +1,16 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++1 >= 0;
++
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. Fixed 1 file.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/write_suggested_error.snap b/crates/biome_cli/tests/snapshots/main_commands_check/write_suggested_error.snap
+new file mode 100644
+index 0000000000..4345c3eb32
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/write_suggested_error.snap
+@@ -0,0 +1,23 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++let a = 4;
++debugger;
++console.log(a);
++
++```
++
++# Termination Message
++
++```block
++flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Incompatible arguments --apply and --write
++  
++
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/write_unsafe_ok.snap b/crates/biome_cli/tests/snapshots/main_commands_check/write_unsafe_ok.snap
+new file mode 100644
+index 0000000000..932af07981
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/write_unsafe_ok.snap
+@@ -0,0 +1,16 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++1 >= 0;
++
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. Fixed 1 file.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_check/write_unsafe_with_error.snap b/crates/biome_cli/tests/snapshots/main_commands_check/write_unsafe_with_error.snap
+new file mode 100644
+index 0000000000..31d9788576
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_check/write_unsafe_with_error.snap
+@@ -0,0 +1,75 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `test1.js`
++
++```js
++const a = 4;
++console.log(a);
++function f() {
++	arguments;
++}
++
++```
++
++## `test2.js`
++
++```js
++const a = 4;
++console.log(a);
++function f() {
++	arguments;
++}
++
++```
++
++# Termination Message
++
++```block
++check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++test1.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Use the rest parameters instead of arguments.
++  
++    1 │ const a = 4;
++    2 │ console.log(a);
++  > 3 │ function f() { arguments; }
++      │                ^^^^^^^^^
++    4 │ 
++  
++  i arguments does not have Array.prototype methods and can be inconvenient to use.
++  
++
++```
++
++```block
++test2.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Use the rest parameters instead of arguments.
++  
++    1 │ const a = 4;
++    2 │ console.log(a);
++  > 3 │ function f() { arguments; }
++      │                ^^^^^^^^^
++    4 │ 
++  
++  i arguments does not have Array.prototype methods and can be inconvenient to use.
++  
++
++```
++
++```block
++Checked 2 files in <TIME>. Fixed 2 files.
++Found 2 errors.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap b/crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap
+index eb305c4338..8227cef6da 100644
+--- a/crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap
++++ b/crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap
+@@ -119,6 +119,7 @@ Available options:
+                               the file. Based on the extension, Biome knows how to format the code.
+                               Example: `echo 'let a;' | biome format --stdin-file-path=file.js`
+         --write               Writes formatted files to file system.
++        --fix                 Alias of `--write`, writes formatted files to file system.
+         --staged              When set to true, only the files that have been staged (the ones prepared
+                               to be committed) will be linted.
+         --changed             When set to true, only the files that have been changed compared to your
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_format/formatter_fix.snap b/crates/biome_cli/tests/snapshots/main_commands_format/formatter_fix.snap
+new file mode 100644
+index 0000000000..6e650e8624
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_format/formatter_fix.snap
+@@ -0,0 +1,16 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `format.js`
++
++```js
++statement();
++
++```
++
++# Emitted Messages
++
++```block
++Formatted 1 file in <TIME>. Fixed 1 file.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_lint/fix_noop.snap b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_noop.snap
+new file mode 100644
+index 0000000000..ee7ee53f4d
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_noop.snap
+@@ -0,0 +1,15 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++(1 >= 0)
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. No fixes needed.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_lint/fix_ok.snap b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_ok.snap
+new file mode 100644
+index 0000000000..1637d58cec
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_ok.snap
+@@ -0,0 +1,15 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++(1 >= 0)
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. Fixed 1 file.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_lint/fix_suggested.snap b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_suggested.snap
+new file mode 100644
+index 0000000000..0e2b5a554a
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_suggested.snap
+@@ -0,0 +1,17 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++const a = 4;
++console.log(a);
++
++```
++
++# Emitted Messages
++
++```block
++Checked 1 file in <TIME>. Fixed 1 file.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_lint/fix_suggested_error.snap b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_suggested_error.snap
+new file mode 100644
+index 0000000000..fd8e9a2b79
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_suggested_error.snap
+@@ -0,0 +1,23 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `fix.js`
++
++```js
++let a = 4;
++debugger;
++console.log(a);
++
++```
++
++# Termination Message
++
++```block
++flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Incompatible arguments --write and --fix
++  
++
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_lint/fix_unsafe_with_error.snap b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_unsafe_with_error.snap
+new file mode 100644
+index 0000000000..c08b09a73b
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_lint/fix_unsafe_with_error.snap
+@@ -0,0 +1,71 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `test1.js`
++
++```js
++const a = 4;
++console.log(a);
++function f() { arguments; }
++
++```
++
++## `test2.js`
++
++```js
++const a = 4;
++console.log(a);
++function f() { arguments; }
++
++```
++
++# Termination Message
++
++```block
++lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++test1.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Use the rest parameters instead of arguments.
++  
++    1 │ const a = 4;
++    2 │ console.log(a);
++  > 3 │ function f() { arguments; }
++      │                ^^^^^^^^^
++    4 │ 
++  
++  i arguments does not have Array.prototype methods and can be inconvenient to use.
++  
++
++```
++
++```block
++test2.js:3:16 lint/style/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Use the rest parameters instead of arguments.
++  
++    1 │ const a = 4;
++    2 │ console.log(a);
++  > 3 │ function f() { arguments; }
++      │                ^^^^^^^^^
++    4 │ 
++  
++  i arguments does not have Array.prototype methods and can be inconvenient to use.
++  
++
++```
++
++```block
++Checked 2 files in <TIME>. Fixed 2 files.
++Found 2 errors.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap b/crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap
+index 8f6079a3ef..1944f6018e 100644
+--- a/crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap
++++ b/crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap
+@@ -7,8 +7,7 @@ expression: content
+ ```block
+ Run various checks on a set of files.
+ 
+-Usage: lint [--apply] [--apply-unsafe] [--rule=<GROUP|RULE>] [--staged] [--changed] [--since=REF] [PATH
+-]...
++Usage: lint [--write] [--unsafe] [--rule=<GROUP|RULE>] [--staged] [--changed] [--since=REF] [PATH]...
+ 
+ Set of properties to integrate Biome with a VCS software.
+         --vcs-client-kind=<git>  The kind of client.
+@@ -66,8 +65,11 @@ Available positional items:
+     PATH                      Single file, single path or list of paths
+ 
+ Available options:
+-        --apply               Apply safe fixes, formatting and import sorting
+-        --apply-unsafe        Apply safe fixes and unsafe fixes, formatting and import sorting
++        --write               Writes safe fixes
++        --unsafe              Allow to do unsafe fixes, should be used with `--write` or `--fix`
++        --fix                 Alias for `--write`, writes safe fixes
++        --apply               Alias for `--write`, writes safe fixes
++        --apply-unsafe        Alias for `--write --unsafe`, writes safe and unsafe fixes
+         --rule=<GROUP|RULE>   Run only the given rule or rule group.
+                               The option overrides the Biome configuration file as follows:
+                               - When a rule is passed, its severity level is set to `error' if it is
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap b/crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap
+index 7abe878afc..034cdc2288 100644
+--- a/crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap
++++ b/crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap
+@@ -38,6 +38,7 @@ Global options applied to all commands
+ 
+ Available options:
+         --write               Writes the new configuration file to disk
++        --fix                 Alias of `--write`, writes the new configuration file to disk
+     -h, --help                Prints help information
+ 
+ Available commands:
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_migrate/should_suggest_error_incompatible_arguments.snap b/crates/biome_cli/tests/snapshots/main_commands_migrate/should_suggest_error_incompatible_arguments.snap
+new file mode 100644
+index 0000000000..5dd2c54f43
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_migrate/should_suggest_error_incompatible_arguments.snap
+@@ -0,0 +1,20 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `biome.json`
++
++```json
++{ "linter": { "enabled": true } }
++```
++
++# Termination Message
++
++```block
++flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Incompatible arguments --write and --fix
++  
++
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_migrate_eslint/migrate_eslintrcjson_fix.snap b/crates/biome_cli/tests/snapshots/main_commands_migrate_eslint/migrate_eslintrcjson_fix.snap
+new file mode 100644
+index 0000000000..93dad852c4
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_migrate_eslint/migrate_eslintrcjson_fix.snap
+@@ -0,0 +1,68 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `biome.json`
++
++```json
++{
++  "linter": {
++    "enabled": true,
++    "rules": {
++      "recommended": false,
++      "complexity": { "noUselessLabel": "error", "useLiteralKeys": "off" },
++      "security": { "noGlobalEval": "warn" },
++      "style": { "useDefaultParameterLast": "off" },
++      "suspicious": { "noDoubleEquals": "warn", "useGetterReturn": "error" }
++    },
++    "ignore": ["**/*.test.js"]
++  },
++  "javascript": { "globals": ["var2", "var1"] },
++  "overrides": [
++    {
++      "ignore": ["*.test.js"],
++      "include": ["bin/*.js", "lib/*.js"],
++      "linter": { "rules": { "suspicious": { "noDoubleEquals": "off" } } }
++    }
++  ]
++}
++```
++
++## `.eslintrc.json`
++
++```json
++{
++        "ignorePatterns": [
++            "**/*.test.js", // trailing comma amd comment
++        ],
++        "globals": {
++            "var1": "writable",
++            "var2": "readonly"
++        },
++        "rules": {
++            "dot-notation": 0,
++            "default-param-last": "off",
++            "eqeqeq": "warn",
++            "getter-return": [2,
++                // support unknown options
++                { "allowImplicit": true }
++            ],
++            "no-eval": 1,
++            "no-extra-label": ["error"]
++        },
++        "overrides": [{
++            "files": ["bin/*.js", "lib/*.js"],
++            "excludedFiles": "*.test.js",
++            "rules": {
++                "eqeqeq": ["off"]
++            }
++        }],
++        "unknownField": "ignored"
++    }
++```
++
++# Emitted Messages
++
++```block
++.eslintrc.json has been successfully migrated.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_commands_migrate_prettier/prettier_migrate_fix.snap b/crates/biome_cli/tests/snapshots/main_commands_migrate_prettier/prettier_migrate_fix.snap
+new file mode 100644
+index 0000000000..9a5c4f229a
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_commands_migrate_prettier/prettier_migrate_fix.snap
+@@ -0,0 +1,45 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `biome.json`
++
++```json
++{
++  "formatter": {
++    "enabled": true,
++    "formatWithErrors": false,
++    "indentStyle": "space",
++    "indentWidth": 2,
++    "lineEnding": "lf",
++    "lineWidth": 80,
++    "attributePosition": "auto"
++  },
++  "linter": { "enabled": true },
++  "javascript": {
++    "formatter": {
++      "jsxQuoteStyle": "double",
++      "quoteProperties": "asNeeded",
++      "trailingCommas": "all",
++      "semicolons": "always",
++      "arrowParentheses": "always",
++      "bracketSpacing": true,
++      "bracketSameLine": false,
++      "quoteStyle": "single",
++      "attributePosition": "auto"
++    }
++  }
++}
++```
++
++## `.prettierrc`
++
++```prettierrc
++{ "useTabs": false, "semi": true, "singleQuote": true }
++```
++
++# Emitted Messages
++
++```block
++.prettierrc has been successfully migrated.
++```

@@ -1,0 +1,17 @@
+diff --git a/opentelemetry-semantic-conventions/tests/version_test.rs b/opentelemetry-semantic-conventions/tests/version_test.rs
+new file mode 100644
+index 0000000..a1b2c3d
+--- /dev/null
++++ b/opentelemetry-semantic-conventions/tests/version_test.rs
+@@ -0,0 +1,11 @@
++use opentelemetry_semantic_conventions as semconv;
++
++#[test]
++fn test_schema_url_is_1_26_0() {
++    assert_eq!(semconv::SCHEMA_URL, "https://opentelemetry.io/schemas/1.26.0");
++}
++
++#[test]
++fn test_messaging_client_id_is_updated() {
++    assert_eq!(semconv::trace::MESSAGING_CLIENT_ID, "messaging.client.id");
++}

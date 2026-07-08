@@ -1,0 +1,16 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/ruff/RUF072.py b/crates/ruff_linter/resources/test/fixtures/ruff/RUF072.py
+index f2ad1a5879..7c422fb1c5 100644
+--- a/crates/ruff_linter/resources/test/fixtures/ruff/RUF072.py
++++ b/crates/ruff_linter/resources/test/fixtures/ruff/RUF072.py
+@@ -170,3 +170,10 @@ try:
+     foo()
+ finally:  # comment
+     pass
++
++# Bare try finally with line starting with a formfeed
++try:
++    1
++    2
++finally:
++    pass
+\ No newline at end of file

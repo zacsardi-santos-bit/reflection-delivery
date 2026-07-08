@@ -1,0 +1,1279 @@
+diff --git a/crates/ruff_python_parser/tests/fixtures.rs b/crates/ruff_python_parser/tests/fixtures.rs
+index 6163c80b1c..5024624ae2 100644
+--- a/crates/ruff_python_parser/tests/fixtures.rs
++++ b/crates/ruff_python_parser/tests/fixtures.rs
+@@ -42,7 +42,7 @@ fn test_valid_syntax(input_path: &Path) {
+     let options = extract_options(&source).unwrap_or_else(|| {
+         ParseOptions::from(Mode::Module).with_target_version(PythonVersion::latest())
+     });
+-    let parsed = parse_unchecked(&source, options);
++    let parsed = parse_unchecked(&source, options.clone());
+ 
+     if parsed.has_syntax_errors() {
+         let line_index = LineIndex::from_source_text(&source);
+@@ -88,7 +88,9 @@ fn test_valid_syntax(input_path: &Path) {
+ 
+     let parsed = parsed.try_into_module().expect("Parsed with Mode::Module");
+ 
+-    let mut visitor = SemanticSyntaxCheckerVisitor::new(TestContext::default());
++    let mut visitor = SemanticSyntaxCheckerVisitor::new(
++        TestContext::default().with_python_version(options.target_version()),
++    );
+ 
+     for stmt in parsed.suite() {
+         visitor.visit_stmt(stmt);
+@@ -134,7 +136,7 @@ fn test_invalid_syntax(input_path: &Path) {
+     let options = extract_options(&source).unwrap_or_else(|| {
+         ParseOptions::from(Mode::Module).with_target_version(PythonVersion::latest())
+     });
+-    let parsed = parse_unchecked(&source, options);
++    let parsed = parse_unchecked(&source, options.clone());
+ 
+     validate_tokens(parsed.tokens(), source.text_len(), input_path);
+     validate_ast(parsed.syntax(), source.text_len(), input_path);
+@@ -182,7 +184,9 @@ fn test_invalid_syntax(input_path: &Path) {
+ 
+     let parsed = parsed.try_into_module().expect("Parsed with Mode::Module");
+ 
+-    let mut visitor = SemanticSyntaxCheckerVisitor::new(TestContext::default());
++    let mut visitor = SemanticSyntaxCheckerVisitor::new(
++        TestContext::default().with_python_version(options.target_version()),
++    );
+ 
+     for stmt in parsed.suite() {
+         visitor.visit_stmt(stmt);
+@@ -461,6 +465,15 @@ impl<'ast> SourceOrderVisitor<'ast> for ValidateAstVisitor<'ast> {
+ #[derive(Debug, Default)]
+ struct TestContext {
+     diagnostics: RefCell<Vec<SemanticSyntaxError>>,
++    python_version: PythonVersion,
++}
++
++impl TestContext {
++    #[must_use]
++    fn with_python_version(mut self, python_version: PythonVersion) -> Self {
++        self.python_version = python_version;
++        self
++    }
+ }
+ 
+ impl SemanticSyntaxContext for TestContext {
+@@ -469,7 +482,7 @@ impl SemanticSyntaxContext for TestContext {
+     }
+ 
+     fn python_version(&self) -> PythonVersion {
+-        PythonVersion::default()
++        self.python_version
+     }
+ 
+     fn report_semantic_error(&self, error: SemanticSyntaxError) {
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_class.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_class.py.snap
+new file mode 100644
+index 0000000000..251a2c6c28
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_class.py.snap
+@@ -0,0 +1,94 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/debug_shadow_class.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..82,
++        body: [
++            ClassDef(
++                StmtClassDef {
++                    range: 0..20,
++                    decorator_list: [],
++                    name: Identifier {
++                        id: Name("__debug__"),
++                        range: 6..15,
++                    },
++                    type_params: None,
++                    arguments: None,
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 17..20,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 17..20,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                },
++            ),
++            ClassDef(
++                StmtClassDef {
++                    range: 35..58,
++                    decorator_list: [],
++                    name: Identifier {
++                        id: Name("C"),
++                        range: 41..42,
++                    },
++                    type_params: Some(
++                        TypeParams {
++                            range: 42..53,
++                            type_params: [
++                                TypeVar(
++                                    TypeParamTypeVar {
++                                        range: 43..52,
++                                        name: Identifier {
++                                            id: Name("__debug__"),
++                                            range: 43..52,
++                                        },
++                                        bound: None,
++                                        default: None,
++                                    },
++                                ),
++                            ],
++                        },
++                    ),
++                    arguments: None,
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 55..58,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 55..58,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | class __debug__: ...  # class name
++  |       ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++2 | class C[__debug__]: ...  # type parameter name
++  |
++
++
++  |
++1 | class __debug__: ...  # class name
++2 | class C[__debug__]: ...  # type parameter name
++  |         ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_function.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_function.py.snap
+new file mode 100644
+index 0000000000..517c64d7fb
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_function.py.snap
+@@ -0,0 +1,168 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/debug_shadow_function.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..125,
++        body: [
++            FunctionDef(
++                StmtFunctionDef {
++                    range: 0..20,
++                    is_async: false,
++                    decorator_list: [],
++                    name: Identifier {
++                        id: Name("__debug__"),
++                        range: 4..13,
++                    },
++                    type_params: None,
++                    parameters: Parameters {
++                        range: 13..15,
++                        posonlyargs: [],
++                        args: [],
++                        vararg: None,
++                        kwonlyargs: [],
++                        kwarg: None,
++                    },
++                    returns: None,
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 17..20,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 17..20,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                },
++            ),
++            FunctionDef(
++                StmtFunctionDef {
++                    range: 38..61,
++                    is_async: false,
++                    decorator_list: [],
++                    name: Identifier {
++                        id: Name("f"),
++                        range: 42..43,
++                    },
++                    type_params: Some(
++                        TypeParams {
++                            range: 43..54,
++                            type_params: [
++                                TypeVar(
++                                    TypeParamTypeVar {
++                                        range: 44..53,
++                                        name: Identifier {
++                                            id: Name("__debug__"),
++                                            range: 44..53,
++                                        },
++                                        bound: None,
++                                        default: None,
++                                    },
++                                ),
++                            ],
++                        },
++                    ),
++                    parameters: Parameters {
++                        range: 54..56,
++                        posonlyargs: [],
++                        args: [],
++                        vararg: None,
++                        kwonlyargs: [],
++                        kwarg: None,
++                    },
++                    returns: None,
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 58..61,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 58..61,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                },
++            ),
++            FunctionDef(
++                StmtFunctionDef {
++                    range: 85..106,
++                    is_async: false,
++                    decorator_list: [],
++                    name: Identifier {
++                        id: Name("f"),
++                        range: 89..90,
++                    },
++                    type_params: None,
++                    parameters: Parameters {
++                        range: 90..101,
++                        posonlyargs: [],
++                        args: [
++                            ParameterWithDefault {
++                                range: 91..100,
++                                parameter: Parameter {
++                                    range: 91..100,
++                                    name: Identifier {
++                                        id: Name("__debug__"),
++                                        range: 91..100,
++                                    },
++                                    annotation: None,
++                                },
++                                default: None,
++                            },
++                        ],
++                        vararg: None,
++                        kwonlyargs: [],
++                        kwarg: None,
++                    },
++                    returns: None,
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 103..106,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 103..106,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | def __debug__(): ...  # function name
++  |     ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++2 | def f[__debug__](): ...  # type parameter name
++3 | def f(__debug__): ...  # parameter name
++  |
++
++
++  |
++1 | def __debug__(): ...  # function name
++2 | def f[__debug__](): ...  # type parameter name
++  |       ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++3 | def f(__debug__): ...  # parameter name
++  |
++
++
++  |
++1 | def __debug__(): ...  # function name
++2 | def f[__debug__](): ...  # type parameter name
++3 | def f(__debug__): ...  # parameter name
++  |       ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_import.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_import.py.snap
+new file mode 100644
+index 0000000000..9cbb408531
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_import.py.snap
+@@ -0,0 +1,133 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/debug_shadow_import.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..100,
++        body: [
++            Import(
++                StmtImport {
++                    range: 0..16,
++                    names: [
++                        Alias {
++                            range: 7..16,
++                            name: Identifier {
++                                id: Name("__debug__"),
++                                range: 7..16,
++                            },
++                            asname: None,
++                        },
++                    ],
++                },
++            ),
++            Import(
++                StmtImport {
++                    range: 17..42,
++                    names: [
++                        Alias {
++                            range: 24..42,
++                            name: Identifier {
++                                id: Name("debug"),
++                                range: 24..29,
++                            },
++                            asname: Some(
++                                Identifier {
++                                    id: Name("__debug__"),
++                                    range: 33..42,
++                                },
++                            ),
++                        },
++                    ],
++                },
++            ),
++            ImportFrom(
++                StmtImportFrom {
++                    range: 43..66,
++                    module: Some(
++                        Identifier {
++                            id: Name("x"),
++                            range: 48..49,
++                        },
++                    ),
++                    names: [
++                        Alias {
++                            range: 57..66,
++                            name: Identifier {
++                                id: Name("__debug__"),
++                                range: 57..66,
++                            },
++                            asname: None,
++                        },
++                    ],
++                    level: 0,
++                },
++            ),
++            ImportFrom(
++                StmtImportFrom {
++                    range: 67..99,
++                    module: Some(
++                        Identifier {
++                            id: Name("x"),
++                            range: 72..73,
++                        },
++                    ),
++                    names: [
++                        Alias {
++                            range: 81..99,
++                            name: Identifier {
++                                id: Name("debug"),
++                                range: 81..86,
++                            },
++                            asname: Some(
++                                Identifier {
++                                    id: Name("__debug__"),
++                                    range: 90..99,
++                                },
++                            ),
++                        },
++                    ],
++                    level: 0,
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | import __debug__
++  |        ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++2 | import debug as __debug__
++3 | from x import __debug__
++  |
++
++
++  |
++1 | import __debug__
++2 | import debug as __debug__
++  |                 ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++3 | from x import __debug__
++4 | from x import debug as __debug__
++  |
++
++
++  |
++1 | import __debug__
++2 | import debug as __debug__
++3 | from x import __debug__
++  |               ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++4 | from x import debug as __debug__
++  |
++
++
++  |
++2 | import debug as __debug__
++3 | from x import __debug__
++4 | from x import debug as __debug__
++  |                        ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_match.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_match.py.snap
+new file mode 100644
+index 0000000000..2b23fee0c4
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_match.py.snap
+@@ -0,0 +1,64 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/debug_shadow_match.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..33,
++        body: [
++            Match(
++                StmtMatch {
++                    range: 0..32,
++                    subject: Name(
++                        ExprName {
++                            range: 6..7,
++                            id: Name("x"),
++                            ctx: Load,
++                        },
++                    ),
++                    cases: [
++                        MatchCase {
++                            range: 13..32,
++                            pattern: MatchAs(
++                                PatternMatchAs {
++                                    range: 18..27,
++                                    pattern: None,
++                                    name: Some(
++                                        Identifier {
++                                            id: Name("__debug__"),
++                                            range: 18..27,
++                                        },
++                                    ),
++                                },
++                            ),
++                            guard: None,
++                            body: [
++                                Expr(
++                                    StmtExpr {
++                                        range: 29..32,
++                                        value: EllipsisLiteral(
++                                            ExprEllipsisLiteral {
++                                                range: 29..32,
++                                            },
++                                        ),
++                                    },
++                                ),
++                            ],
++                        },
++                    ],
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | match x:
++2 |     case __debug__: ...
++  |          ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_try.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_try.py.snap
+new file mode 100644
+index 0000000000..d965f5306a
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_try.py.snap
+@@ -0,0 +1,76 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/debug_shadow_try.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..44,
++        body: [
++            Try(
++                StmtTry {
++                    range: 0..43,
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 5..8,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 5..8,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                    handlers: [
++                        ExceptHandler(
++                            ExceptHandlerExceptHandler {
++                                range: 9..43,
++                                type_: Some(
++                                    Name(
++                                        ExprName {
++                                            range: 16..25,
++                                            id: Name("Exception"),
++                                            ctx: Load,
++                                        },
++                                    ),
++                                ),
++                                name: Some(
++                                    Identifier {
++                                        id: Name("__debug__"),
++                                        range: 29..38,
++                                    },
++                                ),
++                                body: [
++                                    Expr(
++                                        StmtExpr {
++                                            range: 40..43,
++                                            value: EllipsisLiteral(
++                                                ExprEllipsisLiteral {
++                                                    range: 40..43,
++                                                },
++                                            ),
++                                        },
++                                    ),
++                                ],
++                            },
++                        ),
++                    ],
++                    orelse: [],
++                    finalbody: [],
++                    is_star: false,
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | try: ...
++2 | except Exception as __debug__: ...
++  |                     ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_type_alias.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_type_alias.py.snap
+new file mode 100644
+index 0000000000..2817caa8c4
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_type_alias.py.snap
+@@ -0,0 +1,99 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/debug_shadow_type_alias.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..95,
++        body: [
++            TypeAlias(
++                StmtTypeAlias {
++                    range: 0..26,
++                    name: Name(
++                        ExprName {
++                            range: 5..14,
++                            id: Name("__debug__"),
++                            ctx: Store,
++                        },
++                    ),
++                    type_params: None,
++                    value: Subscript(
++                        ExprSubscript {
++                            range: 17..26,
++                            value: Name(
++                                ExprName {
++                                    range: 17..21,
++                                    id: Name("list"),
++                                    ctx: Load,
++                                },
++                            ),
++                            slice: Name(
++                                ExprName {
++                                    range: 22..25,
++                                    id: Name("int"),
++                                    ctx: Load,
++                                },
++                            ),
++                            ctx: Load,
++                        },
++                    ),
++                },
++            ),
++            TypeAlias(
++                StmtTypeAlias {
++                    range: 67..94,
++                    name: Name(
++                        ExprName {
++                            range: 72..77,
++                            id: Name("Debug"),
++                            ctx: Store,
++                        },
++                    ),
++                    type_params: Some(
++                        TypeParams {
++                            range: 77..88,
++                            type_params: [
++                                TypeVar(
++                                    TypeParamTypeVar {
++                                        range: 78..87,
++                                        name: Identifier {
++                                            id: Name("__debug__"),
++                                            range: 78..87,
++                                        },
++                                        bound: None,
++                                        default: None,
++                                    },
++                                ),
++                            ],
++                        },
++                    ),
++                    value: Name(
++                        ExprName {
++                            range: 91..94,
++                            id: Name("str"),
++                            ctx: Load,
++                        },
++                    ),
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | type __debug__ = list[int]  # visited as an Expr but still flagged
++  |      ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++2 | type Debug[__debug__] = str
++  |
++
++
++  |
++1 | type __debug__ = list[int]  # visited as an Expr but still flagged
++2 | type Debug[__debug__] = str
++  |            ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_with.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_with.py.snap
+new file mode 100644
+index 0000000000..51a3a7cc64
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_with.py.snap
+@@ -0,0 +1,89 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/debug_shadow_with.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..39,
++        body: [
++            With(
++                StmtWith {
++                    range: 0..38,
++                    is_async: false,
++                    items: [
++                        WithItem {
++                            range: 5..33,
++                            context_expr: Call(
++                                ExprCall {
++                                    range: 5..20,
++                                    func: Name(
++                                        ExprName {
++                                            range: 5..9,
++                                            id: Name("open"),
++                                            ctx: Load,
++                                        },
++                                    ),
++                                    arguments: Arguments {
++                                        range: 9..20,
++                                        args: [
++                                            StringLiteral(
++                                                ExprStringLiteral {
++                                                    range: 10..19,
++                                                    value: StringLiteralValue {
++                                                        inner: Single(
++                                                            StringLiteral {
++                                                                range: 10..19,
++                                                                value: "foo.txt",
++                                                                flags: StringLiteralFlags {
++                                                                    quote_style: Double,
++                                                                    prefix: Empty,
++                                                                    triple_quoted: false,
++                                                                },
++                                                            },
++                                                        ),
++                                                    },
++                                                },
++                                            ),
++                                        ],
++                                        keywords: [],
++                                    },
++                                },
++                            ),
++                            optional_vars: Some(
++                                Name(
++                                    ExprName {
++                                        range: 24..33,
++                                        id: Name("__debug__"),
++                                        ctx: Store,
++                                    },
++                                ),
++                            ),
++                        },
++                    ],
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 35..38,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 35..38,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | with open("foo.txt") as __debug__: ...
++  |                         ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@del_debug_py39.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@del_debug_py39.py.snap
+new file mode 100644
+index 0000000000..6909999bfe
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@del_debug_py39.py.snap
+@@ -0,0 +1,36 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/del_debug_py39.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..57,
++        body: [
++            Delete(
++                StmtDelete {
++                    range: 43..56,
++                    targets: [
++                        Name(
++                            ExprName {
++                                range: 47..56,
++                                id: Name("__debug__"),
++                                ctx: Del,
++                            },
++                        ),
++                    ],
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | # parse_options: {"target-version": "3.9"}
++2 | del __debug__
++  |     ^^^^^^^^^ Syntax Error: cannot delete `__debug__` on Python 3.9 (syntax was removed in 3.9)
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/invalid_syntax@write_to_debug_expr.py.snap b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@write_to_debug_expr.py.snap
+new file mode 100644
+index 0000000000..617675786f
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/invalid_syntax@write_to_debug_expr.py.snap
+@@ -0,0 +1,205 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/err/write_to_debug_expr.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..83,
++        body: [
++            Delete(
++                StmtDelete {
++                    range: 0..13,
++                    targets: [
++                        Name(
++                            ExprName {
++                                range: 4..13,
++                                id: Name("__debug__"),
++                                ctx: Del,
++                            },
++                        ),
++                    ],
++                },
++            ),
++            Delete(
++                StmtDelete {
++                    range: 14..36,
++                    targets: [
++                        Name(
++                            ExprName {
++                                range: 18..19,
++                                id: Name("x"),
++                                ctx: Del,
++                            },
++                        ),
++                        Name(
++                            ExprName {
++                                range: 21..22,
++                                id: Name("y"),
++                                ctx: Del,
++                            },
++                        ),
++                        Name(
++                            ExprName {
++                                range: 24..33,
++                                id: Name("__debug__"),
++                                ctx: Del,
++                            },
++                        ),
++                        Name(
++                            ExprName {
++                                range: 35..36,
++                                id: Name("z"),
++                                ctx: Del,
++                            },
++                        ),
++                    ],
++                },
++            ),
++            Assign(
++                StmtAssign {
++                    range: 37..50,
++                    targets: [
++                        Name(
++                            ExprName {
++                                range: 37..46,
++                                id: Name("__debug__"),
++                                ctx: Store,
++                            },
++                        ),
++                    ],
++                    value: NumberLiteral(
++                        ExprNumberLiteral {
++                            range: 49..50,
++                            value: Int(
++                                1,
++                            ),
++                        },
++                    ),
++                },
++            ),
++            Assign(
++                StmtAssign {
++                    range: 51..82,
++                    targets: [
++                        Tuple(
++                            ExprTuple {
++                                range: 51..69,
++                                elts: [
++                                    Name(
++                                        ExprName {
++                                            range: 51..52,
++                                            id: Name("x"),
++                                            ctx: Store,
++                                        },
++                                    ),
++                                    Name(
++                                        ExprName {
++                                            range: 54..55,
++                                            id: Name("y"),
++                                            ctx: Store,
++                                        },
++                                    ),
++                                    Name(
++                                        ExprName {
++                                            range: 57..66,
++                                            id: Name("__debug__"),
++                                            ctx: Store,
++                                        },
++                                    ),
++                                    Name(
++                                        ExprName {
++                                            range: 68..69,
++                                            id: Name("z"),
++                                            ctx: Store,
++                                        },
++                                    ),
++                                ],
++                                ctx: Store,
++                                parenthesized: false,
++                            },
++                        ),
++                    ],
++                    value: Tuple(
++                        ExprTuple {
++                            range: 72..82,
++                            elts: [
++                                NumberLiteral(
++                                    ExprNumberLiteral {
++                                        range: 72..73,
++                                        value: Int(
++                                            1,
++                                        ),
++                                    },
++                                ),
++                                NumberLiteral(
++                                    ExprNumberLiteral {
++                                        range: 75..76,
++                                        value: Int(
++                                            2,
++                                        ),
++                                    },
++                                ),
++                                NumberLiteral(
++                                    ExprNumberLiteral {
++                                        range: 78..79,
++                                        value: Int(
++                                            3,
++                                        ),
++                                    },
++                                ),
++                                NumberLiteral(
++                                    ExprNumberLiteral {
++                                        range: 81..82,
++                                        value: Int(
++                                            4,
++                                        ),
++                                    },
++                                ),
++                            ],
++                            ctx: Load,
++                            parenthesized: false,
++                        },
++                    ),
++                },
++            ),
++        ],
++    },
++)
++```
++## Semantic Syntax Errors
++
++  |
++1 | del __debug__
++  |     ^^^^^^^^^ Syntax Error: cannot delete `__debug__` on Python 3.13 (syntax was removed in 3.9)
++2 | del x, y, __debug__, z
++3 | __debug__ = 1
++  |
++
++
++  |
++1 | del __debug__
++2 | del x, y, __debug__, z
++  |           ^^^^^^^^^ Syntax Error: cannot delete `__debug__` on Python 3.13 (syntax was removed in 3.9)
++3 | __debug__ = 1
++4 | x, y, __debug__, z = 1, 2, 3, 4
++  |
++
++
++  |
++1 | del __debug__
++2 | del x, y, __debug__, z
++3 | __debug__ = 1
++  | ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++4 | x, y, __debug__, z = 1, 2, 3, 4
++  |
++
++
++  |
++2 | del x, y, __debug__, z
++3 | __debug__ = 1
++4 | x, y, __debug__, z = 1, 2, 3, 4
++  |       ^^^^^^^^^ Syntax Error: cannot assign to `__debug__`
++  |
+diff --git a/crates/ruff_python_parser/tests/snapshots/valid_syntax@debug_rename_import.py.snap b/crates/ruff_python_parser/tests/snapshots/valid_syntax@debug_rename_import.py.snap
+new file mode 100644
+index 0000000000..6289f59327
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/valid_syntax@debug_rename_import.py.snap
+@@ -0,0 +1,84 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/ok/debug_rename_import.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..86,
++        body: [
++            Import(
++                StmtImport {
++                    range: 0..25,
++                    names: [
++                        Alias {
++                            range: 7..25,
++                            name: Identifier {
++                                id: Name("__debug__"),
++                                range: 7..16,
++                            },
++                            asname: Some(
++                                Identifier {
++                                    id: Name("debug"),
++                                    range: 20..25,
++                                },
++                            ),
++                        },
++                    ],
++                },
++            ),
++            ImportFrom(
++                StmtImportFrom {
++                    range: 26..52,
++                    module: Some(
++                        Identifier {
++                            id: Name("__debug__"),
++                            range: 31..40,
++                        },
++                    ),
++                    names: [
++                        Alias {
++                            range: 48..52,
++                            name: Identifier {
++                                id: Name("Some"),
++                                range: 48..52,
++                            },
++                            asname: None,
++                        },
++                    ],
++                    level: 0,
++                },
++            ),
++            ImportFrom(
++                StmtImportFrom {
++                    range: 53..85,
++                    module: Some(
++                        Identifier {
++                            id: Name("x"),
++                            range: 58..59,
++                        },
++                    ),
++                    names: [
++                        Alias {
++                            range: 67..85,
++                            name: Identifier {
++                                id: Name("__debug__"),
++                                range: 67..76,
++                            },
++                            asname: Some(
++                                Identifier {
++                                    id: Name("debug"),
++                                    range: 80..85,
++                                },
++                            ),
++                        },
++                    ],
++                    level: 0,
++                },
++            ),
++        ],
++    },
++)
++```
+diff --git a/crates/ruff_python_parser/tests/snapshots/valid_syntax@del_debug_py38.py.snap b/crates/ruff_python_parser/tests/snapshots/valid_syntax@del_debug_py38.py.snap
+new file mode 100644
+index 0000000000..1ba0db0c2d
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/valid_syntax@del_debug_py38.py.snap
+@@ -0,0 +1,29 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/ok/del_debug_py38.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..57,
++        body: [
++            Delete(
++                StmtDelete {
++                    range: 43..56,
++                    targets: [
++                        Name(
++                            ExprName {
++                                range: 47..56,
++                                id: Name("__debug__"),
++                                ctx: Del,
++                            },
++                        ),
++                    ],
++                },
++            ),
++        ],
++    },
++)
++```
+diff --git a/crates/ruff_python_parser/tests/snapshots/valid_syntax@read_from_debug.py.snap b/crates/ruff_python_parser/tests/snapshots/valid_syntax@read_from_debug.py.snap
+new file mode 100644
+index 0000000000..5bfd7c4128
+--- /dev/null
++++ b/crates/ruff_python_parser/tests/snapshots/valid_syntax@read_from_debug.py.snap
+@@ -0,0 +1,61 @@
++---
++source: crates/ruff_python_parser/tests/fixtures.rs
++input_file: crates/ruff_python_parser/resources/inline/ok/read_from_debug.py
++---
++## AST
++
++```
++Module(
++    ModModule {
++        range: 0..32,
++        body: [
++            If(
++                StmtIf {
++                    range: 0..17,
++                    test: Name(
++                        ExprName {
++                            range: 3..12,
++                            id: Name("__debug__"),
++                            ctx: Load,
++                        },
++                    ),
++                    body: [
++                        Expr(
++                            StmtExpr {
++                                range: 14..17,
++                                value: EllipsisLiteral(
++                                    ExprEllipsisLiteral {
++                                        range: 14..17,
++                                    },
++                                ),
++                            },
++                        ),
++                    ],
++                    elif_else_clauses: [],
++                },
++            ),
++            Assign(
++                StmtAssign {
++                    range: 18..31,
++                    targets: [
++                        Name(
++                            ExprName {
++                                range: 18..19,
++                                id: Name("x"),
++                                ctx: Store,
++                            },
++                        ),
++                    ],
++                    value: Name(
++                        ExprName {
++                            range: 22..31,
++                            id: Name("__debug__"),
++                            ctx: Load,
++                        },
++                    ),
++                },
++            ),
++        ],
++    },
++)
++```

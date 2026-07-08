@@ -1,0 +1,44 @@
+diff --git a/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs b/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
+index 0c6a16b910..8c30366060 100644
+--- a/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
++++ b/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
+@@ -899,6 +899,39 @@ fn test_imports() {
+         .test_and_snapshot();
+ }
+ 
++#[test]
++fn test_fix_options() {
++    let pass = vec![];
++    let fail = vec![
++        ("import foo from './foo';", Some(json!([{ "fix": { "imports": "off" } }]))),
++        ("let a = 1;", Some(json!([{ "fix": { "variables": "off" } }]))),
++    ];
++
++    let fix = vec![
++        (
++            "let a = 1;",
++            "",
++            Some(json!([{ "fix": { "imports": "off" } }])),
++            FixKind::DangerousSuggestion,
++        ),
++        (
++            "import foo from './foo';",
++            "",
++            Some(json!([{ "fix": { "variables": "off" } }])),
++            FixKind::DangerousSuggestion,
++        ),
++        (
++            "import foo from './foo';",
++            "",
++            Some(json!([{ "fix": { "imports": "fix" } }])),
++            FixKind::DangerousFix,
++        ),
++        ("let a = 1;", "", Some(json!([{ "fix": { "variables": "fix" } }])), FixKind::DangerousFix),
++    ];
++
++    Tester::new(NoUnusedVars::NAME, NoUnusedVars::PLUGIN, pass, fail).expect_fix(fix).test();
++}
++
+ #[test]
+ fn test_used_declarations() {
+     let pass = vec![

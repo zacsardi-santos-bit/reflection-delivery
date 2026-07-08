@@ -1,0 +1,206 @@
+diff --git a/gix-refspec/src/spec.rs b/gix-refspec/src/spec.rs
+index 874ebbcd1..a63be4cb7 100644
+--- a/gix-refspec/src/spec.rs
++++ b/gix-refspec/src/spec.rs
+@@ -126,7 +126,11 @@ impl<'a> RefSpecRef<'a> {
+     /// Derive the prefix from the [`source`][Self::source()] side of this spec if this is a fetch spec,
+     /// or the [`destination`][Self::destination()] side if it is a push spec, if it is possible to do so without ambiguity.
+     ///
+-    /// This means it starts with `refs/`. Note that it won't contain more than two components, like `refs/heads/`
++    /// Exact refs starting with `refs/` are returned unchanged, like `refs/heads/main`
++    /// or `refs/namespaces/foo/refs/heads/main`. Simple Git-style glob refspecs return
++    /// the portion up to their single `*`, like `refs/heads/` or `refs/namespaces/foo/refs/heads/`.
++    ///
++    /// More complex wildcard patterns don't have a Git-compatible ref-prefix and thus return `None`.
+     pub fn prefix(&self) -> Option<&BStr> {
+         if self.mode == Mode::Negative {
+             return None;
+@@ -138,10 +142,19 @@ impl<'a> RefSpecRef<'a> {
+         if source == "HEAD" {
+             return source.into();
+         }
+-        let suffix = source.strip_prefix(b"refs/")?;
+-        let slash_pos = suffix.find_byte(b'/')?;
+-        let prefix = source[..="refs/".len() + slash_pos].as_bstr();
+-        (!prefix.contains(&b'*')).then_some(prefix)
++
++        let sans_refs_prefix = source.strip_prefix(b"refs/")?;
++        if let Some(star_pos) = sans_refs_prefix.find_byte(b'*') {
++            if star_pos == 0
++                || sans_refs_prefix[star_pos + 1..].contains(&b'*')
++                || sans_refs_prefix.find_byteset(b"?[]\\").is_some()
++            {
++                return None;
++            }
++            let prefix = &source[.."refs/".len() + star_pos];
++            return (!prefix.is_empty()).then_some(prefix.as_bstr());
++        }
++        Some(source)
+     }
+ 
+     /// As opposed to [`prefix()`][Self::prefix], if the latter is `None` it will expand to all possible prefixes and place them in `out`.
+diff --git a/gix-refspec/tests/refspec/spec.rs b/gix-refspec/tests/refspec/spec.rs
+index 1a17db24e..f817fdc98 100644
+--- a/gix-refspec/tests/refspec/spec.rs
++++ b/gix-refspec/tests/refspec/spec.rs
+@@ -17,8 +17,8 @@ mod prefix {
+     }
+ 
+     #[test]
+-    fn short_absolute_refs_have_no_prefix() {
+-        assert_eq!(parse("refs/short").to_ref().prefix(), None);
++    fn short_absolute_refs_even_if_unusual_count_as_prefix() {
++        assert_eq!(parse("refs/short").to_ref().prefix().unwrap(), "refs/short");
+     }
+ 
+     #[test]
+@@ -28,23 +28,44 @@ mod prefix {
+                 .unwrap()
+                 .prefix()
+                 .unwrap(),
+-            "refs/remote/"
++            "refs/remote/main"
+         );
+     }
+ 
+     #[test]
+     fn full_names_have_a_prefix() {
+-        assert_eq!(parse("refs/heads/main").to_ref().prefix().unwrap(), "refs/heads/");
+-        assert_eq!(parse("refs/foo/bar").to_ref().prefix().unwrap(), "refs/foo/");
++        assert_eq!(parse("refs/heads/main").to_ref().prefix().unwrap(), "refs/heads/main");
++        assert_eq!(parse("refs/foo/bar").to_ref().prefix().unwrap(), "refs/foo/bar");
++        assert_eq!(
++            parse("refs/namespaces/foo/refs/heads/main").to_ref().prefix().unwrap(),
++            "refs/namespaces/foo/refs/heads/main"
++        );
+         assert_eq!(
+             parse("refs/heads/*:refs/remotes/origin/*").to_ref().prefix().unwrap(),
+             "refs/heads/"
+         );
++        assert_eq!(
++            parse("refs/namespaces/*:refs/remotes/origin/*")
++                .to_ref()
++                .prefix()
++                .unwrap(),
++            "refs/namespaces/"
++        );
+     }
+ 
+     #[test]
+     fn strange_glob_patterns_have_no_prefix() {
+         assert_eq!(parse("refs/*/main:refs/*/main").to_ref().prefix(), None);
++        assert_eq!(
++            parse("refs/*/foo/*").to_ref().prefix(),
++            None,
++            "duplicate * in pattern, we only support simple ones"
++        );
++        assert_eq!(
++            parse("refs/heads/[a-z.]/release/*").to_ref().prefix(),
++            None,
++            "complex glob patterns aren't handled either"
++        );
+     }
+ 
+     #[test]
+@@ -101,9 +122,18 @@ mod expand_prefixes {
+ 
+     #[test]
+     fn full_names_expand_to_their_prefix() {
+-        assert_eq!(parse("refs/heads/main"), ["refs/heads/"]);
+-        assert_eq!(parse("refs/foo/bar"), ["refs/foo/"]);
++        assert_eq!(parse("refs/heads/main"), ["refs/heads/main"]);
++        assert_eq!(parse("refs/foo/bar"), ["refs/foo/bar"]);
++        assert_eq!(
++            parse("refs/namespaces/foo/refs/heads/main"),
++            ["refs/namespaces/foo/refs/heads/main"]
++        );
+         assert_eq!(parse("refs/heads/*:refs/remotes/origin/*"), ["refs/heads/"]);
++        assert_eq!(parse("refs/namespaces/*:refs/remotes/origin/*"), ["refs/namespaces/"]);
++        assert_eq!(
++            parse("refs/namespaces/foo/refs/heads/*:refs/remotes/origin/*"),
++            ["refs/namespaces/foo/refs/heads/"]
++        );
+     }
+ 
+     #[test]
+@@ -112,12 +142,14 @@ mod expand_prefixes {
+         gix_refspec::parse("refs/local/main:refs/remote/main".into(), Operation::Push)
+             .unwrap()
+             .expand_prefixes(&mut out);
+-        assert_eq!(out, ["refs/remote/"]);
++        assert_eq!(out, ["refs/remote/main"]);
+     }
+ 
+     #[test]
+     fn strange_glob_patterns_expand_to_nothing() {
+         assert_eq!(parse("refs/*/main:refs/*/main").len(), 0);
++        assert_eq!(parse("refs/*/foo/*").len(), 0);
++        assert_eq!(parse("refs/heads/[a-z.]/release/*").len(), 0);
+     }
+ 
+     #[test]
+diff --git a/gix/tests/gix/remote/fetch.rs b/gix/tests/gix/remote/fetch.rs
+index 0b51f5515..7756114f2 100644
+--- a/gix/tests/gix/remote/fetch.rs
++++ b/gix/tests/gix/remote/fetch.rs
+@@ -583,6 +583,40 @@ mod blocking_and_async_io {
+         Ok(())
+     }
+ 
++    #[maybe_async::test(
++        feature = "blocking-network-client",
++        async(feature = "async-network-client-async-std", async_std::test)
++    )]
++    async fn fetching_a_missing_explicit_ref_fails_even_if_ls_refs_returns_nothing() -> crate::Result {
++        let daemon = spawn_git_daemon_if_async({
++            let mut p = repo_path("base");
++            p.pop();
++            p
++        })?;
++        let (repo, _tmp) = repo_rw("two-origins");
++        let mut remote = into_daemon_remote_if_async(
++            repo.find_remote("origin")?.with_fetch_tags(fetch::Tags::None),
++            daemon.as_ref(),
++            "base",
++        );
++        remote.replace_refspecs(Some("refs/heads/does-not-exist"), Fetch)?;
++
++        let err = remote
++            .connect(Fetch)
++            .await?
++            .prepare_fetch(gix::progress::Discard, Default::default())
++            .await?
++            .receive(gix::progress::Discard, &AtomicBool::default())
++            .await
++            .unwrap_err();
++
++        assert_eq!(
++            err.to_string(),
++            "None of the refspec(s) refs/heads/does-not-exist matched any of the 0 refs on the remote"
++        );
++        Ok(())
++    }
++
+     #[maybe_async::test(
+         feature = "blocking-network-client",
+         async(feature = "async-network-client-async-std", async_std::test)
+diff --git a/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-non-existing-single-ref b/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-non-existing-single-ref
+index d3d745bbd..785565c58 100644
+--- a/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-non-existing-single-ref
++++ b/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-non-existing-single-ref
+@@ -1 +1 @@
+-Error: None of the refspec(s) refs/heads/does-not-exist matched any of the 2 refs on the remote
+\ No newline at end of file
++Error: None of the refspec(s) refs/heads/does-not-exist matched any of the 0 refs on the remote
+\ No newline at end of file
+diff --git a/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-single-ref b/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-single-ref
+index 3ef288037..64a88db71 100644
+--- a/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-single-ref
++++ b/tests/snapshots/plumbing/no-repo/pack/receive/file-v-any-no-output-single-ref
+@@ -1,5 +1,4 @@
+ index: c787de2aafb897417ca8167baeb146eabd18bc5f
+ pack: 346574b7331dc3a1724da218d622c6e1b6c66a57
+ 
+-ee3c97678e89db4eab7420b04aef51758359f152 refs/heads/dev
+ 3f72b39ad1600e6dac63430c15e0d875e9d3f9d6 refs/heads/main
+\ No newline at end of file

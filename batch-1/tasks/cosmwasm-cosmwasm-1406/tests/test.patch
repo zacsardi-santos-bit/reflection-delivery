@@ -1,0 +1,28 @@
+diff --git a/packages/vm/src/cache.rs b/packages/vm/src/cache.rs
+index 6310f3ca4..ce0544fa5 100644
+--- a/packages/vm/src/cache.rs
++++ b/packages/vm/src/cache.rs
+@@ -530,6 +530,23 @@ mod tests {
+         }
+     }
+ 
++    #[test]
++    fn load_wasm_error_is_os_independent() {
++        let cache: Cache<MockApi, MockStorage, MockQuerier> =
++            unsafe { Cache::new(make_testing_options()).unwrap() };
++        let checksum = Checksum::from([
++            7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
++            7, 7, 7,
++        ]);
++
++        match cache.load_wasm(&checksum).unwrap_err() {
++            VmError::CacheErr { msg, .. } => {
++                assert_eq!(msg, "Error opening Wasm file for reading")
++            }
++            e => panic!("Unexpected error: {:?}", e),
++        }
++    }
++
+     #[test]
+     fn load_wasm_errors_for_corrupted_wasm() {
+         let tmp_dir = TempDir::new().unwrap();

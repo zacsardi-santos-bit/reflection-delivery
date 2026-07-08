@@ -1,0 +1,15 @@
+diff --git a/rust/storage/src/lib.rs b/rust/storage/src/lib.rs
+index d6ecf11..2b3ed99 100644
+--- a/rust/storage/src/lib.rs
++++ b/rust/storage/src/lib.rs
+@@ -442,4 +442,10 @@ mod tests {
+         let _x = PutOptions::if_not_exists(StorageRequestPriority::P0);
+         let _x = PutOptions::if_matches(&ETag("123".to_string()), StorageRequestPriority::P0);
+     }
++
++    #[test]
++    fn test_storage_returns_tempdir() {
++        let (temp_dir, _storage) = test_storage();
++        assert!(temp_dir.path().exists());
++    }
+ }

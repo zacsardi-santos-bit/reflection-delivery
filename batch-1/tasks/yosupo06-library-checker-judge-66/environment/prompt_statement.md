@@ -1,9 +1,7 @@
-I'm trying to add integration tests to the library checker judge API server, but I'm running into several problems that prevent the tests from passing.
+I'm setting up integration tests against our library checker judge API server and hitting three walls that keep the tests red. First one, the server just dies on startup if the auth secret isn't present in the environment. My test env doesn't set it, and honestly I'd rather it fall back to some default value and keep running instead of aborting the whole process. So wherever we read that secret, please make it degrade gracefully to a default rather than panicking when the env var is missing.
 
-First, the server crashes immediately on startup if an authentication secret isn't set as an environment variable. In my test environment this secret isn't configured, and the server should be able to fall back to a default value and keep running rather than aborting.
+Second, when I hit the endpoint asking for supported languages I get an empty list back. Pretty sure it's because we moved things around in a recent directory restructuring and the code still points at the old location for the language definitions file, so it can't load anything. Fix the path so it reads from the file's new spot, and after that the languages endpoint should come back with at least one entry.
 
-Second, when I ask the server for the list of supported programming languages, it comes back empty. The server is looking for the language definitions file in the wrong location — it was moved during a recent directory restructuring, and the path in the code hasn't been updated.
+Third, the submission endpoint happily accepts source code of any size right now, even huge payloads, which is a nasty abuse vector. I want it to reject anything where the source code goes over 1 MiB (that's 1,048,576 bytes) and return an error to the caller instead of processing it.
 
-Third, the submission endpoint accepts source code of any size, including very large files. I'd expect the server to reject submissions where the source code exceeds 1 MiB, returning an error instead of processing the request.
-
-Once these three issues are fixed, the server should start cleanly in a test environment, return a non-empty list of supported languages, and properly reject oversized source code submissions with an error.
+Net goal, once those three are sorted the server starts clean in a test environment even without the secret configured, the language list returns non-empty loaded from the corrected path, and oversized submissions get bounced with an error.

@@ -1,0 +1,58 @@
+diff --git a/tests/sql/test_sql_table_functions.py b/tests/sql/test_sql_table_functions.py
+index 004b8fe37..866c96c7e 100644
+--- a/tests/sql/test_sql_table_functions.py
++++ b/tests/sql/test_sql_table_functions.py
+@@ -1,6 +1,7 @@
+ import pytest
+ 
+ import daft
++from daft import DataType as dt
+ 
+ # TODO chore: make an asset fixture for all tests (beyond just sql).
+ 
+@@ -45,6 +46,23 @@ def test_sql_read_json_paths():
+     assert_eq(actual, expect)
+ 
+ 
++def test_sql_read_with_schema():
++    actual = daft.sql("""SELECT * FROM read_json('tests/assets/json-data/sample1.jsonl', schema := {
++        'x': 'int',
++        'y': 'string',
++        'z': 'bool',
++    });""")
++    expect = daft.read_json(
++        "tests/assets/json-data/sample1.jsonl",
++        schema={
++            "x": dt.int32(),
++            "y": dt.string(),
++            "z": dt.bool(),
++        },
++    )
++    assert_eq(actual, expect)
++
++
+ def test_sql_read_parquet():
+     actual = daft.sql("SELECT * FROM read_parquet('tests/assets/parquet-data/mvp.parquet')")
+     expect = daft.read_parquet("tests/assets/parquet-data/mvp.parquet")
+@@ -86,6 +104,21 @@ def test_sql_read_csv_paths():
+     assert_eq(actual, expect)
+ 
+ 
++def test_sql_read_csv_with_schema(sample_csv_path):
++    actual = daft.sql("""SELECT * FROM read_csv('tests/assets/mvp.csv', schema := {
++        'a': 'double',
++        'b': 'string',
++    });""")
++    expect = daft.read_csv(
++        sample_csv_path,
++        schema={
++            "a": dt.float64(),
++            "b": dt.string(),
++        },
++    )
++    assert_eq(actual, expect)
++
++
+ @pytest.mark.parametrize("has_headers", [True, False])
+ def test_read_csv_headers(sample_csv_path, has_headers):
+     df1 = daft.read_csv(sample_csv_path, has_headers=has_headers)

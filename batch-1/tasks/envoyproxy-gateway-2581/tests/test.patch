@@ -1,0 +1,14 @@
+diff --git a/internal/xds/translator/translator_test.go b/internal/xds/translator/translator_test.go
+index 3ca758345..a324c8a14 100644
+--- a/internal/xds/translator/translator_test.go
++++ b/internal/xds/translator/translator_test.go
+@@ -263,6 +263,9 @@ func TestTranslateXds(t *testing.T) {
+ 		{
+ 			name: "http10",
+ 		},
++		{
++			name: "upstream-tcpkeepalive",
++		},
+ 	}
+ 
+ 	for _, tc := range testCases {

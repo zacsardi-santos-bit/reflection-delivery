@@ -1,0 +1,485 @@
+diff --git a/snapshot/snapshot_test.go b/snapshot/snapshot_test.go
+index 68507358..79712dfd 100644
+--- a/snapshot/snapshot_test.go
++++ b/snapshot/snapshot_test.go
+@@ -443,8 +443,8 @@ func Test_SnapshotSet_Newest(t *testing.T) {
+ func Test_SnapshotSet_NewestFull(t *testing.T) {
+ 	t.Run("no full snapshots", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-1", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -459,8 +459,8 @@ func Test_SnapshotSet_NewestFull(t *testing.T) {
+ 
+ 	t.Run("single full snapshot", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -475,10 +475,10 @@ func Test_SnapshotSet_NewestFull(t *testing.T) {
+ 
+ 	t.Run("multiple full snapshots", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-			{id: "snapshot-3", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+-			{id: "snapshot-4", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-3", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++			{id: "snapshot-4", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -496,8 +496,8 @@ func Test_SnapshotSet_NewestFull(t *testing.T) {
+ func Test_SnapshotSet_NewestIncremental(t *testing.T) {
+ 	t.Run("no incremental snapshots", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -512,8 +512,8 @@ func Test_SnapshotSet_NewestIncremental(t *testing.T) {
+ 
+ 	t.Run("single incremental snapshot", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -528,10 +528,10 @@ func Test_SnapshotSet_NewestIncremental(t *testing.T) {
+ 
+ 	t.Run("multiple incremental snapshots", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-			{id: "snapshot-3", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+-			{id: "snapshot-4", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-3", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++			{id: "snapshot-4", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -548,10 +548,10 @@ func Test_SnapshotSet_NewestIncremental(t *testing.T) {
+ // Test SnapshotSet.Fulls method
+ func Test_SnapshotSet_Fulls(t *testing.T) {
+ 	items := []*Snapshot{
+-		{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-		{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-		{id: "snapshot-3", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+-		{id: "snapshot-4", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
++		{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++		{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++		{id: "snapshot-3", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++		{id: "snapshot-4", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
+ 	}
+ 	ss := SnapshotSet{dir: "/test", items: items}
+ 
+@@ -575,10 +575,10 @@ func Test_SnapshotSet_Fulls(t *testing.T) {
+ // Test SnapshotSet.Incrementals method
+ func Test_SnapshotSet_Incrementals(t *testing.T) {
+ 	items := []*Snapshot{
+-		{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-		{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-		{id: "snapshot-3", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+-		{id: "snapshot-4", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
++		{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++		{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++		{id: "snapshot-3", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++		{id: "snapshot-4", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
+ 	}
+ 	ss := SnapshotSet{dir: "/test", items: items}
+ 
+@@ -763,8 +763,8 @@ func Test_SnapshotSet_Range(t *testing.T) {
+ func Test_SnapshotSet_PartitionAtFull(t *testing.T) {
+ 	t.Run("no full snapshots", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-1", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+ 		}
+ 		ss := SnapshotSet{dir: "/test", items: items}
+ 
+@@ -779,8 +779,8 @@ func Test_SnapshotSet_PartitionAtFull(t *testing.T) {
+ 
+ 	t.Run("full snapshot with no newer", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-1", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+ 		}
+ 		ss := SnapshotSet{dir: "/test", items: items}
+ 
+@@ -798,9 +798,9 @@ func Test_SnapshotSet_PartitionAtFull(t *testing.T) {
+ 
+ 	t.Run("full snapshot with newer incrementals", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-			{id: "snapshot-3", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-3", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+ 		}
+ 		ss := SnapshotSet{dir: "/test", items: items}
+ 
+@@ -822,10 +822,10 @@ func Test_SnapshotSet_PartitionAtFull(t *testing.T) {
+ 
+ 	t.Run("multiple full snapshots", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-			{id: "snapshot-3", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+-			{id: "snapshot-4", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-3", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++			{id: "snapshot-4", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
+ 		}
+ 		ss := SnapshotSet{dir: "/test", items: items}
+ 
+@@ -849,8 +849,8 @@ func Test_SnapshotSet_PartitionAtFull(t *testing.T) {
+ func Test_SnapshotSet_ValidateIncrementalChain(t *testing.T) {
+ 	t.Run("no full snapshot", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-1", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -862,9 +862,9 @@ func Test_SnapshotSet_ValidateIncrementalChain(t *testing.T) {
+ 
+ 	t.Run("valid chain", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-			{id: "snapshot-3", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-3", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -876,7 +876,7 @@ func Test_SnapshotSet_ValidateIncrementalChain(t *testing.T) {
+ 
+ 	t.Run("full snapshot only", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -888,10 +888,10 @@ func Test_SnapshotSet_ValidateIncrementalChain(t *testing.T) {
+ 
+ 	t.Run("multiple full snapshots with incrementals after newest", func(t *testing.T) {
+ 		items := []*Snapshot{
+-			{id: "snapshot-1", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+-			{id: "snapshot-2", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
+-			{id: "snapshot-3", typ: SnapshotTypeFull, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
+-			{id: "snapshot-4", typ: SnapshotTypeIncremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
++			{id: "snapshot-1", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
++			{id: "snapshot-2", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 2}},
++			{id: "snapshot-3", typ: Full, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 3}},
++			{id: "snapshot-4", typ: Incremental, raftMeta: &raft.SnapshotMeta{Term: 1, Index: 4}},
+ 		}
+ 		ss := SnapshotSet{items: items}
+ 
+@@ -934,8 +934,8 @@ func Test_SnapshotCatalog_Scan(t *testing.T) {
+ 		if snap.id != "snapshot-1" {
+ 			t.Fatalf("snapshot id = %q, want %q", snap.id, "snapshot-1")
+ 		}
+-		if snap.typ != SnapshotTypeFull {
+-			t.Fatalf("snapshot type = %v, want %v", snap.typ, SnapshotTypeFull)
++		if snap.typ != Full {
++			t.Fatalf("snapshot type = %v, want %v", snap.typ, Full)
+ 		}
+ 		if snap.raftMeta.Index != 1 || snap.raftMeta.Term != 1 {
+ 			t.Fatalf("snapshot metadata incorrect: term=%d, index=%d", snap.raftMeta.Term, snap.raftMeta.Index)
+@@ -956,8 +956,8 @@ func Test_SnapshotCatalog_Scan(t *testing.T) {
+ 		}
+ 
+ 		snap := ss.All()[0]
+-		if snap.typ != SnapshotTypeIncremental {
+-			t.Fatalf("snapshot type = %v, want %v", snap.typ, SnapshotTypeIncremental)
++		if snap.typ != Incremental {
++			t.Fatalf("snapshot type = %v, want %v", snap.typ, Incremental)
+ 		}
+ 	})
+ 
+@@ -1238,7 +1238,7 @@ func TestSnapshotSet_ResolveFiles(t *testing.T) {
+ 		ss := SnapshotSet{
+ 			dir: "/test",
+ 			items: []*Snapshot{
+-				{id: "snap-1", typ: SnapshotTypeIncremental, path: "/test/snap-1",
++				{id: "snap-1", typ: Incremental, path: "/test/snap-1",
+ 					raftMeta: &raft.SnapshotMeta{Term: 1, Index: 1}},
+ 			},
+ 		}
+@@ -1413,8 +1413,8 @@ func Test_SnapshotCatalog_Scan_MultiWAL(t *testing.T) {
+ 		}
+ 
+ 		snap := ss.All()[0]
+-		if snap.typ != SnapshotTypeIncremental {
+-			t.Fatalf("snapshot type = %v, want %v", snap.typ, SnapshotTypeIncremental)
++		if snap.typ != Incremental {
++			t.Fatalf("snapshot type = %v, want %v", snap.typ, Incremental)
+ 		}
+ 		if len(snap.walFiles) != 2 {
+ 			t.Fatalf("expected 2 WAL files, got %d", len(snap.walFiles))
+@@ -1436,8 +1436,8 @@ func Test_SnapshotCatalog_Scan_MultiWAL(t *testing.T) {
+ 		}
+ 
+ 		snap := ss.All()[0]
+-		if snap.typ != SnapshotTypeIncremental {
+-			t.Fatalf("snapshot type = %v, want %v", snap.typ, SnapshotTypeIncremental)
++		if snap.typ != Incremental {
++			t.Fatalf("snapshot type = %v, want %v", snap.typ, Incremental)
+ 		}
+ 		if len(snap.walFiles) != 3 {
+ 			t.Fatalf("expected 3 WAL files, got %d", len(snap.walFiles))
+@@ -1460,8 +1460,8 @@ func Test_SnapshotCatalog_Scan_MultiWAL(t *testing.T) {
+ 		}
+ 
+ 		snap := ss.All()[0]
+-		if snap.typ != SnapshotTypeFull {
+-			t.Fatalf("snapshot type = %v, want %v", snap.typ, SnapshotTypeFull)
++		if snap.typ != Full {
++			t.Fatalf("snapshot type = %v, want %v", snap.typ, Full)
+ 		}
+ 		if snap.dbFile == nil {
+ 			t.Fatal("expected dbFile to be set")
+diff --git a/snapshot/store_test.go b/snapshot/store_test.go
+index e996cc87..432ed132 100644
+--- a/snapshot/store_test.go
++++ b/snapshot/store_test.go
+@@ -46,10 +46,10 @@ func Test_StoreEmpty(t *testing.T) {
+ 		t.Fatalf("Expected no snapshots, got %d", len(snaps))
+ 	}
+ 
+-	if fn, err := store.FullNeeded(); err != nil {
+-		t.Fatalf("Failed to check if full snapshot needed: %v", err)
+-	} else if !fn {
+-		t.Fatalf("Expected full snapshot needed, but it is not")
++	if dn, err := store.DueNext(); err != nil {
++		t.Fatalf("Failed to check snapshot due next: %v", err)
++	} else if dn != Full {
++		t.Fatalf("Expected full snapshot due next, got %s", dn)
+ 	}
+ 
+ 	_, _, err = store.Open("nonexistent")
+diff --git a/snapshot/upgrader_test.go b/snapshot/upgrader_test.go
+index a5f653f6..0ca61dc3 100644
+--- a/snapshot/upgrader_test.go
++++ b/snapshot/upgrader_test.go
+@@ -184,7 +184,7 @@ func Test_Upgrade8To10_NewAlreadyExists(t *testing.T) {
+ 	if snap.id != "2-18-1686659761026" {
+ 		t.Fatalf("expected snapshot ID 2-18-1686659761026, got %s", snap.id)
+ 	}
+-	if snap.typ != SnapshotTypeFull {
++	if snap.typ != Full {
+ 		t.Fatalf("expected full snapshot, got type %v", snap.typ)
+ 	}
+ }
+@@ -239,7 +239,7 @@ func Test_Upgrade8To10_OK(t *testing.T) {
+ 	if snap.id != snapshotID {
+ 		t.Fatalf("expected snapshot ID %s, got %s", snapshotID, snap.id)
+ 	}
+-	if snap.typ != SnapshotTypeFull {
++	if snap.typ != Full {
+ 		t.Fatalf("expected full snapshot, got type %v", snap.typ)
+ 	}
+ 	if snap.raftMeta.Index != 18 {
+@@ -307,7 +307,7 @@ func Test_Upgrade8To10_MultiplePicksNewest(t *testing.T) {
+ 	if snap.id != "2-20-2000000000000" {
+ 		t.Fatalf("expected newest snapshot ID 2-20-2000000000000, got %s", snap.id)
+ 	}
+-	if snap.typ != SnapshotTypeFull {
++	if snap.typ != Full {
+ 		t.Fatalf("expected full snapshot, got type %v", snap.typ)
+ 	}
+ 	if snap.raftMeta.Index != 20 {
+@@ -352,7 +352,7 @@ func Test_Upgrade8To10_Idempotent(t *testing.T) {
+ 	if snap.id != snapshotID {
+ 		t.Fatalf("expected snapshot ID %s, got %s", snapshotID, snap.id)
+ 	}
+-	if snap.typ != SnapshotTypeFull {
++	if snap.typ != Full {
+ 		t.Fatalf("expected full snapshot, got type %v", snap.typ)
+ 	}
+ 	if snap.raftMeta.Index != 18 {
+@@ -431,7 +431,7 @@ func Test_Upgrade8To10_ResumesPlan(t *testing.T) {
+ 	if snap.id != snapshotID {
+ 		t.Fatalf("expected snapshot ID %s, got %s", snapshotID, snap.id)
+ 	}
+-	if snap.typ != SnapshotTypeFull {
++	if snap.typ != Full {
+ 		t.Fatalf("expected full snapshot, got type %v", snap.typ)
+ 	}
+ 	if snap.raftMeta.Index != 18 {
+diff --git a/store/store_snapshot_test.go b/store/store_snapshot_test.go
+index 98636a69..489cb244 100644
+--- a/store/store_snapshot_test.go
++++ b/store/store_snapshot_test.go
+@@ -11,6 +11,7 @@ import (
+ 
+ 	"github.com/rqlite/rqlite/v10/command/proto"
+ 	"github.com/rqlite/rqlite/v10/internal/random"
++	"github.com/rqlite/rqlite/v10/snapshot"
+ )
+ 
+ // Test_SingleNodeSnapshot tests that the Store correctly takes a snapshot
+@@ -578,14 +579,14 @@ func Test_SingleNodeSnapshot_FSMFailures(t *testing.T) {
+ 	}
+ 
+ 	// Do nothing with the Snapshot, just release it, Store should remain in
+-	// FullNeeded more.
++	// full due next mode.
+ 	f.Release()
+-	fn, err := s.snapshotStore.FullNeeded()
++	dn, err := s.snapshotStore.DueNext()
+ 	if err != nil {
+-		t.Fatalf("failed to check FullNeeded: %s", err.Error())
++		t.Fatalf("failed to check DueNext: %s", err.Error())
+ 	}
+-	if !fn {
+-		t.Fatal("expected Snapshot Store to require full snapshot")
++	if dn != snapshot.Full {
++		t.Fatalf("expected full snapshot due next, got %s", dn)
+ 	}
+ 
+ 	// Next, successfully snapshot and insert more data.
+@@ -596,12 +597,12 @@ func Test_SingleNodeSnapshot_FSMFailures(t *testing.T) {
+ 		`INSERT INTO foo(name) VALUES("fiona")`,
+ 	}
+ 	mustExecute(t, s, queries)
+-	fn, err = s.snapshotStore.FullNeeded()
++	dn, err = s.snapshotStore.DueNext()
+ 	if err != nil {
+-		t.Fatalf("failed to check FullNeeded: %s", err.Error())
++		t.Fatalf("failed to check DueNext: %s", err.Error())
+ 	}
+-	if fn {
+-		t.Fatal("expected Snapshot Store to not require full snapshot")
++	if dn != snapshot.Incremental {
++		t.Fatalf("expected incremental snapshot due next, got %s", dn)
+ 	}
+ 
+ 	// Snap the node again.
+diff --git a/store/store_test.go b/store/store_test.go
+index e8b44656..5549f92e 100644
+--- a/store/store_test.go
++++ b/store/store_test.go
+@@ -18,6 +18,7 @@ import (
+ 	"github.com/rqlite/rqlite/v10/db"
+ 	"github.com/rqlite/rqlite/v10/internal/random"
+ 	"github.com/rqlite/rqlite/v10/internal/rarchive"
++	"github.com/rqlite/rqlite/v10/snapshot"
+ 	"github.com/rqlite/rqlite/v10/testdata/chinook"
+ )
+ 
+@@ -2070,12 +2071,12 @@ COMMIT;
+ 	}
+ 
+ 	// Loading a database should mark that the snapshot store needs a Full Snapshot
+-	fn, err := s.snapshotStore.FullNeeded()
++	dn, err := s.snapshotStore.DueNext()
+ 	if err != nil {
+-		t.Fatalf("failed to check if snapshot store needs a full snapshot: %s", err.Error())
++		t.Fatalf("failed to check snapshot due next: %s", err.Error())
+ 	}
+-	if !fn {
+-		t.Fatalf("expected snapshot store to need a full snapshot")
++	if dn != snapshot.Full {
++		t.Fatalf("expected full snapshot due next, got %s", dn)
+ 	}
+ 
+ 	// Check that data were loaded correctly.
+diff --git a/store/store_vacuum_test.go b/store/store_vacuum_test.go
+index 24936444..215d2f1e 100644
+--- a/store/store_vacuum_test.go
++++ b/store/store_vacuum_test.go
+@@ -10,6 +10,7 @@ import (
+ 	"github.com/rqlite/rqlite/v10/command/proto"
+ 	"github.com/rqlite/rqlite/v10/db"
+ 	"github.com/rqlite/rqlite/v10/internal/rarchive"
++	"github.com/rqlite/rqlite/v10/snapshot"
+ )
+ 
+ // Test_SingleNodeBackupBinary tests that requesting a binary-formatted
+@@ -123,18 +124,18 @@ func Test_OpenStoreSingleNode_VacuumFullNeeded(t *testing.T) {
+ 	if err := s.Snapshot(0); err != nil {
+ 		t.Fatalf("failed to snapshot store: %s", err.Error())
+ 	}
+-	if fn, err := s.snapshotStore.FullNeeded(); err != nil {
+-		t.Fatalf("failed to determine full snapshot needed: %s", err.Error())
+-	} else if fn {
+-		t.Fatalf("full snapshot marked as needed")
++	if dn, err := s.snapshotStore.DueNext(); err != nil {
++		t.Fatalf("failed to check snapshot due next: %s", err.Error())
++	} else if dn != snapshot.Incremental {
++		t.Fatalf("expected incremental snapshot due next, got %s", dn)
+ 	}
+ 	if err := s.Vacuum(); err != nil {
+ 		t.Fatalf("failed to vacuum database: %s", err.Error())
+ 	}
+-	if fn, err := s.snapshotStore.FullNeeded(); err != nil {
+-		t.Fatalf("failed to determine full snapshot needed: %s", err.Error())
+-	} else if fn {
+-		t.Fatalf("full snapshot marked as needed")
++	if dn, err := s.snapshotStore.DueNext(); err != nil {
++		t.Fatalf("failed to check snapshot due next: %s", err.Error())
++	} else if dn != snapshot.Incremental {
++		t.Fatalf("expected incremental snapshot due next, got %s", dn)
+ 	}
+ }
+ 
+@@ -239,10 +240,10 @@ func Test_SingleNodeExplicitVacuumOK(t *testing.T) {
+ 	// VACUUM, and then query the data, make sure it looks good.
+ 	doVacuum()
+ 	doQuery()
+-	if fn, err := s.snapshotStore.FullNeeded(); err != nil {
+-		t.Fatalf("failed to check if snapshot store needs a full snapshot: %s", err.Error())
+-	} else if fn {
+-		t.Fatalf("expected snapshot store to not need a full snapshot post explicit VACUUM")
++	if dn, err := s.snapshotStore.DueNext(); err != nil {
++		t.Fatalf("failed to check snapshot due next: %s", err.Error())
++	} else if dn != snapshot.Incremental {
++		t.Fatalf("expected incremental snapshot due next post explicit VACUUM, got %s", dn)
+ 	}
+ 
+ 	// The next snapshot will be incremental.
+@@ -381,10 +382,10 @@ func Test_SingleNode_SnapshotWithAutoVac(t *testing.T) {
+ 	if err := s.Snapshot(0); err != nil {
+ 		t.Fatalf("failed to snapshot single-node store: %s", err.Error())
+ 	}
+-	if fn, err := s.snapshotStore.FullNeeded(); err != nil {
+-		t.Fatalf("failed to check if snapshot store needs a full snapshot: %s", err.Error())
+-	} else if fn {
+-		t.Fatalf("expected snapshot store to not need a full snapshot")
++	if dn, err := s.snapshotStore.DueNext(); err != nil {
++		t.Fatalf("failed to check snapshot due next: %s", err.Error())
++	} else if dn != snapshot.Incremental {
++		t.Fatalf("expected incremental snapshot due next, got %s", dn)
+ 	}
+ 
+ 	// Enable auto-vacuuming. Need to go under the covers to init the vacuum times.

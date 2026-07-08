@@ -1,0 +1,435 @@
+diff --git a/internal/config/starlark_test.go b/internal/config/starlark_test.go
+new file mode 100644
+index 0000000..d9e6b14
+--- /dev/null
++++ b/internal/config/starlark_test.go
+@@ -0,0 +1,101 @@
++// Copyright 2020 Sorint.lab
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package config
++
++import (
++	"bytes"
++	"fmt"
++	"math"
++	"testing"
++
++	"github.com/google/go-cmp/cmp"
++	"go.starlark.net/starlark"
++)
++
++func TestStarlarkJSON(t *testing.T) {
++
++	tests := []struct {
++		name string
++		in   starlark.Value
++		out  string
++		err  error
++	}{
++		{
++			name: "test key as a string",
++			in: func() starlark.Value {
++				s := &starlark.Dict{}
++				_ = s.SetKey(starlark.String("key"), starlark.String("string01"))
++				return starlark.Value(s)
++			}(),
++			out: `{"key": "string01"}`,
++		},
++		{
++			name: "test key not a string",
++			in: func() starlark.Value {
++				s := &starlark.Dict{}
++				_ = s.SetKey(starlark.MakeInt(10), starlark.String("string01"))
++				return starlark.Value(s)
++			}(),
++			err: fmt.Errorf("cannot convert non-string dict key to JSON"),
++		},
++		{
++			name: "test list",
++			in: func() starlark.Value {
++				l := []starlark.Value{
++					starlark.String("\ns\ttring01"),
++					starlark.MakeInt(10),
++					starlark.Bool(true),
++					starlark.Float(math.MaxFloat64),
++					func() starlark.Value {
++						s := &starlark.Dict{}
++						_ = s.SetKey(starlark.String("key"), starlark.String("string01"))
++						return starlark.Value(s)
++					}(),
++				}
++				return starlark.NewList(l)
++			}(),
++			out: `["\ns\ttring01", 10, true, 1.7976931348623157e+308, {"key": "string01"}]`,
++		},
++		{
++			name: "test string special chars",
++			in:   starlark.String("\ns\ttring01"),
++			out:  `"\ns\ttring01"`,
++		},
++	}
++
++	for _, tt := range tests {
++		t.Run(tt.name, func(t *testing.T) {
++			out := new(bytes.Buffer)
++			if err := starlarkJSON(out, tt.in); err != nil {
++				if tt.err == nil {
++					t.Fatalf("got error: %v, expected no error", err)
++				}
++				if err.Error() != tt.err.Error() {
++					t.Fatalf("got error: %v, want error: %v", err, tt.err)
++				}
++			} else {
++				if tt.err != nil {
++					t.Fatalf("got nil error, want error: %v", tt.err)
++				}
++			}
++
++			if tt.err == nil {
++				if diff := cmp.Diff(tt.out, out.String()); diff != "" {
++					t.Fatalf(diff)
++				}
++			}
++		})
++	}
++}
+diff --git a/tests/setup_test.go b/tests/setup_test.go
+index 83a6838..00c8fea 100644
+--- a/tests/setup_test.go
++++ b/tests/setup_test.go
+@@ -64,6 +64,15 @@ const (
+ 	agolaUser01 = "user01"
+ )
+ 
++type ConfigFormat string
++
++const (
++	// ConfigFormatJSON handles both json or yaml format (since json is a subset of yaml)
++	ConfigFormatJSON     ConfigFormat = "json"
++	ConfigFormatJsonnet  ConfigFormat = "jsonnet"
++	ConfigFormatStarlark ConfigFormat = "starlark"
++)
++
+ func setupEtcd(t *testing.T, logger *zap.Logger, dir string) *testutil.TestEmbeddedEtcd {
+ 	tetcd, err := testutil.NewTestEmbeddedEtcd(t, logger, dir)
+ 	if err != nil {
+@@ -850,7 +859,7 @@ func TestPush(t *testing.T) {
+ 	}
+ }
+ 
+-func directRun(t *testing.T, dir, config, gatewayURL, token string, args ...string) {
++func directRun(t *testing.T, dir, config string, configFormat ConfigFormat, gatewayURL, token string, args ...string) {
+ 	agolaBinDir := os.Getenv("AGOLA_BIN_DIR")
+ 	if agolaBinDir == "" {
+ 		t.Fatalf("env var AGOLA_BIN_DIR is undefined")
+@@ -868,7 +877,15 @@ func directRun(t *testing.T, dir, config, gatewayURL, token string, args ...stri
+ 	gitfs := osfs.New(repoDir)
+ 	dot, _ := gitfs.Chroot(".git")
+ 
+-	f, err := gitfs.Create(".agola/config.jsonnet")
++	var configPath string
++	switch configFormat {
++	case ConfigFormatJsonnet:
++		configPath = ".agola/config.jsonnet"
++	case ConfigFormatStarlark:
++		configPath = ".agola/config.star"
++	}
++
++	f, err := gitfs.Create(configPath)
+ 	if err != nil {
+ 		t.Fatalf("unexpected err: %v", err)
+ 	}
+@@ -987,7 +1004,7 @@ func TestDirectRun(t *testing.T) {
+ 			// From now use the user token
+ 			gwClient = gwclient.NewClient(c.Gateway.APIExposedURL, token)
+ 
+-			directRun(t, dir, config, c.Gateway.APIExposedURL, token, tt.args...)
++			directRun(t, dir, config, ConfigFormatJsonnet, c.Gateway.APIExposedURL, token, tt.args...)
+ 
+ 			_ = testutil.Wait(30*time.Second, func() (bool, error) {
+ 				runs, _, err := gwClient.GetRuns(ctx, nil, nil, []string{path.Join("/user", user.ID)}, nil, "", 0, false)
+@@ -1140,7 +1157,7 @@ func TestDirectRunVariables(t *testing.T) {
+ 			// From now use the user token
+ 			gwClient = gwclient.NewClient(c.Gateway.APIExposedURL, token)
+ 
+-			directRun(t, dir, config, c.Gateway.APIExposedURL, token, tt.args...)
++			directRun(t, dir, config, ConfigFormatJsonnet, c.Gateway.APIExposedURL, token, tt.args...)
+ 
+ 			// TODO(sgotti) add an util to wait for a run phase
+ 			_ = testutil.Wait(30*time.Second, func() (bool, error) {
+@@ -1311,7 +1328,7 @@ func TestDirectRunLogs(t *testing.T) {
+ 			// From now use the user token
+ 			gwClient = gwclient.NewClient(c.Gateway.APIExposedURL, token)
+ 
+-			directRun(t, dir, config, c.Gateway.APIExposedURL, token)
++			directRun(t, dir, config, ConfigFormatJsonnet, c.Gateway.APIExposedURL, token)
+ 
+ 			_ = testutil.Wait(30*time.Second, func() (bool, error) {
+ 				runs, _, err := gwClient.GetRuns(ctx, nil, nil, []string{path.Join("/user", user.ID)}, nil, "", 0, false)
+@@ -1682,7 +1699,7 @@ func TestPullRequest(t *testing.T) {
+ }
+ 
+ func TestConfigContext(t *testing.T) {
+-	config := `
++	jsonnetConfig := `
+ function(ctx) {
+   runs: [
+     {
+@@ -1714,6 +1731,41 @@ function(ctx) {
+     },
+   ],
+ }
++`
++
++	starlarkConfig := `
++def main(ctx):
++  return {
++    "runs": [
++    {
++      "name": 'run01',
++      "tasks": [
++        {
++          "name": 'task01',
++          "runtime": {
++            "containers": [
++              {
++                "image": 'alpine/git',
++              }
++            ]
++          },
++          "environment": {
++            "REF_TYPE": ctx["ref_type"],
++            "REF": ctx["ref"],
++            "BRANCH": ctx["branch"],
++            "TAG": ctx["tag"],
++            "PULL_REQUEST_ID": ctx["pull_request_id"],
++            "COMMIT_SHA": ctx["commit_sha"]
++          },
++          "steps": [
++            { "type": 'clone' },
++            { "type": 'run', "command": 'env' }
++          ],
++        },
++      ],
++    },
++  ]
++}
+ `
+ 
+ 	tests := []struct {
+@@ -1758,111 +1810,121 @@ function(ctx) {
+ 		},
+ 	}
+ 
+-	for _, tt := range tests {
+-		t.Run(tt.name, func(t *testing.T) {
+-			dir, err := ioutil.TempDir("", "agola")
+-			if err != nil {
+-				t.Fatalf("unexpected err: %v", err)
+-			}
+-			defer os.RemoveAll(dir)
++	for _, configFormat := range []ConfigFormat{ConfigFormatJsonnet, ConfigFormatStarlark} {
++		for _, tt := range tests {
++			t.Run(fmt.Sprintf("%s with %s config", tt.name, configFormat), func(t *testing.T) {
++				var config string
++				switch configFormat {
++				case ConfigFormatJsonnet:
++					config = jsonnetConfig
++				case ConfigFormatStarlark:
++					config = starlarkConfig
++				}
+ 
+-			ctx, cancel := context.WithCancel(context.Background())
+-			defer cancel()
++				dir, err := ioutil.TempDir("", "agola")
++				if err != nil {
++					t.Fatalf("unexpected err: %v", err)
++				}
++				defer os.RemoveAll(dir)
+ 
+-			tetcd, tgitea, c := setup(ctx, t, dir)
+-			defer shutdownGitea(tgitea)
+-			defer shutdownEtcd(tetcd)
++				ctx, cancel := context.WithCancel(context.Background())
++				defer cancel()
+ 
+-			gwClient := gwclient.NewClient(c.Gateway.APIExposedURL, "admintoken")
+-			user, _, err := gwClient.CreateUser(ctx, &gwapitypes.CreateUserRequest{UserName: agolaUser01})
+-			if err != nil {
+-				t.Fatalf("unexpected err: %v", err)
+-			}
+-			t.Logf("created agola user: %s", user.UserName)
++				tetcd, tgitea, c := setup(ctx, t, dir)
++				defer shutdownGitea(tgitea)
++				defer shutdownEtcd(tetcd)
+ 
+-			token := createAgolaUserToken(ctx, t, c)
++				gwClient := gwclient.NewClient(c.Gateway.APIExposedURL, "admintoken")
++				user, _, err := gwClient.CreateUser(ctx, &gwapitypes.CreateUserRequest{UserName: agolaUser01})
++				if err != nil {
++					t.Fatalf("unexpected err: %v", err)
++				}
++				t.Logf("created agola user: %s", user.UserName)
+ 
+-			// From now use the user token
+-			gwClient = gwclient.NewClient(c.Gateway.APIExposedURL, token)
++				token := createAgolaUserToken(ctx, t, c)
+ 
+-			directRun(t, dir, config, c.Gateway.APIExposedURL, token, tt.args...)
++				// From now use the user token
++				gwClient = gwclient.NewClient(c.Gateway.APIExposedURL, token)
++
++				directRun(t, dir, config, configFormat, c.Gateway.APIExposedURL, token, tt.args...)
++
++				// TODO(sgotti) add an util to wait for a run phase
++				_ = testutil.Wait(30*time.Second, func() (bool, error) {
++					runs, _, err := gwClient.GetRuns(ctx, nil, nil, []string{path.Join("/user", user.ID)}, nil, "", 0, false)
++					if err != nil {
++						return false, nil
++					}
++
++					if len(runs) != 1 {
++						return false, nil
++					}
++
++					run := runs[0]
++					if run.Phase != rstypes.RunPhaseFinished {
++						return false, nil
++					}
++
++					return true, nil
++				})
+ 
+-			// TODO(sgotti) add an util to wait for a run phase
+-			_ = testutil.Wait(30*time.Second, func() (bool, error) {
+ 				runs, _, err := gwClient.GetRuns(ctx, nil, nil, []string{path.Join("/user", user.ID)}, nil, "", 0, false)
+ 				if err != nil {
+-					return false, nil
++					t.Fatalf("unexpected err: %v", err)
+ 				}
+ 
++				t.Logf("runs: %s", util.Dump(runs))
++
+ 				if len(runs) != 1 {
+-					return false, nil
++					t.Fatalf("expected 1 run got: %d", len(runs))
+ 				}
+ 
+-				run := runs[0]
++				run, _, err := gwClient.GetRun(ctx, runs[0].ID)
++				if err != nil {
++					t.Fatalf("unexpected err: %v", err)
++				}
+ 				if run.Phase != rstypes.RunPhaseFinished {
+-					return false, nil
++					t.Fatalf("expected run phase %q, got %q", rstypes.RunPhaseFinished, run.Phase)
++				}
++				if run.Result != rstypes.RunResultSuccess {
++					t.Fatalf("expected run result %q, got %q", rstypes.RunResultSuccess, run.Result)
+ 				}
+ 
+-				return true, nil
+-			})
+-
+-			runs, _, err := gwClient.GetRuns(ctx, nil, nil, []string{path.Join("/user", user.ID)}, nil, "", 0, false)
+-			if err != nil {
+-				t.Fatalf("unexpected err: %v", err)
+-			}
+-
+-			t.Logf("runs: %s", util.Dump(runs))
+-
+-			if len(runs) != 1 {
+-				t.Fatalf("expected 1 run got: %d", len(runs))
+-			}
+-
+-			run, _, err := gwClient.GetRun(ctx, runs[0].ID)
+-			if err != nil {
+-				t.Fatalf("unexpected err: %v", err)
+-			}
+-			if run.Phase != rstypes.RunPhaseFinished {
+-				t.Fatalf("expected run phase %q, got %q", rstypes.RunPhaseFinished, run.Phase)
+-			}
+-			if run.Result != rstypes.RunResultSuccess {
+-				t.Fatalf("expected run result %q, got %q", rstypes.RunResultSuccess, run.Result)
+-			}
+-
+-			var task *gwapitypes.RunResponseTask
+-			for _, t := range run.Tasks {
+-				if t.Name == "task01" {
+-					task = t
+-					break
++				var task *gwapitypes.RunResponseTask
++				for _, t := range run.Tasks {
++					if t.Name == "task01" {
++						task = t
++						break
++					}
+ 				}
+-			}
+ 
+-			resp, err := gwClient.GetLogs(ctx, run.ID, task.ID, false, 1, false)
+-			if err != nil {
+-				t.Fatalf("unexpected err: %v", err)
+-			}
+-			defer resp.Body.Close()
++				resp, err := gwClient.GetLogs(ctx, run.ID, task.ID, false, 1, false)
++				if err != nil {
++					t.Fatalf("unexpected err: %v", err)
++				}
++				defer resp.Body.Close()
+ 
+-			logs, err := ioutil.ReadAll(resp.Body)
+-			if err != nil {
+-				t.Fatalf("unexpected err: %v", err)
+-			}
+-			curEnv, err := testutil.ParseEnvs(bytes.NewReader(logs))
+-			if err != nil {
+-				t.Fatalf("unexpected err: %v", err)
+-			}
++				logs, err := ioutil.ReadAll(resp.Body)
++				if err != nil {
++					t.Fatalf("unexpected err: %v", err)
++				}
++				curEnv, err := testutil.ParseEnvs(bytes.NewReader(logs))
++				if err != nil {
++					t.Fatalf("unexpected err: %v", err)
++				}
+ 
+-			// update commit sha from annotations since it will change at every test
+-			tt.env["COMMIT_SHA"] = run.Annotations["commit_sha"]
++				// update commit sha from annotations since it will change at every test
++				tt.env["COMMIT_SHA"] = run.Annotations["commit_sha"]
+ 
+-			for n, e := range tt.env {
+-				if ce, ok := curEnv[n]; !ok {
+-					t.Fatalf("missing env var %s", n)
+-				} else {
+-					if ce != e {
+-						t.Fatalf("different env var %s value, want: %q, got %q", n, e, ce)
++				for n, e := range tt.env {
++					if ce, ok := curEnv[n]; !ok {
++						t.Fatalf("missing env var %s", n)
++					} else {
++						if ce != e {
++							t.Fatalf("different env var %s value, want: %q, got %q", n, e, ce)
++						}
+ 					}
+ 				}
+-			}
+-		})
++			})
++		}
+ 	}
+ }

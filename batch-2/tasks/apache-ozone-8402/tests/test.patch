@@ -1,0 +1,1283 @@
+diff --git a/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/ContainerMerkleTreeTestUtils.java b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/ContainerMerkleTreeTestUtils.java
+index 811e4b483a..fb804111ac 100644
+--- a/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/ContainerMerkleTreeTestUtils.java
++++ b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/ContainerMerkleTreeTestUtils.java
+@@ -88,6 +88,7 @@ public static void assertTreesSortedAndMatch(ContainerProtos.ContainerMerkleTree
+         assertEquals(expectedChunkTree.getOffset(), actualChunkTree.getOffset());
+         assertEquals(expectedChunkTree.getLength(), actualChunkTree.getLength());
+         assertEquals(expectedChunkTree.getDataChecksum(), actualChunkTree.getDataChecksum());
++        assertEquals(expectedChunkTree.getIsHealthy(), actualChunkTree.getIsHealthy());
+       }
+     }
+   }
+@@ -152,7 +153,7 @@ public static ContainerMerkleTreeWriter buildTestTree(ConfigurationSource conf,
+       for (int chunkIndex = 0; chunkIndex < 4; chunkIndex++) {
+         chunks.add(buildChunk(conf, chunkIndex, ByteBuffer.wrap(new byte[]{byteValue++, byteValue++, byteValue++})));
+       }
+-      tree.addChunks(blockIndex, chunks);
++      tree.addChunks(blockIndex, true, chunks);
+     }
+     return tree;
+   }
+diff --git a/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/TestContainerMerkleTreeWriter.java b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/TestContainerMerkleTreeWriter.java
+index 5fe5e13529..8fbae2ee68 100644
+--- a/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/TestContainerMerkleTreeWriter.java
++++ b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/TestContainerMerkleTreeWriter.java
+@@ -70,7 +70,7 @@ public void testBuildOneChunkTree() {
+ 
+     // Use the ContainerMerkleTree to build the same tree.
+     ContainerMerkleTreeWriter actualTree = new ContainerMerkleTreeWriter();
+-    actualTree.addChunks(blockID, Collections.singletonList(chunk));
++    actualTree.addChunks(blockID, true, Collections.singletonList(chunk));
+ 
+     // Ensure the trees match.
+     ContainerProtos.ContainerMerkleTree actualTreeProto = actualTree.toProto();
+@@ -106,7 +106,7 @@ public void testBuildTreeWithMissingChunks() {
+ 
+     // Use the ContainerMerkleTree to build the same tree.
+     ContainerMerkleTreeWriter actualTree = new ContainerMerkleTreeWriter();
+-    actualTree.addChunks(blockID, Arrays.asList(chunk1, chunk3));
++    actualTree.addChunks(blockID, true, Arrays.asList(chunk1, chunk3));
+ 
+     // Ensure the trees match.
+     ContainerProtos.ContainerMerkleTree actualTreeProto = actualTree.toProto();
+@@ -137,8 +137,8 @@ public void testBuildTreeWithNonContiguousBlockIDs() {
+     // Use the ContainerMerkleTree to build the same tree.
+     // Add blocks and chunks out of order to test sorting.
+     ContainerMerkleTreeWriter actualTree = new ContainerMerkleTreeWriter();
+-    actualTree.addChunks(blockID3, Arrays.asList(b3c2, b3c1));
+-    actualTree.addChunks(blockID1, Arrays.asList(b1c1, b1c2));
++    actualTree.addChunks(blockID3, true, Arrays.asList(b3c2, b3c1));
++    actualTree.addChunks(blockID1, true, Arrays.asList(b1c1, b1c2));
+ 
+     // Ensure the trees match.
+     ContainerProtos.ContainerMerkleTree actualTreeProto = actualTree.toProto();
+@@ -173,19 +173,59 @@ public void testAppendToBlocksWhileBuilding() throws Exception {
+     // Test building by adding chunks to the blocks individually and out of order.
+     ContainerMerkleTreeWriter actualTree = new ContainerMerkleTreeWriter();
+     // Add all of block 2 first.
+-    actualTree.addChunks(blockID2, Arrays.asList(b2c1, b2c2));
++    actualTree.addChunks(blockID2, true, Arrays.asList(b2c1, b2c2));
+     // Then add block 1 in multiple steps wth chunks out of order.
+-    actualTree.addChunks(blockID1, Collections.singletonList(b1c2));
+-    actualTree.addChunks(blockID1, Arrays.asList(b1c3, b1c1));
++    actualTree.addChunks(blockID1, true, Collections.singletonList(b1c2));
++    actualTree.addChunks(blockID1, true, Arrays.asList(b1c3, b1c1));
+     // Add a duplicate chunk to block 3. It should overwrite the existing one.
+-    actualTree.addChunks(blockID3, Arrays.asList(b3c1, b3c2));
+-    actualTree.addChunks(blockID3, Collections.singletonList(b3c2));
++    actualTree.addChunks(blockID3, true, Arrays.asList(b3c1, b3c2));
++    actualTree.addChunks(blockID3, true, Collections.singletonList(b3c2));
+ 
+     // Ensure the trees match.
+     ContainerProtos.ContainerMerkleTree actualTreeProto = actualTree.toProto();
+     assertTreesSortedAndMatch(expectedTree, actualTreeProto);
+   }
+ 
++  /**
++   * Test that a {@link ContainerMerkleTreeWriter} built from a {@link ContainerProtos.ContainerMerkleTree} will
++   * write produce an identical proto as the input when it is written again.
++   */
++  @Test
++  public void testProtoToWriterConversion() {
++    final long blockID1 = 1;
++    final long blockID2 = 2;
++    final long blockID3 = 3;
++    final long blockID4 = 4;
++    ContainerProtos.ChunkInfo b1c1 = buildChunk(config, 0, ByteBuffer.wrap(new byte[]{1, 2, 3}));
++    ContainerProtos.ChunkInfo b1c2 = buildChunk(config, 1, ByteBuffer.wrap(new byte[]{1, 2}));
++    ContainerProtos.ChunkInfo b1c3 = buildChunk(config, 2, ByteBuffer.wrap(new byte[]{1, 2, 3}));
++    ContainerProtos.ChunkInfo b2c1 = buildChunk(config, 0, ByteBuffer.wrap(new byte[]{1, 2, 3}));
++    ContainerProtos.ChunkInfo b2c2 = buildChunk(config, 1, ByteBuffer.wrap(new byte[]{1, 2, 3}));
++    ContainerProtos.BlockMerkleTree blockTree1 = buildExpectedBlockTree(blockID1,
++        Arrays.asList(buildExpectedChunkTree(b1c1), buildExpectedChunkTree(b1c2), buildExpectedChunkTree(b1c3)));
++    ContainerProtos.BlockMerkleTree blockTree2 = buildExpectedBlockTree(blockID2,
++        Arrays.asList(buildExpectedChunkTree(b2c1), buildExpectedChunkTree(b2c2)));
++    // Test that an empty block is preserved during tree conversion.
++    ContainerProtos.BlockMerkleTree blockTree3 = buildExpectedBlockTree(blockID3, Collections.emptyList());
++    ContainerProtos.ContainerMerkleTree expectedTree = buildExpectedContainerTree(
++        Arrays.asList(blockTree1, blockTree2, blockTree3));
++
++    ContainerMerkleTreeWriter treeWriter = new ContainerMerkleTreeWriter(expectedTree);
++    assertTreesSortedAndMatch(expectedTree, treeWriter.toProto());
++
++    // Modifying the tree writer created from the proto should also succeed.
++    ContainerProtos.ChunkInfo b3c1 = buildChunk(config, 0, ByteBuffer.wrap(new byte[]{1}));
++    treeWriter.addChunks(blockID3, false, b3c1);
++    treeWriter.addBlock(blockID4);
++
++    blockTree3 = buildExpectedBlockTree(blockID3, Collections.singletonList(buildExpectedChunkTree(b3c1, false)));
++    ContainerProtos.BlockMerkleTree blockTree4 = buildExpectedBlockTree(blockID4, Collections.emptyList());
++    ContainerProtos.ContainerMerkleTree expectedUpdatedTree = buildExpectedContainerTree(
++        Arrays.asList(blockTree1, blockTree2, blockTree3, blockTree4));
++
++    assertTreesSortedAndMatch(expectedUpdatedTree, treeWriter.toProto());
++  }
++
+   private ContainerProtos.ContainerMerkleTree buildExpectedContainerTree(List<ContainerProtos.BlockMerkleTree> blocks) {
+     return ContainerProtos.ContainerMerkleTree.newBuilder()
+         .addAllBlockMerkleTree(blocks)
+@@ -209,10 +249,15 @@ private ContainerProtos.BlockMerkleTree buildExpectedBlockTree(long blockID,
+   }
+ 
+   private ContainerProtos.ChunkMerkleTree buildExpectedChunkTree(ContainerProtos.ChunkInfo chunk) {
++    return buildExpectedChunkTree(chunk, true);
++  }
++
++  private ContainerProtos.ChunkMerkleTree buildExpectedChunkTree(ContainerProtos.ChunkInfo chunk, boolean isHealthy) {
+     return ContainerProtos.ChunkMerkleTree.newBuilder()
+         .setOffset(chunk.getOffset())
+         .setLength(chunk.getLen())
+         .setDataChecksum(computeExpectedChunkChecksum(chunk.getChecksumData().getChecksumsList()))
++        .setIsHealthy(isHealthy)
+         .build();
+   }
+ 
+diff --git a/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestContainerReconciliationWithMockDatanodes.java b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestContainerReconciliationWithMockDatanodes.java
+new file mode 100644
+index 0000000000..d290cea5bb
+--- /dev/null
++++ b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestContainerReconciliationWithMockDatanodes.java
+@@ -0,0 +1,621 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements. See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License. You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.hadoop.ozone.container.keyvalue;
++
++import static org.apache.hadoop.hdds.HddsConfigKeys.OZONE_METADATA_DIRS;
++import static org.apache.hadoop.hdds.protocol.MockDatanodeDetails.randomDatanodeDetails;
++import static org.apache.hadoop.hdds.scm.ScmConfigKeys.HDDS_DATANODE_DIR_KEY;
++import static org.apache.hadoop.ozone.container.common.ContainerTestUtils.WRITE_STAGE;
++import static org.apache.hadoop.ozone.container.common.ContainerTestUtils.createDbInstancesForTestIfNeeded;
++import static org.assertj.core.api.Assertions.assertThat;
++import static org.assertj.core.api.Assertions.fail;
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertFalse;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++import static org.mockito.ArgumentMatchers.any;
++import static org.mockito.ArgumentMatchers.anyLong;
++import static org.mockito.ArgumentMatchers.anyMap;
++
++import java.io.File;
++import java.io.IOException;
++import java.io.UncheckedIOException;
++import java.nio.ByteBuffer;
++import java.nio.file.Files;
++import java.nio.file.Path;
++import java.nio.file.Paths;
++import java.nio.file.StandardOpenOption;
++import java.util.ArrayList;
++import java.util.Arrays;
++import java.util.Collection;
++import java.util.Collections;
++import java.util.Comparator;
++import java.util.List;
++import java.util.Map;
++import java.util.Optional;
++import java.util.Random;
++import java.util.UUID;
++import java.util.concurrent.ExecutionException;
++import java.util.concurrent.Future;
++import java.util.concurrent.TimeoutException;
++import java.util.function.Function;
++import java.util.stream.Collectors;
++import java.util.stream.Stream;
++import org.apache.commons.io.IOUtils;
++import org.apache.commons.text.RandomStringGenerator;
++import org.apache.hadoop.hdds.HddsUtils;
++import org.apache.hadoop.hdds.client.BlockID;
++import org.apache.hadoop.hdds.conf.OzoneConfiguration;
++import org.apache.hadoop.hdds.protocol.DatanodeDetails;
++import org.apache.hadoop.hdds.protocol.datanode.proto.ContainerProtos;
++import org.apache.hadoop.hdds.scm.XceiverClientSpi;
++import org.apache.hadoop.hdds.scm.pipeline.Pipeline;
++import org.apache.hadoop.hdds.scm.storage.ContainerProtocolCalls;
++import org.apache.hadoop.hdds.utils.db.BatchOperation;
++import org.apache.hadoop.ozone.OzoneConsts;
++import org.apache.hadoop.ozone.common.Checksum;
++import org.apache.hadoop.ozone.common.ChecksumData;
++import org.apache.hadoop.ozone.container.checksum.DNContainerOperationClient;
++import org.apache.hadoop.ozone.container.common.ContainerTestUtils;
++import org.apache.hadoop.ozone.container.common.helpers.BlockData;
++import org.apache.hadoop.ozone.container.common.helpers.ChunkInfo;
++import org.apache.hadoop.ozone.container.common.impl.ContainerSet;
++import org.apache.hadoop.ozone.container.common.interfaces.DBHandle;
++import org.apache.hadoop.ozone.container.common.volume.MutableVolumeSet;
++import org.apache.hadoop.ozone.container.common.volume.StorageVolume;
++import org.apache.hadoop.ozone.container.keyvalue.helpers.BlockUtils;
++import org.apache.hadoop.ozone.container.ozoneimpl.ContainerController;
++import org.apache.hadoop.ozone.container.ozoneimpl.ContainerScannerConfiguration;
++import org.apache.hadoop.ozone.container.ozoneimpl.OnDemandContainerDataScanner;
++import org.apache.ozone.test.GenericTestUtils;
++import org.apache.ratis.thirdparty.com.google.protobuf.ByteString;
++import org.junit.jupiter.api.AfterAll;
++import org.junit.jupiter.api.AfterEach;
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.BeforeAll;
++import org.junit.jupiter.api.io.TempDir;
++import org.junit.jupiter.params.provider.Arguments;
++import org.junit.jupiter.params.provider.MethodSource;
++import org.mockito.MockedStatic;
++import org.mockito.Mockito;
++import org.slf4j.Logger;
++import org.slf4j.LoggerFactory;
++
++/**
++ * This unit test simulates three datanodes with replicas of a container that need to be reconciled.
++ * It creates three KeyValueHandler instances to represent each datanode, and each instance is working on a container
++ * replica that is stored in a local directory. The reconciliation client is mocked to return the corresponding local
++ * container for each datanode peer.
++ */
++public class TestContainerReconciliationWithMockDatanodes {
++  /**
++   * Number of corrupt blocks and chunks.
++   *
++   * TODO HDDS-11942 support more combinations of corruptions.
++   */
++  public static Stream<Arguments> corruptionValues() {
++    return Stream.of(
++        Arguments.of(5, 0),
++        Arguments.of(0, 5),
++        Arguments.of(0, 10),
++        Arguments.of(10, 0),
++        Arguments.of(5, 10),
++        Arguments.of(10, 5),
++        Arguments.of(2, 3),
++        Arguments.of(3, 2),
++        Arguments.of(4, 6),
++        Arguments.of(6, 4),
++        Arguments.of(6, 9),
++        Arguments.of(9, 6)
++    );
++  }
++
++  public static final Logger LOG = LoggerFactory.getLogger(TestContainerReconciliationWithMockDatanodes.class);
++
++  // All container replicas will be placed in this directory, and the same replicas will be re-used for each test run.
++  @TempDir
++  private static Path containerDir;
++  private static DNContainerOperationClient dnClient;
++  private static MockedStatic<ContainerProtocolCalls> containerProtocolMock;
++  private static List<MockDatanode> datanodes;
++  private static long healthyDataChecksum;
++
++  private static final String CLUSTER_ID = UUID.randomUUID().toString();
++  private static final long CONTAINER_ID = 100L;
++  private static final int CHUNK_LEN = 3 * (int) OzoneConsts.KB;
++  private static final int CHUNKS_PER_BLOCK = 4;
++  private static final int NUM_DATANODES = 3;
++
++  /**
++   * Use the same container instances throughout the tests. Each reconciliation should make a full repair, resetting
++   * the state for the next test.
++   */
++  @BeforeAll
++  public static void setup() throws Exception {
++    LOG.info("Data written to {}", containerDir);
++    dnClient = new DNContainerOperationClient(new OzoneConfiguration(), null, null);
++    datanodes = new ArrayList<>();
++
++    // Create a container with 15 blocks and 3 replicas.
++    for (int i = 0; i < NUM_DATANODES; i++) {
++      DatanodeDetails dnDetails = randomDatanodeDetails();
++      // Use this fake host name to track the node through the test since it's easier to visualize than a UUID.
++      dnDetails.setHostName("dn" + (i + 1));
++      MockDatanode dn = new MockDatanode(dnDetails, containerDir);
++      dn.addContainerWithBlocks(CONTAINER_ID, 15);
++      datanodes.add(dn);
++    }
++
++    datanodes.forEach(d -> d.scanContainer(CONTAINER_ID));
++    healthyDataChecksum = assertUniqueChecksumCount(CONTAINER_ID, datanodes, 1);
++    // Do not count the initial synchronous scan to build the merkle tree towards the scan count in the tests.
++    // This lets each test run start counting the number of scans from zero.
++    datanodes.forEach(MockDatanode::resetOnDemandScanCount);
++
++    containerProtocolMock = Mockito.mockStatic(ContainerProtocolCalls.class);
++    mockContainerProtocolCalls();
++  }
++
++  @AfterEach
++  public void reset() {
++    datanodes.forEach(MockDatanode::resetOnDemandScanCount);
++  }
++
++  @AfterAll
++  public static void teardown() {
++    if (containerProtocolMock != null) {
++      containerProtocolMock.close();
++    }
++  }
++
++  // TODO HDDS-10374 once on-demand scanner can build merkle trees this test should pass.
++  // @ParameterizedTest
++  @MethodSource("corruptionValues")
++  public void testContainerReconciliation(int numBlocksToDelete, int numChunksToCorrupt) throws Exception {
++    LOG.info("Healthy data checksum for container {} in this test is {}", CONTAINER_ID,
++        HddsUtils.checksumToString(healthyDataChecksum));
++    // Introduce corruption in each container on different replicas.
++    List<MockDatanode> dnsToCorrupt = datanodes.stream().limit(2).collect(Collectors.toList());
++
++    dnsToCorrupt.get(0).introduceCorruption(CONTAINER_ID, numBlocksToDelete, numChunksToCorrupt, false);
++    dnsToCorrupt.get(1).introduceCorruption(CONTAINER_ID, numBlocksToDelete, numChunksToCorrupt, true);
++    // Use synchronous on-demand scans to re-build the merkle trees after corruption.
++    datanodes.forEach(d -> d.scanContainer(CONTAINER_ID));
++    // Without reconciliation, checksums should be different because of the corruption.
++    assertUniqueChecksumCount(CONTAINER_ID, datanodes, 3);
++
++    // Each datanode should have had one on-demand scan during test setup, and a second one after corruption was
++    // introduced.
++    waitForExpectedScanCount(1);
++
++    // Reconcile each datanode with its peers.
++    // In a real cluster, SCM will not send a command to reconcile a datanode with itself.
++    for (MockDatanode current : datanodes) {
++      List<DatanodeDetails> peers = datanodes.stream()
++          .map(MockDatanode::getDnDetails)
++          .filter(other -> !current.getDnDetails().equals(other))
++          .collect(Collectors.toList());
++      current.reconcileContainer(dnClient, peers, CONTAINER_ID);
++    }
++    // Reconciliation should have triggered a second on-demand scan for each replica. Wait for them to finish before
++    // checking the results.
++    waitForExpectedScanCount(2);
++    // After reconciliation, checksums should be the same for all containers.
++    long repairedDataChecksum = assertUniqueChecksumCount(CONTAINER_ID, datanodes, 1);
++    assertEquals(healthyDataChecksum, repairedDataChecksum);
++  }
++
++  /**
++   * Uses the on-demand container scanner metrics to wait for the expected number of on-demand scans to complete on
++   * every datanode.
++   */
++  private void waitForExpectedScanCount(int expectedCount) throws Exception {
++    for (MockDatanode datanode: datanodes) {
++      try {
++        GenericTestUtils.waitFor(() -> datanode.getOnDemandScanCount() == expectedCount, 100, 10_000);
++      } catch (TimeoutException ex) {
++        LOG.error("Timed out waiting for on-demand scan count {} to reach expected count {} on datanode {}",
++            datanode.getOnDemandScanCount(), expectedCount, datanode);
++        throw ex;
++      }
++    }
++  }
++
++  /**
++   * Checks for the expected number of unique checksums among a container on the provided datanodes.
++   * @return The data checksum from one of the nodes. Useful if expectedUniqueChecksums = 1.
++   */
++  private static long assertUniqueChecksumCount(long containerID, Collection<MockDatanode> nodes,
++      long expectedUniqueChecksums) {
++    long actualUniqueChecksums = nodes.stream()
++        .mapToLong(d -> d.checkAndGetDataChecksum(containerID))
++        .distinct()
++        .count();
++    assertEquals(expectedUniqueChecksums, actualUniqueChecksums);
++    return nodes.stream().findAny().get().checkAndGetDataChecksum(containerID);
++  }
++
++  private static void mockContainerProtocolCalls() {
++    Map<DatanodeDetails, MockDatanode> dnMap = datanodes.stream()
++        .collect(Collectors.toMap(MockDatanode::getDnDetails, Function.identity()));
++
++    // Mock getContainerChecksumInfo
++    containerProtocolMock.when(() -> ContainerProtocolCalls.getContainerChecksumInfo(any(), anyLong(), any()))
++        .thenAnswer(inv -> {
++          XceiverClientSpi xceiverClientSpi = inv.getArgument(0);
++          long containerID = inv.getArgument(1);
++          Pipeline pipeline = xceiverClientSpi.getPipeline();
++          assertEquals(1, pipeline.size());
++          DatanodeDetails dn = pipeline.getFirstNode();
++          return dnMap.get(dn).getChecksumInfo(containerID);
++        });
++
++    // Mock getBlock
++    containerProtocolMock.when(() -> ContainerProtocolCalls.getBlock(any(), any(), any(), any(), anyMap()))
++        .thenAnswer(inv -> {
++          XceiverClientSpi xceiverClientSpi = inv.getArgument(0);
++          BlockID blockID = inv.getArgument(2);
++          Pipeline pipeline = xceiverClientSpi.getPipeline();
++          assertEquals(1, pipeline.size());
++          DatanodeDetails dn = pipeline.getFirstNode();
++          return dnMap.get(dn).getBlock(blockID);
++        });
++
++    // Mock readChunk
++    containerProtocolMock.when(() -> ContainerProtocolCalls.readChunk(any(), any(), any(), any(), any()))
++        .thenAnswer(inv -> {
++          XceiverClientSpi xceiverClientSpi = inv.getArgument(0);
++          ContainerProtos.ChunkInfo chunkInfo = inv.getArgument(1);
++          ContainerProtos.DatanodeBlockID blockId = inv.getArgument(2);
++          List<XceiverClientSpi.Validator> checksumValidators = inv.getArgument(3);
++          Pipeline pipeline = xceiverClientSpi.getPipeline();
++          assertEquals(1, pipeline.size());
++          DatanodeDetails dn = pipeline.getFirstNode();
++          return dnMap.get(dn).readChunk(blockId, chunkInfo, checksumValidators);
++        });
++
++    containerProtocolMock.when(() -> ContainerProtocolCalls.toValidatorList(any())).thenCallRealMethod();
++  }
++
++  /**
++   * This class wraps a KeyValueHandler instance with just enough features to test its reconciliation functionality.
++   */
++  private static class MockDatanode {
++    private final KeyValueHandler handler;
++    private final DatanodeDetails dnDetails;
++    private final OnDemandContainerDataScanner onDemandScanner;
++    private final ContainerSet containerSet;
++    private final OzoneConfiguration conf;
++
++    private final Logger log;
++
++    MockDatanode(DatanodeDetails dnDetails, Path tempDir) throws IOException {
++      this.dnDetails = dnDetails;
++      log = LoggerFactory.getLogger("mock-datanode-" + dnDetails.getHostName());
++      Path dataVolume = Paths.get(tempDir.toString(), dnDetails.getHostName(), "data");
++      Path metadataVolume = Paths.get(tempDir.toString(), dnDetails.getHostName(), "metadata");
++
++      this.conf = new OzoneConfiguration();
++      conf.set(HDDS_DATANODE_DIR_KEY, dataVolume.toString());
++      conf.set(OZONE_METADATA_DIRS, metadataVolume.toString());
++
++      containerSet = new ContainerSet(1000);
++      MutableVolumeSet volumeSet = createVolumeSet();
++      handler = ContainerTestUtils.getKeyValueHandler(conf, dnDetails.getUuidString(), containerSet, volumeSet);
++      handler.setClusterID(CLUSTER_ID);
++
++      ContainerController controller = new ContainerController(containerSet,
++          Collections.singletonMap(ContainerProtos.ContainerType.KeyValueContainer, handler));
++      onDemandScanner = new OnDemandContainerDataScanner(
++          conf.getObject(ContainerScannerConfiguration.class), controller);
++      // Register the on-demand container scanner with the container set used by the KeyValueHandler.
++      containerSet.registerContainerScanHandler(onDemandScanner::scanContainer);
++    }
++
++    public DatanodeDetails getDnDetails() {
++      return dnDetails;
++    }
++
++    /**
++     * @throws IOException for general IO errors accessing the checksum file
++     * @throws java.io.FileNotFoundException When the checksum file does not exist.
++     */
++    public ContainerProtos.GetContainerChecksumInfoResponseProto getChecksumInfo(long containerID) throws IOException {
++      KeyValueContainer container = getContainer(containerID);
++      ByteString checksumInfo = handler.getChecksumManager().getContainerChecksumInfo(container.getContainerData());
++      return ContainerProtos.GetContainerChecksumInfoResponseProto.newBuilder()
++          .setContainerID(containerID)
++          .setContainerChecksumInfo(checksumInfo)
++          .build();
++    }
++
++    /**
++     * Verifies that the data checksum on disk matches the one in memory, and returns the data checksum.
++     */
++    public long checkAndGetDataChecksum(long containerID) {
++      KeyValueContainer container = getContainer(containerID);
++      long dataChecksum = 0;
++      try {
++        Optional<ContainerProtos.ContainerChecksumInfo> containerChecksumInfo =
++            handler.getChecksumManager().read(container.getContainerData());
++        assertTrue(containerChecksumInfo.isPresent());
++        dataChecksum = containerChecksumInfo.get().getContainerMerkleTree().getDataChecksum();
++        assertEquals(container.getContainerData().getDataChecksum(), dataChecksum);
++      } catch (IOException ex) {
++        fail("Failed to read container checksum from disk", ex);
++      }
++      log.info("Retrieved data checksum {} from container {}", HddsUtils.checksumToString(dataChecksum),
++          containerID);
++      return dataChecksum;
++    }
++
++    public ContainerProtos.GetBlockResponseProto getBlock(BlockID blockID) throws IOException {
++      KeyValueContainer container = getContainer(blockID.getContainerID());
++      ContainerProtos.BlockData blockData = handler.getBlockManager().getBlock(container, blockID).getProtoBufMessage();
++      return ContainerProtos.GetBlockResponseProto.newBuilder()
++          .setBlockData(blockData)
++          .build();
++    }
++
++    public ContainerProtos.ReadChunkResponseProto readChunk(ContainerProtos.DatanodeBlockID blockId,
++        ContainerProtos.ChunkInfo chunkInfo, List<XceiverClientSpi.Validator> validators) throws IOException {
++      KeyValueContainer container = getContainer(blockId.getContainerID());
++      ContainerProtos.ReadChunkResponseProto readChunkResponseProto =
++          ContainerProtos.ReadChunkResponseProto.newBuilder()
++              .setBlockID(blockId)
++              .setChunkData(chunkInfo)
++              .setData(handler.getChunkManager().readChunk(container, BlockID.getFromProtobuf(blockId),
++                  ChunkInfo.getFromProtoBuf(chunkInfo), null).toByteString())
++              .build();
++      verifyChecksums(readChunkResponseProto, blockId, chunkInfo, validators);
++      return readChunkResponseProto;
++    }
++
++    public void verifyChecksums(ContainerProtos.ReadChunkResponseProto readChunkResponseProto,
++        ContainerProtos.DatanodeBlockID blockId, ContainerProtos.ChunkInfo chunkInfo,
++        List<XceiverClientSpi.Validator> validators) throws IOException {
++      assertFalse(validators.isEmpty());
++      ContainerProtos.ContainerCommandRequestProto requestProto =
++          ContainerProtos.ContainerCommandRequestProto.newBuilder()
++              .setCmdType(ContainerProtos.Type.ReadChunk)
++              .setContainerID(blockId.getContainerID())
++              .setDatanodeUuid(dnDetails.getUuidString())
++              .setReadChunk(
++                  ContainerProtos.ReadChunkRequestProto.newBuilder()
++                      .setBlockID(blockId)
++                      .setChunkData(chunkInfo)
++                      .build())
++              .build();
++      ContainerProtos.ContainerCommandResponseProto responseProto =
++          ContainerProtos.ContainerCommandResponseProto.newBuilder()
++              .setCmdType(ContainerProtos.Type.ReadChunk)
++              .setResult(ContainerProtos.Result.SUCCESS)
++              .setReadChunk(readChunkResponseProto).build();
++      for (XceiverClientSpi.Validator function : validators) {
++        function.accept(requestProto, responseProto);
++      }
++    }
++
++    public KeyValueContainer getContainer(long containerID) {
++      return (KeyValueContainer) containerSet.getContainer(containerID);
++    }
++
++    /**
++     * Triggers a synchronous scan of the container. This method will block until the scan completes.
++     */
++    public void scanContainer(long containerID) {
++      Optional<Future<?>> scanFuture = onDemandScanner.scanContainer(containerSet.getContainer(containerID));
++      assertTrue(scanFuture.isPresent());
++
++      try {
++        scanFuture.get().get();
++      } catch (InterruptedException | ExecutionException e) {
++        fail("On demand container scan failed", e);
++      }
++    }
++
++    public int getOnDemandScanCount() {
++      return onDemandScanner.getMetrics().getNumContainersScanned();
++    }
++
++    public void resetOnDemandScanCount() {
++      onDemandScanner.getMetrics().resetNumContainersScanned();
++    }
++
++    public void reconcileContainer(DNContainerOperationClient client, Collection<DatanodeDetails> peers,
++        long containerID) {
++      log.info("Beginning reconciliation on this mock datanode");
++      try {
++        handler.reconcileContainer(client, containerSet.getContainer(containerID), peers);
++      } catch (IOException ex) {
++        fail("Container reconciliation failed", ex);
++      }
++    }
++
++    /**
++     * Create a container with the specified number of blocks. Block data is human-readable so the block files can be
++     * inspected when debugging the test.
++     */
++    public void addContainerWithBlocks(long containerId, int blocks) throws Exception {
++      ContainerProtos.CreateContainerRequestProto createRequest =
++          ContainerProtos.CreateContainerRequestProto.newBuilder()
++              .setContainerType(ContainerProtos.ContainerType.KeyValueContainer)
++              .build();
++      ContainerProtos.ContainerCommandRequestProto request =
++          ContainerProtos.ContainerCommandRequestProto.newBuilder()
++              .setCmdType(ContainerProtos.Type.CreateContainer)
++              .setCreateContainer(createRequest)
++              .setContainerID(containerId)
++              .setDatanodeUuid(dnDetails.getUuidString())
++              .build();
++
++      handler.handleCreateContainer(request, null);
++      KeyValueContainer container = getContainer(containerId);
++
++      // Verify container is initially empty.
++      File chunksPath = new File(container.getContainerData().getChunksPath());
++      ContainerLayoutTestInfo.FILE_PER_BLOCK.validateFileCount(chunksPath, 0, 0);
++
++      // Create data to put in the container.
++      // Seed using the container ID so that all replicas are identical.
++      RandomStringGenerator generator = new RandomStringGenerator.Builder()
++          .withinRange('a', 'z')
++          .usingRandom(new Random(containerId)::nextInt)
++          .get();
++
++      // This array will keep getting populated with new bytes for each chunk.
++      byte[] chunkData = new byte[CHUNK_LEN];
++      int bytesPerChecksum = 2 * (int) OzoneConsts.KB;
++
++      // Add data to the container.
++      List<ContainerProtos.ChunkInfo> chunkList = new ArrayList<>();
++      for (int i = 0; i < blocks; i++) {
++        BlockID blockID = new BlockID(containerId, i);
++        BlockData blockData = new BlockData(blockID);
++
++        chunkList.clear();
++        for (long chunkCount = 0; chunkCount < CHUNKS_PER_BLOCK; chunkCount++) {
++          String chunkName = "chunk" + chunkCount;
++          long offset = chunkCount * chunkData.length;
++          ChunkInfo info = new ChunkInfo(chunkName, offset, chunkData.length);
++
++          // Generate data for the chunk and compute its checksum.
++          // Data is generated as one ascii character per line, so block files are human-readable if further
++          // debugging is needed.
++          for (int c = 0; c < chunkData.length; c += 2) {
++            chunkData[c] = (byte)generator.generate(1).charAt(0);
++            chunkData[c + 1] = (byte)'\n';
++          }
++
++          Checksum checksum = new Checksum(ContainerProtos.ChecksumType.CRC32, bytesPerChecksum);
++          ChecksumData checksumData = checksum.computeChecksum(chunkData);
++          info.setChecksumData(checksumData);
++          // Write chunk and checksum into the container.
++          chunkList.add(info.getProtoBufMessage());
++          handler.getChunkManager().writeChunk(container, blockID, info,
++              ByteBuffer.wrap(chunkData), WRITE_STAGE);
++        }
++        handler.getChunkManager().finishWriteChunks(container, blockData);
++        blockData.setChunks(chunkList);
++        blockData.setBlockCommitSequenceId(i);
++        handler.getBlockManager().putBlock(container, blockData);
++      }
++      ContainerLayoutTestInfo.FILE_PER_BLOCK.validateFileCount(chunksPath, blocks, (long) blocks * CHUNKS_PER_BLOCK);
++      container.markContainerForClose();
++      handler.closeContainer(container);
++    }
++
++    @Override
++    public String toString() {
++      return dnDetails.toString();
++    }
++
++    /**
++     * Returns a list of all blocks in the container sorted numerically by blockID.
++     * For example, the unsorted list would have the first blocks as 1, 10, 11...
++     * The list returned by this method would have the first blocks as 1, 2, 3...
++     */
++    private List<BlockData> getSortedBlocks(KeyValueContainer container) throws IOException {
++      List<BlockData> blockDataList = handler.getBlockManager().listBlock(container, -1, 100);
++      blockDataList.sort(Comparator.comparingLong(BlockData::getLocalID));
++      return blockDataList;
++    }
++
++    /**
++     * Introduce corruption in the container.
++     * 1. Delete blocks from the container.
++     * 2. Corrupt chunks at an offset.
++     * If revers is true, the blocks and chunks are deleted in reverse order.
++     */
++    public void introduceCorruption(long containerID, int numBlocksToDelete, int numChunksToCorrupt, boolean reverse)
++        throws IOException {
++      KeyValueContainer container = getContainer(containerID);
++      KeyValueContainerData containerData = container.getContainerData();
++      // Simulate missing blocks
++      try (DBHandle handle = BlockUtils.getDB(containerData, conf);
++           BatchOperation batch = handle.getStore().getBatchHandler().initBatchOperation()) {
++        List<BlockData> blockDataList = getSortedBlocks(container);
++        int size = blockDataList.size();
++        for (int i = 0; i < numBlocksToDelete; i++) {
++          BlockData blockData = reverse ? blockDataList.get(size - 1 - i) : blockDataList.get(i);
++          File blockFile = TestContainerCorruptions.getBlock(container, blockData.getBlockID().getLocalID());
++          Assertions.assertTrue(blockFile.delete());
++          handle.getStore().getBlockDataTable().deleteWithBatch(batch,
++              containerData.getBlockKey(blockData.getLocalID()));
++          log.info("Deleting block {} from container {}", blockData.getBlockID().getLocalID(), containerID);
++        }
++        handle.getStore().getBatchHandler().commitBatchOperation(batch);
++        // Check that the correct number of blocks were deleted.
++        blockDataList = getSortedBlocks(container);
++        assertEquals(numBlocksToDelete, size - blockDataList.size());
++      }
++
++      // Corrupt chunks at an offset.
++      List<BlockData> blockDataList = getSortedBlocks(container);
++      int size = blockDataList.size();
++      for (int i = 0; i < numChunksToCorrupt; i++) {
++        int blockIndex = reverse ? size - 1 - (i % size) : i % size;
++        BlockData blockData = blockDataList.get(blockIndex);
++        int chunkIndex = i / size;
++        File blockFile = TestContainerCorruptions.getBlock(container, blockData.getBlockID().getLocalID());
++        List<ContainerProtos.ChunkInfo> chunks = new ArrayList<>(blockData.getChunks());
++        ContainerProtos.ChunkInfo chunkInfo = chunks.remove(chunkIndex);
++        corruptFileAtOffset(blockFile, chunkInfo.getOffset(), chunkInfo.getLen());
++        log.info("Corrupting block {} at offset {} in container {}", blockData.getBlockID().getLocalID(),
++            chunkInfo.getOffset(), containerID);
++      }
++    }
++
++    private MutableVolumeSet createVolumeSet() throws IOException {
++      MutableVolumeSet volumeSet = new MutableVolumeSet(dnDetails.getUuidString(), conf, null,
++          StorageVolume.VolumeType.DATA_VOLUME, null);
++      createDbInstancesForTestIfNeeded(volumeSet, CLUSTER_ID, CLUSTER_ID, conf);
++      return volumeSet;
++    }
++
++    /**
++     * Overwrite the file with random bytes at an offset within the given length.
++     */
++    private static void corruptFileAtOffset(File file, long offset, long chunkLength) {
++      try {
++        final int fileLength = (int) file.length();
++        assertTrue(fileLength >= offset + chunkLength);
++        final int chunkEnd = (int)(offset + chunkLength);
++
++        Path path = file.toPath();
++        final byte[] original = IOUtils.readFully(Files.newInputStream(path), fileLength);
++
++        // Corrupt the last byte and middle bytes of the block. The scanner should log this as two errors.
++        final byte[] corruptedBytes = Arrays.copyOf(original, fileLength);
++        corruptedBytes[chunkEnd - 1] = (byte) (original[chunkEnd - 1] << 1);
++        final long chunkMid = offset + (chunkLength - offset) / 2;
++        corruptedBytes[(int) (chunkMid / 2)] = (byte) (original[(int) (chunkMid / 2)] << 1);
++
++
++        Files.write(path, corruptedBytes,
++            StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.SYNC);
++
++        assertThat(IOUtils.readFully(Files.newInputStream(path), fileLength))
++            .isEqualTo(corruptedBytes)
++            .isNotEqualTo(original);
++      } catch (IOException ex) {
++        // Fail the test.
++        throw new UncheckedIOException(ex);
++      }
++    }
++  }
++}
+diff --git a/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestKeyValueHandler.java b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestKeyValueHandler.java
+index 33f4faefb6..7530a33327 100644
+--- a/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestKeyValueHandler.java
++++ b/hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestKeyValueHandler.java
+@@ -17,7 +17,6 @@
+ 
+ package org.apache.hadoop.ozone.container.keyvalue;
+ 
+-import static java.nio.charset.StandardCharsets.UTF_8;
+ import static org.apache.hadoop.hdds.HddsConfigKeys.HDDS_DATANODE_VOLUME_CHOOSING_POLICY;
+ import static org.apache.hadoop.hdds.HddsConfigKeys.OZONE_METADATA_DIRS;
+ import static org.apache.hadoop.hdds.protocol.MockDatanodeDetails.randomDatanodeDetails;
+@@ -27,12 +26,7 @@
+ import static org.apache.hadoop.hdds.scm.ScmConfigKeys.HDDS_DATANODE_DIR_KEY;
+ import static org.apache.hadoop.hdds.scm.ScmConfigKeys.OZONE_SCM_CONTAINER_LAYOUT_KEY;
+ import static org.apache.hadoop.ozone.OzoneConsts.GB;
+-import static org.apache.hadoop.ozone.container.checksum.ContainerChecksumTreeManager.getContainerChecksumFile;
+-import static org.apache.hadoop.ozone.container.checksum.ContainerMerkleTreeTestUtils.writeContainerDataTreeProto;
+-import static org.apache.hadoop.ozone.container.common.ContainerTestUtils.WRITE_STAGE;
+ import static org.apache.hadoop.ozone.container.common.ContainerTestUtils.createBlockMetaData;
+-import static org.apache.hadoop.ozone.container.common.ContainerTestUtils.createDbInstancesForTestIfNeeded;
+-import static org.apache.hadoop.ozone.container.keyvalue.TestContainerCorruptions.getBlock;
+ import static org.assertj.core.api.Assertions.assertThat;
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+ import static org.junit.jupiter.api.Assertions.assertNotEquals;
+@@ -41,7 +35,6 @@
+ import static org.junit.jupiter.api.Assertions.assertThrows;
+ import static org.junit.jupiter.api.Assertions.assertTrue;
+ import static org.mockito.ArgumentMatchers.anyLong;
+-import static org.mockito.ArgumentMatchers.anyMap;
+ import static org.mockito.ArgumentMatchers.eq;
+ import static org.mockito.Mockito.any;
+ import static org.mockito.Mockito.atMostOnce;
+@@ -51,35 +44,21 @@
+ import static org.mockito.Mockito.verify;
+ import static org.mockito.Mockito.when;
+ 
+-import com.google.common.collect.ImmutableList;
+ import java.io.File;
+ import java.io.IOException;
+-import java.io.UncheckedIOException;
+-import java.nio.ByteBuffer;
+ import java.nio.file.Files;
+ import java.nio.file.Path;
+-import java.nio.file.StandardOpenOption;
+ import java.time.Clock;
+-import java.util.ArrayList;
+-import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.EnumSet;
+ import java.util.HashMap;
+-import java.util.HashSet;
+ import java.util.List;
+-import java.util.Map;
+-import java.util.Optional;
+-import java.util.Random;
+ import java.util.Set;
+ import java.util.UUID;
+ import java.util.concurrent.atomic.AtomicInteger;
+-import java.util.stream.Stream;
+ import org.apache.commons.io.FileUtils;
+-import org.apache.commons.io.IOUtils;
+-import org.apache.commons.lang3.RandomStringUtils;
+ import org.apache.hadoop.conf.StorageUnit;
+ import org.apache.hadoop.fs.FileUtil;
+-import org.apache.hadoop.hdds.client.BlockID;
+ import org.apache.hadoop.hdds.conf.OzoneConfiguration;
+ import org.apache.hadoop.hdds.protocol.DatanodeDetails;
+ import org.apache.hadoop.hdds.protocol.MockDatanodeDetails;
+@@ -88,27 +67,17 @@
+ import org.apache.hadoop.hdds.protocol.datanode.proto.ContainerProtos.ContainerDataProto.State;
+ import org.apache.hadoop.hdds.protocol.datanode.proto.ContainerProtos.ContainerType;
+ import org.apache.hadoop.hdds.protocol.proto.StorageContainerDatanodeProtocolProtos.ContainerReplicaProto;
+-import org.apache.hadoop.hdds.scm.XceiverClientSpi;
+ import org.apache.hadoop.hdds.scm.container.common.helpers.StorageContainerException;
+-import org.apache.hadoop.hdds.scm.pipeline.Pipeline;
+ import org.apache.hadoop.hdds.scm.pipeline.PipelineID;
+-import org.apache.hadoop.hdds.scm.storage.ContainerProtocolCalls;
+ import org.apache.hadoop.hdds.security.token.TokenVerifier;
+-import org.apache.hadoop.hdds.utils.db.BatchOperation;
+-import org.apache.hadoop.ozone.OzoneConsts;
+-import org.apache.hadoop.ozone.common.Checksum;
+-import org.apache.hadoop.ozone.common.ChecksumData;
+ import org.apache.hadoop.ozone.container.checksum.ContainerChecksumTreeManager;
+ import org.apache.hadoop.ozone.container.checksum.DNContainerOperationClient;
+ import org.apache.hadoop.ozone.container.common.ContainerTestUtils;
+-import org.apache.hadoop.ozone.container.common.helpers.BlockData;
+-import org.apache.hadoop.ozone.container.common.helpers.ChunkInfo;
+ import org.apache.hadoop.ozone.container.common.helpers.ContainerMetrics;
+ import org.apache.hadoop.ozone.container.common.impl.ContainerLayoutVersion;
+ import org.apache.hadoop.ozone.container.common.impl.ContainerSet;
+ import org.apache.hadoop.ozone.container.common.impl.HddsDispatcher;
+ import org.apache.hadoop.ozone.container.common.interfaces.Container;
+-import org.apache.hadoop.ozone.container.common.interfaces.DBHandle;
+ import org.apache.hadoop.ozone.container.common.interfaces.Handler;
+ import org.apache.hadoop.ozone.container.common.report.IncrementalReportSender;
+ import org.apache.hadoop.ozone.container.common.statemachine.DatanodeConfiguration;
+@@ -116,24 +85,19 @@
+ import org.apache.hadoop.ozone.container.common.utils.StorageVolumeUtil;
+ import org.apache.hadoop.ozone.container.common.volume.HddsVolume;
+ import org.apache.hadoop.ozone.container.common.volume.MutableVolumeSet;
+-import org.apache.hadoop.ozone.container.common.volume.RoundRobinVolumeChoosingPolicy;
+ import org.apache.hadoop.ozone.container.common.volume.StorageVolume;
+ import org.apache.hadoop.ozone.container.common.volume.VolumeSet;
+-import org.apache.hadoop.ozone.container.keyvalue.helpers.BlockUtils;
++import org.apache.hadoop.ozone.container.ozoneimpl.ContainerController;
++import org.apache.hadoop.ozone.container.ozoneimpl.ContainerScannerConfiguration;
++import org.apache.hadoop.ozone.container.ozoneimpl.OnDemandContainerDataScanner;
+ import org.apache.hadoop.util.Sets;
+ import org.apache.ozone.test.GenericTestUtils;
+-import org.apache.ratis.thirdparty.com.google.protobuf.ByteString;
+ import org.junit.jupiter.api.Assertions;
+ import org.junit.jupiter.api.BeforeEach;
+ import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.api.Timeout;
+ import org.junit.jupiter.api.io.TempDir;
+-import org.junit.jupiter.params.ParameterizedTest;
+-import org.junit.jupiter.params.provider.Arguments;
+-import org.junit.jupiter.params.provider.MethodSource;
+-import org.mockito.MockedStatic;
+ import org.mockito.Mockito;
+-import org.mockito.invocation.InvocationOnMock;
+ 
+ /**
+  * Unit tests for {@link KeyValueHandler}.
+@@ -148,34 +112,13 @@ public class TestKeyValueHandler {
+ 
+   private static final long DUMMY_CONTAINER_ID = 9999;
+   private static final String DUMMY_PATH = "dummy/dir/doesnt/exist";
+-  private static final int CHUNK_LEN = 3 * (int) OzoneConsts.KB;
+-  private static final int CHUNKS_PER_BLOCK = 4;
+   private static final String DATANODE_UUID = UUID.randomUUID().toString();
+   private static final String CLUSTER_ID = UUID.randomUUID().toString();
+ 
+   private HddsDispatcher dispatcher;
+   private KeyValueHandler handler;
+   private OzoneConfiguration conf;
+-
+-  /**
+-   * Number of corrupt blocks and chunks.
+-   */
+-  public static Stream<Arguments> corruptionValues() {
+-    return Stream.of(
+-        Arguments.of(5, 0),
+-        Arguments.of(0, 5),
+-        Arguments.of(0, 10),
+-        Arguments.of(10, 0),
+-        Arguments.of(5, 10),
+-        Arguments.of(10, 5),
+-        Arguments.of(2, 3),
+-        Arguments.of(3, 2),
+-        Arguments.of(4, 6),
+-        Arguments.of(6, 4),
+-        Arguments.of(6, 9),
+-        Arguments.of(9, 6)
+-    );
+-  }
++  private ContainerSet mockContainerSet;
+ 
+   @BeforeEach
+   public void setup() throws IOException {
+@@ -188,16 +131,17 @@ public void setup() throws IOException {
+     HashMap<ContainerType, Handler> handlers = new HashMap<>();
+     handlers.put(ContainerType.KeyValueContainer, handler);
+ 
++    mockContainerSet = Mockito.mock(ContainerSet.class);
++
+     dispatcher = new HddsDispatcher(
+         new OzoneConfiguration(),
+-        mock(ContainerSet.class),
++        mockContainerSet,
+         mock(VolumeSet.class),
+         handlers,
+         mock(StateContext.class),
+         mock(ContainerMetrics.class),
+         mock(TokenVerifier.class)
+     );
+-
+   }
+ 
+   /**
+@@ -586,127 +530,6 @@ public void testContainerChecksumInvocation(ContainerLayoutVersion layoutVersion
+     Assertions.assertEquals(1, icrCount.get());
+   }
+ 
+-  @ParameterizedTest
+-  @MethodSource("corruptionValues")
+-  public void testFullContainerReconciliation(int numBlocks, int numChunks) throws Exception {
+-    KeyValueHandler kvHandler = createKeyValueHandler(tempDir);
+-    ContainerChecksumTreeManager checksumManager = kvHandler.getChecksumManager();
+-    DNContainerOperationClient dnClient = new DNContainerOperationClient(conf, null, null);
+-    final long containerID = 100L;
+-    // Create 3 containers with 15 blocks each and 3 replicas.
+-    List<KeyValueContainer> containers = createContainerWithBlocks(kvHandler, containerID, 15, 3);
+-    assertEquals(3, containers.size());
+-
+-    // Introduce corruption in each container on different replicas.
+-    introduceCorruption(kvHandler, containers.get(1), numBlocks, numChunks, false);
+-    introduceCorruption(kvHandler, containers.get(2), numBlocks, numChunks, true);
+-
+-    // Without reconciliation, checksums should be different because of the corruption.
+-    Set<Long> checksumsBeforeReconciliation = new HashSet<>();
+-    for (KeyValueContainer kvContainer : containers) {
+-      Optional<ContainerProtos.ContainerChecksumInfo> containerChecksumInfo =
+-          checksumManager.read(kvContainer.getContainerData());
+-      assertTrue(containerChecksumInfo.isPresent());
+-      long dataChecksum = containerChecksumInfo.get().getContainerMerkleTree().getDataChecksum();
+-      assertEquals(kvContainer.getContainerData().getDataChecksum(), dataChecksum);
+-      checksumsBeforeReconciliation.add(dataChecksum);
+-    }
+-    // There should be more than 1 checksum because of the corruption.
+-    assertTrue(checksumsBeforeReconciliation.size() > 1);
+-
+-    List<DatanodeDetails> datanodes = ImmutableList.of(randomDatanodeDetails(), randomDatanodeDetails(),
+-        randomDatanodeDetails());
+-    Map<String, KeyValueContainer> dnToContainerMap = new HashMap<>();
+-    dnToContainerMap.put(datanodes.get(0).getUuidString(), containers.get(0));
+-    dnToContainerMap.put(datanodes.get(1).getUuidString(), containers.get(1));
+-    dnToContainerMap.put(datanodes.get(2).getUuidString(), containers.get(2));
+-
+-    // Setup mock for each datanode network calls needed for reconciliation.
+-    try (MockedStatic<ContainerProtocolCalls> containerProtocolMock =
+-             Mockito.mockStatic(ContainerProtocolCalls.class)) {
+-      mockContainerProtocolCalls(containerProtocolMock, dnToContainerMap, checksumManager, kvHandler, containerID);
+-
+-      kvHandler.reconcileContainer(dnClient, containers.get(0), Sets.newHashSet(datanodes));
+-      kvHandler.reconcileContainer(dnClient, containers.get(1), Sets.newHashSet(datanodes));
+-      kvHandler.reconcileContainer(dnClient, containers.get(2), Sets.newHashSet(datanodes));
+-
+-      // After reconciliation, checksums should be the same for all containers.
+-      ContainerProtos.ContainerChecksumInfo prevContainerChecksumInfo = null;
+-      for (KeyValueContainer kvContainer : containers) {
+-        kvHandler.createContainerMerkleTree(kvContainer);
+-        Optional<ContainerProtos.ContainerChecksumInfo> containerChecksumInfo =
+-            checksumManager.read(kvContainer.getContainerData());
+-        assertTrue(containerChecksumInfo.isPresent());
+-        long dataChecksum = containerChecksumInfo.get().getContainerMerkleTree().getDataChecksum();
+-        assertEquals(kvContainer.getContainerData().getDataChecksum(), dataChecksum);
+-        if (prevContainerChecksumInfo != null) {
+-          assertEquals(prevContainerChecksumInfo.getContainerMerkleTree().getDataChecksum(), dataChecksum);
+-        }
+-        prevContainerChecksumInfo = containerChecksumInfo.get();
+-      }
+-    }
+-  }
+-  private void mockContainerProtocolCalls(MockedStatic<ContainerProtocolCalls> containerProtocolMock,
+-                                          Map<String, KeyValueContainer> dnToContainerMap,
+-                                          ContainerChecksumTreeManager checksumManager,
+-                                          KeyValueHandler kvHandler,
+-                                          long containerID) {
+-    // Mock getContainerChecksumInfo
+-    containerProtocolMock.when(() -> ContainerProtocolCalls.getContainerChecksumInfo(any(), anyLong(), any()))
+-        .thenAnswer(inv -> {
+-          XceiverClientSpi xceiverClientSpi = inv.getArgument(0);
+-          Pipeline pipeline = xceiverClientSpi.getPipeline();
+-          assertEquals(1, pipeline.size());
+-          DatanodeDetails dn = pipeline.getFirstNode();
+-          KeyValueContainer container = dnToContainerMap.get(dn.getUuidString());
+-          ByteString checksumInfo = checksumManager.getContainerChecksumInfo(container.getContainerData());
+-          return ContainerProtos.GetContainerChecksumInfoResponseProto.newBuilder()
+-              .setContainerID(containerID)
+-              .setContainerChecksumInfo(checksumInfo)
+-              .build();
+-        });
+-
+-    // Mock getBlock
+-    containerProtocolMock.when(() -> ContainerProtocolCalls.getBlock(any(), any(), any(), any(), anyMap()))
+-        .thenAnswer(inv -> {
+-          XceiverClientSpi xceiverClientSpi = inv.getArgument(0);
+-          Pipeline pipeline = xceiverClientSpi.getPipeline();
+-          assertEquals(1, pipeline.size());
+-          DatanodeDetails dn = pipeline.getFirstNode();
+-          KeyValueContainer container = dnToContainerMap.get(dn.getUuidString());
+-          ContainerProtos.BlockData blockData = kvHandler.getBlockManager().getBlock(container, inv.getArgument(2))
+-                .getProtoBufMessage();
+-          return ContainerProtos.GetBlockResponseProto.newBuilder()
+-              .setBlockData(blockData)
+-              .build();
+-        });
+-
+-    // Mock readChunk
+-    containerProtocolMock.when(() -> ContainerProtocolCalls.readChunk(any(), any(), any(), any(), any()))
+-        .thenAnswer(inv -> {
+-          XceiverClientSpi xceiverClientSpi = inv.getArgument(0);
+-          Pipeline pipeline = xceiverClientSpi.getPipeline();
+-          assertEquals(1, pipeline.size());
+-          DatanodeDetails dn = pipeline.getFirstNode();
+-          KeyValueContainer container = dnToContainerMap.get(dn.getUuidString());
+-          return createReadChunkResponse(inv, container, kvHandler);
+-        });
+-  }
+-
+-  // Helper method to create readChunk responses
+-  private ContainerProtos.ReadChunkResponseProto createReadChunkResponse(InvocationOnMock inv,
+-                                                                         KeyValueContainer container,
+-                                                                         KeyValueHandler kvHandler) throws IOException {
+-    ContainerProtos.DatanodeBlockID blockId = inv.getArgument(2);
+-    ContainerProtos.ChunkInfo chunkInfo = inv.getArgument(1);
+-    return ContainerProtos.ReadChunkResponseProto.newBuilder()
+-        .setBlockID(blockId)
+-        .setChunkData(chunkInfo)
+-        .setData(kvHandler.getChunkManager().readChunk(container, BlockID.getFromProtobuf(blockId),
+-                ChunkInfo.getFromProtoBuf(chunkInfo), null).toByteString())
+-        .build();
+-  }
+-
+   @Test
+   public void testGetContainerChecksumInfoOnInvalidContainerStates() {
+     when(handler.handleGetContainerChecksumInfo(any(), any())).thenCallRealMethod();
+@@ -811,6 +634,7 @@ private static ContainerCommandRequestProto createContainerRequest(
+ 
+   private KeyValueHandler createKeyValueHandler(Path path) throws IOException {
+     final ContainerSet containerSet = new ContainerSet(1000);
++
+     final MutableVolumeSet volumeSet = mock(MutableVolumeSet.class);
+ 
+     HddsVolume hddsVolume = new HddsVolume.Builder(path.toString()).conf(conf)
+@@ -828,165 +652,14 @@ private KeyValueHandler createKeyValueHandler(Path path) throws IOException {
+     hddsVolume.getVolumeInfoStats().unregister();
+     hddsVolume.getVolumeIOStats().unregister();
+     ContainerMetrics.remove();
+-    return kvHandler;
+-  }
+-
+-  /**
+-   * Creates a container with normal and deleted blocks.
+-   * First it will insert normal blocks, and then it will insert
+-   * deleted blocks.
+-   */
+-  protected List<KeyValueContainer> createContainerWithBlocks(KeyValueHandler kvHandler, long containerId,
+-                                                              int blocks, int numContainerCopy)
+-      throws Exception {
+-    String strBlock = "block";
+-    String strChunk = "chunkFile";
+-    List<KeyValueContainer> containers = new ArrayList<>();
+-    MutableVolumeSet volumeSet = new MutableVolumeSet(DATANODE_UUID, conf, null,
+-        StorageVolume.VolumeType.DATA_VOLUME, null);
+-    createDbInstancesForTestIfNeeded(volumeSet, CLUSTER_ID, CLUSTER_ID, conf);
+-    int bytesPerChecksum = 2 * (int) OzoneConsts.KB;
+-    Checksum checksum = new Checksum(ContainerProtos.ChecksumType.SHA256,
+-        bytesPerChecksum);
+-    byte[] chunkData = RandomStringUtils.randomAscii(CHUNK_LEN).getBytes(UTF_8);
+-    ChecksumData checksumData = checksum.computeChecksum(chunkData);
+-
+-    for (int j =  0; j < numContainerCopy; j++) {
+-      KeyValueContainerData containerData = new KeyValueContainerData(containerId,
+-          ContainerLayoutVersion.FILE_PER_BLOCK, (long) CHUNKS_PER_BLOCK * CHUNK_LEN * blocks,
+-          UUID.randomUUID().toString(), UUID.randomUUID().toString());
+-      Path kvContainerPath = Files.createDirectory(tempDir.resolve(containerId + "-" + j));
+-      containerData.setMetadataPath(kvContainerPath.toString());
+-      containerData.setDbFile(kvContainerPath.toFile());
+-
+-      KeyValueContainer container = new KeyValueContainer(containerData, conf);
+-      StorageVolumeUtil.getHddsVolumesList(volumeSet.getVolumesList())
+-          .forEach(hddsVolume -> hddsVolume.setDbParentDir(kvContainerPath.toFile()));
+-      container.create(volumeSet, new RoundRobinVolumeChoosingPolicy(), UUID.randomUUID().toString());
+-      assertNotNull(containerData.getChunksPath());
+-      File chunksPath = new File(containerData.getChunksPath());
+-      ContainerLayoutTestInfo.FILE_PER_BLOCK.validateFileCount(chunksPath, 0, 0);
+-
+-      List<ContainerProtos.ChunkInfo> chunkList = new ArrayList<>();
+-      for (int i = 0; i < blocks; i++) {
+-        BlockID blockID = new BlockID(containerId, i);
+-        BlockData blockData = new BlockData(blockID);
+-
+-        chunkList.clear();
+-        for (long chunkCount = 0; chunkCount < CHUNKS_PER_BLOCK; chunkCount++) {
+-          String chunkName = strBlock + i + strChunk + chunkCount;
+-          long offset = chunkCount * CHUNK_LEN;
+-          ChunkInfo info = new ChunkInfo(chunkName, offset, CHUNK_LEN);
+-          info.setChecksumData(checksumData);
+-          chunkList.add(info.getProtoBufMessage());
+-          kvHandler.getChunkManager().writeChunk(container, blockID, info,
+-              ByteBuffer.wrap(chunkData), WRITE_STAGE);
+-        }
+-        kvHandler.getChunkManager().finishWriteChunks(container, blockData);
+-        blockData.setChunks(chunkList);
+-        blockData.setBlockCommitSequenceId(i);
+-        kvHandler.getBlockManager().putBlock(container, blockData);
+-      }
+-
+-      ContainerLayoutTestInfo.FILE_PER_BLOCK.validateFileCount(chunksPath, blocks, (long) blocks * CHUNKS_PER_BLOCK);
+-      container.markContainerForClose();
+-      kvHandler.closeContainer(container);
+-      containers.add(container);
+-    }
+-
+-    return containers;
+-  }
+-
+-  /**
+-   * Introduce corruption in the container.
+-   * 1. Delete blocks from the container.
+-   * 2. Corrupt chunks at an offset.
+-   * If revers is true, the blocks and chunks are deleted in reverse order.
+-   */
+-  private void introduceCorruption(KeyValueHandler kvHandler, KeyValueContainer keyValueContainer, int numBlocks,
+-                                   int numChunks, boolean reverse) throws IOException {
+-    Random random = new Random();
+-    KeyValueContainerData containerData = keyValueContainer.getContainerData();
+-    // Simulate missing blocks
+-    try (DBHandle handle = BlockUtils.getDB(containerData, conf);
+-         BatchOperation batch = handle.getStore().getBatchHandler().initBatchOperation()) {
+-      List<BlockData> blockDataList = kvHandler.getBlockManager().listBlock(keyValueContainer, -1, 100);
+-      int size = blockDataList.size();
+-      for (int i = 0; i < numBlocks; i++) {
+-        BlockData blockData = reverse ? blockDataList.get(size - 1 - i) : blockDataList.get(i);
+-        File blockFile = getBlock(keyValueContainer, blockData.getBlockID().getLocalID());
+-        Assertions.assertTrue(blockFile.delete());
+-        handle.getStore().getBlockDataTable().deleteWithBatch(batch, containerData.getBlockKey(blockData.getLocalID()));
+-      }
+-      handle.getStore().getBatchHandler().commitBatchOperation(batch);
+-    }
+-    Files.deleteIfExists(getContainerChecksumFile(keyValueContainer.getContainerData()).toPath());
+-    kvHandler.createContainerMerkleTree(keyValueContainer);
+-
+-    // Corrupt chunks at an offset.
+-    List<BlockData> blockDataList = kvHandler.getBlockManager().listBlock(keyValueContainer, -1, 100);
+-    int size = blockDataList.size();
+-    for (int i = 0; i < numChunks; i++) {
+-      int blockIndex = reverse ? size - 1 - (i % size) : i % size;
+-      BlockData blockData = blockDataList.get(blockIndex);
+-      int chunkIndex = i / size;
+-      File blockFile = getBlock(keyValueContainer, blockData.getBlockID().getLocalID());
+-      List<ContainerProtos.ChunkInfo> chunks = new ArrayList<>(blockData.getChunks());
+-      ContainerProtos.ChunkInfo chunkInfo = chunks.remove(chunkIndex);
+-      corruptFileAtOffset(blockFile, (int) chunkInfo.getOffset(), (int) chunkInfo.getLen());
+-
+-      // TODO: On-demand scanner (HDDS-10374) should detect this corruption and generate container merkle tree.
+-      ContainerProtos.ContainerChecksumInfo.Builder builder = kvHandler.getChecksumManager()
+-          .read(containerData).get().toBuilder();
+-      List<ContainerProtos.BlockMerkleTree> blockMerkleTreeList = builder.getContainerMerkleTree()
+-          .getBlockMerkleTreeList();
+-      assertEquals(size, blockMerkleTreeList.size());
+-
+-      builder.getContainerMerkleTreeBuilder().clearBlockMerkleTree();
+-      for (int j = 0; j < blockMerkleTreeList.size(); j++) {
+-        ContainerProtos.BlockMerkleTree.Builder blockMerkleTreeBuilder = blockMerkleTreeList.get(j).toBuilder();
+-        if (j == blockIndex) {
+-          List<ContainerProtos.ChunkMerkleTree.Builder> chunkMerkleTreeBuilderList =
+-              blockMerkleTreeBuilder.getChunkMerkleTreeBuilderList();
+-          chunkMerkleTreeBuilderList.get(chunkIndex).setIsHealthy(false).setDataChecksum(random.nextLong());
+-          blockMerkleTreeBuilder.setDataChecksum(random.nextLong());
+-        }
+-        builder.getContainerMerkleTreeBuilder().addBlockMerkleTree(blockMerkleTreeBuilder.build());
+-      }
+-      builder.getContainerMerkleTreeBuilder().setDataChecksum(random.nextLong());
+-      Files.deleteIfExists(getContainerChecksumFile(keyValueContainer.getContainerData()).toPath());
+-      writeContainerDataTreeProto(keyValueContainer.getContainerData(), builder.getContainerMerkleTree());
+-    }
+-  }
+-
+-  /**
+-   * Overwrite the file with random bytes at an offset within the given length.
+-   */
+-  public static void corruptFileAtOffset(File file, int offset, int chunkLength) {
+-    try {
+-      final int fileLength = (int) file.length();
+-      assertTrue(fileLength >= offset + chunkLength);
+-      final int chunkEnd = offset + chunkLength;
+ 
+-      Path path = file.toPath();
+-      final byte[] original = IOUtils.readFully(Files.newInputStream(path), fileLength);
++    // Register the on-demand container scanner with the container set used by the KeyValueHandler.
++    ContainerController controller = new ContainerController(containerSet,
++        Collections.singletonMap(ContainerType.KeyValueContainer, kvHandler));
++    OnDemandContainerDataScanner onDemandScanner = new OnDemandContainerDataScanner(
++        conf.getObject(ContainerScannerConfiguration.class), controller);
++    containerSet.registerContainerScanHandler(onDemandScanner::scanContainer);
+ 
+-      // Corrupt the last byte and middle bytes of the block. The scanner should log this as two errors.
+-      final byte[] corruptedBytes = Arrays.copyOf(original, fileLength);
+-      corruptedBytes[chunkEnd - 1] = (byte) (original[chunkEnd - 1] << 1);
+-      final long chunkMid = offset + ((long) chunkLength - offset) / 2;
+-      corruptedBytes[(int) (chunkMid / 2)] = (byte) (original[(int) (chunkMid / 2)] << 1);
+-
+-
+-      Files.write(path, corruptedBytes,
+-          StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.SYNC);
+-
+-      assertThat(IOUtils.readFully(Files.newInputStream(path), fileLength))
+-          .isEqualTo(corruptedBytes)
+-          .isNotEqualTo(original);
+-    } catch (IOException ex) {
+-      // Fail the test.
+-      throw new UncheckedIOException(ex);
+-    }
++    return kvHandler;
+   }
+ }
+diff --git a/hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/dn/checksum/TestContainerCommandReconciliation.java b/hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/dn/checksum/TestContainerCommandReconciliation.java
+index 4624cc562f..0a54c2e4dc 100644
+--- a/hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/dn/checksum/TestContainerCommandReconciliation.java
++++ b/hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/dn/checksum/TestContainerCommandReconciliation.java
+@@ -378,7 +378,7 @@ public void testContainerChecksumWithBlockMissing() throws Exception {
+ 
+     // TODO: Use On-demand container scanner to build the new container merkle tree. (HDDS-10374)
+     Files.deleteIfExists(getContainerChecksumFile(container.getContainerData()).toPath());
+-    kvHandler.createContainerMerkleTree(container);
++    kvHandler.createContainerMerkleTreeFromMetadata(container);
+     ContainerProtos.ContainerChecksumInfo containerChecksumAfterBlockDelete =
+         readChecksumFile(container.getContainerData());
+     long dataChecksumAfterBlockDelete = containerChecksumAfterBlockDelete.getContainerMerkleTree().getDataChecksum();
+@@ -461,7 +461,7 @@ public void testContainerChecksumChunkCorruption() throws Exception {
+     }
+ 
+     Files.deleteIfExists(getContainerChecksumFile(container.getContainerData()).toPath());
+-    kvHandler.createContainerMerkleTree(container);
++    kvHandler.createContainerMerkleTreeFromMetadata(container);
+     // To set unhealthy for chunks that are corrupted.
+     ContainerProtos.ContainerChecksumInfo containerChecksumAfterChunkCorruption =
+         readChecksumFile(container.getContainerData());
+@@ -559,7 +559,7 @@ public void testDataChecksumReportedAtSCM() throws Exception {
+ 
+     // TODO: Use On-demand container scanner to build the new container merkle tree. (HDDS-10374)
+     Files.deleteIfExists(getContainerChecksumFile(container.getContainerData()).toPath());
+-    kvHandler.createContainerMerkleTree(container);
++    kvHandler.createContainerMerkleTreeFromMetadata(container);
+     ContainerProtos.ContainerChecksumInfo containerChecksumAfterBlockDelete =
+         readChecksumFile(container.getContainerData());
+     long dataChecksumAfterBlockDelete = containerChecksumAfterBlockDelete.getContainerMerkleTree().getDataChecksum();

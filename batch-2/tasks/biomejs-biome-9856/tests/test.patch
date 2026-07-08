@@ -1,0 +1,111 @@
+diff --git a/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md b/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md
+index ffbad94e0c..f967e741e0 100644
+--- a/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md
++++ b/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md
+@@ -6,3 +6,9 @@ form
+ 
+ no hard line
+ here
++
++foo  
++bar with empty line after  
++
++foo  
++bar without empty line after  
+\ No newline at end of file
+diff --git a/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md.snap b/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md.snap
+index a5466203b5..1e9dfc46d7 100644
+--- a/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md.snap
++++ b/crates/biome_markdown_formatter/tests/specs/markdown/hard_line.md.snap
+@@ -15,6 +15,11 @@ form
+ no hard line
+ here
+ 
++foo  
++bar with empty line after  
++
++foo  
++bar without empty line after  
+ ```
+ 
+ 
+@@ -30,4 +35,8 @@ form
+ no hard line
+ here
+ 
++foo  
++bar with empty line after  
++foo  
++bar without empty line after  
+ ```
+diff --git a/crates/biome_markdown_formatter/tests/specs/prettier/markdown/spec/example-186.md.snap b/crates/biome_markdown_formatter/tests/specs/prettier/markdown/spec/example-186.md.snap
+deleted file mode 100644
+index 4067201250..0000000000
+--- a/crates/biome_markdown_formatter/tests/specs/prettier/markdown/spec/example-186.md.snap
++++ /dev/null
+@@ -1,31 +0,0 @@
+----
+-source: crates/biome_formatter_test/src/snapshot_builder.rs
+-info: markdown/spec/example-186.md
+----
+-
+-# Input
+-
+-```md
+-aaa     
+-bbb     
+-
+-```
+-
+-
+-# Prettier differences
+-
+-```diff
+---- Prettier
+-+++ Biome
+-@@ -1,2 +1,2 @@
+- aaa  
+--bbb
+-+bbb  
+-```
+-
+-# Output
+-
+-```md
+-aaa  
+-bbb  
+-```
+diff --git a/crates/biome_markdown_formatter/tests/specs/prettier/markdown/spec/example-609.md.snap b/crates/biome_markdown_formatter/tests/specs/prettier/markdown/spec/example-609.md.snap
+deleted file mode 100644
+index 23aed5df91..0000000000
+--- a/crates/biome_markdown_formatter/tests/specs/prettier/markdown/spec/example-609.md.snap
++++ /dev/null
+@@ -1,28 +0,0 @@
+----
+-source: crates/biome_formatter_test/src/snapshot_builder.rs
+-info: markdown/spec/example-609.md
+----
+-
+-# Input
+-
+-```md
+-foo  
+-
+-```
+-
+-
+-# Prettier differences
+-
+-```diff
+---- Prettier
+-+++ Biome
+-@@ -1 +1 @@
+--foo
+-+foo  
+-```
+-
+-# Output
+-
+-```md
+-foo  
+-```

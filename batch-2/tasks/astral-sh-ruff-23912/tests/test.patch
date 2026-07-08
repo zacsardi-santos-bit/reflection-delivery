@@ -1,0 +1,14 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_annotations/annotation_presence.py b/crates/ruff_linter/resources/test/fixtures/flake8_annotations/annotation_presence.py
+index 4ef4e2220b..edad5b2d8b 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_annotations/annotation_presence.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_annotations/annotation_presence.py
+@@ -164,3 +164,9 @@ class Foo:
+ class Class:
+     def __init__(self):
+         print(f"{self.attr=}")
++
++
++# Regression test for: https://github.com/astral-sh/ruff/issues/14695
++# A quoted annotation containing a nested string with an escape sequence
++# should not cause a stack overflow.
++def quoted_escape(x: "'in\x74'"): pass

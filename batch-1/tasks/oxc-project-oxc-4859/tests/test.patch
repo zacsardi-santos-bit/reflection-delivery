@@ -1,0 +1,57 @@
+diff --git a/crates/oxc_semantic/tests/fixtures/typescript-eslint/call-expression/call-expression.snap b/crates/oxc_semantic/tests/fixtures/typescript-eslint/call-expression/call-expression.snap
+index 31f89fdfff..475c34147b 100644
+--- a/crates/oxc_semantic/tests/fixtures/typescript-eslint/call-expression/call-expression.snap
++++ b/crates/oxc_semantic/tests/fixtures/typescript-eslint/call-expression/call-expression.snap
+@@ -25,15 +25,15 @@ input_file: crates/oxc_semantic/tests/fixtures/typescript-eslint/call-expression
+         "references": [
+           {
+             "flag": "ReferenceFlag(Read)",
+-            "id": 1,
++            "id": 0,
+             "name": "foo",
+-            "node_id": 15
++            "node_id": 13
+           },
+           {
+             "flag": "ReferenceFlag(Read)",
+-            "id": 3,
++            "id": 2,
+             "name": "foo",
+-            "node_id": 21
++            "node_id": 19
+           }
+         ]
+       },
+@@ -45,15 +45,15 @@ input_file: crates/oxc_semantic/tests/fixtures/typescript-eslint/call-expression
+         "references": [
+           {
+             "flag": "ReferenceFlag(Read)",
+-            "id": 0,
++            "id": 1,
+             "name": "a",
+-            "node_id": 14
++            "node_id": 15
+           },
+           {
+             "flag": "ReferenceFlag(Read)",
+-            "id": 2,
++            "id": 3,
+             "name": "a",
+-            "node_id": 20
++            "node_id": 21
+           }
+         ]
+       }
+diff --git a/crates/oxc_semantic/tests/fixtures/typescript-eslint/class/declaration/method-param-default.snap b/crates/oxc_semantic/tests/fixtures/typescript-eslint/class/declaration/method-param-default.snap
+index 030387a79d..f4ebc1b877 100644
+--- a/crates/oxc_semantic/tests/fixtures/typescript-eslint/class/declaration/method-param-default.snap
++++ b/crates/oxc_semantic/tests/fixtures/typescript-eslint/class/declaration/method-param-default.snap
+@@ -45,7 +45,7 @@ input_file: crates/oxc_semantic/tests/fixtures/typescript-eslint/class/declarati
+                     "flag": "ReferenceFlag(Read)",
+                     "id": 1,
+                     "name": "printerName",
+-                    "node_id": 35
++                    "node_id": 40
+                   }
+                 ]
+               }

@@ -1,0 +1,35 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_simplify/SIM108.py b/crates/ruff_linter/resources/test/fixtures/flake8_simplify/SIM108.py
+index 25991d4782..52da2ecd37 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_simplify/SIM108.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_simplify/SIM108.py
+@@ -194,3 +194,17 @@ if foo():
+     z = not foo()
+ else:
+     z = other
++
++
++# These two cases double as tests for f-string quote preservation. The first
++# f-string should preserve its double quotes, and the second should preserve
++# single quotes
++if cond:
++    var = "str"
++else:
++    var = f"{first}-{second}"
++
++if cond:
++    var = "str"
++else:
++    var = f'{first}-{second}'
+diff --git a/crates/ruff_python_formatter/tests/normalizer.rs b/crates/ruff_python_formatter/tests/normalizer.rs
+index c10ed93720..a2fac515cf 100644
+--- a/crates/ruff_python_formatter/tests/normalizer.rs
++++ b/crates/ruff_python_formatter/tests/normalizer.rs
+@@ -181,7 +181,7 @@ impl Transformer for Normalizer {
+                         fstring.value = ast::FStringValue::single(ast::FString {
+                             elements: collector.elements.into(),
+                             range: fstring.range,
+-                            flags: FStringFlags::default(),
++                            flags: FStringFlags::empty(),
+                         });
+                     }
+                 }

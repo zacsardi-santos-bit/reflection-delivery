@@ -1,0 +1,366 @@
+diff --git a/relayer/relays/parachain/types_test.go b/relayer/relays/parachain/types_test.go
+new file mode 100644
+index 00000000..cc377c13
+--- /dev/null
++++ b/relayer/relays/parachain/types_test.go
+@@ -0,0 +1,68 @@
++package parachain
++
++import (
++	"fmt"
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++)
++
++func TestGenerateHashSidesSingleLeaf(t *testing.T) {
++	sides, err := generateHashSides(0, 1)
++	if err != nil {
++		panic(err)
++	}
++
++	assert.Equal(t,
++		[]bool{},
++		sides,
++	)
++}
++
++func TestGenerateHashSidesProof4Of6(t *testing.T) {
++	sides, err := generateHashSides(3, 6)
++	if err != nil {
++		panic(err)
++	}
++
++	assert.Equal(t,
++		[]bool{true, true, false},
++		sides,
++	)
++}
++
++func TestGenerateHashSidesProof5Of6(t *testing.T) {
++	sides, err := generateHashSides(4, 6)
++	if err != nil {
++		panic(err)
++	}
++
++	assert.Equal(t,
++		[]bool{false, true},
++		sides,
++	)
++}
++
++func TestGenerateHashSidesProof5Of8(t *testing.T) {
++	sides, err := generateHashSides(4, 8)
++	if err != nil {
++		panic(err)
++	}
++
++	assert.Equal(t,
++		[]bool{false, false, true},
++		sides,
++	)
++}
++
++func TestGenerateHashSidesLeafPositionTooHigh(t *testing.T) {
++	sides, err := generateHashSides(6, 6)
++	if sides != nil {
++		panic(fmt.Errorf("non-nil sides when leaf position is too high"))
++	}
++
++	assert.Equal(t,
++		err.Error(),
++		"leaf position 6 is too high in proof with 6 leaves",
++	)
++}
+diff --git a/test/README.md b/test/README.md
+index 5573c267..54ffe9ea 100644
+--- a/test/README.md
++++ b/test/README.md
+@@ -4,13 +4,13 @@ The E2E tests run against local deployments of the parachain, relayer, the ether
+ 
+ ## Requirements
+ 
+-* Ubuntu 20.04 or later. MacOs may work, but its not currently a supported configuration.
++* Ubuntu 20.04 or later. MacOS may work, but it's not currently a supported configuration.
+ * Development environment for Rust and Substrate. See parachain [requirements](../parachain/README.md#requirements).
+ * Node 16. Can install using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating):
+ 
+   ```bash
+-  nvm install 16.13.2
+-  nvm use 16.13.2
++  nvm install 16.17.0
++  nvm use 16.17.0
+   ```
+ 
+ * Development environment for Ethereum smart contracts.
+@@ -23,7 +23,6 @@ The E2E tests run against local deployments of the parachain, relayer, the ether
+ 
+ * `jq` - https://stedolan.github.io/jq/download/
+ * geth - https://geth.ethereum.org/docs/install-and-build/installing-geth `go install github.com/ethereum/go-ethereum/cmd/geth@v1.10.23`
+-* lodestar - https://chainsafe.github.io/lodestar/install/source/ Use `v1.0.0`.
+ * g++ (required for lodestar) is available in the `build-essential` package: `apt install build-essential`
+ * lodestar - https://chainsafe.github.io/lodestar/install/source/ Use `v1.1.0`.
+ 
+@@ -56,20 +55,20 @@ yarn install
+ ### Polkadot
+ 
+ * Clone the polkadot repository somewhere on your machine
+-* Checkout tag `v0.9.25`.
++* Checkout tag `v0.9.28`.
+ 
+ Example:
+ ```bash
+ git clone -n https://github.com/paritytech/polkadot.git
+ cd /path/to/polkadot
+ git fetch --tags
+-git checkout v0.9.25
++git checkout v0.9.28
+ cargo build --release
+ ```
+ 
+ ### Configure testnet
+ 
+-Create an `.envrc` file in which to hold environment config, using [.envrc-example](.envrc-example) as a template. make sure to override the `POLKADOT_BIN` variable to the location of the polkadot binary built in the previous step.
++Create an `.envrc` file in which to hold environment config, using [.envrc-example](.envrc-example) as a template. Make sure to override the `POLKADOT_BIN` variable to the location of the polkadot binary built in the previous step.
+ 
+ Example:
+ ```
+diff --git a/test/scripts/start-services.sh b/test/scripts/start-services.sh
+index f37e3a9f..793b7d37 100755
+--- a/test/scripts/start-services.sh
++++ b/test/scripts/start-services.sh
+@@ -15,7 +15,8 @@ beefy_relay_eth_key="${BEEFY_RELAY_ETH_KEY:-0x935b65c833ced92c43ef9de6bff30703d9
+ 
+ # Accounts for which the relayer will relay messages over the basic channel.
+ # Currently only works for messages from Polkadot to Ethereum until SNO-305 is complete.
+-account_ids="${ACCOUNT_IDS:-0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d,0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48}"
++# These IDs are for the test accounts Alice, Bob, Charlie, Dave, Eve and Ferdie, in order
++account_ids="${ACCOUNT_IDS:-0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d,0x8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48,0x90b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22,0x306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc20,0xe659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e,0x1cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c}"
+ 
+ beacon_endpoint_http="${BEACON_HTTP_ENDPOINT:-http://localhost:9596}"
+ 
+@@ -130,7 +131,7 @@ start_polkadot_launch()
+         --bin snowbridge
+ 
+     echo "Building query tool"
+-    cargo build --manifest-path "$parachain_dir/tools/query-events/Cargo.toml" --release --features parachain-snowbase --bin snowbridge-query-events
++    cargo build --manifest-path "$parachain_dir/tools/query-events/Cargo.toml" --release --bin snowbridge-query-events
+ 
+     cp "$parachain_dir/target/release/snowbridge-query-events" "$output_dir/bin"
+ 
+diff --git a/test/src/fixtures/index.js b/test/src/fixtures/index.js
+index b14475da..2ebcda27 100644
+--- a/test/src/fixtures/index.js
++++ b/test/src/fixtures/index.js
+@@ -11,6 +11,11 @@ const polkadotRecipient = "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5
+ const polkadotRecipientSS58 = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
+ const polkadotSenderSS58Alice = polkadotRecipientSS58;
+ const polkadotSenderSS58Bob = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty";
++const polkadotSenderSS58Charlie = "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y";
++const polkadotSenderSS58Dave = "5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy";
++const polkadotSenderSS58Eve = "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw";
++const polkadotSenderSS58Ferdie = "5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL";
++
+ const treasuryAddressSS58 = "5EYCAe5jHEaRUtbinpdbTLuTyGiVt2TJGQPi9fdvVpNLNfSS";
+ const parachainEndpoint = 'ws://localhost:11144';
+ const testParachainEndpoint = 'ws://localhost:13144';
+@@ -25,16 +30,29 @@ const PARA_TO_ETH_WAIT_TIME = 100000;
+ 
+ async function bootstrap() {
+   const ethClient = new EthClient(ethEndpoint + '/' + infuraProjectId, testNetworkID);
++  await ethClient.initialize();
++
+   const subClient = new SubClient(parachainEndpoint);
+   await subClient.connect();
++
+   const testSubClient = new SubClient(testParachainEndpoint);
+   await testSubClient.connect();
+-  await ethClient.initialize();
++
+   return { ethClient, subClient, testSubClient };
+ }
+ 
+ module.exports = {
+-  bootstrap, polkadotRecipient,
+-  polkadotRecipientSS58, polkadotSenderSS58Alice, polkadotSenderSS58Bob, treasuryAddressSS58,
+-  TestTokenAddress, ETH_TO_PARA_WAIT_TIME, PARA_TO_ETH_WAIT_TIME
++  bootstrap,
++  polkadotRecipient,
++  polkadotRecipientSS58,
++  polkadotSenderSS58Alice,
++  polkadotSenderSS58Bob,
++  polkadotSenderSS58Charlie,
++  polkadotSenderSS58Dave,
++  polkadotSenderSS58Eve,
++  polkadotSenderSS58Ferdie,
++  treasuryAddressSS58,
++  TestTokenAddress,
++  ETH_TO_PARA_WAIT_TIME,
++  PARA_TO_ETH_WAIT_TIME
+ };
+diff --git a/test/src/subclient/index.js b/test/src/subclient/index.js
+index 9713c0a0..7f6ff0ac 100644
+--- a/test/src/subclient/index.js
++++ b/test/src/subclient/index.js
+@@ -18,6 +18,10 @@ class SubClient {
+     this.keyring = new Keyring({ type: 'sr25519' });
+     this.alice = this.keyring.addFromUri('//Alice', { name: 'Alice' });
+     this.bob = this.keyring.addFromUri('//Bob', { name: 'Bob' });
++    this.charlie = this.keyring.addFromUri('//Charlie', { name: 'Charlie' });
++    this.dave = this.keyring.addFromUri('//Dave', { name: 'Dave' });
++    this.eve = this.keyring.addFromUri('//Eve', { name: 'Eve' });
++    this.ferdie = this.keyring.addFromUri('//Ferdie', { name: 'Ferdie' });
+   }
+ 
+   async queryAssetsAccountBalance(assetId, accountId) {
+diff --git a/test/test/basic-channel.js b/test/test/basic-channel.js
+new file mode 100644
+index 00000000..7a3296b9
+--- /dev/null
++++ b/test/test/basic-channel.js
+@@ -0,0 +1,96 @@
++const Web3 = require('web3');
++
++const BigNumber = require('bignumber.js');
++
++const { expect } = require("chai")
++  .use(require("chai-as-promised"))
++  .use(require("chai-bignumber")(BigNumber));
++
++const {
++  bootstrap,
++  polkadotSenderSS58Alice,
++  polkadotSenderSS58Bob,
++  polkadotSenderSS58Charlie,
++  polkadotSenderSS58Dave,
++  polkadotSenderSS58Eve,
++  polkadotSenderSS58Ferdie,
++} = require('../src/fixtures');
++
++const { ChannelId } = require("../src/helpers");
++
++describe('Bridge', function () {
++  let ethClient, subClient;
++
++  before(async function () {
++    const clients = await bootstrap();
++    ethClient = clients.ethClient;
++    subClient = clients.subClient;
++    this.testParaEthAssetId = 0;
++  });
++
++  describe('Basic Channel', function () {
++    it('should transfer DOT for 6 accounts from Substrate to Ethereum (basic channel)', async function () {
++      const amount = BigNumber('10e+12'); // 10 DOT (12 decimal places in this environment)
++      const amountWrapped = BigNumber(Web3.utils.toWei('10', "ether")); // 10 SnowDOT (18 decimal places)
++      const ethAccount = ethClient.accounts[1];
++
++      const sudoKey = await subClient.api.query.sudo.key();
++      const sudoPair = subClient.keyring.getPair(sudoKey.toString());
++
++      const beforeEthBalance = await ethClient.getDotBalance(ethAccount);
++      const beforeSubBalanceAlice = await subClient.queryAccountBalance(polkadotSenderSS58Alice);
++      const beforeSubBalanceBob = await subClient.queryAccountBalance(polkadotSenderSS58Bob);
++      const beforeSubBalanceCharlie = await subClient.queryAccountBalance(polkadotSenderSS58Charlie);
++      const beforeSubBalanceDave = await subClient.queryAccountBalance(polkadotSenderSS58Dave);
++      const beforeSubBalanceEve = await subClient.queryAccountBalance(polkadotSenderSS58Eve);
++      const beforeSubBalanceFerdie = await subClient.queryAccountBalance(polkadotSenderSS58Ferdie);
++
++      // lock DOT using basic channel
++      await subClient.api.tx.sudo.sudo(
++        subClient.api.tx.utility.batchAll([
++          subClient.api.tx.utility.dispatchAs(
++            {system: {signed: subClient.alice.address}},
++            subClient.api.tx.dotApp.lock(ChannelId.BASIC, ethAccount, amount.toFixed())
++          ),
++          subClient.api.tx.utility.dispatchAs(
++            {system: {signed: subClient.bob.address}},
++            subClient.api.tx.dotApp.lock(ChannelId.BASIC, ethAccount, amount.toFixed())
++          ),
++          subClient.api.tx.utility.dispatchAs(
++            {system: {signed: subClient.charlie.address}},
++            subClient.api.tx.dotApp.lock(ChannelId.BASIC, ethAccount, amount.toFixed())
++          ),
++          subClient.api.tx.utility.dispatchAs(
++            {system: {signed: subClient.dave.address}},
++            subClient.api.tx.dotApp.lock(ChannelId.BASIC, ethAccount, amount.toFixed())
++          ),
++          subClient.api.tx.utility.dispatchAs(
++            {system: {signed: subClient.eve.address}},
++            subClient.api.tx.dotApp.lock(ChannelId.BASIC, ethAccount, amount.toFixed())
++          ),
++          subClient.api.tx.utility.dispatchAs(
++            {system: {signed: subClient.ferdie.address}},
++            subClient.api.tx.dotApp.lock(ChannelId.BASIC, ethAccount, amount.toFixed())
++          ),
++        ])
++      ).signAndSend(sudoPair)
++      await ethClient.waitForNextEventData({ appName: 'snowDOT', eventName: 'Minted' });
++
++      const afterEthBalance = await ethClient.getDotBalance(ethAccount);
++      const afterSubBalanceAlice = await subClient.queryAccountBalance(polkadotSenderSS58Alice);
++      const afterSubBalanceBob = await subClient.queryAccountBalance(polkadotSenderSS58Bob);
++      const afterSubBalanceCharlie = await subClient.queryAccountBalance(polkadotSenderSS58Charlie);
++      const afterSubBalanceDave = await subClient.queryAccountBalance(polkadotSenderSS58Dave);
++      const afterSubBalanceEve = await subClient.queryAccountBalance(polkadotSenderSS58Eve);
++      const afterSubBalanceFerdie = await subClient.queryAccountBalance(polkadotSenderSS58Ferdie);
++
++      expect(afterEthBalance.minus(beforeEthBalance)).to.be.bignumber.equal(6 * amountWrapped);
++      expect(beforeSubBalanceAlice.minus(afterSubBalanceAlice)).to.be.bignumber.gte(amount);
++      expect(beforeSubBalanceBob.minus(afterSubBalanceBob)).to.be.bignumber.gte(amount);
++      expect(beforeSubBalanceCharlie.minus(afterSubBalanceCharlie)).to.be.bignumber.gte(amount);
++      expect(beforeSubBalanceDave.minus(afterSubBalanceDave)).to.be.bignumber.gte(amount);
++      expect(beforeSubBalanceEve.minus(afterSubBalanceEve)).to.be.bignumber.gte(amount);
++      expect(beforeSubBalanceFerdie.minus(afterSubBalanceFerdie)).to.be.bignumber.gte(amount);
++    });
++  });
++});
+diff --git a/test/test/bootstrap.js b/test/test/bootstrap.js
+index 97f2191c..c50cb4b1 100644
+--- a/test/test/bootstrap.js
++++ b/test/test/bootstrap.js
+@@ -6,19 +6,18 @@ const { expect } = require("chai")
+   .use(require("chai-as-promised"))
+   .use(require("chai-bignumber")(BigNumber));
+ 
+-const { treasuryAddressSS58, polkadotSenderSS58Alice, polkadotSenderSS58Bob,
++const { treasuryAddressSS58, polkadotSenderSS58Alice,
+   polkadotRecipientSS58, polkadotRecipient, bootstrap } = require('../src/fixtures');
+ 
+ const { ChannelId } = require("../src/helpers");
+ 
+ describe('Bridge', function () {
+-  let ethClient, subClient, testSubClient;
++  let ethClient, subClient;
+ 
+   before(async function () {
+     const clients = await bootstrap();
+     ethClient = clients.ethClient;
+     subClient = clients.subClient;
+-    // testSubClient = clients.testSubClient;
+     this.testParaEthAssetId = 0;
+   });
+ 
+@@ -30,21 +29,16 @@ describe('Bridge', function () {
+ 
+       const beforeEthBalance = await ethClient.getDotBalance(ethAccount);
+       const beforeSubBalanceAlice = await subClient.queryAccountBalance(polkadotSenderSS58Alice);
+-      const beforeSubBalanceBob = await subClient.queryAccountBalance(polkadotSenderSS58Bob);
+ 
+       // lock DOT using basic channel
+       await subClient.lockDOT(subClient.alice, ethAccount, amount.toFixed(), ChannelId.BASIC)
+-      await subClient.lockDOT(subClient.bob, ethAccount, amount.toFixed(), ChannelId.BASIC)
+-      await ethClient.waitForNextEventData({ appName: 'snowDOT', eventName: 'Minted' });
+       await ethClient.waitForNextEventData({ appName: 'snowDOT', eventName: 'Minted' });
+ 
+       const afterEthBalance = await ethClient.getDotBalance(ethAccount);
+       const afterSubBalanceAlice = await subClient.queryAccountBalance(polkadotSenderSS58Alice);
+-      const afterSubBalanceBob = await subClient.queryAccountBalance(polkadotSenderSS58Bob);
+ 
+-      expect(afterEthBalance.minus(beforeEthBalance)).to.be.bignumber.equal(2 * amountWrapped);
++      expect(afterEthBalance.minus(beforeEthBalance)).to.be.bignumber.equal(amountWrapped);
+       expect(beforeSubBalanceAlice.minus(afterSubBalanceAlice)).to.be.bignumber.greaterThan(amount);
+-      expect(beforeSubBalanceBob.minus(afterSubBalanceBob)).to.be.bignumber.greaterThan(amount);
+     });
+ 
+     it('should transfer ETH from Ethereum to Substrate (basic channel)', async function () {

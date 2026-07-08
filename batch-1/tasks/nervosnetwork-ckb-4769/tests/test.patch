@@ -1,0 +1,18 @@
+diff --git a/util/types/src/core/tests/tx_pool.rs b/util/types/src/core/tests/tx_pool.rs
+index 2b607001d..3be4bfe00 100644
+--- a/util/types/src/core/tests/tx_pool.rs
++++ b/util/types/src/core/tests/tx_pool.rs
+@@ -122,3 +122,13 @@ fn test_if_is_malformed_tx() {
+         assert_eq!(reject.is_malformed_tx(), is_malformed);
+     }
+ }
++
++#[test]
++fn test_argv_too_long_error_is_malformed_tx() {
++    let error_kind = ErrorKind::Script;
++    let error = error_kind.because(ckb_error::OtherError::new(
++        "@@@VM@@@UNEXPECTED@@@ARGV@@@TOOLONG@@@".to_string(),
++    ));
++    let reject = Reject::Verification(error);
++    assert!(reject.is_malformed_tx());
++}

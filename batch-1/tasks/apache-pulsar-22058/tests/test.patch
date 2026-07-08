@@ -1,0 +1,612 @@
+diff --git a/pulsar-broker/src/test/java/org/apache/pulsar/broker/auth/MockedPulsarServiceBaseTest.java b/pulsar-broker/src/test/java/org/apache/pulsar/broker/auth/MockedPulsarServiceBaseTest.java
+index bd08ced1e0..0bf096fb5d 100644
+--- a/pulsar-broker/src/test/java/org/apache/pulsar/broker/auth/MockedPulsarServiceBaseTest.java
++++ b/pulsar-broker/src/test/java/org/apache/pulsar/broker/auth/MockedPulsarServiceBaseTest.java
+@@ -448,19 +448,27 @@ public abstract class MockedPulsarServiceBaseTest extends TestRetrySupport {
+         return builder;
+     }
+ 
++    protected PulsarTestContext createAdditionalPulsarTestContext(ServiceConfiguration conf) throws Exception {
++        return createAdditionalPulsarTestContext(conf, null);
++    }
+     /**
+      * This method can be used in test classes for creating additional PulsarTestContext instances
+      * that share the same mock ZooKeeper and BookKeeper instances as the main PulsarTestContext instance.
+      *
+      * @param conf the ServiceConfiguration instance to use
++     * @param builderCustomizer a consumer that can be used to customize the builder configuration
+      * @return the PulsarTestContext instance
+      * @throws Exception if an error occurs
+      */
+-    protected PulsarTestContext createAdditionalPulsarTestContext(ServiceConfiguration conf) throws Exception {
+-        return createPulsarTestContextBuilder(conf)
++    protected PulsarTestContext createAdditionalPulsarTestContext(ServiceConfiguration conf,
++                                              Consumer<PulsarTestContext.Builder> builderCustomizer) throws Exception {
++        var builder = createPulsarTestContextBuilder(conf)
+                 .reuseMockBookkeeperAndMetadataStores(pulsarTestContext)
+-                .reuseSpyConfig(pulsarTestContext)
+-                .build();
++                .reuseSpyConfig(pulsarTestContext);
++        if (builderCustomizer != null) {
++            builderCustomizer.accept(builder);
++        }
++        return builder.build();
+     }
+ 
+     protected void waitForZooKeeperWatchers() {
+diff --git a/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceThrottlingTest.java b/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceThrottlingTest.java
+index b2cfe63e2e..707c350feb 100644
+--- a/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceThrottlingTest.java
++++ b/pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerServiceThrottlingTest.java
+@@ -18,8 +18,9 @@
+  */
+ package org.apache.pulsar.broker.service;
+ 
++import static io.opentelemetry.sdk.testing.assertj.OpenTelemetryAssertions.assertThat;
++import static org.awaitility.Awaitility.waitAtMost;
+ import static org.testng.Assert.assertEquals;
+-import static org.testng.Assert.assertNotEquals;
+ import static org.testng.Assert.assertTrue;
+ import static org.testng.Assert.fail;
+ import io.netty.buffer.ByteBuf;
+@@ -38,6 +39,7 @@ import java.util.concurrent.Executors;
+ import java.util.concurrent.Future;
+ import java.util.concurrent.TimeUnit;
+ import lombok.Cleanup;
++import org.apache.pulsar.broker.testcontext.PulsarTestContext;
+ import org.apache.pulsar.client.api.Consumer;
+ import org.apache.pulsar.client.api.PulsarClient;
+ import org.apache.pulsar.client.api.PulsarClientException;
+@@ -66,18 +68,54 @@ public class BrokerServiceThrottlingTest extends BrokerTestBase {
+         super.internalCleanup();
+     }
+ 
++    @Override
++    protected void customizeMainPulsarTestContextBuilder(PulsarTestContext.Builder builder) {
++        super.customizeMainPulsarTestContextBuilder(builder);
++        builder.enableOpenTelemetry(true);
++    }
++
+     /**
+-     * Verifies: updating zk-throttling node reflects broker-maxConcurrentLookupRequest and updates semaphore.
+-     *
+-     * @throws Exception
++     * Verifies: updating zk-throttling node reflects broker-maxConcurrentLookupRequest and updates semaphore, as well
++     * as the related limit metric value.
+      */
+     @Test
+     public void testThrottlingLookupRequestSemaphore() throws Exception {
+-        BrokerService service = pulsar.getBrokerService();
+-        assertNotEquals(service.lookupRequestSemaphore.get().availablePermits(), 0);
+-        admin.brokers().updateDynamicConfiguration("maxConcurrentLookupRequest", Integer.toString(0));
+-        Thread.sleep(1000);
+-        assertEquals(service.lookupRequestSemaphore.get().availablePermits(), 0);
++        var lookupRequestSemaphore = pulsar.getBrokerService().lookupRequestSemaphore;
++        var configName = "maxConcurrentLookupRequest";
++        var metricName = BrokerService.TOPIC_LOOKUP_LIMIT_METRIC_NAME;
++        // Validate that the configuration has not been overridden.
++        assertThat(admin.brokers().getAllDynamicConfigurations()).doesNotContainKey(configName);
++        assertLongSumValue(metricName, 50_000);
++        assertThat(lookupRequestSemaphore.get().availablePermits()).isNotEqualTo(0);
++        admin.brokers().updateDynamicConfiguration(configName, Integer.toString(0));
++        waitAtMost(1, TimeUnit.SECONDS).until(() -> lookupRequestSemaphore.get().availablePermits() == 0);
++        assertLongSumValue(metricName, 0);
++    }
++
++    /**
++     * Verifies: updating zk-throttling node reflects broker-maxConcurrentTopicLoadRequest and updates semaphore, as
++     * well as the related limit metric value.
++     */
++    @Test
++    public void testThrottlingTopicLoadRequestSemaphore() throws Exception {
++        var topicLoadRequestSemaphore = pulsar.getBrokerService().topicLoadRequestSemaphore;
++        var configName = "maxConcurrentTopicLoadRequest";
++        var metricName = BrokerService.TOPIC_LOAD_LIMIT_METRIC_NAME;
++        // Validate that the configuration has not been overridden.
++        assertThat(admin.brokers().getAllDynamicConfigurations()).doesNotContainKey(configName);
++        assertLongSumValue(metricName, 5_000);
++        assertThat(topicLoadRequestSemaphore.get().availablePermits()).isNotEqualTo(0);
++        admin.brokers().updateDynamicConfiguration(configName, Integer.toString(0));
++        waitAtMost(1, TimeUnit.SECONDS).until(() -> topicLoadRequestSemaphore.get().availablePermits() == 0);
++        assertLongSumValue(metricName, 0);
++    }
++
++    private void assertLongSumValue(String metricName, int value) {
++        assertThat(pulsarTestContext.getOpenTelemetryMetricReader().collectAllMetrics())
++                .anySatisfy(metric -> assertThat(metric)
++                        .hasName(metricName)
++                        .hasLongSumSatisfying(
++                                sum -> sum.hasPointsSatisfying(point -> point.hasValue(value))));
+     }
+ 
+     /**
+diff --git a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/AbstractTestPulsarService.java b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/AbstractTestPulsarService.java
+index fcea99c725..c459098f68 100644
+--- a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/AbstractTestPulsarService.java
++++ b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/AbstractTestPulsarService.java
+@@ -19,7 +19,11 @@
+ 
+ package org.apache.pulsar.broker.testcontext;
+ 
++import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdkBuilder;
+ import java.io.IOException;
++import java.util.Optional;
++import java.util.function.Consumer;
++import lombok.extern.slf4j.Slf4j;
+ import org.apache.pulsar.broker.BookKeeperClientFactory;
+ import org.apache.pulsar.broker.PulsarServerException;
+ import org.apache.pulsar.broker.PulsarService;
+@@ -27,6 +31,7 @@ import org.apache.pulsar.broker.ServiceConfiguration;
+ import org.apache.pulsar.broker.intercept.BrokerInterceptor;
+ import org.apache.pulsar.broker.service.PulsarMetadataEventSynchronizer;
+ import org.apache.pulsar.compaction.CompactionServiceFactory;
++import org.apache.pulsar.functions.worker.WorkerConfig;
+ import org.apache.pulsar.metadata.api.MetadataStore;
+ import org.apache.pulsar.metadata.api.MetadataStoreException;
+ import org.apache.pulsar.metadata.api.extended.MetadataStoreExtended;
+@@ -36,6 +41,8 @@ import org.apache.pulsar.metadata.api.extended.MetadataStoreExtended;
+  * {@link PulsarService} implementations for a PulsarService instance used in tests.
+  * Please see {@link PulsarTestContext} for more details.
+  */
++
++@Slf4j
+ abstract class AbstractTestPulsarService extends PulsarService {
+     protected final SpyConfig spyConfig;
+ 
+@@ -44,8 +51,12 @@ abstract class AbstractTestPulsarService extends PulsarService {
+                                      MetadataStoreExtended configurationMetadataStore,
+                                      CompactionServiceFactory compactionServiceFactory,
+                                      BrokerInterceptor brokerInterceptor,
+-                                     BookKeeperClientFactory bookKeeperClientFactory) {
+-        super(config);
++                                     BookKeeperClientFactory bookKeeperClientFactory,
++                                     Consumer<AutoConfiguredOpenTelemetrySdkBuilder> openTelemetrySdkBuilderCustomizer) {
++        super(config, new WorkerConfig(), Optional.empty(),
++                exitCode -> log.info("Pulsar process termination requested with code {}.", exitCode),
++                openTelemetrySdkBuilderCustomizer);
++
+         this.spyConfig = spyConfig;
+         setLocalMetadataStore(
+                 NonClosingProxyHandler.createNonClosingProxy(localMetadataStore, MetadataStoreExtended.class));
+diff --git a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/NonStartableTestPulsarService.java b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/NonStartableTestPulsarService.java
+index 2027bb33bf..7860b0708e 100644
+--- a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/NonStartableTestPulsarService.java
++++ b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/NonStartableTestPulsarService.java
+@@ -69,7 +69,7 @@ class NonStartableTestPulsarService extends AbstractTestPulsarService {
+                                          ManagedLedgerStorage managedLedgerClientFactory,
+                                          Function<BrokerService, BrokerService> brokerServiceCustomizer) {
+         super(spyConfig, config, localMetadataStore, configurationMetadataStore, compactionServiceFactory,
+-                brokerInterceptor, bookKeeperClientFactory);
++                brokerInterceptor, bookKeeperClientFactory, null);
+         setPulsarResources(pulsarResources);
+         setManagedLedgerClientFactory(managedLedgerClientFactory);
+         try {
+diff --git a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/PulsarTestContext.java b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/PulsarTestContext.java
+index 4b5af5e595..be5397916b 100644
+--- a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/PulsarTestContext.java
++++ b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/PulsarTestContext.java
+@@ -21,11 +21,14 @@ package org.apache.pulsar.broker.testcontext;
+ 
+ import com.google.common.util.concurrent.MoreExecutors;
+ import io.netty.channel.EventLoopGroup;
++import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdkBuilder;
++import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
+ import java.io.IOException;
+ import java.nio.charset.StandardCharsets;
+ import java.time.Duration;
+ import java.util.ArrayList;
+ import java.util.List;
++import java.util.Map;
+ import java.util.Optional;
+ import java.util.function.Consumer;
+ import java.util.function.Function;
+@@ -64,6 +67,7 @@ import org.apache.pulsar.metadata.api.MetadataStoreException;
+ import org.apache.pulsar.metadata.api.extended.MetadataStoreExtended;
+ import org.apache.pulsar.metadata.impl.MetadataStoreFactoryImpl;
+ import org.apache.pulsar.metadata.impl.ZKMetadataStore;
++import org.apache.pulsar.opentelemetry.OpenTelemetryService;
+ import org.apache.zookeeper.CreateMode;
+ import org.apache.zookeeper.MockZooKeeper;
+ import org.apache.zookeeper.MockZooKeeperSession;
+@@ -160,6 +164,8 @@ public class PulsarTestContext implements AutoCloseable {
+ 
+     private final boolean preallocatePorts;
+ 
++    private final boolean enableOpenTelemetry;
++    private final InMemoryMetricReader openTelemetryMetricReader;
+ 
+     public ManagedLedgerFactory getManagedLedgerFactory() {
+         return managedLedgerClientFactory.getManagedLedgerFactory();
+@@ -727,11 +733,25 @@ public class PulsarTestContext implements AutoCloseable {
+                     .equals(PulsarCompactionServiceFactory.class.getName())) {
+                 compactionServiceFactory = new MockPulsarCompactionServiceFactory(spyConfig, builder.compactor);
+             }
++            Consumer<AutoConfiguredOpenTelemetrySdkBuilder> openTelemetrySdkBuilderCustomizer;
++            if (builder.enableOpenTelemetry) {
++                var reader = InMemoryMetricReader.create();
++                openTelemetrySdkBuilderCustomizer = sdkBuilder -> {
++                    sdkBuilder.addMeterProviderCustomizer(
++                            (meterProviderBuilder, __) -> meterProviderBuilder.registerMetricReader(reader));
++                    sdkBuilder.addPropertiesSupplier(
++                            () -> Map.of(OpenTelemetryService.OTEL_SDK_DISABLED_KEY, "false"));
++                };
++                openTelemetryMetricReader(reader);
++            } else {
++                openTelemetrySdkBuilderCustomizer = null;
++            }
+             PulsarService pulsarService = spyConfig.getPulsarService()
+                     .spy(StartableTestPulsarService.class, spyConfig, builder.config, builder.localMetadataStore,
+                             builder.configurationMetadataStore, compactionServiceFactory,
+                             builder.brokerInterceptor,
+-                            bookKeeperClientFactory, builder.brokerServiceCustomizer);
++                            bookKeeperClientFactory, builder.brokerServiceCustomizer,
++                            openTelemetrySdkBuilderCustomizer);
+             if (compactionServiceFactory != null) {
+                 compactionServiceFactory.initialize(pulsarService);
+             }
+diff --git a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/StartableTestPulsarService.java b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/StartableTestPulsarService.java
+index a5964c4a55..a077441449 100644
+--- a/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/StartableTestPulsarService.java
++++ b/pulsar-broker/src/test/java/org/apache/pulsar/broker/testcontext/StartableTestPulsarService.java
+@@ -19,6 +19,8 @@
+ 
+ package org.apache.pulsar.broker.testcontext;
+ 
++import io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdkBuilder;
++import java.util.function.Consumer;
+ import java.util.function.Function;
+ import java.util.function.Supplier;
+ import org.apache.pulsar.broker.BookKeeperClientFactory;
+@@ -39,14 +41,15 @@ class StartableTestPulsarService extends AbstractTestPulsarService {
+     private final Function<BrokerService, BrokerService> brokerServiceCustomizer;
+ 
+     public StartableTestPulsarService(SpyConfig spyConfig, ServiceConfiguration config,
+-                                      MetadataStoreExtended localMetadataStore,
+-                                      MetadataStoreExtended configurationMetadataStore,
+-                                      CompactionServiceFactory compactionServiceFactory,
+-                                      BrokerInterceptor brokerInterceptor,
+-                                      BookKeeperClientFactory bookKeeperClientFactory,
+-                                      Function<BrokerService, BrokerService> brokerServiceCustomizer) {
++                                  MetadataStoreExtended localMetadataStore,
++                                  MetadataStoreExtended configurationMetadataStore,
++                                  CompactionServiceFactory compactionServiceFactory,
++                                  BrokerInterceptor brokerInterceptor,
++                                  BookKeeperClientFactory bookKeeperClientFactory,
++                                  Function<BrokerService, BrokerService> brokerServiceCustomizer,
++                                  Consumer<AutoConfiguredOpenTelemetrySdkBuilder> openTelemetrySdkBuilderCustomizer) {
+         super(spyConfig, config, localMetadataStore, configurationMetadataStore, compactionServiceFactory,
+-                brokerInterceptor, bookKeeperClientFactory);
++                brokerInterceptor, bookKeeperClientFactory, openTelemetrySdkBuilderCustomizer);
+         this.brokerServiceCustomizer = brokerServiceCustomizer;
+     }
+ 
+@@ -59,4 +62,4 @@ class StartableTestPulsarService extends AbstractTestPulsarService {
+     public Supplier<NamespaceService> getNamespaceServiceProvider() throws PulsarServerException {
+         return () -> spyConfig.getNamespaceService().spy(NamespaceService.class, this);
+     }
+-}
++}
+\ No newline at end of file
+diff --git a/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java b/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java
+index 0a4c5b7a31..7a527a1688 100644
+--- a/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java
++++ b/pulsar-broker/src/test/java/org/apache/pulsar/client/api/BrokerServiceLookupTest.java
+@@ -18,7 +18,10 @@
+  */
+ package org.apache.pulsar.client.api;
+ 
++import static io.opentelemetry.sdk.testing.assertj.OpenTelemetryAssertions.assertThat;
++import static org.apache.pulsar.broker.namespace.NamespaceService.LOOKUP_REQUEST_DURATION_METRIC_NAME;
+ import static org.mockito.ArgumentMatchers.any;
++import static org.mockito.Mockito.doAnswer;
+ import static org.mockito.Mockito.doReturn;
+ import static org.mockito.Mockito.mock;
+ import static org.mockito.Mockito.spy;
+@@ -50,6 +53,7 @@ import java.util.Optional;
+ import java.util.Set;
+ import java.util.concurrent.CompletableFuture;
+ import java.util.concurrent.ConcurrentHashMap;
++import java.util.concurrent.CountDownLatch;
+ import java.util.concurrent.ExecutionException;
+ import java.util.concurrent.ExecutorService;
+ import java.util.concurrent.Executors;
+@@ -131,6 +135,12 @@ public class BrokerServiceLookupTest extends ProducerConsumerBase {
+         internalCleanup();
+     }
+ 
++    @Override
++    protected void customizeMainPulsarTestContextBuilder(PulsarTestContext.Builder builder) {
++        super.customizeMainPulsarTestContextBuilder(builder);
++        builder.enableOpenTelemetry(true);
++    }
++
+     /**
+      * Usecase Multiple Broker => Lookup Redirection test
+      *
+@@ -141,7 +151,7 @@ public class BrokerServiceLookupTest extends ProducerConsumerBase {
+      *
+      * @throws Exception
+      */
+-    @Test
++    @Test(timeOut = 30_000)
+     public void testMultipleBrokerLookup() throws Exception {
+         log.info("-- Starting {} test --", methodName);
+ 
+@@ -157,7 +167,8 @@ public class BrokerServiceLookupTest extends ProducerConsumerBase {
+         conf2.setConfigurationMetadataStoreUrl("zk:localhost:3181");
+ 
+         @Cleanup
+-        PulsarTestContext pulsarTestContext2 = createAdditionalPulsarTestContext(conf2);
++        PulsarTestContext pulsarTestContext2 = createAdditionalPulsarTestContext(conf2,
++                builder -> builder.enableOpenTelemetry(true));
+         PulsarService pulsar2 = pulsarTestContext2.getPulsarService();
+         pulsar.getLoadManager().get().writeLoadReportOnZookeeper();
+         pulsar2.getLoadManager().get().writeLoadReportOnZookeeper();
+@@ -178,17 +189,71 @@ public class BrokerServiceLookupTest extends ProducerConsumerBase {
+         doReturn(Optional.of(resourceUnit)).when(loadManager2).getLeastLoaded(any(ServiceUnitId.class));
+         loadManagerField.set(pulsar.getNamespaceService(), new AtomicReference<>(loadManager1));
+ 
+-        /**** started broker-2 ****/
++        var metricReader = pulsarTestContext.getOpenTelemetryMetricReader();
++        var lookupRequestSemaphoreField = BrokerService.class.getDeclaredField("lookupRequestSemaphore");
++        lookupRequestSemaphoreField.setAccessible(true);
++        var lookupRequestSemaphoreSpy = spy(pulsar.getBrokerService().getLookupRequestSemaphore());
++        var cdlAfterLookupSemaphoreAcquire = new CountDownLatch(1);
++        var cdlLookupSemaphoreVerification = new CountDownLatch(1);
++        doAnswer(invocation -> {
++            var ret = invocation.callRealMethod();
++            if (Boolean.TRUE.equals(ret)) {
++                cdlAfterLookupSemaphoreAcquire.countDown();
++                cdlLookupSemaphoreVerification.await();
++            }
++            return ret;
++        }).doCallRealMethod().when(lookupRequestSemaphoreSpy).tryAcquire();
++        lookupRequestSemaphoreField.set(pulsar.getBrokerService(), new AtomicReference<>(lookupRequestSemaphoreSpy));
++
++        var topicLoadRequestSemaphoreField = BrokerService.class.getDeclaredField("topicLoadRequestSemaphore");
++        topicLoadRequestSemaphoreField.setAccessible(true);
++        var topicLoadRequestSemaphoreSpy = spy(pulsar2.getBrokerService().getTopicLoadRequestSemaphore().get());
++
++        var cdlAfterTopicLoadSemaphoreAcquire = new CountDownLatch(1);
++        var cdlTopicLoadSemaphoreVerification = new CountDownLatch(1);
++
++        doAnswer(invocation -> {
++            var ret = invocation.callRealMethod();
++            if (Boolean.TRUE.equals(ret)) {
++                cdlAfterTopicLoadSemaphoreAcquire.countDown();
++                cdlTopicLoadSemaphoreVerification.await();
++            }
++            return ret;
++        }).doCallRealMethod().when(topicLoadRequestSemaphoreSpy).tryAcquire();
++        topicLoadRequestSemaphoreField.set(pulsar2.getBrokerService(),
++                new AtomicReference<>(topicLoadRequestSemaphoreSpy));
++
++        assertThat(pulsarTestContext.getOpenTelemetryMetricReader().collectAllMetrics())
++                .noneSatisfy(metric -> assertThat(metric).hasName(LOOKUP_REQUEST_DURATION_METRIC_NAME));
+ 
++        /**** started broker-2 ****/
+         @Cleanup
+         PulsarClient pulsarClient2 = PulsarClient.builder().serviceUrl(pulsar2.getBrokerServiceUrl()).build();
+ 
++        var consumerFuture = pulsarClient2.newConsumer().topic("persistent://my-property/my-ns/my-topic1")
++                .subscriptionName("my-subscriber-name").subscribeAsync();
++
++        cdlAfterLookupSemaphoreAcquire.await();
++        assertThat(metricReader.collectAllMetrics())
++                .anySatisfy(metric -> assertThat(metric)
++                        .hasName(BrokerService.TOPIC_LOOKUP_USAGE_METRIC_NAME)
++                        .hasLongSumSatisfying(
++                                sum -> sum.hasPointsSatisfying(point -> point.hasValue(1))));
++        cdlLookupSemaphoreVerification.countDown();
++
++        cdlAfterTopicLoadSemaphoreAcquire.await();
++        assertThat(pulsarTestContext2.getOpenTelemetryMetricReader().collectAllMetrics())
++                .anySatisfy(metric -> assertThat(metric)
++                        .hasName(BrokerService.TOPIC_LOAD_USAGE_METRIC_NAME)
++                        .hasLongSumSatisfying(
++                                sum -> sum.hasPointsSatisfying(point -> point.hasValue(1))));
++        cdlTopicLoadSemaphoreVerification.countDown();
++
+         // load namespace-bundle by calling Broker2
+-        Consumer<byte[]> consumer = pulsarClient2.newConsumer().topic("persistent://my-property/my-ns/my-topic1")
+-                .subscriptionName("my-subscriber-name").subscribe();
+-        Producer<byte[]> producer = pulsarClient.newProducer(Schema.BYTES)
+-            .topic("persistent://my-property/my-ns/my-topic1")
+-            .create();
++        @Cleanup
++        var consumer = consumerFuture.get();
++        @Cleanup
++        var producer = pulsarClient.newProducer().topic("persistent://my-property/my-ns/my-topic1").create();
+ 
+         for (int i = 0; i < 10; i++) {
+             String message = "my-message-" + i;
+@@ -204,11 +269,21 @@ public class BrokerServiceLookupTest extends ProducerConsumerBase {
+             String expectedMessage = "my-message-" + i;
+             testMessageOrderAndDuplicates(messageSet, receivedMessage, expectedMessage);
+         }
++
++        var metrics = metricReader.collectAllMetrics();
++        assertThat(metrics)
++                .anySatisfy(metric -> assertThat(metric)
++                        .hasName(LOOKUP_REQUEST_DURATION_METRIC_NAME)
++                        .hasHistogramSatisfying(histogram -> histogram.hasPointsSatisfying(
++                                point -> point
++                                        .hasAttributes(NamespaceService.PULSAR_LOOKUP_RESPONSE_REDIRECT_ATTRIBUTES)
++                                        .hasCount(1),
++                                point -> point
++                                        .hasAttributes(NamespaceService.PULSAR_LOOKUP_RESPONSE_BROKER_ATTRIBUTES)
++                                        .hasCount(1))));
++
+         // Acknowledge the consumption of all messages at once
+         consumer.acknowledgeCumulative(msg);
+-        consumer.close();
+-        producer.close();
+-
+     }
+ 
+     @Test
+@@ -1125,6 +1200,16 @@ public class BrokerServiceLookupTest extends ProducerConsumerBase {
+         assertTrue(lookupService instanceof BinaryProtoLookupService);
+         ClientCnx lookupConnection = pulsarClientImpl.getCnxPool().getConnection(lookupService.resolveHost()).join();
+ 
++        var metricReader = pulsarTestContext.getOpenTelemetryMetricReader();
++        assertThat(metricReader.collectAllMetrics())
++                .noneSatisfy(metric -> assertThat(metric)
++                        .hasName(LOOKUP_REQUEST_DURATION_METRIC_NAME)
++                        .hasHistogramSatisfying(histogram -> histogram.hasPointsSatisfying(
++                                point -> point
++                                        .hasAttributes(NamespaceService.PULSAR_LOOKUP_RESPONSE_FAILURE_ATTRIBUTES),
++                                point -> point
++                                        .hasAttributes(NamespaceService.PULSAR_LOOKUP_RESPONSE_BROKER_ATTRIBUTES))));
++
+         // Verify the socket will not be closed if the bundle is unloading.
+         BundleOfTopic bundleOfTopic = new BundleOfTopic(tpName);
+         bundleOfTopic.setBundleIsUnloading();
+@@ -1134,6 +1219,16 @@ public class BrokerServiceLookupTest extends ProducerConsumerBase {
+         } catch (Exception ex) {
+             assertTrue(ex.getMessage().contains("is being unloaded"));
+         }
++
++        assertThat(metricReader.collectAllMetrics())
++                .anySatisfy(metric -> assertThat(metric)
++                        .hasName(LOOKUP_REQUEST_DURATION_METRIC_NAME)
++                        .hasHistogramSatisfying(histogram -> histogram.hasPointsSatisfying(
++                                point -> point
++                                        .hasAttributes(NamespaceService.PULSAR_LOOKUP_RESPONSE_FAILURE_ATTRIBUTES)
++                                        .hasCount(1),
++                                point -> point
++                                        .hasAttributes(NamespaceService.PULSAR_LOOKUP_RESPONSE_BROKER_ATTRIBUTES))));
+         // Do unload topic, trigger producer & consumer reconnection.
+         pulsar.getBrokerService().getTopic(tpName, false).join().get().close(true);
+         assertTrue(lookupConnection.ctx().channel().isActive());
+diff --git a/pulsar-common/src/test/java/org/apache/pulsar/common/stats/MetricsUtilTest.java b/pulsar-common/src/test/java/org/apache/pulsar/common/stats/MetricsUtilTest.java
+new file mode 100644
+index 0000000000..51bb31c437
+--- /dev/null
++++ b/pulsar-common/src/test/java/org/apache/pulsar/common/stats/MetricsUtilTest.java
+@@ -0,0 +1,37 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++package org.apache.pulsar.common.stats;
++
++import static org.assertj.core.api.Assertions.assertThat;
++import java.util.concurrent.TimeUnit;
++import org.testng.annotations.Test;
++
++public class MetricsUtilTest {
++
++    @Test
++    public void testConvertToSeconds() {
++        assertThat(MetricsUtil.convertToSeconds(1, TimeUnit.HOURS)).isEqualTo(3600.0);
++        assertThat(MetricsUtil.convertToSeconds(1, TimeUnit.MINUTES)).isEqualTo(60.0);
++        assertThat(MetricsUtil.convertToSeconds(1, TimeUnit.SECONDS)).isEqualTo(1.0);
++        assertThat(MetricsUtil.convertToSeconds(1, TimeUnit.MILLISECONDS)).isEqualTo(0.001);
++        assertThat(MetricsUtil.convertToSeconds(1, TimeUnit.MICROSECONDS)).isEqualTo(0.000_001);
++        assertThat(MetricsUtil.convertToSeconds(1, TimeUnit.NANOSECONDS)).isEqualTo(0.000_000_001);
++    }
++
++}
+diff --git a/pulsar-opentelemetry/src/test/java/org/apache/pulsar/opentelemetry/OpenTelemetryServiceTest.java b/pulsar-opentelemetry/src/test/java/org/apache/pulsar/opentelemetry/OpenTelemetryServiceTest.java
+index e5c893794a..bf404496a2 100644
+--- a/pulsar-opentelemetry/src/test/java/org/apache/pulsar/opentelemetry/OpenTelemetryServiceTest.java
++++ b/pulsar-opentelemetry/src/test/java/org/apache/pulsar/opentelemetry/OpenTelemetryServiceTest.java
+@@ -53,11 +53,11 @@ public class OpenTelemetryServiceTest {
+     @BeforeMethod
+     public void setup() throws Exception {
+         reader = InMemoryMetricReader.create();
+-        openTelemetryService = OpenTelemetryService.builder().
+-                sdkBuilderConsumer(getSdkBuilderConsumer(reader,
+-                        Map.of(OpenTelemetryService.OTEL_SDK_DISABLED_KEY, "false"))).
+-                clusterName("openTelemetryServiceTestCluster").
+-                build();
++        openTelemetryService = OpenTelemetryService.builder()
++                .builderCustomizer(
++                        getBuilderCustomizer(reader, Map.of(OpenTelemetryService.OTEL_SDK_DISABLED_KEY, "false")))
++                .clusterName("openTelemetryServiceTestCluster")
++                .build();
+         meter = openTelemetryService.getOpenTelemetry().getMeter("openTelemetryServiceTestInstrument");
+     }
+ 
+@@ -68,8 +68,8 @@ public class OpenTelemetryServiceTest {
+     }
+ 
+     // Customizes the SDK builder to include the MetricReader and extra properties for testing purposes.
+-    private static Consumer<AutoConfiguredOpenTelemetrySdkBuilder> getSdkBuilderConsumer(MetricReader extraReader,
+-                                                                                 Map<String, String> extraProperties) {
++    private static Consumer<AutoConfiguredOpenTelemetrySdkBuilder> getBuilderCustomizer(MetricReader extraReader,
++                                                                                Map<String, String> extraProperties) {
+         return autoConfigurationCustomizer -> {
+             if (extraReader != null) {
+                 autoConfigurationCustomizer.addMeterProviderCustomizer(
+@@ -97,14 +97,14 @@ public class OpenTelemetryServiceTest {
+         var reader = InMemoryMetricReader.create();
+ 
+         @Cleanup
+-        var ots = OpenTelemetryService.builder().
+-                sdkBuilderConsumer(getSdkBuilderConsumer(reader,
++        var ots = OpenTelemetryService.builder()
++                .builderCustomizer(getBuilderCustomizer(reader,
+                         Map.of(OpenTelemetryService.OTEL_SDK_DISABLED_KEY, "false",
+-                               "otel.java.disabled.resource.providers", JarServiceNameDetector.class.getName()))).
+-                clusterName("testServiceNameAndVersion").
+-                serviceName("openTelemetryServiceTestService").
+-                serviceVersion("1.0.0").
+-                build();
++                               "otel.java.disabled.resource.providers", JarServiceNameDetector.class.getName())))
++                .clusterName("testServiceNameAndVersion")
++                .serviceName("openTelemetryServiceTestService")
++                .serviceVersion("1.0.0")
++                .build();
+ 
+         assertThat(reader.collectAllMetrics())
+             .allSatisfy(metric -> assertThat(metric)
+@@ -128,13 +128,13 @@ public class OpenTelemetryServiceTest {
+     public void testMetricCardinalityIsSet() {
+         var prometheusExporterPort = 9464;
+         @Cleanup
+-        var ots = OpenTelemetryService.builder().
+-                sdkBuilderConsumer(getSdkBuilderConsumer(null,
++        var ots = OpenTelemetryService.builder()
++                .builderCustomizer(getBuilderCustomizer(null,
+                         Map.of(OpenTelemetryService.OTEL_SDK_DISABLED_KEY, "false",
+                         "otel.metrics.exporter", "prometheus",
+-                        "otel.exporter.prometheus.port", Integer.toString(prometheusExporterPort)))).
+-                clusterName("openTelemetryServiceCardinalityTestCluster").
+-                build();
++                        "otel.exporter.prometheus.port", Integer.toString(prometheusExporterPort))))
++                .clusterName("openTelemetryServiceCardinalityTestCluster")
++                .build();
+         var meter = ots.getOpenTelemetry().getMeter("openTelemetryMetricCardinalityTest");
+         var counter = meter.counterBuilder("dummyCounter").build();
+         for (int i = 0; i < OpenTelemetryService.MAX_CARDINALITY_LIMIT + 100; i++) {
+@@ -172,10 +172,10 @@ public class OpenTelemetryServiceTest {
+         var metricReader = InMemoryMetricReader.create();
+ 
+         @Cleanup
+-        var ots = OpenTelemetryService.builder().
+-                sdkBuilderConsumer(getSdkBuilderConsumer(metricReader, Map.of())).
+-                clusterName("openTelemetryServiceTestCluster").
+-                build();
++        var ots = OpenTelemetryService.builder()
++                .builderCustomizer(getBuilderCustomizer(metricReader, Map.of()))
++                .clusterName("openTelemetryServiceTestCluster")
++                .build();
+         var meter = ots.getOpenTelemetry().getMeter("openTelemetryServiceTestInstrument");
+ 
+         var builders = List.of(

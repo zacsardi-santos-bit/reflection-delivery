@@ -1,0 +1,2325 @@
+diff --git a/cli/tests/integration/data/Cargo.lock b/cli/tests/integration/data/Cargo.lock
+index 1abca9251..ca207c45c 100644
+--- a/cli/tests/integration/data/Cargo.lock
++++ b/cli/tests/integration/data/Cargo.lock
+@@ -164,7 +164,7 @@ dependencies = [
+ 
+ [[package]]
+ name = "grafbase-sdk"
+-version = "0.1.9"
++version = "0.1.11"
+ dependencies = [
+  "grafbase-sdk-derive",
+  "http",
+diff --git a/crates/integration-tests/tests/federation/extensions/mod.rs b/crates/integration-tests/tests/federation/extensions/mod.rs
+index 9943f571b..3aad91fc2 100644
+--- a/crates/integration-tests/tests/federation/extensions/mod.rs
++++ b/crates/integration-tests/tests/federation/extensions/mod.rs
+@@ -1,2 +1,2 @@
+ mod basic;
+-mod sdl;
++mod validation;
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/default_value.rs b/crates/integration-tests/tests/federation/extensions/validation/default_value.rs
+new file mode 100644
+index 000000000..bec21234a
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/default_value.rs
+@@ -0,0 +1,176 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn default_values() {
++    runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(a: EchoInput! = { x: 3 }, b: Int) on SCHEMA
++                    directive @echo(a: EchoInput! = { x: 3 }, b: Int) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        x: Int!
++                        y: String! = "default"
++                    }
++                "#,
++            })
++            .build()
++            .await;
++
++        let response = engine.post("query { echo }").await;
++        insta::assert_json_snapshot!(response, @r#"
++        {
++          "data": {
++            "echo": {
++              "schema": {
++                "meta": {
++                  "a": {
++                    "x": 3
++                  }
++                }
++              },
++              "directive": {
++                "a": {
++                  "x": 3
++                }
++              }
++            }
++          }
++        }
++        "#);
++    });
++}
++
++#[test]
++fn default_values_partial_override() {
++    runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(a: { x: 5 })
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(a: { x: 5 })
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(a: EchoInput! = { x: 3 }, b: Int) on SCHEMA
++                    directive @echo(a: EchoInput! = { x: 3 }, b: Int) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        x: Int!
++                        y: String! = "default"
++                    }
++                "#,
++            })
++            .build()
++            .await;
++
++        let response = engine.post("query { echo }").await;
++        insta::assert_json_snapshot!(response, @r#"
++        {
++          "data": {
++            "echo": {
++              "schema": {
++                "meta": {
++                  "a": {
++                    "x": 5,
++                    "y": "default"
++                  }
++                }
++              },
++              "directive": {
++                "a": {
++                  "x": 5,
++                  "y": "default"
++                }
++              }
++            }
++          }
++        }
++        "#);
++    });
++}
++
++#[test]
++fn default_values_override() {
++    runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(a: { x: 5, y: "override" })
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(a: { x: 5, y: "override" })
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(a: EchoInput! = { x: 3 }, b: Int) on SCHEMA
++                    directive @echo(a: EchoInput! = { x: 3 }, b: Int) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        x: Int!
++                        y: String! = "default"
++                    }
++                "#,
++            })
++            .build()
++            .await;
++
++        let response = engine.post("query { echo }").await;
++        insta::assert_json_snapshot!(response, @r#"
++        {
++          "data": {
++            "echo": {
++              "schema": {
++                "meta": {
++                  "a": {
++                    "x": 5,
++                    "y": "override"
++                  }
++                }
++              },
++              "directive": {
++                "a": {
++                  "x": 5,
++                  "y": "override"
++                }
++              }
++            }
++          }
++        }
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/definition.rs b/crates/integration-tests/tests/federation/extensions/validation/definition.rs
+new file mode 100644
+index 000000000..96b332035
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/definition.rs
+@@ -0,0 +1,144 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn unknown_type() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: { a: 1 })
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoInput!) on SCHEMA
++                    directive @echo(value: EchoInput!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Unknown type 'EchoInput'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: { a: 1 })
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoInput!) on SCHEMA
++                    directive @echo(value: EchoInput!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Unknown type 'EchoInput'",
++        )
++        "#);
++    });
++}
++
++#[test]
++fn not_a_input_type() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: { a: 1 })
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoInput!) on SCHEMA
++                    directive @echo(value: EchoInput!) on FIELD_DEFINITION
++
++                    type EchoInput {
++                        a: Int!
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Type 'EchoInput' is used for an input value but is not a scalar, input object or enum.",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: { a: 1 })
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoInput!) on SCHEMA
++                    directive @echo(value: EchoInput!) on FIELD_DEFINITION
++
++                    type EchoInput {
++                        a: Int!
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Type 'EchoInput' is used for an input value but is not a scalar, input object or enum.",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/enum_.rs b/crates/integration-tests/tests/federation/extensions/validation/enum_.rs
+new file mode 100644
+index 000000000..495ec502b
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/enum_.rs
+@@ -0,0 +1,204 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_enum_value() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: VALUE)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: VALUE)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoEnum!) on SCHEMA
++                    directive @echo(value: EchoEnum!) on FIELD_DEFINITION
++
++                    enum EchoEnum {
++                        VALUE
++                    }
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": "VALUE"
++            }
++          },
++          "directive": {
++            "value": "VALUE"
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn unknown_enum_value() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: UNKNOWN)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoEnum!) on SCHEMA
++                    directive @echo(value: EchoEnum!) on FIELD_DEFINITION
++
++                    enum EchoEnum {
++                        VALUE
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found an unknown enum value 'UNKNOWN' for the enum EchoEnum at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: UNKNOWN)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoEnum!) on SCHEMA
++                    directive @echo(value: EchoEnum!) on FIELD_DEFINITION
++
++                    enum EchoEnum {
++                        VALUE
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found an unknown enum value 'UNKNOWN' for the enum EchoEnum at path '.value'",
++        )
++        "#);
++    });
++}
++
++#[test]
++fn invalid_enum_value() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: "VALID")
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoEnum!) on SCHEMA
++                    directive @echo(value: EchoEnum!) on FIELD_DEFINITION
++
++                    enum EchoEnum {
++                        VALUE
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a String value where we expected a EchoEnum enum value at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 1)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: EchoEnum!) on SCHEMA
++                    directive @echo(value: EchoEnum!) on FIELD_DEFINITION
++
++                    enum EchoEnum {
++                        VALUE
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a Integer value where we expected a EchoEnum enum value at path '.value'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/fields.rs b/crates/integration-tests/tests/federation/extensions/validation/fields.rs
+new file mode 100644
+index 000000000..20efe9bcc
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/fields.rs
+@@ -0,0 +1,277 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn missing_nullable_field() {
++    runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(input: {})
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(input: {})
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(input: EchoInput!) on SCHEMA
++                    directive @echo(input: EchoInput!) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        value: String
++                    }
++                "#,
++            })
++            .build()
++            .await;
++
++        let response = engine.post("query { echo }").await;
++        insta::assert_json_snapshot!(response, @r#"
++        {
++          "data": {
++            "echo": {
++              "schema": {
++                "meta": {
++                  "input": {}
++                }
++              },
++              "directive": {
++                "input": {}
++              }
++            }
++          }
++        }
++        "#);
++    });
++}
++
++#[test]
++fn missing_required_field() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(input: {})
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(input: EchoInput!) on SCHEMA
++                    directive @echo(input: EchoInput!) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        value: String!
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a null where we expected a String! at path '.input.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(input: {})
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(input: EchoInput!) on SCHEMA
++                    directive @echo(input: EchoInput!) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        value: String!
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a null where we expected a String! at path '.input.value'",
++        )
++        "#);
++    });
++}
++
++#[test]
++fn too_many_fields() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(input: { value: "test", other: 1 })
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(input: EchoInput!) on SCHEMA
++                    directive @echo(input: EchoInput!) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        value: String
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Input object EchoInput does not have a field named 'other' at path '.input'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(input: { value: "test", other: 1 })
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(input: EchoInput!) on SCHEMA
++                    directive @echo(input: EchoInput!) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        value: String
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Input object EchoInput does not have a field named 'other' at path '.input'",
++        )
++        "#);
++    });
++}
++
++#[test]
++fn not_an_object() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(input: [])
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(input: EchoInput!) on SCHEMA
++                    directive @echo(input: EchoInput!) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        value: String
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a List value where we expected a 'EchoInput' input object at path '.input'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(input: [])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(input: EchoInput!) on SCHEMA
++                    directive @echo(input: EchoInput!) on FIELD_DEFINITION
++
++                    input EchoInput {
++                        value: String
++                    }
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a List value where we expected a 'EchoInput' input object at path '.input'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/list.rs b/crates/integration-tests/tests/federation/extensions/validation/list.rs
+new file mode 100644
+index 000000000..e88e28d0c
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/list.rs
+@@ -0,0 +1,178 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn list_coercion() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "meta")
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: "something")
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: [String!]!) on SCHEMA
++                    directive @echo(value: [String!]!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": [
++                "meta"
++              ]
++            }
++          },
++          "directive": {
++            "value": [
++              "something"
++            ]
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn list_list_coercion() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "meta")
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: "something")
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: [[String!]]) on SCHEMA
++                    directive @echo(value: [[String!]]) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": [
++                [
++                  "meta"
++                ]
++              ]
++            }
++          },
++          "directive": {
++            "value": [
++              [
++                "something"
++              ]
++            ]
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn incompatible_list_wrapping() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: ["something"])
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: [[String!]]) on SCHEMA
++                    directive @echo(value: [[String!]]) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a String value where we expected a [String!] at path '.value.0'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: ["meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: [[String!]]) on SCHEMA
++                    directive @echo(value: [[String!]]) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a String value where we expected a [String!] at path '.value.0'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/sdl.rs b/crates/integration-tests/tests/federation/extensions/validation/mod.rs
+similarity index 60%
+rename from crates/integration-tests/tests/federation/extensions/sdl.rs
+rename to crates/integration-tests/tests/federation/extensions/validation/mod.rs
+index 5080c2f58..e2d75df75 100644
+--- a/crates/integration-tests/tests/federation/extensions/sdl.rs
++++ b/crates/integration-tests/tests/federation/extensions/validation/mod.rs
+@@ -1,3 +1,11 @@
++mod default_value;
++mod definition;
++mod enum_;
++mod fields;
++mod list;
++mod non_null;
++mod scalar;
++
+ use std::{collections::HashMap, sync::Arc};
+ 
+ use engine::Engine;
+@@ -117,3 +125,69 @@ fn simple_echo() {
+     }
+     "#);
+ }
++
++#[test]
++fn too_many_arguments() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: "ste", other: 1)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Unknown argumant named 'other'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "str", other: 1)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Unknown argumant named 'other'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/non_null.rs b/crates/integration-tests/tests/federation/extensions/validation/non_null.rs
+new file mode 100644
+index 000000000..408038704
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/non_null.rs
+@@ -0,0 +1,226 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn unexpected_null() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: null)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a null where we expected a String! at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: null)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a null where we expected a String! at path '.value'",
++        )
++        "#);
++    });
++}
++
++#[test]
++fn missing_required_argument() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Missing required argument named 'value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Missing required argument named 'value'",
++        )
++        "#);
++    });
++}
++
++#[test]
++fn missing_nullable_argument() {
++    runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String) on SCHEMA
++                    directive @echo(value: String) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        let response = engine.post("query { echo }").await;
++        insta::assert_json_snapshot!(response, @r#"
++        {
++          "data": {
++            "echo": {
++              "schema": {
++                "meta": {}
++              },
++              "directive": {}
++            }
++          }
++        }
++        "#);
++    });
++}
++
++#[test]
++fn distinquish_providing_null_from_not_present_at_all() {
++    runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(a: null)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(a: null)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(a: String, b: String) on SCHEMA
++                    directive @echo(a: String, b: String) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        let response = engine.post("query { echo }").await;
++        insta::assert_json_snapshot!(response, @r#"
++        {
++          "data": {
++            "echo": {
++              "schema": {
++                "meta": {
++                  "a": null
++                }
++              },
++              "directive": {
++                "a": null
++              }
++            }
++          }
++        }
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/big_int.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/big_int.rs
+new file mode 100644
+index 000000000..f0642db96
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/big_int.rs
+@@ -0,0 +1,166 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_big_int() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 9223372036854775807)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: -923372036854775807)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: BigInt!) on SCHEMA
++                    directive @echo(value: BigInt!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": 9223372036854775807
++            }
++          },
++          "directive": {
++            "value": -923372036854775807
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn float_to_big_int_coercion() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 1.0)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 7.0)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: BigInt!) on SCHEMA
++                    directive @echo(value: BigInt!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": 1
++            }
++          },
++          "directive": {
++            "value": 7
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn invalid_big_int() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 7.123)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: BigInt!) on SCHEMA
++                    directive @echo(value: BigInt!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a Float value where we expected a BigInt scalar at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "79.123")
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: BigInt!) on SCHEMA
++                    directive @echo(value: BigInt!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a String value where we expected a BigInt scalar at path '.value'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/boolean.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/boolean.rs
+new file mode 100644
+index 000000000..e77276aed
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/boolean.rs
+@@ -0,0 +1,118 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_boolean() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: true)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: false)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Boolean!) on SCHEMA
++                    directive @echo(value: Boolean!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": true
++            }
++          },
++          "directive": {
++            "value": false
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn invalid_boolean() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 7.123)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Boolean!) on SCHEMA
++                    directive @echo(value: Boolean!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a Float value where we expected a Boolean scalar at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "test")
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Boolean!) on SCHEMA
++                    directive @echo(value: Boolean!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a String value where we expected a Boolean scalar at path '.value'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/custom.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/custom.rs
+new file mode 100644
+index 000000000..b4217061a
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/custom.rs
+@@ -0,0 +1,65 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_string() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: [{a:1}, 789, "test"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: {x: 7.123, y: null, z: false, w: VALUE})
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Any!) on SCHEMA
++                    directive @echo(value: Any!) on FIELD_DEFINITION
++
++                    scalar Any
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": [
++                {
++                  "a": 1
++                },
++                789,
++                "test"
++              ]
++            }
++          },
++          "directive": {
++            "value": {
++              "x": 7.123,
++              "y": null,
++              "z": false,
++              "w": "VALUE"
++            }
++          }
++        }
++      }
++    }
++    "#);
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/float.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/float.rs
+new file mode 100644
+index 000000000..e0ec8b0c5
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/float.rs
+@@ -0,0 +1,166 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_float() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 780.123)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: -78901.23)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Float!) on SCHEMA
++                    directive @echo(value: Float!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": 780.123
++            }
++          },
++          "directive": {
++            "value": -78901.23
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn int_to_float_conversion() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 109879)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: -123)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Float!) on SCHEMA
++                    directive @echo(value: Float!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": 109879.0
++            }
++          },
++          "directive": {
++            "value": -123.0
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn invalid_float() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: {})
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Float!) on SCHEMA
++                    directive @echo(value: Float!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a Object value where we expected a Float scalar at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "79.123")
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Float!) on SCHEMA
++                    directive @echo(value: Float!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a String value where we expected a Float scalar at path '.value'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/id.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/id.rs
+new file mode 100644
+index 000000000..47ca9e5bb
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/id.rs
+@@ -0,0 +1,118 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_id() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "8709")
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: "xsdfwe")
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: ID!) on SCHEMA
++                    directive @echo(value: ID!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": "8709"
++            }
++          },
++          "directive": {
++            "value": "xsdfwe"
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn invalid_id() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 7.123)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: ID!) on SCHEMA
++                    directive @echo(value: ID!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a Float value where we expected a ID scalar at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: [])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: ID!) on SCHEMA
++                    directive @echo(value: ID!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a List value where we expected a ID scalar at path '.value'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/int.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/int.rs
+new file mode 100644
+index 000000000..b1f4a3cfd
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/int.rs
+@@ -0,0 +1,166 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_int() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 9089)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 9089)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Int!) on SCHEMA
++                    directive @echo(value: Int!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": 9089
++            }
++          },
++          "directive": {
++            "value": 9089
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn float_to_int_coercion() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 1.0)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 7.0)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Int!) on SCHEMA
++                    directive @echo(value: Int!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": 1
++            }
++          },
++          "directive": {
++            "value": 7
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn invalid_int() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 9223372036854775807)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Int!) on SCHEMA
++                    directive @echo(value: Int!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found value 9223372036854775807 which cannot be coerced into a Int scalar at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: 79.123)
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: Int!) on SCHEMA
++                    directive @echo(value: Int!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a Float value where we expected a Int scalar at path '.value'",
++        )
++        "#);
++    });
++}
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/mod.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/mod.rs
+new file mode 100644
+index 000000000..1d81394c0
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/mod.rs
+@@ -0,0 +1,9 @@
++mod big_int;
++mod boolean;
++mod custom;
++mod float;
++mod id;
++mod int;
++mod string;
++
++use super::EchoExt;
+diff --git a/crates/integration-tests/tests/federation/extensions/validation/scalar/string.rs b/crates/integration-tests/tests/federation/extensions/validation/scalar/string.rs
+new file mode 100644
+index 000000000..6967f8949
+--- /dev/null
++++ b/crates/integration-tests/tests/federation/extensions/validation/scalar/string.rs
+@@ -0,0 +1,118 @@
++use engine::Engine;
++use integration_tests::{federation::EngineExt, runtime};
++
++use super::EchoExt;
++
++#[test]
++fn valid_string() {
++    let response = runtime().block_on(async move {
++        let engine = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: "8709")
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: "xsdfwe")
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .build()
++            .await;
++
++        engine.post("query { echo }").await
++    });
++
++    insta::assert_json_snapshot!(response, @r#"
++    {
++      "data": {
++        "echo": {
++          "schema": {
++            "meta": {
++              "value": "8709"
++            }
++          },
++          "directive": {
++            "value": "xsdfwe"
++          }
++        }
++      }
++    }
++    "#);
++}
++
++#[test]
++fn invalid_string() {
++    runtime().block_on(async move {
++        // Invalid field directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON @echo(value: 7.123)
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At Query.echo for the extension 'echo-1.0.0' directive named 'echo': Found a Float value where we expected a String scalar at path '.value'",
++        )
++        "#);
++
++        // Invalid schema directive
++        let result = Engine::builder()
++            .with_subgraph_sdl(
++                "a",
++                r#"
++                extend schema
++                    @link(url: "echo-1.0.0", import: ["@echo", "@meta"])
++                    @meta(value: [])
++
++                scalar JSON
++
++                type Query {
++                    echo: JSON
++                }
++                "#,
++            )
++            .with_extension(EchoExt {
++                sdl: r#"
++                    directive @meta(value: String!) on SCHEMA
++                    directive @echo(value: String!) on FIELD_DEFINITION
++                "#,
++            })
++            .try_build()
++            .await;
++
++        insta::assert_debug_snapshot!(result.err(), @r#"
++        Some(
++            "At subgraph named 'a' for the extension 'echo-1.0.0' directive named 'meta': Found a List value where we expected a String scalar at path '.value'",
++        )
++        "#);
++    });
++}

@@ -1,0 +1,24 @@
+diff --git a/crates/oxc_codegen/tests/mod.rs b/crates/oxc_codegen/tests/mod.rs
+--- a/crates/oxc_codegen/tests/mod.rs
++++ b/crates/oxc_codegen/tests/mod.rs
+@@ -340,0 +341,20 @@
++
++#[test]
++fn class_decl() {
++    test_ts("class Bar {}", "class Bar {}\n", false);
++}
++
++#[test]
++fn using_stmt() {
++    test("using x = foo()", "using x = foo();\n", None);
++}
++
++#[test]
++fn interface_in_module() {
++    test_ts("module Foo { interface Bar {} }", "module Foo {\n\tinterface Bar {}\n}\n", false);
++}
++
++#[test]
++fn class_in_module() {
++    test_ts("module Foo { class Bar {} }", "module Foo {\n\tclass Bar {}\n}\n", false);
++}

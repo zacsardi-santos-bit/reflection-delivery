@@ -1,0 +1,13 @@
+diff --git a/experiments/compositions/composition/expanders/jinja2/main_test.go b/experiments/compositions/composition/expanders/jinja2/main_test.go
+index 20e7a84c2f..3fa7d967d2 100644
+--- a/experiments/compositions/composition/expanders/jinja2/main_test.go
++++ b/experiments/compositions/composition/expanders/jinja2/main_test.go
+@@ -30,7 +30,7 @@ import (
+ )
+ 
+ var (
+-	addr = flag.String("addr", "[::]:50051", "the address to connect to")
++	addr = flag.String("addr", "[::]:8443", "the address to connect to")
+ )
+ 
+ var expanderClient pb.ExpanderClient

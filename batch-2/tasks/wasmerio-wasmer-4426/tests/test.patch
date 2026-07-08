@@ -1,0 +1,25 @@
+diff --git a/lib/wasm-interface/src/validate.rs b/lib/wasm-interface/src/validate.rs
+index c25bb70223a..9f6f94ea710 100644
+--- a/lib/wasm-interface/src/validate.rs
++++ b/lib/wasm-interface/src/validate.rs
+@@ -466,6 +466,20 @@ mod validation_tests {
+ 
+         assert!(result.is_err(), "missing a required export is an error");
+     }
++
++    #[test]
++    fn test_validate_with_new_wasmparser_api() {
++        let wasm = wat::parse_str("(module)").unwrap();
++        let mut val = wasmparser::Validator::new_with_features(wasmparser::WasmFeatures {
++            threads: true,
++            reference_types: true,
++            simd: true,
++            bulk_memory: true,
++            multi_value: true,
++            ..Default::default()
++        });
++        val.validate_all(&wasm).expect("validation should succeed");
++    }
+ }
+ 
+ #[derive(Debug)]

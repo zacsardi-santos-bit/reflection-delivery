@@ -1,0 +1,357 @@
+diff --git a/dev/pypi/tests/__init__.py b/dev/pypi/tests/__init__.py
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/dev/pypi/tests/conftest.py b/dev/pypi/tests/conftest.py
+new file mode 100644
+index 000000000..35baf24dc
+--- /dev/null
++++ b/dev/pypi/tests/conftest.py
+@@ -0,0 +1,13 @@
++from collections.abc import Iterator
++
++import pypi
++import pytest
++
++
++@pytest.fixture(autouse=True)
++def _clear_caches(monkeypatch: pytest.MonkeyPatch) -> Iterator[None]:
++    pypi.clear_cache()
++    # Don't actually sleep between retries inside tests.
++    monkeypatch.setattr("pypi._client.time.sleep", lambda _seconds: None)
++    yield
++    pypi.clear_cache()
+diff --git a/dev/pypi/tests/test_client.py b/dev/pypi/tests/test_client.py
+new file mode 100644
+index 000000000..abdec2e60
+--- /dev/null
++++ b/dev/pypi/tests/test_client.py
+@@ -0,0 +1,171 @@
++from __future__ import annotations
++
++import asyncio
++import email.message
++import io
++import json
++import urllib.error
++from collections.abc import Iterator
++from typing import Any
++from unittest import mock
++
++import pypi
++import pytest
++from packaging.version import Version
++
++_URLOPEN = "pypi._client.urllib.request.urlopen"
++
++
++def _payload(versions: list[str]) -> dict[str, Any]:
++    return {
++        "info": {"name": "demo", "summary": "demo"},
++        "releases": {v: [{"upload_time_iso_8601": "2024-01-01T00:00:00Z"}] for v in versions},
++    }
++
++
++def _http_error(code: int) -> urllib.error.HTTPError:
++    return urllib.error.HTTPError(
++        url="https://example/", code=code, msg="boom", hdrs=email.message.Message(), fp=None
++    )
++
++
++def _success_response(payload: dict[str, Any]) -> mock.MagicMock:
++    body = io.BytesIO(json.dumps(payload).encode())
++    return mock.MagicMock(
++        __enter__=mock.MagicMock(return_value=body),
++        __exit__=mock.MagicMock(return_value=False),
++    )
++
++
++def _urlopen_returning(payloads: list[dict[str, Any]]) -> Any:
++    iterator: Iterator[dict[str, Any]] = iter(payloads)
++
++    def _open(url: str, timeout: float) -> mock.MagicMock:
++        return _success_response(next(iterator))
++
++    return _open
++
++
++def test_get_package_returns_typed_package() -> None:
++    payload = _payload(["1.0.0", "2.0.0"])
++    with mock.patch(_URLOPEN, side_effect=_urlopen_returning([payload])) as mock_open:
++        pkg = pypi.get_package("demo")
++        mock_open.assert_called_once()
++
++    assert isinstance(pkg, pypi.Package)
++    assert pkg.latest_version == Version("2.0.0")
++
++
++def test_get_package_uses_in_memory_cache() -> None:
++    payload = _payload(["1.0.0"])
++    with mock.patch(_URLOPEN, side_effect=_urlopen_returning([payload])) as mock_open:
++        pypi.get_package("demo")
++        pypi.get_package("demo")
++        mock_open.assert_called_once()
++
++
++def test_clear_cache_forces_refetch() -> None:
++    payload = _payload(["1.0.0"])
++    with mock.patch(_URLOPEN, side_effect=_urlopen_returning([payload, payload])) as mock_open:
++        pypi.get_package("demo")
++        pypi.clear_cache()
++        pypi.get_package("demo")
++        assert mock_open.call_count == 2
++
++
++def test_pypi_url_env_var_is_respected(monkeypatch: pytest.MonkeyPatch) -> None:
++    monkeypatch.setenv("PYPI_URL", "https://internal-proxy.example/")
++    seen: list[str] = []
++
++    def _open(url: str, timeout: float) -> mock.MagicMock:
++        seen.append(url)
++        return _success_response(_payload(["1.0.0"]))
++
++    with mock.patch(_URLOPEN, side_effect=_open):
++        pypi.get_package("demo")
++
++    assert seen == ["https://internal-proxy.example/pypi/demo/json"]
++
++
++def test_404_raises_pypi_error_without_retry() -> None:
++    with mock.patch(_URLOPEN, side_effect=_http_error(404)) as mock_open:
++        with pytest.raises(pypi.PyPIError, match="Package not found"):
++            pypi.get_package("does-not-exist")
++        mock_open.assert_called_once()
++
++
++def test_non_retryable_http_error_raises_immediately() -> None:
++    with mock.patch(_URLOPEN, side_effect=_http_error(401)) as mock_open:
++        with pytest.raises(pypi.PyPIError, match="HTTP 401"):
++            pypi.get_package("demo")
++        mock_open.assert_called_once()
++
++
++@pytest.mark.parametrize("status", [429, 500, 502, 503, 504])
++def test_retries_transient_http_errors_then_succeeds(status: int) -> None:
++    payload = _payload(["1.0.0"])
++    side_effects = [_http_error(status), _http_error(status), _success_response(payload)]
++    with mock.patch(_URLOPEN, side_effect=side_effects) as mock_open:
++        pkg = pypi.get_package("demo")
++        assert mock_open.call_count == 3
++    assert pkg.latest_version == Version("1.0.0")
++
++
++def test_retries_url_errors_then_succeeds() -> None:
++    payload = _payload(["1.0.0"])
++    side_effects: list[Any] = [
++        urllib.error.URLError("dns fail"),
++        ConnectionResetError("reset"),
++        _success_response(payload),
++    ]
++    with mock.patch(_URLOPEN, side_effect=side_effects) as mock_open:
++        pkg = pypi.get_package("demo")
++        assert mock_open.call_count == 3
++    assert pkg.latest_version == Version("1.0.0")
++
++
++def test_retry_exhaustion_raises_pypi_error() -> None:
++    err = urllib.error.URLError("dns fail")
++    with mock.patch(_URLOPEN, side_effect=[err, err, err]) as mock_open:
++        with pytest.raises(pypi.PyPIError, match="after 3 attempts"):
++            pypi.get_package("demo")
++        assert mock_open.call_count == 3
++
++
++def test_unexpected_payload_shape_raises() -> None:
++    list_payload_response = mock.MagicMock(
++        __enter__=mock.MagicMock(return_value=io.BytesIO(json.dumps([1, 2, 3]).encode())),
++        __exit__=mock.MagicMock(return_value=False),
++    )
++    with mock.patch(_URLOPEN, return_value=list_payload_response):
++        with pytest.raises(pypi.PyPIError, match="Unexpected response"):
++            pypi.get_package("demo")
++
++
++def test_aget_package_returns_package() -> None:
++    payload = _payload(["1.0.0"])
++    with mock.patch(_URLOPEN, side_effect=_urlopen_returning([payload])):
++        pkg = asyncio.run(pypi.aget_package("demo"))
++
++    assert isinstance(pkg, pypi.Package)
++    assert pkg.latest_version == Version("1.0.0")
++
++
++def test_aget_packages_preserves_order_and_fetches_each() -> None:
++    names = ["alpha", "beta", "gamma"]
++    payloads = {n: _payload([f"{i + 1}.0.0"]) for i, n in enumerate(names)}
++    seen: list[str] = []
++
++    def _open(url: str, timeout: float) -> mock.MagicMock:
++        for n in names:
++            if url.endswith(f"/pypi/{n}/json"):
++                seen.append(n)
++                return _success_response(payloads[n])
++        raise AssertionError(f"unexpected URL: {url}")
++
++    with mock.patch(_URLOPEN, side_effect=_open):
++        pkgs = asyncio.run(pypi.aget_packages(names))
++
++    expected = [Version("1.0.0"), Version("2.0.0"), Version("3.0.0")]
++    assert [p.latest_version for p in pkgs] == expected
++    assert sorted(seen) == sorted(names)
+diff --git a/dev/pypi/tests/test_models.py b/dev/pypi/tests/test_models.py
+new file mode 100644
+index 000000000..7b4fa76a2
+--- /dev/null
++++ b/dev/pypi/tests/test_models.py
+@@ -0,0 +1,152 @@
++from __future__ import annotations
++
++from typing import Any
++
++import pytest
++from packaging.specifiers import SpecifierSet
++from packaging.version import Version
++from pypi._models import Package
++
++_DEFAULT_UPLOAD = "2024-01-01T00:00:00Z"
++
++
++def _payload(releases: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
++    # Inject a default upload_time into every non-empty dist so tests don't
++    # have to spell it out — `from_json` skips releases that lack one.
++    normalized = {
++        v: [{"upload_time_iso_8601": _DEFAULT_UPLOAD, **d} for d in dists]
++        for v, dists in releases.items()
++    }
++    return {"info": {"name": "demo", "summary": "demo package"}, "releases": normalized}
++
++
++def test_versions_are_parsed_to_packaging_version() -> None:
++    pkg = Package.from_json(
++        _payload({
++            "1.0.0": [{"upload_time_iso_8601": "2024-01-01T00:00:00Z"}],
++            "2.0.0": [{"upload_time_iso_8601": "2024-06-01T00:00:00Z"}],
++        })
++    )
++    assert all(isinstance(v, Version) for v in pkg.versions)
++    assert pkg.versions == (Version("1.0.0"), Version("2.0.0"))
++
++
++def test_releases_without_distributions_are_dropped() -> None:
++    pkg = Package.from_json(
++        _payload({
++            "1.0.0": [{}],
++            "0.5.0": [],  # all distributions deleted on PyPI
++        })
++    )
++    assert pkg.versions == (Version("1.0.0"),)
++
++
++def test_releases_without_upload_time_are_dropped() -> None:
++    raw = {
++        "info": {"name": "demo"},
++        "releases": {
++            "1.0.0": [{"upload_time_iso_8601": "2024-01-01T00:00:00Z"}],
++            "0.5.0": [{"filename": "demo-0.5.0.tar.gz"}],  # missing upload_time
++        },
++    }
++    pkg = Package.from_json(raw)
++    assert pkg.versions == (Version("1.0.0"),)
++
++
++def test_invalid_versions_are_dropped() -> None:
++    pkg = Package.from_json(
++        _payload({
++            "1.0.0": [{"upload_time_iso_8601": "2024-01-01T00:00:00Z"}],
++            "2004d": [{"upload_time_iso_8601": "2024-01-01T00:00:00Z"}],
++        })
++    )
++    assert pkg.versions == (Version("1.0.0"),)
++
++
++@pytest.mark.parametrize(
++    ("releases", "expected"),
++    [
++        ({"1.0.0": [{}], "2.0.0": [{}]}, Version("2.0.0")),
++        ({"1.0.0": [{}], "2.0.0a1": [{}]}, Version("1.0.0")),
++        ({"1.0.0": [{}], "2.0.0.dev1": [{}]}, Version("1.0.0")),
++        ({"1.0.0": [{"yanked": True}], "0.9.0": [{}]}, Version("0.9.0")),
++        ({}, None),
++    ],
++)
++def test_latest_version_skips_pre_dev_and_yanked(
++    releases: dict[str, list[dict[str, Any]]], expected: Version | None
++) -> None:
++    pkg = Package.from_json(_payload(releases))
++    assert pkg.latest_version == expected
++
++
++def test_get_release_accepts_str_or_version() -> None:
++    pkg = Package.from_json(_payload({"1.2.3": [{}]}))
++    by_str = pkg.get_release("1.2.3")
++    by_version = pkg.get_release(Version("1.2.3"))
++    assert by_str is not None
++    assert by_str is by_version
++    assert pkg.get_release("9.9.9") is None
++
++
++def test_release_upload_time_picks_earliest() -> None:
++    pkg = Package.from_json(
++        _payload({
++            "1.0.0": [
++                {"upload_time_iso_8601": "2024-03-01T00:00:00Z"},
++                {"upload_time_iso_8601": "2024-01-01T00:00:00Z"},
++            ],
++        })
++    )
++    release = pkg.get_release("1.0.0")
++    assert release is not None
++    assert release.upload_time is not None
++    assert release.upload_time.year == 2024
++    assert release.upload_time.month == 1
++
++
++def test_release_yanked_only_when_all_distributions_yanked() -> None:
++    pkg = Package.from_json(_payload({"1.0.0": [{"yanked": True}, {"yanked": False}]}))
++    release = pkg.get_release("1.0.0")
++    assert release is not None
++    assert release.yanked is False
++
++
++def test_release_yanked_when_every_distribution_yanked() -> None:
++    pkg = Package.from_json(_payload({"1.0.0": [{"yanked": True}, {"yanked": True}]}))
++    release = pkg.get_release("1.0.0")
++    assert release is not None
++    assert release.yanked is True
++
++
++def test_release_requires_python_parsed_to_specifier_set() -> None:
++    pkg = Package.from_json(_payload({"1.0.0": [{"requires_python": ">=3.10,<4"}]}))
++    release = pkg.get_release("1.0.0")
++    assert release is not None
++    assert release.requires_python == SpecifierSet(">=3.10,<4")
++    assert Version("3.11") in release.requires_python
++    assert Version("3.9") not in release.requires_python
++
++
++def test_release_requires_python_picks_first_non_empty() -> None:
++    pkg = Package.from_json(
++        _payload({
++            "1.0.0": [
++                {"requires_python": ""},
++                {"requires_python": ">=3.10"},
++                {"requires_python": ">=3.11"},
++            ]
++        })
++    )
++    release = pkg.get_release("1.0.0")
++    assert release is not None
++    assert release.requires_python == SpecifierSet(">=3.10")
++
++
++@pytest.mark.parametrize("raw", [None, "", "not a specifier"])
++def test_release_requires_python_none_for_missing_or_invalid(raw: str | None) -> None:
++    payload_dist = {} if raw is None else {"requires_python": raw}
++    pkg = Package.from_json(_payload({"1.0.0": [payload_dist]}))
++    release = pkg.get_release("1.0.0")
++    assert release is not None
++    assert release.requires_python is None

@@ -1,13 +1,9 @@
-I'm working with a data table component and I need to add several new features and fix some existing bugs.
+I'm working with our data table component and I've got a batch of sorting features, column drag-and-drop, and some annoying bugs to knock out. On sorting, I want per-column config so clicking a header a third time can reset back to the original unsorted order instead of cycling ascending/descending forever, plus an option that makes the very first click sort descending, and a per-column custom sort comparator so we can pass our own comparison function for a specific column rather than being stuck with just the table-wide one.
 
-For sorting, I want to add the ability to configure individual columns so that clicking a column header a third time resets the sort back to the original unsorted order (rather than cycling between ascending and descending forever). I also want an option to make a column sort in descending order on the first click. Additionally, I need support for a per-column custom sort comparator function, so developers can supply their own sorting logic for specific columns.
+I also need drag-and-drop column reordering, which means a new hook module that exposes functions to build a column model from a set of column references, reorder a column order array, and handle hover events while a column's being dragged around.
 
-I also need to add support for reordering columns via drag and drop. This requires a new hook module that exposes functions to build a column model from column references, reorder a column order array, and handle hover events during dragging.
+On filtering, the reset button in the filter dialog should fire its own dedicated callback when clicked without closing the dialog, since right now there's no way to react to a reset separately from a close.
 
-On the filter side, the reset button in the filter dialog should trigger a dedicated callback when clicked, without closing the dialog. Currently there's no way to respond to a filter reset separately from closing.
+Couple of bugs too. The selection toolbar still renders even when it's set to hidden if rows happen to be pre-selected at init, and it just shouldn't render at all when hidden placement is active. Also when we're in single-row selection mode, trying to programmatically select multiple rows silently accepts it right now, I want it to throw an error instead. And the CSV utility that escapes dangerous characters crashes when it hits a non-string value like a number, so it should just return non-string values as-is without touching them.
 
-There's also a bug where the selection toolbar still renders even when it's configured to be hidden, if rows are pre-selected on initialization. It should not render at all when hidden mode is active.
-
-When the table is in single-row selection mode, attempting to programmatically select multiple rows should throw an error rather than silently accepting the input.
-
-Finally, the CSV utility function that escapes dangerous characters currently crashes when it encounters a non-string value like a number. It should return non-string values as-is without modification.
+These give us finer control over sorting UX and make the table hold up better around edge cases like non-string data, pre-selected rows, and custom filter interactions, and the drag-and-drop bits unlock proper column reordering.

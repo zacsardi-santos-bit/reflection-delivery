@@ -1,0 +1,39 @@
+diff --git a/implementations/rust/ockam/ockam_api/tests/common/trace_code.rs b/implementations/rust/ockam/ockam_api/tests/common/trace_code.rs
+index a437e1279..148dbac9c 100644
+--- a/implementations/rust/ockam/ockam_api/tests/common/trace_code.rs
++++ b/implementations/rust/ockam/ockam_api/tests/common/trace_code.rs
+@@ -26,7 +26,7 @@ where
+             .unwrap()
+             .set_all_crates()
+             .set_log_level(tracing_core::metadata::Level::TRACE),
+-        &ExportingConfiguration::foreground(true).unwrap(),
++        &ExportingConfiguration::foreground().unwrap(),
+         "test",
+         None,
+     );
+diff --git a/implementations/rust/ockam/ockam_api/tests/journeys.rs b/implementations/rust/ockam/ockam_api/tests/journeys.rs
+index e1c94a285..5d1bf0f17 100644
+--- a/implementations/rust/ockam/ockam_api/tests/journeys.rs
++++ b/implementations/rust/ockam/ockam_api/tests/journeys.rs
+@@ -30,7 +30,7 @@ fn test_create_journey_event() {
+         &LoggingConfiguration::off()
+             .unwrap()
+             .set_crates(&["ockam_api"]),
+-        &ExportingConfiguration::foreground(false).unwrap(),
++        &ExportingConfiguration::foreground().unwrap(),
+         "test",
+         None,
+     );
+diff --git a/implementations/rust/ockam/ockam_api/tests/logging_tracing.rs b/implementations/rust/ockam/ockam_api/tests/logging_tracing.rs
+index 91029dc91..86634e12b 100644
+--- a/implementations/rust/ockam/ockam_api/tests/logging_tracing.rs
++++ b/implementations/rust/ockam/ockam_api/tests/logging_tracing.rs
+@@ -34,7 +34,7 @@ fn test_log_and_traces() {
+         &make_configuration()
+             .unwrap()
+             .set_log_directory(log_directory.into()),
+-        &ExportingConfiguration::foreground(false).unwrap(),
++        &ExportingConfiguration::foreground().unwrap(),
+         "test",
+         None,
+     );

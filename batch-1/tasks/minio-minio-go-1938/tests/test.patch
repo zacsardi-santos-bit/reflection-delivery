@@ -1,0 +1,14 @@
+diff --git a/api_unit_test.go b/api_unit_test.go
+index 3defca2..0000000 100644
+--- a/api_unit_test.go
++++ b/api_unit_test.go
+@@ -224,3 +224,9 @@
+ 		}
+ 	}
+ }
++
++func TestHTTPStatusRetryableExcludesCloudflare(t *testing.T) {
++	if isHTTPStatusRetryable(520) {
++		t.Fatal("HTTP 520 (Cloudflare catch-all) should not be retryable")
++	}
++}

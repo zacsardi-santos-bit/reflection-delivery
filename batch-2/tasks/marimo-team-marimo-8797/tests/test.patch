@@ -1,0 +1,228 @@
+diff --git a/tests/_metadata/test_opengraph.py b/tests/_metadata/test_opengraph.py
+index 1f4e49044..e86161774 100644
+--- a/tests/_metadata/test_opengraph.py
++++ b/tests/_metadata/test_opengraph.py
+@@ -1,16 +1,21 @@
+ from __future__ import annotations
+ 
+ import textwrap
++from typing import TYPE_CHECKING
+ 
+ from marimo._metadata.opengraph import (
+     DEFAULT_OPENGRAPH_PLACEHOLDER_IMAGE_GENERATOR,
+     OpenGraphConfig,
+     default_opengraph_image,
++    default_opengraph_image_abs,
+     read_opengraph_from_file,
+     read_opengraph_from_pyproject,
+     resolve_opengraph_metadata,
+ )
+ 
++if TYPE_CHECKING:
++    import pytest
++
+ 
+ def test_read_opengraph_from_pyproject() -> None:
+     pyproject = {
+@@ -101,13 +106,12 @@ def test_resolve_opengraph_metadata_defaults_image_if_present(
+     path = tmp_path / "notebook.py"
+     path.write_text(script, encoding="utf-8")
+ 
+-    default_image = default_opengraph_image(str(path))
+-    image_path = tmp_path / default_image
+-    image_path.parent.mkdir(parents=True, exist_ok=True)
+-    image_path.write_bytes(b"fake-png")
++    image_abs = default_opengraph_image_abs(str(path))
++    image_abs.parent.mkdir(parents=True, exist_ok=True)
++    image_abs.write_bytes(b"fake-png")
+ 
+     resolved = resolve_opengraph_metadata(str(path))
+-    assert resolved.image == default_image
++    assert resolved.image == default_opengraph_image(str(path))
+ 
+ 
+ def test_resolve_opengraph_metadata_supports_https_url_image(tmp_path) -> None:
+@@ -128,6 +132,44 @@ def test_resolve_opengraph_metadata_supports_https_url_image(tmp_path) -> None:
+     assert resolved.image == "https://example.com/opengraph.png"
+ 
+ 
++def test_default_opengraph_image_abs_follows_pycache_prefix(
++    tmp_path, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    prefix = tmp_path / "prefix"
++    monkeypatch.setattr("sys.pycache_prefix", str(prefix))
++
++    notebook = tmp_path / "project" / "notebook.py"
++    notebook.parent.mkdir(parents=True)
++    notebook.touch()
++
++    abs_path = default_opengraph_image_abs(str(notebook))
++    # Should be under the prefix, not next to the notebook.
++    assert str(abs_path).startswith(str(prefix))
++    assert abs_path.name == "opengraph.png"
++    assert "notebook" in abs_path.parts  # stem used as subdirectory
++
++
++def test_default_image_exists_with_pycache_prefix(
++    tmp_path, monkeypatch: pytest.MonkeyPatch
++) -> None:
++    """_default_image_exists finds images under the relocated __marimo__ dir."""
++    prefix = tmp_path / "prefix"
++    monkeypatch.setattr("sys.pycache_prefix", str(prefix))
++
++    notebook = tmp_path / "project" / "notebook.py"
++    notebook.parent.mkdir(parents=True)
++    notebook.touch()
++
++    # Image at the relocated path.
++    image = default_opengraph_image_abs(str(notebook))
++    image.parent.mkdir(parents=True)
++    image.write_bytes(b"fake-png")
++
++    from marimo._metadata.opengraph import _default_image_exists
++
++    assert _default_image_exists(str(notebook))
++
++
+ def test_default_opengraph_placeholder_generator() -> None:
+     image = DEFAULT_OPENGRAPH_PLACEHOLDER_IMAGE_GENERATOR("Hello World")
+     assert image.media_type == "image/svg+xml"
+diff --git a/tests/_save/stores/test_file.py b/tests/_save/stores/test_file.py
+index 4025a0b54..9427b2607 100644
+--- a/tests/_save/stores/test_file.py
++++ b/tests/_save/stores/test_file.py
+@@ -42,3 +42,12 @@ class TestFileStore:
+         # Clear non-existent key
+         result = store.clear("nonexistent")
+         assert result is False
++
++    def test_default_path_is_lazy(self) -> None:
++        """Default save_path is not resolved at construction time."""
++        store = FileStore()
++        # The backing attribute should be None until first access.
++        assert store._resolved_save_path is None
++        # Accessing the property triggers resolution.
++        _ = store.save_path
++        assert store._resolved_save_path is not None
+diff --git a/tests/_session/state/test_serialize_session.py b/tests/_session/state/test_serialize_session.py
+index 3d8112862..e367e3cdd 100644
+--- a/tests/_session/state/test_serialize_session.py
++++ b/tests/_session/state/test_serialize_session.py
+@@ -582,6 +582,24 @@ def test_get_session_cache_file():
+         )
+ 
+ 
++def test_get_session_cache_file_with_pycache_prefix(
++    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
++):
++    prefix = tmp_path / "prefix"
++    monkeypatch.setattr("sys.pycache_prefix", str(prefix))
++
++    path = tmp_path / "app" / "notebooks" / "notebook.py"
++    cache_file = get_session_cache_file(path)
++    relative_parent = Path(*path.parent.parts[1:])  # strip root
++    assert cache_file == (
++        prefix
++        / relative_parent
++        / "__marimo__"
++        / "session"
++        / "notebook.py.json"
++    )
++
++
+ def test_hash_code():
+     """Test _hash_code function"""
+     assert _hash_code(None) is None
+diff --git a/tests/_utils/test_paths.py b/tests/_utils/test_paths.py
+index b49b37b2c..4eab76869 100644
+--- a/tests/_utils/test_paths.py
++++ b/tests/_utils/test_paths.py
+@@ -7,7 +7,11 @@ from pathlib import Path
+ 
+ import pytest
+ 
+-from marimo._utils.paths import normalize_path, pretty_path
++from marimo._utils.paths import (
++    normalize_path,
++    notebook_output_dir,
++    pretty_path,
++)
+ 
+ 
+ def test_normalize_path_makes_absolute() -> None:
+@@ -114,6 +118,76 @@ def test_normalize_path_does_not_skip_regular_paths() -> None:
+     assert result.__class__.__module__.startswith("pathlib")
+ 
+ 
++class TestGetMarimoDir:
++    """Tests for notebook_output_dir function."""
++
++    def test_none_returns_cwd_relative(self) -> None:
++        assert notebook_output_dir(None) == Path("__marimo__")
++
++    def test_file_path_returns_sibling_dir(self, tmp_path: Path) -> None:
++        notebook = tmp_path / "notebook.py"
++        notebook.touch()
++        result = notebook_output_dir(str(notebook))
++        assert result == tmp_path / "__marimo__"
++
++    def test_directory_path(self, tmp_path: Path) -> None:
++        result = notebook_output_dir(tmp_path)
++        assert result == tmp_path / "__marimo__"
++
++    def test_pycache_prefix_mirrors_tree(
++        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        prefix = tmp_path / "prefix"
++        monkeypatch.setattr("sys.pycache_prefix", str(prefix))
++
++        notebook = tmp_path / "app" / "notebooks" / "example" / "foo.py"
++        result = notebook_output_dir(str(notebook))
++        # The notebook's absolute parent tree is mirrored under the prefix.
++        relative_parent = Path(
++            *notebook.parent.parts[1:]
++        )  # strip root (/ or C:\)
++        assert result == prefix / relative_parent / "__marimo__"
++
++    def test_pycache_prefix_not_applied_when_none(
++        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        monkeypatch.setattr("sys.pycache_prefix", None)
++        notebook = tmp_path / "app" / "notebooks" / "foo.py"
++        result = notebook_output_dir(str(notebook))
++        assert result == notebook.parent / "__marimo__"
++
++    def test_pycache_prefix_ignored_for_none_path(
++        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        monkeypatch.setattr("sys.pycache_prefix", str(tmp_path / "prefix"))
++        assert notebook_output_dir(None) == Path("__marimo__")
++
++    def test_pycache_prefix_ignored_for_relative_path(
++        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        """Relative paths stay notebook-relative, not relocated under prefix."""
++        monkeypatch.setattr("sys.pycache_prefix", str(tmp_path / "prefix"))
++        result = notebook_output_dir("notebook.py")
++        # Should resolve relative to CWD, not under the prefix.
++        assert (
++            result == normalize_path(Path("notebook.py")).parent / "__marimo__"
++        )
++        assert str(tmp_path / "prefix") not in str(result)
++
++    def test_pycache_prefix_mkdir_creates_full_tree(
++        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
++    ) -> None:
++        """Mirrored prefix paths can be created with mkdir(parents=True)."""
++        prefix = tmp_path / "prefix"
++        monkeypatch.setattr("sys.pycache_prefix", str(prefix))
++
++        notebook = tmp_path / "project" / "notebook.py"
++        marimo_dir = notebook_output_dir(str(notebook))
++        # The full tree doesn't exist yet — mkdir should still work.
++        marimo_dir.mkdir(parents=True, exist_ok=True)
++        assert marimo_dir.is_dir()
++
++
+ class TestPrettyPath:
+     """Tests for pretty_path function."""

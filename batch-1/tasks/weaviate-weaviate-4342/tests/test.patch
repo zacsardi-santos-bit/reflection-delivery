@@ -1,0 +1,238 @@
+diff --git a/adapters/repos/db/vector/hnsw/distancer/bench_amd64_test.go b/adapters/repos/db/vector/hnsw/distancer/bench_amd64_test.go
+index 6225adcdd8..12867588a5 100644
+--- a/adapters/repos/db/vector/hnsw/distancer/bench_amd64_test.go
++++ b/adapters/repos/db/vector/hnsw/distancer/bench_amd64_test.go
+@@ -18,7 +18,7 @@ import (
+ 	"github.com/weaviate/weaviate/adapters/repos/db/vector/hnsw/distancer/asm"
+ )
+ 
+-func benchmarkDotGo(b *testing.B, dims int) {
++func benchmarkDot(b *testing.B, dims int, dotFn func(a, b []float32) float32) {
+ 	r := getRandomSeed()
+ 
+ 	vec1 := make([]float32, dims)
+@@ -30,32 +30,17 @@ func benchmarkDotGo(b *testing.B, dims int) {
+ 
+ 	b.ResetTimer()
+ 	for n := 0; n < b.N; n++ {
+-		DotProductGo(vec1, vec2)
+-	}
+-}
+-
+-func benchmarkDotAVX(b *testing.B, dims int) {
+-	r := getRandomSeed()
+-
+-	vec1 := make([]float32, dims)
+-	vec2 := make([]float32, dims)
+-	for i := range vec1 {
+-		vec1[i] = r.Float32()
+-		vec2[i] = r.Float32()
+-	}
+-
+-	b.ResetTimer()
+-	for n := 0; n < b.N; n++ {
+-		asm.Dot(vec1, vec2)
++		dotFn(vec1, vec2)
+ 	}
+ }
+ 
+ func BenchmarkDot(b *testing.B) {
+-	dims := []int{30, 32, 128, 256, 300, 384, 600, 768, 1024}
++	dims := []int{2, 4, 6, 8, 10, 12, 16, 24, 30, 32, 128, 256, 300, 384, 512, 768, 1024, 1536}
+ 	for _, dim := range dims {
+ 		b.Run(fmt.Sprintf("%d dimensions", dim), func(b *testing.B) {
+-			b.Run("pure go", func(b *testing.B) { benchmarkDotGo(b, dim) })
+-			b.Run("avx", func(b *testing.B) { benchmarkDotAVX(b, dim) })
++			b.Run("pure go", func(b *testing.B) { benchmarkDot(b, dim, DotProductGo) })
++			b.Run("avx", func(b *testing.B) { benchmarkDot(b, dim, asm.Dot) })
++			b.Run("avx512", func(b *testing.B) { benchmarkDot(b, dim, asm.DotAVX512) })
+ 		})
+ 	}
+ }
+diff --git a/adapters/repos/db/vector/hnsw/distancer/dot_product_amd64_test.go b/adapters/repos/db/vector/hnsw/distancer/dot_product_amd64_test.go
+index 5857fa5ad4..f5fa589d61 100644
+--- a/adapters/repos/db/vector/hnsw/distancer/dot_product_amd64_test.go
++++ b/adapters/repos/db/vector/hnsw/distancer/dot_product_amd64_test.go
+@@ -18,9 +18,10 @@ import (
+ 	"unsafe"
+ 
+ 	"github.com/weaviate/weaviate/adapters/repos/db/vector/hnsw/distancer/asm"
++	"golang.org/x/sys/cpu"
+ )
+ 
+-func testDotProductFixedValue(t *testing.T, size uint) {
++func testDotProductFixedValue(t *testing.T, size uint, dotFn func(x []float32, y []float32) float32) {
+ 	count := 10000
+ 	countFailed := 0
+ 	for i := 0; i < count; i++ {
+@@ -32,7 +33,7 @@ func testDotProductFixedValue(t *testing.T, size uint) {
+ 		}
+ 		vec1 = Normalize(vec1)
+ 		vec2 = Normalize(vec2)
+-		res := -asm.Dot(vec1, vec2)
++		res := -dotFn(vec1, vec2)
+ 		if math.IsNaN(float64(res)) {
+ 			panic("NaN")
+ 		}
+@@ -52,7 +53,7 @@ func testDotProductFixedValue(t *testing.T, size uint) {
+ 	fmt.Printf("total failed: %d\n", countFailed)
+ }
+ 
+-func testDotProductRandomValue(t *testing.T, size uint) {
++func testDotProductRandomValue(t *testing.T, size uint, dotFn func(x []float32, y []float32) float32) {
+ 	r := getRandomSeed()
+ 	count := 10000
+ 	countFailed := 0
+@@ -72,7 +73,7 @@ func testDotProductRandomValue(t *testing.T, size uint) {
+ 	}
+ 
+ 	for i := 0; i < count; i++ {
+-		res := -asm.Dot(vec1s[i], vec2s[i])
++		res := -dotFn(vec1s[i], vec2s[i])
+ 		if math.IsNaN(float64(res)) {
+ 			panic("NaN")
+ 		}
+@@ -94,18 +95,45 @@ func testDotProductRandomValue(t *testing.T, size uint) {
+ 
+ func TestCompareDotProductImplementations(t *testing.T) {
+ 	sizes := []uint{
++		1,
++		2,
++		3,
++		4,
++		5,
++		6,
+ 		8,
++		10,
++		12,
+ 		16,
++		24,
++		30,
++		31,
+ 		32,
+ 		64,
++		67,
+ 		128,
+ 		256,
++		260,
++		299,
++		300,
++		384,
++		390,
++		600,
++		768,
++		777,
++		784,
++		1024,
++		1536,
+ 	}
+ 
+ 	for _, size := range sizes {
+ 		t.Run(fmt.Sprintf("with size %d", size), func(t *testing.T) {
+-			testDotProductFixedValue(t, size)
+-			testDotProductRandomValue(t, size)
++			testDotProductFixedValue(t, size, asm.Dot)
++			testDotProductRandomValue(t, size, asm.Dot)
++			if cpu.X86.HasAVX512 {
++				testDotProductFixedValue(t, size, asm.DotAVX512)
++				testDotProductRandomValue(t, size, asm.DotAVX512)
++			}
+ 		})
+ 	}
+ }
+diff --git a/adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go b/adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go
+index 407fd6c9fd..18080a5a90 100644
+--- a/adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go
++++ b/adapters/repos/db/vector/hnsw/distancer/l2_amd64_test.go
+@@ -18,6 +18,7 @@ import (
+ 
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/weaviate/weaviate/adapters/repos/db/vector/hnsw/distancer/asm"
++	"golang.org/x/sys/cpu"
+ )
+ 
+ func L2PureGo(a, b []float32) float32 {
+@@ -44,9 +45,14 @@ func Test_L2_DistanceImplementation(t *testing.T) {
+ 			}
+ 
+ 			control := L2PureGo(x, y)
+-			asmResult := asm.L2(x, y)
+ 
++			asmResult := asm.L2(x, y)
+ 			assert.InEpsilon(t, control, asmResult, 0.01)
++
++			if cpu.X86.HasAVX512 {
++				asmResult = asm.L2AVX512(x, y)
++				assert.InEpsilon(t, control, asmResult, 0.01)
++			}
+ 		})
+ 	}
+ }
+@@ -64,16 +70,51 @@ func Test_L2_DistanceImplementation_OneNegativeValue(t *testing.T) {
+ 			}
+ 
+ 			control := L2PureGo(x, y)
+-			asmResult := asm.L2(x, y)
+ 
++			asmResult := asm.L2(x, y)
+ 			assert.InEpsilon(t, control, asmResult, 0.01)
++
++			if cpu.X86.HasAVX512 {
++				asmResult = asm.L2AVX512(x, y)
++				assert.InEpsilon(t, control, asmResult, 0.01)
++			}
+ 		})
+ 	}
+ }
+ 
+-func Benchmark_L2_PureGo_VS_AVX(b *testing.B) {
++func Benchmark_L2(b *testing.B) {
+ 	r := getRandomSeed()
+-	lengths := []int{30, 32, 128, 256, 300, 384, 600, 768, 1024}
++	lengths := []int{
++		1,
++		2,
++		3,
++		4,
++		5,
++		6,
++		8,
++		10,
++		12,
++		16,
++		24,
++		30,
++		31,
++		32,
++		64,
++		67,
++		128,
++		256,
++		260,
++		299,
++		300,
++		384,
++		390,
++		600,
++		768,
++		777,
++		784,
++		1024,
++		1536,
++	}
+ 	for _, length := range lengths {
+ 		b.Run(fmt.Sprintf("vector dim=%d", length), func(b *testing.B) {
+ 			x := make([]float32, length)
+@@ -94,6 +135,12 @@ func Benchmark_L2_PureGo_VS_AVX(b *testing.B) {
+ 					asm.L2(x, y)
+ 				}
+ 			})
++
++			b.Run("asm AVX512", func(b *testing.B) {
++				for i := 0; i < b.N; i++ {
++					asm.L2AVX512(x, y)
++				}
++			})
+ 		})
+ 	}
+ }

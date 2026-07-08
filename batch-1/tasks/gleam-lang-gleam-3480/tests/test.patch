@@ -1,0 +1,1254 @@
+diff --git a/compiler-core/src/language_server/tests/completion.rs b/compiler-core/src/language_server/tests/completion.rs
+index de8f51a91..8fde3fc7f 100644
+--- a/compiler-core/src/language_server/tests/completion.rs
++++ b/compiler-core/src/language_server/tests/completion.rs
+@@ -808,6 +808,231 @@ pub fn wibble(
+     assert_completion!(TestProject::for_source(code), Position::new(4, 0));
+ }
+ 
++#[test]
++fn local_variable() {
++    let code = "
++pub fn main(wibble: Int) {
++  let wobble = 1
++  w
++
++  let wabble = 2
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(3, 3));
++}
++
++#[test]
++fn local_variable_anonymous_function() {
++    let code = "
++pub fn main() {
++  let add_one = fn(wibble: Int) { wibble + 1 }
++  add_one(1)
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(2, 40));
++}
++
++#[test]
++fn local_variable_nested_anonymous_function() {
++    let code = "
++pub fn main() {
++  let add_one = fn(wibble: Int) {
++    let wabble = 1
++    let add_two = fn(wobble: Int) { wobble + 2 }
++    wibble + add_two(1)
++  }
++  add_one(1)
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(4, 42));
++}
++
++#[test]
++fn local_variable_ignore_anonymous_function_args() {
++    let code = "
++pub fn main() {
++  let add_one = fn(wibble: Int) { wibble + 1 }
++  let wobble = 1
++  w
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(4, 3));
++}
++
++#[test]
++fn local_variable_ignore_anonymous_function_args_nested() {
++    let code = "
++pub fn main() {
++  let add_one = fn(wibble: Int) {
++    let wabble = 1
++    let add_two = fn(wobble: Int) { wobble + 2 }
++    wibble + add_two(1)
++  }
++  add_one(1)
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(5, 10));
++}
++
++#[test]
++fn local_variable_ignore_anonymous_function_returned() {
++    let code = "
++pub fn main() {
++  fn(wibble: Int) {
++    let wabble = 1
++    let add_two = fn(wobble: Int) { wobble + 2 }
++    wibble + add_two(1)
++  }
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(5, 10));
++}
++
++#[test]
++fn local_variable_case_expression() {
++    let code = "
++pub fn main() {
++  case True {
++    True as wibble -> { todo }
++    False -> { todo }
++  }
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(3, 25));
++}
++
++#[test]
++fn local_variable_inside_nested_exprs() {
++    let code = r#"
++type Foo { Bar(List(#(Bool))) }
++fn wibble() {
++  Bar([#(!{
++    let foo = True
++    foo
++  })])
++  todo
++}
++"#;
++
++    assert_completion!(TestProject::for_source(code), Position::new(5, 7));
++}
++
++#[test]
++fn local_variable_pipe() {
++    let code = "
++pub fn main() {
++  let add_one = fn(wibble: Int) { wibble + 1 }
++  let wobble = 1
++  wobble |> add_one
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(4, 19));
++}
++
++#[test]
++fn local_variable_pipe_with_args() {
++    let code = "
++pub fn main() {
++  let add_one = fn(wibble: Int, wobble: Int) { wibble + wobble }
++  let wobble = 1
++  let wibble = 2
++  wobble |> add_one(1, wibble)
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(5, 29));
++}
++
++#[test]
++fn local_variable_function_call() {
++    let code = "
++fn add_one(wibble: Int) -> Int {
++  wibble + 1
++}
++
++pub fn main() {
++  let wobble = 1
++  add_one(wobble)
++}
++";
++
++    assert_completion!(TestProject::for_source(code), Position::new(7, 16));
++}
++
++#[test]
++fn local_variable_ignored() {
++    let code = "
++fn wibble() {
++  let a = 1
++  let _b = 2
++
++}
++";
++    assert_completion!(TestProject::for_source(code), Position::new(4, 0));
++}
++
++#[test]
++fn local_variable_as() {
++    let code = "
++fn wibble() {
++  let b as c = 5
++
++}
++";
++    assert_completion!(TestProject::for_source(code), Position::new(3, 0));
++}
++
++#[test]
++fn local_variable_tuple() {
++    let code = "
++fn wibble() {
++  let assert #([d, e] as f, g) = #([0, 1], 2)
++
++}
++";
++    assert_completion!(TestProject::for_source(code), Position::new(3, 0));
++}
++
++#[test]
++fn local_variable_bit_array() {
++    let code = "
++fn wibble() {
++  let assert <<h:1>> as i = <<1:1>>
++
++}
++";
++    assert_completion!(TestProject::for_source(code), Position::new(3, 0));
++}
++
++#[test]
++fn local_variable_string() {
++    let code = r#"
++fn wibble() {
++  let assert "a" <> j = "ab"
++
++}
++"#;
++    assert_completion!(TestProject::for_source(code), Position::new(3, 0));
++}
++
++#[test]
++fn local_variable_ignore_within_function() {
++    let code = "
++fn main(a, b, z) {
++    Nil
++}
++";
++    assert_completion!(TestProject::for_source(code), Position::new(1, 14));
++}
++
+ #[test]
+ fn internal_values_from_root_package_are_in_the_completions() {
+     let dep = r#"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable.snap
+new file mode 100644
+index 000000000..b9400584b
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable.snap
+@@ -0,0 +1,56 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main(wibble: Int) {\n  let wobble = 1\n  w\n\n  let wabble = 2\n}\n"
++---
++pub fn main(wibble: Int) {
++  let wobble = 1
++  w|
++
++  let wabble = 2
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++main
++  kind:   Function
++  detail: fn(Int) -> Int
++  sort:   2_main
++  desc:   app
++  edits:
++    [3:2-3:2]: "main"
++wibble
++  kind:   Variable
++  detail: Int
++  sort:   2_wibble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:2-3:2]: "wibble"
++wobble
++  kind:   Variable
++  detail: Int
++  sort:   2_wobble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:2-3:2]: "wobble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_anonymous_function.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_anonymous_function.snap
+new file mode 100644
+index 000000000..9ff78e591
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_anonymous_function.snap
+@@ -0,0 +1,46 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  let add_one = fn(wibble: Int) { wibble + 1 }\n  add_one(1)\n}\n"
++---
++pub fn main() {
++  let add_one = fn(wibble: Int) { wibble| + 1 }
++  add_one(1)
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++main
++  kind:   Function
++  detail: fn() -> Int
++  sort:   2_main
++  desc:   app
++  edits:
++    [2:34-2:34]: "main"
++wibble
++  kind:   Variable
++  detail: Int
++  sort:   2_wibble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [2:34-2:34]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_as.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_as.snap
+new file mode 100644
+index 000000000..18410f7e1
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_as.snap
+@@ -0,0 +1,54 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\nfn wibble() {\n  let b as c = 5\n\n}\n"
++---
++fn wibble() {
++  let b as c = 5
++|
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++b
++  kind:   Variable
++  detail: Int
++  sort:   2_b
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "b"
++c
++  kind:   Variable
++  detail: Int
++  sort:   2_c
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "c"
++wibble
++  kind:   Function
++  detail: fn() -> Int
++  sort:   2_wibble
++  desc:   app
++  edits:
++    [3:0-3:0]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_bit_array.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_bit_array.snap
+new file mode 100644
+index 000000000..b9f0b6bd5
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_bit_array.snap
+@@ -0,0 +1,54 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\nfn wibble() {\n  let assert <<h:1>> as i = <<1:1>>\n\n}\n"
++---
++fn wibble() {
++  let assert <<h:1>> as i = <<1:1>>
++|
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++h
++  kind:   Variable
++  detail: Int
++  sort:   2_h
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "h"
++i
++  kind:   Variable
++  detail: BitArray
++  sort:   2_i
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "i"
++wibble
++  kind:   Function
++  detail: fn() -> BitArray
++  sort:   2_wibble
++  desc:   app
++  edits:
++    [3:0-3:0]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_case_expression.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_case_expression.snap
+new file mode 100644
+index 000000000..27f4b7673
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_case_expression.snap
+@@ -0,0 +1,48 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  case True {\n    True as wibble -> { todo }\n    False -> { todo }\n  }\n}\n"
++---
++pub fn main() {
++  case True {
++    True as wibble -> { t|odo }
++    False -> { todo }
++  }
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++main
++  kind:   Function
++  detail: fn() -> a
++  sort:   2_main
++  desc:   app
++  edits:
++    [3:24-3:24]: "main"
++wibble
++  kind:   Variable
++  detail: Bool
++  sort:   2_wibble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:24-3:24]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_function_call.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_function_call.snap
+new file mode 100644
+index 000000000..ede6f34be
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_function_call.snap
+@@ -0,0 +1,57 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\nfn add_one(wibble: Int) -> Int {\n  wibble + 1\n}\n\npub fn main() {\n  let wobble = 1\n  add_one(wobble)\n}\n"
++---
++fn add_one(wibble: Int) -> Int {
++  wibble + 1
++}
++
++pub fn main() {
++  let wobble = 1
++  add_one(wobble|)
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++add_one
++  kind:   Function
++  detail: fn(Int) -> Int
++  sort:   2_add_one
++  desc:   app
++  edits:
++    [7:10-7:10]: "add_one"
++main
++  kind:   Function
++  detail: fn() -> Int
++  sort:   2_main
++  desc:   app
++  edits:
++    [7:10-7:10]: "main"
++wobble
++  kind:   Variable
++  detail: Int
++  sort:   2_wobble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [7:10-7:10]: "wobble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args.snap
+new file mode 100644
+index 000000000..d4d005c9a
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args.snap
+@@ -0,0 +1,55 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  let add_one = fn(wibble: Int) { wibble + 1 }\n  let wobble = 1\n  w\n}\n"
++---
++pub fn main() {
++  let add_one = fn(wibble: Int) { wibble + 1 }
++  let wobble = 1
++  w|
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++add_one
++  kind:   Variable
++  detail: fn(Int) -> Int
++  sort:   2_add_one
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:2-4:2]: "add_one"
++main
++  kind:   Function
++  detail: fn() -> a
++  sort:   2_main
++  desc:   app
++  edits:
++    [4:2-4:2]: "main"
++wobble
++  kind:   Variable
++  detail: Int
++  sort:   2_wobble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:2-4:2]: "wobble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args_nested.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args_nested.snap
+new file mode 100644
+index 000000000..663d337ab
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args_nested.snap
+@@ -0,0 +1,66 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  let add_one = fn(wibble: Int) {\n    let wabble = 1\n    let add_two = fn(wobble: Int) { wobble + 2 }\n    wibble + add_two(1)\n  }\n  add_one(1)\n}\n"
++---
++pub fn main() {
++  let add_one = fn(wibble: Int) {
++    let wabble = 1
++    let add_two = fn(wobble: Int) { wobble + 2 }
++    wibble| + add_two(1)
++  }
++  add_one(1)
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++add_two
++  kind:   Variable
++  detail: fn(Int) -> Int
++  sort:   2_add_two
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:4-5:4]: "add_two"
++main
++  kind:   Function
++  detail: fn() -> Int
++  sort:   2_main
++  desc:   app
++  edits:
++    [5:4-5:4]: "main"
++wabble
++  kind:   Variable
++  detail: Int
++  sort:   2_wabble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:4-5:4]: "wabble"
++wibble
++  kind:   Variable
++  detail: Int
++  sort:   2_wibble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:4-5:4]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_returned.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_returned.snap
+new file mode 100644
+index 000000000..16ed6fdad
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_returned.snap
+@@ -0,0 +1,65 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  fn(wibble: Int) {\n    let wabble = 1\n    let add_two = fn(wobble: Int) { wobble + 2 }\n    wibble + add_two(1)\n  }\n}\n"
++---
++pub fn main() {
++  fn(wibble: Int) {
++    let wabble = 1
++    let add_two = fn(wobble: Int) { wobble + 2 }
++    wibble| + add_two(1)
++  }
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++add_two
++  kind:   Variable
++  detail: fn(Int) -> Int
++  sort:   2_add_two
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:4-5:4]: "add_two"
++main
++  kind:   Function
++  detail: fn() -> fn(Int) -> Int
++  sort:   2_main
++  desc:   app
++  edits:
++    [5:4-5:4]: "main"
++wabble
++  kind:   Variable
++  detail: Int
++  sort:   2_wabble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:4-5:4]: "wabble"
++wibble
++  kind:   Variable
++  detail: Int
++  sort:   2_wibble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:4-5:4]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_within_function.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_within_function.snap
+new file mode 100644
+index 000000000..8a3c15e6b
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_within_function.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\nfn main(a, b, z) {\n    Nil\n}\n"
++---
++fn main(a, b, |z) {
++    Nil
++}
++
++
++----- Completion content -----
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignored.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignored.snap
+new file mode 100644
+index 000000000..b4588057f
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignored.snap
+@@ -0,0 +1,47 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\nfn wibble() {\n  let a = 1\n  let _b = 2\n\n}\n"
++---
++fn wibble() {
++  let a = 1
++  let _b = 2
++|
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++a
++  kind:   Variable
++  detail: Int
++  sort:   2_a
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:0-4:0]: "a"
++wibble
++  kind:   Function
++  detail: fn() -> Int
++  sort:   2_wibble
++  desc:   app
++  edits:
++    [4:0-4:0]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_inside_nested_exprs.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_inside_nested_exprs.snap
+new file mode 100644
+index 000000000..67b0cdd65
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_inside_nested_exprs.snap
+@@ -0,0 +1,57 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\ntype Foo { Bar(List(#(Bool))) }\nfn wibble() {\n  Bar([#(!{\n    let foo = True\n    foo\n  })])\n  todo\n}\n"
++---
++type Foo { Bar(List(#(Bool))) }
++fn wibble() {
++  Bar([#(!{
++    let foo = True
++    foo|
++  })])
++  todo
++}
++
++
++----- Completion content -----
++Bar
++  kind:   Constructor
++  detail: fn(List(#(Bool))) -> Foo
++  sort:   2_Bar
++  desc:   app
++  edits:
++    [5:4-5:4]: "Bar"
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++foo
++  kind:   Variable
++  detail: Bool
++  sort:   2_foo
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:4-5:4]: "foo"
++wibble
++  kind:   Function
++  detail: fn() -> a
++  sort:   2_wibble
++  desc:   app
++  edits:
++    [5:4-5:4]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_nested_anonymous_function.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_nested_anonymous_function.snap
+new file mode 100644
+index 000000000..c1ff8d842
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_nested_anonymous_function.snap
+@@ -0,0 +1,66 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  let add_one = fn(wibble: Int) {\n    let wabble = 1\n    let add_two = fn(wobble: Int) { wobble + 2 }\n    wibble + add_two(1)\n  }\n  add_one(1)\n}\n"
++---
++pub fn main() {
++  let add_one = fn(wibble: Int) {
++    let wabble = 1
++    let add_two = fn(wobble: Int) { wobble| + 2 }
++    wibble + add_two(1)
++  }
++  add_one(1)
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++main
++  kind:   Function
++  detail: fn() -> Int
++  sort:   2_main
++  desc:   app
++  edits:
++    [4:36-4:36]: "main"
++wabble
++  kind:   Variable
++  detail: Int
++  sort:   2_wabble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:36-4:36]: "wabble"
++wibble
++  kind:   Variable
++  detail: Int
++  sort:   2_wibble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:36-4:36]: "wibble"
++wobble
++  kind:   Variable
++  detail: Int
++  sort:   2_wobble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:36-4:36]: "wobble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe.snap
+new file mode 100644
+index 000000000..be6479242
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe.snap
+@@ -0,0 +1,55 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  let add_one = fn(wibble: Int) { wibble + 1 }\n  let wobble = 1\n  wobble |> add_one\n}\n"
++---
++pub fn main() {
++  let add_one = fn(wibble: Int) { wibble + 1 }
++  let wobble = 1
++  wobble |> add_one|
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++add_one
++  kind:   Variable
++  detail: fn(Int) -> Int
++  sort:   2_add_one
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:12-4:12]: "add_one"
++main
++  kind:   Function
++  detail: fn() -> Int
++  sort:   2_main
++  desc:   app
++  edits:
++    [4:12-4:12]: "main"
++wobble
++  kind:   Variable
++  detail: Int
++  sort:   2_wobble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [4:12-4:12]: "wobble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe_with_args.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe_with_args.snap
+new file mode 100644
+index 000000000..17ae84459
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe_with_args.snap
+@@ -0,0 +1,64 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\npub fn main() {\n  let add_one = fn(wibble: Int, wobble: Int) { wibble + wobble }\n  let wobble = 1\n  let wibble = 2\n  wobble |> add_one(1, wibble)\n}\n"
++---
++pub fn main() {
++  let add_one = fn(wibble: Int, wobble: Int) { wibble + wobble }
++  let wobble = 1
++  let wibble = 2
++  wobble |> add_one(1, wibble|)
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++add_one
++  kind:   Variable
++  detail: fn(Int, Int) -> Int
++  sort:   2_add_one
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:23-5:23]: "add_one"
++main
++  kind:   Function
++  detail: fn() -> a
++  sort:   2_main
++  desc:   app
++  edits:
++    [5:23-5:23]: "main"
++wibble
++  kind:   Variable
++  detail: Int
++  sort:   2_wibble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:23-5:23]: "wibble"
++wobble
++  kind:   Variable
++  detail: Int
++  sort:   2_wobble
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [5:23-5:23]: "wobble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_string.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_string.snap
+new file mode 100644
+index 000000000..3004ff412
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_string.snap
+@@ -0,0 +1,46 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\nfn wibble() {\n  let assert \"a\" <> j = \"ab\"\n\n}\n"
++---
++fn wibble() {
++  let assert "a" <> j = "ab"
++|
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++j
++  kind:   Variable
++  detail: String
++  sort:   2_j
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "j"
++wibble
++  kind:   Function
++  detail: fn() -> String
++  sort:   2_wibble
++  desc:   app
++  edits:
++    [3:0-3:0]: "wibble"
+diff --git a/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_tuple.snap b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_tuple.snap
+new file mode 100644
+index 000000000..f9478ac9d
+--- /dev/null
++++ b/compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_tuple.snap
+@@ -0,0 +1,70 @@
++---
++source: compiler-core/src/language_server/tests/completion.rs
++expression: "\nfn wibble() {\n  let assert #([d, e] as f, g) = #([0, 1], 2)\n\n}\n"
++---
++fn wibble() {
++  let assert #([d, e] as f, g) = #([0, 1], 2)
++|
++}
++
++
++----- Completion content -----
++Error
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Error
++False
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_False
++Nil
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_Nil
++Ok
++  kind:   Constructor
++  detail: gleam
++  sort:   4_Ok
++True
++  kind:   EnumMember
++  detail: gleam
++  sort:   4_True
++d
++  kind:   Variable
++  detail: Int
++  sort:   2_d
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "d"
++e
++  kind:   Variable
++  detail: Int
++  sort:   2_e
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "e"
++f
++  kind:   Variable
++  detail: List(Int)
++  sort:   2_f
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "f"
++g
++  kind:   Variable
++  detail: Int
++  sort:   2_g
++  desc:   app
++  docs:   "A locally defined variable."
++  edits:
++    [3:0-3:0]: "g"
++wibble
++  kind:   Function
++  detail: fn() -> #(List(Int), Int)
++  sort:   2_wibble
++  desc:   app
++  edits:
++    [3:0-3:0]: "wibble"

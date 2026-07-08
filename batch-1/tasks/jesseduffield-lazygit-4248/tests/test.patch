@@ -1,0 +1,31 @@
+diff --git a/pkg/utils/goid_test.go b/pkg/utils/goid_test.go
+new file mode 100644
+index 0000000..86a922b
+--- /dev/null
++++ b/pkg/utils/goid_test.go
+@@ -0,0 +1,25 @@
++package utils_test
++
++import (
++	"bytes"
++	"runtime"
++	"strconv"
++	"testing"
++
++	"github.com/petermattis/goid"
++)
++
++func TestGoidConsistency(t *testing.T) {
++	fastID := goid.Get()
++
++	var buf [64]byte
++	n := runtime.Stack(buf[:], false)
++	s := buf[:n]
++	s = s[len("goroutine "):]
++	s = s[:bytes.IndexByte(s, ' ')]
++	slowID, _ := strconv.ParseInt(string(s), 10, 64)
++
++	if fastID != slowID {
++		t.Errorf("goid.Get() = %d, want %d (runtime goroutine ID)", fastID, slowID)
++	}
++}

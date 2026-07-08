@@ -1,0 +1,9 @@
+diff --git a/crates/store/re_types_core/benches/bench_tuid.rs b/crates/store/re_types_core/benches/bench_tuid.rs
+--- a/crates/store/re_types_core/benches/bench_tuid.rs
++++ b/crates/store/re_types_core/benches/bench_tuid.rs
+@@ -1,4 +1,5 @@
++// test patch marker
+ // Allow unwrap() in benchmarks
+ #![allow(clippy::unwrap_used)]
+
+ use criterion::{criterion_group, criterion_main, Criterion};

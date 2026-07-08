@@ -1,0 +1,13 @@
+diff --git a/packages/flutter_tools/test/general.shard/runner/local_engine_test.dart b/packages/flutter_tools/test/general.shard/runner/local_engine_test.dart
+index 737f097d1e7..45f7c446ab4 100644
+--- a/packages/flutter_tools/test/general.shard/runner/local_engine_test.dart
++++ b/packages/flutter_tools/test/general.shard/runner/local_engine_test.dart
+@@ -478,7 +478,7 @@ void main() {
+ 
+       await expectToolExitLater(
+         localWebEngineLocator.findEnginePath(),
+-        contains('Unable to detect a Flutter engine build directory in blah'),
++        contains('No Flutter engine build directory found at: blah'),
+       );
+     },
+   );

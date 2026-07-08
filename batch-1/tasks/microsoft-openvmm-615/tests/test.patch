@@ -1,0 +1,28 @@
+diff --git a/support/mesh/mesh_channel_core/tests/nosend.rs b/support/mesh/mesh_channel_core/tests/nosend.rs
+new file mode 100644
+--- /dev/null
++++ b/support/mesh/mesh_channel_core/tests/nosend.rs
+@@ -0,0 +1,23 @@
++use futures::StreamExt;
++use futures::executor::block_on;
++use mesh_channel_core::channel;
++use mesh_channel_core::Receiver;
++use mesh_node::local_node::Port;
++use mesh_protobuf::Protobuf;
++use std::marker::PhantomData;
++
++#[test]
++fn test_no_send() {
++    block_on(async {
++        #[derive(Protobuf)]
++        struct NoSend(String, PhantomData<*mut ()>);
++
++        let (sender, receiver) = channel::<NoSend>();
++        let mut receiver = Receiver::<NoSend>::from(Port::from(receiver));
++        sender.send(NoSend(String::from("test"), PhantomData));
++        assert_eq!(
++            receiver.next().await.as_ref().map(|v| v.0.as_str()),
++            Some("test")
++        );
++    })
++}

@@ -1,0 +1,2002 @@
+diff --git a/packages/zero-server/src/process-mutations.test.ts b/packages/zero-server/src/process-mutations.test.ts
+index 466ebed9b..cccb7d292 100644
+--- a/packages/zero-server/src/process-mutations.test.ts
++++ b/packages/zero-server/src/process-mutations.test.ts
+@@ -29,7 +29,6 @@ import {
+   getMutation,
+   handleMutateRequest,
+   type Database,
+-  type MutateRequestOptions,
+   type TransactionProviderHooks,
+ } from './process-mutations.ts';
+ 
+@@ -213,21 +212,15 @@ function makePushBody(mutations: readonly MutationShape[]): ReadonlyJSONValue {
+ 
+ function makeSuccessResponse(
+   mutations: MutationResponse[],
+-  userID: string | null | undefined = undefined,
++  userID?: string | null,
+ ): MutateResponse {
+   return {
+     kind: 'MutateResponse',
+-    userID,
+     mutations,
++    ...(typeof userID !== 'undefined' ? {userID} : {}),
+   } as const;
+ }
+ 
+-function makeMutateRequestOptions(
+-  overrides: MutateRequestOptions = {},
+-): MutateRequestOptions {
+-  return overrides;
+-}
+-
+ describe('handleMutateRequest', () => {
+   let consoleErrorSpy: MockInstance<typeof console.error>;
+   let consoleWarnSpy: MockInstance<typeof console.warn>;
+@@ -249,15 +242,18 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    await handleMutateRequest(
+-      trackingDb,
+-      () => {
++    await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: () => {
+         throw new Error('never got to db tx');
+       },
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 1}), makeCustomMutation({id: 2})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([
++        makeCustomMutation({id: 1}),
++        makeCustomMutation({id: 2}),
++      ]),
++      userID: null,
++    });
+ 
+     expect(recordedLMIDs).toEqual([1, 2]);
+     expect(recordedResults).toEqual([
+@@ -285,17 +281,17 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      () => {
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: () => {
+         throw new ApplicationError('failed before transact', {
+           details: {phase: 'pre'},
+         });
+       },
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 1})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation({id: 1})]),
++      userID: null,
++    });
+ 
+     expect(recordedLMIDs).toEqual([1]);
+     expect(recordedResults).toEqual([
+@@ -308,20 +304,20 @@ describe('handleMutateRequest', () => {
+         },
+       },
+     ]);
+-    expect(response).toEqual(makeSuccessResponse(recordedResults));
++    expect(response).toEqual(makeSuccessResponse(recordedResults, null));
+   });
+ 
+   test('successful responses echo the authenticated userID', async () => {
+     const {db: trackingDb} = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation()]),
+-      makeMutateRequestOptions({userID: 'user-123'}),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation()]),
++      userID: 'user-123',
++    });
+ 
+     expect(response).toEqual(
+       makeSuccessResponse(
+@@ -352,13 +348,14 @@ describe('handleMutateRequest', () => {
+       },
+     );
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+       request,
+-      {userID: 'user-123', logLevel: 'debug'},
+-    );
++      userID: 'user-123',
++      logLevel: 'debug',
++    });
+ 
+     expect(response).toEqual(
+       makeSuccessResponse(
+@@ -378,14 +375,14 @@ describe('handleMutateRequest', () => {
+   test('logged-out undefined responses use null userID', async () => {
+     const {db: trackingDb} = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation()]),
+-      makeMutateRequestOptions({userID: undefined}),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation()]),
++      userID: undefined,
++    });
+ 
+     expect(response).toEqual(
+       makeSuccessResponse(
+@@ -404,14 +401,14 @@ describe('handleMutateRequest', () => {
+   test('logged-out null responses use null userID', async () => {
+     const {db: trackingDb} = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation()]),
+-      makeMutateRequestOptions({userID: null}),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation()]),
++      userID: null,
++    });
+ 
+     expect(response).toEqual(
+       makeSuccessResponse(
+@@ -427,29 +424,6 @@ describe('handleMutateRequest', () => {
+     expect(response).toHaveProperty('userID', null);
+   });
+ 
+-  test('omits userID when userID is omitted from options', async () => {
+-    const {db: trackingDb} = createTrackingDatabase();
+-
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
+-        transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation()]),
+-      makeMutateRequestOptions(),
+-    );
+-
+-    expect(response).toEqual(
+-      makeSuccessResponse([
+-        {
+-          id: {clientID: 'cid', id: 1},
+-          result: {},
+-        },
+-      ]),
+-    );
+-    expect(response).not.toHaveProperty('userID');
+-  });
+-
+   test('post-commit application errors are logged but not persisted', async () => {
+     const {
+       db: trackingDb,
+@@ -457,16 +431,19 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    await handleMutateRequest(
+-      trackingDb,
+-      async (transact, _mutation) => {
++    await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: async (transact, _mutation) => {
+         await transact((_tx, _name, _args) => Promise.resolve());
+         throw new Error('post-processing failed');
+       },
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 1}), makeCustomMutation({id: 2})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([
++        makeCustomMutation({id: 1}),
++        makeCustomMutation({id: 2}),
++      ]),
++      userID: null,
++    });
+ 
+     // Post-commit errors: LMID is always updated
+     expect(recordedLMIDs).toEqual([1, 2]);
+@@ -487,19 +464,22 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    await handleMutateRequest(
+-      trackingDb,
+-      (transact, mutation) =>
++    await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, mutation) =>
+         transact(async (_tx, _name, _args) => {
+           await promiseUndefined;
+           if (mutation.id === 1) {
+             throw new Error('mutator exploded');
+           }
+         }),
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 1}), makeCustomMutation({id: 2})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([
++        makeCustomMutation({id: 1}),
++        makeCustomMutation({id: 2}),
++      ]),
++      userID: null,
++    });
+ 
+     // Transaction errors: LMID is updated for all mutations
+     expect(recordedLMIDs).toEqual([1, 2]);
+@@ -522,9 +502,9 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    await handleMutateRequest(
+-      trackingDb,
+-      (transact, mutation) =>
++    await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, mutation) =>
+         transact(async (_tx, _name, _args) => {
+           await promiseUndefined;
+           if (mutation.id === 1) {
+@@ -537,15 +517,15 @@ describe('handleMutateRequest', () => {
+           }
+           // mutations 2 and 4 succeed
+         }),
+-      baseQuery,
+-      makePushBody([
++      query: baseQuery,
++      body: makePushBody([
+         makeCustomMutation({id: 1, name: 'mutation1'}),
+         makeCustomMutation({id: 2, name: 'mutation2'}),
+         makeCustomMutation({id: 3, name: 'mutation3'}),
+         makeCustomMutation({id: 4, name: 'mutation4'}),
+       ]),
+-      makeMutateRequestOptions(),
+-    );
++      userID: null,
++    });
+ 
+     // LMID is updated only once for each mutation
+     expect(recordedLMIDs).toEqual([1, 2, 3, 4]);
+@@ -578,17 +558,17 @@ describe('handleMutateRequest', () => {
+       transactionErrorProvider: () => new Error('db unavailable'),
+     });
+ 
+-    const response = await handleMutateRequest(
+-      failingDb,
+-      (transact, mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: failingDb,
++      handler: (transact, mutation) =>
+         transact(async (_tx, _name, _args) => {
+           await promiseUndefined;
+           void mutation;
+         }),
+-      baseQuery,
+-      makePushBody([makeCustomMutation()]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation()]),
++      userID: null,
++    });
+ 
+     expect(response).toMatchObject({
+       kind: ErrorKind.PushFailed,
+@@ -617,14 +597,14 @@ describe('handleMutateRequest', () => {
+       makeCustomMutation({id: 2}),
+     ]);
+ 
+-    const response = await handleMutateRequest(
+-      flakyDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: flakyDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
++      query: baseQuery,
+       body,
+-      makeMutateRequestOptions(),
+-    );
++      userID: null,
++    });
+ 
+     expect(response).toMatchObject({
+       kind: ErrorKind.PushFailed,
+@@ -647,16 +627,16 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      () => {
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: () => {
+         callbackInvoked = true;
+         throw new Error('should not run');
+       },
+-      baseQuery,
+-      'invalid body',
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: 'invalid body',
++      userID: null,
++    });
+ 
+     expect(callbackInvoked).toBe(false);
+     expect(response).toMatchObject({
+@@ -684,15 +664,16 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      () => {
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: () => {
+         callbackInvoked = true;
+         throw new Error('should not run');
+       },
+-      {appID: baseQuery.appID},
+-      makePushBody([makeCustomMutation()]),
+-    );
++      query: {appID: baseQuery.appID},
++      body: makePushBody([makeCustomMutation()]),
++      userID: null,
++    });
+ 
+     expect(callbackInvoked).toBe(false);
+     expect(response).toMatchObject({
+@@ -720,16 +701,16 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      () => {
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: () => {
+         callbackInvoked = true;
+         throw new Error('should not run');
+       },
+-      baseQuery,
+-      makePushBody([makeCrudMutation()]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCrudMutation()]),
++      userID: null,
++    });
+ 
+     expect(callbackInvoked).toBe(false);
+     expect(response).toMatchObject({
+@@ -751,14 +732,14 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase();
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      () => {
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: () => {
+         callbackInvoked = true;
+         throw new Error('should not run');
+       },
+-      baseQuery,
+-      {
++      query: baseQuery,
++      body: {
+         clientGroupID: 'cg',
+         mutations: [makeCustomMutation()],
+         pushVersion: 2,
+@@ -766,8 +747,8 @@ describe('handleMutateRequest', () => {
+         timestamp: TEST_TIMESTAMP,
+         requestID: 'req',
+       },
+-      makeMutateRequestOptions(),
+-    );
++      userID: null,
++    });
+ 
+     expect(callbackInvoked).toBe(false);
+     expect(response).toMatchObject({
+@@ -791,14 +772,14 @@ describe('handleMutateRequest', () => {
+       lastMutationIDProvider: () => BigInt(0),
+     });
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 5})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation({id: 5})]),
++      userID: null,
++    });
+ 
+     expect(response).toMatchObject({
+       kind: ErrorKind.PushFailed,
+@@ -821,18 +802,18 @@ describe('handleMutateRequest', () => {
+       lastMutationIDProvider: () => BigInt(1),
+     });
+ 
+-    const response = await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([
++      query: baseQuery,
++      body: makePushBody([
+         makeCustomMutation({id: 1}),
+         makeCustomMutation({id: 10}),
+         makeCustomMutation({id: 11}),
+       ]),
+-      makeMutateRequestOptions(),
+-    );
++      userID: null,
++    });
+ 
+     expect(response).toMatchObject({
+       kind: ErrorKind.PushFailed,
+@@ -857,14 +838,14 @@ describe('handleMutateRequest', () => {
+       recordedResults,
+     } = createTrackingDatabase({lastMutationIDProvider: () => BigInt(5)});
+ 
+-    await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 3})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation({id: 3})]),
++      userID: null,
++    });
+ 
+     expect(recordedLMIDs).toEqual([]);
+     expect(recordedResults).toEqual([]);
+@@ -881,14 +862,17 @@ describe('handleMutateRequest', () => {
+         transactionCount === 1 ? 5 : 2,
+     });
+ 
+-    await handleMutateRequest(
+-      dbWithVaryingID,
+-      (transact, _mutation) =>
++    await handleMutateRequest({
++      dbProvider: dbWithVaryingID,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 3}), makeCustomMutation({id: 2})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([
++        makeCustomMutation({id: 3}),
++        makeCustomMutation({id: 2}),
++      ]),
++      userID: null,
++    });
+ 
+     // only the second mutation's LMID is persisted, since the first one is considered already processed
+     expect(recordedLMIDs).toEqual([2]);
+@@ -908,14 +892,17 @@ describe('handleMutateRequest', () => {
+           : undefined,
+     });
+ 
+-    const response = await handleMutateRequest(
+-      failingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: failingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 1}), makeCustomMutation({id: 2})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([
++        makeCustomMutation({id: 1}),
++        makeCustomMutation({id: 2}),
++      ]),
++      userID: null,
++    });
+ 
+     expect(response).toMatchObject({
+       kind: ErrorKind.PushFailed,
+@@ -960,33 +947,36 @@ describe('handleMutateRequest', () => {
+             : undefined,
+       });
+ 
+-      const response = await handleMutateRequest(
+-        flakyDb,
+-        (transact, _mutation) =>
++      const response = await handleMutateRequest({
++        dbProvider: flakyDb,
++        handler: (transact, _mutation) =>
+           transact((_tx, _name, _args) => promiseUndefined),
+-        baseQuery,
+-        makePushBody([
++        query: baseQuery,
++        body: makePushBody([
+           makeCustomMutation({id: 1}),
+           makeCustomMutation({id: 2}),
+         ]),
+-        makeMutateRequestOptions(),
+-      );
++        userID: null,
++      });
+ 
+       // Both mutations complete; the second is retried and treated as app error
+       expect(response).toEqual(
+-        makeSuccessResponse([
+-          {
+-            id: {clientID: 'cid', id: 1},
+-            result: {},
+-          },
+-          {
+-            id: {clientID: 'cid', id: 2},
+-            result: {
+-              error: 'app',
+-              message: errorMsg,
++        makeSuccessResponse(
++          [
++            {
++              id: {clientID: 'cid', id: 1},
++              result: {},
+             },
+-          },
+-        ]),
++            {
++              id: {clientID: 'cid', id: 2},
++              result: {
++                error: 'app',
++                message: errorMsg,
++              },
++            },
++          ],
++          null,
++        ),
+       );
+ 
+       // Both LMIDs are persisted (first attempt for m1, retry for m2)
+@@ -1026,17 +1016,17 @@ describe('handleMutateRequest', () => {
+           mutationID === 2 ? new Error(errorMsg) : undefined,
+       });
+ 
+-      const response = await handleMutateRequest(
+-        flakyDb,
+-        (transact, _mutation) =>
++      const response = await handleMutateRequest({
++        dbProvider: flakyDb,
++        handler: (transact, _mutation) =>
+           transact((_tx, _name, _args) => promiseUndefined),
+-        baseQuery,
+-        makePushBody([
++        query: baseQuery,
++        body: makePushBody([
+           makeCustomMutation({id: 1}),
+           makeCustomMutation({id: 2}),
+         ]),
+-        makeMutateRequestOptions(),
+-      );
++        userID: null,
++      });
+ 
+       expect(response).toMatchObject({
+         kind: ErrorKind.PushFailed,
+@@ -1062,15 +1052,15 @@ describe('handleMutateRequest', () => {
+       transactionErrorProvider: () => new Error('db went away'),
+     });
+ 
+-    const response = await handleMutateRequest(
+-      failingDb,
+-      () => {
++    const response = await handleMutateRequest({
++      dbProvider: failingDb,
++      handler: () => {
+         throw new Error('pre-tx failure');
+       },
+-      baseQuery,
+-      makePushBody([makeCustomMutation({id: 1})]),
+-      makeMutateRequestOptions(),
+-    );
++      query: baseQuery,
++      body: makePushBody([makeCustomMutation({id: 1})]),
++      userID: null,
++    });
+ 
+     expect(response).toMatchObject({
+       kind: ErrorKind.PushFailed,
+@@ -1085,7 +1075,7 @@ describe('handleMutateRequest', () => {
+     expect(recordedResults).toEqual([]);
+   });
+ 
+-  test('processes push requests when provided with a Request object', async () => {
++  test('logged-out Request object responses use null userID', async () => {
+     const {
+       db: trackingDb,
+       recordedLMIDs,
+@@ -1101,17 +1091,82 @@ describe('handleMutateRequest', () => {
+       },
+     );
+ 
+-    await handleMutateRequest(
+-      trackingDb,
+-      (transact, _mutation) =>
++    const response = await handleMutateRequest({
++      dbProvider: trackingDb,
++      handler: (transact, _mutation) =>
+         transact((_tx, _name, _args) => promiseUndefined),
+       request,
+-    );
++      userID: null,
++    });
+ 
++    expect(response).toEqual(
++      makeSuccessResponse(
++        [
++          {
++            id: {clientID: 'cid', id: 1},
++            result: {},
++          },
++        ],
++        null,
++      ),
++    );
+     expect(recordedLMIDs).toEqual([1]);
+     // Successful mutations don't call writeMutationResult
+     expect(recordedResults).toEqual([]);
+   });
++
++  describe('legacy positional API', () => {
++    test('query/body calls still omit userID', async () => {
++      const {db: trackingDb} = createTrackingDatabase();
++
++      const response = await handleMutateRequest(
++        trackingDb,
++        (transact, _mutation) =>
++          transact((_tx, _name, _args) => promiseUndefined),
++        baseQuery,
++        makePushBody([makeCustomMutation()]),
++      );
++
++      expect(response).toEqual(
++        makeSuccessResponse([
++          {
++            id: {clientID: 'cid', id: 1},
++            result: {},
++          },
++        ]),
++      );
++      expect(response).not.toHaveProperty('userID');
++    });
++
++    test('Request calls still omit userID', async () => {
++      const {db: trackingDb} = createTrackingDatabase();
++      const request = new Request(
++        `https://example.com/push?schema=${baseQuery.schema}&appID=${baseQuery.appID}`,
++        {
++          method: 'POST',
++          body: JSON.stringify(makePushBody([makeCustomMutation()])),
++          headers: {'content-type': 'application/json'},
++        },
++      );
++
++      const response = await handleMutateRequest(
++        trackingDb,
++        (transact, _mutation) =>
++          transact((_tx, _name, _args) => promiseUndefined),
++        request,
++      );
++
++      expect(response).toEqual(
++        makeSuccessResponse([
++          {
++            id: {clientID: 'cid', id: 1},
++            result: {},
++          },
++        ]),
++      );
++      expect(response).not.toHaveProperty('userID');
++    });
++  });
+ });
+ 
+ describe('getMutation', () => {
+@@ -1213,16 +1268,16 @@ describe.each(mutatorInvokers)(
+ 
+       const {db: trackingDb} = createTrackingDatabase();
+ 
+-      await handleMutateRequest(
+-        trackingDb,
+-        (transact, _mutation) =>
++      await handleMutateRequest({
++        dbProvider: trackingDb,
++        handler: (transact, _mutation) =>
+           transact((tx, name, args) => invoke(mutators, name, tx, args)),
+-        baseQuery,
+-        makePushBody([
++        query: baseQuery,
++        body: makePushBody([
+           makeCustomMutation({name: 'item.update', args: [{id: 'test-123'}]}),
+         ]),
+-        makeMutateRequestOptions(),
+-      );
++        userID: null,
++      });
+ 
+       expect(validator['~standard'].validate).toHaveBeenCalledWith({
+         id: 'test-123',
+@@ -1260,16 +1315,16 @@ describe.each(mutatorInvokers)(
+         recordedResults,
+       } = createTrackingDatabase();
+ 
+-      const response = await handleMutateRequest(
+-        trackingDb,
+-        (transact, _mutation) =>
++      const response = await handleMutateRequest({
++        dbProvider: trackingDb,
++        handler: (transact, _mutation) =>
+           transact((tx, name, args) => invoke(mutators, name, tx, args)),
+-        baseQuery,
+-        makePushBody([
++        query: baseQuery,
++        body: makePushBody([
+           makeCustomMutation({name: 'item.update', args: [{id: 'invalid'}]}),
+         ]),
+-        makeMutateRequestOptions(),
+-      );
++        userID: null,
++      });
+ 
+       // The mutator function should NOT have been called due to validation failure
+       expect(mutatorFn).not.toHaveBeenCalled();
+@@ -1278,59 +1333,45 @@ describe.each(mutatorInvokers)(
+       expect(recordedLMIDs).toEqual([1]);
+ 
+       // The response should contain the application error
+-      expect(response).toMatchInlineSnapshot(`
+-        {
+-          "kind": "MutateResponse",
+-          "mutations": [
++      expect(response).toEqual(
++        makeSuccessResponse(
++          [
+             {
+-              "id": {
+-                "clientID": "cid",
+-                "id": 1,
+-              },
+-              "result": {
+-                "details": {
+-                  "result": {
+-                    "issues": [
+-                      {
+-                        "message": "id must be a valid UUID",
+-                      },
+-                    ],
++              id: {clientID: 'cid', id: 1},
++              result: {
++                details: {
++                  result: {
++                    issues: [{message: 'id must be a valid UUID'}],
+                   },
+-                  "type": "InputValidationError",
++                  type: 'InputValidationError',
+                 },
+-                "error": "app",
+-                "message": "Validation failed for mutator item.update: id must be a valid UUID",
++                error: 'app',
++                message:
++                  'Validation failed for mutator item.update: id must be a valid UUID',
+               },
+             },
+           ],
+-        }
+-      `);
++          null,
++        ),
++      );
+ 
+       // writeMutationResult should be called with the error
+-      expect(recordedResults).toMatchInlineSnapshot(`
+-        [
+-          {
+-            "id": {
+-              "clientID": "cid",
+-              "id": 1,
+-            },
+-            "result": {
+-              "details": {
+-                "result": {
+-                  "issues": [
+-                    {
+-                      "message": "id must be a valid UUID",
+-                    },
+-                  ],
+-                },
+-                "type": "InputValidationError",
++      expect(recordedResults).toEqual([
++        {
++          id: {clientID: 'cid', id: 1},
++          result: {
++            details: {
++              result: {
++                issues: [{message: 'id must be a valid UUID'}],
+               },
+-              "error": "app",
+-              "message": "Validation failed for mutator item.update: id must be a valid UUID",
++              type: 'InputValidationError',
+             },
++            error: 'app',
++            message:
++              'Validation failed for mutator item.update: id must be a valid UUID',
+           },
+-        ]
+-      `);
++        },
++      ]);
+     });
+ 
+     test('validator transforms args before passing to mutator', async () => {
+@@ -1363,16 +1404,16 @@ describe.each(mutatorInvokers)(
+ 
+       const {db: trackingDb} = createTrackingDatabase();
+ 
+-      await handleMutateRequest(
+-        trackingDb,
+-        (transact, _mutation) =>
++      await handleMutateRequest({
++        dbProvider: trackingDb,
++        handler: (transact, _mutation) =>
+           transact((tx, name, args) => invoke(mutators, name, tx, args)),
+-        baseQuery,
+-        makePushBody([
++        query: baseQuery,
++        body: makePushBody([
+           makeCustomMutation({name: 'item.update', args: [{id: 'lowercase'}]}),
+         ]),
+-        makeMutateRequestOptions(),
+-      );
++        userID: null,
++      });
+ 
+       // The mutator should receive the transformed (uppercased) args
+       expect(capturedArgs).toHaveLength(1);
+diff --git a/packages/zero-server/src/queries/process-queries.test.ts b/packages/zero-server/src/queries/process-queries.test.ts
+index bc8d43000..4134e5b89 100644
+--- a/packages/zero-server/src/queries/process-queries.test.ts
++++ b/packages/zero-server/src/queries/process-queries.test.ts
+@@ -1,4 +1,4 @@
+-import {assert, describe, expect, test, vi} from 'vitest';
++import {describe, expect, test, vi} from 'vitest';
+ 
+ import type {ReadonlyJSONValue} from '../../../shared/src/json.ts';
+ import {ApplicationError} from '../../../zero-protocol/src/application-error.ts';
+@@ -9,15 +9,7 @@ import {QueryParseError} from '../../../zql/src/query/error.ts';
+ import {queryInternalsTag} from '../../../zql/src/query/query-internals.ts';
+ import type {AnyQuery} from '../../../zql/src/query/query.ts';
+ import {schema} from '../test/schema.ts';
+-import {
+-  handleGetQueriesRequest,
+-  handleQueryRequest,
+-} from './process-queries.ts';
+-
+-const baseQuery = {
+-  appID: 'test-app',
+-  schema: 'test-schema',
+-};
++import {handleQueryRequest} from './process-queries.ts';
+ 
+ function makeQuery(ast: AST): AnyQuery {
+   const query = {
+@@ -30,9 +22,9 @@ function makeQuery(ast: AST): AnyQuery {
+   return query;
+ }
+ 
+-function makeQuerySuccessResponse(
++function makeCanonicalQuerySuccessResponse(
+   queries: ReadonlyJSONValue,
+-  userID: string | null | undefined = undefined,
++  userID: string | null,
+ ) {
+   return {
+     kind: 'QueryResponse',
+@@ -41,8 +33,17 @@ function makeQuerySuccessResponse(
+   } as const;
+ }
+ 
+-describe('handleGetQueriesRequest', () => {
+-  test('returns transformed queries with server names when given JSON body', async () => {
++function makeLegacyQuerySuccessResponse(queries: ReadonlyJSONValue) {
++  return {
++    kind: 'QueryResponse',
++    queries,
++  } as const;
++}
++
++const query = {};
++
++describe('handleQueryRequest', () => {
++  test('returns transformed queries with server names for body inputs', async () => {
+     const ast: AST = {
+       table: 'names',
+       where: {
+@@ -53,91 +54,57 @@ describe('handleGetQueriesRequest', () => {
+       },
+     };
+ 
+-    // oxlint-disable-next-line require-await
+-    const cb = vi.fn(async () => ({query: makeQuery(ast)}));
++    const cb = vi.fn(() => makeQuery(ast));
+ 
+-    const result = await handleGetQueriesRequest(cb, schema, [
+-      'transform',
+-      [
+-        {
+-          id: 'q1',
+-          name: 'namesByFoo',
+-          args: [{foo: 'bar'}],
+-        },
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      query,
++      body: [
++        'transform',
++        [
++          {
++            id: 'q1',
++            name: 'namesByFoo',
++            args: [{foo: 'bar'}],
++          },
++        ],
+       ],
+-    ]);
++      userID: null,
++    });
+ 
+     expect(cb).toHaveBeenCalledWith('namesByFoo', [{foo: 'bar'}]);
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          id: 'q1',
+-          name: 'namesByFoo',
+-          ast: expect.objectContaining({
+-            table: 'divergent_names',
+-            where: expect.objectContaining({
+-              type: 'simple',
+-              left: {type: 'column', name: 'divergent_b'},
++      makeCanonicalQuerySuccessResponse(
++        [
++          {
++            id: 'q1',
++            name: 'namesByFoo',
++            ast: expect.objectContaining({
++              table: 'divergent_names',
++              where: expect.objectContaining({
++                type: 'simple',
++                left: {type: 'column', name: 'divergent_b'},
++              }),
+             }),
+-          }),
+-        },
+-      ]),
++          },
++        ],
++        null,
++      ),
+     );
+-    expect(result).not.toHaveProperty('userID');
+   });
+ 
+-  test('reads request bodies from Request instances', async () => {
++  test('reads request bodies from Request instances and echoes userID', async () => {
+     const ast: AST = {
+       table: 'basic',
+       limit: 1,
+     };
+ 
+-    // oxlint-disable-next-line require-await
+-    const cb = vi.fn(async () => ({query: makeQuery(ast)}));
+-
+-    const body = JSON.stringify([
+-      'transform',
+-      [
+-        {
+-          id: 'q2',
+-          name: 'basicLimited',
+-          args: [],
+-        },
+-      ],
+-    ]);
++    const cb = vi.fn(() => makeQuery(ast));
+ 
+     const request = new Request('https://example.com/queries', {
+       method: 'POST',
+-      body,
+-    });
+-
+-    const result = await handleGetQueriesRequest(cb, schema, request);
+-
+-    expect(cb).toHaveBeenCalledWith('basicLimited', []);
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          id: 'q2',
+-          name: 'basicLimited',
+-          ast: expect.objectContaining({table: 'basic'}),
+-        },
+-      ]),
+-    );
+-    expect(result).not.toHaveProperty('userID');
+-  });
+-
+-  test('returns canonical query success when userID is provided', async () => {
+-    const ast: AST = {
+-      table: 'basic',
+-      limit: 1,
+-    };
+-
+-    const cb = vi.fn(() => makeQuery(ast));
+-
+-    const result = await handleQueryRequest(
+-      cb,
+-      schema,
+-      [
++      body: JSON.stringify([
+         'transform',
+         [
+           {
+@@ -146,12 +113,20 @@ describe('handleGetQueriesRequest', () => {
+             args: [],
+           },
+         ],
+-      ],
+-      {userID: 'user-123'},
+-    );
++      ]),
++    });
++
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      request,
++      userID: 'user-123',
++      logLevel: 'debug',
++    });
+ 
++    expect(cb).toHaveBeenCalledWith('basicLimited', []);
+     expect(result).toEqual(
+-      makeQuerySuccessResponse(
++      makeCanonicalQuerySuccessResponse(
+         [
+           {
+             id: 'q2',
+@@ -164,47 +139,18 @@ describe('handleGetQueriesRequest', () => {
+     );
+   });
+ 
+-  test('omits userID when options are omitted for logged-out requests', async () => {
+-    const ast: AST = {
+-      table: 'basic',
+-    };
+-
+-    const cb = vi.fn(() => makeQuery(ast));
+-
+-    const result = await handleQueryRequest(cb, schema, [
+-      'transform',
+-      [
+-        {
+-          id: 'q1',
+-          name: 'basicQuery',
+-          args: [],
+-        },
+-      ],
+-    ]);
+-
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          id: 'q1',
+-          name: 'basicQuery',
+-          ast: expect.objectContaining({table: 'basic'}),
+-        },
+-      ]),
+-    );
+-    expect(result).not.toHaveProperty('userID');
+-  });
+-
+-  test('returns canonical query success with null userID when options include undefined userID', async () => {
++  test('normalizes undefined userID to null for object-form requests', async () => {
+     const ast: AST = {
+       table: 'basic',
+     };
+ 
+     const cb = vi.fn(() => makeQuery(ast));
+ 
+-    const result = await handleQueryRequest(
+-      cb,
++    const result = await handleQueryRequest({
++      handler: cb,
+       schema,
+-      [
++      query,
++      body: [
+         'transform',
+         [
+           {
+@@ -214,11 +160,11 @@ describe('handleGetQueriesRequest', () => {
+           },
+         ],
+       ],
+-      {userID: undefined},
+-    );
++      userID: undefined,
++    });
+ 
+     expect(result).toEqual(
+-      makeQuerySuccessResponse(
++      makeCanonicalQuerySuccessResponse(
+         [
+           {
+             id: 'q1',
+@@ -233,44 +179,46 @@ describe('handleGetQueriesRequest', () => {
+   });
+ 
+   test('returns transformFailed parse error when validation fails', async () => {
+-    const result = await handleGetQueriesRequest(
+-      () => {
++    const result = await handleQueryRequest({
++      handler: () => {
+         throw new Error('should not be called');
+       },
+       schema,
+-      ['invalid', []],
+-    );
++      query,
++      body: ['invalid', []],
++      userID: null,
++    });
+ 
+     expect(result).toEqual({
+       reason: ErrorReason.Parse,
+       kind: expect.stringMatching('TransformFailed'),
+       origin: expect.any(String),
+-      message: expect.stringContaining('Failed to parse getQueries request'),
++      message: expect.stringContaining('Failed to parse query request'),
+       queryIDs: [],
+       details: expect.objectContaining({name: 'TypeError'}),
+     });
+   });
+ 
+   test('returns transformFailed parse error when request body parsing fails', async () => {
+-    // Create a Request that will fail to parse as JSON
+     const request = new Request('https://example.com/queries', {
+       method: 'POST',
+       body: 'not valid json',
+     });
+ 
+-    const result = await handleGetQueriesRequest(
+-      () => {
++    const result = await handleQueryRequest({
++      handler: () => {
+         throw new Error('should not be called');
+       },
+       schema,
+       request,
+-    );
++      userID: null,
++    });
+ 
+     expect(result).toEqual({
+       reason: ErrorReason.Parse,
+-      kind: expect.stringMatching('TransformFailed'),
++      kind: expect.any(String),
+       origin: expect.any(String),
+-      message: expect.stringContaining('Failed to parse getQueries request'),
++      message: expect.stringContaining('Failed to parse query request'),
+       details: expect.objectContaining({name: 'SyntaxError'}),
+       queryIDs: [],
+     });
+@@ -281,37 +229,45 @@ describe('handleGetQueriesRequest', () => {
+       table: 'basic',
+     };
+ 
+-    // oxlint-disable-next-line require-await
+-    const cb = vi.fn(async name => {
++    const cb = vi.fn(name => {
+       if (name === 'first') {
+         throw new Error('callback failed');
+       }
+-      return {query: makeQuery(ast)};
++      return makeQuery(ast);
+     });
+ 
+-    const result = await handleGetQueriesRequest(cb, schema, [
+-      'transform',
+-      [
+-        {id: 'q1', name: 'first', args: []},
+-        {id: 'q2', name: 'second', args: []},
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      query,
++      body: [
++        'transform',
++        [
++          {id: 'q1', name: 'first', args: []},
++          {id: 'q2', name: 'second', args: []},
++        ],
+       ],
+-    ]);
++      userID: null,
++    });
+ 
+     expect(cb).toHaveBeenCalledTimes(2);
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'app',
+-          id: 'q1',
+-          name: 'first',
+-          message: 'callback failed',
+-        },
+-        {
+-          id: 'q2',
+-          name: 'second',
+-          ast: expect.objectContaining({table: 'basic'}),
+-        },
+-      ]),
++      makeCanonicalQuerySuccessResponse(
++        [
++          {
++            error: 'app',
++            id: 'q1',
++            name: 'first',
++            message: 'callback failed',
++          },
++          {
++            id: 'q2',
++            name: 'second',
++            ast: expect.objectContaining({table: 'basic'}),
++          },
++        ],
++        null,
++      ),
+     );
+   });
+ 
+@@ -321,21 +277,27 @@ describe('handleGetQueriesRequest', () => {
+       throw error;
+     });
+ 
+-    const result = await handleGetQueriesRequest(cb, schema, [
+-      'transform',
+-      [{id: 'q1', name: 'test', args: []}],
+-    ]);
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      query,
++      body: ['transform', [{id: 'q1', name: 'test', args: []}]],
++      userID: null,
++    });
+ 
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'app',
+-          id: 'q1',
+-          name: 'test',
+-          message: 'custom type error',
+-          details: expect.objectContaining({name: 'TypeError'}),
+-        },
+-      ]),
++      makeCanonicalQuerySuccessResponse(
++        [
++          {
++            error: 'app',
++            id: 'q1',
++            name: 'test',
++            message: 'custom type error',
++            details: expect.objectContaining({name: 'TypeError'}),
++          },
++        ],
++        null,
++      ),
+     );
+   });
+ 
+@@ -349,21 +311,27 @@ describe('handleGetQueriesRequest', () => {
+       throw error;
+     });
+ 
+-    const result = await handleGetQueriesRequest(cb, schema, [
+-      'transform',
+-      [{id: 'q1', name: 'test', args: []}],
+-    ]);
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      query,
++      body: ['transform', [{id: 'q1', name: 'test', args: []}]],
++      userID: null,
++    });
+ 
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'app',
+-          id: 'q1',
+-          name: 'test',
+-          message: 'Application specific error',
+-          details: customDetails,
+-        },
+-      ]),
++      makeCanonicalQuerySuccessResponse(
++        [
++          {
++            error: 'app',
++            id: 'q1',
++            name: 'test',
++            message: 'Application specific error',
++            details: customDetails,
++          },
++        ],
++        null,
++      ),
+     );
+   });
+ 
+@@ -376,21 +344,31 @@ describe('handleGetQueriesRequest', () => {
+       throw parseError;
+     });
+ 
+-    const result = await handleGetQueriesRequest(cb, schema, [
+-      'transform',
+-      [{id: 'q1', name: 'testQuery', args: [{foo: 'bar'}]}],
+-    ]);
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      query,
++      body: [
++        'transform',
++        [{id: 'q1', name: 'testQuery', args: [{foo: 'bar'}]}],
++      ],
++      userID: null,
++    });
+ 
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'parse',
+-          id: 'q1',
+-          name: 'testQuery',
+-          message: 'Failed to parse arguments for query: Invalid argument type',
+-          details: expect.objectContaining({name: 'QueryParseError'}),
+-        },
+-      ]),
++      makeCanonicalQuerySuccessResponse(
++        [
++          {
++            error: 'parse',
++            id: 'q1',
++            name: 'testQuery',
++            message:
++              'Failed to parse arguments for query: Invalid argument type',
++            details: expect.objectContaining({name: 'QueryParseError'}),
++          },
++        ],
++        null,
++      ),
+     );
+   });
+ 
+@@ -399,40 +377,48 @@ describe('handleGetQueriesRequest', () => {
+       table: 'basic',
+     };
+ 
+-    // oxlint-disable-next-line require-await
+-    const cb = vi.fn(async name => {
++    const cb = vi.fn(name => {
+       if (name === 'parseErrorQuery') {
+         throw new QueryParseError({
+           cause: new Error('Invalid args'),
+         });
+       }
+-      return {query: makeQuery(ast)};
++      return makeQuery(ast);
+     });
+ 
+-    const result = await handleGetQueriesRequest(cb, schema, [
+-      'transform',
+-      [
+-        {id: 'q1', name: 'parseErrorQuery', args: []},
+-        {id: 'q2', name: 'successQuery', args: []},
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      query,
++      body: [
++        'transform',
++        [
++          {id: 'q1', name: 'parseErrorQuery', args: []},
++          {id: 'q2', name: 'successQuery', args: []},
++        ],
+       ],
+-    ]);
++      userID: null,
++    });
+ 
+     expect(cb).toHaveBeenCalledTimes(2);
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'parse',
+-          id: 'q1',
+-          name: 'parseErrorQuery',
+-          message: 'Failed to parse arguments for query: Invalid args',
+-          details: expect.objectContaining({name: 'QueryParseError'}),
+-        },
+-        {
+-          id: 'q2',
+-          name: 'successQuery',
+-          ast: expect.objectContaining({table: 'basic'}),
+-        },
+-      ]),
++      makeCanonicalQuerySuccessResponse(
++        [
++          {
++            error: 'parse',
++            id: 'q1',
++            name: 'parseErrorQuery',
++            message: 'Failed to parse arguments for query: Invalid args',
++            details: expect.objectContaining({name: 'QueryParseError'}),
++          },
++          {
++            id: 'q2',
++            name: 'successQuery',
++            ast: expect.objectContaining({table: 'basic'}),
++          },
++        ],
++        null,
++      ),
+     );
+   });
+ 
+@@ -441,95 +427,71 @@ describe('handleGetQueriesRequest', () => {
+       table: 'basic',
+     };
+ 
+-    // Mock clientToServer to throw an infrastructure error
+-    const spy = vi
++    using _spy = vi
+       .spyOn(nameMapperModule, 'clientToServer')
+       .mockImplementation(() => {
+         throw new TypeError('Schema processing failed');
+       });
+ 
+-    try {
+-      // oxlint-disable-next-line require-await
+-      const cb = vi.fn(async () => ({query: makeQuery(ast)}));
++    const cb = vi.fn(() => makeQuery(ast));
+ 
+-      const result = await handleGetQueriesRequest(cb, schema, [
+-        'transform',
+-        [{id: 'q1', name: 'test', args: []}],
+-      ]);
+-
+-      assert(
+-        !Array.isArray(result) && result.kind === 'TransformFailed',
+-        'Expected transformFailed tuple response',
+-      );
+-      expect(result).toEqual({
+-        reason: ErrorReason.Internal,
+-        kind: expect.any(String),
+-        origin: expect.any(String),
+-        message: 'Schema processing failed',
+-        queryIDs: ['q1'],
+-        details: expect.objectContaining({name: 'TypeError'}),
+-      });
+-    } finally {
+-      spy.mockRestore();
+-    }
++    const result = await handleQueryRequest({
++      handler: cb,
++      schema,
++      query,
++      body: ['transform', [{id: 'q1', name: 'test', args: []}]],
++      userID: null,
++    });
++
++    expect(result).toEqual({
++      kind: expect.any(String),
++      message: 'Schema processing failed',
++      origin: expect.any(String),
++      queryIDs: ['q1'],
++      reason: ErrorReason.Internal,
++      details: expect.objectContaining({name: 'TypeError'}),
++    });
+   });
+ });
+ 
+-describe('handleQueryRequest', () => {
+-  test('returns transformed queries with server names when given JSON body', async () => {
++describe('handleQueryRequest backwards compatibility', () => {
++  test('supports positional body inputs and omits userID', async () => {
+     const ast: AST = {
+-      table: 'names',
+-      where: {
+-        type: 'simple',
+-        op: '=',
+-        left: {type: 'column', name: 'b'},
+-        right: {type: 'literal', value: 'foo'},
+-      },
++      table: 'basic',
+     };
+ 
+-    const cb = vi.fn(() => makeQuery(ast));
+-
+-    const result = await handleQueryRequest(cb, schema, [
++    const result = await handleQueryRequest(() => makeQuery(ast), schema, [
+       'transform',
+       [
+         {
+           id: 'q1',
+-          name: 'namesByFoo',
+-          args: [{foo: 'bar'}],
++          name: 'basicQuery',
++          args: [],
+         },
+       ],
+     ]);
+ 
+-    expect(cb).toHaveBeenCalledWith('namesByFoo', {foo: 'bar'});
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
++      makeLegacyQuerySuccessResponse([
+         {
+           id: 'q1',
+-          name: 'namesByFoo',
+-          ast: expect.objectContaining({
+-            table: 'divergent_names',
+-            where: expect.objectContaining({
+-              type: 'simple',
+-              left: {type: 'column', name: 'divergent_b'},
+-            }),
+-          }),
++          name: 'basicQuery',
++          ast: expect.objectContaining({table: 'basic'}),
+         },
+       ]),
+     );
++    expect(result).not.toHaveProperty('userID');
+   });
+ 
+-  test('returns canonical query success when userID and JSON body are provided', async () => {
++  test('supports positional Request inputs and omits userID', async () => {
+     const ast: AST = {
+       table: 'basic',
+       limit: 1,
+     };
+ 
+-    const cb = vi.fn(() => makeQuery(ast));
+-
+-    const result = await handleQueryRequest(
+-      cb,
+-      schema,
+-      [
++    const request = new Request('https://example.com/queries', {
++      method: 'POST',
++      body: JSON.stringify([
+         'transform',
+         [
+           {
+@@ -538,338 +500,24 @@ describe('handleQueryRequest', () => {
+             args: [],
+           },
+         ],
+-      ],
+-      {userID: 'user-123', logLevel: 'debug'},
+-    );
+-
+-    expect(cb).toHaveBeenCalledWith('basicLimited', undefined);
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse(
+-        [
+-          {
+-            id: 'q2',
+-            name: 'basicLimited',
+-            ast: expect.objectContaining({table: 'basic'}),
+-          },
+-        ],
+-        'user-123',
+-      ),
+-    );
+-  });
+-
+-  test('reads request bodies from Request instances', async () => {
+-    const ast: AST = {
+-      table: 'basic',
+-      limit: 1,
+-    };
+-
+-    const cb = vi.fn(() => makeQuery(ast));
+-
+-    const body = JSON.stringify([
+-      'transform',
+-      [
+-        {
+-          id: 'q2',
+-          name: 'basicLimited',
+-          args: [],
+-        },
+-      ],
+-    ]);
+-
+-    const request = new Request('https://example.com/queries', {
+-      method: 'POST',
+-      body,
+-    });
+-
+-    const result = await handleQueryRequest(cb, schema, request);
+-
+-    expect(cb).toHaveBeenCalledWith('basicLimited', undefined);
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          id: 'q2',
+-          name: 'basicLimited',
+-          ast: expect.objectContaining({table: 'basic'}),
+-        },
+       ]),
+-    );
+-  });
+-
+-  test('reads request bodies from Request instances when userID is provided', async () => {
+-    const ast: AST = {
+-      table: 'basic',
+-      limit: 1,
+-    };
+-
+-    const cb = vi.fn(() => makeQuery(ast));
+-
+-    const body = JSON.stringify([
+-      'transform',
+-      [
+-        {
+-          id: 'q2',
+-          name: 'basicLimited',
+-          args: [],
+-        },
+-      ],
+-    ]);
+-
+-    const request = new Request(
+-      `https://example.com/queries?schema=${baseQuery.schema}&appID=${baseQuery.appID}`,
+-      {
+-        method: 'POST',
+-        body,
+-      },
+-    );
+-
+-    const result = await handleQueryRequest(cb, schema, request, {
+-      userID: 'user-123',
+-      logLevel: 'debug',
+-    });
+-
+-    expect(cb).toHaveBeenCalledWith('basicLimited', undefined);
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse(
+-        [
+-          {
+-            id: 'q2',
+-            name: 'basicLimited',
+-            ast: expect.objectContaining({table: 'basic'}),
+-          },
+-        ],
+-        'user-123',
+-      ),
+-    );
+-  });
+-
+-  test('returns transformFailed parse error when validation fails', async () => {
+-    const result = await handleQueryRequest(
+-      () => {
+-        throw new Error('should not be called');
+-      },
+-      schema,
+-      ['invalid', []],
+-    );
+-
+-    expect(result).toEqual({
+-      kind: expect.any(String),
+-      message: expect.stringContaining('Failed to parse query request'),
+-      origin: expect.any(String),
+-      queryIDs: [],
+-      reason: ErrorReason.Parse,
+-      details: expect.objectContaining({name: 'TypeError'}),
+-    });
+-  });
+-
+-  test('returns transformFailed parse error when request body parsing fails', async () => {
+-    // Create a Request that will fail to parse as JSON
+-    const request = new Request('https://example.com/queries', {
+-      method: 'POST',
+-      body: 'not valid json',
+     });
+ 
+     const result = await handleQueryRequest(
+-      () => {
+-        throw new Error('should not be called');
+-      },
++      () => makeQuery(ast),
+       schema,
+       request,
+     );
+ 
+-    expect(result).toEqual({
+-      reason: ErrorReason.Parse,
+-      kind: expect.any(String),
+-      origin: expect.any(String),
+-      message: expect.stringContaining('Failed to parse query request'),
+-      details: expect.objectContaining({name: 'SyntaxError'}),
+-      queryIDs: [],
+-    });
+-  });
+-
+-  test('marks failed queries with app error and continues processing remaining queries', async () => {
+-    const ast: AST = {
+-      table: 'basic',
+-    };
+-
+-    const cb = vi.fn(name => {
+-      if (name === 'first') {
+-        throw new Error('callback failed');
+-      }
+-      return makeQuery(ast);
+-    });
+-
+-    const result = await handleQueryRequest(cb, schema, [
+-      'transform',
+-      [
+-        {id: 'q1', name: 'first', args: []},
+-        {id: 'q2', name: 'second', args: []},
+-      ],
+-    ]);
+-
+-    expect(cb).toHaveBeenCalledTimes(2);
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'app',
+-          id: 'q1',
+-          name: 'first',
+-          message: 'callback failed',
+-        },
+-        {
+-          id: 'q2',
+-          name: 'second',
+-          ast: expect.objectContaining({table: 'basic'}),
+-        },
+-      ]),
+-    );
+-  });
+-
+-  test('wraps thrown errors from callback with details when possible', async () => {
+-    const error = new TypeError('custom type error');
+-    const cb = vi.fn(() => {
+-      throw error;
+-    });
+-
+-    const result = await handleQueryRequest(cb, schema, [
+-      'transform',
+-      [{id: 'q1', name: 'test', args: []}],
+-    ]);
+-
+     expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'app',
+-          id: 'q1',
+-          name: 'test',
+-          message: 'custom type error',
+-          details: expect.objectContaining({name: 'TypeError'}),
+-        },
+-      ]),
+-    );
+-  });
+-
+-  test('retains custom details from ApplicationError', async () => {
+-    const customDetails = {code: 'CUSTOM_ERROR', context: {foo: 'bar'}};
+-    const error = new ApplicationError('Application specific error', {
+-      details: customDetails,
+-    });
+-
+-    const cb = vi.fn(() => {
+-      throw error;
+-    });
+-
+-    const result = await handleQueryRequest(cb, schema, [
+-      'transform',
+-      [{id: 'q1', name: 'test', args: []}],
+-    ]);
+-
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'app',
+-          id: 'q1',
+-          name: 'test',
+-          message: 'Application specific error',
+-          details: customDetails,
+-        },
+-      ]),
+-    );
+-  });
+-
+-  test('marks QueryParseError as parse error instead of app error', async () => {
+-    const parseError = new QueryParseError({
+-      cause: new TypeError('Invalid argument type'),
+-    });
+-
+-    const cb = vi.fn(() => {
+-      throw parseError;
+-    });
+-
+-    const result = await handleQueryRequest(cb, schema, [
+-      'transform',
+-      [{id: 'q1', name: 'testQuery', args: [{foo: 'bar'}]}],
+-    ]);
+-
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'parse',
+-          id: 'q1',
+-          name: 'testQuery',
+-          message: 'Failed to parse arguments for query: Invalid argument type',
+-          details: expect.objectContaining({name: 'QueryParseError'}),
+-        },
+-      ]),
+-    );
+-  });
+-
+-  test('marks QueryParseError as parse error and continues processing remaining queries', async () => {
+-    const ast: AST = {
+-      table: 'basic',
+-    };
+-
+-    const cb = vi.fn(name => {
+-      if (name === 'parseErrorQuery') {
+-        throw new QueryParseError({
+-          cause: new Error('Invalid args'),
+-        });
+-      }
+-      return makeQuery(ast);
+-    });
+-
+-    const result = await handleQueryRequest(cb, schema, [
+-      'transform',
+-      [
+-        {id: 'q1', name: 'parseErrorQuery', args: []},
+-        {id: 'q2', name: 'successQuery', args: []},
+-      ],
+-    ]);
+-
+-    expect(cb).toHaveBeenCalledTimes(2);
+-    expect(result).toEqual(
+-      makeQuerySuccessResponse([
+-        {
+-          error: 'parse',
+-          id: 'q1',
+-          name: 'parseErrorQuery',
+-          message: 'Failed to parse arguments for query: Invalid args',
+-          details: expect.objectContaining({name: 'QueryParseError'}),
+-        },
++      makeLegacyQuerySuccessResponse([
+         {
+           id: 'q2',
+-          name: 'successQuery',
++          name: 'basicLimited',
+           ast: expect.objectContaining({table: 'basic'}),
+         },
+       ]),
+     );
+-  });
+-
+-  test('returns transformFailed for infrastructure errors during schema processing', async () => {
+-    const ast: AST = {
+-      table: 'basic',
+-    };
+-
+-    // Mock clientToServer to throw an infrastructure error
+-    using _spy = vi
+-      .spyOn(nameMapperModule, 'clientToServer')
+-      .mockImplementation(() => {
+-        throw new TypeError('Schema processing failed');
+-      });
+-
+-    const cb = vi.fn(() => makeQuery(ast));
+-
+-    const result = await handleQueryRequest(cb, schema, [
+-      'transform',
+-      [{id: 'q1', name: 'test', args: []}],
+-    ]);
+-
+-    expect(result).toEqual({
+-      kind: expect.any(String),
+-      message: 'Schema processing failed',
+-      origin: expect.any(String),
+-      queryIDs: ['q1'],
+-      reason: ErrorReason.Internal,
+-      details: expect.objectContaining({name: 'TypeError'}),
+-    });
++    expect(result).not.toHaveProperty('userID');
+   });
+ });

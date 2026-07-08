@@ -1,0 +1,20 @@
+diff --git a/pkg/beyla/config_test.go b/pkg/beyla/config_test.go
+index e3a8edbbd..e35b0e625 100644
+--- a/pkg/beyla/config_test.go
++++ b/pkg/beyla/config_test.go
+@@ -122,10 +122,11 @@ network:
+ 		Printer:          false,
+ 		TracePrinter:     "json",
+ 		EBPF: config.EBPFTracer{
+-			BatchLength:        100,
+-			BatchTimeout:       time.Second,
+-			HTTPRequestTimeout: 30 * time.Second,
+-			TCBackend:          tcmanager.TCBackendAuto,
++			BatchLength:               100,
++			BatchTimeout:              time.Second,
++			HTTPRequestTimeout:        30 * time.Second,
++			TCBackend:                 tcmanager.TCBackendAuto,
++			ContextPropagationEnabled: true,
+ 		},
+ 		Grafana: otel.GrafanaConfig{
+ 			OTLP: otel.GrafanaOTLP{

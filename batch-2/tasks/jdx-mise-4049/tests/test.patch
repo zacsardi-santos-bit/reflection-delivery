@@ -1,0 +1,20 @@
+diff --git a/src/cli/usage.rs b/src/cli/usage.rs
+--- a/src/cli/usage.rs
++++ b/src/cli/usage.rs
+@@ -31,4 +31,16 @@
+         println!("{min_version}\n{}\n{extra}", spec.to_string().trim());
+         Ok(())
+     }
+ }
++
++#[cfg(test)]
++mod tests {
++    #[test]
++    fn test_usage_kdl_format() {
++        let extra = include_str!("../assets/mise-extra.usage.kdl");
++        assert!(
++            extra.contains("#true"),
++            "Expected KDL v6 format with #true booleans"
++        );
++    }
++}

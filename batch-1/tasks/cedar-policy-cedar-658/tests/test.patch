@@ -1,0 +1,30 @@
+diff --git a/cedar-policy-validator/src/human_schema/test.rs b/cedar-policy-validator/src/human_schema/test.rs
+index d54d4b51..e1f2a3b4 100644
+--- a/cedar-policy-validator/src/human_schema/test.rs
++++ b/cedar-policy-validator/src/human_schema/test.rs
+@@ -933,3 +933,25 @@
+         );
+     }
+ }
++
++#[cfg(test)]
++#[allow(clippy::panic)]
++mod appliesto_display_tests {
++    use smol_str::ToSmolStr;
++    use std::{collections::HashMap, iter::{empty, once}};
++    use crate::{ActionType, NamespaceDefinition, SchemaFragment};
++
++    #[test]
++    fn test_empty_appliesto_display() {
++        let action = ActionType {
++            attributes: None,
++            applies_to: None,
++            member_of: None,
++        };
++        let namespace = NamespaceDefinition::new(empty(), once(("foo".to_smolstr(), action)));
++        let fragment = SchemaFragment(HashMap::from([("bar".to_smolstr(), namespace)]));
++        let as_src = fragment.as_natural_schema().unwrap();
++        let expected = r#"action "foo" ;"#;
++        assert!(as_src.contains(expected), "src was:\n`{as_src}`");
++    }
++}

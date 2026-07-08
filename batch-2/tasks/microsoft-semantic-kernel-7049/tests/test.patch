@@ -1,0 +1,369 @@
+diff --git a/python/tests/conftest.py b/python/tests/conftest.py
+index 929ea3dfb..e5481f1cb 100644
+--- a/python/tests/conftest.py
++++ b/python/tests/conftest.py
+@@ -249,6 +249,31 @@ def openai_unit_test_env(monkeypatch, exclude_list, override_env_param_dict):
+     return env_vars
+ 
+ 
++@pytest.fixture()
++def mistralai_unit_test_env(monkeypatch, exclude_list, override_env_param_dict):
++    """Fixture to set environment variables for MistralAISettings."""
++    if exclude_list is None:
++        exclude_list = []
++
++    if override_env_param_dict is None:
++        override_env_param_dict = {}
++
++    env_vars = {
++        "MISTRALAI_CHAT_MODEL_ID": "test_chat_model_id",
++        "MISTRALAI_API_KEY": "test_api_key"
++    }
++
++    env_vars.update(override_env_param_dict)
++
++    for key, value in env_vars.items():
++        if key not in exclude_list:
++            monkeypatch.setenv(key, value)
++        else:
++            monkeypatch.delenv(key, raising=False)
++
++    return env_vars
++
++
+ @pytest.fixture()
+ def aca_python_sessions_unit_test_env(monkeypatch, exclude_list, override_env_param_dict):
+     """Fixture to set environment variables for ACA Python Unit Tests."""
+diff --git a/python/tests/integration/completions/test_chat_completions.py b/python/tests/integration/completions/test_chat_completions.py
+index c70e54891..caeeef177 100644
+--- a/python/tests/integration/completions/test_chat_completions.py
++++ b/python/tests/integration/completions/test_chat_completions.py
+@@ -19,6 +19,10 @@ from semantic_kernel.connectors.ai.azure_ai_inference.services.azure_ai_inferenc
+ from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
+ from semantic_kernel.connectors.ai.function_call_behavior import FunctionCallBehavior
+ from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
++from semantic_kernel.connectors.ai.mistral_ai.prompt_execution_settings.mistral_ai_prompt_execution_settings import (
++    MistralAIChatPromptExecutionSettings,
++)
++from semantic_kernel.connectors.ai.mistral_ai.services.mistral_ai_chat_completion import MistralAIChatCompletion
+ from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.azure_chat_prompt_execution_settings import (
+     AzureChatPromptExecutionSettings,
+ )
+@@ -37,6 +41,13 @@ from semantic_kernel.contents.utils.author_role import AuthorRole
+ from semantic_kernel.core_plugins.math_plugin import MathPlugin
+ from tests.integration.completions.test_utils import retry
+ 
++mistral_ai_setup: bool = False
++try:
++    if os.environ["MISTRALAI_API_KEY"] and os.environ["MISTRALAI_CHAT_MODEL_ID"]:
++        mistral_ai_setup = True
++except KeyError:
++    mistral_ai_setup = False
++
+ 
+ def setup(
+     kernel: Kernel,
+@@ -90,6 +101,7 @@ def services() -> dict[str, tuple[ChatCompletionClientBase, type[PromptExecution
+         "azure": (AzureChatCompletion(), AzureChatPromptExecutionSettings),
+         "azure_custom_client": (azure_custom_client, AzureChatPromptExecutionSettings),
+         "azure_ai_inference": (azure_ai_inference_client, AzureAIInferenceChatPromptExecutionSettings),
++        "mistral_ai": (MistralAIChatCompletion() if mistral_ai_setup else None, MistralAIChatPromptExecutionSettings),
+     }
+ 
+ 
+@@ -383,6 +395,17 @@ pytestmark = pytest.mark.parametrize(
+             ["house", "germany"],
+             id="azure_ai_inference_image_input_file",
+         ),
++        pytest.param(
++            "mistral_ai",
++            {},
++            [
++                ChatMessageContent(role=AuthorRole.USER, items=[TextContent(text="Hello")]),
++                ChatMessageContent(role=AuthorRole.USER, items=[TextContent(text="How are you today?")]),
++            ],
++            ["Hello", "well"],
++            marks=pytest.mark.skipif(not mistral_ai_setup, reason="Mistral AI Environment Variables not set"),
++            id="mistral_ai_text_input",
++        ),
+     ],
+ )
+ 
+diff --git a/python/tests/unit/connectors/mistral_ai/services/test_mistralai_chat_completion.py b/python/tests/unit/connectors/mistral_ai/services/test_mistralai_chat_completion.py
+new file mode 100644
+index 000000000..8510fbae3
+--- /dev/null
++++ b/python/tests/unit/connectors/mistral_ai/services/test_mistralai_chat_completion.py
+@@ -0,0 +1,140 @@
++# Copyright (c) Microsoft. All rights reserved.
++from unittest.mock import AsyncMock, MagicMock
++
++import pytest
++from mistralai.async_client import MistralAsyncClient
++
++from semantic_kernel.connectors.ai.chat_completion_client_base import ChatCompletionClientBase
++from semantic_kernel.connectors.ai.mistral_ai.prompt_execution_settings.mistral_ai_prompt_execution_settings import (
++    MistralAIChatPromptExecutionSettings,
++)
++from semantic_kernel.connectors.ai.mistral_ai.services.mistral_ai_chat_completion import MistralAIChatCompletion
++from semantic_kernel.contents.chat_message_content import ChatMessageContent
++from semantic_kernel.exceptions import ServiceInitializationError, ServiceResponseException
++from semantic_kernel.functions.kernel_arguments import KernelArguments
++from semantic_kernel.kernel import Kernel
++
++
++@pytest.mark.asyncio
++async def test_complete_chat_contents(kernel: Kernel):
++    chat_history = MagicMock()
++    settings = MagicMock()
++    settings.number_of_responses = 1
++    arguments = KernelArguments()
++    client = MagicMock(spec=MistralAsyncClient)
++    chat_completion_response = AsyncMock()
++    choices = [
++        MagicMock(finish_reason="stop", message=MagicMock(role="assistant", content="Test"))
++    ]
++    chat_completion_response.choices = choices
++    client.chat.return_value = chat_completion_response
++    chat_completion_base = MistralAIChatCompletion(
++        ai_model_id="test_model_id", service_id="test", api_key="", async_client=client
++    )
++
++    content: list[ChatMessageContent] = await chat_completion_base.get_chat_message_contents(
++        chat_history, settings, kernel=kernel, arguments=arguments
++    )
++    assert content is not None
++
++
++@pytest.mark.asyncio
++async def test_complete_chat_stream_contents(kernel: Kernel):
++    chat_history = MagicMock()
++    settings = MagicMock()
++    settings.ai_model_id = None
++    arguments = KernelArguments()
++    client = MagicMock(spec=MistralAsyncClient)
++    chat_completion_response = MagicMock()
++    choices = [
++        MagicMock(finish_reason="stop", delta=MagicMock(role="assistant", content="Test")),
++        MagicMock(finish_reason="stop", delta=MagicMock(role="assistant", content="Test", tool_calls=None))
++        ]
++    chat_completion_response.choices = choices
++    chat_completion_response_empty = MagicMock()
++    chat_completion_response_empty.choices = []
++    generator_mock = MagicMock()
++    generator_mock.__aiter__.return_value = [chat_completion_response_empty, chat_completion_response]
++    client.chat_stream.return_value = generator_mock
++
++    chat_completion_base = MistralAIChatCompletion(
++        ai_model_id="test_model_id", service_id="test", api_key="", async_client=client
++    )
++
++    async for content in chat_completion_base.get_streaming_chat_message_contents(
++        chat_history, settings, kernel=kernel, arguments=arguments
++    ):
++        assert content is not None
++
++
++@pytest.mark.asyncio
++async def test_mistral_ai_sdk_exception(kernel: Kernel):
++    chat_history = MagicMock()
++    settings = MagicMock()
++    settings.ai_model_id = None
++    arguments = KernelArguments()
++    client = MagicMock(spec=MistralAsyncClient)
++    client.chat.side_effect = Exception("Test Exception")
++    client.chat_stream.side_effect = Exception("Test Exception")
++
++    chat_completion_base = MistralAIChatCompletion(
++        ai_model_id="test_model_id", service_id="test", api_key="", async_client=client
++    )
++
++    with pytest.raises(ServiceResponseException):
++        await chat_completion_base.get_chat_message_contents(
++            chat_history, settings, kernel=kernel, arguments=arguments
++        )
++
++
++@pytest.mark.asyncio
++async def test_mistral_ai_sdk_exception_streaming(kernel: Kernel):
++    chat_history = MagicMock()
++    settings = MagicMock()
++    settings.number_of_responses = 1
++    arguments = KernelArguments()
++    client = MagicMock(spec=MistralAsyncClient)
++    client.chat_stream.side_effect = Exception("Test Exception")
++
++    chat_completion_base = MistralAIChatCompletion(
++        ai_model_id="test_model_id", service_id="test", api_key="", async_client=client
++    )
++
++    with pytest.raises(ServiceResponseException):
++        async for content in chat_completion_base.get_streaming_chat_message_contents(
++            chat_history, settings, kernel=kernel, arguments=arguments
++        ):
++            assert content is not None
++        
++
++def test_mistral_ai_chat_completion_init(mistralai_unit_test_env) -> None:
++    # Test successful initialization
++    mistral_ai_chat_completion = MistralAIChatCompletion()
++
++    assert mistral_ai_chat_completion.ai_model_id == mistralai_unit_test_env["MISTRALAI_CHAT_MODEL_ID"]
++    assert isinstance(mistral_ai_chat_completion, ChatCompletionClientBase)
++
++
++@pytest.mark.parametrize("exclude_list", [["MISTRALAI_API_KEY"]], indirect=True)
++def test_mistral_ai_chat_completion_init_with_empty_api_key(mistralai_unit_test_env) -> None:
++    ai_model_id = "test_model_id"
++
++    with pytest.raises(ServiceInitializationError):
++        MistralAIChatCompletion(
++            ai_model_id=ai_model_id,
++            env_file_path="test.env",
++        )
++
++
++@pytest.mark.parametrize("exclude_list", [["MISTRALAI_CHAT_MODEL_ID"]], indirect=True)
++def test_mistral_ai_chat_completion_init_with_empty_model_id(mistralai_unit_test_env) -> None:
++    with pytest.raises(ServiceInitializationError):
++        MistralAIChatCompletion(
++            env_file_path="test.env",
++        )
++
++
++def test_prompt_execution_settings_class(mistralai_unit_test_env):
++    mistral_ai_chat_completion = MistralAIChatCompletion()
++    prompt_execution_settings = mistral_ai_chat_completion.get_prompt_execution_settings_class()
++    assert prompt_execution_settings == MistralAIChatPromptExecutionSettings
+diff --git a/python/tests/unit/connectors/mistral_ai/test_mistralai_request_settings.py b/python/tests/unit/connectors/mistral_ai/test_mistralai_request_settings.py
+new file mode 100644
+index 000000000..636f1565b
+--- /dev/null
++++ b/python/tests/unit/connectors/mistral_ai/test_mistralai_request_settings.py
+@@ -0,0 +1,126 @@
++# Copyright (c) Microsoft. All rights reserved.
++import pytest
++
++from semantic_kernel.connectors.ai.mistral_ai.prompt_execution_settings.mistral_ai_prompt_execution_settings import (
++    MistralAIChatPromptExecutionSettings,
++)
++from semantic_kernel.connectors.ai.prompt_execution_settings import PromptExecutionSettings
++
++
++def test_default_mistralai_chat_prompt_execution_settings():
++    settings = MistralAIChatPromptExecutionSettings()
++    assert settings.temperature is None
++    assert settings.top_p is None
++    assert settings.max_tokens is None
++    assert settings.messages is None
++
++
++def test_custom_mistralai_chat_prompt_execution_settings():
++    settings = MistralAIChatPromptExecutionSettings(
++        temperature=0.5,
++        top_p=0.5,
++        max_tokens=128,
++        messages=[{"role": "system", "content": "Hello"}],
++    )
++    assert settings.temperature == 0.5
++    assert settings.top_p == 0.5
++    assert settings.max_tokens == 128
++    assert settings.messages == [{"role": "system", "content": "Hello"}]
++
++
++def test_mistralai_chat_prompt_execution_settings_from_default_completion_config():
++    settings = PromptExecutionSettings(service_id="test_service")
++    chat_settings = MistralAIChatPromptExecutionSettings.from_prompt_execution_settings(settings)
++    assert chat_settings.service_id == "test_service"
++    assert chat_settings.temperature is None
++    assert chat_settings.top_p is None
++    assert chat_settings.max_tokens is None
++
++
++def test_mistral_chat_prompt_execution_settings_from_openai_prompt_execution_settings():
++    chat_settings = MistralAIChatPromptExecutionSettings(service_id="test_service", temperature=1.0)
++    new_settings = MistralAIChatPromptExecutionSettings(service_id="test_2", temperature=0.0)
++    chat_settings.update_from_prompt_execution_settings(new_settings)
++    assert chat_settings.service_id == "test_2"
++    assert chat_settings.temperature == 0.0
++
++
++def test_mistral_chat_prompt_execution_settings_from_custom_completion_config():
++    settings = PromptExecutionSettings(
++        service_id="test_service",
++        extension_data={
++            "temperature": 0.5,
++            "top_p": 0.5,
++            "max_tokens": 128,
++            "messages": [{"role": "system", "content": "Hello"}],
++        },
++    )
++    chat_settings = MistralAIChatPromptExecutionSettings.from_prompt_execution_settings(settings)
++    assert chat_settings.temperature == 0.5
++    assert chat_settings.top_p == 0.5
++    assert chat_settings.max_tokens == 128
++
++
++def test_openai_chat_prompt_execution_settings_from_custom_completion_config_with_none():
++    settings = PromptExecutionSettings(
++        service_id="test_service",
++        extension_data={
++            "temperature": 0.5,
++            "top_p": 0.5,
++            "max_tokens": 128,
++            "messages": [{"role": "system", "content": "Hello"}],
++        },
++    )
++    chat_settings = MistralAIChatPromptExecutionSettings.from_prompt_execution_settings(settings)
++    assert chat_settings.temperature == 0.5
++    assert chat_settings.top_p == 0.5
++    assert chat_settings.max_tokens == 128
++
++
++def test_openai_chat_prompt_execution_settings_from_custom_completion_config_with_functions():
++    settings = PromptExecutionSettings(
++        service_id="test_service",
++        extension_data={
++            "temperature": 0.5,
++            "top_p": 0.5,
++            "max_tokens": 128,
++            "tools": [{}],
++            "messages": [{"role": "system", "content": "Hello"}],
++        },
++    )
++    chat_settings = MistralAIChatPromptExecutionSettings.from_prompt_execution_settings(settings)
++    assert chat_settings.temperature == 0.5
++    assert chat_settings.top_p == 0.5
++    assert chat_settings.max_tokens == 128
++
++
++def test_create_options():
++    settings = MistralAIChatPromptExecutionSettings(
++        service_id="test_service",
++        extension_data={
++            "temperature": 0.5,
++            "top_p": 0.5,
++            "max_tokens": 128,
++            "tools": [{}],
++            "messages": [{"role": "system", "content": "Hello"}],
++        },
++    )
++    options = settings.prepare_settings_dict()
++    assert options["temperature"] == 0.5
++    assert options["top_p"] == 0.5
++    assert options["max_tokens"] == 128
++
++
++def test_create_options_with_function_choice_behavior():
++    with pytest.raises(NotImplementedError):
++        MistralAIChatPromptExecutionSettings(
++            service_id="test_service",
++            function_choice_behavior="auto",
++            extension_data={
++                "temperature": 0.5,
++                "top_p": 0.5,
++                "max_tokens": 128,
++                "tools": [{}],
++                "messages": [{"role": "system", "content": "Hello"}],
++            },
++        )

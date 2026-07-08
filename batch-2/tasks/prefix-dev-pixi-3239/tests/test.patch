@@ -1,0 +1,19 @@
+diff --git a/crates/pixi_manifest/src/pypi/pypi_requirement.rs b/crates/pixi_manifest/src/pypi/pypi_requirement.rs
+index e11a52c2c..6a804c341 100644
+--- a/crates/pixi_manifest/src/pypi/pypi_requirement.rs
++++ b/crates/pixi_manifest/src/pypi/pypi_requirement.rs
+@@ -1171,4 +1171,14 @@ mod tests {
+             ))
+             .join("\n"));
+     }
++
++    #[test]
++    fn test_snapshot_content_updated() {
++        let snap = include_str!("snapshots/pixi_manifest__pypi__pypi_requirement__tests__deserialize_failing.snap");
++        assert!(
++            !snap.contains("snapshot_kind: text"),
++            "Snapshot file has not been updated. Expected no 'snapshot_kind: text' field.\nGot: {}",
++            snap
++        );
++    }
+ }

@@ -1,0 +1,25 @@
+diff --git a/codex-rs/tui/src/chatwidget/tests.rs b/codex-rs/tui/src/chatwidget/tests.rs
+index 05adf3d307..7f83f622d5 100644
+--- a/codex-rs/tui/src/chatwidget/tests.rs
++++ b/codex-rs/tui/src/chatwidget/tests.rs
+@@ -6509,7 +6509,7 @@ async fn image_generation_call_adds_history_cell() {
+             status: "completed".into(),
+             revised_prompt: Some("A tiny blue square".into()),
+             result: "Zm9v".into(),
+-            saved_path: Some("/tmp/ig-1.png".into()),
++            saved_path: Some("file:///tmp/ig-1.png".into()),
+         }),
+     });
+ 
+diff --git a/codex-rs/tui_app_server/src/chatwidget/tests.rs b/codex-rs/tui_app_server/src/chatwidget/tests.rs
+index bae556d51a..d9f71b6a68 100644
+--- a/codex-rs/tui_app_server/src/chatwidget/tests.rs
++++ b/codex-rs/tui_app_server/src/chatwidget/tests.rs
+@@ -7097,7 +7097,7 @@ async fn image_generation_call_adds_history_cell() {
+             status: "completed".into(),
+             revised_prompt: Some("A tiny blue square".into()),
+             result: "Zm9v".into(),
+-            saved_path: Some("/tmp/ig-1.png".into()),
++            saved_path: Some("file:///tmp/ig-1.png".into()),
+         }),
+     });

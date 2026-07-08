@@ -1,0 +1,1595 @@
+diff --git a/router/router_test.go b/router/router_test.go
+index db9a4e4ab..d2fce62f7 100644
+--- a/router/router_test.go
++++ b/router/router_test.go
+@@ -49,6 +49,7 @@ func Test_initializeCtrlEndpoints(t *testing.T) {
+ 				Options               *channel.Options
+ 				DataDir               string
+ 				Heartbeats            env.HeartbeatOptions
++				StartupTimeout        time.Duration
+ 			}{
+ 				DataDir:          tmpDir,
+ 				InitialEndpoints: []*UpdatableAddress{NewUpdatableAddress(addr)},
+@@ -89,6 +90,7 @@ func Test_updateCtrlEndpoints(t *testing.T) {
+ 				Options               *channel.Options
+ 				DataDir               string
+ 				Heartbeats            env.HeartbeatOptions
++				StartupTimeout        time.Duration
+ 			}{
+ 				DataDir:          tmpDir,
+ 				InitialEndpoints: []*UpdatableAddress{NewUpdatableAddress(addr), NewUpdatableAddress(addr2)},
+diff --git a/zititest/go.mod b/zititest/go.mod
+index aa5950a47..39604580e 100644
+--- a/zititest/go.mod
++++ b/zititest/go.mod
+@@ -7,15 +7,18 @@ replace github.com/openziti/ziti => ../
+ require (
+ 	github.com/Jeffail/gabs v1.4.0
+ 	github.com/Jeffail/gabs/v2 v2.7.0
++	github.com/go-openapi/runtime v0.27.1
+ 	github.com/google/go-cmp v0.6.0
+ 	github.com/google/uuid v1.5.0
++	github.com/gorilla/websocket v1.5.1
+ 	github.com/michaelquigley/pfxlog v0.6.10
+ 	github.com/openziti/agent v1.0.16
+-	github.com/openziti/channel/v2 v2.0.116
++	github.com/openziti/channel/v2 v2.0.117
++	github.com/openziti/edge-api v0.26.10
+ 	github.com/openziti/fablab v0.5.42
+ 	github.com/openziti/foundation/v2 v2.0.36
+ 	github.com/openziti/identity v1.0.69
+-	github.com/openziti/sdk-golang v0.22.17
++	github.com/openziti/sdk-golang v0.22.21
+ 	github.com/openziti/storage v0.2.28
+ 	github.com/openziti/transport/v2 v2.0.121
+ 	github.com/openziti/ziti v0.28.3
+@@ -71,10 +74,9 @@ require (
+ 	github.com/go-openapi/jsonpointer v0.20.2 // indirect
+ 	github.com/go-openapi/jsonreference v0.20.4 // indirect
+ 	github.com/go-openapi/loads v0.21.5 // indirect
+-	github.com/go-openapi/runtime v0.26.2 // indirect
+ 	github.com/go-openapi/spec v0.20.14 // indirect
+ 	github.com/go-openapi/strfmt v0.22.0 // indirect
+-	github.com/go-openapi/swag v0.22.7 // indirect
++	github.com/go-openapi/swag v0.22.9 // indirect
+ 	github.com/go-openapi/validate v0.22.6 // indirect
+ 	github.com/go-resty/resty/v2 v2.11.0 // indirect
+ 	github.com/golang-jwt/jwt/v5 v5.2.0 // indirect
+@@ -84,7 +86,6 @@ require (
+ 	github.com/gorilla/mux v1.8.1 // indirect
+ 	github.com/gorilla/schema v1.2.0 // indirect
+ 	github.com/gorilla/securecookie v1.1.1 // indirect
+-	github.com/gorilla/websocket v1.5.1 // indirect
+ 	github.com/hashicorp/go-hclog v1.6.2 // indirect
+ 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
+ 	github.com/hashicorp/go-msgpack v0.5.5 // indirect
+@@ -134,7 +135,6 @@ require (
+ 	github.com/oliveagle/jsonpath v0.0.0-20180606110733-2e52cf6e6852 // indirect
+ 	github.com/opentracing/opentracing-go v1.2.0 // indirect
+ 	github.com/openziti/dilithium v0.3.3 // indirect
+-	github.com/openziti/edge-api v0.26.8 // indirect
+ 	github.com/openziti/jwks v1.0.3 // indirect
+ 	github.com/openziti/metrics v1.2.43 // indirect
+ 	github.com/openziti/runzmd v1.0.37 // indirect
+diff --git a/zititest/go.sum b/zititest/go.sum
+index ae5fbf901..5af3fb4b8 100644
+--- a/zititest/go.sum
++++ b/zititest/go.sum
+@@ -231,14 +231,14 @@ github.com/go-openapi/jsonreference v0.20.4 h1:bKlDxQxQJgwpUSgOENiMPzCTBVuc7vTdX
+ github.com/go-openapi/jsonreference v0.20.4/go.mod h1:5pZJyJP2MnYCpoeoMAql78cCHauHj0V9Lhc506VOpw4=
+ github.com/go-openapi/loads v0.21.5 h1:jDzF4dSoHw6ZFADCGltDb2lE4F6De7aWSpe+IcsRzT0=
+ github.com/go-openapi/loads v0.21.5/go.mod h1:PxTsnFBoBe+z89riT+wYt3prmSBP6GDAQh2l9H1Flz8=
+-github.com/go-openapi/runtime v0.26.2 h1:elWyB9MacRzvIVgAZCBJmqTi7hBzU0hlKD4IvfX0Zl0=
+-github.com/go-openapi/runtime v0.26.2/go.mod h1:O034jyRZ557uJKzngbMDJXkcKJVzXJiymdSfgejrcRw=
++github.com/go-openapi/runtime v0.27.1 h1:ae53yaOoh+fx/X5Eaq8cRmavHgDma65XPZuvBqvJYto=
++github.com/go-openapi/runtime v0.27.1/go.mod h1:fijeJEiEclyS8BRurYE1DE5TLb9/KZl6eAdbzjsrlLU=
+ github.com/go-openapi/spec v0.20.14 h1:7CBlRnw+mtjFGlPDRZmAMnq35cRzI91xj03HVyUi/Do=
+ github.com/go-openapi/spec v0.20.14/go.mod h1:8EOhTpBoFiask8rrgwbLC3zmJfz4zsCUueRuPM6GNkw=
+ github.com/go-openapi/strfmt v0.22.0 h1:Ew9PnEYc246TwrEspvBdDHS4BVKXy/AOVsfqGDgAcaI=
+ github.com/go-openapi/strfmt v0.22.0/go.mod h1:HzJ9kokGIju3/K6ap8jL+OlGAbjpSv27135Yr9OivU4=
+-github.com/go-openapi/swag v0.22.7 h1:JWrc1uc/P9cSomxfnsFSVWoE1FW6bNbrVPmpQYpCcR8=
+-github.com/go-openapi/swag v0.22.7/go.mod h1:Gl91UqO+btAM0plGGxHqJcQZ1ZTy6jbmridBTsDy8A0=
++github.com/go-openapi/swag v0.22.9 h1:XX2DssF+mQKM2DHsbgZK74y/zj4mo9I99+89xUmuZCE=
++github.com/go-openapi/swag v0.22.9/go.mod h1:3/OXnFfnMAwBD099SwYRk7GD3xOrr1iL7d/XNLXVVwE=
+ github.com/go-openapi/validate v0.22.6 h1:+NhuwcEYpWdO5Nm4bmvhGLW0rt1Fcc532Mu3wpypXfo=
+ github.com/go-openapi/validate v0.22.6/go.mod h1:eaddXSqKeTg5XpSmj1dYyFTK/95n/XHwcOY+BMxKMyM=
+ github.com/go-resty/resty/v2 v2.11.0 h1:i7jMfNOJYMp69lq7qozJP+bjgzfAzeOhuGlyDrqxT/8=
+@@ -587,14 +587,12 @@ github.com/opentracing/opentracing-go v1.2.0/go.mod h1:GxEUsuufX4nBwe+T+Wl9TAgYr
+ github.com/openzipkin/zipkin-go v0.1.1/go.mod h1:NtoC/o8u3JlF1lSlyPNswIbeQH9bJTmOf0Erfk+hxe8=
+ github.com/openziti/agent v1.0.16 h1:9Saji+8hFE1NpzP2XzDhsVJbCrDlhixoLHfOpFt5Z+U=
+ github.com/openziti/agent v1.0.16/go.mod h1:zfm53+PVWoGFzjGGgQdKby5749G6VRYHe+eQJmoVKy4=
+-github.com/openziti/channel/v2 v2.0.116 h1:VUxJ3rICTQz9fmSz6tbssC2tzXafL1MAY6yvgHfSUHI=
+-github.com/openziti/channel/v2 v2.0.116/go.mod h1:RADBBOkbwpFMmbznU3bZmUsBB646seqZnQ7GPI6Chjg=
++github.com/openziti/channel/v2 v2.0.117 h1:9EUNJIA4NCosn+Uci0gYNiDMsGBX52Jd34wpziW+zPA=
++github.com/openziti/channel/v2 v2.0.117/go.mod h1:RADBBOkbwpFMmbznU3bZmUsBB646seqZnQ7GPI6Chjg=
+ github.com/openziti/dilithium v0.3.3 h1:PLgQ6PMNLSTzCFbX/h98cmudgz/cU6TmjdSv5NAPD8k=
+ github.com/openziti/dilithium v0.3.3/go.mod h1:vsCjI2AU/hon9e+dLhUFbCNGesJDj2ASgkySOcpmvjo=
+-github.com/openziti/edge-api v0.26.8 h1:W1iHwVrb4hVKXWhfN8g/dl1d0RGdus6nOYbhM5ixOEg=
+-github.com/openziti/edge-api v0.26.8/go.mod h1:Tm2Qn1BC0zF+F261Y8FTyPtS/UkeUtUBYoT6ueCjVbA=
+-github.com/openziti/fablab v0.5.38 h1:G8ieax/d4LGeRPuMT2XHTOc18jtZTaXtPmjA+5CVO3U=
+-github.com/openziti/fablab v0.5.38/go.mod h1:LstfQixYgv82aUBR8ranX2Hc9KHohFC1G5/AeaeTMwg=
++github.com/openziti/edge-api v0.26.10 h1:LEDuJHZsExi0PBVO9iVuIdZWJ7eFo/i4TJhXoSFmfOU=
++github.com/openziti/edge-api v0.26.10/go.mod h1:FQLjav9AfqxQYSL0xKPDZ/JWTSZXApkk7jM2/iczGXM=
+ github.com/openziti/fablab v0.5.42 h1:vENJKfEba2T4sSLwlKDL/IzBYfY8iHnhc4umf6IESiY=
+ github.com/openziti/fablab v0.5.42/go.mod h1:HDT06y1QX8kO8ZQrgHvZmJsvc8iRybESGtlDLDII4ks=
+ github.com/openziti/foundation/v2 v2.0.36 h1:ogEIvsWur8/9mUzf9NOB4hRUyx372Uy6AmnHRcurIkY=
+@@ -607,8 +605,8 @@ github.com/openziti/metrics v1.2.43 h1:DSrmpLhoA45DlLVNdKOn2lBfCM0/r6wKz+3SDXe8X
+ github.com/openziti/metrics v1.2.43/go.mod h1:+RY4avT60Vbxb9wyfvRD0msrARyYCB5+heb8VIZzCm8=
+ github.com/openziti/runzmd v1.0.37 h1:qj2r9z4t7OAdmIXMdGbP9Su6TqA0bLdD2RMjJ71LRS0=
+ github.com/openziti/runzmd v1.0.37/go.mod h1:eKhqJsGoLeDHex/o5Mw6TcNJxlVljafSVm7ZU+bX5G8=
+-github.com/openziti/sdk-golang v0.22.17 h1:taywYpWpWBtZUj6KewMScYXgPe8TWz2nWNl96/y/IZ4=
+-github.com/openziti/sdk-golang v0.22.17/go.mod h1:t0sT5N1Q/LdAd54Dxz274sQ9vJo8/B5Q0jn+VZ9vFuw=
++github.com/openziti/sdk-golang v0.22.21 h1:rj8gCq9SPcRpStPX0GUL8X2vkCQNUn+nk2WbyY82b/Y=
++github.com/openziti/sdk-golang v0.22.21/go.mod h1:w3M9yAVnW7IAU1dpYtiFB/mIYLiU7l4tB+c4coqWRwo=
+ github.com/openziti/secretstream v0.1.16 h1:tVanF7OpJL1MJ1gvWaRlR2i+kAbrGsxr3q6EXFOS08U=
+ github.com/openziti/secretstream v0.1.16/go.mod h1:bvjGBUW/0e5MzD5S3FW3rhGASRNWAi+kTkTENZ9qRDE=
+ github.com/openziti/storage v0.2.28 h1:qHnsSF4RgQpT23hOXlwkAvJ0gO5PLmvTqyBy13dm3Rc=
+@@ -1025,8 +1023,6 @@ golang.org/x/sync v0.0.0-20201207232520-09787c993a3a/go.mod h1:RxMgew5VJxzue5/jJ
+ golang.org/x/sync v0.0.0-20210220032951-036812b2e83c/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+ golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+ golang.org/x/sync v0.1.0/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+-golang.org/x/sync v0.5.0 h1:60k92dhOjHxJkrqnwsfl8KuaHbn/5dl0lUPUklKo3qE=
+-golang.org/x/sync v0.5.0/go.mod h1:Czt+wKu1gCyEFDUtn0jG5QVvpJ6rzVqr5aXyt9drQfk=
+ golang.org/x/sync v0.6.0 h1:5BMeUDZ7vkXGfEr1x9B4bRcTH4lpkTkpdh0T/J+qjbQ=
+ golang.org/x/sync v0.6.0/go.mod h1:Czt+wKu1gCyEFDUtn0jG5QVvpJ6rzVqr5aXyt9drQfk=
+ golang.org/x/sys v0.0.0-20180606202747-9527bec2660b/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+diff --git a/zititest/models/links-test/configs/router.yml.tmpl b/zititest/models/links-test/configs/router.yml.tmpl
+index 2e6a24f04..b66c29b68 100644
+--- a/zititest/models/links-test/configs/router.yml.tmpl
++++ b/zititest/models/links-test/configs/router.yml.tmpl
+@@ -18,6 +18,7 @@ tls:
+ ctrl:
+   endpoints: {{ range $host := .Model.MustSelectHosts "component.ctrl" 1 }}
+     - tls:{{ $host.PublicIp }}:6262{{end}}
++  startupTimeout: 5m
+ 
+ healthChecks:
+   ctrlPingCheck:
+diff --git a/zititest/models/zrok-test/configs/ctrl.yml.tmpl b/zititest/models/zrok-test/configs/ctrl.yml.tmpl
+new file mode 100644
+index 000000000..9603b4e31
+--- /dev/null
++++ b/zititest/models/zrok-test/configs/ctrl.yml.tmpl
+@@ -0,0 +1,195 @@
++v: 3
++
++db: /home/{{ .Model.MustVariable "credentials.ssh.username" }}/fablab/ctrl.db
++
++identity:
++  cert: /home/{{ .Model.MustVariable "credentials.ssh.username" }}/fablab/pki/{{ .Component.Id }}/certs/{{ .Component.Id }}-server.chain.pem
++  key: /home/{{ .Model.MustVariable "credentials.ssh.username" }}/fablab/pki/{{ .Component.Id }}/keys/{{ .Component.Id }}-server.key
++  ca: /home/{{ .Model.MustVariable "credentials.ssh.username" }}/fablab/pki/{{ .Component.Id }}/certs/{{ .Component.Id }}.chain.pem
++
++# the endpoint that routers will connect to the controller over.
++ctrl:
++  listener: tls:0.0.0.0:6262
++  options:
++    advertiseAddress: tls:{{ .Host.PublicIp }}:6262
++    # (optional) settings
++    # set the maximum number of connect requests that are buffered and waiting to be acknowledged (1 to 5000, default 1000)
++    #maxQueuedConnects:      50
++
++    # the maximum number of connects that have  begun hello synchronization (1 to 1000, default 16)
++    #maxOutstandingConnects: 100
++
++    # the number of milliseconds to wait before a hello synchronization fails and closes the connection (30ms to 60000ms, default: 1000ms)
++    #connectTimeoutMs:       3000
++
++    # Sets the control channel write timeout. A write timeout will close the control channel, so the router will reconnect
++    #writeTimeout: 15s
++
++    # A listener address which will be sent to connecting routers in order to change their configured controller
++    # address. If defined, routers will update address configuration to immediately use the new address for future
++    # connections. The value of newListener must be resolvable both via DNS and validate via certificates
++    #newListener: tls:localhost:6262
++
++events:
++  jsonLogger:
++    subscriptions:
++      - type: entityChange
++      - type: edge.apiSessions
++      - type: edge.entityCounts
++        interval: 15s
++      - type: edge.sessions
++      - type: fabric.routers
++      - type: fabric.terminators
++#      - type: metrics
++#        sourceFilter: .*
++#        metricFilter: .*egress.*m1_rate*
++#      - type: fabric.circuits
++#        include:
++#          - created
++#        include:
++#          - created
++#      - type: fabric.usage
++#      - type: services
++#      - type: fabric.usage
++    handler:
++      type: file
++      format: json
++      path: /home/{{ .Model.MustVariable "credentials.ssh.username" }}/logs/event.log
++
++healthChecks:
++  boltCheck:
++    # How often to try entering a bolt read tx. Defaults to 30 seconds
++    interval: 30s
++    # When to timeout the check. Defaults to 15 seconds
++    timeout: 15s
++    # How long to wait before starting the check. Defaults to 15 seconds
++    initialDelay: 15s
++
++# By having an 'edge' section defined, the ziti-controller will attempt to parse the edge configuration. Removing this
++# section, commenting out, or altering the name of the section will cause the edge to not run.
++edge:
++  # This section represents the configuration of the Edge API that is served over HTTPS
++  api:
++    #(optional, default 90s) Alters how frequently heartbeat and last activity values are persisted
++    # activityUpdateInterval: 90s
++    #(optional, default 250) The number of API Sessions updated for last activity per transaction
++    # activityUpdateBatchSize: 250
++    # sessionTimeout - optional, default 10m
++    # The number of minutes before an Edge API session will timeout. Timeouts are reset by
++    # API requests and connections that are maintained to Edge Routers
++    sessionTimeout: 30m
++    # address - required
++    # The default address (host:port) to use for enrollment for the Client API. This value must match one of the addresses
++    # defined in a bind point's address field for the `edge-client` API in the web section.
++    address: {{ .Host.PublicIp }}:1280
++  # enrollment - required
++  # A section containing settings pertaining to enrollment.
++  enrollment:
++    # signingCert - required
++    # A Ziti Identity configuration section that specifically makes use of the cert and key fields to define
++    # a signing certificate from the PKI that the Ziti environment is using to sign certificates. The signingCert.cert
++    # will be added to the /.well-known CA store that is used to bootstrap trust with the Ziti Controller.
++    signingCert:
++      cert: /home/{{ .Model.MustVariable "credentials.ssh.username" }}/fablab/pki/{{ .Component.Id }}/certs/{{ .Component.Id }}.cert
++      key: /home/{{ .Model.MustVariable "credentials.ssh.username" }}/fablab/pki/{{ .Component.Id }}/keys/{{ .Component.Id }}.key
++
++    # edgeIdentity - optional
++    # A section for identity enrollment specific settings
++    edgeIdentity:
++      # duration - optional, default 5m
++      # The length of time that a Ziti Edge Identity enrollment should remain valid. After
++      # this duration, the enrollment will expire and not longer be usable.
++      duration: 1h
++    # edgeRouter - Optional
++    # A section for edge router enrollment specific settings.
++    edgeRouter:
++      # duration - optional, default 5m
++      # The length of time that a Ziti Edge Router enrollment should remain valid. After
++      # this duration, the enrollment will expire and not longer be usable.
++      duration: 1h
++
++
++# web - optional
++# Defines webListeners that will be hosted by the controller. Each webListener can host many APIs and be bound to many
++# bind points.
++web:
++  # name - required
++  # Provides a name for this listener, used for logging output. Not required to be unique, but is highly suggested.
++  - name: all-apis-localhost
++    # bindPoints - required
++    # One or more bind points are required. A bind point specifies an interface (interface:port string) that defines
++    # where on the host machine the webListener will listen and the address (host:port) that should be used to
++    # publicly address the webListener(i.e. mydomain.com, localhost, 127.0.0.1). This public address may be used for
++    # incoming address resolution as well as used in responses in the API.
++    bindPoints:
++      #interface - required
++      # A host:port string on which network interface to listen on. 0.0.0.0 will listen on all interfaces
++      - interface: 0.0.0.0:1280
++
++        # address - required
++        # The public address that external incoming requests will be able to resolve. Used in request processing and
++        # response content that requires full host:port/path addresses.
++        address: {{ .Host.PublicIp }}:1280
++
++        # newAddress - optional
++        # A host:port string which will be sent out as an HTTP header "ziti-new-address" if specified. If the header
++        # is present, clients should update location configuration to immediately use the new address for future
++        # connections. The value of newAddress must be resolvable both via DNS and validate via certificates
++        #newAddress: localhost:1280
++    # identity - optional
++    # Allows the webListener to have a specific identity instead of defaulting to the root `identity` section.
++    #    identity:
++    #      cert:                 ${ZITI_SOURCE}/ziti/etc/ca/intermediate/certs/ctrl-client.cert.pem
++    #      server_cert:          ${ZITI_SOURCE}/ziti/etc/ca/intermediate/certs/ctrl-server.cert.pem
++    #      key:                  ${ZITI_SOURCE}/ziti/etc/ca/intermediate/private/ctrl.key.pem
++    #      ca:                   ${ZITI_SOURCE}/ziti/etc/ca/intermediate/certs/ca-chain.cert.pem
++    # options - optional
++    # Allows the specification of webListener level options - mainly dealing with HTTP/TLS settings. These options are
++    # used for all http servers started by the current webListener.
++    options:
++      # idleTimeout - optional, default 5000ms
++      # The maximum amount of idle time in milliseconds allowed for pipelined HTTP requests. Setting this too high
++      # can cause resources on the host to be consumed as clients remain connected and idle. Lowering this value
++      # will cause clients to reconnect on subsequent HTTPs requests.
++      idleTimeout: 5000ms  #http timeouts, new
++
++      # readTimeout - optional, default 5000ms
++      # The maximum amount of time in milliseconds http servers will wait to read the first incoming requests. A higher
++      # value risks consuming resources on the host with clients that are acting bad faith or suffering from high latency
++      # or packet loss. A lower value can risk losing connections to high latency/packet loss clients.
++
++      readTimeout: 5000ms
++      # writeTimeout - optional, default 10000ms
++      # The total maximum time in milliseconds that the http server will wait for a single requests to be received and
++      # responded too. A higher value can allow long running requests to consume resources on the host. A lower value
++      # can risk ending requests before the server has a chance to respond.
++
++      writeTimeout: 100000ms
++      # minTLSVersion - optional, default TSL1.2
++      # The minimum version of TSL to support
++
++      minTLSVersion: TLS1.2
++      # maxTLSVersion - optional, default TSL1.3
++      # The maximum version of TSL to support
++
++      maxTLSVersion: TLS1.3
++    # apis - required
++    # Allows one or more APIs to be bound to this webListener
++    apis:
++      # binding - required
++      # Specifies an API to bind to this webListener. Built-in APIs are
++      #   - health-checks
++      #   - edge-management
++      #   - edge-client
++      #   - fabric-management
++      - binding: health-checks
++        options: {}
++      - binding: fabric
++      - binding: edge-management
++        # options - variable optional/required
++        # This section is used to define values that are specified by the API they are associated with.
++        # These settings are per API. The example below is for the `edge-api` and contains both optional values and
++        # required values.
++        options: {}
++      - binding: edge-client
++        options: {}
+diff --git a/zititest/models/zrok-test/configs/router.yml.tmpl b/zititest/models/zrok-test/configs/router.yml.tmpl
+new file mode 100644
+index 000000000..2a912b665
+--- /dev/null
++++ b/zititest/models/zrok-test/configs/router.yml.tmpl
+@@ -0,0 +1,75 @@
++{{$ssh_username := .Model.MustVariable "credentials.ssh.username"}}
++{{$identity := .Component.Id}}
++{{$router_ip := .Host.PublicIp}}
++  
++v: 3
++
++enableDebugOps: true
++
++identity:
++  cert:                 /home/{{$ssh_username}}/fablab/cfg/{{$identity}}-client.cert
++  server_cert:          /home/{{$ssh_username}}/fablab/cfg/{{$identity}}-server.cert
++  key:                  /home/{{$ssh_username}}/fablab/cfg/{{$identity}}.key
++  ca:                   /home/{{$ssh_username}}/fablab/cfg/{{$identity}}-server.chain.pem
++
++tls:
++  handshakeTimeout: 30s
++
++ctrl:
++  endpoints: {{ range $host := .Model.MustSelectHosts "component.ctrl" 1 }}
++    - tls:{{ $host.PublicIp }}:6262{{end}}
++
++healthChecks:
++  ctrlPingCheck:
++    # How often to ping the controller over the control channel. Defaults to 30 seconds
++    interval: 30s
++    # When to timeout the ping. Defaults to 15 seconds
++    timeout: 15s
++    # How long to wait before pinging the controller. Defaults to 15 seconds
++    initialDelay: 15s
++
++metrics:
++  reportInterval: 5s
++  messageQueueSize: 10
++
++link:
++  listeners:
++    - binding:          transport
++      bind:             tls:0.0.0.0:60{{printf "%02d" .Component.ScaleIndex }}
++      advertise:        tls:{{$router_ip}}:60{{printf "%02d" .Component.ScaleIndex }}
++  dialers:
++    - binding:          transport
++      options:
++        connectTimeout: 30s
++
++listeners:
++{{if .Component.HasTag "tunneler"}}
++  - binding: tunnel
++    options:
++      mode: host
++{{end}}
++  - binding: edge
++    address: tls:0.0.0.0:62{{printf "%02d" .Component.ScaleIndex }}
++    options:
++      # (required) The public hostname and port combination that Ziti SDKs should connect on. Previously this was in the chanIngress section.
++      advertise: {{ .Host.PublicIp }}:62{{printf "%02d" .Component.ScaleIndex }}
++
++# By having an 'edge' section defined, the ziti-router will attempt to parse the edge configuration. Removing this
++# section, commenting out, or altering the name of the section will cause the router to no longer operate as an Edge
++# Router.
++edge:
++  # (required) Information used to generate the initial registration CSR. For documentation on these fields please
++  # refer to the openssl documentation. These values MUST be supplied and have no defaults.
++  csr:
++    country: US
++    province: NC
++    locality: Charlotte
++    organization: NetFoundry
++    organizationalUnit: Ziti
++
++    # (required) SANs that this Gateways certs should contain. At least one IP or DNS SAN should be defined that matches
++    # the edge listeners "advertise" value from the "listeners" section.
++    sans:
++      ip:
++        - {{ .Host.PublicIp }}
++
+diff --git a/zititest/models/zrok-test/configs/zrok-frontend.yml.tmpl b/zititest/models/zrok-test/configs/zrok-frontend.yml.tmpl
+new file mode 100644
+index 000000000..98507ec8c
+--- /dev/null
++++ b/zititest/models/zrok-test/configs/zrok-frontend.yml.tmpl
+@@ -0,0 +1,3 @@
++v:                  3
++host_match:         paul.demo.openziti.org
++address:            0.0.0.0:1280
+\ No newline at end of file
+diff --git a/zititest/models/zrok-test/configs/zrok.yml.tmpl b/zititest/models/zrok-test/configs/zrok.yml.tmpl
+new file mode 100644
+index 000000000..754db9635
+--- /dev/null
++++ b/zititest/models/zrok-test/configs/zrok.yml.tmpl
+@@ -0,0 +1,29 @@
++#    _____ __ ___ | | __
++#   |_  / '__/ _ \| |/ /
++#    / /| | | (_) |   <
++#   /___|_|  \___/|_|\_\
++# controller configuration
++
++v:                  3
++
++admin:
++  # generate these admin tokens from a source of randomness, e.g.
++  #  LC_ALL=C tr -dc _A-Z-a-z-0-9 < /dev/urandom | head -c32
++  secrets:
++    -               {{ .Model.MustVariable "credentials.zrok.secret" }}  # be sure to change this!
++
++endpoint:
++  host:             0.0.0.0
++  port:             1280
++
++invites:
++  invites_open:    true
++
++store:
++  path:              /home/{{ .Model.MustVariable "credentials.ssh.username" }}/zrok.db
++  type:             sqlite3
++
++ziti:
++  api_endpoint:     "https://{{ publicIp "component#ctrl1" }}:1280"
++  username:         {{ .Model.MustVariable "credentials.edge.username" }}
++  password:         {{ .Model.MustVariable "credentials.edge.password" }}
+\ No newline at end of file
+diff --git a/zititest/models/zrok-test/main.go b/zititest/models/zrok-test/main.go
+new file mode 100644
+index 000000000..d70d14eda
+--- /dev/null
++++ b/zititest/models/zrok-test/main.go
+@@ -0,0 +1,365 @@
++/*
++	Copyright NetFoundry Inc.
++
++	Licensed under the Apache License, Version 2.0 (the "License");
++	you may not use this file except in compliance with the License.
++	You may obtain a copy of the License at
++
++	https://www.apache.org/licenses/LICENSE-2.0
++
++	Unless required by applicable law or agreed to in writing, software
++	distributed under the License is distributed on an "AS IS" BASIS,
++	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++	See the License for the specific language governing permissions and
++	limitations under the License.
++*/
++
++package main
++
++import (
++	"embed"
++	_ "embed"
++	"github.com/openziti/fablab"
++	"github.com/openziti/fablab/kernel/lib/actions"
++	"github.com/openziti/fablab/kernel/lib/actions/component"
++	"github.com/openziti/fablab/kernel/lib/actions/host"
++	"github.com/openziti/fablab/kernel/lib/actions/semaphore"
++	"github.com/openziti/fablab/kernel/lib/binding"
++	"github.com/openziti/fablab/kernel/lib/runlevel/0_infrastructure/aws_ssh_key"
++	"github.com/openziti/fablab/kernel/lib/runlevel/0_infrastructure/semaphore"
++	"github.com/openziti/fablab/kernel/lib/runlevel/0_infrastructure/terraform"
++	distribution "github.com/openziti/fablab/kernel/lib/runlevel/3_distribution"
++	"github.com/openziti/fablab/kernel/lib/runlevel/3_distribution/rsync"
++	aws_ssh_key2 "github.com/openziti/fablab/kernel/lib/runlevel/6_disposal/aws_ssh_key"
++	"github.com/openziti/fablab/kernel/lib/runlevel/6_disposal/terraform"
++	"github.com/openziti/fablab/kernel/model"
++	"github.com/openziti/fablab/resources"
++	"github.com/openziti/ziti/zititest/models/test_resources"
++	"github.com/openziti/ziti/zititest/zitilab"
++	"github.com/openziti/ziti/zititest/zitilab/actions/edge"
++	"github.com/openziti/ziti/zititest/zitilab/models"
++	"os"
++	"path"
++	"time"
++)
++
++const TargetZitiVersion = ""
++
++// const TargetZitiVersion = "v0.32.0"
++
++const TargetZrokVersion = ""
++
++//const TargetZrokVersion = "v0.4.22"
++
++const iterations = 100_000
++const pacing = 10 * time.Millisecond
++
++//go:embed configs
++var configResource embed.FS
++
++type scaleStrategy struct{}
++
++func (self scaleStrategy) IsScaled(entity model.Entity) bool {
++	return entity.GetScope().HasTag("scaled")
++}
++
++func (self scaleStrategy) GetEntityCount(entity model.Entity) uint32 {
++	if entity.GetType() == model.EntityTypeHost {
++		if entity.GetScope().HasTag("router") {
++			return 2
++		} else if entity.GetScope().HasTag("client") {
++			return 3
++		}
++	}
++
++	if entity.GetType() == model.EntityTypeComponent {
++		if entity.GetScope().HasTag("client") {
++			return 50
++		}
++	}
++
++	return 1
++}
++
++var m = &model.Model{
++	Id: "zrok-test",
++	Scope: model.Scope{
++		Defaults: model.Variables{
++			"environment": "zrok-test",
++			"credentials": model.Variables{
++				"aws": model.Variables{
++					"managed_key": true,
++				},
++				"ssh": model.Variables{
++					"username": "ubuntu",
++				},
++				"edge": model.Variables{
++					"username": "admin",
++					"password": "admin",
++				},
++			},
++			"metrics": model.Variables{
++				"influxdb": model.Variables{
++					"url": "http://localhost:8086",
++					"db":  "ziti",
++				},
++			},
++		},
++	},
++	StructureFactories: []model.Factory{
++		model.NewScaleFactoryWithDefaultEntityFactory(scaleStrategy{}),
++		model.FactoryFunc(func(m *model.Model) error {
++			return m.ForEachHost("component.ctrl", 1, func(host *model.Host) error {
++				if host.InstanceType == "" {
++					host.InstanceType = "c5.large"
++				}
++				return nil
++			})
++		}),
++		model.FactoryFunc(func(m *model.Model) error {
++			return m.ForEachHost("component.router", 1, func(host *model.Host) error {
++				host.InstanceType = "c5.large"
++				return nil
++			})
++		}),
++
++		model.FactoryFunc(func(m *model.Model) error {
++			return m.ForEachHost("component.client", 1, func(host *model.Host) error {
++				host.InstanceType = "c5.large"
++				return nil
++			})
++		}),
++	},
++	Resources: model.Resources{
++		resources.Configs:   resources.SubFolder(configResource, "configs"),
++		resources.Binaries:  os.DirFS(path.Join(os.Getenv("GOPATH"), "bin")),
++		resources.Terraform: test_resources.TerraformResources(),
++	},
++	Regions: model.Regions{
++		"us-east-1": {
++			Region: "us-east-1",
++			Site:   "us-east-1a",
++			Hosts: model.Hosts{
++				"ctrl1": {
++					Components: model.Components{
++						"ctrl1": {
++							Scope: model.Scope{Tags: model.Tags{"ctrl"}},
++							Type: &zitilab.ControllerType{
++								Version: TargetZitiVersion,
++							},
++						},
++					},
++				},
++				"zrokCtrl": {
++					InstanceType: "c5.large",
++					Components: model.Components{
++						"zrokCtrl": {
++							Scope: model.Scope{Tags: model.Tags{"zrokCtrl"}},
++							Type: &zitilab.ZrokControllerType{
++								Version:          TargetZrokVersion,
++								PreCreateClients: ".client",
++							},
++						},
++					},
++				},
++				"zrokFront": {
++					InstanceType: "c5.large",
++					Components: model.Components{
++						"zrokFront": {
++							Scope: model.Scope{Tags: model.Tags{"zrokFront"}},
++							Type: &zitilab.ZrokFrontendType{
++								Version: TargetZrokVersion,
++								DNS:     "paul.demo.openziti.org",
++							},
++						},
++					},
++				},
++				"router-us-east-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"scaled", "router"}},
++					Components: model.Components{
++						"router-us-east-{{ .Host.ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"router"}},
++							Type: &zitilab.RouterType{
++								Version: TargetZitiVersion,
++							},
++						},
++					},
++				},
++				"zrok-us-east-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++					Components: model.Components{
++						"zrok-us-east-{{ .Host.ScaleIndex }}.{{ .ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++							Type: &zitilab.ZrokLoopTestType{
++								Version:    TargetZrokVersion,
++								Pacing:     pacing,
++								Iterations: iterations,
++							},
++						},
++					},
++				},
++			},
++		},
++		"us-west-2": {
++			Region: "us-west-2",
++			Site:   "us-west-2b",
++			Hosts: model.Hosts{
++				"router-us-west-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"scaled", "router"}},
++					Components: model.Components{
++						"router-us-west-{{ .Host.ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"router"}},
++							Type: &zitilab.RouterType{
++								Version: TargetZitiVersion,
++							},
++						},
++					},
++				},
++
++				"zrok-us-west-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++					Components: model.Components{
++						"zrok-us-west-{{ .Host.ScaleIndex }}.{{ .ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++							Type: &zitilab.ZrokLoopTestType{
++								Version:    TargetZrokVersion,
++								Pacing:     pacing,
++								Iterations: iterations,
++							},
++						},
++					},
++				},
++			},
++		},
++		"eu-west-2": {
++			Region: "eu-west-2",
++			Site:   "eu-west-2a",
++			Hosts: model.Hosts{
++				"router-eu-west-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"scaled", "router"}},
++					Components: model.Components{
++						"router-eu-west-{{ .Host.ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"router"}},
++							Type: &zitilab.RouterType{
++								Version: TargetZitiVersion,
++							},
++						},
++					},
++				},
++
++				"zrok-eu-west-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++					Components: model.Components{
++						"zrok-eu-west-{{ .Host.ScaleIndex }}.{{ .ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++							Type: &zitilab.ZrokLoopTestType{
++								Version:    TargetZrokVersion,
++								Pacing:     pacing,
++								Iterations: iterations,
++							},
++						},
++					},
++				},
++			},
++		},
++
++		"eu-central-1": {
++			Region: "eu-central-1",
++			Site:   "eu-central-1a",
++			Hosts: model.Hosts{
++				"router-eu-central-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"scaled", "router"}},
++					Components: model.Components{
++						"router-eu-central-{{ .Host.ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"router"}},
++							Type: &zitilab.RouterType{
++								Version: TargetZitiVersion,
++							},
++						},
++					},
++				},
++
++				"zrok-eu-central-{{.ScaleIndex}}": {
++					Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++					Components: model.Components{
++						"zrok-eu-central-{{ .Host.ScaleIndex }}.{{ .ScaleIndex }}": {
++							Scope: model.Scope{Tags: model.Tags{"client", "scaled"}},
++							Type: &zitilab.ZrokLoopTestType{
++								Version:    TargetZrokVersion,
++								Pacing:     pacing,
++								Iterations: iterations,
++							},
++						},
++					},
++				},
++			},
++		},
++	},
++
++	Actions: model.ActionBinders{
++		"bootstrap": model.ActionBinder(func(m *model.Model) model.Action {
++			workflow := actions.Workflow()
++
++			workflow.AddAction(host.GroupExec("*", 50, "touch .hushlogin"))
++			workflow.AddAction(component.StopInParallel("*", 100))
++			workflow.AddAction(host.GroupExec("*", 50, "rm -rf logs/* .zrok/"))
++			workflow.AddAction(host.GroupExec("*", 50, "find fablab -type d -exec chmod 755 {} \\;"))
++			workflow.AddAction(edge.InitController("#ctrl1"))
++			workflow.AddAction(component.Start(".ctrl"))
++			workflow.AddAction(edge.ControllerAvailable("#ctrl1", 30*time.Second))
++
++			workflow.AddAction(edge.Login("#ctrl1"))
++
++			workflow.AddAction(component.StopInParallel(models.RouterTag, 50))
++			workflow.AddAction(edge.InitEdgeRouters(models.RouterTag, 50))
++			workflow.AddAction(component.StartInParallel(models.RouterTag, 50))
++
++			workflow.AddAction(component.ExecF("#zrokCtrl", (*zitilab.ZrokControllerType).Init))
++			workflow.AddAction(component.ExecF("#zrokCtrl", (*zitilab.ZrokControllerType).PreCreateAccounts))
++			workflow.AddAction(component.Start("#zrokCtrl"))
++			workflow.AddAction(semaphore.Sleep(2 * time.Second))
++
++			workflow.AddAction(component.ExecF("#zrokFront", (*zitilab.ZrokFrontendType).Init))
++			workflow.AddAction(component.Start("#zrokFront"))
++			workflow.AddAction(semaphore.Sleep(2 * time.Second))
++
++			workflow.AddAction(component.ExecInParallelF(".client", 200, (*zitilab.ZrokLoopTestType).Init))
++			return workflow
++		}),
++		"clean": model.Bind(actions.Workflow(
++			component.StopInParallelHostExclusive("*", 15),
++			host.GroupExec("*", 25, "rm -f logs/*"),
++		)),
++		"login": model.Bind(edge.Login("#ctrl1")),
++	},
++
++	Infrastructure: model.Stages{
++		aws_ssh_key.Express(),
++		&terraform_0.Terraform{
++			Retries: 3,
++			ReadyCheck: &semaphore_0.ReadyStage{
++				MaxWait: 90 * time.Second,
++			},
++		},
++	},
++
++	Distribution: model.Stages{
++		distribution.DistributeSshKey("*"),
++		rsync.RsyncStaged(),
++	},
++
++	Disposal: model.Stages{
++		terraform.Dispose(),
++		aws_ssh_key2.Dispose(),
++	},
++}
++
++func main() {
++	m.AddActivationActions("bootstrap")
++
++	model.AddBootstrapExtension(binding.AwsCredentialsLoader)
++	model.AddBootstrapExtension(aws_ssh_key.KeyManager)
++
++	fablab.InitModel(m)
++	fablab.Run()
++}
+diff --git a/zititest/zitilab/actions/edge/get_entity_id.go b/zititest/zitilab/cli/get_entity_id.go
+similarity index 83%
+rename from zititest/zitilab/actions/edge/get_entity_id.go
+rename to zititest/zitilab/cli/get_entity_id.go
+index e8589292e..8755aeb8f 100644
+--- a/zititest/zitilab/actions/edge/get_entity_id.go
++++ b/zititest/zitilab/cli/get_entity_id.go
+@@ -1,15 +1,14 @@
+-package edge
++package cli
+ 
+ import (
+ 	"fmt"
+ 	"github.com/Jeffail/gabs"
+ 	"github.com/openziti/fablab/kernel/model"
+-	"github.com/openziti/ziti/zititest/zitilab/cli"
+ 	"github.com/pkg/errors"
+ )
+ 
+ func GetEntityId(m *model.Model, entityType string, name string) (string, error) {
+-	output, err := cli.Exec(m, "edge", "list", entityType, "--output-json",
++	output, err := Exec(m, "edge", "list", entityType, "--output-json",
+ 		fmt.Sprintf(`name="%v" limit none`, name))
+ 	if err != nil {
+ 		return "", err
+diff --git a/zititest/zitilab/component_common.go b/zititest/zitilab/component_common.go
+index 04cceba06..6ac064322 100644
+--- a/zititest/zitilab/component_common.go
++++ b/zititest/zitilab/component_common.go
+@@ -65,7 +65,7 @@ func startZitiComponent(c *model.Component, zitiType string, version string, con
+ 	return nil
+ }
+ 
+-func canonicalizeZitiVersion(version *string) {
++func canonicalizeGoAppVersion(version *string) {
+ 	if version != nil {
+ 		if *version != "" && *version != "latest" && !strings.HasPrefix(*version, "v") {
+ 			*version = "v" + *version
+@@ -74,13 +74,14 @@ func canonicalizeZitiVersion(version *string) {
+ }
+ 
+ func getZitiBinaryPath(c *model.Component, version string) string {
+-	binaryName := "ziti"
++	return getBinaryPath(c, "ziti", version)
++}
++
++func getBinaryPath(c *model.Component, binaryName string, version string) string {
+ 	if version != "" {
+ 		binaryName += "-" + version
+ 	}
+-
+ 	user := c.GetHost().GetSshUser()
+-
+ 	return fmt.Sprintf("/home/%s/fablab/bin/%s", user, binaryName)
+ }
+ 
+diff --git a/zititest/zitilab/component_controller.go b/zititest/zitilab/component_controller.go
+index 976e74f90..6447c4125 100644
+--- a/zititest/zitilab/component_controller.go
++++ b/zititest/zitilab/component_controller.go
+@@ -46,7 +46,7 @@ type ControllerType struct {
+ }
+ 
+ func (self *ControllerType) InitType(*model.Component) {
+-	canonicalizeZitiVersion(&self.Version)
++	canonicalizeGoAppVersion(&self.Version)
+ }
+ 
+ func (self *ControllerType) GetActions() map[string]model.ComponentAction {
+diff --git a/zititest/zitilab/component_echo_server.go b/zititest/zitilab/component_echo_server.go
+index 1a2472e13..7dedd6394 100644
+--- a/zititest/zitilab/component_echo_server.go
++++ b/zititest/zitilab/component_echo_server.go
+@@ -18,7 +18,7 @@ type EchoServerType struct {
+ }
+ 
+ func (self *EchoServerType) InitType(*model.Component) {
+-	canonicalizeZitiVersion(&self.Version)
++	canonicalizeGoAppVersion(&self.Version)
+ }
+ 
+ func (self *EchoServerType) Dump() any {
+diff --git a/zititest/zitilab/component_router.go b/zititest/zitilab/component_router.go
+index 285937d42..23dd92de3 100644
+--- a/zititest/zitilab/component_router.go
++++ b/zititest/zitilab/component_router.go
+@@ -46,7 +46,7 @@ type RouterType struct {
+ }
+ 
+ func (self *RouterType) InitType(*model.Component) {
+-	canonicalizeZitiVersion(&self.Version)
++	canonicalizeGoAppVersion(&self.Version)
+ }
+ 
+ func (self *RouterType) GetActions() map[string]model.ComponentAction {
+diff --git a/zititest/zitilab/component_zcat.go b/zititest/zitilab/component_zcat.go
+index e5b589de3..162867850 100644
+--- a/zititest/zitilab/component_zcat.go
++++ b/zititest/zitilab/component_zcat.go
+@@ -16,7 +16,7 @@ type ZCatType struct {
+ }
+ 
+ func (self *ZCatType) InitType(*model.Component) {
+-	canonicalizeZitiVersion(&self.Version)
++	canonicalizeGoAppVersion(&self.Version)
+ }
+ 
+ func (self *ZCatType) Dump() any {
+diff --git a/zititest/zitilab/component_ziti_edge_tunnel.go b/zititest/zitilab/component_ziti_edge_tunnel.go
+index 0d41052a3..a6fd4e147 100644
+--- a/zititest/zitilab/component_ziti_edge_tunnel.go
++++ b/zititest/zitilab/component_ziti_edge_tunnel.go
+@@ -52,7 +52,7 @@ func (self *ZitiEdgeTunnelType) InitType(*model.Component) {
+ 	if strings.HasPrefix(self.Version, "v") {
+ 		self.Version = self.Version[1:]
+ 	}
+-	canonicalizeZitiVersion(&self.ZitiVersion)
++	canonicalizeGoAppVersion(&self.ZitiVersion)
+ }
+ 
+ func (self *ZitiEdgeTunnelType) getBinaryName() string {
+diff --git a/zititest/zitilab/component_ziti_tunnel.go b/zititest/zitilab/component_ziti_tunnel.go
+index 8cc0b428f..daca6af97 100644
+--- a/zititest/zitilab/component_ziti_tunnel.go
++++ b/zititest/zitilab/component_ziti_tunnel.go
+@@ -63,7 +63,7 @@ func (self *ZitiTunnelType) GetActions() map[string]model.ComponentAction {
+ }
+ 
+ func (self *ZitiTunnelType) InitType(*model.Component) {
+-	canonicalizeZitiVersion(&self.Version)
++	canonicalizeGoAppVersion(&self.Version)
+ }
+ 
+ func (self *ZitiTunnelType) Dump() any {
+diff --git a/zititest/zitilab/component_zrok_controller.go b/zititest/zitilab/component_zrok_controller.go
+new file mode 100644
+index 000000000..728c5d4d0
+--- /dev/null
++++ b/zititest/zitilab/component_zrok_controller.go
+@@ -0,0 +1,183 @@
++/*
++	Copyright 2019 NetFoundry Inc.
++
++	Licensed under the Apache License, Version 2.0 (the "License");
++	you may not use this file except in compliance with the License.
++	You may obtain a copy of the License at
++
++	https://www.apache.org/licenses/LICENSE-2.0
++
++	Unless required by applicable law or agreed to in writing, software
++	distributed under the License is distributed on an "AS IS" BASIS,
++	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++	See the License for the specific language governing permissions and
++	limitations under the License.
++*/
++
++package zitilab
++
++import (
++	"fmt"
++	"github.com/michaelquigley/pfxlog"
++	"github.com/openziti/fablab/kernel/lib"
++	"github.com/openziti/fablab/kernel/lib/actions/host"
++	"github.com/openziti/fablab/kernel/model"
++	"github.com/openziti/ziti/ziti/constants"
++	"github.com/openziti/ziti/zititest/zitilab/stageziti"
++	"github.com/sirupsen/logrus"
++	"io/fs"
++	"strings"
++)
++
++var _ model.ComponentType = (*ZrokControllerType)(nil)
++var _ model.ServerComponent = (*ZrokControllerType)(nil)
++var _ model.FileStagingComponent = (*ZrokControllerType)(nil)
++var _ model.ActionsComponent = (*ZrokControllerType)(nil)
++
++const (
++	ZrokControllerActionInit              = "init"
++	ZrokControllerActionPreCreateAccounts = "preCreateAccounts"
++)
++
++type ZrokControllerType struct {
++	ConfigSourceFS   fs.FS
++	ConfigSource     string
++	ConfigName       string
++	Version          string
++	LocalPath        string
++	PreCreateClients string
++}
++
++func (self *ZrokControllerType) InitType(*model.Component) {
++	canonicalizeGoAppVersion(&self.Version)
++}
++
++func (self *ZrokControllerType) GetActions() map[string]model.ComponentAction {
++	return map[string]model.ComponentAction{
++		ZrokControllerActionInit:              model.ComponentActionF(self.Init),
++		ZrokControllerActionPreCreateAccounts: model.ComponentActionF(self.PreCreateAccounts),
++	}
++}
++
++func (self *ZrokControllerType) Dump() any {
++	return map[string]string{
++		"type_id":       "zrok-controller",
++		"config_source": self.ConfigSource,
++		"config_name":   self.ConfigName,
++		"version":       self.Version,
++		"local_path":    self.LocalPath,
++	}
++}
++
++func (self *ZrokControllerType) StageFiles(r model.Run, c *model.Component) error {
++	configSource := self.ConfigSource
++	if configSource == "" {
++		configSource = "zrok.yml.tmpl"
++	}
++
++	configName := self.getConfigName(c)
++
++	if err := lib.GenerateConfigForComponent(c, self.ConfigSourceFS, configSource, configName, r); err != nil {
++		return err
++	}
++
++	return stageziti.StageZrokOnce(r, c, self.Version, self.LocalPath)
++}
++
++func (self *ZrokControllerType) getConfigName(c *model.Component) string {
++	configName := self.ConfigName
++	if configName == "" {
++		configName = c.Id + ".yml"
++	}
++	return configName
++}
++
++func (self *ZrokControllerType) getProcessFilter() func(string) bool {
++	return func(s string) bool {
++		return strings.Contains(s, "zrok") &&
++			strings.Contains(s, " controller")
++	}
++}
++
++func (self *ZrokControllerType) IsRunning(_ model.Run, c *model.Component) (bool, error) {
++	pids, err := c.GetHost().FindProcesses(self.getProcessFilter())
++	if err != nil {
++		return false, err
++	}
++	return len(pids) > 0, nil
++}
++
++func (self *ZrokControllerType) Start(_ model.Run, c *model.Component) error {
++	user := c.GetHost().GetSshUser()
++
++	binaryPath := getBinaryPath(c, constants.ZROK, self.Version)
++	configPath := self.getConfigPath(c)
++	logsPath := fmt.Sprintf("/home/%s/logs/%s.log", user, c.Id)
++
++	serviceCmd := fmt.Sprintf("nohup %s controller %s > %s 2>&1 &", binaryPath, configPath, logsPath)
++
++	if quiet, _ := c.GetBoolVariable("quiet_startup"); !quiet {
++		logrus.Info(serviceCmd)
++	}
++
++	value, err := c.GetHost().ExecLogged(serviceCmd)
++	if err != nil {
++		return err
++	}
++
++	if len(value) > 0 {
++		logrus.Infof("output [%s]", strings.Trim(value, " \t\r\n"))
++	}
++
++	return nil
++}
++
++func (self *ZrokControllerType) Stop(_ model.Run, c *model.Component) error {
++	return c.GetHost().KillProcesses("-TERM", self.getProcessFilter())
++}
++
++func (self *ZrokControllerType) getConfigPath(c *model.Component) string {
++	return fmt.Sprintf("/home/%s/fablab/cfg/%s", c.GetHost().GetSshUser(), self.getConfigName(c))
++}
++
++func (self *ZrokControllerType) Init(run model.Run, c *model.Component) error {
++	binaryPath := getBinaryPath(c, constants.ZROK, self.Version)
++	configPath := self.getConfigPath(c)
++
++	tmpl := "rm -f /home/%v/zrok.db && set -o pipefail; %s admin bootstrap %s 2>&1 | tee logs/init.zrok.log"
++	cmd := fmt.Sprintf(tmpl, c.GetHost().GetSshUser(), binaryPath, configPath)
++	return host.Exec(c.GetHost(), cmd).Execute(run)
++}
++
++func (self *ZrokControllerType) PreCreateAccounts(run model.Run, c *model.Component) error {
++	binaryPath := getBinaryPath(c, constants.ZROK, self.Version)
++	configPath := self.getConfigPath(c)
++
++	components := run.GetModel().SelectComponents(self.PreCreateClients)
++	if len(components) == 0 {
++		return fmt.Errorf("found no zrok clients for component spec '%s'", self.PreCreateClients)
++	}
++	for _, clientComponent := range components {
++		log := pfxlog.Logger().WithField("id", clientComponent.Id)
++
++		tmpl := "%s admin create account %s -- %s@openziti.org %s 2>&1"
++		cmd := fmt.Sprintf(tmpl, binaryPath, configPath, clientComponent.Id, clientComponent.Id)
++		log.Info(cmd)
++		output, err := c.GetHost().ExecLogged(cmd)
++		if err != nil {
++			log.WithError(err).WithField("output", output).Error("error creating account")
++			return err
++		}
++
++		parts := strings.Split(output, "token = ")
++		if len(parts) != 2 {
++			return fmt.Errorf("unable to parse output for token: %s", output)
++		}
++		token := parts[1]
++		token = token[:strings.Index(token, `"`)]
++
++		clientComponent.Data["token"] = token
++		log.WithField("token", token).Info("client created")
++	}
++	return nil
++}
+diff --git a/zititest/zitilab/component_zrok_frontend.go b/zititest/zitilab/component_zrok_frontend.go
+new file mode 100644
+index 000000000..579a44a16
+--- /dev/null
++++ b/zititest/zitilab/component_zrok_frontend.go
+@@ -0,0 +1,170 @@
++/*
++	Copyright 2019 NetFoundry Inc.
++
++	Licensed under the Apache License, Version 2.0 (the "License");
++	you may not use this file except in compliance with the License.
++	You may obtain a copy of the License at
++
++	https://www.apache.org/licenses/LICENSE-2.0
++
++	Unless required by applicable law or agreed to in writing, software
++	distributed under the License is distributed on an "AS IS" BASIS,
++	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++	See the License for the specific language governing permissions and
++	limitations under the License.
++*/
++
++package zitilab
++
++import (
++	"fmt"
++	"github.com/michaelquigley/pfxlog"
++	"github.com/openziti/fablab/kernel/lib"
++	"github.com/openziti/fablab/kernel/lib/actions/host"
++	"github.com/openziti/fablab/kernel/libssh"
++	"github.com/openziti/fablab/kernel/model"
++	"github.com/openziti/ziti/ziti/constants"
++	"github.com/openziti/ziti/zititest/zitilab/cli"
++	"github.com/openziti/ziti/zititest/zitilab/stageziti"
++	"github.com/sirupsen/logrus"
++	"io/fs"
++	"path/filepath"
++	"strings"
++)
++
++var _ model.ComponentType = (*ZrokFrontendType)(nil)
++var _ model.ServerComponent = (*ZrokFrontendType)(nil)
++var _ model.FileStagingComponent = (*ZrokFrontendType)(nil)
++var _ model.ActionsComponent = (*ZrokFrontendType)(nil)
++
++const (
++	ZrokFrontendActionInit = "init"
++)
++
++type ZrokFrontendType struct {
++	ConfigSourceFS   fs.FS
++	ConfigSource     string
++	ConfigName       string
++	Version          string
++	LocalPath        string
++	DNS              string
++	ZrokCtrlSelector string
++}
++
++func (self *ZrokFrontendType) InitType(*model.Component) {
++	canonicalizeGoAppVersion(&self.Version)
++	if self.ZrokCtrlSelector == "" {
++		self.ZrokCtrlSelector = "zrokCtrl"
++	}
++}
++
++func (self *ZrokFrontendType) GetActions() map[string]model.ComponentAction {
++	return map[string]model.ComponentAction{
++		ZrokFrontendActionInit: model.ComponentActionF(self.Init),
++	}
++}
++
++func (self *ZrokFrontendType) Dump() any {
++	return map[string]string{
++		"type_id":       "zrok-frontend",
++		"config_source": self.ConfigSource,
++		"config_name":   self.ConfigName,
++		"version":       self.Version,
++		"local_path":    self.LocalPath,
++	}
++}
++
++func (self *ZrokFrontendType) StageFiles(r model.Run, c *model.Component) error {
++	configSource := self.ConfigSource
++	if configSource == "" {
++		configSource = "zrok-frontend.yml.tmpl"
++	}
++
++	configName := self.getConfigName(c)
++
++	if err := lib.GenerateConfigForComponent(c, self.ConfigSourceFS, configSource, configName, r); err != nil {
++		return err
++	}
++
++	return stageziti.StageZrokOnce(r, c, self.Version, self.LocalPath)
++}
++
++func (self *ZrokFrontendType) getConfigName(c *model.Component) string {
++	configName := self.ConfigName
++	if configName == "" {
++		configName = c.Id + ".yml"
++	}
++	return configName
++}
++
++func (self *ZrokFrontendType) getProcessFilter() func(string) bool {
++	return func(s string) bool {
++		return strings.Contains(s, "zrok") &&
++			strings.Contains(s, " access public")
++	}
++}
++
++func (self *ZrokFrontendType) IsRunning(_ model.Run, c *model.Component) (bool, error) {
++	pids, err := c.GetHost().FindProcesses(self.getProcessFilter())
++	if err != nil {
++		return false, err
++	}
++	return len(pids) > 0, nil
++}
++
++func (self *ZrokFrontendType) Start(_ model.Run, c *model.Component) error {
++	user := c.GetHost().GetSshUser()
++
++	binaryPath := getBinaryPath(c, constants.ZROK, self.Version)
++	configPath := fmt.Sprintf("/home/%s/fablab/cfg/%s", user, self.getConfigName(c))
++	logsPath := fmt.Sprintf("/home/%s/logs/%s.log", user, c.Id)
++
++	serviceCmd := fmt.Sprintf("nohup %s access public %s > %s 2>&1 &", binaryPath, configPath, logsPath)
++
++	if quiet, _ := c.GetBoolVariable("quiet_startup"); !quiet {
++		logrus.Info(serviceCmd)
++	}
++
++	value, err := c.GetHost().ExecLogged(serviceCmd)
++	if err != nil {
++		return err
++	}
++
++	if len(value) > 0 {
++		logrus.Infof("output [%s]", strings.Trim(value, " \t\r\n"))
++	}
++
++	return nil
++}
++
++func (self *ZrokFrontendType) Stop(_ model.Run, c *model.Component) error {
++	return c.GetHost().KillProcesses("-TERM", self.getProcessFilter())
++}
++
++func (self *ZrokFrontendType) Init(run model.Run, c *model.Component) error {
++	id, err := cli.GetEntityId(run.GetModel(), "identities", "public")
++	if err != nil {
++		return err
++	}
++
++	binaryPath := getBinaryPath(c, constants.ZROK, self.Version)
++
++	zrokSecret := run.GetModel().MustStringVariable("credentials.zrok.secret")
++	zrokApiEndpoint := run.GetModel().MustSelectHost("zrokCtrl").PublicIp + ":1280"
++	tmpl := "set -o pipefail; ZROK_ADMIN_TOKEN=%s ZROK_API_ENDPOINT=http://%s %s admin create frontend -- %s public http://{token}.%s:1280 2>&1 | tee logs/init.log"
++	cmd := fmt.Sprintf(tmpl, zrokSecret, zrokApiEndpoint, binaryPath, id, self.DNS)
++	if err = host.Exec(c.GetHost(), cmd).Execute(run); err != nil {
++		return err
++	}
++
++	pfxlog.Logger().Info("fetching public frontend identity")
++	zrokCtrl := run.GetModel().MustSelectHost(self.ZrokCtrlSelector)
++	fullPath := fmt.Sprintf("/home/%s/.zrok/identities/public.json", zrokCtrl.GetSshUser())
++	if err = libssh.RetrieveRemoteFiles(zrokCtrl.NewSshConfigFactory(), run.GetTmpDir(), fullPath); err != nil {
++		return err
++	}
++
++	pfxlog.Logger().Info("sending public frontend identity")
++	remoteDest := fmt.Sprintf("/home/%s/.zrok/identities/public.json", c.GetHost().GetSshUser())
++	return c.GetHost().SendFile(filepath.Join(run.GetTmpDir(), "public.json"), remoteDest)
++}
+diff --git a/zititest/zitilab/component_zrok_looptest.go b/zititest/zitilab/component_zrok_looptest.go
+new file mode 100644
+index 000000000..c6da9cea4
+--- /dev/null
++++ b/zititest/zitilab/component_zrok_looptest.go
+@@ -0,0 +1,145 @@
++/*
++	Copyright 2019 NetFoundry Inc.
++
++	Licensed under the Apache License, Version 2.0 (the "License");
++	you may not use this file except in compliance with the License.
++	You may obtain a copy of the License at
++
++	https://www.apache.org/licenses/LICENSE-2.0
++
++	Unless required by applicable law or agreed to in writing, software
++	distributed under the License is distributed on an "AS IS" BASIS,
++	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++	See the License for the specific language governing permissions and
++	limitations under the License.
++*/
++
++package zitilab
++
++import (
++	"fmt"
++	"github.com/michaelquigley/pfxlog"
++	"github.com/openziti/fablab/kernel/model"
++	"github.com/openziti/ziti/ziti/constants"
++	"github.com/openziti/ziti/zititest/zitilab/stageziti"
++	"github.com/sirupsen/logrus"
++	"strings"
++	"time"
++)
++
++var _ model.ComponentType = (*ZrokLoopTestType)(nil)
++var _ model.ServerComponent = (*ZrokLoopTestType)(nil)
++var _ model.FileStagingComponent = (*ZrokLoopTestType)(nil)
++var _ model.ActionsComponent = (*ZrokLoopTestType)(nil)
++
++const (
++	ZrokLoopTestActionInit = "init"
++)
++
++type ZrokLoopTestType struct {
++	Version    string
++	LocalPath  string
++	Iterations uint32
++	Loopers    uint8
++	Pacing     time.Duration
++}
++
++func (self *ZrokLoopTestType) InitType(*model.Component) {
++	canonicalizeGoAppVersion(&self.Version)
++	if self.Iterations == 0 {
++		self.Iterations = 1
++	}
++	if self.Loopers == 0 {
++		self.Loopers = 1
++	}
++}
++
++func (self *ZrokLoopTestType) GetActions() map[string]model.ComponentAction {
++	return map[string]model.ComponentAction{
++		ZrokFrontendActionInit: model.ComponentActionF(self.Init),
++	}
++}
++
++func (self *ZrokLoopTestType) Dump() any {
++	return map[string]string{
++		"type_id":    "zrok-test-loop",
++		"version":    self.Version,
++		"local_path": self.LocalPath,
++	}
++}
++
++func (self *ZrokLoopTestType) StageFiles(r model.Run, c *model.Component) error {
++	return stageziti.StageZrokOnce(r, c, self.Version, self.LocalPath)
++}
++
++func (self *ZrokLoopTestType) getProcessFilter() func(string) bool {
++	return func(s string) bool {
++		return strings.Contains(s, "zrok") &&
++			strings.Contains(s, " test loop public") &&
++			!strings.Contains(s, "sudo")
++	}
++}
++
++func (self *ZrokLoopTestType) IsRunning(_ model.Run, c *model.Component) (bool, error) {
++	pids, err := c.GetHost().FindProcesses(self.getProcessFilter())
++	if err != nil {
++		return false, err
++	}
++	return len(pids) > 0, nil
++}
++
++func (self *ZrokLoopTestType) Start(_ model.Run, c *model.Component) error {
++	user := c.GetHost().GetSshUser()
++	userId := self.getUnixUser(c)
++
++	binaryPath := getBinaryPath(c, constants.ZROK, self.Version)
++	logsPath := fmt.Sprintf("/home/%s/logs/%s.log", user, c.Id)
++
++	serviceCmd := fmt.Sprintf("nohup sudo -u %s %s test loop public --iterations %v --loopers %v --min-pacing-ms %v --max-pacing-ms %v 2>&1 &> %s &",
++		userId, binaryPath, self.Iterations, self.Loopers, self.Pacing.Milliseconds(), self.Pacing.Milliseconds(), logsPath)
++
++	if quiet, _ := c.GetBoolVariable("quiet_startup"); !quiet {
++		logrus.Info(serviceCmd)
++	}
++
++	value, err := c.GetHost().ExecLogged(serviceCmd)
++	if err != nil {
++		return err
++	}
++
++	if len(value) > 0 {
++		logrus.Infof("output [%s]", strings.Trim(value, " \t\r\n"))
++	}
++
++	return nil
++}
++
++func (self *ZrokLoopTestType) Stop(_ model.Run, c *model.Component) error {
++	return c.GetHost().KillProcesses("-TERM", self.getProcessFilter())
++}
++
++func (self *ZrokLoopTestType) getUnixUser(c *model.Component) string {
++	return fmt.Sprintf("zrok%v", c.ScaleIndex)
++}
++
++func (self *ZrokLoopTestType) Init(run model.Run, c *model.Component) error {
++	userId := self.getUnixUser(c)
++
++	// this will error on first run
++	_ = c.GetHost().ExecLogOnlyOnError(fmt.Sprintf("sudo deluser %s --remove-home", userId))
++	if err := c.GetHost().ExecLogOnlyOnError(fmt.Sprintf("sudo useradd %s -m -g ubuntu ", userId)); err != nil {
++		return err
++	}
++
++	binaryPath := getBinaryPath(c, constants.ZROK, self.Version)
++	val, ok := c.Data["token"]
++	if !ok {
++		return fmt.Errorf("no token found for zrok client '%s'", c.Id)
++	}
++	token := fmt.Sprintf("%v", val)
++	zrokApiEndpoint := run.GetModel().MustSelectHost("zrokCtrl").PublicIp + ":1280"
++	tmpl := "set -o pipefail; sudo -u %s ZROK_API_ENDPOINT=http://%s %s enable %s"
++	cmd := fmt.Sprintf(tmpl, userId, zrokApiEndpoint, binaryPath, token)
++	pfxlog.Logger().Info(cmd)
++	return c.GetHost().ExecLogOnlyOnError(cmd)
++}
+diff --git a/zititest/zitilab/stageziti/stageziti.go b/zititest/zitilab/stageziti/stageziti.go
+index f55f3b2ea..325d86b7a 100644
+--- a/zititest/zitilab/stageziti/stageziti.go
++++ b/zititest/zitilab/stageziti/stageziti.go
+@@ -1,6 +1,7 @@
+ package stageziti
+ 
+ import (
++	"fmt"
+ 	"github.com/openziti/fablab/kernel/model"
+ 	"github.com/openziti/ziti/common/getziti"
+ 	"github.com/openziti/ziti/ziti/util"
+@@ -9,6 +10,7 @@ import (
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
++	"strings"
+ )
+ 
+ func StageZitiOnce(run model.Run, component *model.Component, version string, source string) error {
+@@ -24,6 +26,19 @@ func StageZitiOnce(run model.Run, component *model.Component, version string, so
+ 	})
+ }
+ 
++func StageZrokOnce(run model.Run, component *model.Component, version string, source string) error {
++	op := "install.zrok-"
++	if version == "" {
++		op += "local"
++	} else {
++		op += version
++	}
++
++	return run.DoOnce(op, func() error {
++		return StageZrok(run, component, version, source)
++	})
++}
++
+ func StageZitiEdgeTunnelOnce(run model.Run, component *model.Component, version string, source string) error {
+ 	op := "install.ziti-edge-tunnel-"
+ 	if version == "" {
+@@ -38,7 +53,19 @@ func StageZitiEdgeTunnelOnce(run model.Run, component *model.Component, version
+ }
+ 
+ func StageZiti(run model.Run, component *model.Component, version string, source string) error {
+-	fileName := "ziti"
++	return StageExecutable(run, "ziti", component, version, source, func() error {
++		return getziti.InstallZiti(version, "linux", "amd64", run.GetBinDir(), false)
++	})
++}
++
++func StageZrok(run model.Run, component *model.Component, version string, source string) error {
++	return StageExecutable(run, "zrok", component, version, source, func() error {
++		return getziti.InstallZrok(version, "linux", "amd64", run.GetBinDir(), false)
++	})
++}
++
++func StageExecutable(run model.Run, executable string, component *model.Component, version string, source string, fallbackF func() error) error {
++	fileName := executable
+ 	if version != "" {
+ 		fileName += "-" + version
+ 	}
+@@ -48,20 +75,22 @@ func StageZiti(run model.Run, component *model.Component, version string, source
+ 		_ = os.Remove(target)
+ 	}
+ 
++	envVar := strings.ToUpper(executable) + "_PATH"
++
+ 	if version == "" {
+ 		if source != "" {
+ 			logrus.Infof("[%s] => [%s]", source, target)
+ 			return util.CopyFile(source, target)
+ 		}
+-		if envSource, found := component.GetStringVariable("ZITI_PATH"); found {
++		if envSource, found := component.GetStringVariable(envVar); found {
+ 			logrus.Infof("[%s] => [%s]", envSource, target)
+ 			return util.CopyFile(envSource, target)
+ 		}
+-		if zitiPath, err := exec.LookPath("ziti"); err == nil {
++		if zitiPath, err := exec.LookPath(executable); err == nil {
+ 			logrus.Infof("[%s] => [%s]", zitiPath, target)
+ 			return util.CopyFile(zitiPath, target)
+ 		}
+-		return errors.New("ziti binary not found in path, no path provided and no ZITI_PATH env variable set")
++		return fmt.Errorf("%s binary not found in path, no path provided and no %s env variable set", executable, envVar)
+ 	}
+ 
+ 	found, err := run.FileExists(filepath.Join(model.BuildKitDir, model.BuildBinDir, fileName))
+@@ -73,9 +102,10 @@ func StageZiti(run model.Run, component *model.Component, version string, source
+ 		logrus.Infof("%s already present, not downloading again", target)
+ 		return nil
+ 	}
++
+ 	logrus.Infof("%s not present, attempting to fetch", target)
+ 
+-	return getziti.InstallZiti(version, "linux", "amd64", run.GetBinDir(), false)
++	return fallbackF()
+ }
+ 
+ func StageZitiEdgeTunnel(run model.Run, component *model.Component, version string, source string) error {

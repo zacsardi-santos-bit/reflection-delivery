@@ -1,0 +1,16 @@
+diff --git a/internal/factory/container/device_test.go b/internal/factory/container/device_test.go
+index 23b9e5965..063503aa9 100644
+--- a/internal/factory/container/device_test.go
++++ b/internal/factory/container/device_test.go
+@@ -204,7 +204,10 @@ var _ = t.Describe("Container", func() {
+ 				}
+ 			}
+ 
+-			return cdi.GetRegistry(cdi.WithSpecDirs(dir)).Refresh()
++			if err := cdi.Configure(cdi.WithSpecDirs(dir)); err != nil {
++				return err
++			}
++			return cdi.Refresh()
+ 		}
+ 
+ 		type testdata struct {
