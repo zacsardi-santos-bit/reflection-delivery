@@ -1,0 +1,14 @@
+diff --git a/crates/storage/provider/src/providers/database/provider.rs b/crates/storage/provider/src/providers/database/provider.rs
+--- a/crates/storage/provider/src/providers/database/provider.rs
++++ b/crates/storage/provider/src/providers/database/provider.rs
+@@ -3451,3 +3451,10 @@
+         assert_eq!(range_result, individual_results);
+     }
++
++    #[test]
++    fn test_ommers_provider_on_db_provider() {
++        let factory = create_test_provider_factory();
++        let provider = factory.provider().unwrap();
++        let _ = provider.ommers(0u64.into()).expect("ommers should work");
++    }
+ }

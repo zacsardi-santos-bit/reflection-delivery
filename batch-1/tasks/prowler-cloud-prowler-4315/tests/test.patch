@@ -1,0 +1,983 @@
+diff --git a/tests/lib/outputs/csv/csv_test.py b/tests/lib/outputs/csv/csv_test.py
+new file mode 100644
+index 000000000..a6ea01721
+--- /dev/null
++++ b/tests/lib/outputs/csv/csv_test.py
+@@ -0,0 +1,213 @@
++from datetime import datetime
++from io import StringIO, TextIOWrapper
++from typing import List
++from unittest.mock import MagicMock
++
++import pytest
++
++from prowler.lib.outputs.csv.csv import write_csv
++from prowler.lib.outputs.csv.models import CSV
++from prowler.lib.outputs.finding import Finding, Severity, Status
++from prowler.lib.outputs.output import Output
++
++
++@pytest.fixture
++def generate_finding():
++    return Finding(
++        auth_method="OAuth",
++        timestamp=datetime.now(),
++        account_uid="12345",
++        account_name="Example Account",
++        account_email="example@example.com",
++        account_organization_uid="org-123",
++        account_organization_name="Example Org",
++        account_tags=["tag1", "tag2"],
++        finding_uid="finding-123",
++        provider="aws",
++        check_id="check-123",
++        check_title="Example Check",
++        check_type="Security",
++        status=Status("FAIL"),
++        status_extended="Extended status",
++        muted=False,
++        service_name="Example Service",
++        subservice_name="Example Subservice",
++        severity=Severity("critical"),
++        resource_type="Instance",
++        resource_uid="resource-123",
++        resource_name="Example Resource",
++        resource_details="Detailed information about the resource",
++        resource_tags="tag1,tag2",
++        partition="aws",
++        region="us-west-1",
++        description="Description of the finding",
++        risk="High",
++        related_url="http://example.com",
++        remediation_recommendation_text="Recommendation text",
++        remediation_recommendation_url="http://example.com/remediation",
++        remediation_code_nativeiac="native-iac-code",
++        remediation_code_terraform="terraform-code",
++        remediation_code_cli="cli-code",
++        remediation_code_other="other-code",
++        compliance={"compliance_key": "compliance_value"},
++        categories="category1,category2",
++        depends_on="dependency",
++        related_to="related finding",
++        notes="Notes about the finding",
++        prowler_version="1.0",
++    )
++
++
++class TestCSV:
++
++    def test_output_transform(self, generate_finding):
++        findings = [generate_finding]
++
++        # Clear the data from CSV class
++        CSV._data = []
++
++        output = CSV(findings)
++        output_data = output.data[0]
++        assert isinstance(output_data, dict)
++        assert isinstance(output_data["TIMESTAMP"], datetime)
++        assert isinstance(output_data["ACCOUNT_TAGS"], str)
++        assert isinstance(output_data["SEVERITY"], str)
++        assert isinstance(output_data["STATUS"], str)
++        assert isinstance(output_data["MUTED"], bool)
++        assert isinstance(output_data["COMPLIANCE"], str)
++
++        assert output_data["AUTH_METHOD"] == "OAuth"
++        assert output_data["ACCOUNT_UID"] == "12345"
++        assert output_data["ACCOUNT_NAME"] == "Example Account"
++        assert output_data["ACCOUNT_EMAIL"] == "example@example.com"
++        assert output_data["ACCOUNT_ORGANIZATION_UID"] == "org-123"
++        assert output_data["ACCOUNT_ORGANIZATION_NAME"] == "Example Org"
++        assert output_data["ACCOUNT_TAGS"] == "tag1 | tag2"
++        assert output_data["FINDING_UID"] == "finding-123"
++        assert output_data["PROVIDER"] == "aws"
++        assert output_data["CHECK_ID"] == "check-123"
++        assert output_data["CHECK_TITLE"] == "Example Check"
++        assert output_data["CHECK_TYPE"] == "Security"
++        assert output_data["STATUS"] == "FAIL"
++        assert output_data["STATUS_EXTENDED"] == "Extended status"
++        assert output_data["MUTED"] is False
++        assert output_data["SERVICE_NAME"] == "Example Service"
++        assert output_data["SUBSERVICE_NAME"] == "Example Subservice"
++        assert output_data["SEVERITY"] == "critical"
++        assert output_data["RESOURCE_TYPE"] == "Instance"
++        assert output_data["RESOURCE_UID"] == "resource-123"
++        assert output_data["RESOURCE_NAME"] == "Example Resource"
++        assert (
++            output_data["RESOURCE_DETAILS"] == "Detailed information about the resource"
++        )
++        assert output_data["RESOURCE_TAGS"] == "tag1,tag2"
++        assert output_data["PARTITION"] == "aws"
++        assert output_data["REGION"] == "us-west-1"
++        assert output_data["DESCRIPTION"] == "Description of the finding"
++        assert output_data["RISK"] == "High"
++        assert output_data["RELATED_URL"] == "http://example.com"
++        assert output_data["REMEDIATION_RECOMMENDATION_TEXT"] == "Recommendation text"
++        assert (
++            output_data["REMEDIATION_RECOMMENDATION_URL"]
++            == "http://example.com/remediation"
++        )
++        assert output_data["REMEDIATION_CODE_NATIVEIAC"] == "native-iac-code"
++        assert output_data["REMEDIATION_CODE_TERRAFORM"] == "terraform-code"
++        assert output_data["REMEDIATION_CODE_CLI"] == "cli-code"
++        assert output_data["REMEDIATION_CODE_OTHER"] == "other-code"
++        assert output_data["COMPLIANCE"] == "compliance_key: compliance_value"
++        assert output_data["CATEGORIES"] == "category1,category2"
++        assert output_data["DEPENDS_ON"] == "dependency"
++        assert output_data["RELATED_TO"] == "related finding"
++        assert output_data["NOTES"] == "Notes about the finding"
++        assert output_data["PROWLER_VERSION"] == "1.0"
++
++    def test_csv_write_to_file(self, generate_finding):
++        mock_file = StringIO()
++        findings = [generate_finding]
++        # Clear the data from CSV class
++        CSV._data = []
++        output = CSV(findings)
++        output._file_descriptor = mock_file
++
++        output.batch_write_data_to_file()
++
++        mock_file.seek(0)
++        content = mock_file.read()
++        content = content.split("PROWLER_VERSION")[1]
++        content = content.removeprefix("\r\n")
++        content = content.removesuffix("\r\n")
++        string = ""
++        for value in output.data[0].values():
++            string += f"{value};"
++        string = string.removesuffix(";")
++        assert string in content
++
++    @pytest.fixture
++    def mock_output_class(self):
++        class MockOutput(Output):
++            def transform(self, findings: List[Finding]):
++                pass
++
++            def batch_write_data_to_file(self, file_descriptor: TextIOWrapper) -> None:
++                pass
++
++        return MockOutput
++
++    def test_abstract_methods_called(self, mock_output_class):
++        # Create mocks for the abstract methods
++        mock_output_class.transform = MagicMock()
++        mock_output_class.batch_write_data_to_file = MagicMock()
++
++        findings = [MagicMock(spec=Finding)]
++        file_path = "test_file.txt"
++
++        # Instantiate the mock class
++        output_instance = mock_output_class(
++            findings, create_file_descriptor=True, file_path=file_path
++        )
++
++        # Check that transform was called once
++        output_instance.transform.assert_called_once_with(findings)
++
++        # Check that create_file_descriptor was called and the file descriptor was created
++        assert output_instance.file_descriptor is not None
++
++        # Check the type
++        assert isinstance(output_instance.file_descriptor, TextIOWrapper)
++
++        # Assuming we need to call batch_write_data_to_file for this test
++        output_instance.batch_write_data_to_file(output_instance.file_descriptor)
++
++        # Check that batch_write_data_to_file was called once
++        output_instance.batch_write_data_to_file.assert_called_once_with(
++            output_instance.file_descriptor
++        )
++
++    def test_write_csv_with_dict(self):
++        headers = ["provider", "account", "check_id"]
++        row = {"provider": "aws", "account": "account_try", "check_id": "account_check"}
++        mock_file = StringIO()
++
++        write_csv(mock_file, headers, row)
++
++        mock_file.seek(0)
++        content = mock_file.read()
++        assert "aws;account_try;account_check" in content
++
++    def test_write_csv_with_object(self):
++        class Row:
++            def __init__(self, provider, account, check_id):
++                self.provider = provider
++                self.account = account
++                self.check_id = check_id
++
++        headers = ["provider", "account", "check_id"]
++        row = Row("aws", "account_try", "account_check")
++        mock_file = StringIO()
++
++        write_csv(mock_file, headers, row)
++
++        mock_file.seek(0)
++        content = mock_file.read()
++        assert "aws;account_try;account_check" in content
+diff --git a/tests/lib/outputs/finding_test.py b/tests/lib/outputs/finding_test.py
+new file mode 100644
+index 000000000..990bbb31d
+--- /dev/null
++++ b/tests/lib/outputs/finding_test.py
+@@ -0,0 +1,484 @@
++from unittest.mock import MagicMock, patch
++
++from prowler.lib.outputs.finding import Finding, Severity, Status
++
++
++def mock_get_provider_data_mapping_aws(_):
++    return {
++        "auth_method": "mock_auth",
++        "timestamp": 1622520000,
++        "account_uid": "mock_account_uid",
++        "account_name": "mock_account_name",
++        "account_email": "mock_account_email",
++        "account_organization_uid": "mock_account_org_uid",
++        "account_organization_name": "mock_account_org_name",
++        "account_tags": ["tag1", "tag2"],
++        "finding_uid": "mock_finding_uid",
++        "provider": "aws",
++        "check_id": "mock_check_id",
++        "check_title": "mock_check_title",
++        "check_type": "mock_check_type",
++        "status": Status.PASS,
++        "status_extended": "mock_status_extended",
++        "muted": False,
++        "service_name": "mock_service_name",
++        "subservice_name": "mock_subservice_name",
++        "severity": Severity.high,
++        "resource_type": "mock_resource_type",
++        "resource_uid": "mock_resource_uid",
++        "resource_name": "mock_resource_name",
++        "resource_details": "mock_resource_details",
++        "resource_tags": "mock_resource_tags",
++        "partition": None,
++        "region": "mock_region",
++        "description": "mock_description",
++        "risk": "mock_risk",
++        "related_url": "mock_related_url",
++        "remediation_recommendation_text": "mock_remediation_text",
++        "remediation_recommendation_url": "mock_remediation_url",
++        "remediation_code_nativeiac": "mock_code_nativeiac",
++        "remediation_code_terraform": "mock_code_terraform",
++        "remediation_code_cli": "mock_code_cli",
++        "remediation_code_other": "mock_code_other",
++        "compliance": {"mock_compliance_key": "mock_compliance_value"},
++        "categories": "mock_categories",
++        "depends_on": "mock_depends_on",
++        "related_to": "mock_related_to",
++        "notes": "mock_notes",
++        "prowler_version": "1.0.0",
++    }
++
++
++def mock_get_provider_data_mapping_azure(_):
++    return {
++        "auth_method": "mock_auth",
++        "timestamp": 1622520000,
++        "account_uid": "mock_account_uid",
++        "account_name": "mock_account_name",
++        "account_email": "mock_account_email",
++        "account_organization_uid": "mock_account_org_uid",
++        "account_organization_name": "mock_account_org_name",
++        "account_tags": ["tag1", "tag2"],
++        "finding_uid": "mock_finding_uid",
++        "provider": "azure",
++        "check_id": "mock_check_id",
++        "check_title": "mock_check_title",
++        "check_type": "mock_check_type",
++        "status": Status.PASS,
++        "status_extended": "mock_status_extended",
++        "muted": False,
++        "service_name": "mock_service_name",
++        "subservice_name": "mock_subservice_name",
++        "severity": Severity.high,
++        "resource_type": "mock_resource_type",
++        "resource_uid": "mock_resource_uid",
++        "resource_name": "mock_resource_name",
++        "resource_details": "mock_resource_details",
++        "resource_tags": "mock_resource_tags",
++        "partition": None,
++        "description": "mock_description",
++        "risk": "mock_risk",
++        "related_url": "mock_related_url",
++        "remediation_recommendation_text": "mock_remediation_text",
++        "remediation_recommendation_url": "mock_remediation_url",
++        "remediation_code_nativeiac": "mock_code_nativeiac",
++        "remediation_code_terraform": "mock_code_terraform",
++        "remediation_code_cli": "mock_code_cli",
++        "remediation_code_other": "mock_code_other",
++        "compliance": {"mock_compliance_key": "mock_compliance_value"},
++        "categories": "mock_categories",
++        "depends_on": "mock_depends_on",
++        "related_to": "mock_related_to",
++        "notes": "mock_notes",
++        "prowler_version": "1.0.0",
++    }
++
++
++def mock_get_provider_data_mapping_gcp(_):
++    return {
++        "auth_method": "mock_auth",
++        "timestamp": 1622520000,
++        "account_uid": "mock_account_uid",
++        "account_name": "mock_account_name",
++        "account_email": "mock_account_email",
++        "account_organization_uid": "mock_account_org_uid",
++        "account_organization_name": "mock_account_org_name",
++        "account_tags": ["tag1", "tag2"],
++        "finding_uid": "mock_finding_uid",
++        "provider": "gcp",
++        "check_id": "mock_check_id",
++        "check_title": "mock_check_title",
++        "check_type": "mock_check_type",
++        "status": Status.PASS,
++        "status_extended": "mock_status_extended",
++        "muted": False,
++        "service_name": "mock_service_name",
++        "subservice_name": "mock_subservice_name",
++        "severity": Severity.high,
++        "resource_type": "mock_resource_type",
++        "resource_uid": "mock_resource_uid",
++        "resource_name": "mock_resource_name",
++        "resource_details": "mock_resource_details",
++        "resource_tags": "mock_resource_tags",
++        "partition": None,
++        "description": "mock_description",
++        "risk": "mock_risk",
++        "related_url": "mock_related_url",
++        "remediation_recommendation_text": "mock_remediation_text",
++        "remediation_recommendation_url": "mock_remediation_url",
++        "remediation_code_nativeiac": "mock_code_nativeiac",
++        "remediation_code_terraform": "mock_code_terraform",
++        "remediation_code_cli": "mock_code_cli",
++        "remediation_code_other": "mock_code_other",
++        "compliance": {"mock_compliance_key": "mock_compliance_value"},
++        "categories": "mock_categories",
++        "depends_on": "mock_depends_on",
++        "related_to": "mock_related_to",
++        "notes": "mock_notes",
++        "prowler_version": "1.0.0",
++    }
++
++
++def mock_get_provider_data_mapping_kubernetes(_):
++    return {
++        "auth_method": "mock_auth",
++        "timestamp": 1622520000,
++        "account_uid": "mock_account_uid",
++        "account_name": "mock_account_name",
++        "account_email": "mock_account_email",
++        "account_organization_uid": "mock_account_org_uid",
++        "account_organization_name": "mock_account_org_name",
++        "account_tags": ["tag1", "tag2"],
++        "finding_uid": "mock_finding_uid",
++        "provider": "kubernetes",
++        "check_id": "mock_check_id",
++        "check_title": "mock_check_title",
++        "check_type": "mock_check_type",
++        "status": Status.PASS,
++        "status_extended": "mock_status_extended",
++        "muted": False,
++        "service_name": "mock_service_name",
++        "subservice_name": "mock_subservice_name",
++        "severity": Severity.high,
++        "resource_type": "mock_resource_type",
++        "resource_uid": "mock_resource_uid",
++        "resource_name": "mock_resource_name",
++        "resource_details": "mock_resource_details",
++        "resource_tags": "mock_resource_tags",
++        "partition": None,
++        "description": "mock_description",
++        "risk": "mock_risk",
++        "related_url": "mock_related_url",
++        "remediation_recommendation_text": "mock_remediation_text",
++        "remediation_recommendation_url": "mock_remediation_url",
++        "remediation_code_nativeiac": "mock_code_nativeiac",
++        "remediation_code_terraform": "mock_code_terraform",
++        "remediation_code_cli": "mock_code_cli",
++        "remediation_code_other": "mock_code_other",
++        "compliance": {"mock_compliance_key": "mock_compliance_value"},
++        "categories": "mock_categories",
++        "depends_on": "mock_depends_on",
++        "related_to": "mock_related_to",
++        "notes": "mock_notes",
++        "prowler_version": "1.0.0",
++    }
++
++
++def mock_fill_common_finding_data(_, unix_timestamp):
++    return {"common_key": "common_value", "unix_timestamp": unix_timestamp}
++
++
++def mock_get_check_compliance(_, __, ___):
++    return {"mock_compliance_key": "mock_compliance_value"}
++
++
++class TestFinding:
++    @patch(
++        "prowler.lib.outputs.finding.get_provider_data_mapping",
++        new=mock_get_provider_data_mapping_aws,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.fill_common_finding_data",
++        new=mock_fill_common_finding_data,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.get_check_compliance",
++        new=mock_get_check_compliance,
++    )
++    def test_generate_output_aws(self):
++        # Mock provider and other arguments
++        provider = MagicMock()
++        provider.type = "aws"
++        check_output = MagicMock()
++        check_output.resource_id = "test_resource_id"
++        check_output.resource_arn = "test_resource_arn"
++        check_output.region = "us-west-1"
++        output_options = MagicMock()
++        output_options.unix_timestamp = 1234567890
++        global_provider = MagicMock()
++        global_provider.output_options = output_options
++        # Call the method under test
++        finding_output = Finding.generate_output(provider, check_output)
++
++        # Assertions to verify expected behavior
++        assert finding_output is not None
++        assert finding_output.auth_method == "profile: mock_auth"
++        assert finding_output.resource_name == "test_resource_id"
++        assert finding_output.resource_uid == "test_resource_arn"
++        assert finding_output.region == "us-west-1"
++        assert finding_output.compliance == {
++            "mock_compliance_key": "mock_compliance_value"
++        }
++        assert finding_output.provider == "aws"
++        assert finding_output.check_id == "mock_check_id"
++        assert finding_output.check_title == "mock_check_title"
++        assert finding_output.check_type == "mock_check_type"
++        assert finding_output.status == Status.PASS
++        assert finding_output.status_extended == "mock_status_extended"
++        assert finding_output.muted is False
++        assert finding_output.service_name == "mock_service_name"
++        assert finding_output.subservice_name == "mock_subservice_name"
++        assert finding_output.severity == Severity.high
++        assert finding_output.resource_type == "mock_resource_type"
++        assert finding_output.resource_tags == "mock_resource_tags"
++        assert finding_output.partition is None
++        assert finding_output.description == "mock_description"
++        assert finding_output.risk == "mock_risk"
++        assert finding_output.related_url == "mock_related_url"
++        assert finding_output.remediation_recommendation_text == "mock_remediation_text"
++        assert finding_output.remediation_recommendation_url == "mock_remediation_url"
++        assert finding_output.remediation_code_nativeiac == "mock_code_nativeiac"
++        assert finding_output.remediation_code_terraform == "mock_code_terraform"
++        assert finding_output.remediation_code_cli == "mock_code_cli"
++        assert finding_output.remediation_code_other == "mock_code_other"
++        assert finding_output.categories == "mock_categories"
++        assert finding_output.depends_on == "mock_depends_on"
++        assert finding_output.related_to == "mock_related_to"
++        assert finding_output.notes == "mock_notes"
++        assert finding_output.account_uid == "mock_account_uid"
++        assert finding_output.account_name == "mock_account_name"
++        assert finding_output.account_email == "mock_account_email"
++        assert finding_output.account_organization_uid == "mock_account_org_uid"
++        assert finding_output.account_organization_name == "mock_account_org_name"
++        assert finding_output.account_tags == ["tag1", "tag2"]
++        assert finding_output.prowler_version == "1.0.0"
++
++    @patch(
++        "prowler.lib.outputs.finding.get_provider_data_mapping",
++        new=mock_get_provider_data_mapping_azure,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.fill_common_finding_data",
++        new=mock_fill_common_finding_data,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.get_check_compliance",
++        new=mock_get_check_compliance,
++    )
++    def test_generate_output_azure(self):
++        # Mock provider and other arguments
++        provider = MagicMock()
++        provider.type = "azure"
++        provider.identity.identity_type = "mock_identity_type"
++        provider.identity.identity_id = "mock_identity_id"
++        provider.identity.subscriptions = {
++            "mock_subscription_id": "mock_subscription_name"
++        }
++        check_output = MagicMock()
++        check_output.resource_id = "test_resource_id"
++        check_output.resource_arn = "test_resource_arn"
++        check_output.subscription = "mock_subscription_id"
++        check_output.resource_name = "test_resource_name"
++        check_output.location = "us-west-1"
++        check_output.region = "us-west-1"
++        output_options = MagicMock()
++        output_options.unix_timestamp = 1234567890
++        global_provider = MagicMock()
++        global_provider.output_options = output_options
++        # Call the method under test
++        finding_output = Finding.generate_output(provider, check_output)
++
++        # Assertions to verify expected behavior
++        assert finding_output is not None
++        assert finding_output.auth_method == "mock_identity_type: mock_identity_id"
++        assert finding_output.resource_name == "test_resource_name"
++        assert finding_output.resource_uid == "test_resource_id"
++        assert finding_output.region == "us-west-1"
++        assert finding_output.compliance == {
++            "mock_compliance_key": "mock_compliance_value"
++        }
++        assert finding_output.provider == "azure"
++        assert finding_output.check_id == "mock_check_id"
++        assert finding_output.check_title == "mock_check_title"
++        assert finding_output.check_type == "mock_check_type"
++        assert finding_output.status == Status.PASS
++        assert finding_output.status_extended == "mock_status_extended"
++        assert finding_output.muted is False
++        assert finding_output.service_name == "mock_service_name"
++        assert finding_output.subservice_name == "mock_subservice_name"
++        assert finding_output.severity == Severity.high
++        assert finding_output.resource_type == "mock_resource_type"
++        assert finding_output.resource_tags == "mock_resource_tags"
++        assert finding_output.partition is None
++        assert finding_output.description == "mock_description"
++        assert finding_output.risk == "mock_risk"
++        assert finding_output.related_url == "mock_related_url"
++        assert finding_output.remediation_recommendation_text == "mock_remediation_text"
++        assert finding_output.remediation_recommendation_url == "mock_remediation_url"
++        assert finding_output.remediation_code_nativeiac == "mock_code_nativeiac"
++        assert finding_output.remediation_code_terraform == "mock_code_terraform"
++        assert finding_output.remediation_code_cli == "mock_code_cli"
++        assert finding_output.remediation_code_other == "mock_code_other"
++        assert finding_output.categories == "mock_categories"
++        assert finding_output.depends_on == "mock_depends_on"
++
++    @patch(
++        "prowler.lib.outputs.finding.get_provider_data_mapping",
++        new=mock_get_provider_data_mapping_gcp,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.fill_common_finding_data",
++        new=mock_fill_common_finding_data,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.get_check_compliance",
++        new=mock_get_check_compliance,
++    )
++    def test_generate_output_gcp(self):
++        provider = MagicMock()
++        provider.type = "gcp"
++        project = MagicMock()
++        organization = MagicMock()
++        organization.id = "mock_organization_id"
++        organization.display_name = "mock_organization_name"
++        project.id = "mock_project_id"
++        project.name = "mock_project_name"
++        project.labels = ["label1", "label2"]
++        project.organization = organization
++
++        provider.projects = {"mock_project_id": project}
++        check_output = MagicMock()
++        check_output.resource_id = "test_resource_id"
++        check_output.resource_arn = "test_resource_arn"
++        check_output.region = "us-west-1"
++        check_output.project_id = "mock_project_id"
++        check_output.resource_name = "test_resource_name"
++        check_output.location = "us-west-1"
++        output_options = MagicMock()
++        output_options.unix_timestamp = 1234567890
++
++        finding_output = Finding.generate_output(provider, check_output)
++
++        assert finding_output is not None
++        assert finding_output.auth_method == "Principal: mock_auth"
++        assert finding_output.resource_name == "test_resource_name"
++        assert finding_output.resource_uid == "test_resource_id"
++        assert finding_output.region == "us-west-1"
++        assert finding_output.compliance == {
++            "mock_compliance_key": "mock_compliance_value"
++        }
++        assert finding_output.provider == "gcp"
++        assert finding_output.check_id == "mock_check_id"
++        assert finding_output.check_title == "mock_check_title"
++        assert finding_output.check_type == "mock_check_type"
++        assert finding_output.status == Status.PASS
++        assert finding_output.status_extended == "mock_status_extended"
++        assert finding_output.muted is False
++        assert finding_output.service_name == "mock_service_name"
++        assert finding_output.subservice_name == "mock_subservice_name"
++        assert finding_output.severity == Severity.high
++        assert finding_output.resource_type == "mock_resource_type"
++        assert finding_output.resource_tags == "mock_resource_tags"
++        assert finding_output.partition is None
++        assert finding_output.description == "mock_description"
++        assert finding_output.risk == "mock_risk"
++        assert finding_output.related_url == "mock_related_url"
++        assert finding_output.remediation_recommendation_text == "mock_remediation_text"
++        assert finding_output.remediation_recommendation_url == "mock_remediation_url"
++        assert finding_output.remediation_code_nativeiac == "mock_code_nativeiac"
++        assert finding_output.remediation_code_terraform == "mock_code_terraform"
++        assert finding_output.remediation_code_cli == "mock_code_cli"
++        assert finding_output.remediation_code_other == "mock_code_other"
++        assert finding_output.categories == "mock_categories"
++        assert finding_output.depends_on == "mock_depends_on"
++        assert finding_output.related_to == "mock_related_to"
++        assert finding_output.notes == "mock_notes"
++        assert finding_output.account_uid == "mock_project_id"
++        assert finding_output.account_name == "mock_project_name"
++        assert finding_output.account_email == "mock_account_email"
++        assert finding_output.account_organization_uid == "mock_organization_id"
++        assert finding_output.account_organization_name == "mock_account_org_name"
++        assert finding_output.account_tags == ["label1", "label2"]
++        assert finding_output.prowler_version == "1.0.0"
++        assert finding_output.timestamp == 1622520000
++
++    @patch(
++        "prowler.lib.outputs.finding.get_provider_data_mapping",
++        new=mock_get_provider_data_mapping_kubernetes,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.fill_common_finding_data",
++        new=mock_fill_common_finding_data,
++    )
++    @patch(
++        "prowler.lib.outputs.finding.get_check_compliance",
++        new=mock_get_check_compliance,
++    )
++    def test_generate_output_kubernetes(self):
++        provider = MagicMock()
++        provider.type = "kubernetes"
++        identity = MagicMock()
++
++        identity.context = "In-Cluster"
++        provider.identity = identity
++        check_output = MagicMock()
++        check_output.resource_name = "test_resource_name"
++        check_output.resource_id = "test_resource_id"
++        check_output.namespace = "test_namespace"
++        output_options = MagicMock()
++        output_options.unix_timestamp = 1234567890
++
++        finding_output = Finding.generate_output(provider, check_output)
++
++        assert finding_output is not None
++        assert finding_output.auth_method == "in-cluster"
++        assert finding_output.resource_name == "test_resource_name"
++        assert finding_output.resource_uid == "test_resource_id"
++        assert finding_output.region == "namespace: test_namespace"
++        assert finding_output.compliance == {
++            "mock_compliance_key": "mock_compliance_value"
++        }
++        assert finding_output.provider == "kubernetes"
++        assert finding_output.check_id == "mock_check_id"
++        assert finding_output.check_title == "mock_check_title"
++        assert finding_output.check_type == "mock_check_type"
++        assert finding_output.status == Status.PASS
++        assert finding_output.status_extended == "mock_status_extended"
++        assert finding_output.muted is False
++        assert finding_output.service_name == "mock_service_name"
++        assert finding_output.subservice_name == "mock_subservice_name"
++        assert finding_output.severity == Severity.high
++        assert finding_output.resource_type == "mock_resource_type"
++        assert finding_output.resource_tags == "mock_resource_tags"
++        assert finding_output.partition is None
++        assert finding_output.description == "mock_description"
++        assert finding_output.risk == "mock_risk"
++        assert finding_output.related_url == "mock_related_url"
++        assert finding_output.remediation_recommendation_text == "mock_remediation_text"
++        assert finding_output.remediation_recommendation_url == "mock_remediation_url"
++        assert finding_output.remediation_code_nativeiac == "mock_code_nativeiac"
++        assert finding_output.remediation_code_terraform == "mock_code_terraform"
++        assert finding_output.remediation_code_cli == "mock_code_cli"
++        assert finding_output.remediation_code_other == "mock_code_other"
++        assert finding_output.categories == "mock_categories"
++        assert finding_output.depends_on == "mock_depends_on"
++        assert finding_output.related_to == "mock_related_to"
++        assert finding_output.notes == "mock_notes"
++        assert finding_output.account_uid == "mock_account_uid"
++        assert finding_output.account_name == "context: In-Cluster"
++        assert finding_output.account_email == "mock_account_email"
++        assert finding_output.account_organization_uid == "mock_account_org_uid"
++        assert finding_output.account_organization_name == "mock_account_org_name"
++        assert finding_output.account_tags == ["tag1", "tag2"]
++        assert finding_output.prowler_version == "1.0.0"
++        assert finding_output.timestamp == 1622520000
+diff --git a/tests/lib/outputs/fixtures/fixtures.py b/tests/lib/outputs/fixtures/fixtures.py
+index 94d242ec8..7999fec25 100644
+--- a/tests/lib/outputs/fixtures/fixtures.py
++++ b/tests/lib/outputs/fixtures/fixtures.py
+@@ -1,15 +1,15 @@
+ from datetime import datetime
+ 
+ from prowler.config.config import prowler_version
+-from prowler.lib.outputs.common_models import FindingOutput
++from prowler.lib.outputs.finding import Finding
+ from tests.providers.aws.utils import AWS_ACCOUNT_NUMBER
+ 
+ 
+ # TODO: customize it per provider
+-def generate_finding_output(status, severity, muted, region) -> FindingOutput:
++def generate_finding_output(status, severity, muted, region) -> Finding:
+     # TODO: Include metadata from a valid file
+ 
+-    return FindingOutput(
++    return Finding(
+         auth_method="profile: default",
+         timestamp=datetime.now(),
+         account_uid=AWS_ACCOUNT_NUMBER,
+diff --git a/tests/lib/outputs/outputs_test.py b/tests/lib/outputs/outputs_test.py
+index 68ead2020..a22f884b7 100644
+--- a/tests/lib/outputs/outputs_test.py
++++ b/tests/lib/outputs/outputs_test.py
+@@ -6,7 +6,6 @@ import pytest
+ from colorama import Fore
+ 
+ from prowler.config.config import (
+-    csv_file_suffix,
+     html_file_suffix,
+     json_asff_file_suffix,
+     json_ocsf_file_suffix,
+@@ -18,11 +17,10 @@ from prowler.lib.check.compliance_models import (
+     Compliance_Requirement,
+ )
+ from prowler.lib.check.models import Check_Report, load_check_metadata
+-from prowler.lib.outputs.common import generate_provider_output
+-from prowler.lib.outputs.common_models import FindingOutput
+ from prowler.lib.outputs.compliance.compliance import get_check_compliance
+ from prowler.lib.outputs.csv.csv import generate_csv_fields
+ from prowler.lib.outputs.file_descriptors import fill_file_descriptors
++from prowler.lib.outputs.finding import Finding
+ from prowler.lib.outputs.outputs import extract_findings_statistics, set_report_color
+ from prowler.lib.outputs.utils import (
+     parse_html_string,
+@@ -42,20 +40,13 @@ class TestOutputs:
+         output_directory = f"{os.path.dirname(os.path.realpath(__file__))}"
+         aws_provider = set_mocked_aws_provider()
+         test_output_modes = [
+-            ["csv"],
+             ["json-asff"],
+             ["json-ocsf"],
+             ["html"],
+-            ["csv", "json-asff", "json-ocsf", "html"],
++            ["json-asff", "json-ocsf", "html"],
+         ]
+         output_filename = f"prowler-output-{audited_account}-{output_file_timestamp}"
+         expected = [
+-            {
+-                "csv": open_file(
+-                    f"{output_directory}/{output_filename}{csv_file_suffix}",
+-                    "a",
+-                )
+-            },
+             {
+                 "json-asff": open_file(
+                     f"{output_directory}/{output_filename}{json_asff_file_suffix}",
+@@ -75,10 +66,6 @@ class TestOutputs:
+                 )
+             },
+             {
+-                "csv": open_file(
+-                    f"{output_directory}/{output_filename}{csv_file_suffix}",
+-                    "a",
+-                ),
+                 "json-asff": open_file(
+                     f"{output_directory}/{output_filename}{json_asff_file_suffix}",
+                     "a",
+@@ -169,7 +156,7 @@ class TestOutputs:
+             "prowler_version",
+         ]
+ 
+-        assert generate_csv_fields(FindingOutput) == expected
++        assert generate_csv_fields(Finding) == expected
+ 
+     def test_unroll_list_no_separator(self):
+         list = ["test", "test1", "test2"]
+@@ -744,183 +731,3 @@ class TestOutputs:
+             "CIS-2.0": ["2.1.3"],
+             "CIS-2.1": ["2.1.3"],
+         }
+-
+-    def test_generate_provider_output(self):
+-        provider = mock.MagicMock()
+-        provider.type = "aws"
+-        finding = mock.MagicMock()
+-        finding.resource_id = "test"
+-        finding.resource_arn = "test-arn"
+-        finding.region = "eu-west-1"
+-        finding.check_metadata = mock.MagicMock()
+-        finding.check_metadata.CheckID = "iam_user_accesskey_unused"
+-        csv_data = {
+-            "resource_uid": "test",
+-            "resource_arn": "test-arn",
+-            "region": "eu-west-1",
+-            "account_uid": "123456789012",
+-            "auth_method": "test",
+-            "resource_name": "test",
+-            "timestamp": "2022-01-01T00:00:00Z",
+-            "provider": "aws",
+-            "check_id": "iam_user_accesskey_unused",
+-            "check_title": "IAM User Access Key Unused",
+-            "check_type": "config",
+-            "status": "PASS",
+-            "status_extended": "This is a test",
+-            "service_name": "iam",
+-            "subservice_name": "user",
+-            "severity": "low",
+-            "resource_type": "aws_iam_user",
+-            "resource_details": "Test resource details",
+-            "resource_tags": "",
+-            "description": "IAM User Access Key Unused",
+-            "risk": "if an access key is not used, it should be removed",
+-            "related_url": "",
+-            "remediation_recommendation_text": "Remove unused access keys",
+-            "remediation_recommendation_url": "",
+-            "remediation_code_nativeiac": "",
+-            "remediation_code_terraform": "",
+-            "remediation_code_cli": "",
+-            "remediation_code_other": "",
+-            "compliance": {
+-                "CIS": ["2.1.3"],
+-                "NIST-800-53-Revision-5": ["sc_28_1"],
+-            },
+-            "categories": "security",
+-            "depends_on": "",
+-            "related_to": "",
+-            "notes": "",
+-            "finding_uid": "test-finding",
+-        }
+-
+-        assert generate_provider_output(provider, finding, csv_data) == FindingOutput(
+-            auth_method="profile: test",
+-            account_uid="123456789012",
+-            timestamp="2022-01-01T00:00:00Z",
+-            account_name=None,
+-            account_email=None,
+-            account_organization_uid=None,
+-            account_organization_name=None,
+-            account_tags=None,
+-            finding_uid="prowler-aws-iam_user_accesskey_unused-123456789012-eu-west-1-test",
+-            provider="aws",
+-            check_id="iam_user_accesskey_unused",
+-            check_title="IAM User Access Key Unused",
+-            check_type="config",
+-            status="PASS",
+-            status_extended="This is a test",
+-            service_name="iam",
+-            subservice_name="user",
+-            severity="low",
+-            resource_type="aws_iam_user",
+-            resource_uid="test-arn",
+-            resource_name="test",
+-            resource_tags="",
+-            resource_details="Test resource details",
+-            region="eu-west-1",
+-            description="IAM User Access Key Unused",
+-            risk="if an access key is not used, it should be removed",
+-            related_url="",
+-            remediation_recommendation_text="Remove unused access keys",
+-            remediation_recommendation_url="",
+-            remediation_code_nativeiac="",
+-            remediation_code_terraform="",
+-            remediation_code_cli="",
+-            remediation_code_other="",
+-            compliance={"CIS": ["2.1.3"], "NIST-800-53-Revision-5": ["sc_28_1"]},
+-            categories="security",
+-            depends_on="",
+-            related_to="",
+-            notes="",
+-        )
+-
+-    def test_generate_provider_output_unix_timestamp(self):
+-        provider = mock.MagicMock()
+-        provider.type = "aws"
+-        finding = mock.MagicMock()
+-        finding.resource_id = "test"
+-        finding.resource_arn = "test-arn"
+-        finding.region = "eu-west-1"
+-        finding.check_metadata = mock.MagicMock()
+-        finding.check_metadata.CheckID = "iam_user_accesskey_unused"
+-        csv_data = {
+-            "resource_uid": "test",
+-            "resource_arn": "test-arn",
+-            "region": "eu-west-1",
+-            "account_uid": "123456789012",
+-            "auth_method": "test",
+-            "resource_name": "test",
+-            "timestamp": 1640995200,
+-            "provider": "aws",
+-            "check_id": "iam_user_accesskey_unused",
+-            "check_title": "IAM User Access Key Unused",
+-            "check_type": "config",
+-            "status": "PASS",
+-            "status_extended": "This is a test",
+-            "service_name": "iam",
+-            "subservice_name": "user",
+-            "severity": "low",
+-            "resource_type": "aws_iam_user",
+-            "resource_details": "Test resource details",
+-            "resource_tags": "",
+-            "description": "IAM User Access Key Unused",
+-            "risk": "if an access key is not used, it should be removed",
+-            "related_url": "",
+-            "remediation_recommendation_text": "Remove unused access keys",
+-            "remediation_recommendation_url": "",
+-            "remediation_code_nativeiac": "",
+-            "remediation_code_terraform": "",
+-            "remediation_code_cli": "",
+-            "remediation_code_other": "",
+-            "compliance": {
+-                "CIS": ["2.1.3"],
+-                "NIST-800-53-Revision-5": ["sc_28_1"],
+-            },
+-            "categories": "security",
+-            "depends_on": "",
+-            "related_to": "",
+-            "notes": "",
+-            "finding_uid": "test-finding",
+-        }
+-
+-        assert generate_provider_output(provider, finding, csv_data) == FindingOutput(
+-            auth_method="profile: test",
+-            account_uid="123456789012",
+-            timestamp=1640995200,
+-            account_name=None,
+-            account_email=None,
+-            account_organization_uid=None,
+-            account_organization_name=None,
+-            account_tags=None,
+-            finding_uid="prowler-aws-iam_user_accesskey_unused-123456789012-eu-west-1-test",
+-            provider="aws",
+-            check_id="iam_user_accesskey_unused",
+-            check_title="IAM User Access Key Unused",
+-            check_type="config",
+-            status="PASS",
+-            status_extended="This is a test",
+-            service_name="iam",
+-            subservice_name="user",
+-            severity="low",
+-            resource_type="aws_iam_user",
+-            resource_uid="test-arn",
+-            resource_name="test",
+-            resource_tags="",
+-            resource_details="Test resource details",
+-            region="eu-west-1",
+-            description="IAM User Access Key Unused",
+-            risk="if an access key is not used, it should be removed",
+-            related_url="",
+-            remediation_recommendation_text="Remove unused access keys",
+-            remediation_recommendation_url="",
+-            remediation_code_nativeiac="",
+-            remediation_code_terraform="",
+-            remediation_code_cli="",
+-            remediation_code_other="",
+-            compliance={"CIS": ["2.1.3"], "NIST-800-53-Revision-5": ["sc_28_1"]},
+-            categories="security",
+-            depends_on="",
+-            related_to="",
+-            notes="",
+-        )

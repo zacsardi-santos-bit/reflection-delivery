@@ -1,0 +1,8 @@
+diff --git a/codex-rs/analytics/src/lib.rs b/codex-rs/analytics/src/lib.rs
+--- a/codex-rs/analytics/src/lib.rs
++++ b/codex-rs/analytics/src/lib.rs
+@@ -51,3 +51,4 @@ pub fn now_unix_seconds() -> u64 {
+         .unwrap_or_default()
+         .as_secs()
+ }
++

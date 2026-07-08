@@ -1,0 +1,221 @@
+diff --git a/packages/experimental/Checkbox/src/__tests__/Checkbox.test.tsx b/packages/experimental/Checkbox/src/__tests__/Checkbox.test.tsx
+index 4a4179367..908f87256 100644
+--- a/packages/experimental/Checkbox/src/__tests__/Checkbox.test.tsx
++++ b/packages/experimental/Checkbox/src/__tests__/Checkbox.test.tsx
+@@ -1,6 +1,9 @@
+ import * as React from 'react';
+ import { Checkbox } from '../Checkbox';
+ import * as renderer from 'react-test-renderer';
++import { checkRenderConsistency, checkReRender } from '@fluentui-react-native/test-tools';
++import { AccessibilityActionName, Text, View } from 'react-native';
++import { Svg } from 'react-native-svg';
+ 
+ function onChange(isChecked: boolean) {
+   console.log(isChecked);
+@@ -38,16 +41,55 @@ describe('Checkbox component tests', () => {
+       checkboxBorderColor: 'red',
+       checkboxBorderRadius: 5,
+       checkboxBorderWidth: 2,
++      checkboxSize: 11,
+       checkmarkColor: 'pink',
+       checkmarkOpacity: 0.7,
++      checkmarkSize: 7,
+       backgroundColor: 'purple',
+       color: 'yellow',
+       spacingLabelAfter: 7,
++      spacingLabelBefore: 9,
+       borderColor: 'green',
+       borderRadius: 4,
+-      borderWidth: 1,
++      borderWidth: 2,
+     });
+     const tree = renderer.create(<BoldCheckbox label="All Tokens Checkbox" onChange={onChange} defaultChecked={false} />).toJSON();
+     expect(tree).toMatchSnapshot();
+   });
++
++  it('Checkbox composed', () => {
++    const ComposedCheckbox = Checkbox.compose({
++      slots: {
++        root: View,
++        checkbox: View,
++        checkmark: Svg,
++        label: Text,
++      },
++    });
++    const tree = renderer.create(<ComposedCheckbox>Composed Button with RNText</ComposedCheckbox>).toJSON();
++    expect(tree).toMatchSnapshot();
++  });
++
++  it('Checkbox simple rendering does not invalidate styling', () => {
++    checkRenderConsistency(() => <Checkbox>Default button</Checkbox>, 2);
++  });
++
++  it('Checkbox re-renders correctly', () => {
++    checkReRender(() => <Checkbox>Render twice</Checkbox>, 2);
++  });
++
++  it('Checkbox shares produced styles across multiple renders', () => {
++    const style = { backgroundColor: 'black' };
++    checkRenderConsistency(() => <Checkbox style={style}>Shared styles</Checkbox>, 2);
++  });
++
++  it('Checkbox re-renders correctly with style', () => {
++    const style = { borderColor: 'blue' };
++    checkReRender(() => <Checkbox style={style}>Shared Style Render</Checkbox>, 2);
++  });
++
++  it('Checkbox re-renders correctly with accessibilityAction', () => {
++    const action = [{ name: 'Expand' as AccessibilityActionName }];
++    checkReRender(() => <Checkbox accessibilityActions={action}>Shared Style Render</Checkbox>, 2);
++  });
+ });
+diff --git a/packages/experimental/Checkbox/src/__tests__/__snapshots__/Checkbox.test.tsx.snap b/packages/experimental/Checkbox/src/__tests__/__snapshots__/Checkbox.test.tsx.snap
+index f91e64d67..b9ab3931a 100644
+--- a/packages/experimental/Checkbox/src/__tests__/__snapshots__/Checkbox.test.tsx.snap
++++ b/packages/experimental/Checkbox/src/__tests__/__snapshots__/Checkbox.test.tsx.snap
+@@ -172,7 +172,7 @@ exports[`Checkbox component tests Checkbox all tokens 1`] = `
+       "backgroundColor": "purple",
+       "borderColor": "green",
+       "borderRadius": 2,
+-      "borderWidth": 1,
++      "borderWidth": 2,
+       "display": "flex",
+       "flexDirection": "row",
+       "padding": 8,
+@@ -253,6 +253,7 @@ exports[`Checkbox component tests Checkbox all tokens 1`] = `
+         "fontSize": 20,
+         "fontWeight": "900",
+         "margin": 0,
++        "marginEnd": 9,
+         "marginStart": 12,
+       }
+     }
+@@ -262,6 +263,128 @@ exports[`Checkbox component tests Checkbox all tokens 1`] = `
+ </View>
+ `;
+ 
++exports[`Checkbox component tests Checkbox composed 1`] = `
++<View
++  accessibilityActions={
++    Array [
++      Object {
++        "name": "Toggle",
++      },
++    ]
++  }
++  accessibilityRole="checkbox"
++  accessibilityState={
++    Object {
++      "checked": undefined,
++      "disabled": false,
++    }
++  }
++  accessible={true}
++  enableFocusRing={true}
++  focusable={true}
++  onAccessibilityAction={[Function]}
++  onBlur={[Function]}
++  onClick={[Function]}
++  onFocus={[Function]}
++  onPress={[Function]}
++  onResponderGrant={[Function]}
++  onResponderMove={[Function]}
++  onResponderRelease={[Function]}
++  onResponderTerminate={[Function]}
++  onResponderTerminationRequest={[Function]}
++  onStartShouldSetResponder={[Function]}
++  style={
++    Object {
++      "alignItems": "center",
++      "alignSelf": "flex-start",
++      "backgroundColor": undefined,
++      "borderRadius": 2,
++      "display": "flex",
++      "flexDirection": "row",
++      "padding": 8,
++      "paddingHorizontal": undefined,
++    }
++  }
++>
++  <View
++    style={
++      Object {
++        "alignItems": "center",
++        "backgroundColor": "#ffffff",
++        "borderColor": "#323130",
++        "borderRadius": 2,
++        "borderWidth": 1,
++        "height": 16,
++        "justifyContent": "center",
++        "width": 16,
++      }
++    }
++  >
++    <RNSVGSvgView
++      align="xMidYMid"
++      bbHeight={8}
++      bbWidth={8}
++      color={-14672098}
++      focusable={false}
++      meetOrSlice={0}
++      minX={0}
++      minY={0}
++      style={
++        Array [
++          Object {
++            "backgroundColor": "transparent",
++            "borderWidth": 0,
++          },
++          Object {
++            "color": "#201f1e",
++            "height": 8,
++            "opacity": 0,
++            "width": 8,
++          },
++          Object {
++            "flex": 0,
++            "height": 8,
++            "width": 8,
++          },
++        ]
++      }
++      tintColor={-14672098}
++      vbHeight={8}
++      vbWidth={11}
++    >
++      <RNSVGGroup
++        opacity={0}
++      >
++        <RNSVGPath
++          d="M10.2637 1.26367L4 7.5332L0.736328 4.26367L1.26367 3.73633L4 6.4668L9.73633 0.736328L10.2637 1.26367Z"
++          fill={
++            Array [
++              2,
++            ]
++          }
++          propList={
++            Array [
++              "fill",
++            ]
++          }
++        />
++      </RNSVGGroup>
++    </RNSVGSvgView>
++  </View>
++  <Text
++    style={
++      Object {
++        "color": "#323130",
++        "fontFamily": "Segoe UI",
++        "fontSize": 14,
++        "fontWeight": "400",
++        "marginStart": 12,
++      }
++    }
++  />
++</View>
++`;
++
+ exports[`Checkbox component tests Checkbox default 1`] = `
+ <View
+   accessibilityActions={

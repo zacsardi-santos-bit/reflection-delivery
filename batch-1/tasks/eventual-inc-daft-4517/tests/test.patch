@@ -1,0 +1,28 @@
+diff --git a/src/daft-distributed/src/pipeline_node/translate.rs b/src/daft-distributed/src/pipeline_node/translate.rs
+index 479a1992f..abcdef123 100644
+--- a/src/daft-distributed/src/pipeline_node/translate.rs
++++ b/src/daft-distributed/src/pipeline_node/translate.rs
+@@ -450,4 +450,23 @@
+
+         Ok(())
+     }
++
++    #[test]
++    fn test_distributed_node_names() {
++        let fields = vec![
++            Field::new("category", DataType::Utf8),
++        ];
++        let in_mem_plan = dummy_in_memory_scan(fields).unwrap().build();
++        let plan_id = Arc::from("foo");
++        let stage_id = StageID::new(0);
++        let in_mem_node = logical_plan_to_pipeline_node(
++            plan_id,
++            stage_id,
++            in_mem_plan,
++            Arc::new(DaftExecutionConfig::default()),
++            Arc::new(HashMap::new()),
++        )
++        .unwrap();
++        assert_eq!(in_mem_node.name(), "DistributedInMemoryScan");
++    }
+ }

@@ -1,0 +1,19 @@
+diff --git a/crates/pgrepr/src/scalar.rs b/crates/pgrepr/src/scalar.rs
+--- a/crates/pgrepr/src/scalar.rs
++++ b/crates/pgrepr/src/scalar.rs
+@@ -310,6 +310,15 @@ mod tests {
+     #[test]
+     fn test_get_timezone() {
+         let tz = get_timezone("+00:00");
+         assert_eq!(chrono_tz::UTC, tz);
+     }
++
++    #[test]
++    fn test_from_datafusion_timestamp_second() {
++        let scalar = DfScalar::TimestampSecond(Some(938_709_124), None);
++        let result = Scalar::from_datafusion(scalar, &PgType::TIMESTAMP);
++        let expected =
++            Scalar::Timestamp(NaiveDateTime::from_timestamp_opt(938_709_124, 0).unwrap());
++        assert_eq!(result, expected);
++    }
+ }

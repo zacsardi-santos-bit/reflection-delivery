@@ -1,0 +1,10 @@
+diff --git a/Packs/FeedAzureADConnectHealth/Integrations/AzureADConnectHealthFeed/AzureADConnectHealthFeed_test.py b/Packs/FeedAzureADConnectHealth/Integrations/AzureADConnectHealthFeed/AzureADConnectHealthFeed_test.py
+--- a/Packs/FeedAzureADConnectHealth/Integrations/AzureADConnectHealthFeed/AzureADConnectHealthFeed_test.py
++++ b/Packs/FeedAzureADConnectHealth/Integrations/AzureADConnectHealthFeed/AzureADConnectHealthFeed_test.py
+@@ -19,4 +19,6 @@
+     url_indicators = {indicator['value'] for indicator in indicators if indicator['type'] == 'URL'}
+     domain_glob_indicators = {indicator['value'] for indicator in indicators if indicator['type'] == 'DomainGlob'}
+     assert expected_url in url_indicators
+     assert expected_domain_glob in domain_glob_indicators
++    assert url_indicators == {expected_url}
++    assert domain_glob_indicators == {expected_domain_glob}

@@ -1,0 +1,1335 @@
+diff --git a/cmd/migrate/load_balancer_pool_test.go b/cmd/migrate/load_balancer_pool_test.go
+index 763096643..4e1ec602c 100644
+--- a/cmd/migrate/load_balancer_pool_test.go
++++ b/cmd/migrate/load_balancer_pool_test.go
+@@ -26,8 +26,7 @@ resource "cloudflare_load_balancer_pool" "test" {
+     name    = "test"
+     address = "192.0.2.1"
+     header = {
+-      header = "Host"
+-      values = ["example.com"]
++      host = ["example.com"]
+     }
+   }]
+ }`},
+@@ -168,8 +167,7 @@ resource "cloudflare_load_balancer_pool" "test" {
+     address = value.address
+     enabled = true
+     header = {
+-      header = "Host"
+-      values = [value.host]
++      host = [value.host]
+     }
+     name = value.name
+   }]
+@@ -461,8 +459,7 @@ resource "cloudflare_load_balancer_pool" "test" {
+   origins = [for key, value in local.origins_map : {
+     address = value.address
+     header = {
+-      header = "Host"
+-      values = [value.address]
++      host = [value.address]
+     }
+     name = "prefix-${key}"
+   }]
+@@ -495,8 +492,7 @@ resource "cloudflare_load_balancer_pool" "test" {
+   origins = [for key, value in local.transceiver_map : {
+     address = value.host
+     header = {
+-      header = "Host"
+-      values = [value.host]
++      host = [value.host]
+     }
+     name   = key
+     weight = value.weight
+diff --git a/cmd/migrate/load_balancer_test.go b/cmd/migrate/load_balancer_test.go
+index 1dfc10285..2b56bb900 100644
+--- a/cmd/migrate/load_balancer_test.go
++++ b/cmd/migrate/load_balancer_test.go
+@@ -330,107 +330,107 @@ func TestLoadBalancerRulesTransformation(t *testing.T) {
+   ]
+ }`},
+ 		},
+-		//		{
+-		//			Name: "handle region_pools that already have region as list",
+-		//			Config: `resource "cloudflare_load_balancer" "test" {
+-		//  zone_id = "test_zone"
+-		//  name = "test-lb"
+-		//  default_pool_ids = ["pool1"]
+-		//
+-		//  rules = [
+-		//    {
+-		//      condition = "true"
+-		//      disabled  = false
+-		//      name      = "already migrated"
+-		//      overrides = {
+-		//        steering_policy = "geo"
+-		//        region_pools = [
+-		//          {
+-		//            pool_ids = ["pool1"]
+-		//            region   = ["WNAM", "ENAM"]
+-		//          }
+-		//        ]
+-		//        default_pools = ["default_pool"]
+-		//      }
+-		//      priority   = 0
+-		//      terminates = false
+-		//    }
+-		//  ]
+-		//}`,
+-		//			Expected: []string{`resource "cloudflare_load_balancer" "test" {
+-		//  zone_id          = "test_zone"
+-		//  name             = "test-lb"
+-		//  default_pool_ids = ["pool1"]
+-		//
+-		//  rules = [
+-		//    {
+-		//      condition  = "true"
+-		//      disabled   = false
+-		//      name       = "already migrated"
+-		//      overrides  = {
+-		//        steering_policy = "geo"
+-		//        region_pools = [
+-		//          {
+-		//            pool_ids = ["pool1"]
+-		//            region   = ["WNAM", "ENAM"]
+-		//          }
+-		//        ]
+-		//        default_pools = ["default_pool"]
+-		//      }
+-		//      priority   = 0
+-		//      terminates = false
+-		//    }
+-		//  ]
+-		//}`},
+-		//		},
+-		//		{
+-		//			Name: "handle empty rules list",
+-		//			Config: `resource "cloudflare_load_balancer" "test" {
+-		//  zone_id = "test_zone"
+-		//  name = "test-lb"
+-		//  default_pool_ids = ["pool1"]
+-		//  rules = []
+-		//}`,
+-		//			Expected: []string{`resource "cloudflare_load_balancer" "test" {
+-		//  zone_id          = "test_zone"
+-		//  name             = "test-lb"
+-		//  default_pool_ids = ["pool1"]
+-		//  rules            = []
+-		//}`},
+-		//		},
+-		//		{
+-		//			Name: "handle rules without overrides",
+-		//			Config: `resource "cloudflare_load_balancer" "test" {
+-		//  zone_id = "test_zone"
+-		//  name = "test-lb"
+-		//  default_pool_ids = ["pool1"]
+-		//
+-		//  rules = [
+-		//    {
+-		//      condition = "true"
+-		//      disabled  = false
+-		//      name      = "simple rule"
+-		//      priority   = 0
+-		//      terminates = true
+-		//    }
+-		//  ]
+-		//}`,
+-		//			Expected: []string{`resource "cloudflare_load_balancer" "test" {
+-		//  zone_id          = "test_zone"
+-		//  name             = "test-lb"
+-		//  default_pool_ids = ["pool1"]
+-		//
+-		//  rules = [
+-		//    {
+-		//      condition  = "true"
+-		//      disabled   = false
+-		//      name       = "simple rule"
+-		//      priority   = 0
+-		//      terminates = true
+-		//    }
+-		//  ]
+-		//}`},
+-		//		},
++		{
++			Name: "handle region_pools that already have region as list",
++			Config: `resource "cloudflare_load_balancer" "test" {
++		 zone_id = "test_zone"
++		 name = "test-lb"
++		 default_pool_ids = ["pool1"]
++		
++		 rules = [
++		   {
++		     condition = "true"
++		     disabled  = false
++		     name      = "already migrated"
++		     overrides = {
++		       steering_policy = "geo"
++		       region_pools = [
++		         {
++		           pool_ids = ["pool1"]
++		           region   = ["WNAM", "ENAM"]
++		         }
++		       ]
++		       default_pools = ["default_pool"]
++		     }
++		     priority   = 0
++		     terminates = false
++		   }
++		 ]
++		}`,
++			Expected: []string{`resource "cloudflare_load_balancer" "test" {
++		 zone_id          = "test_zone"
++		 name             = "test-lb"
++		 default_pool_ids = ["pool1"]
++		
++		 rules = [
++		   {
++		     condition  = "true"
++		     disabled   = false
++		     name       = "already migrated"
++		     overrides  = {
++		       steering_policy = "geo"
++		       region_pools = [
++		         {
++		           pool_ids = ["pool1"]
++		           region   = ["WNAM", "ENAM"]
++		         }
++		       ]
++		       default_pools = ["default_pool"]
++		     }
++		     priority   = 0
++		     terminates = false
++		   }
++		 ]
++		}`},
++		},
++		{
++			Name: "handle empty rules list",
++			Config: `resource "cloudflare_load_balancer" "test" {
++		 zone_id = "test_zone"
++		 name = "test-lb"
++		 default_pool_ids = ["pool1"]
++		 rules = []
++		}`,
++			Expected: []string{`resource "cloudflare_load_balancer" "test" {
++		 zone_id          = "test_zone"
++		 name             = "test-lb"
++		 default_pool_ids = ["pool1"]
++		 rules            = []
++		}`},
++		},
++		{
++			Name: "handle rules without overrides",
++			Config: `resource "cloudflare_load_balancer" "test" {
++		 zone_id = "test_zone"
++		 name = "test-lb"
++		 default_pool_ids = ["pool1"]
++		
++		 rules = [
++		   {
++		     condition = "true"
++		     disabled  = false
++		     name      = "simple rule"
++		     priority   = 0
++		     terminates = true
++		   }
++		 ]
++		}`,
++			Expected: []string{`resource "cloudflare_load_balancer" "test" {
++		 zone_id          = "test_zone"
++		 name             = "test-lb"
++		 default_pool_ids = ["pool1"]
++		
++		 rules = [
++		   {
++		     condition  = "true"
++		     disabled   = false
++		     name       = "simple rule"
++		     priority   = 0
++		     terminates = true
++		   }
++		 ]
++		}`},
++		},
+ 	}
+ 
+ 	RunTransformationTests(t, tests, transformFileDefault)
+diff --git a/cmd/migrate/transformations/config_attribute_renames_test.go b/cmd/migrate/transformations/config_attribute_renames_test.go
+index 12b6e5f59..92b4e4b82 100644
+--- a/cmd/migrate/transformations/config_attribute_renames_test.go
++++ b/cmd/migrate/transformations/config_attribute_renames_test.go
+@@ -209,16 +209,13 @@ attribute_removals:
+   name = "example-pool"
+ 
+ 
+-  origins = [
+-    {
+-      address = "192.0.2.1",
+-      name    = "origin-1"
+-    },
+-    {
+-      address = "192.0.2.2",
+-      name    = "origin-2"
+-    }
+-  ]
++  origins = [{
++    address = "192.0.2.1"
++    name    = "origin-1"
++    }, {
++    address = "192.0.2.2"
++    name    = "origin-2"
++  }]
+   min_origins = 1
+ }`
+ 
+diff --git a/cmd/migrate/transformations/config_block_to_attribute_nested_test.go b/cmd/migrate/transformations/config_block_to_attribute_nested_test.go
+new file mode 100644
+index 000000000..045a101ce
+--- /dev/null
++++ b/cmd/migrate/transformations/config_block_to_attribute_nested_test.go
+@@ -0,0 +1,168 @@
++package transformations
++
++import (
++	"os"
++	"path/filepath"
++	"strings"
++	"testing"
++)
++
++func TestLoadBalancerNestedAttributes(t *testing.T) {
++	// Create test config
++	tempDir, err := os.MkdirTemp("", "variable_interpolation_test")
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer os.RemoveAll(tempDir)
++
++	configPath := filepath.Join(tempDir, "config.yaml")
++	configContent := `
++version: "1.0"
++transformations:
++ cloudflare_load_balancer:
++  to_map:
++   - adaptive_routing
++   - location_strategy
++   - random_steering
++   - fixed_response
++   - overrides
++   - session_affinity_attributes
++  to_list:
++   - rules
++   - country_pools
++   - pop_pools
++   - region_pools
++`
++	if err := os.WriteFile(configPath, []byte(configContent), 0644); err != nil {
++		t.Fatal(err)
++	}
++
++	// Test input with variable interpolation
++	input := `resource "cloudflare_load_balancer" "api-openai" {
++		 zone_id = cloudflare_zone.api-openai-com.id
++		 name = "api.openai.com"
++		 default_pool_ids = [var.api_primary_origins_lb_pool_id]
++
++		 rules {
++			condition = "(${local.router_non_sticky_condition})"
++			disabled  = false
++			name      = "router non-sticky endpoints (geo-aware)"
++			overrides {
++			  steering_policy = "geo"
++			  region_pools {
++				region   = "WNAM" # West North America
++				pool_ids = [cloudflare_load_balancer_pool.router-geo-pools["us-west"].id]
++			  }
++			  region_pools {
++				region   = "ENAM" # East North America
++				pool_ids = [cloudflare_load_balancer_pool.router-geo-pools["us-east"].id]
++			  }
++			  region_pools {
++				region   = "WEU" # Western Europe
++				pool_ids = [cloudflare_load_balancer_pool.router-geo-pools["eu"].id]
++			  }
++			  region_pools {
++				region   = "EEU" # Eastern Europe
++				pool_ids = [cloudflare_load_balancer_pool.router-geo-pools["eu"].id]
++			  }
++              country_pools {
++				country  = "US"
++				pool_ids = [cloudflare_load_balancer_pool.example.id]
++			  }
++			  pop_pools {
++                 pop      = "LAX"
++                 pool_ids = [cloudflare_load_balancer_pool.example.id]
++              }
++			  # Fallback to the default pool if the request doesn't match any of the above regions
++			  default_pools    = [var.router_us_unified_origins_lb_pool_id]
++			  session_affinity = "none"
++			}
++			priority   = 0
++			terminates = true
++		  }
++		}`
++
++	// Create transformer
++	transformer, err := NewHCLTransformer(configPath)
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	// Transform
++	inputPath := filepath.Join(tempDir, "input.tf")
++	outputPath := filepath.Join(tempDir, "output.tf")
++	if err := os.WriteFile(inputPath, []byte(input), 0644); err != nil {
++		t.Fatal(err)
++	}
++
++	if err := transformer.TransformFile(inputPath, outputPath); err != nil {
++		t.Fatal(err)
++	}
++
++	// Check result
++	output, err := os.ReadFile(outputPath)
++	if err != nil {
++		t.Fatal(err)
++	}
++	result := string(output)
++
++	// Check that rules has been converted to a list
++	if !strings.Contains(result, "rules = [{") {
++		t.Errorf("rules should be converted to a list attribute")
++	}
++
++	// Check that overrides has been converted to an attribute
++	if !strings.Contains(result, "overrides = {") {
++		t.Errorf("overrides should be converted to an attribute map")
++	}
++
++	// Check that all 4 region_pools are preserved as duplicate keys
++	regionPoolsCount := strings.Count(result, "region_pools =")
++	if regionPoolsCount != 4 {
++		t.Errorf("Expected 4 'region_pools' but found %d occurrences", regionPoolsCount)
++		t.Logf("Output:\n%s", result)
++	}
++
++	// Check for specific regions to ensure they're preserved
++	if !strings.Contains(result, `"WNAM"`) {
++		t.Errorf("Region WNAM was lost in transformation:\n%s", result)
++	}
++	if !strings.Contains(result, `"ENAM"`) {
++		t.Errorf("Region ENAM was lost in transformation:\n%s", result)
++	}
++	if !strings.Contains(result, `"WEU"`) {
++		t.Errorf("Region WEU was lost in transformation:\n%s", result)
++	}
++	if !strings.Contains(result, `"EEU"`) {
++		t.Errorf("Region EEU was lost in transformation:\n%s", result)
++	}
++
++	// Check that pool references are preserved
++	if !strings.Contains(result, `cloudflare_load_balancer_pool.router-geo-pools["us-west"].id`) {
++		t.Errorf("Pool reference for us-west was lost:\n%s", result)
++	}
++	if !strings.Contains(result, `cloudflare_load_balancer_pool.router-geo-pools["us-east"].id`) {
++		t.Errorf("Pool reference for us-east was lost:\n%s", result)
++	}
++	if !strings.Contains(result, `cloudflare_load_balancer_pool.router-geo-pools["eu"].id`) {
++		t.Errorf("Pool reference for eu was lost:\n%s", result)
++	}
++
++	// Check that country_pools is preserved
++	if !strings.Contains(result, "country_pools =") {
++		t.Errorf("country_pools was lost in transformation:\n%s", result)
++	}
++
++	// Check that pop_pools is preserved
++	if !strings.Contains(result, "pop_pools =") {
++		t.Errorf("pop_pools was lost in transformation:\n%s", result)
++	}
++
++	// Check that other attributes in overrides are preserved
++	if !strings.Contains(result, `steering_policy`) || !strings.Contains(result, `"geo"`) {
++		t.Errorf("steering_policy was lost in overrides:\n%s", result)
++	}
++	if !strings.Contains(result, `session_affinity`) || !strings.Contains(result, `"none"`) {
++		t.Errorf("session_affinity was lost in overrides:\n%s", result)
++	}
++}
+diff --git a/cmd/migrate/transformations/config_block_to_attribute_test.go b/cmd/migrate/transformations/config_block_to_attribute_test.go
+index 4c04691eb..319c87a4b 100644
+--- a/cmd/migrate/transformations/config_block_to_attribute_test.go
++++ b/cmd/migrate/transformations/config_block_to_attribute_test.go
+@@ -64,18 +64,15 @@ transformations:
+ 			expected: `resource "cloudflare_load_balancer_pool" "example" {
+   name = "example-pool"
+ 
+-  origins = [
+-    {
+-      address = "192.0.2.1",
+-      enabled = true,
+-      name    = "origin-1"
+-    },
+-    {
+-      address = "192.0.2.2",
+-      enabled = false,
+-      name    = "origin-2"
+-    }
+-  ]
++  origins = [{
++    address = "192.0.2.1"
++    enabled = true
++    name    = "origin-1"
++  }, {
++    address = "192.0.2.2"
++    enabled = false
++    name    = "origin-2"
++  }]
+ }`,
+ 		},
+ 		{
+@@ -165,12 +162,10 @@ transformations:
+   load_shedding = {
+     default_percent = 10
+   }
+-  origins = [
+-    {
+-      address = "192.0.2.1",
+-      name    = "origin-1"
+-    }
+-  ]
++  origins = [{
++    address = "192.0.2.1"
++    name    = "origin-1"
++  }]
+ }`,
+ 		},
+ 		{
+@@ -190,12 +185,10 @@ transformations:
+   enabled         = true
+   minimum_origins = 1
+ 
+-  origins = [
+-    {
+-      address = "192.0.2.1",
+-      name    = "origin-1"
+-    }
+-  ]
++  origins = [{
++    address = "192.0.2.1"
++    name    = "origin-1"
++  }]
+ }`,
+ 		},
+ 		{
+@@ -390,171 +383,4 @@ transformations:
+ 				tt.resourceType, tt.blockName, result, tt.expected)
+ 		}
+ 	}
+-}
+-
+-// TestLoadBalancerPoolOriginsWithVariableInterpolation tests that variable interpolations are preserved
+-func TestLoadBalancerPoolOriginsWithVariableInterpolation(t *testing.T) {
+-	// Create test config
+-	tempDir, err := os.MkdirTemp("", "variable_interpolation_test")
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	defer os.RemoveAll(tempDir)
+-
+-	configPath := filepath.Join(tempDir, "config.yaml")
+-	configContent := `
+-version: "1.0"
+-transformations:
+-  cloudflare_load_balancer_pool:
+-    to_list:
+-      - origins
+-`
+-	if err := os.WriteFile(configPath, []byte(configContent), 0644); err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	// Test input with variable interpolation
+-	input := `resource "cloudflare_load_balancer_pool" "test" {
+-  name = "test-pool"
+-  origins {
+-    name    = "u0"
+-    address = "api.unified-0.${var.api_openai_com_domain}"
+-    enabled = true
+-    weight  = 1
+-  }
+-  origins {
+-    name    = "u1"
+-    address = "api.unified-1.${var.api_openai_com_domain}"
+-    enabled = true
+-    weight  = 1
+-  }
+-}`
+-
+-	// Create transformer
+-	transformer, err := NewHCLTransformer(configPath)
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	// Transform
+-	inputPath := filepath.Join(tempDir, "input.tf")
+-	outputPath := filepath.Join(tempDir, "output.tf")
+-	if err := os.WriteFile(inputPath, []byte(input), 0644); err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	if err := transformer.TransformFile(inputPath, outputPath); err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	// Check result
+-	output, err := os.ReadFile(outputPath)
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	result := string(output)
+-
+-	// Should NOT contain double dollar signs (escaped variables)
+-	if strings.Contains(result, "$${") {
+-		t.Errorf("Result contains escaped variables ($$):\n%s", result)
+-	}
+-
+-	// Should still contain the variable reference
+-	if !strings.Contains(result, "${var.api_openai_com_domain}") {
+-		t.Errorf("Variable reference was lost:\n%s", result)
+-	}
+-
+-	// Should have converted origins blocks to list attribute
+-	if !strings.Contains(result, "origins = [") {
+-		t.Errorf("Origins blocks were not converted to list attribute:\n%s", result)
+-	}
+-
+-	// Should have removed the blocks
+-	if strings.Contains(result, "origins {") {
+-		t.Errorf("Origins blocks were not removed:\n%s", result)
+-	}
+-}
+-
+-// TestMixedOriginsWithAndWithoutVariables tests mixed scenarios
+-func TestMixedOriginsWithAndWithoutVariables(t *testing.T) {
+-	// Create test config
+-	tempDir, err := os.MkdirTemp("", "mixed_origins_test")
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	defer os.RemoveAll(tempDir)
+-
+-	configPath := filepath.Join(tempDir, "config.yaml")
+-	configContent := `
+-version: "1.0"
+-transformations:
+-  cloudflare_load_balancer_pool:
+-    to_list:
+-      - origins
+-`
+-	if err := os.WriteFile(configPath, []byte(configContent), 0644); err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	// Test input with mixed origins - some with variables, some without
+-	input := `resource "cloudflare_load_balancer_pool" "test" {
+-  name = "test-pool"
+-  origins {
+-    name    = "static"
+-    address = "192.168.1.1"
+-    enabled = true
+-  }
+-  origins {
+-    name    = "dynamic"
+-    address = "api.${var.domain_suffix}"
+-    enabled = false
+-  }
+-  origins {
+-    name    = "complex"
+-    address = "${var.prefix}.${var.domain}.${var.suffix}"
+-    weight  = 2
+-  }
+-}`
+-
+-	// Create transformer
+-	transformer, err := NewHCLTransformer(configPath)
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	// Transform
+-	inputPath := filepath.Join(tempDir, "input.tf")
+-	outputPath := filepath.Join(tempDir, "output.tf")
+-	if err := os.WriteFile(inputPath, []byte(input), 0644); err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	if err := transformer.TransformFile(inputPath, outputPath); err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	// Check result
+-	output, err := os.ReadFile(outputPath)
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	result := string(output)
+-
+-	// Should NOT contain double dollar signs
+-	if strings.Contains(result, "$${") {
+-		t.Errorf("Result contains escaped variables ($$):\n%s", result)
+-	}
+-
+-	// All addresses should be preserved correctly
+-	if !strings.Contains(result, "192.168.1.1") {
+-		t.Errorf("Static IP address was not preserved:\n%s", result)
+-	}
+-
+-	if !strings.Contains(result, "api.${var.domain_suffix}") {
+-		t.Errorf("Simple variable interpolation was not preserved:\n%s", result)
+-	}
+-
+-	if !strings.Contains(result, "${var.prefix}.${var.domain}.${var.suffix}") {
+-		t.Errorf("Complex variable interpolation was not preserved:\n%s", result)
+-	}
+ }
+\ No newline at end of file
+diff --git a/internal/services/page_rule/migrations_test.go b/internal/services/page_rule/migrations_test.go
+deleted file mode 100644
+index 6d9b34ded..000000000
+--- a/internal/services/page_rule/migrations_test.go
++++ /dev/null
+@@ -1,631 +0,0 @@
+-package page_rule_test
+-
+-import (
+-	"fmt"
+-	"os"
+-	"testing"
+-
+-	"github.com/hashicorp/terraform-plugin-testing/config"
+-	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+-	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
+-	"github.com/hashicorp/terraform-plugin-testing/plancheck"
+-	"github.com/hashicorp/terraform-plugin-testing/statecheck"
+-	"github.com/hashicorp/terraform-plugin-testing/tfjsonpath"
+-
+-	"github.com/cloudflare/terraform-provider-cloudflare/internal/acctest"
+-	"github.com/cloudflare/terraform-provider-cloudflare/internal/utils"
+-)
+-
+-// TestMigrateCloudflarePageRule_Basic tests the most fundamental
+-// page rule migration scenario with minimal configuration. This test ensures that:
+-// 1. The actions block is converted to an attribute (actions {} → actions = {})
+-// 2. Boolean string values are properly converted ("on" → true, "off" → false)
+-// 3. State transformation handles schema_version reset to 0
+-// 4. Resources remain functional after migration without requiring manual intervention
+-func TestMigrateCloudflarePageRule_Basic(t *testing.T) {
+-	testCases := []struct {
+-		name     string
+-		version  string
+-		configFn func(zoneID, target, rnd string) string
+-	}{
+-		{
+-			name:     "from_v4_52_1", // Last v4 release
+-			version:  "4.52.1",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV4Basic,
+-		},
+-		{
+-			name:     "from_v5_0_0", // First v5 release, after breaking changes
+-			version:  "5.0.0",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV5Basic,
+-		},
+-		{
+-			name:     "from_v5_7_1", // Recent v5 release
+-			version:  "5.7.1",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV5Basic,
+-		},
+-	}
+-
+-	for _, tc := range testCases {
+-		t.Run(tc.name, func(t *testing.T) {
+-			zoneID := os.Getenv("CLOUDFLARE_ZONE_ID")
+-			zone := os.Getenv("CLOUDFLARE_DOMAIN")
+-			rnd := utils.GenerateRandomResourceName()
+-			resourceName := "cloudflare_page_rule." + rnd
+-			target := fmt.Sprintf("%s.%s/*", rnd, zone)
+-			testConfig := tc.configFn(zoneID, target, rnd)
+-			tmpDir := t.TempDir()
+-
+-			resource.Test(t, resource.TestCase{
+-				PreCheck: func() {
+-					acctest.TestAccPreCheck(t)
+-					acctest.TestAccPreCheck_ZoneID(t)
+-					acctest.TestAccPreCheck_Domain(t)
+-				},
+-				CheckDestroy: testAccCheckCloudflarePageRuleDestroy,
+-				WorkingDir:   tmpDir,
+-				Steps: []resource.TestStep{
+-					{
+-						// Step 1: Create page rule with specific version
+-						ExternalProviders: map[string]resource.ExternalProvider{
+-							"cloudflare": {
+-								VersionConstraint: tc.version,
+-								Source:            "cloudflare/cloudflare",
+-							},
+-						},
+-						Config: testConfig,
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("status"), knownvalue.StringExact("active")),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("priority"), knownvalue.Float64Exact(1)),
+-						},
+-					},
+-					// Step 2: Migrate to v5 provider
+-					acctest.MigrationTestStep(t, testConfig, tmpDir, tc.version, []statecheck.StateCheck{
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("status"), knownvalue.StringExact("active")),
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.NotNull()),
+-					}),
+-					{
+-						// Step 3: Apply the migrated configuration
+-						ProtoV6ProviderFactories: acctest.TestAccProtoV6ProviderFactories,
+-						ConfigDirectory:          config.StaticDirectory(tmpDir),
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("status"), knownvalue.StringExact("active")),
+-							// Check that actions contains ssl
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"ssl": knownvalue.StringExact("flexible"),
+-							})),
+-						},
+-					},
+-				},
+-			})
+-		})
+-	}
+-}
+-
+-// TestMigrateCloudflarePageRule_CacheDeceptionArmor tests migration of
+-// cache deception armor settings, which is commonly used for security.
+-func TestMigrateCloudflarePageRule_CacheDeceptionArmor(t *testing.T) {
+-	testCases := []struct {
+-		name     string
+-		version  string
+-		configFn func(zoneID, target, rnd string) string
+-	}{
+-		{
+-			name:     "from_v4_52_1",
+-			version:  "4.52.1",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV4CacheDeceptionArmor,
+-		},
+-		{
+-			name:     "from_v5_0_0",
+-			version:  "5.0.0",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV5CacheDeceptionArmor,
+-		},
+-	}
+-
+-	for _, tc := range testCases {
+-		t.Run(tc.name, func(t *testing.T) {
+-			zoneID := os.Getenv("CLOUDFLARE_ZONE_ID")
+-			zone := os.Getenv("CLOUDFLARE_DOMAIN")
+-			rnd := utils.GenerateRandomResourceName()
+-			resourceName := "cloudflare_page_rule." + rnd
+-			target := fmt.Sprintf("*.%s.%s/*", rnd, zone)
+-			testConfig := tc.configFn(zoneID, target, rnd)
+-			tmpDir := t.TempDir()
+-
+-			resource.Test(t, resource.TestCase{
+-				PreCheck: func() {
+-					acctest.TestAccPreCheck(t)
+-					acctest.TestAccPreCheck_ZoneID(t)
+-					acctest.TestAccPreCheck_Domain(t)
+-				},
+-				CheckDestroy: testAccCheckCloudflarePageRuleDestroy,
+-				WorkingDir:   tmpDir,
+-				Steps: []resource.TestStep{
+-					{
+-						ExternalProviders: map[string]resource.ExternalProvider{
+-							"cloudflare": {
+-								VersionConstraint: tc.version,
+-								Source:            "cloudflare/cloudflare",
+-							},
+-						},
+-						Config: testConfig,
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("priority"), knownvalue.Float64Exact(1)),
+-						},
+-					},
+-					acctest.MigrationTestStep(t, testConfig, tmpDir, tc.version, []statecheck.StateCheck{
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-							"cache_deception_armor": knownvalue.StringExact("on"),
+-						})),
+-					}),
+-					{
+-						ProtoV6ProviderFactories: acctest.TestAccProtoV6ProviderFactories,
+-						ConfigDirectory:          config.StaticDirectory(tmpDir),
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"cache_deception_armor": knownvalue.StringExact("on"),
+-							})),
+-						},
+-					},
+-				},
+-			})
+-		})
+-	}
+-}
+-
+-// TestMigrateCloudflarePageRule_CacheKeyFields tests migration of
+-// cache key fields configuration, including the ignore → exclude/include transformation.
+-func TestMigrateCloudflarePageRule_CacheKeyFields(t *testing.T) {
+-	testCases := []struct {
+-		name     string
+-		version  string
+-		configFn func(zoneID, target, rnd string) string
+-	}{
+-		{
+-			name:     "from_v4_52_1",
+-			version:  "4.52.1",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV4CacheKeyFields,
+-		},
+-	}
+-
+-	for _, tc := range testCases {
+-		t.Run(tc.name, func(t *testing.T) {
+-			zoneID := os.Getenv("CLOUDFLARE_ZONE_ID")
+-			zone := os.Getenv("CLOUDFLARE_DOMAIN")
+-			rnd := utils.GenerateRandomResourceName()
+-			resourceName := "cloudflare_page_rule." + rnd
+-			target := fmt.Sprintf("%s.%s/api/*", rnd, zone)
+-			testConfig := tc.configFn(zoneID, target, rnd)
+-			tmpDir := t.TempDir()
+-
+-			resource.Test(t, resource.TestCase{
+-				PreCheck: func() {
+-					acctest.TestAccPreCheck(t)
+-					acctest.TestAccPreCheck_ZoneID(t)
+-					acctest.TestAccPreCheck_Domain(t)
+-				},
+-				CheckDestroy: testAccCheckCloudflarePageRuleDestroy,
+-				WorkingDir:   tmpDir,
+-				Steps: []resource.TestStep{
+-					{
+-						ExternalProviders: map[string]resource.ExternalProvider{
+-							"cloudflare": {
+-								VersionConstraint: tc.version,
+-								Source:            "cloudflare/cloudflare",
+-							},
+-						},
+-						Config: testConfig,
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-						},
+-					},
+-					{
+-						PreConfig: func() {
+-							// Write out config
+-							acctest.WriteOutConfig(t, testConfig, tmpDir)
+-
+-							// Run migration
+-							acctest.RunMigrationCommand(t, testConfig, tmpDir)
+-						},
+-						ProtoV6ProviderFactories: acctest.TestAccProtoV6ProviderFactories,
+-						ConfigDirectory:          config.StaticDirectory(tmpDir),
+-						ConfigPlanChecks: resource.ConfigPlanChecks{
+-							PreApply: []plancheck.PlanCheck{
+-								acctest.DebugNonEmptyPlan,
+-							},
+-						},
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"cache_level": knownvalue.StringExact("aggressive"),
+-							})),
+-						},
+-					},
+-					{
+-						ProtoV6ProviderFactories: acctest.TestAccProtoV6ProviderFactories,
+-						ConfigDirectory:          config.StaticDirectory(tmpDir),
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"cache_level": knownvalue.StringExact("aggressive"),
+-								"cache_key_fields": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-									"user": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-										"device_type": knownvalue.Bool(false),
+-										"geo":         knownvalue.Bool(false),
+-										"lang":        knownvalue.Bool(true),
+-									}),
+-									"query_string": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-										"exclude": knownvalue.ListExact([]knownvalue.Check{
+-											knownvalue.StringExact("api_token"),
+-										}),
+-									}),
+-									"header": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-										"include": knownvalue.ListExact([]knownvalue.Check{
+-											knownvalue.StringExact("x-custom-header"),
+-											knownvalue.StringExact("x-another-header"),
+-										}),
+-									}),
+-									"cookie": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-										"include": knownvalue.ListExact([]knownvalue.Check{
+-											knownvalue.StringExact("session_id"),
+-										}),
+-									}),
+-									"host": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-										"resolved": knownvalue.Bool(false),
+-									}),
+-								}),
+-							})),
+-						},
+-					},
+-				},
+-			})
+-		})
+-	}
+-}
+-
+-// TestMigrateCloudflarePageRule_ForwardingURL tests migration of
+-// forwarding URL configuration (redirect rules).
+-func TestMigrateCloudflarePageRule_ForwardingURL(t *testing.T) {
+-	testCases := []struct {
+-		name     string
+-		version  string
+-		configFn func(zoneID, target, rnd string) string
+-	}{
+-		{
+-			name:     "from_v4_52_1",
+-			version:  "4.52.1",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV4ForwardingURL,
+-		},
+-		{
+-			name:     "from_v5_0_0",
+-			version:  "5.0.0",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV5ForwardingURL,
+-		},
+-	}
+-
+-	for _, tc := range testCases {
+-		t.Run(tc.name, func(t *testing.T) {
+-			zoneID := os.Getenv("CLOUDFLARE_ZONE_ID")
+-			zone := os.Getenv("CLOUDFLARE_DOMAIN")
+-			rnd := utils.GenerateRandomResourceName()
+-			resourceName := "cloudflare_page_rule." + rnd
+-			target := fmt.Sprintf("%s.%s/old-path/*", rnd, zone)
+-			testConfig := tc.configFn(zoneID, target, rnd)
+-			tmpDir := t.TempDir()
+-
+-			resource.Test(t, resource.TestCase{
+-				PreCheck: func() {
+-					acctest.TestAccPreCheck(t)
+-					acctest.TestAccPreCheck_ZoneID(t)
+-					acctest.TestAccPreCheck_Domain(t)
+-				},
+-				CheckDestroy: testAccCheckCloudflarePageRuleDestroy,
+-				WorkingDir:   tmpDir,
+-				Steps: []resource.TestStep{
+-					{
+-						ExternalProviders: map[string]resource.ExternalProvider{
+-							"cloudflare": {
+-								VersionConstraint: tc.version,
+-								Source:            "cloudflare/cloudflare",
+-							},
+-						},
+-						Config: testConfig,
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-						},
+-					},
+-					acctest.MigrationTestStep(t, testConfig, tmpDir, tc.version, []statecheck.StateCheck{
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-						statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-							"forwarding_url": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"status_code": knownvalue.Int64Exact(301),
+-								"url":         knownvalue.StringExact("https://example.com/new-path/$1"),
+-							}),
+-						})),
+-					}),
+-					{
+-						ProtoV6ProviderFactories: acctest.TestAccProtoV6ProviderFactories,
+-						ConfigDirectory:          config.StaticDirectory(tmpDir),
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"forwarding_url": knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-									"status_code": knownvalue.Int64Exact(301),
+-									"url":         knownvalue.StringExact("https://example.com/new-path/$1"),
+-								}),
+-							})),
+-						},
+-					},
+-				},
+-			})
+-		})
+-	}
+-}
+-
+-// TestMigrateCloudflarePageRule_CompleteSettings tests migration with
+-// a comprehensive set of page rule settings including cache, security, and performance options.
+-func TestMigrateCloudflarePageRule_CompleteSettings(t *testing.T) {
+-	testCases := []struct {
+-		name     string
+-		version  string
+-		configFn func(zoneID, target, rnd string) string
+-	}{
+-		{
+-			name:     "from_v4_52_1",
+-			version:  "4.52.1",
+-			configFn: testAccCloudflarePageRuleMigrationConfigV4Complete,
+-		},
+-	}
+-
+-	for _, tc := range testCases {
+-		t.Run(tc.name, func(t *testing.T) {
+-			zoneID := os.Getenv("CLOUDFLARE_ZONE_ID")
+-			zone := os.Getenv("CLOUDFLARE_DOMAIN")
+-			rnd := utils.GenerateRandomResourceName()
+-			resourceName := "cloudflare_page_rule." + rnd
+-			target := fmt.Sprintf("%s.%s/assets/*", rnd, zone)
+-			testConfig := tc.configFn(zoneID, target, rnd)
+-			tmpDir := t.TempDir()
+-
+-			resource.Test(t, resource.TestCase{
+-				PreCheck: func() {
+-					acctest.TestAccPreCheck(t)
+-					acctest.TestAccPreCheck_ZoneID(t)
+-					acctest.TestAccPreCheck_Domain(t)
+-				},
+-				CheckDestroy: testAccCheckCloudflarePageRuleDestroy,
+-				WorkingDir:   tmpDir,
+-				Steps: []resource.TestStep{
+-					{
+-						ExternalProviders: map[string]resource.ExternalProvider{
+-							"cloudflare": {
+-								VersionConstraint: tc.version,
+-								Source:            "cloudflare/cloudflare",
+-							},
+-						},
+-						Config: testConfig,
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("priority"), knownvalue.Float64Exact(1)),
+-						},
+-					},
+-					{
+-						PreConfig: func() {
+-							// Write out config
+-							acctest.WriteOutConfig(t, testConfig, tmpDir)
+-
+-							// Run migration
+-							acctest.RunMigrationCommand(t, testConfig, tmpDir)
+-						},
+-						ProtoV6ProviderFactories: acctest.TestAccProtoV6ProviderFactories,
+-						ConfigDirectory:          config.StaticDirectory(tmpDir),
+-						ConfigPlanChecks: resource.ConfigPlanChecks{
+-							PreApply: []plancheck.PlanCheck{
+-								acctest.DebugNonEmptyPlan,
+-							},
+-						},
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"cache_level": knownvalue.StringExact("aggressive"),
+-							})),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions.browser_cache_ttl"), knownvalue.Float64Exact(3600)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions.edge_cache_ttl"), knownvalue.Float64Exact(7200)),
+-						},
+-					},
+-					{
+-						ProtoV6ProviderFactories: acctest.TestAccProtoV6ProviderFactories,
+-						ConfigDirectory:          config.StaticDirectory(tmpDir),
+-						ConfigStateChecks: []statecheck.StateCheck{
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("zone_id"), knownvalue.StringExact(zoneID)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("target"), knownvalue.StringExact(target)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions"), knownvalue.ObjectPartial(map[string]knownvalue.Check{
+-								"cache_level": knownvalue.StringExact("aggressive"),
+-							})),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions.browser_cache_ttl"), knownvalue.Float64Exact(3600)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions.edge_cache_ttl"), knownvalue.Float64Exact(7200)),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions.security_level"), knownvalue.StringExact("high")),
+-							statecheck.ExpectKnownValue(resourceName, tfjsonpath.New("actions.ssl"), knownvalue.StringExact("flexible")),
+-						},
+-					},
+-				},
+-			})
+-		})
+-	}
+-}
+-
+-// V4 Configuration Functions
+-
+-func testAccCloudflarePageRuleMigrationConfigV4Basic(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id  = "%[1]s"
+-  target   = "%[2]s"
+-  status   = "active"
+-  priority = 1
+-
+-  actions {
+-    ssl = "flexible"
+-  }
+-}`, zoneID, target, rnd)
+-}
+-
+-func testAccCloudflarePageRuleMigrationConfigV4CacheDeceptionArmor(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id  = "%[1]s"
+-  target   = "%[2]s"
+-  status   = "active"
+-  priority = 1
+-
+-  actions {
+-    cache_deception_armor = "on"
+-  }
+-}`, zoneID, target, rnd)
+-}
+-
+-func testAccCloudflarePageRuleMigrationConfigV4CacheKeyFields(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id = "%[1]s"
+-  target  = "%[2]s"
+-  status  = "active"
+-
+-  actions {
+-    cache_level = "aggressive"
+-
+-    cache_key_fields {
+-	  user {
+-        lang = true
+-      }
+-      query_string {
+-        exclude = ["api_token"]
+-      }
+-      header {
+-        include = ["x-custom-header", "x-another-header"]
+-      }
+-      cookie {
+-        include = ["session_id"]
+-      }
+-	  host {}
+-    }
+-  }
+-}`, zoneID, target, rnd)
+-}
+-
+-func testAccCloudflarePageRuleMigrationConfigV4ForwardingURL(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id  = "%[1]s"
+-  target   = "%[2]s"
+-  status   = "active"
+-  priority = 1
+-
+-  actions {
+-    forwarding_url {
+-      status_code = 301
+-      url         = "https://example.com/new-path/$1"
+-    }
+-  }
+-}`, zoneID, target, rnd)
+-}
+-
+-func testAccCloudflarePageRuleMigrationConfigV4Complete(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id  = "%[1]s"
+-  target   = "%[2]s"
+-  status   = "active"
+-  priority = 1
+-
+-  actions {
+-    cache_level       = "aggressive"
+-    browser_cache_ttl = 3600
+-    edge_cache_ttl    = 7200
+-    security_level    = "high"
+-    ssl              = "flexible"
+-
+-    cache_ttl_by_status {
+-      codes = "200"
+-      ttl   = 86400
+-    }
+-
+-    cache_ttl_by_status {
+-      codes = "404"
+-      ttl   = 300
+-    }
+-
+-    minify {
+-      html = "on"
+-      css  = "on"
+-      js   = "off"
+-    }
+-  }
+-}`, zoneID, target, rnd)
+-}
+-
+-// V5 Configuration Functions
+-
+-func testAccCloudflarePageRuleMigrationConfigV5Basic(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id  = "%[1]s"
+-  target   = "%[2]s"
+-  status   = "active"
+-  priority = 1
+-
+-  actions = {
+-    ssl = "flexible"
+-  }
+-}`, zoneID, target, rnd)
+-}
+-
+-func testAccCloudflarePageRuleMigrationConfigV5CacheDeceptionArmor(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id  = "%[1]s"
+-  target   = "%[2]s"
+-  status   = "active"
+-  priority = 1
+-
+-  actions = {
+-    cache_deception_armor = "on"
+-  }
+-}`, zoneID, target, rnd)
+-}
+-
+-func testAccCloudflarePageRuleMigrationConfigV5ForwardingURL(zoneID, target, rnd string) string {
+-	return fmt.Sprintf(`
+-resource "cloudflare_page_rule" "%[3]s" {
+-  zone_id  = "%[1]s"
+-  target   = "%[2]s"
+-  status   = "active"
+-  priority = 1
+-
+-  actions = {
+-    forwarding_url = {
+-      status_code = 301
+-      url         = "https://example.com/new-path/$1"
+-    }
+-  }
+-}`, zoneID, target, rnd)
+-}

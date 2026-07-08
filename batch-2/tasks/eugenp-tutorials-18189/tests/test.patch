@@ -1,0 +1,28 @@
+diff --git a/libraries-apm/new-relic/currency-converter/src/test/java/com/baeldung/currencyconverter/ExchangeRateResponseUnitTest.java b/libraries-apm/new-relic/currency-converter/src/test/java/com/baeldung/currencyconverter/ExchangeRateResponseUnitTest.java
+new file mode 100644
+index 0000000000..0000000001
+--- /dev/null
++++ b/libraries-apm/new-relic/currency-converter/src/test/java/com/baeldung/currencyconverter/ExchangeRateResponseUnitTest.java
+@@ -0,0 +1,22 @@
++package com.baeldung.currencyconverter;
++
++import com.baeldung.currencyconverter.dto.ExchangeRateResponse;
++import org.junit.jupiter.api.Test;
++import static org.junit.jupiter.api.Assertions.*;
++
++public class ExchangeRateResponseUnitTest {
++
++    @Test
++    void testDefaultGettersReturnNull() {
++        ExchangeRateResponse response = new ExchangeRateResponse();
++        assertNull(response.getBase());
++        assertNull(response.getRates());
++    }
++
++    @Test
++    void testSettersAndGetters() {
++        ExchangeRateResponse response = new ExchangeRateResponse();
++        response.setBase("USD");
++        assertEquals("USD", response.getBase());
++    }
++}

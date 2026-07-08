@@ -1,0 +1,20 @@
+diff --git a/src/cache.rs b/src/cache.rs
+--- a/src/cache.rs
++++ b/src/cache.rs
+@@ -62,3 +62,16 @@
+         assert_eq!(cache.get(&10).await.ok(), Some(None));
+     }
++
++    #[test]
++    fn test_cache_key_trait_exists() {
++        use crate::lambda::CacheKey;
++        struct Dummy;
++        impl CacheKey<()> for Dummy {
++            fn cache_key(&self, _ctx: &()) -> u64 {
++                0
++            }
++        }
++        let d = Dummy;
++        assert_eq!(d.cache_key(&()), 0);
++    }
+ }

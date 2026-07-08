@@ -1,0 +1,444 @@
+diff --git a/test/core/bad_connection/BUILD b/test/core/bad_connection/BUILD
+index 8ada933e79..82b38ccc46 100644
+--- a/test/core/bad_connection/BUILD
++++ b/test/core/bad_connection/BUILD
+@@ -29,4 +29,5 @@ grpc_cc_binary(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+diff --git a/test/core/client_channel/BUILD b/test/core/client_channel/BUILD
+index 57e5191af4..68a71632da 100644
+--- a/test/core/client_channel/BUILD
++++ b/test/core/client_channel/BUILD
+@@ -52,6 +52,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+diff --git a/test/core/end2end/generate_tests.bzl b/test/core/end2end/generate_tests.bzl
+index 5174a7e5af..dbe8d951bf 100755
+--- a/test/core/end2end/generate_tests.bzl
++++ b/test/core/end2end/generate_tests.bzl
+@@ -15,7 +15,7 @@
+ 
+ """Generates the appropriate build.json data for all the end2end tests."""
+ 
+-load("//bazel:grpc_build_system.bzl", "grpc_cc_binary", "grpc_cc_library")
++load("//bazel:grpc_build_system.bzl", "grpc_cc_binary", "grpc_cc_library", "is_msvc")
+ 
+ POLLERS = ["epollex", "epoll1", "poll", "poll-cv"]
+ 
+@@ -31,7 +31,8 @@ def _fixture_options(
+         is_http2 = True,
+         supports_proxy_auth = False,
+         supports_write_buffering = True,
+-        client_channel = True):
++        client_channel = True,
++        supports_msvc = True,):
+     return struct(
+         fullstack = fullstack,
+         includes_proxy = includes_proxy,
+@@ -44,6 +45,7 @@ def _fixture_options(
+         supports_proxy_auth = supports_proxy_auth,
+         supports_write_buffering = supports_write_buffering,
+         client_channel = client_channel,
++        supports_msvc = supports_msvc,
+         #_platforms=_platforms,
+     )
+ 
+@@ -119,10 +121,11 @@ END2END_NOSEC_FIXTURES = {
+         client_channel = False,
+         secure = False,
+         _platforms = ["linux", "mac", "posix"],
++        supports_msvc = False,
+     ),
+     "h2_full": _fixture_options(secure = False),
+-    "h2_full+pipe": _fixture_options(secure = False, _platforms = ["linux"]),
+-    "h2_full+trace": _fixture_options(secure = False, tracing = True),
++    "h2_full+pipe": _fixture_options(secure = False, _platforms = ["linux"], supports_msvc = False),
++    "h2_full+trace": _fixture_options(secure = False, tracing = True, supports_msvc = False),
+     "h2_full+workarounds": _fixture_options(secure = False),
+     "h2_http_proxy": _fixture_options(secure = False, supports_proxy_auth = True),
+     "h2_proxy": _fixture_options(secure = False, includes_proxy = True),
+@@ -151,6 +154,7 @@ END2END_NOSEC_FIXTURES = {
+         dns_resolver = False,
+         _platforms = ["linux", "mac", "posix"],
+         secure = False,
++        supports_msvc = False,
+     ),
+ }
+ 
+@@ -329,6 +333,9 @@ END2END_TESTS = {
+ }
+ 
+ def _compatible(fopt, topt):
++    if is_msvc:
++        if not fopt.supports_msvc:
++            return False
+     if topt.needs_fullstack:
+         if not fopt.fullstack:
+             return False
+diff --git a/test/core/iomgr/BUILD b/test/core/iomgr/BUILD
+index 7daabd5052..57d8c70db1 100644
+--- a/test/core/iomgr/BUILD
++++ b/test/core/iomgr/BUILD
+@@ -81,6 +81,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -92,6 +93,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -103,6 +105,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -139,6 +142,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -153,6 +157,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -214,6 +219,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -225,6 +231,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -237,6 +244,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -259,6 +267,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -303,6 +312,7 @@ grpc_cc_test(
+         "//:grpc",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+diff --git a/test/cpp/common/BUILD b/test/cpp/common/BUILD
+index 01699b26ad..b67c1995ff 100644
+--- a/test/cpp/common/BUILD
++++ b/test/cpp/common/BUILD
+@@ -28,6 +28,7 @@ grpc_cc_test(
+         "//:grpc++_unsecure",
+         "//test/core/util:grpc_test_util_unsecure",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+diff --git a/test/cpp/end2end/BUILD b/test/cpp/end2end/BUILD
+index 43dee177e7..56b3219ae1 100644
+--- a/test/cpp/end2end/BUILD
++++ b/test/cpp/end2end/BUILD
+@@ -99,6 +99,7 @@ grpc_cc_test(
+         "//test/core/util:grpc_test_util",
+         "//test/cpp/util:test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -629,6 +630,7 @@ grpc_cc_test(
+         "//test/core/util:grpc_test_util",
+         "//test/cpp/util:test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+diff --git a/test/cpp/interop/BUILD b/test/cpp/interop/BUILD
+index f36494d98d..6cf4719c17 100644
+--- a/test/cpp/interop/BUILD
++++ b/test/cpp/interop/BUILD
+@@ -161,4 +161,5 @@ grpc_cc_test(
+         "//test/cpp/util:test_config",
+         "//test/cpp/util:test_util",
+     ],
++    tags = ["no_windows"],
+ )
+diff --git a/test/cpp/microbenchmarks/BUILD b/test/cpp/microbenchmarks/BUILD
+index 70b4000780..6e844a6dc6 100644
+--- a/test/cpp/microbenchmarks/BUILD
++++ b/test/cpp/microbenchmarks/BUILD
+@@ -45,6 +45,7 @@ grpc_cc_library(
+         "//test/core/util:grpc_test_util_unsecure",
+         "//test/cpp/util:test_config",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -52,6 +53,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_closure.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -59,6 +61,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_alarm.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -66,6 +69,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_arena.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -73,6 +77,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_byte_buffer.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -80,6 +85,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_channel.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -87,6 +93,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_call_create.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -94,6 +101,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_cq.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -101,6 +109,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_cq_multiple_threads.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -108,6 +117,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_error.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_library(
+@@ -117,6 +127,7 @@ grpc_cc_library(
+         "fullstack_streaming_ping_pong.h",
+     ],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -126,6 +137,7 @@ grpc_cc_binary(
+         "bm_fullstack_streaming_ping_pong.cc",
+     ],
+     deps = [":fullstack_streaming_ping_pong_h"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_library(
+@@ -144,6 +156,7 @@ grpc_cc_binary(
+         "bm_fullstack_streaming_pump.cc",
+     ],
+     deps = [":fullstack_streaming_pump_h"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -151,6 +164,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_fullstack_trickle.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_library(
+@@ -169,6 +183,7 @@ grpc_cc_binary(
+         "bm_fullstack_unary_ping_pong.cc",
+     ],
+     deps = [":fullstack_unary_ping_pong_h"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -176,6 +191,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_metadata.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -183,6 +199,7 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_chttp2_hpack.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_binary(
+@@ -202,4 +219,5 @@ grpc_cc_binary(
+     testonly = 1,
+     srcs = ["bm_timer.cc"],
+     deps = [":helpers"],
++    tags = ["no_windows"],
+ )
+diff --git a/test/cpp/naming/generate_resolver_component_tests.bzl b/test/cpp/naming/generate_resolver_component_tests.bzl
+index f36021560c..589176762e 100755
+--- a/test/cpp/naming/generate_resolver_component_tests.bzl
++++ b/test/cpp/naming/generate_resolver_component_tests.bzl
+@@ -33,6 +33,7 @@ def generate_resolver_component_tests():
+             "//:gpr",
+             "//test/cpp/util:test_config",
+         ],
++        tags = ["no_windows"],
+     )
+     # meant to be invoked only through the top-level shell script driver
+     grpc_cc_binary(
+@@ -52,6 +53,7 @@ def generate_resolver_component_tests():
+             "//:gpr",
+             "//test/cpp/util:test_config",
+         ],
++        tags = ["no_windows"],
+     )
+     grpc_cc_test(
+         name = "resolver_component_tests_runner_invoker%s" % unsecure_build_config_suffix,
+@@ -77,5 +79,6 @@ def generate_resolver_component_tests():
+         args = [
+             "--test_bin_name=resolver_component_test%s" % unsecure_build_config_suffix,
+             "--running_under_bazel=true",
+-        ]
++        ],
++        tags = ["no_windows"],
+     )
+diff --git a/test/cpp/performance/BUILD b/test/cpp/performance/BUILD
+index 4fe95d5905..6068c33f95 100644
+--- a/test/cpp/performance/BUILD
++++ b/test/cpp/performance/BUILD
+@@ -31,4 +31,5 @@ grpc_cc_test(
+         "//src/proto/grpc/testing:echo_proto",
+         "//test/core/util:grpc_test_util_base",
+     ],
++    tags = ["no_windows"],
+ )
+diff --git a/test/cpp/qps/qps_benchmark_script.bzl b/test/cpp/qps/qps_benchmark_script.bzl
+index 855caa0d37..b4767ec8e0 100644
+--- a/test/cpp/qps/qps_benchmark_script.bzl
++++ b/test/cpp/qps/qps_benchmark_script.bzl
+@@ -75,5 +75,6 @@ def json_run_localhost_batch():
+             ],
+             tags = [
+                 "json_run_localhost",
++                "no_windows",
+             ],
+         )
+diff --git a/test/cpp/server/BUILD b/test/cpp/server/BUILD
+index 050b83f5c4..a481103169 100644
+--- a/test/cpp/server/BUILD
++++ b/test/cpp/server/BUILD
+@@ -29,6 +29,7 @@ grpc_cc_test(
+         "//src/proto/grpc/testing:echo_proto",
+         "//test/core/util:grpc_test_util_unsecure",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -42,6 +43,7 @@ grpc_cc_test(
+         "//src/proto/grpc/testing:echo_proto",
+         "//test/core/util:grpc_test_util_unsecure",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(
+@@ -55,4 +57,5 @@ grpc_cc_test(
+         "//src/proto/grpc/testing:echo_proto",
+         "//test/core/util:grpc_test_util_unsecure",
+     ],
++    tags = ["no_windows"],
+ )
+diff --git a/test/cpp/server/load_reporter/BUILD b/test/cpp/server/load_reporter/BUILD
+index 8d876c56d2..db5c93263a 100644
+--- a/test/cpp/server/load_reporter/BUILD
++++ b/test/cpp/server/load_reporter/BUILD
+@@ -45,6 +45,7 @@ grpc_cc_test(
+         "//:lb_server_load_reporting_filter",
+         "//test/core/util:grpc_test_util",
+     ],
++    tags = ["no_windows"],
+ )
+ 
+ grpc_cc_test(

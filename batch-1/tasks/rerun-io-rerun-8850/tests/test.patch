@@ -1,0 +1,32 @@
+diff --git a/crates/utils/re_video/src/decode/mod.rs b/crates/utils/re_video/src/decode/mod.rs
+--- a/crates/utils/re_video/src/decode/mod.rs
++++ b/crates/utils/re_video/src/decode/mod.rs
+@@ -452,4 +452,28 @@
+             _ => Err(()),
+         }
+     }
+ }
++
++#[cfg(test)]
++#[cfg(not(target_arch = "wasm32"))]
++mod tests_enqueue_ahead {
++    use super::*;
++
++    struct NopDecoder;
++
++    impl AsyncDecoder for NopDecoder {
++        fn submit_chunk(&mut self, _chunk: Chunk) -> Result<()> {
++            Ok(())
++        }
++
++        fn reset(&mut self) -> Result<()> {
++            Ok(())
++        }
++    }
++
++    #[test]
++    fn test_min_num_samples_to_enqueue_ahead_default() {
++        let decoder = NopDecoder;
++        assert_eq!(decoder.min_num_samples_to_enqueue_ahead(), 0);
++    }
++}

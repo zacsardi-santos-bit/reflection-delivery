@@ -1,0 +1,17 @@
+diff --git a/engine/crates/integration-tests/tests/federation/basic/mutation.rs b/engine/crates/integration-tests/tests/federation/basic/mutation.rs
+index 95ce432d0..54ed6c687 100644
+--- a/engine/crates/integration-tests/tests/federation/basic/mutation.rs
++++ b/engine/crates/integration-tests/tests/federation/basic/mutation.rs
+@@ -147,12 +147,6 @@ fn mutation_failure_should_stop_later_executions_if_required() {
+         {
+           "data": null,
+           "errors": [
+-            {
+-              "message": "Upstream response error: Missing required field named 'fail'",
+-              "path": [
+-                "fail"
+-              ]
+-            },
+             {
+               "message": "Upstream error: This mutation always fails",
+               "path": [

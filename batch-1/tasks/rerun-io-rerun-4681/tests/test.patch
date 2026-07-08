@@ -1,0 +1,16 @@
+diff --git a/crates/re_space_view_spatial/src/space_view_2d.rs b/crates/re_space_view_spatial/src/space_view_2d.rs
+index 142755b731..abc123def0 100644
+--- a/crates/re_space_view_spatial/src/space_view_2d.rs
++++ b/crates/re_space_view_spatial/src/space_view_2d.rs
+@@ -216,3 +216,11 @@ impl SpaceViewClass for SpatialSpaceView2D {
+         crate::ui_2d::view_2d(ctx, ui, state, query, system_output)
+     }
+ }
++
++#[cfg(test)]
++mod tests {
++    #[test]
++    fn test_points3d_component_data() {
++        let _ = std::any::type_name::<crate::visualizers::Points3DComponentData<'_>>();
++    }
++}

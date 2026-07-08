@@ -1,0 +1,22 @@
+diff --git a/core/runtime/src/test/java/io/quarkus/runtime/ResettableSystemPropertiesAbsenceTest.java b/core/runtime/src/test/java/io/quarkus/runtime/ResettableSystemPropertiesAbsenceTest.java
+new file mode 100644
+index 00000000000..abc1234567890
+--- /dev/null
++++ b/core/runtime/src/test/java/io/quarkus/runtime/ResettableSystemPropertiesAbsenceTest.java
+@@ -0,0 +1,16 @@
++package io.quarkus.runtime;
++
++import static org.junit.jupiter.api.Assertions.assertThrows;
++
++import org.junit.jupiter.api.Test;
++
++class ResettableSystemPropertiesAbsenceTest {
++
++    @Test
++    void resettableSystemPropertiesShouldNotExist() throws Exception {
++        assertThrows(ClassNotFoundException.class, () -> {
++            Class.forName("io.quarkus.runtime.ResettableSystemProperties");
++        });
++    }
++
++}

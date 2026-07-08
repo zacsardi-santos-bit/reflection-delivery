@@ -1,0 +1,711 @@
+diff --git a/crates/cairo-lang-doc/src/tests/mod.rs b/crates/cairo-lang-doc/src/tests/mod.rs
+index 3b39eaaa5..5be0e126a 100644
+--- a/crates/cairo-lang-doc/src/tests/mod.rs
++++ b/crates/cairo-lang-doc/src/tests/mod.rs
+@@ -1,2 +1,3 @@
+ pub mod test;
++pub mod test_documentable_formatter;
+ pub mod test_utils;
+diff --git a/crates/cairo-lang-doc/src/tests/test-data/basic.txt b/crates/cairo-lang-doc/src/tests/test-data/basic.txt
+index 5d33839de..8d2f74027 100644
+--- a/crates/cairo-lang-doc/src/tests/test-data/basic.txt
++++ b/crates/cairo-lang-doc/src/tests/test-data/basic.txt
+@@ -150,7 +150,7 @@ Content(" ")
+ Content("Default impl of abc TraitTest function inner comment.")
+ 
+ //! > Item signature #5
+-impl TraitTestImpl of TraitTest
++impl TraitTestImpl of TraitTest;
+ 
+ //! > Item documentation #5
+ Implementation of TraitTest's abc function. Implements [this](TraitTest) trait.
+@@ -184,7 +184,7 @@ Content(" ")
+ Content("Test module used to check if the documentation is being attached to the nodes correctly.")
+ 
+ //! > Item signature #8
+-pub fn inner_test_module_function() -> ()
++pub fn inner_test_module_function()
+ 
+ //! > Item documentation #8
+ Just a function outside the test_module. Above that module there is a [trait](super::TraitTest). Just a function inside the test_module.
+diff --git a/crates/cairo-lang-doc/src/tests/test-data/comment_markers.txt b/crates/cairo-lang-doc/src/tests/test-data/comment_markers.txt
+index 2605635f1..aaedc4194 100644
+--- a/crates/cairo-lang-doc/src/tests/test-data/comment_markers.txt
++++ b/crates/cairo-lang-doc/src/tests/test-data/comment_markers.txt
+@@ -46,9 +46,7 @@ trait T
+ //! > Item documentation tokens #2
+ 
+ //! > Item signature #3
+-fn map<U, F, +Destruct<F>, +core::ops::FnOnce<F, (T,)>[Output: U]>(
+-    self: Option<T>, f: F,
+-) -> Option<U>
++fn map<U, F, +Destruct<F>, +core::ops::FnOnce<F, (T,)>[Output: U]>(self: Option<T>, f: F) -> Option<U>
+ 
+ //! > Item documentation #3
+ Maps an `Option<T>` to `Option<U>` by applying a function to a contained value (if `Some`) or returns `None` (if `None`).
+diff --git a/crates/cairo-lang-doc/src/tests/test-data/signature.txt b/crates/cairo-lang-doc/src/tests/test-data/signature.txt
+new file mode 100644
+index 000000000..f1d80f25e
+--- /dev/null
++++ b/crates/cairo-lang-doc/src/tests/test-data/signature.txt
+@@ -0,0 +1,210 @@
++//! > Documentation
++
++//! > test_runner_name
++documentation_test_runner
++
++//! > cairo_project.toml
++[crate_roots]
++hello = "src"
++
++//! > cairo_code
++fn main() {}
++
++fn free_function<T, impl TPartialEq: PartialEq<T>, +Drop<T>, +Copy<T>>(
++    ref self: Array<T>, item: T,
++) -> bool {
++    return true;
++}
++
++#[derive(Copy, Drop, Serde)]
++enum MemberEnum {
++    Simple: felt252,
++    Complex: Span<MemberStruct>,
++}
++
++#[derive(Copy, Drop)]
++struct MemberStruct {
++    name: felt252,
++    ty: MemberEnum,
++}
++
++trait Shape<T> {
++    const SHAPE_CONST: felt252;
++    type ShapePair;
++
++    fn area(self: T) -> u32;
++}
++
++struct Circle {
++    radius: u32,
++}
++
++impl CircleShape of Shape<Circle> {
++    type ShapePair = (Circle, Circle);
++    const SHAPE_CONST: felt252 = 'xyz';
++    fn area(self: Circle) -> u32 {
++        3 * self.radius * self.radius
++    }
++}
++
++
++trait ATrait {}
++
++struct B<T, G, +ATrait> {
++    t: T,
++    g: G,
++}
++
++impl BCopy<T, G, +ATrait, +Copy<T>, +Copy<G>> of Copy<B<T, G>>;
++
++pub extern type bytes31;
++
++pub extern type Pedersen;
++
++pub extern fn pedersen(a: felt252, b: felt252) -> felt252 implicits(Pedersen) nopanic;
++
++//! > Item signature #1
++//! > Item documentation #1
++//! > Item documentation tokens #1
++
++//! > Item signature #2
++fn main()
++//! > Item documentation #2
++//! > Item documentation tokens #2
++
++//! > Item signature #3
++fn free_function<T, TPartialEq, +Drop<T>, +Copy<T>>(ref self: Array<T>, item: T) -> bool
++//! > Item documentation #3
++//! > Item documentation tokens #3
++
++//! > Item signature #4
++enum MemberEnum {
++    Simple: felt252,
++    Complex: Span<MemberStruct>,
++}
++//! > Item documentation #4
++//! > Item documentation tokens #4
++
++//! > Item signature #5
++Simple: felt252
++//! > Item documentation #5
++//! > Item documentation tokens #5
++
++//! > Item signature #6
++Complex: Span<MemberStruct>
++//! > Item documentation #6
++//! > Item documentation tokens #6
++
++//! > Item signature #7
++#[derive(Copy, Drop)]
++struct MemberStruct {
++    name: felt252,
++    ty: MemberEnum,
++}
++//! > Item documentation #7
++//! > Item documentation tokens #7
++
++//! > Item signature #8
++name: felt252
++//! > Item documentation #8
++//! > Item documentation tokens #8
++
++//! > Item signature #9
++ty: MemberEnum
++//! > Item documentation #9
++//! > Item documentation tokens #9
++
++//! > Item signature #10
++trait Shape<T>
++//! > Item documentation #10
++//! > Item documentation tokens #10
++
++//! > Item signature #11
++const SHAPE_CONST: felt252;
++//! > Item documentation #11
++//! > Item documentation tokens #11
++
++//! > Item signature #12
++type ShapePair;
++//! > Item documentation #12
++//! > Item documentation tokens #12
++
++//! > Item signature #13
++fn area<T, T>(self: T) -> u32
++//! > Item documentation #13
++//! > Item documentation tokens #13
++
++//! > Item signature #14
++struct Circle {
++    radius: u32,
++}
++//! > Item documentation #14
++//! > Item documentation tokens #14
++
++//! > Item signature #15
++radius: u32
++//! > Item documentation #15
++//! > Item documentation tokens #15
++
++//! > Item signature #16
++impl CircleShape of Shape<Circle>;
++//! > Item documentation #16
++//! > Item documentation tokens #16
++
++//! > Item signature #17
++type ShapePair = (Circle, Circle);
++//! > Item documentation #17
++//! > Item documentation tokens #17
++
++//! > Item signature #18
++const SHAPE_CONST: felt252 = 'xyz';
++//! > Item documentation #18
++//! > Item documentation tokens #18
++
++//! > Item signature #19
++fn area(self: Circle) -> u32
++//! > Item documentation #19
++//! > Item documentation tokens #19
++
++//! > Item signature #20
++trait ATrait
++//! > Item documentation #20
++//! > Item documentation tokens #20
++
++//! > Item signature #21
++struct B<T, G, +ATrait> {
++    t: T,
++    g: G,
++}
++//! > Item documentation #21
++//! > Item documentation tokens #21
++
++//! > Item signature #22
++t: T
++//! > Item documentation #22
++//! > Item documentation tokens #22
++
++//! > Item signature #23
++g: G
++//! > Item documentation #23
++//! > Item documentation tokens #23
++
++//! > Item signature #24
++impl BCopy<T, G, +ATrait, +Copy<T>, +Copy<G>> of Copy<B<T, G, +ATrait>>;
++//! > Item documentation #24
++//! > Item documentation tokens #24
++
++//! > Item signature #25
++pub extern type bytes31;
++//! > Item documentation #25
++//! > Item documentation tokens #25
++
++//! > Item signature #26
++pub extern type Pedersen;
++//! > Item documentation #26
++//! > Item documentation tokens #26
++
++//! > Item signature #27
++pub extern fn pedersen(a: felt252, b: felt252) -> felt252 implicits(Pedersen) nopanic;
++//! > Item documentation #27
++//! > Item documentation tokens #27
+diff --git a/crates/cairo-lang-doc/src/tests/test-data/signature_links.txt b/crates/cairo-lang-doc/src/tests/test-data/signature_links.txt
+new file mode 100644
+index 000000000..bfcd3b708
+--- /dev/null
++++ b/crates/cairo-lang-doc/src/tests/test-data/signature_links.txt
+@@ -0,0 +1,141 @@
++//! > Documentation
++
++//! > test_runner_name
++documentation_test_runner
++
++//! > cairo_project.toml
++[crate_roots]
++hello = "src"
++
++//! > cairo_code
++
++struct MemberStruct {
++    ty: MemberEnum,
++}
++
++enum MemberEnum {
++    Simple: felt252,
++    Complex: Span<MemberStruct>,
++}
++
++trait ATrait {}
++
++struct B<T, G, +ATrait> {
++    t: T,
++    g: G,
++}
++
++fn function_tuple(t: (MemberStruct, (MemberStruct, MemberEnum))) -> (MemberStruct, MemberEnum) {
++    return t;
++}
++
++enum AnotherEnum {
++    Simple: felt252,
++    Complex: (MemberStruct, MemberEnum),
++}
++
++fn incorrect_function(x: NotExistingType)
++
++enum IncorrectEnum {
++    INCORRECT_VARIANT: NotExistingType
++}
++
++struct IncorrectStruct {
++    incorrect_member: NotExistingType,
++}
++
++//! > Item signature #1
++struct MemberStruct {
++    ty: MemberEnum,
++}
++//! > Item linked items #1
++MemberEnum
++
++//! > Item signature #2
++ty: MemberEnum
++//! > Item linked items #2
++MemberEnum
++
++//! > Item signature #3
++enum MemberEnum {
++    Simple: felt252,
++    Complex: Span<MemberStruct>,
++}
++//! > Item linked items #3
++
++//! > Item signature #4
++Simple: felt252
++//! > Item linked items #4
++
++//! > Item signature #5
++Complex: Span<MemberStruct>
++//! > Item linked items #5
++
++//! > Item signature #6
++trait ATrait
++//! > Item linked items #6
++
++//! > Item signature #7
++struct B<T, G, +ATrait> {
++    t: T,
++    g: G,
++}
++//! > Item linked items #7
++T, G, +ATrait
++
++//! > Item signature #8
++t: T
++//! > Item linked items #8
++
++
++//! > Item signature #9
++g: G
++//! > Item linked items #9
++
++
++//! > Item signature #10
++fn function_tuple(t: (MemberStruct, (MemberStruct, MemberEnum))) -> (MemberStruct, MemberEnum)
++//! > Item linked items #10
++MemberStruct, MemberStruct, MemberEnum, MemberStruct, MemberEnum
++
++//! > Item signature #11
++enum AnotherEnum {
++    Simple: felt252,
++    Complex: (MemberStruct, MemberEnum),
++}
++//! > Item linked items #11
++MemberStruct, MemberEnum
++
++//! > Item signature #12
++Simple: felt252
++//! > Item linked items #12
++
++//! > Item signature #13
++Complex: (MemberStruct, MemberEnum)
++//! > Item linked items #13
++MemberStruct, MemberEnum
++
++//! > Item signature #14
++fn incorrect_function(x: NotExistingType)
++//! > Item linked items #14
++
++//! > Item signature #15
++enum IncorrectEnum {
++    INCORRECT_VARIANT: <missing>,
++}
++//! > Item linked items #15
++
++//! > Item signature #16
++INCORRECT_VARIANT: <missing>
++//! > Item linked items #16
++
++//! > Item signature #17
++struct IncorrectStruct {
++    incorrect_member: <missing>,
++}
++//! > Item linked items #17
++
++//! > Item signature #18
++incorrect_member: <missing>
++//! > Item linked items #18
++
+diff --git a/crates/cairo-lang-doc/src/tests/test-data/trivia.txt b/crates/cairo-lang-doc/src/tests/test-data/trivia.txt
+index d77a1cd4f..74721b6b6 100644
+--- a/crates/cairo-lang-doc/src/tests/test-data/trivia.txt
++++ b/crates/cairo-lang-doc/src/tests/test-data/trivia.txt
+@@ -96,8 +96,8 @@ second field
+ Content("second field")
+ 
+ //! > Item signature #6
+-#[derive(Clone)]
+-#[derive(Drop)]
++#[derive(Clone)] 
++#[derive(Drop)] 
+ struct Pair2<T, U> {
+     pub first: T,
+     second: U,
+@@ -156,7 +156,7 @@ Second variant
+ Content("Second variant")
+ 
+ //! > Item signature #12
+-pub extern type S<T>
++pub extern type S<T>;
+ 
+ //! > Item documentation #12
+ extern type comment
+diff --git a/crates/cairo-lang-doc/src/tests/test.rs b/crates/cairo-lang-doc/src/tests/test.rs
+index 6454f5d64..4aaa0c1fd 100644
+--- a/crates/cairo-lang-doc/src/tests/test.rs
++++ b/crates/cairo-lang-doc/src/tests/test.rs
+@@ -21,7 +21,8 @@ cairo_lang_test_utils::test_file_test!(
+     basic: "basic.txt",
+     submodule: "submodule.txt",
+     trivia: "trivia.txt",
+-    comment_markers: "comment_markers.txt"
++    comment_markers: "comment_markers.txt",
++    signature: "signature.txt",
+   },
+   documentation_test_runner
+ );
+@@ -85,7 +86,7 @@ impl<'a> ResultDocBuilder<'a> {
+             }
+         };
+ 
+-        self.insert_doc_to_test_output(module_doc, "".to_owned(), doc_tokens);
++        self.insert_doc_to_test_output(module_doc, Some("".to_owned()), doc_tokens);
+ 
+         let submodule_items = self.db.module_items(module_id).unwrap();
+ 
+@@ -260,11 +261,13 @@ impl<'a> ResultDocBuilder<'a> {
+     fn insert_doc_to_test_output(
+         &mut self,
+         documentation: Option<String>,
+-        signature: String,
++        signature: Option<String>,
+         documentation_as_tokens: Option<Vec<DocumentationCommentToken>>,
+     ) {
+-        self.output
+-            .insert("Item signature #".to_string() + &self.item_counter.to_string(), signature);
++        if let Some(signature) = signature {
++            self.output
++                .insert("Item signature #".to_string() + &self.item_counter.to_string(), signature);
++        }
+         self.output.insert(
+             "Item documentation #".to_string() + &self.item_counter.to_string(),
+             documentation.unwrap_or_default(),
+diff --git a/crates/cairo-lang-doc/src/tests/test_documentable_formatter.rs b/crates/cairo-lang-doc/src/tests/test_documentable_formatter.rs
+new file mode 100644
+index 000000000..570f7a035
+--- /dev/null
++++ b/crates/cairo-lang-doc/src/tests/test_documentable_formatter.rs
+@@ -0,0 +1,210 @@
++use cairo_lang_defs::db::DefsGroup;
++use cairo_lang_defs::ids::{
++    EnumId, ImplDefId, ImplItemId, LookupItemId, ModuleId, ModuleItemId, StructId, TraitId,
++    TraitItemId,
++};
++use cairo_lang_semantic::db::SemanticGroup;
++use cairo_lang_test_utils::parse_test_file::TestRunnerResult;
++use cairo_lang_utils::ordered_hash_map::OrderedHashMap;
++use itertools::Itertools;
++
++use super::test_utils::{
++    TestDatabase, set_file_content, setup_test_module_without_syntax_diagnostics,
++};
++use crate::db::DocGroup;
++use crate::documentable_formatter::LocationLink;
++use crate::documentable_item::DocumentableItemId;
++
++cairo_lang_test_utils::test_file_test!(
++  item_documentation,
++  "src/tests/test-data",
++  {
++    signature_links: "signature_links.txt",
++  },
++  documentation_test_runner
++);
++
++fn documentation_test_runner(
++    inputs: &OrderedHashMap<String, String>,
++    _args: &OrderedHashMap<String, String>,
++) -> TestRunnerResult {
++    let mut db_val = TestDatabase::new().unwrap();
++    let crate_id =
++        setup_test_module_without_syntax_diagnostics(&mut db_val, inputs["cairo_code"].as_str());
++    let submodule_code = inputs.get("cairo_submodule_code");
++
++    if let Some(submodule_code) = submodule_code {
++        set_file_content(&mut db_val, "src/cairo_submodule_code.cairo", submodule_code);
++    }
++
++    let db = &db_val;
++
++    let mut result_doc_builder = ResultSignatureBuilder::new(db);
++
++    result_doc_builder.document_module(ModuleId::CrateRoot(crate_id));
++
++    TestRunnerResult::success(result_doc_builder.get_output())
++}
++
++struct ResultSignatureBuilder<'a> {
++    db: &'a TestDatabase,
++    item_counter: u32,
++    output: OrderedHashMap<String, String>,
++}
++
++impl<'a> ResultSignatureBuilder<'a> {
++    fn new(db: &'a TestDatabase) -> Self {
++        Self { db, item_counter: 1, output: OrderedHashMap::default() }
++    }
++
++    fn get_output(self) -> OrderedHashMap<String, String> {
++        self.output
++    }
++
++    fn document_module(&mut self, module_id: ModuleId) {
++        let submodule_items = self.db.module_items(module_id).unwrap();
++
++        for submodule_item_id in submodule_items.iter() {
++            match submodule_item_id {
++                ModuleItemId::Struct(struct_id) => {
++                    self.document_struct_with_members(struct_id);
++                }
++                ModuleItemId::Enum(enum_id) => {
++                    self.document_enum_with_variants(enum_id);
++                }
++                ModuleItemId::Trait(trait_id) => {
++                    self.document_trait_with_items(trait_id);
++                }
++                ModuleItemId::Impl(impl_id) => {
++                    self.document_impl_with_items(impl_id);
++                }
++                ModuleItemId::Submodule(module_id) => {
++                    self.document_module(ModuleId::Submodule(*module_id))
++                }
++                _ => {
++                    let id = DocumentableItemId::from(LookupItemId::ModuleItem(*submodule_item_id));
++                    let (item_signature, links) = self.db.get_item_signature_with_links(id);
++                    self.insert_signature_links_to_test_output(item_signature, links);
++                }
++            }
++        }
++    }
++
++    fn document_struct_with_members(&mut self, struct_id: &StructId) {
++        let id =
++            DocumentableItemId::from(LookupItemId::ModuleItem(ModuleItemId::Struct(*struct_id)));
++        let (struct_signature, links) = self.db.get_item_signature_with_links(id);
++        self.insert_signature_links_to_test_output(struct_signature, links);
++
++        let members = self.db.struct_members(*struct_id).unwrap();
++
++        members.iter().for_each(|(_, semantic_member)| {
++            let id = DocumentableItemId::from(semantic_member.id);
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        });
++    }
++
++    fn document_enum_with_variants(&mut self, enum_id: &EnumId) {
++        let id = DocumentableItemId::from(LookupItemId::ModuleItem(ModuleItemId::Enum(*enum_id)));
++        let (signature, links) = self.db.get_item_signature_with_links(id);
++        self.insert_signature_links_to_test_output(signature, links);
++        let variants = self.db.enum_variants(*enum_id).unwrap();
++
++        variants.iter().for_each(|(_, variant_id)| {
++            let id = DocumentableItemId::Variant(*variant_id);
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        })
++    }
++
++    fn document_trait_with_items(&mut self, trait_id: &TraitId) {
++        let id = DocumentableItemId::from(LookupItemId::ModuleItem(ModuleItemId::Trait(*trait_id)));
++        let (signature, links) = self.db.get_item_signature_with_links(id);
++        self.insert_signature_links_to_test_output(signature, links);
++        let trait_constants = self.db.trait_constants(*trait_id).unwrap();
++        let trait_types = self.db.trait_types(*trait_id).unwrap();
++        let trait_functions = self.db.trait_functions(*trait_id).unwrap();
++
++        trait_constants.iter().for_each(|(_, trait_constant_id)| {
++            let id = DocumentableItemId::from(LookupItemId::TraitItem(TraitItemId::Constant(
++                *trait_constant_id,
++            )));
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        });
++
++        trait_types.iter().for_each(|(_, trait_type_id)| {
++            let id = DocumentableItemId::from(LookupItemId::TraitItem(TraitItemId::Type(
++                *trait_type_id,
++            )));
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        });
++
++        trait_functions.iter().for_each(|(_, trait_function_id)| {
++            let id = DocumentableItemId::from(LookupItemId::TraitItem(TraitItemId::Function(
++                *trait_function_id,
++            )));
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        });
++    }
++
++    fn document_impl_with_items(&mut self, impl_id: &ImplDefId) {
++        let id = DocumentableItemId::from(LookupItemId::ModuleItem(ModuleItemId::Impl(*impl_id)));
++        let (impl_signature, links) = self.db.get_item_signature_with_links(id);
++        self.insert_signature_links_to_test_output(impl_signature, links);
++        let impl_types = self.db.impl_types(*impl_id).unwrap();
++        let impl_constants = self.db.impl_constants(*impl_id).unwrap();
++        let impl_functions = self.db.impl_functions(*impl_id).unwrap();
++
++        impl_types.iter().for_each(|(impl_type_id, _)| {
++            let id =
++                DocumentableItemId::from(LookupItemId::ImplItem(ImplItemId::Type(*impl_type_id)));
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        });
++
++        impl_constants.iter().for_each(|(impl_constant_id, _)| {
++            let id = DocumentableItemId::from(LookupItemId::ImplItem(ImplItemId::Constant(
++                *impl_constant_id,
++            )));
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        });
++
++        impl_functions.iter().for_each(|(_, impl_function_id)| {
++            let id = DocumentableItemId::from(LookupItemId::ImplItem(ImplItemId::Function(
++                *impl_function_id,
++            )));
++            let (signature, links) = self.db.get_item_signature_with_links(id);
++            self.insert_signature_links_to_test_output(signature, links);
++        });
++    }
++
++    fn insert_signature_links_to_test_output(
++        &mut self,
++        signature: Option<String>,
++        linked_items: Vec<LocationLink>,
++    ) {
++        if let Some(signature) = signature {
++            let formatted_links = linked_items
++                .iter()
++                .map(|link| self.cut_link_slice(signature.clone(), link.start, link.end))
++                .join(", ");
++
++            self.output
++                .insert("Item signature #".to_string() + &self.item_counter.to_string(), signature);
++            self.output.insert(
++                "Item linked items #".to_string() + &self.item_counter.to_string(),
++                formatted_links,
++            );
++            self.item_counter += 1;
++        }
++    }
++
++    fn cut_link_slice(&mut self, signature: String, start: usize, end: usize) -> String {
++        signature.chars().skip(start).take(end - start).collect()
++    }
++}
+diff --git a/crates/cairo-lang-doc/src/tests/test_utils.rs b/crates/cairo-lang-doc/src/tests/test_utils.rs
+index c7dc56f8a..d4a740e26 100644
+--- a/crates/cairo-lang-doc/src/tests/test_utils.rs
++++ b/crates/cairo-lang-doc/src/tests/test_utils.rs
+@@ -105,6 +105,18 @@ pub fn setup_test_module<T: DefsGroup + AsFilesGroupMut + ?Sized>(
+     crate_id
+ }
+ 
++pub fn setup_test_module_without_syntax_diagnostics<T: DefsGroup + AsFilesGroupMut + ?Sized>(
++    db: &mut T,
++    content: &str,
++) -> CrateId {
++    let crate_id = CrateId::plain(db, "test");
++    let directory = Directory::Real("src".into());
++    db.set_crate_config(crate_id, Some(CrateConfiguration::default_for_root(directory)));
++    let file = db.module_main_file(ModuleId::CrateRoot(crate_id)).unwrap();
++    db.as_files_group_mut().override_file_content(file, Some(content.into()));
++    crate_id
++}
++
+ pub fn set_file_content(db: &mut TestDatabase, path: &str, content: &str) {
+     let file_id = FileLongId::OnDisk(path.into()).intern(db);
+     db.as_files_group_mut().override_file_content(file_id, Some(content.into()));

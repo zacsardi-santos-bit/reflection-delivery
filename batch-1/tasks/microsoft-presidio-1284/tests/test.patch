@@ -1,0 +1,418 @@
+diff --git a/presidio-anonymizer/tests/conftest.py b/presidio-anonymizer/tests/conftest.py
+new file mode 100644
+index 00000000..9f29db11
+--- /dev/null
++++ b/presidio-anonymizer/tests/conftest.py
+@@ -0,0 +1,53 @@
++from typing import Dict, Type
++
++import pytest
++
++from presidio_anonymizer.entities import RecognizerResult
++from presidio_anonymizer.operators import Operator, OperatorType
++
++
++@pytest.fixture(scope="session")
++def three_person_analyzer_results():
++    text = "Peter gave Julie a book about Heidi."
++    analyzer_results = [
++        RecognizerResult("PERSON", 0, 5, 1.0),
++        RecognizerResult("PERSON", 11, 16, 1.0),
++        RecognizerResult("PERSON", 30, 35, 1.0),
++    ]
++    return text, analyzer_results
++
++
++@pytest.fixture(scope="session")
++def mock_anonymizer_cls() -> Type[Operator]:
++    class MockAnonymizer(Operator):
++        def operate(self, text: str, params: Dict = None) -> str:
++            return text
++
++        def validate(self, params: Dict = None) -> None:
++            pass
++
++        def operator_name(self) -> str:
++            return self.__class__.__name__
++
++        def operator_type(self) -> OperatorType:
++            return OperatorType.Anonymize
++
++    return MockAnonymizer
++
++
++@pytest.fixture(scope="session")
++def mock_deanonymizer_cls() -> Type[Operator]:
++    class MockDeanonymizer(Operator):
++        def operate(self, text: str, params: Dict = None) -> str:
++            return text
++
++        def validate(self, params: Dict = None) -> None:
++            pass
++
++        def operator_name(self) -> str:
++            return self.__class__.__name__
++
++        def operator_type(self) -> OperatorType:
++            return OperatorType.Deanonymize
++
++    return MockDeanonymizer
+diff --git a/presidio-anonymizer/tests/integration/test_anonymize_engine.py b/presidio-anonymizer/tests/integration/test_anonymize_engine.py
+index e9a18f5d..710359c3 100644
+--- a/presidio-anonymizer/tests/integration/test_anonymize_engine.py
++++ b/presidio-anonymizer/tests/integration/test_anonymize_engine.py
+@@ -1,3 +1,5 @@
++import re
++
+ import pytest
+ 
+ from presidio_anonymizer import AnonymizerEngine
+@@ -6,7 +8,11 @@ from presidio_anonymizer.entities import (
+     RecognizerResult,
+     OperatorConfig,
+ )
+-from presidio_anonymizer.operators import AESCipher
++from presidio_anonymizer.operators import AESCipher, OperatorType, Redact
++from tests.mock_operators import (
++    create_reverser_operator,
++    create_instance_counter_anonymizer,
++)
+ 
+ 
+ def test_given_url_at_the_end_then_we_redact_is_successfully():
+@@ -34,8 +40,8 @@ def test_given_operator_decrypt_then_we_fail():
+     ]
+     engine = AnonymizerEngine()
+     with pytest.raises(
+-            InvalidParamException,
+-            match="Invalid operator class 'decrypt'.",
++        InvalidParamException,
++        match="Invalid operator class 'decrypt'.",
+     ):
+         engine.anonymize(text, analyzer_results, anonymizers_config)
+ 
+@@ -268,3 +274,59 @@ def test_empty_text_returns_correct_results():
+     actual_anonymize_result = AnonymizerEngine().anonymize(text, analyzer_results)
+ 
+     assert actual_anonymize_result.text == text
++
++
++def test_add_anonymizer_returns_updated_list(mock_anonymizer_cls):
++    engine = AnonymizerEngine()
++    anon_list_len = len(engine.get_anonymizers())
++    engine.add_anonymizer(mock_anonymizer_cls)
++    anon_list = engine.get_anonymizers()
++    assert len(anon_list) == anon_list_len + 1
++    assert mock_anonymizer_cls().operator_name() in anon_list
++
++
++def test_anonymizer_engine_uses_custom_operator():
++    engine = AnonymizerEngine()
++    engine.add_anonymizer(create_reverser_operator(OperatorType.Anonymize))
++    text = "hello"
++    analyzer_results = [RecognizerResult("WORD", 0, 5, 1.0)]
++
++    actual_anonymize_result = engine.anonymize(
++        text, analyzer_results, {"WORD": OperatorConfig("Reverser")}
++    )
++    assert actual_anonymize_result.text == "hello"[::-1]
++
++
++def test_remove_anonymizer_removes_anonymizer():
++    engine = AnonymizerEngine()
++    num_of_anonymizers = len(engine.get_anonymizers())
++    engine.remove_anonymizer(Redact)
++    anonymizers = engine.get_anonymizers()
++    assert len(anonymizers) == num_of_anonymizers - 1
++
++
++def test_operator_metadata_returns_updated_results(three_person_analyzer_results):
++    counter_anonymizer = create_instance_counter_anonymizer()
++    engine = AnonymizerEngine()
++    engine.add_anonymizer(counter_anonymizer)
++    text, analyzer_results = three_person_analyzer_results
++
++    entity_mapping = dict()
++
++    actual_anonymize_result = engine.anonymize(
++        text,
++        analyzer_results,
++        {
++            "DEFAULT": OperatorConfig(
++                "entity_counter", {"entity_mapping": entity_mapping}
++
++            )
++        },
++    )
++
++    pattern = r'<PERSON_\d+>'
++    assert len(re.findall(pattern, actual_anonymize_result.text)) == 3
++    for results in actual_anonymize_result.items:
++        assert results.operator == "entity_counter"
++        assert results.entity_type == "PERSON"
++        assert re.findall(pattern, results.text)
+diff --git a/presidio-anonymizer/tests/integration/test_deanonymize_engine.py b/presidio-anonymizer/tests/integration/test_deanonymize_engine.py
+index a2627cd5..dffdee69 100644
+--- a/presidio-anonymizer/tests/integration/test_deanonymize_engine.py
++++ b/presidio-anonymizer/tests/integration/test_deanonymize_engine.py
+@@ -8,7 +8,8 @@ from presidio_anonymizer.entities import (
+     OperatorResult,
+     OperatorConfig,
+ )
+-from presidio_anonymizer.operators import Decrypt
++from presidio_anonymizer.operators import Decrypt, OperatorType, DeanonymizeKeep
++from tests.mock_operators import create_reverser_operator
+ 
+ 
+ def test_given_operator_decrypt_with_valid_params_then_decrypt_text_successfully():
+@@ -94,4 +95,44 @@ def test_given_request_deanonymizers_return_list():
+     expected_list = ["deanonymize_keep", "decrypt"]
+     anon_list = engine.get_deanonymizers()
+ 
+-    assert anon_list == expected_list
++    assert len(anon_list) == len(expected_list)
++    assert set(anon_list) == set(expected_list)
++
++
++def test_add_deanonymizer_returns_updated_list(mock_deanonymizer_cls):
++    engine = DeanonymizeEngine()
++    deanon_list_len = len(engine.get_deanonymizers())
++    engine.add_deanonymizer(mock_deanonymizer_cls)
++    deanon_list = engine.get_deanonymizers()
++    assert len(deanon_list) == deanon_list_len + 1
++    assert mock_deanonymizer_cls().operator_name() in deanon_list
++
++
++def test_e2e_custom_operator_returns_original():
++    text = "hello"
++    recognizer_results = [RecognizerResult("WORD", 0, 5, 0.8)]
++    anonymizer_engine = AnonymizerEngine()
++    anonymizer_engine.add_anonymizer(create_reverser_operator(OperatorType.Anonymize))
++    anonymized = anonymizer_engine.anonymize(
++        text, recognizer_results, {"WORD": OperatorConfig("Reverser")}
++    )
++
++    assert anonymized.text == text[::-1]
++
++    deanonymizer_engine = DeanonymizeEngine()
++    deanonymizer_engine.add_deanonymizer(
++        create_reverser_operator(OperatorType.Deanonymize)
++    )
++    deanonymized = deanonymizer_engine.deanonymize(
++        anonymized.text, anonymized.items, {"WORD": OperatorConfig("Reverser")}
++    )
++
++    assert deanonymized.text == text
++
++
++def test_remove_deanonymizer_removes_anonymizer():
++    engine = DeanonymizeEngine()
++    num_of_deanonymizers = len(engine.get_deanonymizers())
++    engine.remove_deanonymizer(DeanonymizeKeep)
++    deanonymizers = engine.get_deanonymizers()
++    assert len(deanonymizers) == num_of_deanonymizers - 1
+diff --git a/presidio-anonymizer/tests/mock_operators.py b/presidio-anonymizer/tests/mock_operators.py
+new file mode 100644
+index 00000000..a44cbe7c
+--- /dev/null
++++ b/presidio-anonymizer/tests/mock_operators.py
+@@ -0,0 +1,83 @@
++from typing import Type, Dict
++
++from presidio_anonymizer.operators import OperatorType, Operator
++
++
++def create_instance_counter_anonymizer() -> Type[Operator]:
++    class InstanceCounterAnonymizer(Operator):
++        """
++        Anonymizer which replaces the entity value
++        with an instance counter per entity.
++        """
++
++        REPLACING_FORMAT = "<{entity_type}_{index}>"
++
++        def operate(self, text: str, params: Dict = None) -> str:
++            """Anonymize the input text."""
++
++            entity_type: str = params["entity_type"]
++
++            # entity_mapping is a dict of dicts containing mappings per entity type
++            entity_mapping: Dict[Dict:str] = params["entity_mapping"]
++
++            entity_mapping_for_type = entity_mapping.get(entity_type)
++            if not entity_mapping_for_type:
++                new_text = self.REPLACING_FORMAT.format(
++                    entity_type=entity_type, index=0
++                )
++                entity_mapping[entity_type] = {}
++
++            else:
++                if text in entity_mapping_for_type:
++                    return entity_mapping_for_type[text]
++
++                previous_index = self._get_last_index(entity_mapping_for_type)
++                new_text = self.REPLACING_FORMAT.format(
++                    entity_type=entity_type, index=previous_index + 1
++                )
++
++            entity_mapping[entity_type][text] = new_text
++            return new_text
++
++        @staticmethod
++        def _get_last_index(entity_mapping_for_type: Dict) -> int:
++            """Get the last index for a given entity type."""
++
++            def get_index(value: str) -> int:
++                return int(value.split("_")[-1][:-1])
++
++            indices = [get_index(v) for v in entity_mapping_for_type.values()]
++            return max(indices)
++
++        def validate(self, params: Dict = None) -> None:
++            """Validate operator parameters."""
++
++            if "entity_mapping" not in params:
++                raise ValueError("An input Dict called `entity_mapping` is required.")
++            if "entity_type" not in params:
++                raise ValueError("An entity_type param is required.")
++
++        def operator_name(self) -> str:
++            return "entity_counter"
++
++        def operator_type(self) -> OperatorType:
++            return OperatorType.Anonymize
++
++    return InstanceCounterAnonymizer
++
++
++def create_reverser_operator(operator_type: OperatorType) -> Type[Operator]:
++    class ReverserOperator(Operator):
++        def operate(self, text: str, params: Dict = None) -> str:
++            return text[::-1]
++
++        def validate(self, params: Dict = None) -> None:
++            pass
++
++        def operator_name(self) -> str:
++            return "Reverser"
++
++        def operator_type(self) -> OperatorType:
++            return operator_type
++
++    return ReverserOperator
+diff --git a/presidio-anonymizer/tests/operators/test_operators_factory.py b/presidio-anonymizer/tests/operators/test_operators_factory.py
+index 29d7c9b1..e8880119 100644
+--- a/presidio-anonymizer/tests/operators/test_operators_factory.py
++++ b/presidio-anonymizer/tests/operators/test_operators_factory.py
+@@ -5,7 +5,7 @@ from presidio_anonymizer.operators import OperatorsFactory, OperatorType
+ 
+ 
+ def test_given_anonymizers_list_then_all_classes_are_there():
+-    anonymizers = OperatorsFactory.get_anonymizers()
++    anonymizers = OperatorsFactory().get_anonymizers()
+     assert len(anonymizers) == 7
+     for class_name in [
+         "hash",
+@@ -20,7 +20,7 @@ def test_given_anonymizers_list_then_all_classes_are_there():
+ 
+ 
+ def test_given_decryptors_list_then_all_classes_are_there():
+-    decryptors = OperatorsFactory.get_deanonymizers()
++    decryptors = OperatorsFactory().get_deanonymizers()
+     assert len(decryptors) == 2
+     for class_name in ["decrypt"]:
+         assert decryptors.get(class_name)
+@@ -66,3 +66,60 @@ def test_given_wrong_name_for_anonymizer_class_then_we_fail():
+ def test_given_wrong_operator_then_we_fail():
+     with pytest.raises(InvalidParamException, match="Invalid operator type '3'."):
+         OperatorsFactory().create_operator_class("bla", 3)
++
++
++def test_given_custom_anonymizer_list_gets_updated(mock_anonymizer_cls):
++    factory = OperatorsFactory()
++    num_of_anonymizers = len(factory.get_anonymizers())
++    factory.add_anonymize_operator(mock_anonymizer_cls)
++    anonymizers = factory.get_anonymizers()
++    assert len(anonymizers) == num_of_anonymizers + 1
++    assert anonymizers.get("MockAnonymizer")
++    assert anonymizers.get("MockAnonymizer")().operator_name() == "MockAnonymizer"
++
++
++def test_given_custom_deanonymizer_list_gets_updated(mock_deanonymizer_cls):
++    factory = OperatorsFactory()
++    num_of_deanonymizers = len(factory.get_deanonymizers())
++    factory.add_deanonymize_operator(mock_deanonymizer_cls)
++    deanonymizers = factory.get_deanonymizers()
++    assert len(deanonymizers) == num_of_deanonymizers + 1
++    assert deanonymizers.get("MockDeanonymizer")
++    assert deanonymizers.get("MockDeanonymizer")().operator_name() == "MockDeanonymizer"
++
++
++def test_remove_anonymizer_removes_operator(mock_anonymizer_cls):
++    factory = OperatorsFactory()
++    factory.add_anonymize_operator(mock_anonymizer_cls)
++    num_of_anonymizers = len(factory.get_anonymizers())
++    factory.remove_anonymize_operator(mock_anonymizer_cls)
++    anonymizers = factory.get_anonymizers()
++    assert len(anonymizers) == num_of_anonymizers - 1
++    assert not anonymizers.get("MockAnonymizer")
++
++
++def test_remove_missing_anonymizer_raises_exception(mock_anonymizer_cls):
++    factory = OperatorsFactory()
++    with pytest.raises(
++        InvalidParamException,
++        match="Operator MockAnonymizer not found in anonymizers list",
++    ):
++        factory.remove_anonymize_operator(mock_anonymizer_cls)
++
++
++def test_remove_deanonymizer_removes_operator(mock_deanonymizer_cls):
++    factory = OperatorsFactory()
++    factory.add_deanonymize_operator(mock_deanonymizer_cls)
++    num_of_deanonymizers = len(factory.get_deanonymizers())
++    factory.remove_deanonymize_operator(mock_deanonymizer_cls)
++    deanonymizers = factory.get_deanonymizers()
++    assert len(deanonymizers) == num_of_deanonymizers - 1
++
++
++def test_remove_missing_deanonymizer_raises_exception(mock_deanonymizer_cls):
++    factory = OperatorsFactory()
++    with pytest.raises(
++        InvalidParamException,
++        match="Operator MockDeanonymizer not found in deanonymizers list",
++    ):
++        factory.remove_deanonymize_operator(mock_deanonymizer_cls)
+diff --git a/presidio-anonymizer/tests/test_anonymizer_engine.py b/presidio-anonymizer/tests/test_anonymizer_engine.py
+index 9d8ae88b..6a078251 100644
+--- a/presidio-anonymizer/tests/test_anonymizer_engine.py
++++ b/presidio-anonymizer/tests/test_anonymizer_engine.py
+@@ -238,20 +238,20 @@ def test_given_sorted_analyzer_results_merge_entities_separated_by_white_space(
+ 
+ def _operate(
+     text: str,
+-    text_metadata: List[PIIEntity],
+-    operators: Dict[str, OperatorConfig],
+-    operator: OperatorType,
++    pii_entities: List[PIIEntity],
++    operators_metadata: Dict[str, OperatorConfig],
++    operator_type: OperatorType,
+ ) -> EngineResult:
+     assert text == "hello world, my name is Jane Doe. My number is: 034453334"
+-    assert len(text_metadata) == 2
++    assert len(pii_entities) == 2
+     expected = [
+         RecognizerResult(start=48, end=57, entity_type="PHONE_NUMBER", score=0.95),
+         RecognizerResult(start=18, end=36, entity_type="BLA", score=0.8),
+     ]
+-    assert all(elem in text_metadata for elem in expected)
+-    assert len(operators) == 1
+-    assert operators["DEFAULT"]
+-    assert operator == OperatorType.Anonymize
++    assert all(elem in pii_entities for elem in expected)
++    assert len(operators_metadata) == 1
++    assert operators_metadata["DEFAULT"]
++    assert operator_type == OperatorType.Anonymize
+     return EngineResult(
+         "Number: I am your new text!", [OperatorResult(0, 35, "type", "text", "hash")]
+     )

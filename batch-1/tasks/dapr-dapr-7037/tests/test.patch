@@ -1,0 +1,1586 @@
+diff --git a/pkg/injector/patcher/sidecar_container_test.go b/pkg/injector/patcher/sidecar_container_test.go
+index 3cebac8e9..37fb7dc54 100644
+--- a/pkg/injector/patcher/sidecar_container_test.go
++++ b/pkg/injector/patcher/sidecar_container_test.go
+@@ -329,8 +329,6 @@ func TestGetSidecarContainer(t *testing.T) {
+ 		c.Identity = "pod_identity"
+ 		c.ControlPlaneNamespace = "my-namespace"
+ 		c.ControlPlaneTrustDomain = "test.example.com"
+-		c.CertChain = "my-cert-chain"
+-		c.CertKey = "my-cert-key"
+ 
+ 		c.SetFromPodAnnotations()
+ 
+@@ -362,7 +360,7 @@ func TestGetSidecarContainer(t *testing.T) {
+ 
+ 		// Command should be empty, image's entrypoint to be used.
+ 		assert.Empty(t, container.Command)
+-		assertEqualJSON(t, container.Env, `[{"name":"NAMESPACE","value":"dapr-system"},{"name":"DAPR_TRUST_ANCHORS"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"DAPR_CONTROLPLANE_NAMESPACE","value":"my-namespace"},{"name":"DAPR_CONTROLPLANE_TRUST_DOMAIN","value":"test.example.com"},{"name":"DAPR_CERT_CHAIN","value":"my-cert-chain"},{"name":"DAPR_CERT_KEY","value":"my-cert-key"},{"name":"SENTRY_LOCAL_IDENTITY","value":"pod_identity"},{"name":"DAPR_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"secret","key":"token"}}},{"name":"APP_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"appsecret","key":"token"}}}]`)
++		assertEqualJSON(t, container.Env, `[{"name":"NAMESPACE","value":"dapr-system"},{"name":"DAPR_TRUST_ANCHORS"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"DAPR_CONTROLPLANE_NAMESPACE","value":"my-namespace"},{"name":"DAPR_CONTROLPLANE_TRUST_DOMAIN","value":"test.example.com"},{"name":"DAPR_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"secret","key":"token"}}},{"name":"APP_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"appsecret","key":"token"}}}]`)
+ 		// default image
+ 		assert.Equal(t, "daprio/dapr", container.Image)
+ 		assert.EqualValues(t, expectedArgs, container.Args)
+@@ -394,8 +392,6 @@ func TestGetSidecarContainer(t *testing.T) {
+ 		c.Identity = "pod_identity"
+ 		c.ControlPlaneNamespace = "my-namespace"
+ 		c.ControlPlaneTrustDomain = "test.example.com"
+-		c.CertChain = "my-cert-chain"
+-		c.CertKey = "my-cert-key"
+ 		c.EnableK8sDownwardAPIs = true
+ 
+ 		c.SetFromPodAnnotations()
+@@ -436,7 +432,7 @@ func TestGetSidecarContainer(t *testing.T) {
+ 
+ 		// Command should be empty, image's entrypoint to be used.
+ 		assert.Empty(t, container.Command)
+-		assertEqualJSON(t, container.Env, `[{"name":"NAMESPACE","value":"dapr-system"},{"name":"DAPR_TRUST_ANCHORS"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"DAPR_CONTROLPLANE_NAMESPACE","value":"my-namespace"},{"name":"DAPR_CONTROLPLANE_TRUST_DOMAIN","value":"test.example.com"},{"name":"DAPR_HOST_IP","valueFrom":{"fieldRef":{"fieldPath":"status.podIP"}}},{"name":"DAPR_CERT_CHAIN","value":"my-cert-chain"},{"name":"DAPR_CERT_KEY","value":"my-cert-key"},{"name":"SENTRY_LOCAL_IDENTITY","value":"pod_identity"},{"name":"DAPR_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"secret","key":"token"}}},{"name":"APP_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"appsecret","key":"token"}}}]`)
++		assertEqualJSON(t, container.Env, `[{"name":"NAMESPACE","value":"dapr-system"},{"name":"DAPR_TRUST_ANCHORS"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"DAPR_CONTROLPLANE_NAMESPACE","value":"my-namespace"},{"name":"DAPR_CONTROLPLANE_TRUST_DOMAIN","value":"test.example.com"},{"name":"DAPR_HOST_IP","valueFrom":{"fieldRef":{"fieldPath":"status.podIP"}}},{"name":"DAPR_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"secret","key":"token"}}},{"name":"APP_API_TOKEN","valueFrom":{"secretKeyRef":{"name":"appsecret","key":"token"}}}]`)
+ 		// default image
+ 		assert.Equal(t, "daprio/dapr", container.Image)
+ 		assert.EqualValues(t, expectedArgs, container.Args)
+diff --git a/pkg/injector/patcher/sidecar_patcher_test.go b/pkg/injector/patcher/sidecar_patcher_test.go
+index 33d39f89a..b03bf1cde 100644
+--- a/pkg/injector/patcher/sidecar_patcher_test.go
++++ b/pkg/injector/patcher/sidecar_patcher_test.go
+@@ -267,8 +267,6 @@ func TestPatching(t *testing.T) {
+ 			c := NewSidecarConfig(pod)
+ 			c.Namespace = "testns"
+ 			c.Identity = "pod:identity"
+-			c.CertChain = "certchain"
+-			c.CertKey = "certkey"
+ 			c.SentrySPIFFEID = "spiffe://foo.bar/ns/example/dapr-sentry"
+ 
+ 			if tc.sidecarConfigModifierFn != nil {
+@@ -302,7 +300,6 @@ func TestPatching(t *testing.T) {
+ 					daprdEnvVars[env.Name] = env.Value
+ 				}
+ 				assert.Equal(t, "testns", daprdEnvVars["NAMESPACE"])
+-				assert.Equal(t, "pod:identity", daprdEnvVars["SENTRY_LOCAL_IDENTITY"])
+ 
+ 				assert.Len(t, daprdContainer.VolumeMounts, 1)
+ 				assert.Equal(t, "dapr-identity-token", daprdContainer.VolumeMounts[0].Name)
+diff --git a/pkg/injector/service/handler_test.go b/pkg/injector/service/handler_test.go
+index 5dab39806..8d4e63c3f 100644
+--- a/pkg/injector/service/handler_test.go
++++ b/pkg/injector/service/handler_test.go
+@@ -15,7 +15,6 @@ package service
+ 
+ import (
+ 	"bytes"
+-	"context"
+ 	"encoding/json"
+ 	"io"
+ 	"net/http"
+@@ -56,9 +55,6 @@ func TestHandleRequest(t *testing.T) {
+ 	injector.currentTrustAnchors = func() ([]byte, error) {
+ 		return nil, nil
+ 	}
+-	injector.signDaprdCertificate = func(context.Context, string) ([]byte, []byte, error) {
+-		return []byte("test-cert"), []byte("test-key"), nil
+-	}
+ 
+ 	podBytes, _ := json.Marshal(corev1.Pod{
+ 		TypeMeta: metav1.TypeMeta{
+diff --git a/pkg/security/legacy/legacy_test.go b/pkg/security/legacy/legacy_test.go
+deleted file mode 100644
+index 4e70bb1e1..000000000
+--- a/pkg/security/legacy/legacy_test.go
++++ /dev/null
+@@ -1,491 +0,0 @@
+-/*
+-Copyright 2023 The Dapr Authors
+-Licensed under the Apache License, Version 2.0 (the "License");
+-you may not use this file except in compliance with the License.
+-You may obtain a copy of the License at
+-    http://www.apache.org/licenses/LICENSE-2.0
+-Unless required by applicable law or agreed to in writing, software
+-distributed under the License is distributed on an "AS IS" BASIS,
+-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-See the License for the specific language governing permissions and
+-limitations under the License.
+-*/
+-
+-package legacy
+-
+-import (
+-	"context"
+-	"crypto/ecdsa"
+-	"crypto/elliptic"
+-	"crypto/rand"
+-	"crypto/tls"
+-	"crypto/x509"
+-	"fmt"
+-	"math/big"
+-	"net"
+-	"net/http"
+-	"net/url"
+-	"sync"
+-	"testing"
+-	"time"
+-
+-	"github.com/spiffe/go-spiffe/v2/bundle/x509bundle"
+-	"github.com/spiffe/go-spiffe/v2/spiffeid"
+-	"github.com/spiffe/go-spiffe/v2/spiffetls/tlsconfig"
+-	"github.com/spiffe/go-spiffe/v2/svid/x509svid"
+-	"github.com/stretchr/testify/assert"
+-	"github.com/stretchr/testify/require"
+-)
+-
+-func serialNumber(t *testing.T) *big.Int {
+-	t.Helper()
+-	serialNumberLimit := new(big.Int).Lsh(big.NewInt(1), 128)
+-
+-	serialNumber, err := rand.Int(rand.Reader, serialNumberLimit)
+-	require.NoError(t, err)
+-	return serialNumber
+-}
+-
+-func genIssuerCA(t *testing.T) (issuerCA *x509.Certificate, issuerKey *ecdsa.PrivateKey, rootCA x509bundle.Source, rootPool *x509.CertPool) {
+-	t.Helper()
+-
+-	rootPK, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+-	require.NoError(t, err)
+-	tmpl := x509.Certificate{
+-		SerialNumber:          serialNumber(t),
+-		NotBefore:             time.Now(),
+-		NotAfter:              time.Now().Add(time.Minute),
+-		KeyUsage:              x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
+-		SignatureAlgorithm:    x509.ECDSAWithSHA256,
+-		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+-		BasicConstraintsValid: true,
+-		IsCA:                  true,
+-	}
+-
+-	certDER, err := x509.CreateCertificate(rand.Reader, &tmpl, &tmpl, &rootPK.PublicKey, rootPK)
+-	require.NoError(t, err)
+-
+-	rootCert, err := x509.ParseCertificate(certDER)
+-	require.NoError(t, err)
+-
+-	issPK, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+-	require.NoError(t, err)
+-
+-	tmpl = x509.Certificate{
+-		SerialNumber:          serialNumber(t),
+-		NotBefore:             time.Now(),
+-		NotAfter:              time.Now().Add(time.Minute),
+-		KeyUsage:              x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
+-		SignatureAlgorithm:    x509.ECDSAWithSHA256,
+-		ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+-		BasicConstraintsValid: true,
+-		IsCA:                  true,
+-	}
+-
+-	issCertDER, err := x509.CreateCertificate(rand.Reader, &tmpl, &tmpl, &issPK.PublicKey, rootPK)
+-	require.NoError(t, err)
+-
+-	issCert, err := x509.ParseCertificate(issCertDER)
+-	require.NoError(t, err)
+-
+-	rootPool = x509.NewCertPool()
+-	rootPool.AddCert(rootCert)
+-
+-	return issCert, issPK,
+-		x509bundle.FromX509Authorities(spiffeid.RequireTrustDomainFromString("example.com"), []*x509.Certificate{rootCert}),
+-		rootPool
+-}
+-
+-func Test_NewServer(t *testing.T) {
+-	issCert, issKey, rootCA, rootPool := genIssuerCA(t)
+-	diffCert, diffKey, diffRootCA, diffPool := genIssuerCA(t)
+-
+-	clientPK, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+-	require.NoError(t, err)
+-	clientPKDER, err := x509.MarshalPKCS8PrivateKey(clientPK)
+-	require.NoError(t, err)
+-
+-	serverPK, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+-	require.NoError(t, err)
+-
+-	serverCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-		URIs:         []*url.URL{spiffeid.RequireFromSegments(spiffeid.RequireTrustDomainFromString("example.com"), "server").URL()},
+-		KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-		ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-		NotBefore:    time.Now(),
+-		NotAfter:     time.Now().Add(time.Minute),
+-		SerialNumber: serialNumber(t),
+-	}, issCert, &serverPK.PublicKey, issKey)
+-	require.NoError(t, err)
+-
+-	serverPKDER, err := x509.MarshalPKCS8PrivateKey(serverPK)
+-	require.NoError(t, err)
+-
+-	serverSVID, err := x509svid.ParseRaw(append(serverCertDER, issCert.Raw...), serverPKDER)
+-	require.NoError(t, err)
+-
+-	dial := func(t *testing.T, clientConfig *tls.Config) error {
+-		var lis net.Listener
+-		var lock sync.Mutex
+-
+-		server := &http.Server{
+-			Addr:              "localhost:0",
+-			TLSConfig:         NewServer(serverSVID, rootCA, tlsconfig.AuthorizeAny()),
+-			ReadHeaderTimeout: time.Second,
+-		}
+-		server.BaseContext = func(nlis net.Listener) context.Context {
+-			lock.Lock()
+-			defer lock.Unlock()
+-			lis = nlis
+-			return context.Background()
+-		}
+-
+-		serverClosed := make(chan struct{})
+-		go func() {
+-			defer close(serverClosed)
+-			require.ErrorIs(t, server.ListenAndServeTLS("", ""), http.ErrServerClosed)
+-		}()
+-
+-		t.Cleanup(func() {
+-			require.NoError(t, server.Close())
+-			select {
+-			case <-serverClosed:
+-			case <-time.After(time.Second):
+-				t.Fatal("timed out waiting for server to close")
+-			}
+-		})
+-
+-		assert.Eventually(t, func() bool {
+-			lock.Lock()
+-			defer lock.Unlock()
+-			return lis != nil
+-		}, time.Second, time.Millisecond)
+-
+-		client := &http.Client{Transport: &http.Transport{TLSClientConfig: clientConfig}}
+-		conn, err := client.Get(fmt.Sprintf("https://localhost:%d/", lis.Addr().(*net.TCPAddr).Port))
+-		if err != nil {
+-			return err
+-		}
+-		conn.Body.Close()
+-		return nil
+-	}
+-
+-	t.Run("if client uses a SVID in the same root with the correct Trust Domain, no error", func(t *testing.T) {
+-		id := spiffeid.RequireFromSegments(spiffeid.RequireTrustDomainFromString("example.com"), "client")
+-
+-		clientCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			URIs:         []*url.URL{id.URL()},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &clientPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		clientsvid, err := x509svid.ParseRaw(append(clientCertDER, issCert.Raw...), clientPKDER)
+-		require.NoError(t, err)
+-
+-		require.NoError(t, dial(t, tlsconfig.MTLSClientConfig(clientsvid, rootCA, tlsconfig.AuthorizeAny())))
+-	})
+-
+-	t.Run("if client uses a SVID but signed by different root, expect error", func(t *testing.T) {
+-		id := spiffeid.RequireFromSegments(spiffeid.RequireTrustDomainFromString("example.com"), "client")
+-
+-		clientCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			URIs:         []*url.URL{id.URL()},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, diffCert, &clientPK.PublicKey, diffKey)
+-		require.NoError(t, err)
+-
+-		clientsvid, err := x509svid.ParseRaw(append(clientCertDER, diffCert.Raw...), clientPKDER)
+-		require.NoError(t, err)
+-
+-		err = dial(t, tlsconfig.MTLSClientConfig(clientsvid, diffRootCA, tlsconfig.AuthorizeAny()))
+-		require.ErrorContains(t, err, "x509: ECDSA verification failure")
+-	})
+-
+-	t.Run("if client uses DNS and is `cluster.local`, expect no error", func(t *testing.T) {
+-		clientCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"cluster.local"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &clientPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		require.NoError(t, dial(t, &tls.Config{
+-			RootCAs: rootPool,
+-
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{clientCertDER, issCert.Raw}, PrivateKey: clientPK},
+-			},
+-		},
+-		))
+-	})
+-
+-	t.Run("if client uses DNS and one is `cluster.local`, expect no error", func(t *testing.T) {
+-		clientCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"no-cluster.foo.local", "cluster.local"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &clientPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		require.NoError(t, dial(t, &tls.Config{
+-			RootCAs:            rootPool,
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{clientCertDER, issCert.Raw}, PrivateKey: clientPK},
+-			},
+-		}))
+-	})
+-
+-	t.Run("if client uses DNS but none are `cluster.local`, expect error", func(t *testing.T) {
+-		clientCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"no-cluster.foo.local", "local.cluster"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &clientPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		err = dial(t, &tls.Config{
+-			RootCAs:            rootPool,
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{clientCertDER, issCert.Raw}, PrivateKey: clientPK},
+-			},
+-		})
+-		require.ErrorContains(t, err, "remote error: tls: bad certificate")
+-	})
+-
+-	t.Run("if client uses DNS but is from different root, expect error", func(t *testing.T) {
+-		clientCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"no-cluster.foo.local", "local.cluster"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, diffCert, &clientPK.PublicKey, diffKey)
+-		require.NoError(t, err)
+-
+-		err = dial(t, &tls.Config{
+-			RootCAs:            diffPool,
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{clientCertDER, diffCert.Raw}, PrivateKey: clientPK},
+-			},
+-		})
+-		require.ErrorContains(t, err, "remote error: tls: bad certificate")
+-	})
+-}
+-
+-func Test_NewDialClient(t *testing.T) {
+-	issCert, issKey, rootCA, rootPool := genIssuerCA(t)
+-	diffCert, diffKey, diffRootCA, diffPool := genIssuerCA(t)
+-
+-	clientPK, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+-	require.NoError(t, err)
+-	clientPKDER, err := x509.MarshalPKCS8PrivateKey(clientPK)
+-	require.NoError(t, err)
+-
+-	serverPK, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+-	require.NoError(t, err)
+-
+-	serverPKDER, err := x509.MarshalPKCS8PrivateKey(serverPK)
+-	require.NoError(t, err)
+-
+-	clientCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-		URIs:         []*url.URL{spiffeid.RequireFromSegments(spiffeid.RequireTrustDomainFromString("example.com"), "client").URL()},
+-		KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-		ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-		NotBefore:    time.Now(),
+-		NotAfter:     time.Now().Add(time.Minute),
+-		SerialNumber: serialNumber(t),
+-	}, issCert, &clientPK.PublicKey, issKey)
+-	require.NoError(t, err)
+-
+-	clientSVID, err := x509svid.ParseRaw(append(clientCertDER, issCert.Raw...), clientPKDER)
+-	require.NoError(t, err)
+-
+-	serve := func(t *testing.T, serverConfig *tls.Config) error {
+-		var lis net.Listener
+-		var lock sync.Mutex
+-
+-		server := &http.Server{
+-			Addr:              "localhost:0",
+-			TLSConfig:         serverConfig,
+-			ReadHeaderTimeout: time.Second,
+-		}
+-		server.BaseContext = func(nlis net.Listener) context.Context {
+-			lock.Lock()
+-			defer lock.Unlock()
+-			lis = nlis
+-			return context.Background()
+-		}
+-
+-		serverClosed := make(chan struct{})
+-		go func() {
+-			defer close(serverClosed)
+-			require.ErrorIs(t, server.ListenAndServeTLS("", ""), http.ErrServerClosed)
+-		}()
+-
+-		t.Cleanup(func() {
+-			require.NoError(t, server.Close())
+-			select {
+-			case <-serverClosed:
+-			case <-time.After(time.Second):
+-				t.Fatal("timed out waiting for server to close")
+-			}
+-		})
+-
+-		assert.Eventually(t, func() bool {
+-			lock.Lock()
+-			defer lock.Unlock()
+-			return lis != nil
+-		}, time.Second, time.Millisecond)
+-
+-		client := &http.Client{Transport: &http.Transport{TLSClientConfig: NewDialClient(clientSVID, rootCA, tlsconfig.AuthorizeAny())}}
+-		conn, err := client.Get(fmt.Sprintf("https://localhost:%d/", lis.Addr().(*net.TCPAddr).Port))
+-		if err != nil {
+-			return err
+-		}
+-		conn.Body.Close()
+-		return nil
+-	}
+-
+-	t.Run("if server uses a SVID in the same root with the correct Trust Domain, no error", func(t *testing.T) {
+-		id := spiffeid.RequireFromSegments(spiffeid.RequireTrustDomainFromString("example.com"), "server")
+-
+-		serverCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			URIs:         []*url.URL{id.URL()},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &serverPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		serversvid, err := x509svid.ParseRaw(append(serverCertDER, issCert.Raw...), serverPKDER)
+-		require.NoError(t, err)
+-
+-		require.NoError(t, serve(t, tlsconfig.MTLSServerConfig(serversvid, rootCA, tlsconfig.AuthorizeAny())))
+-	})
+-
+-	t.Run("if server uses a SVID but signed by different root, expect error", func(t *testing.T) {
+-		id := spiffeid.RequireFromSegments(spiffeid.RequireTrustDomainFromString("example.com"), "server")
+-
+-		serverCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			URIs:         []*url.URL{id.URL()},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, diffCert, &serverPK.PublicKey, diffKey)
+-		require.NoError(t, err)
+-
+-		serversvid, err := x509svid.ParseRaw(append(serverCertDER, diffCert.Raw...), serverPKDER)
+-		require.NoError(t, err)
+-
+-		err = serve(t, tlsconfig.MTLSServerConfig(serversvid, diffRootCA, tlsconfig.AuthorizeAny()))
+-		require.ErrorContains(t, err, "x509: ECDSA verification failure")
+-	})
+-
+-	t.Run("if server uses DNS and is `cluster.local`, expect no error", func(t *testing.T) {
+-		serverCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"cluster.local"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &serverPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		require.NoError(t, serve(t, &tls.Config{
+-			RootCAs:            rootPool,
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{serverCertDER, issCert.Raw}, PrivateKey: serverPK},
+-			},
+-		}))
+-	})
+-
+-	t.Run("if server uses DNS and one is `cluster.local`, expect no error", func(t *testing.T) {
+-		serverCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"no-cluster.foo.local", "cluster.local"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &serverPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		require.NoError(t, serve(t, &tls.Config{
+-			RootCAs:            rootPool,
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{serverCertDER, issCert.Raw}, PrivateKey: serverPK},
+-			},
+-		}))
+-	})
+-
+-	t.Run("if server uses DNS but none are `cluster.local`, expect error", func(t *testing.T) {
+-		serverCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"no-cluster.foo.local", "local.cluster"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, issCert, &serverPK.PublicKey, issKey)
+-		require.NoError(t, err)
+-
+-		err = serve(t, &tls.Config{
+-			RootCAs:            rootPool,
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{serverCertDER, issCert.Raw}, PrivateKey: serverPK},
+-			},
+-		})
+-		require.ErrorContains(t, err, "x509svid: could not get leaf SPIFFE ID: certificate contains no URI SAN\nx509: certificate is valid for no-cluster.foo.local, local.cluster, not cluster.local")
+-	})
+-
+-	t.Run("if server uses DNS but is from different root, expect error", func(t *testing.T) {
+-		serverCertDER, err := x509.CreateCertificate(rand.Reader, &x509.Certificate{
+-			DNSNames:     []string{"no-cluster.foo.local", "local.cluster"},
+-			KeyUsage:     x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
+-			ExtKeyUsage:  []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth, x509.ExtKeyUsageServerAuth},
+-			NotBefore:    time.Now(),
+-			NotAfter:     time.Now().Add(time.Minute),
+-			SerialNumber: serialNumber(t),
+-		}, diffCert, &serverPK.PublicKey, diffKey)
+-		require.NoError(t, err)
+-
+-		err = serve(t, &tls.Config{
+-			RootCAs:            diffPool,
+-			InsecureSkipVerify: true, //nolint: gosec // this is a test
+-			Certificates: []tls.Certificate{
+-				{Certificate: [][]byte{serverCertDER, diffCert.Raw}, PrivateKey: serverPK},
+-			},
+-		})
+-		require.ErrorContains(t, err, "x509svid: could not get leaf SPIFFE ID: certificate contains no URI SAN\nx509: certificate is valid for no-cluster.foo.local, local.cluster, not cluster.local")
+-	})
+-}
+diff --git a/pkg/sentry/server/ca/ca_test.go b/pkg/sentry/server/ca/ca_test.go
+index f0644c912..e5d4e203e 100644
+--- a/pkg/sentry/server/ca/ca_test.go
++++ b/pkg/sentry/server/ca/ca_test.go
+@@ -171,7 +171,7 @@ func TestSignIdentity(t *testing.T) {
+ 			Namespace:          "my-test-namespace",
+ 			AppID:              "my-app-id",
+ 			DNS:                []string{"my-app-id.my-test-namespace.svc.cluster.local", "example.com"},
+-		}, false)
++		})
+ 		require.NoError(t, err)
+ 
+ 		require.Len(t, clientCert, 3)
+diff --git a/pkg/sentry/server/server_test.go b/pkg/sentry/server/server_test.go
+index 282d8dc5f..b2a2c9667 100644
+--- a/pkg/sentry/server/server_test.go
++++ b/pkg/sentry/server/server_test.go
+@@ -82,10 +82,10 @@ func TestRun(t *testing.T) {
+ 			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+ 				return grpc.Creds(insecure.NewCredentials())
+ 			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.RequireTrustDomainFromString("test"), false, nil
++			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, error) {
++				return spiffeid.RequireTrustDomainFromString("test"), nil
+ 			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
++			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest) ([]*x509.Certificate, error) {
+ 				return []*x509.Certificate{}, nil
+ 			}).WithTrustAnchors(func() []byte {
+ 				return []byte("my-trust-anchors")
+@@ -106,10 +106,10 @@ func TestRun(t *testing.T) {
+ 			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+ 				return grpc.Creds(insecure.NewCredentials())
+ 			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.RequireTrustDomainFromString("test"), false, nil
++			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, error) {
++				return spiffeid.RequireTrustDomainFromString("test"), nil
+ 			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
++			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest) ([]*x509.Certificate, error) {
+ 				return nil, fmt.Errorf("signing error")
+ 			}).WithTrustAnchors(func() []byte {
+ 				return []byte("my-trust-anchors")
+@@ -130,10 +130,10 @@ func TestRun(t *testing.T) {
+ 			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+ 				return grpc.Creds(insecure.NewCredentials())
+ 			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), false, nil
++			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, error) {
++				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), nil
+ 			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
++			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest) ([]*x509.Certificate, error) {
+ 				return []*x509.Certificate{crtX509}, nil
+ 			}).WithTrustAnchors(func() []byte {
+ 				return []byte("my-trust-anchors")
+@@ -154,10 +154,10 @@ func TestRun(t *testing.T) {
+ 			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+ 				return grpc.Creds(insecure.NewCredentials())
+ 			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.TrustDomain{}, false, fmt.Errorf("validation error")
++			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, error) {
++				return spiffeid.TrustDomain{}, fmt.Errorf("validation error")
+ 			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
++			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest) ([]*x509.Certificate, error) {
+ 				return []*x509.Certificate{crtX509}, nil
+ 			}).WithTrustAnchors(func() []byte {
+ 				return []byte("my-trust-anchors")
+@@ -178,10 +178,10 @@ func TestRun(t *testing.T) {
+ 			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+ 				return grpc.Creds(insecure.NewCredentials())
+ 			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), false, nil
++			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, error) {
++				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), nil
+ 			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
++			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest) ([]*x509.Certificate, error) {
+ 				return []*x509.Certificate{crtX509}, nil
+ 			}).WithTrustAnchors(func() []byte {
+ 				return []byte("my-trust-anchors")
+@@ -206,10 +206,10 @@ func TestRun(t *testing.T) {
+ 			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+ 				return grpc.Creds(insecure.NewCredentials())
+ 			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), false, nil
++			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, error) {
++				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), nil
+ 			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
++			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest) ([]*x509.Certificate, error) {
+ 				assert.Equal(t, []string{"dapr-sidecar-injector.default.svc"}, req.DNS)
+ 				return []*x509.Certificate{crtX509}, nil
+ 			}).WithTrustAnchors(func() []byte {
+@@ -235,12 +235,11 @@ func TestRun(t *testing.T) {
+ 			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+ 				return grpc.Creds(insecure.NewCredentials())
+ 			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), false, nil
++			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, error) {
++				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), nil
+ 			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
+-				assert.Equal(t, []string{"cluster.local", "dapr-webhook.default.svc"}, req.DNS)
+-				assert.False(t, override)
++			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest) ([]*x509.Certificate, error) {
++				assert.Equal(t, []string{"dapr-webhook.default.svc"}, req.DNS)
+ 				return []*x509.Certificate{crtX509}, nil
+ 			}).WithTrustAnchors(func() []byte {
+ 				return []byte("my-trust-anchors")
+@@ -261,36 +260,6 @@ func TestRun(t *testing.T) {
+ 			expErr:  false,
+ 			expCode: codes.OK,
+ 		},
+-		"if request has duration override, expect the cert duration to be max": {
+-			sec: securityfake.New().WithGRPCServerOptionNoClientAuthFn(func() grpc.ServerOption {
+-				return grpc.Creds(insecure.NewCredentials())
+-			}),
+-			val: validatorfake.New().WithValidateFn(func(ctx context.Context, req *sentryv1pb.SignCertificateRequest) (spiffeid.TrustDomain, bool, error) {
+-				return spiffeid.RequireTrustDomainFromString("my-trust-domain"), true, nil
+-			}),
+-			ca: cafake.New().WithSignIdentity(func(ctx context.Context, req *ca.SignRequest, override bool) ([]*x509.Certificate, error) {
+-				assert.Equal(t, []string{"dapr-sidecar-injector.default.svc"}, req.DNS)
+-				assert.True(t, override)
+-				return []*x509.Certificate{crtX509}, nil
+-			}).WithTrustAnchors(func() []byte {
+-				return []byte("my-trust-anchors")
+-			}),
+-			req: &sentryv1pb.SignCertificateRequest{
+-				Id:                        "dapr-injector",
+-				Token:                     "my-token",
+-				TrustDomain:               "my-trust-domain",
+-				Namespace:                 "default",
+-				CertificateSigningRequest: csrPEM,
+-				TokenValidator:            sentryv1pb.SignCertificateRequest_TokenValidator(-1),
+-			},
+-			expResp: &sentryv1pb.SignCertificateResponse{
+-				WorkloadCertificate:    crtPEM,
+-				TrustChainCertificates: [][]byte{[]byte("my-trust-anchors")},
+-				ValidUntil:             timestamppb.New(time.Date(2023, 1, 1, 1, 1, 1, 0, time.UTC)),
+-			},
+-			expErr:  false,
+-			expCode: codes.OK,
+-		},
+ 	}
+ 
+ 	for name, test := range tests {
+diff --git a/pkg/sentry/server/validator/internal/common_test.go b/pkg/sentry/server/validator/internal/common_test.go
+index a8c6104d9..4d329f129 100644
+--- a/pkg/sentry/server/validator/internal/common_test.go
++++ b/pkg/sentry/server/validator/internal/common_test.go
+@@ -93,10 +93,9 @@ func TestValidate(t *testing.T) {
+ 
+ 	for name, test := range tests {
+ 		t.Run(name, func(t *testing.T) {
+-			td, overrideDuration, err := Validate(context.Background(), test.req)
++			td, err := Validate(context.Background(), test.req)
+ 			assert.Equal(t, test.expTD, td)
+ 			assert.Equal(t, test.expErr, err)
+-			assert.False(t, overrideDuration)
+ 		})
+ 	}
+ }
+diff --git a/pkg/sentry/server/validator/kubernetes/kubernetes_test.go b/pkg/sentry/server/validator/kubernetes/kubernetes_test.go
+index 7ba0f8785..f303d9cf3 100644
+--- a/pkg/sentry/server/validator/kubernetes/kubernetes_test.go
++++ b/pkg/sentry/server/validator/kubernetes/kubernetes_test.go
+@@ -59,9 +59,8 @@ func TestValidate(t *testing.T) {
+ 
+ 		sentryAudience string
+ 
+-		expTD               spiffeid.TrustDomain
+-		expOverrideDuration bool
+-		expErr              bool
++		expTD  spiffeid.TrustDomain
++		expErr bool
+ 	}{
+ 		"if pod in different namespace, expect error": {
+ 			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+@@ -732,52 +731,6 @@ func TestValidate(t *testing.T) {
+ 			expErr: false,
+ 			expTD:  spiffeid.RequireTrustDomainFromString("cluster.local"),
+ 		},
+-		"valid authentication, config annotation, using legacy request ID, return the trust domain from config": {
+-			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+-			reactor: func(t *testing.T) core.ReactionFunc {
+-				return func(action core.Action) (bool, runtime.Object, error) {
+-					obj := action.(core.CreateAction).GetObject().(*kauthapi.TokenReview)
+-					assert.Equal(t, []string{"dapr.io/sentry", "spiffe://cluster.local/ns/dapr-test/dapr-sentry"}, obj.Spec.Audiences)
+-					return true, &kauthapi.TokenReview{Status: kauthapi.TokenReviewStatus{
+-						Authenticated: true,
+-						User: kauthapi.UserInfo{
+-							Username: "system:serviceaccount:dapr-test:my-sa",
+-						},
+-					}}, nil
+-				}
+-			},
+-			req: &sentryv1pb.SignCertificateRequest{
+-				CertificateSigningRequest: []byte("csr"),
+-				Namespace:                 "dapr-test",
+-				Token:                     newToken(t, "dapr-test", "my-pod"),
+-				TrustDomain:               "example.test.dapr.io",
+-				Id:                        "dapr-test:my-sa",
+-			},
+-			pod: &corev1.Pod{
+-				ObjectMeta: metav1.ObjectMeta{
+-					Name:      "my-pod",
+-					Namespace: "dapr-test",
+-					Annotations: map[string]string{
+-						"dapr.io/app-id": "my-app-id",
+-						"dapr.io/config": "my-config",
+-					},
+-				},
+-				Spec: corev1.PodSpec{ServiceAccountName: "my-sa"},
+-			},
+-			config: &configapi.Configuration{
+-				ObjectMeta: metav1.ObjectMeta{
+-					Name:      "my-config",
+-					Namespace: "dapr-test",
+-				},
+-				Spec: configapi.ConfigurationSpec{
+-					AccessControlSpec: &configapi.AccessControlSpec{
+-						TrustDomain: "example.test.dapr.io",
+-					},
+-				},
+-			},
+-			expErr: false,
+-			expTD:  spiffeid.RequireTrustDomainFromString("example.test.dapr.io"),
+-		},
+ 
+ 		"if both app-id and control-plane annotation present, should error": {
+ 			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+@@ -934,7 +887,7 @@ func TestValidate(t *testing.T) {
+ 				Namespace:                 "dapr-test",
+ 				Token:                     newToken(t, "dapr-test", "my-pod"),
+ 				TrustDomain:               "example.test.dapr.io",
+-				Id:                        "dapr-test:my-sa",
++				Id:                        "dapr-placement",
+ 			},
+ 			pod: &corev1.Pod{
+ 				ObjectMeta: metav1.ObjectMeta{
+@@ -961,7 +914,7 @@ func TestValidate(t *testing.T) {
+ 			expErr: false,
+ 			expTD:  spiffeid.RequireTrustDomainFromString("cluster.local"),
+ 		},
+-		"injector is able to request for whatever identity it wants (name)": {
++		"injector is not able to request for whatever identity it wants (name)": {
+ 			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+ 			reactor: func(t *testing.T) core.ReactionFunc {
+ 				return func(action core.Action) (bool, runtime.Object, error) {
+@@ -992,11 +945,10 @@ func TestValidate(t *testing.T) {
+ 				},
+ 				Spec: corev1.PodSpec{ServiceAccountName: "my-sa"},
+ 			},
+-			expErr:              false,
+-			expOverrideDuration: true,
+-			expTD:               spiffeid.RequireTrustDomainFromString("cluster.local"),
++			expErr: true,
++			expTD:  spiffeid.TrustDomain{},
+ 		},
+-		"injector is able to request for whatever identity it wants (namespace)": {
++		"injector is not able to request for whatever identity it wants (namespace)": {
+ 			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+ 			reactor: func(t *testing.T) core.ReactionFunc {
+ 				return func(action core.Action) (bool, runtime.Object, error) {
+@@ -1027,11 +979,10 @@ func TestValidate(t *testing.T) {
+ 				},
+ 				Spec: corev1.PodSpec{ServiceAccountName: "my-sa"},
+ 			},
+-			expErr:              false,
+-			expOverrideDuration: true,
+-			expTD:               spiffeid.RequireTrustDomainFromString("cluster.local"),
++			expErr: true,
++			expTD:  spiffeid.TrustDomain{},
+ 		},
+-		"injector is able to request for whatever identity it wants (namespace + name)": {
++		"injector is not able to request for whatever identity it wants (namespace + name)": {
+ 			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+ 			reactor: func(t *testing.T) core.ReactionFunc {
+ 				return func(action core.Action) (bool, runtime.Object, error) {
+@@ -1062,9 +1013,8 @@ func TestValidate(t *testing.T) {
+ 				},
+ 				Spec: corev1.PodSpec{ServiceAccountName: "my-sa"},
+ 			},
+-			expErr:              false,
+-			expOverrideDuration: true,
+-			expTD:               spiffeid.RequireTrustDomainFromString("cluster.local"),
++			expErr: true,
++			expTD:  spiffeid.TrustDomain{},
+ 		},
+ 		"injector is not able to request for whatever identity it wants if not in control plane namespace": {
+ 			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+@@ -1235,7 +1185,7 @@ func TestValidate(t *testing.T) {
+ 			expErr: true,
+ 			expTD:  spiffeid.TrustDomain{},
+ 		},
+-		"if requester is using the legacy request ID, and namespace+service account name is over 64 characters, don't error": {
++		"if requester is using the legacy request ID, and namespace+service account name is over 64 characters, error": {
+ 			sentryAudience: "spiffe://cluster.local/ns/dapr-test/dapr-sentry",
+ 			reactor: func(t *testing.T) core.ReactionFunc {
+ 				return func(action core.Action) (bool, runtime.Object, error) {
+@@ -1263,8 +1213,8 @@ func TestValidate(t *testing.T) {
+ 				},
+ 				Spec: corev1.PodSpec{ServiceAccountName: strings.Repeat("a", 65)},
+ 			},
+-			expErr: false,
+-			expTD:  spiffeid.RequireTrustDomainFromString("public"),
++			expErr: true,
++			expTD:  spiffeid.TrustDomain{},
+ 		},
+ 	}
+ 
+@@ -1295,10 +1245,9 @@ func TestValidate(t *testing.T) {
+ 				ready:          func(_ context.Context) bool { return true },
+ 			}
+ 
+-			td, overrideDuration, err := k.Validate(context.Background(), test.req)
++			td, err := k.Validate(context.Background(), test.req)
+ 			assert.Equal(t, test.expErr, err != nil, "%v", err)
+ 			assert.Equal(t, test.expTD, td)
+-			assert.Equal(t, test.expOverrideDuration, overrideDuration)
+ 		})
+ 	}
+ }
+diff --git a/tests/integration/framework/process/daprd/daprd.go b/tests/integration/framework/process/daprd/daprd.go
+index 658b45ca1..9ec053df1 100644
+--- a/tests/integration/framework/process/daprd/daprd.go
++++ b/tests/integration/framework/process/daprd/daprd.go
+@@ -143,6 +143,9 @@ func New(t *testing.T, fopts ...Option) *Daprd {
+ 	if opts.blockShutdownDuration != nil {
+ 		args = append(args, "--dapr-block-shutdown-duration="+*opts.blockShutdownDuration)
+ 	}
++	if opts.controlPlaneTrustDomain != nil {
++		args = append(args, "--control-plane-trust-domain="+*opts.controlPlaneTrustDomain)
++	}
+ 
+ 	ns := "default"
+ 	if opts.namespace != nil {
+diff --git a/tests/integration/framework/process/daprd/options.go b/tests/integration/framework/process/daprd/options.go
+index 7837f5a6c..4092b1774 100644
+--- a/tests/integration/framework/process/daprd/options.go
++++ b/tests/integration/framework/process/daprd/options.go
+@@ -58,6 +58,7 @@ type options struct {
+ 	disableK8sSecretStore   *bool
+ 	gracefulShutdownSeconds *int
+ 	blockShutdownDuration   *string
++	controlPlaneTrustDomain *string
+ }
+ 
+ func WithExecOptions(execOptions ...exec.Option) Option {
+@@ -273,3 +274,9 @@ func WithDaprBlockShutdownDuration(duration string) Option {
+ 		o.blockShutdownDuration = &duration
+ 	}
+ }
++
++func WithControlPlaneTrustDomain(trustDomain string) Option {
++	return func(o *options) {
++		o.controlPlaneTrustDomain = &trustDomain
++	}
++}
+diff --git a/tests/integration/framework/process/kubernetes/kubernetes.go b/tests/integration/framework/process/kubernetes/kubernetes.go
+index b0e990ab5..a8e0b4d47 100644
+--- a/tests/integration/framework/process/kubernetes/kubernetes.go
++++ b/tests/integration/framework/process/kubernetes/kubernetes.go
+@@ -18,8 +18,10 @@ import (
+ 	"crypto/ecdsa"
+ 	"crypto/elliptic"
+ 	"crypto/rand"
++	"crypto/x509"
+ 	"encoding/json"
+ 	"fmt"
++	"math/big"
+ 	"net/http"
+ 	"os"
+ 	"path/filepath"
+@@ -31,6 +33,7 @@ import (
+ 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+ 	"sigs.k8s.io/yaml"
+ 
++	securitypem "github.com/dapr/dapr/pkg/security/pem"
+ 	"github.com/dapr/dapr/pkg/sentry/server/ca"
+ 	prochttp "github.com/dapr/dapr/tests/integration/framework/process/http"
+ 	"github.com/dapr/dapr/tests/integration/framework/process/kubernetes/informer"
+@@ -111,11 +114,31 @@ func New(t *testing.T, fopts ...Option) *Kubernetes {
+ 	require.NoError(t, err)
+ 	bundle, err := ca.GenerateBundle(pk, "kubernetes.integration.dapr.io", time.Second*5, nil)
+ 	require.NoError(t, err)
++	leafpk, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
++	require.NoError(t, err)
++	leafCert := &x509.Certificate{
++		SerialNumber:       big.NewInt(1),
++		NotBefore:          time.Now(),
++		NotAfter:           time.Now().Add(time.Minute * 5),
++		KeyUsage:           x509.KeyUsageDigitalSignature | x509.KeyUsageKeyEncipherment,
++		ExtKeyUsage:        []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
++		DNSNames:           []string{"cluster.local"},
++		SignatureAlgorithm: x509.ECDSAWithSHA256,
++	}
++	leafCertDER, err := x509.CreateCertificate(rand.Reader, leafCert, bundle.IssChain[0], leafpk.Public(), bundle.IssKey)
++	require.NoError(t, err)
++	leafCert, err = x509.ParseCertificate(leafCertDER)
++	require.NoError(t, err)
++
++	chainPEM, err := securitypem.EncodeX509Chain(append([]*x509.Certificate{leafCert}, bundle.IssChain...))
++	require.NoError(t, err)
++	keyPEM, err := securitypem.EncodePrivateKey(leafpk)
++	require.NoError(t, err)
+ 
+ 	return &Kubernetes{
+ 		http: prochttp.New(t,
+ 			prochttp.WithHandler(handler),
+-			prochttp.WithMTLS(t, bundle.TrustAnchors, bundle.IssChainPEM, bundle.IssKeyPEM),
++			prochttp.WithMTLS(t, bundle.TrustAnchors, chainPEM, keyPEM),
+ 		),
+ 		bundle:   bundle,
+ 		informer: informer,
+diff --git a/tests/integration/suite/daprd/hotreload/operator/informer/basic.go b/tests/integration/suite/daprd/hotreload/operator/informer/basic.go
+index a37051644..22338fdea 100644
+--- a/tests/integration/suite/daprd/hotreload/operator/informer/basic.go
++++ b/tests/integration/suite/daprd/hotreload/operator/informer/basic.go
+@@ -105,6 +105,7 @@ func (b *basic) Setup(t *testing.T) []framework.Option {
+ 		daprd.WithExecOptions(exec.WithEnvVars(t,
+ 			"DAPR_TRUST_ANCHORS", string(sentry.CABundle().TrustAnchors),
+ 		)),
++		daprd.WithControlPlaneTrustDomain("integration.test.dapr.io"),
+ 	)
+ 
+ 	return []framework.Option{
+diff --git a/tests/integration/suite/daprd/hotreload/operator/informer/reconnect/components.go b/tests/integration/suite/daprd/hotreload/operator/informer/reconnect/components.go
+index 9ae9ac671..2689042ac 100644
+--- a/tests/integration/suite/daprd/hotreload/operator/informer/reconnect/components.go
++++ b/tests/integration/suite/daprd/hotreload/operator/informer/reconnect/components.go
+@@ -101,6 +101,7 @@ func (c *components) Setup(t *testing.T) []framework.Option {
+ 		daprd.WithConfigs("daprsystem"),
+ 		daprd.WithSentryAddress(sentry.Address()),
+ 		daprd.WithControlPlaneAddress(c.operator1.Address()),
++		daprd.WithControlPlaneTrustDomain("integration.test.dapr.io"),
+ 		daprd.WithDisableK8sSecretStore(true),
+ 		daprd.WithEnableMTLS(true),
+ 		daprd.WithNamespace("default"),
+diff --git a/tests/integration/suite/healthz/injector.go b/tests/integration/suite/healthz/injector.go
+index 55620c3c3..8f0175206 100644
+--- a/tests/integration/suite/healthz/injector.go
++++ b/tests/integration/suite/healthz/injector.go
+@@ -39,7 +39,10 @@ type injector struct {
+ }
+ 
+ func (i *injector) Setup(t *testing.T) []framework.Option {
+-	sentry := procsentry.New(t, procsentry.WithTrustDomain("integration.test.dapr.io"))
++	sentry := procsentry.New(t,
++		procsentry.WithTrustDomain("integration.test.dapr.io"),
++		procsentry.WithNamespace("dapr-system"),
++	)
+ 
+ 	i.injector = procinjector.New(t,
+ 		procinjector.WithNamespace("dapr-system"),
+diff --git a/tests/integration/suite/healthz/operator.go b/tests/integration/suite/healthz/operator.go
+index bcb188e10..879c6b15d 100644
+--- a/tests/integration/suite/healthz/operator.go
++++ b/tests/integration/suite/healthz/operator.go
+@@ -25,6 +25,7 @@ import (
+ 	"github.com/stretchr/testify/require"
+ 
+ 	"github.com/dapr/dapr/tests/integration/framework"
++	"github.com/dapr/dapr/tests/integration/framework/process/exec"
+ 	"github.com/dapr/dapr/tests/integration/framework/process/kubernetes"
+ 	procoperator "github.com/dapr/dapr/tests/integration/framework/process/operator"
+ 	procsentry "github.com/dapr/dapr/tests/integration/framework/process/sentry"
+@@ -43,7 +44,10 @@ type operator struct {
+ }
+ 
+ func (o *operator) Setup(t *testing.T) []framework.Option {
+-	o.sentry = procsentry.New(t, procsentry.WithTrustDomain("integration.test.dapr.io"))
++	o.sentry = procsentry.New(t,
++		procsentry.WithTrustDomain("integration.test.dapr.io"),
++		procsentry.WithExecOptions(exec.WithEnvVars(t, "NAMESPACE", "dapr-system")),
++	)
+ 
+ 	kubeAPI := kubernetes.New(t, kubernetes.WithBaseOperatorAPI(t,
+ 		spiffeid.RequireTrustDomainFromString("integration.test.dapr.io"),
+diff --git a/tests/integration/suite/ports/injector.go b/tests/integration/suite/ports/injector.go
+index 2f7ac7fb0..0edcbb6d1 100644
+--- a/tests/integration/suite/ports/injector.go
++++ b/tests/integration/suite/ports/injector.go
+@@ -37,7 +37,10 @@ type injector struct {
+ }
+ 
+ func (i *injector) Setup(t *testing.T) []framework.Option {
+-	sentry := procsentry.New(t, procsentry.WithTrustDomain("integration.test.dapr.io"))
++	sentry := procsentry.New(t,
++		procsentry.WithNamespace("dapr-system"),
++		procsentry.WithTrustDomain("integration.test.dapr.io"),
++	)
+ 
+ 	i.injector = procinjector.New(t,
+ 		procinjector.WithNamespace("dapr-system"),
+diff --git a/tests/integration/suite/ports/operator.go b/tests/integration/suite/ports/operator.go
+index 093fe0bd0..88062c325 100644
+--- a/tests/integration/suite/ports/operator.go
++++ b/tests/integration/suite/ports/operator.go
+@@ -24,6 +24,7 @@ import (
+ 	"github.com/stretchr/testify/assert"
+ 
+ 	"github.com/dapr/dapr/tests/integration/framework"
++	"github.com/dapr/dapr/tests/integration/framework/process/exec"
+ 	"github.com/dapr/dapr/tests/integration/framework/process/kubernetes"
+ 	procoperator "github.com/dapr/dapr/tests/integration/framework/process/operator"
+ 	procsentry "github.com/dapr/dapr/tests/integration/framework/process/sentry"
+@@ -40,7 +41,10 @@ type operator struct {
+ }
+ 
+ func (o *operator) Setup(t *testing.T) []framework.Option {
+-	sentry := procsentry.New(t, procsentry.WithTrustDomain("integration.test.dapr.io"))
++	sentry := procsentry.New(t,
++		procsentry.WithTrustDomain("integration.test.dapr.io"),
++		procsentry.WithExecOptions(exec.WithEnvVars(t, "NAMESPACE", "dapr-system")),
++	)
+ 
+ 	kubeAPI := kubernetes.New(t, kubernetes.WithBaseOperatorAPI(t,
+ 		spiffeid.RequireTrustDomainFromString("integration.test.dapr.io"),
+diff --git a/tests/integration/suite/sentry/validator/insecure/insecure.go b/tests/integration/suite/sentry/validator/insecure/insecure.go
+index 53152d78b..3e59e8ae9 100644
+--- a/tests/integration/suite/sentry/validator/insecure/insecure.go
++++ b/tests/integration/suite/sentry/validator/insecure/insecure.go
+@@ -59,7 +59,6 @@ func (m *insecure) Run(t *testing.T, parentCtx context.Context) {
+ 		defaultNamespace = "default"
+ 	)
+ 	defaultAppSPIFFEID := fmt.Sprintf("spiffe://public/ns/%s/%s", defaultNamespace, defaultAppID)
+-	defaultAppDNSName := fmt.Sprintf("%s.%s.svc.cluster.local", defaultAppID, defaultNamespace)
+ 
+ 	m.proc.WaitUntilRunning(t, parentCtx)
+ 
+@@ -102,7 +101,7 @@ func (m *insecure) Run(t *testing.T, parentCtx context.Context) {
+ 		require.NoError(t, err)
+ 		require.NotEmpty(t, res.GetWorkloadCertificate())
+ 
+-		validateCertificateResponse(t, res, m.proc.CABundle(), defaultAppSPIFFEID, defaultAppDNSName)
++		validateCertificateResponse(t, res, m.proc.CABundle(), defaultAppSPIFFEID)
+ 	})
+ 
+ 	t.Run("insecure validator is the default", func(t *testing.T) {
+@@ -117,7 +116,7 @@ func (m *insecure) Run(t *testing.T, parentCtx context.Context) {
+ 		require.NoError(t, err)
+ 		require.NotEmpty(t, res.GetWorkloadCertificate())
+ 
+-		validateCertificateResponse(t, res, m.proc.CABundle(), defaultAppSPIFFEID, defaultAppDNSName)
++		validateCertificateResponse(t, res, m.proc.CABundle(), defaultAppSPIFFEID)
+ 	})
+ 
+ 	t.Run("fails with missing CSR", func(t *testing.T) {
+@@ -172,7 +171,7 @@ func (m *insecure) Run(t *testing.T, parentCtx context.Context) {
+ 	})
+ }
+ 
+-func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateResponse, sentryBundle ca.Bundle, expectSPIFFEID, expectDNSName string) {
++func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateResponse, sentryBundle ca.Bundle, expectSPIFFEID string) {
+ 	t.Helper()
+ 
+ 	require.NotEmpty(t, res.GetWorkloadCertificate())
+@@ -193,7 +192,7 @@ func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateRe
+ 		certURIs[i] = v.String()
+ 	}
+ 	assert.Equal(t, []string{expectSPIFFEID}, certURIs)
+-	assert.Equal(t, []string{expectDNSName}, cert.DNSNames)
++	assert.Empty(t, cert.DNSNames)
+ 	assert.Contains(t, cert.ExtKeyUsage, x509.ExtKeyUsageServerAuth)
+ 	assert.Contains(t, cert.ExtKeyUsage, x509.ExtKeyUsageClientAuth)
+ 
+@@ -205,5 +204,5 @@ func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateRe
+ 
+ 	cert, err = x509.ParseCertificate(block.Bytes)
+ 	require.NoError(t, err)
+-	assert.Equal(t, []string{"cluster.local"}, cert.DNSNames)
++	assert.Empty(t, cert.DNSNames)
+ }
+diff --git a/tests/integration/suite/sentry/validator/jwks/shared.go b/tests/integration/suite/sentry/validator/jwks/shared.go
+index 0a5c4e65e..2d355fc17 100644
+--- a/tests/integration/suite/sentry/validator/jwks/shared.go
++++ b/tests/integration/suite/sentry/validator/jwks/shared.go
+@@ -42,7 +42,6 @@ func (s shared) Run(t *testing.T, parentCtx context.Context) {
+ 		defaultNamespace = "default"
+ 	)
+ 	defaultAppSPIFFEID := fmt.Sprintf("spiffe://public/ns/%s/%s", defaultNamespace, defaultAppID)
+-	defaultAppDNSName := fmt.Sprintf("%s.%s.svc.cluster.local", defaultAppID, defaultNamespace)
+ 
+ 	s.proc.WaitUntilRunning(t, parentCtx)
+ 
+@@ -124,7 +123,7 @@ func (s shared) Run(t *testing.T, parentCtx context.Context) {
+ 		require.NoError(t, err)
+ 		require.NotEmpty(t, res.GetWorkloadCertificate())
+ 
+-		validateCertificateResponse(t, res, s.proc.CABundle(), defaultAppSPIFFEID, defaultAppDNSName)
++		validateCertificateResponse(t, res, s.proc.CABundle(), defaultAppSPIFFEID)
+ 	})
+ 
+ 	testWithTokenError := func(fn func(builder *jwt.Builder), assertErr func(t *testing.T, grpcStatus *status.Status)) func(t *testing.T) {
+diff --git a/tests/integration/suite/sentry/validator/jwks/utils.go b/tests/integration/suite/sentry/validator/jwks/utils.go
+index 74eb4a09b..6410e32fe 100644
+--- a/tests/integration/suite/sentry/validator/jwks/utils.go
++++ b/tests/integration/suite/sentry/validator/jwks/utils.go
+@@ -106,7 +106,7 @@ func signJWT(builder *jwt.Builder) ([]byte, error) {
+ 	return jwt.Sign(token, jwt.WithKey(jwa.ES256, jwtSigningKeyPriv))
+ }
+ 
+-func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateResponse, sentryBundle ca.Bundle, expectSPIFFEID, expectDNSName string) {
++func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateResponse, sentryBundle ca.Bundle, expectSPIFFEID string) {
+ 	t.Helper()
+ 
+ 	require.NotEmpty(t, res.GetWorkloadCertificate())
+@@ -128,7 +128,7 @@ func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateRe
+ 			certURIs[i] = v.String()
+ 		}
+ 		assert.Equal(t, []string{expectSPIFFEID}, certURIs)
+-		assert.Equal(t, []string{expectDNSName}, cert.DNSNames)
++		assert.Empty(t, cert.DNSNames)
+ 		assert.Contains(t, cert.ExtKeyUsage, x509.ExtKeyUsageServerAuth)
+ 		assert.Contains(t, cert.ExtKeyUsage, x509.ExtKeyUsageClientAuth)
+ 	}
+@@ -144,7 +144,7 @@ func validateCertificateResponse(t *testing.T, res *sentrypbv1.SignCertificateRe
+ 		cert, err := x509.ParseCertificate(block.Bytes)
+ 		require.NoError(t, err)
+ 
+-		assert.Equal(t, []string{"cluster.local"}, cert.DNSNames)
++		assert.Empty(t, cert.DNSNames)
+ 	}
+ }
+ 
+diff --git a/tests/integration/suite/sentry/validator/kubernetes/common.go b/tests/integration/suite/sentry/validator/kubernetes/common.go
+index e93e2f4dd..4e0f7dd6a 100644
+--- a/tests/integration/suite/sentry/validator/kubernetes/common.go
++++ b/tests/integration/suite/sentry/validator/kubernetes/common.go
+@@ -30,7 +30,14 @@ import (
+ 	prockube "github.com/dapr/dapr/tests/integration/framework/process/kubernetes"
+ )
+ 
+-func kubeAPI(t *testing.T, bundle ca.Bundle, namespace, serviceaccount string) *prockube.Kubernetes {
++type kubeAPIOptions struct {
++	bundle         ca.Bundle
++	namespace      string
++	serviceAccount string
++	appID          string
++}
++
++func kubeAPI(t *testing.T, opts kubeAPIOptions) *prockube.Kubernetes {
+ 	t.Helper()
+ 
+ 	return prockube.New(t,
+@@ -46,15 +53,15 @@ func kubeAPI(t *testing.T, bundle ca.Bundle, namespace, serviceaccount string) *
+ 			TypeMeta:   metav1.TypeMeta{APIVersion: "v1", Kind: "Secret"},
+ 			ObjectMeta: metav1.ObjectMeta{Namespace: "sentrynamespace", Name: "dapr-trust-bundle"},
+ 			Data: map[string][]byte{
+-				"ca.crt":     bundle.TrustAnchors,
+-				"issuer.crt": bundle.IssChainPEM,
+-				"issuer.key": bundle.IssKeyPEM,
++				"ca.crt":     opts.bundle.TrustAnchors,
++				"issuer.crt": opts.bundle.IssChainPEM,
++				"issuer.key": opts.bundle.IssKeyPEM,
+ 			},
+ 		}),
+ 		prockube.WithConfigMapGet(t, &corev1.ConfigMap{
+ 			TypeMeta:   metav1.TypeMeta{APIVersion: "v1", Kind: "ConfigMap"},
+ 			ObjectMeta: metav1.ObjectMeta{Namespace: "sentrynamespace", Name: "dapr-trust-bundle"},
+-			Data:       map[string]string{"ca.crt": string(bundle.TrustAnchors)},
++			Data:       map[string]string{"ca.crt": string(opts.bundle.TrustAnchors)},
+ 		}),
+ 		prockube.WithClusterPodList(t, &corev1.PodList{
+ 			TypeMeta: metav1.TypeMeta{APIVersion: "v1", Kind: "PodList"},
+@@ -62,10 +69,10 @@ func kubeAPI(t *testing.T, bundle ca.Bundle, namespace, serviceaccount string) *
+ 				{
+ 					TypeMeta: metav1.TypeMeta{APIVersion: "v1", Kind: "Pod"},
+ 					ObjectMeta: metav1.ObjectMeta{
+-						Namespace: namespace, Name: "mypod",
+-						Annotations: map[string]string{"dapr.io/app-id": "myappid"},
++						Namespace: opts.namespace, Name: "mypod",
++						Annotations: map[string]string{"dapr.io/app-id": opts.appID},
+ 					},
+-					Spec: corev1.PodSpec{ServiceAccountName: serviceaccount},
++					Spec: corev1.PodSpec{ServiceAccountName: opts.serviceAccount},
+ 				},
+ 			},
+ 		}),
+@@ -81,7 +88,7 @@ func kubeAPI(t *testing.T, bundle ca.Bundle, namespace, serviceaccount string) *
+ 			resp, err := json.Marshal(&authapi.TokenReview{
+ 				Status: authapi.TokenReviewStatus{
+ 					Authenticated: true,
+-					User:          authapi.UserInfo{Username: fmt.Sprintf("system:serviceaccount:%s:%s", namespace, serviceaccount)},
++					User:          authapi.UserInfo{Username: fmt.Sprintf("system:serviceaccount:%s:%s", opts.namespace, opts.serviceAccount)},
+ 				},
+ 			})
+ 			require.NoError(t, err)
+diff --git a/tests/integration/suite/sentry/validator/kubernetes/kubernetes.go b/tests/integration/suite/sentry/validator/kubernetes/kube.go
+similarity index 92%
+rename from tests/integration/suite/sentry/validator/kubernetes/kubernetes.go
+rename to tests/integration/suite/sentry/validator/kubernetes/kube.go
+index ce272e4ea..42bd53171 100644
+--- a/tests/integration/suite/sentry/validator/kubernetes/kubernetes.go
++++ b/tests/integration/suite/sentry/validator/kubernetes/kube.go
+@@ -36,21 +36,26 @@ import (
+ )
+ 
+ func init() {
+-	suite.Register(new(kubernetes))
++	suite.Register(new(kube))
+ }
+ 
+-// kubernetes tests Sentry with the Kubernetes validator.
+-type kubernetes struct {
++// kube tests Sentry with the Kubernetes validator.
++type kube struct {
+ 	sentry *sentry.Sentry
+ }
+ 
+-func (k *kubernetes) Setup(t *testing.T) []framework.Option {
++func (k *kube) Setup(t *testing.T) []framework.Option {
+ 	rootKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+ 	require.NoError(t, err)
+ 	bundle, err := ca.GenerateBundle(rootKey, "integration.test.dapr.io", time.Second*5, nil)
+ 	require.NoError(t, err)
+ 
+-	kubeAPI := kubeAPI(t, bundle, "mynamespace", "myserviceaccount")
++	kubeAPI := kubeAPI(t, kubeAPIOptions{
++		bundle:         bundle,
++		namespace:      "mynamespace",
++		serviceAccount: "myserviceaccount",
++		appID:          "myappid",
++	})
+ 
+ 	k.sentry = sentry.New(t,
+ 		sentry.WithWriteConfig(false),
+@@ -69,7 +74,7 @@ func (k *kubernetes) Setup(t *testing.T) []framework.Option {
+ 	}
+ }
+ 
+-func (k *kubernetes) Run(t *testing.T, ctx context.Context) {
++func (k *kube) Run(t *testing.T, ctx context.Context) {
+ 	k.sentry.WaitUntilRunning(t, ctx)
+ 
+ 	conn := k.sentry.DialGRPC(t, ctx, "spiffe://integration.test.dapr.io/ns/sentrynamespace/dapr-sentry")
+diff --git a/tests/integration/suite/sentry/validator/kubernetes/legacyid.go b/tests/integration/suite/sentry/validator/kubernetes/legacyid.go
+new file mode 100644
+index 000000000..ad331b4ff
+--- /dev/null
++++ b/tests/integration/suite/sentry/validator/kubernetes/legacyid.go
+@@ -0,0 +1,100 @@
++/*
++Copyright 2023 The Dapr Authors
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++    http://www.apache.org/licenses/LICENSE-2.0
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package kubernetes
++
++import (
++	"context"
++	"crypto/ecdsa"
++	"crypto/elliptic"
++	"crypto/rand"
++	"crypto/x509"
++	"encoding/pem"
++	"testing"
++	"time"
++
++	"github.com/stretchr/testify/assert"
++	"github.com/stretchr/testify/require"
++	"google.golang.org/grpc/codes"
++	"google.golang.org/grpc/status"
++
++	sentrypbv1 "github.com/dapr/dapr/pkg/proto/sentry/v1"
++	"github.com/dapr/dapr/pkg/sentry/server/ca"
++	"github.com/dapr/dapr/tests/integration/framework"
++	"github.com/dapr/dapr/tests/integration/framework/process/exec"
++	"github.com/dapr/dapr/tests/integration/framework/process/sentry"
++	"github.com/dapr/dapr/tests/integration/suite"
++)
++
++func init() {
++	suite.Register(new(legacyid))
++}
++
++// legacyid ensures that the legacy '<namespace>:<service account>' ID format
++// is no longer supported.
++type legacyid struct {
++	sentry *sentry.Sentry
++}
++
++func (l *legacyid) Setup(t *testing.T) []framework.Option {
++	rootKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
++	require.NoError(t, err)
++	bundle, err := ca.GenerateBundle(rootKey, "integration.test.dapr.io", time.Second*5, nil)
++	require.NoError(t, err)
++
++	kubeAPI := kubeAPI(t, kubeAPIOptions{
++		bundle:         bundle,
++		namespace:      "myns",
++		serviceAccount: "myaccount",
++		appID:          "myappid",
++	})
++
++	l.sentry = sentry.New(t,
++		sentry.WithWriteConfig(false),
++		sentry.WithKubeconfig(kubeAPI.KubeconfigPath(t)),
++		sentry.WithExecOptions(
++			// Enable Kubernetes validator.
++			exec.WithEnvVars(t, "KUBERNETES_SERVICE_HOST", "anything"),
++			exec.WithEnvVars(t, "NAMESPACE", "sentrynamespace"),
++		),
++		sentry.WithCABundle(bundle),
++		sentry.WithTrustDomain("integration.test.dapr.io"),
++	)
++
++	return []framework.Option{
++		framework.WithProcesses(l.sentry, kubeAPI),
++	}
++}
++
++func (l *legacyid) Run(t *testing.T, ctx context.Context) {
++	l.sentry.WaitUntilRunning(t, ctx)
++
++	conn := l.sentry.DialGRPC(t, ctx, "spiffe://integration.test.dapr.io/ns/sentrynamespace/dapr-sentry")
++	client := sentrypbv1.NewCAClient(conn)
++
++	pk, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
++	require.NoError(t, err)
++	csrDer, err := x509.CreateCertificateRequest(rand.Reader, new(x509.CertificateRequest), pk)
++	require.NoError(t, err)
++
++	resp, err := client.SignCertificate(ctx, &sentrypbv1.SignCertificateRequest{
++		Id:                        "myns:myaccount",
++		Namespace:                 "myns",
++		CertificateSigningRequest: pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE REQUEST", Bytes: csrDer}),
++		TokenValidator:            sentrypbv1.SignCertificateRequest_KUBERNETES,
++		Token:                     `{"kubernetes.io":{"pod":{"name":"mypod"}}}`,
++	})
++	assert.Nil(t, resp)
++	require.Error(t, err)
++	assert.Equal(t, codes.PermissionDenied, status.Code(err))
++}
+diff --git a/tests/integration/suite/sentry/validator/kubernetes/longname.go b/tests/integration/suite/sentry/validator/kubernetes/longname.go
+index 3a4c4f180..59c3d997f 100644
+--- a/tests/integration/suite/sentry/validator/kubernetes/longname.go
++++ b/tests/integration/suite/sentry/validator/kubernetes/longname.go
+@@ -24,12 +24,16 @@ import (
+ 	"testing"
+ 	"time"
+ 
++	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
++	"google.golang.org/grpc/codes"
++	"google.golang.org/grpc/status"
+ 
+ 	sentrypbv1 "github.com/dapr/dapr/pkg/proto/sentry/v1"
+ 	"github.com/dapr/dapr/pkg/sentry/server/ca"
+ 	"github.com/dapr/dapr/tests/integration/framework"
+ 	"github.com/dapr/dapr/tests/integration/framework/process/exec"
++	"github.com/dapr/dapr/tests/integration/framework/process/kubernetes"
+ 	"github.com/dapr/dapr/tests/integration/framework/process/sentry"
+ 	"github.com/dapr/dapr/tests/integration/suite"
+ )
+@@ -38,10 +42,13 @@ func init() {
+ 	suite.Register(new(longname))
+ }
+ 
+-// longname tests that sentry with authenticate requests with legacy identities
+-// that use namespace + serviceaccount names longer than 253 characters.
++// longname tests that sentry with _not_ authenticate requests with legacy
++// identities that use namespace + serviceaccount names longer than 253
++// characters, or app IDs longer than 64 characters.
+ type longname struct {
+-	sentry *sentry.Sentry
++	sentry1 *sentry.Sentry
++	sentry2 *sentry.Sentry
++	sentry3 *sentry.Sentry
+ }
+ 
+ func (l *longname) Setup(t *testing.T) []framework.Option {
+@@ -50,43 +57,98 @@ func (l *longname) Setup(t *testing.T) []framework.Option {
+ 	bundle, err := ca.GenerateBundle(rootKey, "integration.test.dapr.io", time.Second*5, nil)
+ 	require.NoError(t, err)
+ 
+-	kubeAPI := kubeAPI(t, bundle, strings.Repeat("n", 253), strings.Repeat("s", 253))
++	kubeAPI1 := kubeAPI(t, kubeAPIOptions{
++		bundle:         bundle,
++		namespace:      strings.Repeat("n", 253),
++		serviceAccount: strings.Repeat("s", 253),
++		appID:          "myapp",
++	})
++
++	kubeAPI2 := kubeAPI(t, kubeAPIOptions{
++		bundle:         bundle,
++		namespace:      strings.Repeat("n", 253),
++		serviceAccount: strings.Repeat("s", 253),
++		appID:          strings.Repeat("a", 65),
++	})
+ 
+-	l.sentry = sentry.New(t,
+-		sentry.WithWriteConfig(false),
+-		sentry.WithKubeconfig(kubeAPI.KubeconfigPath(t)),
+-		sentry.WithNamespace("sentrynamespace"),
+-		sentry.WithExecOptions(
+-			// Enable Kubernetes validator.
+-			exec.WithEnvVars(t, "KUBERNETES_SERVICE_HOST", "anything"),
+-		),
+-		sentry.WithCABundle(bundle),
+-		sentry.WithTrustDomain("integration.test.dapr.io"),
+-	)
++	kubeAPI3 := kubeAPI(t, kubeAPIOptions{
++		bundle:         bundle,
++		namespace:      strings.Repeat("n", 253),
++		serviceAccount: strings.Repeat("s", 253),
++		appID:          strings.Repeat("a", 64),
++	})
++
++	sentryOpts := func(kubeAPI *kubernetes.Kubernetes) *sentry.Sentry {
++		return sentry.New(t,
++			sentry.WithWriteConfig(false),
++			sentry.WithKubeconfig(kubeAPI.KubeconfigPath(t)),
++			sentry.WithExecOptions(
++				// Enable Kubernetes validator.
++				exec.WithEnvVars(t, "KUBERNETES_SERVICE_HOST", "anything"),
++				exec.WithEnvVars(t, "NAMESPACE", "sentrynamespace"),
++			),
++			sentry.WithCABundle(bundle),
++			sentry.WithTrustDomain("integration.test.dapr.io"),
++		)
++	}
++
++	l.sentry1 = sentryOpts(kubeAPI1)
++	l.sentry2 = sentryOpts(kubeAPI2)
++	l.sentry3 = sentryOpts(kubeAPI3)
+ 
+ 	return []framework.Option{
+-		framework.WithProcesses(l.sentry, kubeAPI),
++		framework.WithProcesses(kubeAPI1, kubeAPI2, kubeAPI3, l.sentry1, l.sentry2, l.sentry3),
+ 	}
+ }
+ 
+ func (l *longname) Run(t *testing.T, ctx context.Context) {
+-	l.sentry.WaitUntilRunning(t, ctx)
++	l.sentry1.WaitUntilRunning(t, ctx)
++	l.sentry2.WaitUntilRunning(t, ctx)
++	l.sentry3.WaitUntilRunning(t, ctx)
+ 
+-	conn := l.sentry.DialGRPC(t, ctx, "spiffe://integration.test.dapr.io/ns/sentrynamespace/dapr-sentry")
+-	client := sentrypbv1.NewCAClient(conn)
++	conn1 := l.sentry1.DialGRPC(t, ctx, "spiffe://integration.test.dapr.io/ns/sentrynamespace/dapr-sentry")
++	client1 := sentrypbv1.NewCAClient(conn1)
+ 
+ 	pk, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+ 	require.NoError(t, err)
+ 	csrDer, err := x509.CreateCertificateRequest(rand.Reader, new(x509.CertificateRequest), pk)
+ 	require.NoError(t, err)
+ 
+-	resp, err := client.SignCertificate(ctx, &sentrypbv1.SignCertificateRequest{
++	resp, err := client1.SignCertificate(ctx, &sentrypbv1.SignCertificateRequest{
+ 		Id:                        strings.Repeat("n", 253) + ":" + strings.Repeat("s", 253),
+ 		Namespace:                 strings.Repeat("n", 253),
+ 		CertificateSigningRequest: pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE REQUEST", Bytes: csrDer}),
+ 		TokenValidator:            sentrypbv1.SignCertificateRequest_KUBERNETES,
+ 		Token:                     `{"kubernetes.io":{"pod":{"name":"mypod"}}}`,
+ 	})
++	assert.Nil(t, resp)
++	require.ErrorContains(t, err, "app ID must be 64 characters or less")
++	assert.Equal(t, codes.PermissionDenied, status.Code(err))
++
++	conn2 := l.sentry2.DialGRPC(t, ctx, "spiffe://integration.test.dapr.io/ns/sentrynamespace/dapr-sentry")
++	client2 := sentrypbv1.NewCAClient(conn2)
++
++	resp, err = client2.SignCertificate(ctx, &sentrypbv1.SignCertificateRequest{
++		Id:                        strings.Repeat("a", 65),
++		Namespace:                 strings.Repeat("n", 253),
++		CertificateSigningRequest: pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE REQUEST", Bytes: csrDer}),
++		TokenValidator:            sentrypbv1.SignCertificateRequest_KUBERNETES,
++		Token:                     `{"kubernetes.io":{"pod":{"name":"mypod"}}}`,
++	})
++	assert.Nil(t, resp)
++	require.ErrorContains(t, err, "app ID must be 64 characters or less")
++	assert.Equal(t, codes.PermissionDenied, status.Code(err))
++
++	conn3 := l.sentry3.DialGRPC(t, ctx, "spiffe://integration.test.dapr.io/ns/sentrynamespace/dapr-sentry")
++	client3 := sentrypbv1.NewCAClient(conn3)
++
++	resp, err = client3.SignCertificate(ctx, &sentrypbv1.SignCertificateRequest{
++		Id:                        strings.Repeat("a", 64),
++		Namespace:                 strings.Repeat("n", 253),
++		CertificateSigningRequest: pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE REQUEST", Bytes: csrDer}),
++		TokenValidator:            sentrypbv1.SignCertificateRequest_KUBERNETES,
++		Token:                     `{"kubernetes.io":{"pod":{"name":"mypod"}}}`,
++	})
+ 	require.NoError(t, err)
+ 	require.NotEmpty(t, resp.GetWorkloadCertificate())
+ }

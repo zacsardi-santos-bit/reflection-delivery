@@ -1,14 +1,5 @@
-I'm working on improving the collaborative editing presence feature in a Wagtail project. Right now, the presence ping endpoint only shows which users are viewing the same page, but it doesn't tell me whether someone is actively making edits, and it has no awareness of whether another user has already saved a newer version of the content since I opened it.
+I'm cleaning up the collaborative editing presence feature in our Wagtail project and I hit a wall with the ping endpoint. Right now it only tells me which users are on the same page or snippet, so everyone looks identical whether they left a tab open or they're actively typing, and worse there's no awareness of saved revisions, so if someone saves a newer version while I'm editing I find out only when things break. I want to close both gaps.
 
-I want to extend the ping endpoint so that:
-- It only accepts POST requests (GET should be rejected with an appropriate error)
-- It accepts an optional flag indicating whether the current user is actively editing
-- It accepts an optional identifier for the revision the client currently has open
-- It returns richer information about other users — specifically whether they are actively editing and whether they have saved a newer revision since the one the client currently has
-- When multiple sessions belong to the same user, they are merged into a single entry in the response
-- If a newer revision was saved by a user with no active session, the response still surfaces that revision with a null session reference
-- If a newer revision was saved without any associated user, the response returns an empty string for the user field
-- Results are ordered so the most important information appears first: users with new revisions, then users actively editing, then others sorted by session ID
-- Malformed input returns a clear error response with HTTP 400
+Can you extend the presence ping so it only takes POST and rejects GET with a proper method-not-allowed response? It should accept an optional flag for whether the current user is actively editing, plus an optional identifier for the revision the client currently has open. The response needs to be richer about other users, specifically whether each one is actively editing and whether they've saved a newer revision than the one my client has open. When multiple sessions belong to the same user, merge them into a single entry with the most relevant info. Oh and edge cases: if a newer revision was saved by a user who no longer has an active session, still surface that revision but with a null session reference, and if a newer revision was saved with no associated user at all, return an empty string for the user field. Sort results so the most actionable stuff floats up, new revisions first, then people actively editing, then everyone else sorted by session ID. Malformed input should come back as a clear error with HTTP 400.
 
-The model backing these sessions also needs to track the "is actively editing" flag persistently so other users can see it in subsequent pings.
+Also the model backing these sessions needs to persist that "is actively editing" flag so other users can see it in later pings, don't just keep it in memory. This gives us the data layer to warn editors about concurrent changes and show who's actually working on the same content instead of silently overwriting each other.

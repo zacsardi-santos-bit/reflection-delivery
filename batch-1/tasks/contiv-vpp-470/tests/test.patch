@@ -1,0 +1,959 @@
+diff --git a/plugins/ksr/endpoints_reflector_test.go b/plugins/ksr/endpoints_reflector_test.go
+index 49a523be5..7a47f99a9 100644
+--- a/plugins/ksr/endpoints_reflector_test.go
++++ b/plugins/ksr/endpoints_reflector_test.go
+@@ -17,6 +17,7 @@ package ksr
+ import (
+ 	"sync"
+ 	"testing"
++	"time"
+ 
+ 	"github.com/onsi/gomega"
+ 
+@@ -24,17 +25,16 @@ import (
+ 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+ 	"k8s.io/client-go/kubernetes"
+ 
+-	"time"
+-
+-	proto "github.com/contiv/vpp/plugins/ksr/model/endpoints"
++	"github.com/contiv/vpp/plugins/ksr/model/endpoints"
+ 	"github.com/ligato/cn-infra/flavors/local"
+ )
+ 
+ type EndpointsTestVars struct {
+ 	k8sListWatch *mockK8sListWatch
+ 	mockKvWriter *mockKeyProtoValWriter
++	mockKvLister *mockKeyProtoValLister
+ 	epsReflector *EndpointsReflector
+-	endpoints    *coreV1.Endpoints
++	epsTestData  []coreV1.Endpoints
+ }
+ 
+ var epTestVars EndpointsTestVars
+@@ -47,84 +47,218 @@ func TestEndpointsReflector(t *testing.T) {
+ 
+ 	epTestVars.k8sListWatch = &mockK8sListWatch{}
+ 	epTestVars.mockKvWriter = newMockKeyProtoValWriter()
++	epTestVars.mockKvLister = newMockKeyProtoValLister(epTestVars.mockKvWriter.ds)
+ 
+ 	epTestVars.epsReflector = &EndpointsReflector{
+-		ReflectorDeps: ReflectorDeps{
++		Reflector: Reflector{
+ 			Log:          flavorLocal.LoggerFor("endpoints-reflector"),
+ 			K8sClientset: &kubernetes.Clientset{},
+ 			K8sListWatch: epTestVars.k8sListWatch,
+ 			Writer:       epTestVars.mockKvWriter,
++			Lister:       epTestVars.mockKvLister,
++			dsSynced:     false,
++			objType:      "Endpoints",
+ 		},
+ 	}
+ 
+ 	nodeName := "cvpp"
+-	epTestVars.endpoints = &coreV1.Endpoints{
+-		ObjectMeta: metav1.ObjectMeta{
+-			Name:            "my-nginx",
+-			Namespace:       "default",
+-			SelfLink:        "/api/v1/namespaces/default/endpoints/my-nginx",
+-			UID:             "cace7a27-eddf-11e7-9959-0800271d72be",
+-			ResourceVersion: "85353",
+-			Generation:      0,
+-			CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
+-				time.FixedZone("PST", -800)),
+-			Labels: map[string]string{"ksrRun": "my-nginx"},
++	epTestVars.epsTestData = []coreV1.Endpoints{
++		{
++			// Test data 0: mocks a new object to be added
++			ObjectMeta: metav1.ObjectMeta{
++				Name:            "my-nginx",
++				Namespace:       "default",
++				SelfLink:        "/api/v1/namespaces/default/endpoints/my-nginx",
++				UID:             "cace7a27-eddf-11e7-9959-0800271d72be",
++				ResourceVersion: "85353",
++				Generation:      0,
++				CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
++					time.FixedZone("PST", -800)),
++				Labels: map[string]string{"ksrRun": "my-nginx"},
++			},
++			Subsets: []coreV1.EndpointSubset{
++				{
++					Addresses: []coreV1.EndpointAddress{
++						{
++							IP:       "192.168.49.80",
++							NodeName: &nodeName,
++							TargetRef: &coreV1.ObjectReference{
++								Kind:            "Pod",
++								Namespace:       "default",
++								Name:            "my-nginx-9d5677d94-bmq98",
++								UID:             "a49c6175-edde-11e7-9959-0800271d72be",
++								ResourceVersion: "84938",
++							},
++						},
++						{
++							IP:       "192.168.49.81",
++							NodeName: &nodeName,
++							TargetRef: &coreV1.ObjectReference{
++								Kind:            "Pod",
++								Namespace:       "default",
++								Name:            "my-nginx-9d5677d94-4wvfb",
++								UID:             "a49da607-edde-11e7-9959-0800271d72be",
++								ResourceVersion: "84948",
++							},
++						},
++					},
++					Ports: []coreV1.EndpointPort{
++						{
++							Port:     80,
++							Protocol: "TCP",
++						},
++					},
++				},
++			},
+ 		},
+-		Subsets: []coreV1.EndpointSubset{
+-			{
+-				Addresses: []coreV1.EndpointAddress{
+-					{
+-						IP:       "192.168.49.80",
+-						NodeName: &nodeName,
+-						TargetRef: &coreV1.ObjectReference{
+-							Kind:            "Pod",
+-							Namespace:       "default",
+-							Name:            "my-nginx-9d5677d94-bmq98",
+-							UID:             "a49c6175-edde-11e7-9959-0800271d72be",
+-							ResourceVersion: "84938",
++		// Test data 1: mocks an object that updates a "pre-existing" object
++		// during sync
++		{
++			ObjectMeta: metav1.ObjectMeta{
++				Name:            "calico-etcd",
++				Namespace:       "kube-system",
++				SelfLink:        "/api/v1/namespaces/default/endpoints/calico-etcd",
++				UID:             "1143b9ec-ec4d-11e7-9959-0800271d72be",
++				ResourceVersion: "85353",
++				Generation:      0,
++				CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
++					time.FixedZone("PST", -800)),
++				Labels: map[string]string{"k8s-app": "calico-etcd"},
++			},
++			Subsets: []coreV1.EndpointSubset{
++				{
++					Addresses: []coreV1.EndpointAddress{
++						{
++							IP:       "10.0.2.15",
++							NodeName: &nodeName,
++							TargetRef: &coreV1.ObjectReference{
++								Kind:            "Pod",
++								Namespace:       "kube-system",
++								Name:            "calico-etcd-xkkvc",
++								UID:             "531e26a7-f028-11e7-9eee-0800271d72be",
++								ResourceVersion: "288097",
++							},
+ 						},
+ 					},
+-					{
+-						IP:       "192.168.49.81",
+-						NodeName: &nodeName,
+-						TargetRef: &coreV1.ObjectReference{
+-							Kind:            "Pod",
+-							Namespace:       "default",
+-							Name:            "my-nginx-9d5677d94-4wvfb",
+-							UID:             "a49da607-edde-11e7-9959-0800271d72be",
+-							ResourceVersion: "84948",
++					Ports: []coreV1.EndpointPort{
++						{
++							Port:     6666,
++							Protocol: "TCP",
+ 						},
+ 					},
+ 				},
+-				Ports: []coreV1.EndpointPort{
+-					{
+-						Port:     80,
+-						Protocol: "TCP",
++			},
++		},
++		// Test data 2: mocks a "stale" object that is to be deleted during
++		// sync
++		{
++			ObjectMeta: metav1.ObjectMeta{
++				Name:            "kube-dns",
++				Namespace:       "kube-system",
++				SelfLink:        "/api/v1/namespaces/default/endpoints/kube-dns",
++				UID:             "978d039b-ec4c-11e7-9959-0800271d72be",
++				ResourceVersion: "288168",
++				Generation:      0,
++				CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
++					time.FixedZone("PST", -800)),
++				Labels: map[string]string{"k8s-app": "calico-etcd"},
++			},
++			Subsets: []coreV1.EndpointSubset{
++				{
++					Addresses: []coreV1.EndpointAddress{
++						{
++							IP:       "192.168.49.91",
++							NodeName: &nodeName,
++							TargetRef: &coreV1.ObjectReference{
++								Kind:            "Pod",
++								Namespace:       "kube-system",
++								Name:            "kube-dns-6f4fd4bdf-lkpjr",
++								UID:             "978e098f-ec4c-11e7-9959-0800271d72be",
++								ResourceVersion: "288167",
++							},
++						},
++					},
++					Ports: []coreV1.EndpointPort{
++						{
++							Name:     "dns",
++							Port:     53,
++							Protocol: "UDP",
++						},
++						{
++							Name:     "dns-tcp",
++							Port:     53,
++							Protocol: "TCP",
++						},
+ 					},
+ 				},
+ 			},
+ 		},
+ 	}
+ 
++	// The mock function returns two K8s mock endpoints instances:
++	// - a new endpoints instance to be added to the data store
++	// - a modified endpoints instance, where and existing instance in the
++	//   data store is to be updated
++	MockK8sCache.ListFunc = func() []interface{} {
++		return []interface{}{
++			// Updated value mock
++			&epTestVars.epsTestData[0],
++			// New value mock
++			&epTestVars.epsTestData[1],
++		}
++	}
++
++	// Pre-populate the mock data store with pre-existing data that is supposed
++	// to be updated during the test.
++	k8sEps1 := &epTestVars.epsTestData[1]
++	protoEps1 := epTestVars.epsReflector.endpointsToProto(k8sEps1)
++	protoEps1.EndpointSubsets[0].Addresses[0].Ip = "1.2.3.4"
++	epTestVars.mockKvWriter.Put(endpoints.Key(k8sEps1.GetName(), k8sEps1.GetNamespace()), protoEps1)
++
++	// Pre-populate the mock data store with "stale" data that is supposed to
++	// be deleted during the test.
++	eps2 := &epTestVars.epsTestData[2]
++	epTestVars.mockKvWriter.Put(endpoints.Key(eps2.GetName(),
++		eps2.GetNamespace()), epTestVars.epsReflector.endpointsToProto(eps2))
++
++	statsBefore := *epTestVars.epsReflector.GetStats()
++
+ 	stopCh := make(chan struct{})
+ 	var wg sync.WaitGroup
+ 	err := epTestVars.epsReflector.Init(stopCh, &wg)
+ 	gomega.Expect(err).To(gomega.BeNil())
+ 
++	// Wait for the initial sync to finish
++	for {
++		if epTestVars.epsReflector.HasSynced() {
++			break
++		}
++		time.Sleep(time.Millisecond * 100)
++	}
++
++	statsAfter := *epTestVars.epsReflector.GetStats()
++
++	gomega.Expect(epTestVars.mockKvWriter.ds).Should(gomega.HaveLen(2))
++	gomega.Expect(statsBefore.NumAdds + 1).Should(gomega.BeNumerically("==", statsAfter.NumAdds))
++	gomega.Expect(statsBefore.NumUpdates + 1).Should(gomega.BeNumerically("==", statsAfter.NumUpdates))
++	gomega.Expect(statsBefore.NumDeletes + 1).Should(gomega.BeNumerically("==", statsAfter.NumDeletes))
++
++	epTestVars.mockKvWriter.ClearDs()
++
+ 	t.Run("addDeleteEndpoints", testAddDeleteEndpoints)
++
+ 	epTestVars.mockKvWriter.ClearDs()
+ 	t.Run("updateEndpoints", testUpdateEndpoints)
+-	// TODO: add more
+ }
+ 
+ func testAddDeleteEndpoints(t *testing.T) {
+-	eps := epTestVars.endpoints
++	eps := &epTestVars.epsTestData[0]
+ 
+-	// Check if we can add a service
++	// Check if we can add an endpoint
+ 	add := epTestVars.epsReflector.GetStats().NumAdds
+ 	epTestVars.k8sListWatch.Add(eps)
+-	epsProto := &proto.Endpoints{}
+-	err := epTestVars.mockKvWriter.GetValue(proto.Key(eps.GetName(), eps.GetNamespace()), epsProto)
++	epsProto := &endpoints.Endpoints{}
++	err := epTestVars.mockKvWriter.GetValue(endpoints.Key(eps.GetName(), eps.GetNamespace()), epsProto)
+ 
+ 	gomega.Expect(add + 1).To(gomega.Equal(epTestVars.epsReflector.GetStats().NumAdds))
+ 
+@@ -165,8 +299,8 @@ func testAddDeleteEndpoints(t *testing.T) {
+ 	epTestVars.k8sListWatch.Delete(eps)
+ 	gomega.Expect(del + 1).To(gomega.Equal(epTestVars.epsReflector.GetStats().NumDeletes))
+ 
+-	epsProto = &proto.Endpoints{}
+-	key := proto.Key(eps.GetName(), eps.GetNamespace())
++	epsProto = &endpoints.Endpoints{}
++	key := endpoints.Key(eps.GetName(), eps.GetNamespace())
+ 	err = epTestVars.mockKvWriter.GetValue(key, epsProto)
+ 	gomega.Ω(err).ShouldNot(gomega.Succeed())
+ }
+@@ -174,7 +308,7 @@ func testAddDeleteEndpoints(t *testing.T) {
+ func testUpdateEndpoints(t *testing.T) {
+ 	nodeName := "cvpp"
+ 
+-	epsOld := epTestVars.endpoints
++	epsOld := &epTestVars.epsTestData[0]
+ 	epsNew := &coreV1.Endpoints{
+ 		ObjectMeta: metav1.ObjectMeta{
+ 			Name:            "my-nginx",
+@@ -228,8 +362,8 @@ func testUpdateEndpoints(t *testing.T) {
+ 	gomega.Expect(upd + 1).To(gomega.Equal(epTestVars.epsReflector.GetStats().NumUpdates))
+ 
+ 	// Check that new data was written properly
+-	epsProto := &proto.Endpoints{}
+-	err := epTestVars.mockKvWriter.GetValue(proto.Key(epsNew.GetName(), epsNew.GetNamespace()), epsProto)
++	epsProto := &endpoints.Endpoints{}
++	err := epTestVars.mockKvWriter.GetValue(endpoints.Key(epsNew.GetName(), epsNew.GetNamespace()), epsProto)
+ 	gomega.Expect(err).To(gomega.BeNil())
+ 	gomega.Expect(epsProto.EndpointSubsets[0].Addresses[0].Ip).
+ 		To(gomega.Equal(epsNew.Subsets[0].Addresses[0].IP))
+diff --git a/plugins/ksr/namespace_reflector_test.go b/plugins/ksr/namespace_reflector_test.go
+index cfd825a61..9e14a674b 100644
+--- a/plugins/ksr/namespace_reflector_test.go
++++ b/plugins/ksr/namespace_reflector_test.go
+@@ -1,20 +1,43 @@
++// Copyright (c) 2018 Cisco and/or its affiliates.
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at:
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
+ package ksr
+ 
+ import (
+ 	"sync"
+ 	"testing"
++	"time"
+ 
+ 	"github.com/onsi/gomega"
+ 
+-	core_v1 "k8s.io/api/core/v1"
++	coreV1 "k8s.io/api/core/v1"
+ 	"k8s.io/client-go/kubernetes"
+ 
+ 	proto "github.com/contiv/vpp/plugins/ksr/model/namespace"
+ 	"github.com/ligato/cn-infra/flavors/local"
+ )
+ 
+-var k8sListWatch *mockK8sListWatch
+-var keyProtoValWriter *mockKeyProtoValWriter
++type NamespaceTestVars struct {
++	k8sListWatch *mockK8sListWatch
++	mockKvWriter *mockKeyProtoValWriter
++	mockKvLister *mockKeyProtoValLister
++	nsReflector  *NamespaceReflector
++	svc          *coreV1.Service
++	svcTestData  []coreV1.Service
++}
++
++var nsTestVars NamespaceTestVars
+ 
+ func TestNamespaceReflector(t *testing.T) {
+ 	gomega.RegisterTestingT(t)
+@@ -22,41 +45,140 @@ func TestNamespaceReflector(t *testing.T) {
+ 	flavorLocal := &local.FlavorLocal{}
+ 	flavorLocal.Inject()
+ 
+-	k8sListWatch = &mockK8sListWatch{}
+-	keyProtoValWriter = newMockKeyProtoValWriter()
+-	nsReflector := &NamespaceReflector{
+-		ReflectorDeps: ReflectorDeps{
+-			Log:          flavorLocal.LoggerFor("ns-reflector"),
++	nsTestVars.k8sListWatch = &mockK8sListWatch{}
++	nsTestVars.mockKvWriter = newMockKeyProtoValWriter()
++	nsTestVars.mockKvLister = newMockKeyProtoValLister(nsTestVars.mockKvWriter.ds)
++
++	nsTestVars.nsReflector = &NamespaceReflector{
++		Reflector: Reflector{
++			Log:          flavorLocal.LoggerFor("namespace-reflector"),
+ 			K8sClientset: &kubernetes.Clientset{},
+-			K8sListWatch: k8sListWatch,
+-			Writer:       keyProtoValWriter,
++			K8sListWatch: nsTestVars.k8sListWatch,
++			Writer:       nsTestVars.mockKvWriter,
++			Lister:       nsTestVars.mockKvLister,
++			dsSynced:     false,
++			objType:      "Service",
+ 		},
+ 	}
+ 
+ 	stopCh := make(chan struct{})
+ 	var wg sync.WaitGroup
+-	err := nsReflector.Init(stopCh, &wg)
++	err := nsTestVars.nsReflector.Init(stopCh, &wg)
+ 	gomega.Expect(err).To(gomega.BeNil())
+ 
+-	t.Run("newNamespace", testNewNamespace)
+-	keyProtoValWriter.ClearDs()
+-	// TODO: add more
++	// Wait for the initial sync to finish
++	for {
++		if nsTestVars.nsReflector.HasSynced() {
++			break
++		}
++		time.Sleep(time.Millisecond * 100)
++	}
++
++	t.Run("addDeleteNamespace", testAddDeleteNamespace)
++	nsTestVars.mockKvWriter.ClearDs()
++	t.Run("updateNamespace", testUpdateeNamespace)
+ }
+ 
+-func testNewNamespace(t *testing.T) {
+-	ns := &core_v1.Namespace{}
++func testAddDeleteNamespace(t *testing.T) {
++
++	ns := &coreV1.Namespace{}
+ 	ns.Name = "namespace1"
+ 	ns.Labels = make(map[string]string)
+ 	ns.Labels["role"] = "mgmt"
+ 	ns.Labels["privileged"] = "true"
+-	k8sListWatch.Add(ns)
++
++	// Take a snapshot of counters
++	adds := nsTestVars.nsReflector.GetStats().NumAdds
++	argErrs := nsTestVars.nsReflector.GetStats().NumArgErrors
++
++	// Test add with wrong argument type
++	nsTestVars.k8sListWatch.Add(&ns)
++
++	gomega.Expect(argErrs + 1).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumArgErrors))
++	gomega.Expect(adds).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumAdds))
++
++	// Test add where everything should be good
++	nsTestVars.k8sListWatch.Add(ns)
+ 
+ 	nsProto := &proto.Namespace{}
+-	err := keyProtoValWriter.GetValue(proto.Key(ns.GetName()), nsProto)
++	err := nsTestVars.mockKvWriter.GetValue(proto.Key(ns.GetName()), nsProto)
+ 	gomega.Expect(err).To(gomega.BeNil())
+ 	gomega.Expect(nsProto).NotTo(gomega.BeNil())
+ 	gomega.Expect(nsProto.Name).To(gomega.Equal(ns.GetName()))
+ 	gomega.Expect(nsProto.Label).To(gomega.HaveLen(2))
+ 	gomega.Expect(nsProto.Label).To(gomega.ContainElement(&proto.Namespace_Label{Key: "role", Value: "mgmt"}))
+ 	gomega.Expect(nsProto.Label).To(gomega.ContainElement(&proto.Namespace_Label{Key: "privileged", Value: "true"}))
++
++	gomega.Expect(adds + 1).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumAdds))
++
++	// Take a snapshot of counters
++	dels := nsTestVars.nsReflector.GetStats().NumDeletes
++	argErrs = nsTestVars.nsReflector.GetStats().NumArgErrors
++
++	nsTestVars.k8sListWatch.Delete(&ns)
++
++	// Test delete with wrong argument type
++	gomega.Expect(argErrs + 1).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumArgErrors))
++	gomega.Expect(dels).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumDeletes))
++	gomega.Expect(len(nsTestVars.mockKvWriter.ds)).Should(gomega.BeNumerically("==", 1))
++
++	// Test delete where everything should be good
++	nsTestVars.k8sListWatch.Delete(ns)
++
++	// NumArgErrors stat should roll and the data store should be empty
++	gomega.Expect(dels + 1).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumDeletes))
++	gomega.Expect(len(nsTestVars.mockKvWriter.ds)).Should(gomega.BeNumerically("==", 0))
++}
++
++func testUpdateeNamespace(t *testing.T) {
++
++	nsOld := &coreV1.Namespace{}
++	nsOld.Name = "namespace1"
++	nsOld.Labels = make(map[string]string)
++	nsOld.Labels["role"] = "mgmt"
++	nsOld.Labels["privileged"] = "true"
++
++	nsNew := &coreV1.Namespace{}
++	nsNew.Name = nsOld.Name
++	nsNew.Labels = make(map[string]string)
++	nsNew.Labels["role"] = nsOld.Labels["role"]
++	nsNew.Labels["privileged"] = "false" // <-- Different value for flag "privileged"
++
++	adds := nsTestVars.nsReflector.GetStats().NumAdds
++
++	nsTestVars.k8sListWatch.Add(nsOld)
++
++	nsProtoOld := &proto.Namespace{}
++	err := nsTestVars.mockKvWriter.GetValue(proto.Key(nsOld.GetName()), nsProtoOld)
++	gomega.Expect(err).To(gomega.BeNil())
++	gomega.Expect(nsProtoOld).NotTo(gomega.BeNil())
++	gomega.Expect(nsProtoOld.Name).To(gomega.Equal(nsOld.GetName()))
++	gomega.Expect(nsProtoOld.Label).To(gomega.HaveLen(2))
++	gomega.Expect(nsProtoOld.Label).To(gomega.ContainElement(&proto.Namespace_Label{Key: "role", Value: "mgmt"}))
++	gomega.Expect(nsProtoOld.Label).To(gomega.ContainElement(&proto.Namespace_Label{Key: "privileged", Value: "true"}))
++
++	gomega.Expect(adds + 1).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumAdds))
++
++	// Take a snapshot of counters
++	updates := nsTestVars.nsReflector.GetStats().NumUpdates
++	argErrs := nsTestVars.nsReflector.GetStats().NumArgErrors
++
++	// Test update with wrong argument type
++	nsTestVars.k8sListWatch.Update(nsOld, &nsNew)
++
++	gomega.Expect(argErrs + 1).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumArgErrors))
++	gomega.Expect(updates).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumUpdates))
++
++	// Test update where everything should be good
++	nsTestVars.k8sListWatch.Update(nsOld, nsNew)
++
++	gomega.Expect(updates + 1).To(gomega.Equal(nsTestVars.nsReflector.GetStats().NumUpdates))
++
++	nsProtoNew := &proto.Namespace{}
++	err = nsTestVars.mockKvWriter.GetValue(proto.Key(nsOld.GetName()), nsProtoNew)
++	gomega.Expect(err).To(gomega.BeNil())
++
++	gomega.Expect(nsProtoOld.Label).To(gomega.ContainElement(&proto.Namespace_Label{Key: "privileged", Value: "true"}))
++	gomega.Expect(nsProtoNew.Label).To(gomega.ContainElement(&proto.Namespace_Label{Key: "privileged", Value: "false"}))
++
+ }
+diff --git a/plugins/ksr/service_reflector_test.go b/plugins/ksr/service_reflector_test.go
+index f9a5cf397..624d6d120 100644
+--- a/plugins/ksr/service_reflector_test.go
++++ b/plugins/ksr/service_reflector_test.go
+@@ -17,6 +17,7 @@ package ksr
+ import (
+ 	"sync"
+ 	"testing"
++	"time"
+ 
+ 	"github.com/onsi/gomega"
+ 
+@@ -25,9 +26,7 @@ import (
+ 	"k8s.io/apimachinery/pkg/util/intstr"
+ 	"k8s.io/client-go/kubernetes"
+ 
+-	"time"
+-
+-	proto "github.com/contiv/vpp/plugins/ksr/model/service"
++	"github.com/contiv/vpp/plugins/ksr/model/service"
+ 	"github.com/ligato/cn-infra/flavors/local"
+ )
+ 
+@@ -37,6 +36,7 @@ type ServiceTestVars struct {
+ 	mockKvLister *mockKeyProtoValLister
+ 	svcReflector *ServiceReflector
+ 	svc          *coreV1.Service
++	svcTestData  []coreV1.Service
+ }
+ 
+ var serviceTestVars ServiceTestVars
+@@ -49,7 +49,7 @@ func TestServiceReflector(t *testing.T) {
+ 
+ 	serviceTestVars.k8sListWatch = &mockK8sListWatch{}
+ 	serviceTestVars.mockKvWriter = newMockKeyProtoValWriter()
+-	serviceTestVars.mockKvLister = newMockKeyProtoValLister()
++	serviceTestVars.mockKvLister = newMockKeyProtoValLister(serviceTestVars.mockKvWriter.ds)
+ 
+ 	serviceTestVars.svcReflector = &ServiceReflector{
+ 		Reflector: Reflector{
+@@ -58,90 +58,263 @@ func TestServiceReflector(t *testing.T) {
+ 			K8sListWatch: serviceTestVars.k8sListWatch,
+ 			Writer:       serviceTestVars.mockKvWriter,
+ 			Lister:       serviceTestVars.mockKvLister,
+-			dsSynced:     true,
++			dsSynced:     false,
+ 			objType:      "Service",
+ 		},
+ 	}
+ 
+-	serviceTestVars.svc = &coreV1.Service{
+-		ObjectMeta: metav1.ObjectMeta{
+-			Name:            "kubernetes",
+-			Namespace:       "default",
+-			SelfLink:        "/api/v1/namespaces/default/services/kubernetes",
+-			UID:             "8ca8bfdc-ec4c-11e7-9959-0800271d72be",
+-			ResourceVersion: "16",
+-			Generation:      0,
+-			CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
+-				time.FixedZone("PST", -800)),
+-			Labels: map[string]string{"component: apiserver": "provider: kubernetes"},
++	serviceTestVars.svcTestData = []coreV1.Service{
++		{
++			// Test data 0: mocks a new object to be added or a "pre-existing"
++			// object that is updated during sync
++			ObjectMeta: metav1.ObjectMeta{
++				Name:            "kubernetes",
++				Namespace:       "default",
++				SelfLink:        "/api/v1/namespaces/default/services/kubernetes",
++				UID:             "8ca8bfdc-ec4c-11e7-9959-0800271d72be",
++				ResourceVersion: "16",
++				Generation:      0,
++				CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
++					time.FixedZone("PST", -800)),
++				Labels: map[string]string{"component: apiserver": "provider: kubernetes"},
++			},
++			Spec: coreV1.ServiceSpec{
++				Ports: []coreV1.ServicePort{
++					{
++						Name:     "https",
++						Protocol: "TCP",
++						Port:     443,
++						TargetPort: intstr.IntOrString{
++							Type:   0,
++							IntVal: 6443,
++						},
++					},
++				},
++				Selector:  map[string]string{},
++				ClusterIP: "10.96.0.1",
++				Type:      "ClusterIP",
++			},
+ 		},
+-		Spec: coreV1.ServiceSpec{
+-			Ports: []coreV1.ServicePort{
+-				{
+-					Name:     "https",
+-					Protocol: "TCP",
+-					Port:     443,
+-					TargetPort: intstr.IntOrString{
+-						Type:   0,
+-						IntVal: 6443,
++		// Test data 1: mocks an object that updates a "pre-existing" object
++		// during sync
++		{
++			ObjectMeta: metav1.ObjectMeta{
++				Name:            "kubernetes",
++				Namespace:       "default",
++				SelfLink:        "/api/v1/namespaces/default/services/kubernetes",
++				UID:             "8ca8bfdc-ec4c-11e7-9959-0800271d72be",
++				ResourceVersion: "16",
++				Generation:      0,
++				CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
++					time.FixedZone("PST", -800)),
++				Labels: map[string]string{"component: apiserver": "provider: kubernetes"},
++			},
++			Spec: coreV1.ServiceSpec{
++				Ports: []coreV1.ServicePort{
++					{
++						Name:     "https",
++						Protocol: "TCP",
++						Port:     443,
++						TargetPort: intstr.IntOrString{
++							Type:   0,
++							IntVal: 6443,
++						},
+ 					},
+ 				},
++				Selector:  map[string]string{},
++				ClusterIP: "10.96.0.2", // <-- Updated IP address
++				Type:      "ClusterIP",
+ 			},
+-			Selector:  map[string]string{},
+-			ClusterIP: "10.96.0.1",
+-			Type:      "ClusterIP",
+ 		},
++		// Test data 2: mocks a new object that is to be added during sync
++		{
++			ObjectMeta: metav1.ObjectMeta{
++				Name:            "calico-etcd",
++				Namespace:       "kube-system",
++				SelfLink:        "/api/v1/namespaces/kube-system/services/calico-etcd",
++				UID:             "11401d89-ec4d-11e7-9959-0800271d72be",
++				ResourceVersion: "579",
++				Generation:      0,
++				CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
++					time.FixedZone("PST", -800)),
++				Labels: map[string]string{"k8s-app": "calico-etcd"},
++			},
++			Spec: coreV1.ServiceSpec{
++				Ports: []coreV1.ServicePort{
++					{
++						Protocol: "TCP",
++						Port:     6666,
++						TargetPort: intstr.IntOrString{
++							Type:   0,
++							IntVal: 6666,
++						},
++					},
++				},
++				Selector: map[string]string{
++					"k8s-app": "calico-etcd",
++				},
++				ClusterIP: "10.96.232.136",
++				Type:      "ClusterIP",
++			},
++		},
++		// Test data 3: mocks a "stale" object that is to be deleted during
++		// sync
++		{
++			ObjectMeta: metav1.ObjectMeta{
++				Name:            "kube-dns",
++				Namespace:       "kube-system",
++				SelfLink:        "/api/v1/namespaces/kube-system/services/kube-dns",
++				UID:             "8ed7c31b-ec4c-11e7-9959-0800271d72be",
++				ResourceVersion: "184",
++				Generation:      0,
++				CreationTimestamp: metav1.Date(2017, 12, 28, 19, 58, 37, 0,
++					time.FixedZone("PST", -800)),
++				Labels: map[string]string{"k8s-app": "kube-dns"},
++			},
++			Spec: coreV1.ServiceSpec{
++				Ports: []coreV1.ServicePort{
++					{
++						Name:     "dns",
++						Protocol: "UDP",
++						Port:     53,
++						TargetPort: intstr.IntOrString{
++							Type:   0,
++							IntVal: 53,
++						},
++					},
++					{
++						Name:     "dns-tcp",
++						Protocol: "TCP",
++						Port:     53,
++						TargetPort: intstr.IntOrString{
++							Type:   0,
++							IntVal: 53,
++						},
++					},
++				},
++				Selector: map[string]string{
++					"k8s-app": "kube-dns",
++				},
++				ClusterIP: "10.96.0.10",
++				Type:      "ClusterIP",
++			},
++		},
++	}
++
++	// The mock function returns two K8s mock service instances:
++	// - a new service instance to be added to the data store
++	// - a modified service instance, where and existing service in the
++	//   data store is to be updated
++	MockK8sCache.ListFunc = func() []interface{} {
++		return []interface{}{
++			// Updated value mock
++			&serviceTestVars.svcTestData[1],
++			// New value mock
++			&serviceTestVars.svcTestData[2],
++		}
+ 	}
+ 
++	// Pre-populate the mock data store with pre-existing data that is supposed
++	// to be updated during the test.
++	svc1 := &serviceTestVars.svcTestData[0]
++	serviceTestVars.mockKvWriter.
++		Put(service.Key(svc1.GetName(), svc1.GetNamespace()), serviceTestVars.svcReflector.serviceToProto(svc1))
++	// Pre-populate the mock data store with "stale" data that is supposed to
++	// be deleted during the test.
++	svc2 := &serviceTestVars.svcTestData[3]
++	serviceTestVars.mockKvWriter.
++		Put(service.Key(svc2.GetName(), svc2.GetNamespace()), serviceTestVars.svcReflector.serviceToProto(svc2))
++
++	statsBefore := *serviceTestVars.svcReflector.GetStats()
++
+ 	stopCh := make(chan struct{})
+ 	var wg sync.WaitGroup
+ 	err := serviceTestVars.svcReflector.Init(stopCh, &wg)
+ 	gomega.Expect(err).To(gomega.BeNil())
+ 
++	// Wait for the initial sync to finish
++	for {
++		if serviceTestVars.svcReflector.HasSynced() {
++			break
++		}
++		time.Sleep(time.Millisecond * 100)
++	}
++
++	statsAfter := *serviceTestVars.svcReflector.GetStats()
++
++	gomega.Expect(serviceTestVars.mockKvWriter.ds).Should(gomega.HaveLen(2))
++	gomega.Expect(statsBefore.NumAdds + 1).To(gomega.Equal(statsAfter.NumAdds))
++	gomega.Expect(statsBefore.NumUpdates + 1).Should(gomega.BeNumerically("==", statsAfter.NumUpdates))
++	gomega.Expect(statsBefore.NumDeletes + 1).Should(gomega.BeNumerically("==", statsAfter.NumDeletes))
++
++	serviceTestVars.mockKvWriter.ClearDs()
++
++	serviceTestVars.svc = &serviceTestVars.svcTestData[0]
++
+ 	t.Run("addDeleteService", testAddDeleteService)
++
+ 	serviceTestVars.mockKvWriter.ClearDs()
+-	// TODO: add more
+ 	t.Run("updateService", testUpdateService)
++
++	MockK8sCache.ListFunc = nil
+ }
+ 
+ func testUpdateService(t *testing.T) {
+-	svcOld := *serviceTestVars.svc
+-	svcNew := *serviceTestVars.svc
++	svcOld := serviceTestVars.svcTestData[0]
++	svcNew := serviceTestVars.svcTestData[1]
+ 
++	// Take a snapshot of counters
++	argErrs := serviceTestVars.svcReflector.GetStats().NumArgErrors
+ 	upd := serviceTestVars.svcReflector.GetStats().NumUpdates
+ 
++	// Test update with wrong argument type
+ 	serviceTestVars.k8sListWatch.Update(svcOld, svcNew)
++
+ 	// There should be no update if we pass bad data types into update function
++	gomega.Expect(argErrs + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumArgErrors))
+ 	gomega.Expect(upd).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumUpdates))
+ 
+-	serviceTestVars.k8sListWatch.Update(&svcOld, &svcNew)
++	// Test add where everything should be good
++	serviceTestVars.k8sListWatch.Update(&svcOld, &svcOld)
++
+ 	// There should be no update if old and new updates are the same
+ 	gomega.Expect(upd).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumUpdates))
+ 
+ 	svcNew.Spec.ClusterIP = "1.2.3.4"
+ 	gomega.Expect(svcOld).ShouldNot(gomega.BeEquivalentTo(svcNew))
+ 	serviceTestVars.k8sListWatch.Update(&svcOld, &svcNew)
++
+ 	// There should be exactly one update because old and new data are different
+ 	gomega.Expect(upd + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumUpdates))
+ 
+ 	// Check that new data was written properly
+-	svcProto := &proto.Service{}
+-	err := serviceTestVars.mockKvWriter.GetValue(proto.Key(svcNew.GetName(), svcNew.GetNamespace()), svcProto)
++	svcProto := &service.Service{}
++	err := serviceTestVars.mockKvWriter.GetValue(service.Key(svcNew.GetName(), svcNew.GetNamespace()), svcProto)
+ 	gomega.Expect(err).To(gomega.BeNil())
+ 	gomega.Expect(svcProto.ClusterIp).To(gomega.Equal(svcNew.Spec.ClusterIP))
++
+ }
+ 
+ func testAddDeleteService(t *testing.T) {
+ 	svc := serviceTestVars.svc
+ 
+-	// Check if we can add a service
+-	add := serviceTestVars.svcReflector.GetStats().NumAdds
++	// Take a snapshot of counters
++	adds := serviceTestVars.svcReflector.GetStats().NumAdds
++	argErrs := serviceTestVars.svcReflector.GetStats().NumArgErrors
++
++	// Test add with wrong argument type
++	serviceTestVars.k8sListWatch.Add(&svc)
++
++	gomega.Expect(argErrs + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumArgErrors))
++	gomega.Expect(adds).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumAdds))
++
++	// Test add where everything should be good
+ 	serviceTestVars.k8sListWatch.Add(svc)
+-	svcProto := &proto.Service{}
+-	err := serviceTestVars.mockKvWriter.GetValue(proto.Key(svc.GetName(), svc.GetNamespace()), svcProto)
+ 
+-	gomega.Expect(add + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumAdds))
++	svcProto := &service.Service{}
++	err := serviceTestVars.mockKvWriter.GetValue(service.Key(svc.GetName(), svc.GetNamespace()), svcProto)
+ 
++	gomega.Expect(adds + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumAdds))
+ 	gomega.Expect(err).To(gomega.BeNil())
+ 	gomega.Expect(svcProto).NotTo(gomega.BeNil())
+ 	gomega.Expect(svcProto.Name).To(gomega.Equal(svc.GetName()))
+@@ -157,13 +330,22 @@ func testAddDeleteService(t *testing.T) {
+ 	gomega.Expect(svcProto.Port[0].TargetPort.Type).To(gomega.BeEquivalentTo(svc.Spec.Ports[0].TargetPort.Type))
+ 	gomega.Expect(svcProto.Port[0].TargetPort.IntVal).Should(gomega.BeEquivalentTo(svc.Spec.Ports[0].TargetPort.IntVal))
+ 
+-	// Now check if we can delete the newly added service
+-	del := serviceTestVars.svcReflector.GetStats().NumDeletes
++	// Take a snapshot of counters
++	dels := serviceTestVars.svcReflector.GetStats().NumDeletes
++	argErrs = serviceTestVars.svcReflector.GetStats().NumArgErrors
++
++	// Test delete with wrong argument type
++	serviceTestVars.k8sListWatch.Delete(&svc)
++
++	gomega.Expect(argErrs + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumArgErrors))
++	gomega.Expect(dels).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumDeletes))
++
++	// Test delete where everything should be good
+ 	serviceTestVars.k8sListWatch.Delete(svc)
+-	gomega.Expect(del + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumDeletes))
++	gomega.Expect(dels + 1).To(gomega.Equal(serviceTestVars.svcReflector.GetStats().NumDeletes))
+ 
+-	svcProto = &proto.Service{}
+-	key := proto.Key(svc.GetName(), svc.GetNamespace())
++	svcProto = &service.Service{}
++	key := service.Key(svc.GetName(), svc.GetNamespace())
+ 	err = serviceTestVars.mockKvWriter.GetValue(key, svcProto)
+ 	gomega.Ω(err).ShouldNot(gomega.Succeed())
+ }
+diff --git a/plugins/service/configurator/configurator_test.go b/plugins/service/configurator/configurator_test.go
+new file mode 100644
+index 000000000..12e6b6f28
+--- /dev/null
++++ b/plugins/service/configurator/configurator_test.go
+@@ -0,0 +1,24 @@
++/*
++ * // Copyright (c) 2018 Cisco and/or its affiliates.
++ * //
++ * // Licensed under the Apache License, Version 2.0 (the "License");
++ * // you may not use this file except in compliance with the License.
++ * // You may obtain a copy of the License at:
++ * //
++ * //     http://www.apache.org/licenses/LICENSE-2.0
++ * //
++ * // Unless required by applicable law or agreed to in writing, software
++ * // distributed under the License is distributed on an "AS IS" BASIS,
++ * // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * // See the License for the specific language governing permissions and
++ * // limitations under the License.
++ */
++
++package configurator
++
++func TestSomething(t *testing.T) {
++	gomega.RegisterTestingT(t)
++	logger := logroot.StandardLogger()
++	logger.SetLevel(logging.DebugLevel)
++	logger.Debug("TestSomething")
++}
+diff --git a/plugins/service/processor/processor_test.go b/plugins/service/processor/processor_test.go
+new file mode 100644
+index 000000000..f637aa822
+--- /dev/null
++++ b/plugins/service/processor/processor_test.go
+@@ -0,0 +1,24 @@
++/*
++ * // Copyright (c) 2018 Cisco and/or its affiliates.
++ * //
++ * // Licensed under the Apache License, Version 2.0 (the "License");
++ * // you may not use this file except in compliance with the License.
++ * // You may obtain a copy of the License at:
++ * //
++ * //     http://www.apache.org/licenses/LICENSE-2.0
++ * //
++ * // Unless required by applicable law or agreed to in writing, software
++ * // distributed under the License is distributed on an "AS IS" BASIS,
++ * // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * // See the License for the specific language governing permissions and
++ * // limitations under the License.
++ */
++
++package processor
++
++func TestSomething(t *testing.T) {
++	gomega.RegisterTestingT(t)
++	logger := logroot.StandardLogger()
++	logger.SetLevel(logging.DebugLevel)
++	logger.Debug("TestSomething")
++}

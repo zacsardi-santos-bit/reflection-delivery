@@ -1,0 +1,216 @@
+diff --git a/pandas/tests/arithmetic/test_period.py b/pandas/tests/arithmetic/test_period.py
+index 8de8663b2f..db18fc1cc9 100644
+--- a/pandas/tests/arithmetic/test_period.py
++++ b/pandas/tests/arithmetic/test_period.py
+@@ -1228,7 +1228,6 @@ class TestPeriodIndexArithmetic:
+             arr + ts
+         with pytest.raises(TypeError, match=msg):
+             ts + arr
+-
+         msg = "cannot add PeriodArray and DatetimeArray"
+         with pytest.raises(TypeError, match=msg):
+             arr + Series([ts])
+@@ -1239,16 +1238,9 @@ class TestPeriodIndexArithmetic:
+         with pytest.raises(TypeError, match=msg):
+             pd.Index([ts]) + arr
+ 
+-        if box_with_array is pd.DataFrame:
+-            msg = "cannot add PeriodArray and DatetimeArray"
+-        else:
+-            msg = r"unsupported operand type\(s\) for \+: 'Period' and 'DatetimeArray"
++        msg = "cannot add PeriodArray and DatetimeArray"
+         with pytest.raises(TypeError, match=msg):
+             arr + pd.DataFrame([ts])
+-        if box_with_array is pd.DataFrame:
+-            msg = "cannot add PeriodArray and DatetimeArray"
+-        else:
+-            msg = r"unsupported operand type\(s\) for \+: 'DatetimeArray' and 'Period'"
+         with pytest.raises(TypeError, match=msg):
+             pd.DataFrame([ts]) + arr
+ 
+diff --git a/pandas/tests/arithmetic/test_string.py b/pandas/tests/arithmetic/test_string.py
+index 5399e3ed4a..968d7c42f2 100644
+--- a/pandas/tests/arithmetic/test_string.py
++++ b/pandas/tests/arithmetic/test_string.py
+@@ -255,11 +255,13 @@ def test_mul(any_string_dtype):
+     tm.assert_extension_array_equal(result, expected)
+ 
+ 
+-def test_add_strings(any_string_dtype, request):
++def test_add_strings(any_string_dtype, request, using_infer_string):
+     dtype = any_string_dtype
+-    if dtype != np.dtype(object):
+-        mark = pytest.mark.xfail(reason="GH-28527")
++    if dtype == object and using_infer_string:
++        # Only fails on objects while using infer_string
++        mark = pytest.mark.xfail(reason="object addition returns StringDtype")
+         request.applymarker(mark)
++
+     arr = pd.array(["a", "b", "c", "d"], dtype=dtype)
+     df = pd.DataFrame([["t", "y", "v", "w"]], dtype=object)
+     assert arr.__add__(df) is NotImplemented
+@@ -273,17 +275,20 @@ def test_add_strings(any_string_dtype, request):
+     tm.assert_frame_equal(result, expected)
+ 
+ 
+-@pytest.mark.xfail(reason="GH-28527")
+-def test_add_frame(any_string_dtype, using_infer_string):
++def test_add_frame(any_string_dtype, request, using_infer_string):
+     if not using_infer_string:
+         pytest.skip(
+             "This doesn't fail on this build, but this build is going away, "
+             "so not worth more invasive fix."
+         )
++
+     dtype = any_string_dtype
+-    arr = pd.array(["a", "b", np.nan, np.nan], dtype=dtype)
+-    df = pd.DataFrame([["x", np.nan, "y", np.nan]])
++    if dtype == object:
++        marker = pytest.mark.xfail(reason="processed as NumpyEADtype, separate issue")
++        request.applymarker(marker)
+ 
++    arr = pd.array(["a", "b", np.nan, np.nan], dtype=dtype)
++    df = pd.DataFrame([["x", np.nan, "y", np.nan]], dtype=dtype)
+     assert arr.__add__(df) is NotImplemented
+ 
+     result = arr + df
+diff --git a/pandas/tests/arrays/boolean/test_arithmetic.py b/pandas/tests/arrays/boolean/test_arithmetic.py
+index 312dfb72e0..555e69dc82 100644
+--- a/pandas/tests/arrays/boolean/test_arithmetic.py
++++ b/pandas/tests/arrays/boolean/test_arithmetic.py
+@@ -118,7 +118,7 @@ def test_error_invalid_values(data, all_arithmetic_operators):
+         ops(pd.Timestamp("20180101"))
+ 
+     # invalid array-likes
+-    if op not in ("__mul__", "__rmul__"):
++    if op not in ("__mul__", "__rmul__", "__add__", "__radd__"):
+         # TODO(extension) numpy's mul with object array sees booleans as numbers
+         msg = "|".join(
+             [
+diff --git a/pandas/tests/arrays/floating/test_arithmetic.py b/pandas/tests/arrays/floating/test_arithmetic.py
+index 9b06fe5364..5dfa24c3ad 100644
+--- a/pandas/tests/arrays/floating/test_arithmetic.py
++++ b/pandas/tests/arrays/floating/test_arithmetic.py
+@@ -160,8 +160,9 @@ def test_error_invalid_values(data, all_arithmetic_operators):
+         ops(pd.Timestamp("20180101"))
+ 
+     # invalid array-likes
++    str_ser = pd.Series("foo", index=s.index)
+     with pytest.raises(TypeError, match=msg):
+-        ops(pd.Series("foo", index=s.index))
++        ops(str_ser)
+ 
+     msg = "|".join(
+         [
+diff --git a/pandas/tests/frame/test_arithmetic.py b/pandas/tests/frame/test_arithmetic.py
+index 51386caf0c..dfe7ed5cd8 100644
+--- a/pandas/tests/frame/test_arithmetic.py
++++ b/pandas/tests/frame/test_arithmetic.py
+@@ -632,11 +632,37 @@ class TestFrameFlexArithmetic:
+         expected = float_frame.sort_index() * np.nan
+         tm.assert_frame_equal(result, expected)
+ 
+-        with pytest.raises(NotImplementedError, match="fill_value"):
+-            float_frame.add(float_frame.iloc[0], fill_value=3)
++    @pytest.mark.parametrize("axis", [0, 1])
++    def test_arith_flex_frame_fill_value_series(self, axis):
++        # GH#61581
++        df = DataFrame({"A": [1.0, np.nan], "B": [np.nan, 4.0]})
++        if axis == 0:
++            ser = Series([np.nan, 2.0])
++            expected = DataFrame({"A": [11.0, 12.0], "B": [np.nan, 6.0]})
++        else:
++            ser = Series([np.nan, 2.0], index=["A", "B"])
++            expected = DataFrame({"A": [11.0, np.nan], "B": [12.0, 6.0]})
++        result = df.add(ser, axis=axis, fill_value=10)
++        tm.assert_frame_equal(result, expected)
+ 
+-        with pytest.raises(NotImplementedError, match="fill_value"):
+-            float_frame.add(float_frame.iloc[0], axis="index", fill_value=3)
++    @pytest.mark.parametrize("axis", [0, 1])
++    def test_arith_flex_frame_fill_value_series_mismatched_index(self, axis):
++        # GH#61581
++        ser = Series([10.0, np.nan], index=["A", "C"])
++        if axis == 0:
++            df = DataFrame({"A": [1.0, np.nan], "B": [np.nan, 4.0]}, index=["A", "B"])
++            expected = DataFrame(
++                {"A": [11.0, np.nan, np.nan], "B": [15.0, 9.0, np.nan]},
++                index=["A", "B", "C"],
++            )
++        else:
++            df = DataFrame({"A": [1.0, np.nan], "B": [np.nan, 4.0]}, index=[0, 1])
++            expected = DataFrame(
++                {"A": [11.0, 15.0], "B": [np.nan, 9.0], "C": [np.nan, np.nan]},
++                index=[0, 1],
++            )
++        result = df.add(ser, axis=axis, fill_value=5)
++        tm.assert_frame_equal(result, expected)
+ 
+     @pytest.mark.parametrize("op", ["add", "sub", "mul", "mod"])
+     def test_arith_flex_series_ops(self, simple_frame, op):
+@@ -671,18 +697,26 @@ class TestFrameFlexArithmetic:
+         result = df.div(df[0], axis="index")
+         tm.assert_frame_equal(result, expected)
+ 
+-    def test_arith_flex_zero_len_raises(self):
+-        # GH 19522 passing fill_value to frame flex arith methods should
+-        # raise even in the zero-length special cases
++    def test_arith_flex_zero_len_fill_value(self):
+         ser_len0 = Series([], dtype=object)
+         df_len0 = DataFrame(columns=["A", "B"])
+         df = DataFrame([[1, 2], [3, 4]], columns=["A", "B"])
+ 
+-        with pytest.raises(NotImplementedError, match="fill_value"):
++        msg = r"unsupported operand type\(s\) for \+: 'int' and 'str'"
++        with pytest.raises(TypeError, match=msg):
+             df.add(ser_len0, fill_value="E")
+ 
+-        with pytest.raises(NotImplementedError, match="fill_value"):
+-            df_len0.sub(df["A"], axis=None, fill_value=3)
++        result = df_len0.sub(df, axis=None, fill_value=3)
++        expected = DataFrame([[2, 1], [0, -1]], columns=["A", "B"])
++        tm.assert_frame_equal(result, expected, check_dtype=False)
++
++        result = df_len0.sub(df["A"], axis=0, fill_value=3)
++        expected = DataFrame([[2, 2], [0, 0]], columns=["A", "B"])
++        tm.assert_frame_equal(result, expected, check_dtype=False)
++
++        result = df_len0.sub(df["A"], axis=1, fill_value=3)
++        expected = DataFrame([], columns=["A", "B", 0, 1])
++        tm.assert_frame_equal(result, expected, check_dtype=False)
+ 
+     def test_flex_add_scalar_fill_value(self):
+         # GH#12723
+@@ -2274,6 +2308,32 @@ def test_mixed_col_index_dtype(string_dtype_no_object):
+     tm.assert_frame_equal(result, expected)
+ 
+ 
++@pytest.mark.parametrize("axis", [0, 1])
++@pytest.mark.parametrize(
++    "dtype, fill_val",
++    [
++        (tm.ALL_INT_EA_DTYPES[0], 10),
++        (tm.FLOAT_NUMPY_DTYPES[0], 4.9),
++        (tm.FLOAT_EA_DTYPES[0], 4.9),
++    ],
++)
++def test_df_mul_array_fill_value(dtype, fill_val, axis, request):
++    # GH 61581
++    df = DataFrame([[np.nan, 1, 2], [3, np.nan, 5]], dtype=dtype)
++    if axis == 0:
++        mult = pd.array([np.nan, 1.0], dtype=dtype)
++        expected = DataFrame(
++            [[np.nan, fill_val, fill_val * 2], [3.0, fill_val, 5.0]]
++        ).astype(dtype)
++    else:
++        mult = pd.array([np.nan, 1.0, 2.0], dtype=dtype)
++        expected = DataFrame(
++            [[np.nan, 1.0, 2.0 * 2.0], [3.0 * fill_val, fill_val, 5.0 * 2.0]]
++        ).astype(dtype)
++    result = df.mul(mult, axis=axis, fill_value=fill_val)
++    tm.assert_frame_equal(result, expected)
++
++
+ def test_sum_mixed_empty(any_string_dtype):
+     # GH 64657
+     # for actual string dtype, sum gives "", for object dtype we get 0

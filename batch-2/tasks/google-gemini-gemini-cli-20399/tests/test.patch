@@ -1,0 +1,895 @@
+diff --git a/packages/cli/src/config/settingsSchema.test.ts b/packages/cli/src/config/settingsSchema.test.ts
+index cf9dfc992..17a916213 100644
+--- a/packages/cli/src/config/settingsSchema.test.ts
++++ b/packages/cli/src/config/settingsSchema.test.ts
+@@ -96,6 +96,14 @@ describe('SettingsSchema', () => {
+       ]);
+     });
+ 
++    it('should have errorVerbosity enum property', () => {
++      const definition = getSettingsSchema().ui?.properties?.errorVerbosity;
++      expect(definition).toBeDefined();
++      expect(definition?.type).toBe('enum');
++      expect(definition?.default).toBe('low');
++      expect(definition?.options?.map((o) => o.value)).toEqual(['low', 'full']);
++    });
++
+     it('should have checkpointing nested properties', () => {
+       expect(
+         getSettingsSchema().general?.properties?.checkpointing.properties
+diff --git a/packages/cli/src/ui/components/DetailedMessagesDisplay.test.tsx b/packages/cli/src/ui/components/DetailedMessagesDisplay.test.tsx
+index 108db073d..6e6a4ce48 100644
+--- a/packages/cli/src/ui/components/DetailedMessagesDisplay.test.tsx
++++ b/packages/cli/src/ui/components/DetailedMessagesDisplay.test.tsx
+@@ -4,12 +4,13 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { render } from '../../test-utils/render.js';
++import { renderWithProviders } from '../../test-utils/render.js';
+ import { DetailedMessagesDisplay } from './DetailedMessagesDisplay.js';
+ import { describe, it, expect, vi } from 'vitest';
+ import type { ConsoleMessageItem } from '../types.js';
+ import { Box } from 'ink';
+ import type React from 'react';
++import { createMockSettings } from '../../test-utils/settings.js';
+ 
+ vi.mock('./shared/ScrollableList.js', () => ({
+   ScrollableList: ({
+@@ -29,13 +30,18 @@ vi.mock('./shared/ScrollableList.js', () => ({
+ 
+ describe('DetailedMessagesDisplay', () => {
+   it('renders nothing when messages are empty', async () => {
+-    const { lastFrame, waitUntilReady, unmount } = render(
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
+       <DetailedMessagesDisplay
+         messages={[]}
+         maxHeight={10}
+         width={80}
+         hasFocus={false}
+       />,
++      {
++        settings: createMockSettings({
++          merged: { ui: { errorVerbosity: 'full' } },
++        }),
++      },
+     );
+     await waitUntilReady();
+     expect(lastFrame({ allowEmpty: true })).toBe('');
+@@ -50,13 +56,18 @@ describe('DetailedMessagesDisplay', () => {
+       { type: 'debug', content: 'Debug message', count: 1 },
+     ];
+ 
+-    const { lastFrame, waitUntilReady, unmount } = render(
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
+       <DetailedMessagesDisplay
+         messages={messages}
+         maxHeight={20}
+         width={80}
+         hasFocus={true}
+       />,
++      {
++        settings: createMockSettings({
++          merged: { ui: { errorVerbosity: 'full' } },
++        }),
++      },
+     );
+     await waitUntilReady();
+     const output = lastFrame();
+@@ -65,18 +76,69 @@ describe('DetailedMessagesDisplay', () => {
+     unmount();
+   });
+ 
++  it('hides the F12 hint in low error verbosity mode', async () => {
++    const messages: ConsoleMessageItem[] = [
++      { type: 'error', content: 'Error message', count: 1 },
++    ];
++
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
++      <DetailedMessagesDisplay
++        messages={messages}
++        maxHeight={20}
++        width={80}
++        hasFocus={true}
++      />,
++      {
++        settings: createMockSettings({
++          merged: { ui: { errorVerbosity: 'low' } },
++        }),
++      },
++    );
++    await waitUntilReady();
++    expect(lastFrame()).not.toContain('(F12 to close)');
++    unmount();
++  });
++
++  it('shows the F12 hint in full error verbosity mode', async () => {
++    const messages: ConsoleMessageItem[] = [
++      { type: 'error', content: 'Error message', count: 1 },
++    ];
++
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
++      <DetailedMessagesDisplay
++        messages={messages}
++        maxHeight={20}
++        width={80}
++        hasFocus={true}
++      />,
++      {
++        settings: createMockSettings({
++          merged: { ui: { errorVerbosity: 'full' } },
++        }),
++      },
++    );
++    await waitUntilReady();
++    expect(lastFrame()).toContain('(F12 to close)');
++    unmount();
++  });
++
+   it('renders message counts', async () => {
+     const messages: ConsoleMessageItem[] = [
+       { type: 'log', content: 'Repeated message', count: 5 },
+     ];
+ 
+-    const { lastFrame, waitUntilReady, unmount } = render(
++    const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
+       <DetailedMessagesDisplay
+         messages={messages}
+         maxHeight={10}
+         width={80}
+         hasFocus={false}
+       />,
++      {
++        settings: createMockSettings({
++          merged: { ui: { errorVerbosity: 'full' } },
++        }),
++      },
+     );
+     await waitUntilReady();
+     const output = lastFrame();
+diff --git a/packages/cli/src/ui/components/Footer.test.tsx b/packages/cli/src/ui/components/Footer.test.tsx
+index 2d8662cd5..9c253fec9 100644
+--- a/packages/cli/src/ui/components/Footer.test.tsx
++++ b/packages/cli/src/ui/components/Footer.test.tsx
+@@ -8,7 +8,11 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+ import { renderWithProviders } from '../../test-utils/render.js';
+ import { createMockSettings } from '../../test-utils/settings.js';
+ import { Footer } from './Footer.js';
+-import { tildeifyPath, ToolCallDecision } from '@google/gemini-cli-core';
++import {
++  makeFakeConfig,
++  tildeifyPath,
++  ToolCallDecision,
++} from '@google/gemini-cli-core';
+ import type { SessionStatsState } from '../contexts/SessionContext.js';
+ 
+ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
+@@ -503,6 +507,75 @@ describe('<Footer />', () => {
+       unmount();
+     });
+   });
++
++  describe('error summary visibility', () => {
++    it('hides error summary in low verbosity mode', async () => {
++      const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
++        <Footer />,
++        {
++          width: 120,
++          uiState: {
++            sessionStats: mockSessionStats,
++            errorCount: 2,
++            showErrorDetails: false,
++          },
++          settings: createMockSettings({
++            merged: { ui: { errorVerbosity: 'low' } },
++          }),
++        },
++      );
++      await waitUntilReady();
++      expect(lastFrame()).not.toContain('F12 for details');
++      expect(lastFrame()).not.toContain('2 errors');
++      unmount();
++    });
++
++    it('shows error summary in full verbosity mode', async () => {
++      const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
++        <Footer />,
++        {
++          width: 120,
++          uiState: {
++            sessionStats: mockSessionStats,
++            errorCount: 2,
++            showErrorDetails: false,
++          },
++          settings: createMockSettings({
++            merged: { ui: { errorVerbosity: 'full' } },
++          }),
++        },
++      );
++      await waitUntilReady();
++      expect(lastFrame()).toContain('F12 for details');
++      expect(lastFrame()).toContain('2 errors');
++      unmount();
++    });
++
++    it('shows error summary in debug mode even when verbosity is low', async () => {
++      const debugConfig = makeFakeConfig();
++      vi.spyOn(debugConfig, 'getDebugMode').mockReturnValue(true);
++
++      const { lastFrame, waitUntilReady, unmount } = renderWithProviders(
++        <Footer />,
++        {
++          width: 120,
++          config: debugConfig,
++          uiState: {
++            sessionStats: mockSessionStats,
++            errorCount: 1,
++            showErrorDetails: false,
++          },
++          settings: createMockSettings({
++            merged: { ui: { errorVerbosity: 'low' } },
++          }),
++        },
++      );
++      await waitUntilReady();
++      expect(lastFrame()).toContain('F12 for details');
++      expect(lastFrame()).toContain('1 error');
++      unmount();
++    });
++  });
+ });
+ 
+ describe('fallback mode display', () => {
+diff --git a/packages/cli/src/ui/components/messages/ToolGroupMessage.test.tsx b/packages/cli/src/ui/components/messages/ToolGroupMessage.test.tsx
+index 1ead1503e..056e6a54b 100644
+--- a/packages/cli/src/ui/components/messages/ToolGroupMessage.test.tsx
++++ b/packages/cli/src/ui/components/messages/ToolGroupMessage.test.tsx
+@@ -25,6 +25,7 @@ import {
+   GLOB_DISPLAY_NAME,
+ } from '@google/gemini-cli-core';
+ import os from 'node:os';
++import { createMockSettings } from '../../../test-utils/settings.js';
+ 
+ describe('<ToolGroupMessage />', () => {
+   afterEach(() => {
+@@ -64,6 +65,11 @@ describe('<ToolGroupMessage />', () => {
+     ideMode: false,
+     enableInteractiveShell: true,
+   });
++  const fullVerbositySettings = createMockSettings({
++    merged: {
++      ui: { errorVerbosity: 'full' },
++    },
++  });
+ 
+   describe('Golden Snapshots', () => {
+     it('renders single successful tool call', async () => {
+@@ -73,6 +79,7 @@ describe('<ToolGroupMessage />', () => {
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -104,7 +111,7 @@ describe('<ToolGroupMessage />', () => {
+ 
+       const { lastFrame, unmount, waitUntilReady } = renderWithProviders(
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+-        { config: baseMockConfig },
++        { config: baseMockConfig, settings: fullVerbositySettings },
+       );
+ 
+       // Should render nothing because all tools in the group are confirming
+@@ -140,6 +147,7 @@ describe('<ToolGroupMessage />', () => {
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -160,6 +168,76 @@ describe('<ToolGroupMessage />', () => {
+       unmount();
+     });
+ 
++    it('hides errored tool calls in low error verbosity mode', async () => {
++      const toolCalls = [
++        createToolCall({
++          callId: 'tool-1',
++          name: 'successful-tool',
++          status: CoreToolCallStatus.Success,
++        }),
++        createToolCall({
++          callId: 'tool-2',
++          name: 'error-tool',
++          status: CoreToolCallStatus.Error,
++          resultDisplay: 'Tool failed',
++        }),
++      ];
++      const item = createItem(toolCalls);
++
++      const { lastFrame, unmount, waitUntilReady } = renderWithProviders(
++        <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
++        {
++          config: baseMockConfig,
++          uiState: {
++            pendingHistoryItems: [
++              {
++                type: 'tool_group',
++                tools: toolCalls,
++              },
++            ],
++          },
++        },
++      );
++      await waitUntilReady();
++      const output = lastFrame();
++      expect(output).toContain('successful-tool');
++      expect(output).not.toContain('error-tool');
++      unmount();
++    });
++
++    it('keeps client-initiated errored tool calls visible in low error verbosity mode', async () => {
++      const toolCalls = [
++        createToolCall({
++          callId: 'tool-1',
++          name: 'client-error-tool',
++          status: CoreToolCallStatus.Error,
++          isClientInitiated: true,
++          resultDisplay: 'Client tool failed',
++        }),
++      ];
++      const item = createItem(toolCalls);
++
++      const { lastFrame, unmount, waitUntilReady } = renderWithProviders(
++        <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
++        {
++          config: baseMockConfig,
++          uiState: {
++            pendingHistoryItems: [
++              {
++                type: 'tool_group',
++                tools: toolCalls,
++              },
++            ],
++          },
++        },
++      );
++
++      await waitUntilReady();
++      const output = lastFrame();
++      expect(output).toContain('client-error-tool');
++      unmount();
++    });
++
+     it('renders mixed tool calls including shell command', async () => {
+       const toolCalls = [
+         createToolCall({
+@@ -187,6 +265,7 @@ describe('<ToolGroupMessage />', () => {
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -233,6 +312,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -266,6 +346,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -288,6 +369,7 @@ describe('<ToolGroupMessage />', () => {
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -326,6 +408,7 @@ describe('<ToolGroupMessage />', () => {
+         </Scrollable>,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -356,6 +439,7 @@ describe('<ToolGroupMessage />', () => {
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -406,6 +490,7 @@ describe('<ToolGroupMessage />', () => {
+         </Scrollable>,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -439,6 +524,7 @@ describe('<ToolGroupMessage />', () => {
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -468,6 +554,7 @@ describe('<ToolGroupMessage />', () => {
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -510,6 +597,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           uiState: {
+             pendingHistoryItems: [
+               {
+@@ -569,7 +657,7 @@ describe('<ToolGroupMessage />', () => {
+ 
+         const { lastFrame, unmount, waitUntilReady } = renderWithProviders(
+           <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+-          { config: baseMockConfig },
++          { config: baseMockConfig, settings: fullVerbositySettings },
+         );
+         await waitUntilReady();
+ 
+@@ -599,7 +687,7 @@ describe('<ToolGroupMessage />', () => {
+ 
+       const { lastFrame, unmount, waitUntilReady } = renderWithProviders(
+         <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+-        { config: baseMockConfig },
++        { config: baseMockConfig, settings: fullVerbositySettings },
+       );
+ 
+       await waitUntilReady();
+@@ -627,7 +715,7 @@ describe('<ToolGroupMessage />', () => {
+           toolCalls={toolCalls}
+           borderBottom={false}
+         />,
+-        { config: baseMockConfig },
++        { config: baseMockConfig, settings: fullVerbositySettings },
+       );
+       // AskUser tools in progress are rendered by AskUserDialog, so we expect nothing.
+       await waitUntilReady();
+@@ -665,7 +753,7 @@ describe('<ToolGroupMessage />', () => {
+ 
+         const { lastFrame, unmount, waitUntilReady } = renderWithProviders(
+           <ToolGroupMessage {...baseProps} item={item} toolCalls={toolCalls} />,
+-          { config: baseMockConfig },
++          { config: baseMockConfig, settings: fullVerbositySettings },
+         );
+ 
+         await waitUntilReady();
+@@ -697,6 +785,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           useAlternateBuffer: true,
+           uiState: {
+             constrainHeight: true,
+@@ -728,6 +817,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           useAlternateBuffer: true,
+           uiState: {
+             constrainHeight: true,
+@@ -760,6 +850,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           useAlternateBuffer: true,
+           uiState: {
+             constrainHeight: true,
+@@ -791,6 +882,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           useAlternateBuffer: true,
+           uiState: {
+             constrainHeight: true,
+@@ -818,6 +910,7 @@ describe('<ToolGroupMessage />', () => {
+         />,
+         {
+           config: baseMockConfig,
++          settings: fullVerbositySettings,
+           useAlternateBuffer: true,
+           uiState: {
+             constrainHeight: false,
+@@ -850,6 +943,7 @@ describe('<ToolGroupMessage />', () => {
+           />,
+           {
+             config: baseMockConfig,
++            settings: fullVerbositySettings,
+             useAlternateBuffer: true,
+             uiState: {
+               constrainHeight: true,
+diff --git a/packages/cli/src/ui/components/messages/ToolResultDisplayOverflow.test.tsx b/packages/cli/src/ui/components/messages/ToolResultDisplayOverflow.test.tsx
+index a1d4106ce..2dff7d25e 100644
+--- a/packages/cli/src/ui/components/messages/ToolResultDisplayOverflow.test.tsx
++++ b/packages/cli/src/ui/components/messages/ToolResultDisplayOverflow.test.tsx
+@@ -50,10 +50,14 @@ describe('ToolResultDisplay Overflow', () => {
+ 
+     await waitUntilReady();
+ 
+-    // ResizeObserver might take a tick, though ToolGroupMessage calculates overflow synchronously
++    // In ASB mode the overflow hint can render before the scroll position
++    // settles. Wait for both the hint and the tail of the content so this
++    // snapshot is deterministic across slower CI runners.
+     await waitFor(() => {
+       const frame = lastFrame();
+-      expect(frame.toLowerCase()).toContain('press ctrl+o to show more lines');
++      expect(frame).toBeDefined();
++      expect(frame?.toLowerCase()).toContain('press ctrl+o to show more lines');
++      expect(frame).toContain('line 50');
+     });
+ 
+     const frame = lastFrame();
+diff --git a/packages/cli/src/ui/hooks/toolMapping.test.ts b/packages/cli/src/ui/hooks/toolMapping.test.ts
+index 16365f442..3b4e94235 100644
+--- a/packages/cli/src/ui/hooks/toolMapping.test.ts
++++ b/packages/cli/src/ui/hooks/toolMapping.test.ts
+@@ -325,5 +325,33 @@ describe('toolMapping', () => {
+       const result = mapToDisplay(toolCall);
+       expect(result.tools[0].originalRequestName).toBe('original_tool');
+     });
++
++    it('propagates isClientInitiated from tool request', () => {
++      const clientInitiatedTool: ScheduledToolCall = {
++        status: CoreToolCallStatus.Scheduled,
++        request: {
++          ...mockRequest,
++          callId: 'call-client',
++          isClientInitiated: true,
++        },
++        tool: mockTool,
++        invocation: mockInvocation,
++      };
++
++      const modelInitiatedTool: ScheduledToolCall = {
++        status: CoreToolCallStatus.Scheduled,
++        request: {
++          ...mockRequest,
++          callId: 'call-model',
++          isClientInitiated: false,
++        },
++        tool: mockTool,
++        invocation: mockInvocation,
++      };
++
++      const result = mapToDisplay([clientInitiatedTool, modelInitiatedTool]);
++      expect(result.tools[0].isClientInitiated).toBe(true);
++      expect(result.tools[1].isClientInitiated).toBe(false);
++    });
+   });
+ });
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.test.tsx b/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
+index eb7e029b9..df8c17bd2 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
++++ b/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
+@@ -335,7 +335,10 @@ describe('useGeminiStream', () => {
+   });
+ 
+   const mockLoadedSettings: LoadedSettings = {
+-    merged: { preferredEditor: 'vscode' },
++    merged: {
++      preferredEditor: 'vscode',
++      ui: { errorVerbosity: 'full' },
++    },
+     user: { path: '/user/settings.json', settings: {} },
+     workspace: { path: '/workspace/.gemini/settings.json', settings: {} },
+     errors: [],
+@@ -346,6 +349,7 @@ describe('useGeminiStream', () => {
+   const renderTestHook = (
+     initialToolCalls: TrackedToolCall[] = [],
+     geminiClient?: any,
++    loadedSettings: LoadedSettings = mockLoadedSettings,
+   ) => {
+     const client = geminiClient || mockConfig.getGeminiClient();
+     let lastToolCalls = initialToolCalls;
+@@ -360,7 +364,7 @@ describe('useGeminiStream', () => {
+         cmd: PartListUnion,
+       ) => Promise<SlashCommandProcessorResult | false>,
+       shellModeActive: false,
+-      loadedSettings: mockLoadedSettings,
++      loadedSettings,
+       toolCalls: initialToolCalls,
+     };
+ 
+@@ -969,6 +973,93 @@ describe('useGeminiStream', () => {
+       // Streaming state should be Idle
+       expect(result.current.streamingState).toBe(StreamingState.Idle);
+     });
++
++    const infoTexts = mockAddItem.mock.calls.map(
++      ([item]) => (item as { text?: string }).text ?? '',
++    );
++    expect(
++      infoTexts.some((text) =>
++        text.includes(
++          'Some internal tool attempts failed before this final error',
++        ),
++      ),
++    ).toBe(false);
++    expect(
++      infoTexts.some((text) =>
++        text.includes('This request failed. Press F12 for diagnostics'),
++      ),
++    ).toBe(false);
++  });
++
++  it('should add a compact suppressed-error note before STOP_EXECUTION terminal info in low verbosity mode', async () => {
++    const stopExecutionToolCalls: TrackedToolCall[] = [
++      {
++        request: {
++          callId: 'stop-call',
++          name: 'stopTool',
++          args: {},
++          isClientInitiated: false,
++          prompt_id: 'prompt-id-stop',
++        },
++        status: CoreToolCallStatus.Error,
++        response: {
++          callId: 'stop-call',
++          responseParts: [{ text: 'error occurred' }],
++          errorType: ToolErrorType.STOP_EXECUTION,
++          error: new Error('Stop reason from hook'),
++          resultDisplay: undefined,
++        },
++        responseSubmittedToGemini: false,
++        tool: {
++          displayName: 'stop tool',
++        },
++        invocation: {
++          getDescription: () => `Mock description`,
++        } as unknown as AnyToolInvocation,
++      } as unknown as TrackedCompletedToolCall,
++    ];
++    const lowVerbositySettings = {
++      ...mockLoadedSettings,
++      merged: {
++        ...mockLoadedSettings.merged,
++        ui: { errorVerbosity: 'low' },
++      },
++    } as LoadedSettings;
++    const client = new MockedGeminiClientClass(mockConfig);
++
++    const { result } = renderTestHook([], client, lowVerbositySettings);
++
++    await act(async () => {
++      if (capturedOnComplete) {
++        await capturedOnComplete(stopExecutionToolCalls);
++      }
++    });
++
++    await waitFor(() => {
++      expect(mockMarkToolsAsSubmitted).toHaveBeenCalledWith(['stop-call']);
++      expect(mockSendMessageStream).not.toHaveBeenCalled();
++      expect(result.current.streamingState).toBe(StreamingState.Idle);
++    });
++
++    const infoTexts = mockAddItem.mock.calls.map(
++      ([item]) => (item as { text?: string }).text ?? '',
++    );
++    const noteIndex = infoTexts.findIndex((text) =>
++      text.includes(
++        'Some internal tool attempts failed before this final error',
++      ),
++    );
++    const stopIndex = infoTexts.findIndex((text) =>
++      text.includes('Agent execution stopped: Stop reason from hook'),
++    );
++    const failureHintIndex = infoTexts.findIndex((text) =>
++      text.includes('This request failed. Press F12 for diagnostics'),
++    );
++    expect(noteIndex).toBeGreaterThanOrEqual(0);
++    expect(stopIndex).toBeGreaterThanOrEqual(0);
++    expect(failureHintIndex).toBeGreaterThanOrEqual(0);
++    expect(noteIndex).toBeLessThan(stopIndex);
++    expect(stopIndex).toBeLessThan(failureHintIndex);
+   });
+ 
+   it('should group multiple cancelled tool call responses into a single history entry', async () => {
+diff --git a/packages/cli/src/ui/hooks/useLoadingIndicator.test.tsx b/packages/cli/src/ui/hooks/useLoadingIndicator.test.tsx
+index 16ab6198a..e0ae9b5f2 100644
+--- a/packages/cli/src/ui/hooks/useLoadingIndicator.test.tsx
++++ b/packages/cli/src/ui/hooks/useLoadingIndicator.test.tsx
+@@ -35,6 +35,7 @@ describe('useLoadingIndicator', () => {
+     initialShouldShowFocusHint: boolean = false,
+     initialRetryStatus: RetryAttemptPayload | null = null,
+     loadingPhrasesMode: LoadingPhrasesMode = 'all',
++    initialErrorVerbosity: 'low' | 'full' = 'full',
+   ) => {
+     let hookResult: ReturnType<typeof useLoadingIndicator>;
+     function TestComponent({
+@@ -42,17 +43,20 @@ describe('useLoadingIndicator', () => {
+       shouldShowFocusHint,
+       retryStatus,
+       mode,
++      errorVerbosity,
+     }: {
+       streamingState: StreamingState;
+       shouldShowFocusHint?: boolean;
+       retryStatus?: RetryAttemptPayload | null;
+       mode?: LoadingPhrasesMode;
++      errorVerbosity?: 'low' | 'full';
+     }) {
+       hookResult = useLoadingIndicator({
+         streamingState,
+         shouldShowFocusHint: !!shouldShowFocusHint,
+         retryStatus: retryStatus || null,
+         loadingPhrasesMode: mode,
++        errorVerbosity,
+       });
+       return null;
+     }
+@@ -62,6 +66,7 @@ describe('useLoadingIndicator', () => {
+         shouldShowFocusHint={initialShouldShowFocusHint}
+         retryStatus={initialRetryStatus}
+         mode={loadingPhrasesMode}
++        errorVerbosity={initialErrorVerbosity}
+       />,
+     );
+     return {
+@@ -75,7 +80,15 @@ describe('useLoadingIndicator', () => {
+         shouldShowFocusHint?: boolean;
+         retryStatus?: RetryAttemptPayload | null;
+         mode?: LoadingPhrasesMode;
+-      }) => rerender(<TestComponent mode={loadingPhrasesMode} {...newProps} />),
++        errorVerbosity?: 'low' | 'full';
++      }) =>
++        rerender(
++          <TestComponent
++            mode={loadingPhrasesMode}
++            errorVerbosity={initialErrorVerbosity}
++            {...newProps}
++          />,
++        ),
+     };
+   };
+ 
+@@ -229,6 +242,46 @@ describe('useLoadingIndicator', () => {
+     expect(result.current.currentLoadingPhrase).toContain('Attempt 3/3');
+   });
+ 
++  it('should hide low-verbosity retry status for early retry attempts', () => {
++    const retryStatus = {
++      model: 'gemini-pro',
++      attempt: 1,
++      maxAttempts: 5,
++      delayMs: 1000,
++    };
++    const { result } = renderLoadingIndicatorHook(
++      StreamingState.Responding,
++      false,
++      retryStatus,
++      'all',
++      'low',
++    );
++
++    expect(result.current.currentLoadingPhrase).not.toBe(
++      "This is taking a bit longer, we're still on it.",
++    );
++  });
++
++  it('should show a generic retry phrase in low error verbosity mode for later retries', () => {
++    const retryStatus = {
++      model: 'gemini-pro',
++      attempt: 2,
++      maxAttempts: 5,
++      delayMs: 1000,
++    };
++    const { result } = renderLoadingIndicatorHook(
++      StreamingState.Responding,
++      false,
++      retryStatus,
++      'all',
++      'low',
++    );
++
++    expect(result.current.currentLoadingPhrase).toBe(
++      "This is taking a bit longer, we're still on it.",
++    );
++  });
++
+   it('should show no phrases when loadingPhrasesMode is "off"', () => {
+     const { result } = renderLoadingIndicatorHook(
+       StreamingState.Responding,
+diff --git a/packages/cli/src/ui/hooks/useQuotaAndFallback.test.ts b/packages/cli/src/ui/hooks/useQuotaAndFallback.test.ts
+index 0f28df32d..ea4234bd1 100644
+--- a/packages/cli/src/ui/hooks/useQuotaAndFallback.test.ts
++++ b/packages/cli/src/ui/hooks/useQuotaAndFallback.test.ts
+@@ -161,6 +161,67 @@ describe('useQuotaAndFallback', () => {
+       );
+     });
+ 
++    it('should auto-retry transient capacity failures in low verbosity mode', async () => {
++      const { result } = renderHook(() =>
++        useQuotaAndFallback({
++          config: mockConfig,
++          historyManager: mockHistoryManager,
++          userTier: UserTierId.FREE,
++          setModelSwitchedFromQuotaError: mockSetModelSwitchedFromQuotaError,
++          onShowAuthSelection: mockOnShowAuthSelection,
++          paidTier: null,
++          settings: mockSettings,
++          errorVerbosity: 'low',
++        }),
++      );
++
++      const handler = setFallbackHandlerSpy.mock
++        .calls[0][0] as FallbackModelHandler;
++      const intent = await handler(
++        'gemini-pro',
++        'gemini-flash',
++        new RetryableQuotaError('retryable quota', mockGoogleApiError, 5),
++      );
++
++      expect(intent).toBe('retry_once');
++      expect(result.current.proQuotaRequest).toBeNull();
++      expect(mockSetModelSwitchedFromQuotaError).not.toHaveBeenCalledWith(true);
++      expect(mockConfig.setQuotaErrorOccurred).not.toHaveBeenCalledWith(true);
++    });
++
++    it('should still prompt for terminal quota in low verbosity mode', async () => {
++      const { result } = renderHook(() =>
++        useQuotaAndFallback({
++          config: mockConfig,
++          historyManager: mockHistoryManager,
++          userTier: UserTierId.FREE,
++          setModelSwitchedFromQuotaError: mockSetModelSwitchedFromQuotaError,
++          onShowAuthSelection: mockOnShowAuthSelection,
++          paidTier: null,
++          settings: mockSettings,
++          errorVerbosity: 'low',
++        }),
++      );
++
++      const handler = setFallbackHandlerSpy.mock
++        .calls[0][0] as FallbackModelHandler;
++      let promise: Promise<FallbackIntent | null>;
++      act(() => {
++        promise = handler(
++          'gemini-pro',
++          'gemini-flash',
++          new TerminalQuotaError('pro quota', mockGoogleApiError),
++        );
++      });
++
++      expect(result.current.proQuotaRequest).not.toBeNull();
++
++      act(() => {
++        result.current.handleProQuotaChoice('retry_later');
++      });
++      await promise!;
++    });
++
+     describe('Interactive Fallback', () => {
+       it('should set an interactive request for a terminal quota error', async () => {
+         const { result } = renderHook(() =>

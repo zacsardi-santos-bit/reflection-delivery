@@ -1,0 +1,8 @@
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -97,3 +97,4 @@
+ [project's home page](https://mesonbuild.com).
+
+ Meson is a registered trademark of Jussi Pakkanen.
++

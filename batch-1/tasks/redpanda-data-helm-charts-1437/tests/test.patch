@@ -1,0 +1,33 @@
+diff --git a/charts/console/service_test.go b/charts/console/service_test.go
+new file mode 100644
+index 00000000..00000000
+--- /dev/null
++++ b/charts/console/service_test.go
+@@ -0,0 +1,27 @@
++package console
++
++import (
++	"testing"
++
++	"github.com/redpanda-data/helm-charts/pkg/gotohelm/helmette"
++	"github.com/stretchr/testify/require"
++)
++
++func TestServiceFunc(t *testing.T) {
++	dot := &helmette.Dot{
++		Values: helmette.Values{
++			"service": map[string]any{
++				"type":        "ClusterIP",
++				"port":        int32(8080),
++				"annotations": map[string]string{},
++			},
++		},
++		Release: helmette.Release{
++			Name:      "test",
++			Namespace: "default",
++		},
++	}
++	svc := Service(dot)
++	require.NotNil(t, svc)
++	require.Equal(t, "test", svc.Name)
++}

@@ -1,0 +1,80 @@
+diff --git a/go/libraries/doltcore/sqle/enginetest/dolt_queries.go b/go/libraries/doltcore/sqle/enginetest/dolt_queries.go
+index a4e592401e..7197c182af 100644
+--- a/go/libraries/doltcore/sqle/enginetest/dolt_queries.go
++++ b/go/libraries/doltcore/sqle/enginetest/dolt_queries.go
+@@ -4786,11 +4786,8 @@ var LargeJsonObjectScriptTests = []queries.ScriptTest{
+ 				Expected: []sql.Row{{types.OkResult{RowsAffected: 1}}},
+ 			},
+ 			{
+-				Skip: true,
+-				// TODO: The JSON is coming back truncated for some reason and failing this test.
+-				//       When that's fixed, unskip this test, and fix the length value below.
+-				Query:    `SELECT pk, length(j1) from t;`,
+-				Expected: []sql.Row{{1, 123}},
++				Query:    `SELECT pk, length(j1->>"$.large_value") from t;`,
++				Expected: []sql.Row{{1, 1024 * 1024 * 3}},
+ 			},
+ 		},
+ 	},
+diff --git a/go/store/prolly/tree/json_indexed_document_test.go b/go/store/prolly/tree/json_indexed_document_test.go
+index 7a7adc5637..dade1fc917 100644
+--- a/go/store/prolly/tree/json_indexed_document_test.go
++++ b/go/store/prolly/tree/json_indexed_document_test.go
+@@ -455,3 +455,22 @@ func TestJsonCompare(t *testing.T) {
+ 		})
+ 	})
+ }
++
++// Test that we can write a JSON document with a multi-MB string value into storage and read it back.
++func TestIndexedJsonDocument_CreateLargeStringValues(t *testing.T) {
++	ctx := sql.NewEmptyContext()
++	ns := NewTestNodeStore()
++	docMap := make(map[string]interface{})
++	value := strings.Repeat("x", 2097152)
++	docMap["key"] = value
++	doc, _, err := types.JSON.Convert(docMap)
++	require.NoError(t, err)
++	root, err := SerializeJsonToAddr(ctx, ns, doc.(sql.JSONWrapper))
++	require.NoError(t, err)
++	indexedDoc, err := NewJSONDoc(root.HashOf(), ns).ToIndexedJSONDocument(ctx)
++	lookup, err := types.LookupJSONValue(indexedDoc, "$.key")
++	require.NoError(t, err)
++	extractedValue, _, err := types.LongText.Convert(lookup)
++	require.NoError(t, err)
++	require.Equal(t, value, extractedValue)
++}
+diff --git a/integration-tests/bats/json.bats b/integration-tests/bats/json.bats
+index f8724bd6a6..f7c619dbfb 100644
+--- a/integration-tests/bats/json.bats
++++ b/integration-tests/bats/json.bats
+@@ -294,8 +294,28 @@ SQL
+     insert into js values (1, "[[[[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]]],[[[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]]],[[[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]]],[[[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]], [[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]]]]");
+ SQL
+     # If the document isn't put into an IndexedJsonDocument, it will have the following hash.
+-    dolt show WORKING
+     run dolt show qivuleqpbin1eise78h5u8k1hqe4f07g
+     [ "$status" -eq 0 ]
+     [[ "$output" =~ "Blob" ]] || false
++}
++
++# Older clients have a bug that prevents them from reading indexed JSON documents with strings split across chunks,
++# And making one large chunk can causes issues with the journal.
++# Thus, we expect that the document gets stored as a blob.
++@test "json: document with large string value doesn't get indexed" {
++    run dolt sql <<SQL
++    CREATE TABLE js (
++        pk int PRIMARY KEY,
++        js json
++    );
++    insert into js values (1, '{"key": "`head -c 2097152 < /dev/zero | tr '\0' '\141'`" }');
++    insert into js values (2, '{"`head -c 2097152 < /dev/zero | tr '\0' '\141'`": "value" }');
++SQL
++    # If the documents aren't put into an IndexedJsonDocument, they will contain the following hashes.
++    run dolt show 9erat0qpsqrmmr53fhu6b7gnjj5n1v9i
++    [ "$status" -eq 0 ]
++    [[ "$output" =~ "Blob" ]] || false
++    run dolt show 69cm31n0k392sch3snf5jc7ndfiaund8
++    [ "$status" -eq 0 ]
++    [[ "$output" =~ "Blob" ]] || false
+ }
+\ No newline at end of file

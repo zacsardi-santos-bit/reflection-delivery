@@ -1,0 +1,550 @@
+diff --git a/src/core/public/chrome/nav_controls/nav_controls_service.test.ts b/src/core/public/chrome/nav_controls/nav_controls_service.test.ts
+index 6e2a71537e..a3d73168c7 100644
+--- a/src/core/public/chrome/nav_controls/nav_controls_service.test.ts
++++ b/src/core/public/chrome/nav_controls/nav_controls_service.test.ts
+@@ -143,4 +143,24 @@ describe('RecentlyAccessed#start()', () => {
+       ]);
+     });
+   });
++
++  describe('expanded left bottom controls', () => {
++    it('allows registration', async () => {
++      const navControls = getStart();
++      const nc = { mount: jest.fn() };
++      navControls.registerLeftBottom(nc);
++      expect(await navControls.getLeftBottom$().pipe(take(1)).toPromise()).toEqual([nc]);
++    });
++
++    it('sorts controls by order property', async () => {
++      const navControls = getStart();
++      const nc1 = { mount: jest.fn(), order: 10 };
++      const nc2 = { mount: jest.fn(), order: 0 };
++      const nc3 = { mount: jest.fn(), order: 20 };
++      navControls.registerLeftBottom(nc1);
++      navControls.registerLeftBottom(nc2);
++      navControls.registerLeftBottom(nc3);
++      expect(await navControls.getLeftBottom$().pipe(take(1)).toPromise()).toEqual([nc2, nc1, nc3]);
++    });
++  });
+ });
+diff --git a/src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx b/src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx
+new file mode 100644
+index 0000000000..b08029553b
+--- /dev/null
++++ b/src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx
+@@ -0,0 +1,226 @@
++/*
++ * Copyright OpenSearch Contributors
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import React from 'react';
++import { BehaviorSubject } from 'rxjs';
++import { fireEvent, render } from '@testing-library/react';
++import { StubBrowserStorage } from 'test_utils/stub_browser_storage';
++import {
++  CollapsibleNavGroupEnabled,
++  CollapsibleNavGroupEnabledProps,
++  NavGroups,
++} from './collapsible_nav_group_enabled';
++import { ChromeNavLink } from '../../nav_links';
++import { ChromeRegistrationNavLink, NavGroupItemInMap } from '../../nav_group';
++import { httpServiceMock } from '../../../mocks';
++import { getLogos } from '../../../../common';
++import { ALL_USE_CASE_ID, DEFAULT_NAV_GROUPS } from '../../../../public';
++import { CollapsibleNavTopProps } from './collapsible_nav_group_enabled_top';
++
++jest.mock('./collapsible_nav_group_enabled_top', () => ({
++  CollapsibleNavTop: (props: CollapsibleNavTopProps) => (
++    <button data-test-subj="back" onClick={props.onClickBack}>
++      go back
++    </button>
++  ),
++}));
++
++const mockBasePath = httpServiceMock.createSetupContract({ basePath: '/test' }).basePath;
++
++describe('<NavGroups />', () => {
++  const getMockedNavLink = (
++    navLink: Partial<ChromeNavLink & ChromeRegistrationNavLink>
++  ): ChromeNavLink & ChromeRegistrationNavLink => ({
++    baseUrl: '',
++    href: '',
++    id: '',
++    title: '',
++    ...navLink,
++  });
++  it('should render correctly', () => {
++    const navigateToApp = jest.fn();
++    const onNavItemClick = jest.fn();
++    const { container, getByTestId } = render(
++      <NavGroups
++        navLinks={[
++          getMockedNavLink({
++            id: 'pure',
++            title: 'pure link',
++          }),
++          getMockedNavLink({
++            id: 'subLink',
++            title: 'subLink',
++            parentNavLinkId: 'pure',
++          }),
++          getMockedNavLink({
++            id: 'link-in-category',
++            title: 'link-in-category',
++            category: {
++              id: 'category-1',
++              label: 'category-1',
++            },
++          }),
++          getMockedNavLink({
++            id: 'link-in-category-2',
++            title: 'link-in-category-2',
++            category: {
++              id: 'category-1',
++              label: 'category-1',
++            },
++          }),
++          getMockedNavLink({
++            id: 'sub-link-in-category',
++            title: 'sub-link-in-category',
++            parentNavLinkId: 'link-in-category',
++            category: {
++              id: 'category-1',
++              label: 'category-1',
++            },
++          }),
++        ]}
++        navigateToApp={navigateToApp}
++        onNavItemClick={onNavItemClick}
++      />
++    );
++    expect(container).toMatchSnapshot();
++    expect(container.querySelectorAll('.nav-link-item-btn').length).toEqual(5);
++    fireEvent.click(getByTestId('collapsibleNavAppLink-pure'));
++    expect(navigateToApp).toBeCalledWith('pure');
++  });
++});
++
++describe('<CollapsibleNavGroupEnabled />', () => {
++  function mockProps(
++    props?: Partial<CollapsibleNavGroupEnabledProps> & {
++      navGroupsMap?: Record<string, NavGroupItemInMap>;
++    }
++  ): CollapsibleNavGroupEnabledProps {
++    const currentNavGroup$ = new BehaviorSubject<NavGroupItemInMap | undefined>(undefined);
++    const navGroupsMap$ = new BehaviorSubject<Record<string, NavGroupItemInMap>>({
++      [ALL_USE_CASE_ID]: {
++        ...DEFAULT_NAV_GROUPS[ALL_USE_CASE_ID],
++        navLinks: [
++          {
++            id: 'link-in-all',
++            title: 'link-in-all',
++          },
++        ],
++      },
++      [DEFAULT_NAV_GROUPS.observability.id]: {
++        ...DEFAULT_NAV_GROUPS.observability,
++        navLinks: [
++          {
++            id: 'link-in-observability',
++            title: 'link-in-observability',
++            showInAllNavGroup: true,
++          },
++        ],
++      },
++      ...props?.navGroupsMap,
++    });
++    return {
++      appId$: new BehaviorSubject('test'),
++      basePath: mockBasePath,
++      id: 'collapsibe-nav',
++      isLocked: false,
++      isNavOpen: false,
++      navLinks$: new BehaviorSubject([
++        {
++          id: 'link-in-all',
++          title: 'link-in-all',
++          baseUrl: '',
++          href: '',
++        },
++        {
++          id: 'link-in-observability',
++          title: 'link-in-observability',
++          baseUrl: '',
++          href: '',
++        },
++        {
++          id: 'link-in-analytics',
++          title: 'link-in-analytics',
++          baseUrl: '',
++          href: '',
++        },
++      ]),
++      storage: new StubBrowserStorage(),
++      onIsLockedUpdate: () => {},
++      closeNav: () => {},
++      navigateToApp: () => Promise.resolve(),
++      navigateToUrl: () => Promise.resolve(),
++      customNavLink$: new BehaviorSubject(undefined),
++      logos: getLogos({}, mockBasePath.serverBasePath),
++      navGroupsMap$,
++      navControlsLeftBottom$: new BehaviorSubject([]),
++      currentNavGroup$,
++      setCurrentNavGroup: (val: string | undefined) => {
++        if (val) {
++          const currentNavGroup = navGroupsMap$.getValue()[val];
++          if (currentNavGroup) {
++            currentNavGroup$.next(currentNavGroup);
++          }
++        } else {
++          currentNavGroup$.next(undefined);
++        }
++      },
++      ...props,
++    };
++  }
++  it('should render correctly', () => {
++    const props = mockProps({
++      isNavOpen: true,
++      navGroupsMap: {
++        [DEFAULT_NAV_GROUPS.analytics.id]: {
++          ...DEFAULT_NAV_GROUPS.analytics,
++          navLinks: [
++            {
++              id: 'link-in-analytics',
++              title: 'link-in-analytics',
++              showInAllNavGroup: true,
++            },
++          ],
++        },
++      },
++    });
++    const { container } = render(<CollapsibleNavGroupEnabled {...props} />);
++    expect(container).toMatchSnapshot();
++    const { container: isNavOpenCloseContainer } = render(
++      <CollapsibleNavGroupEnabled {...props} isNavOpen={false} />
++    );
++    expect(isNavOpenCloseContainer).toMatchSnapshot();
++  });
++
++  it('should render correctly when only one visible use case is provided', () => {
++    const props = mockProps();
++    const { getAllByTestId } = render(<CollapsibleNavGroupEnabled {...props} isNavOpen />);
++    expect(getAllByTestId('collapsibleNavAppLink-link-in-observability').length).toEqual(1);
++  });
++
++  it('should show all use case by default and able to click see all', async () => {
++    const props = mockProps({
++      navGroupsMap: {
++        [DEFAULT_NAV_GROUPS.analytics.id]: {
++          ...DEFAULT_NAV_GROUPS.analytics,
++          navLinks: [
++            {
++              id: 'link-in-analytics',
++              title: 'link-in-analytics',
++              showInAllNavGroup: true,
++            },
++          ],
++        },
++      },
++    });
++    const { container, getAllByTestId, getByTestId } = render(
++      <CollapsibleNavGroupEnabled {...props} isNavOpen />
++    );
++    fireEvent.click(getAllByTestId('collapsibleNavAppLink-link-in-analytics')[1]);
++    expect(getAllByTestId('collapsibleNavAppLink-link-in-analytics').length).toEqual(1);
++    expect(container).toMatchSnapshot();
++    fireEvent.click(getByTestId('back'));
++    expect(getAllByTestId('collapsibleNavAppLink-link-in-analytics').length).toEqual(2);
++  });
++});
+diff --git a/src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx b/src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx
+new file mode 100644
+index 0000000000..294992c392
+--- /dev/null
++++ b/src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx
+@@ -0,0 +1,111 @@
++/*
++ * Copyright OpenSearch Contributors
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import React from 'react';
++import { render } from '@testing-library/react';
++import { ChromeNavLink } from '../../nav_links';
++import { ChromeRegistrationNavLink } from '../../nav_group';
++import { httpServiceMock } from '../../../mocks';
++import { getLogos } from '../../../../common';
++import { CollapsibleNavTop } from './collapsible_nav_group_enabled_top';
++
++const mockBasePath = httpServiceMock.createSetupContract({ basePath: '/test' }).basePath;
++
++describe('<CollapsibleNavTop />', () => {
++  const getMockedNavLink = (
++    navLink: Partial<ChromeNavLink & ChromeRegistrationNavLink>
++  ): ChromeNavLink & ChromeRegistrationNavLink => ({
++    baseUrl: '',
++    href: '',
++    id: '',
++    title: '',
++    ...navLink,
++  });
++  const mockedNavLinks = [
++    getMockedNavLink({
++      id: 'home',
++      title: 'home link',
++    }),
++    getMockedNavLink({
++      id: 'subLink',
++      title: 'subLink',
++      parentNavLinkId: 'pure',
++    }),
++    getMockedNavLink({
++      id: 'link-in-category',
++      title: 'link-in-category',
++      category: {
++        id: 'category-1',
++        label: 'category-1',
++      },
++    }),
++    getMockedNavLink({
++      id: 'link-in-category-2',
++      title: 'link-in-category-2',
++      category: {
++        id: 'category-1',
++        label: 'category-1',
++      },
++    }),
++    getMockedNavLink({
++      id: 'sub-link-in-category',
++      title: 'sub-link-in-category',
++      parentNavLinkId: 'link-in-category',
++      category: {
++        id: 'category-1',
++        label: 'category-1',
++      },
++    }),
++  ];
++  const getMockedProps = () => {
++    return {
++      navLinks: mockedNavLinks,
++      navigateToApp: jest.fn(),
++      navGroupsMap: {},
++      logos: getLogos({}, mockBasePath.serverBasePath),
++      shouldShrinkNavigation: false,
++    };
++  };
++  it('should render home icon', async () => {
++    const { findByTestId } = render(<CollapsibleNavTop {...getMockedProps()} />);
++    await findByTestId('collapsibleNavHome');
++  });
++
++  it('should render back icon', async () => {
++    const { findByTestId } = render(
++      <CollapsibleNavTop
++        {...getMockedProps()}
++        navGroupsMap={{
++          navGroupFoo: {
++            id: 'navGroupFoo',
++            title: 'navGroupFoo',
++            description: 'navGroupFoo',
++            navLinks: [],
++          },
++          navGroupBar: {
++            id: 'navGroupBar',
++            title: 'navGroupBar',
++            description: 'navGroupBar',
++            navLinks: [],
++          },
++        }}
++        currentNavGroup={{
++          id: 'navGroupFoo',
++          title: 'navGroupFoo',
++          description: 'navGroupFoo',
++          navLinks: [],
++        }}
++      />
++    );
++    await findByTestId('collapsibleNavBackButton');
++  });
++
++  it('should render expand icon', async () => {
++    const { findByTestId } = render(
++      <CollapsibleNavTop {...getMockedProps()} shouldShrinkNavigation />
++    );
++    await findByTestId('collapsibleNavShrinkButton');
++  });
++});
+diff --git a/src/core/public/chrome/ui/header/header.test.tsx b/src/core/public/chrome/ui/header/header.test.tsx
+index ee4d660e1d..16e77a353c 100644
+--- a/src/core/public/chrome/ui/header/header.test.tsx
++++ b/src/core/public/chrome/ui/header/header.test.tsx
+@@ -78,7 +78,10 @@ function mockProps() {
+       paddingSize: 640,
+     }),
+     navGroupEnabled: false,
+-    currentNavgroup$: new BehaviorSubject(undefined),
++    currentNavGroup$: new BehaviorSubject(undefined),
++    navGroupsMap$: new BehaviorSubject({}),
++    navControlsLeftBottom$: new BehaviorSubject([]),
++    setCurrentNavGroup: jest.fn(() => {}),
+   };
+ }
+ 
+@@ -168,4 +171,18 @@ describe('Header', () => {
+ 
+     expect(component).toMatchSnapshot();
+   });
++
++  it('renders new header when feature flag is turned on', () => {
++    const branding = {
++      useExpandedHeader: false,
++    };
++    const props = {
++      ...mockProps(),
++      branding,
++    };
++
++    const component = mountWithIntl(<Header {...props} navGroupEnabled />);
++
++    expect(component.find('CollapsibleNavGroupEnabled').exists()).toBeTruthy();
++  });
+ });
+diff --git a/src/plugins/advanced_settings/public/plugin.test.ts b/src/plugins/advanced_settings/public/plugin.test.ts
+new file mode 100644
+index 0000000000..2ff2a08b80
+--- /dev/null
++++ b/src/plugins/advanced_settings/public/plugin.test.ts
+@@ -0,0 +1,23 @@
++/*
++ * Copyright OpenSearch Contributors
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { managementPluginMock } from '../../management/public/mocks';
++import { coreMock } from '../../../core/public/mocks';
++import { AdvancedSettingsPlugin } from './plugin';
++import { homePluginMock } from '../../home/public/mocks';
++
++describe('AdvancedSettingsPlugin', () => {
++  it('setup successfully', () => {
++    const pluginInstance = new AdvancedSettingsPlugin();
++    const setupMock = coreMock.createSetup();
++    expect(() =>
++      pluginInstance.setup(setupMock, {
++        management: managementPluginMock.createSetupContract(),
++        home: homePluginMock.createSetupContract(),
++      })
++    ).not.toThrow();
++    expect(setupMock.application.register).toBeCalledTimes(1);
++  });
++});
+diff --git a/src/plugins/dashboard/public/plugin.test.tsx b/src/plugins/dashboard/public/plugin.test.tsx
+new file mode 100644
+index 0000000000..5ca81d5b77
+--- /dev/null
++++ b/src/plugins/dashboard/public/plugin.test.tsx
+@@ -0,0 +1,30 @@
++/*
++ * Copyright OpenSearch Contributors
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { coreMock } from '../../../core/public/mocks';
++import { DashboardPlugin } from './plugin';
++import { dataPluginMock } from '../../data/public/mocks';
++import { embeddablePluginMock } from '../../embeddable/public/mocks';
++import { opensearchDashboardsLegacyPluginMock } from '../../opensearch_dashboards_legacy/public/mocks';
++import { urlForwardingPluginMock } from '../../url_forwarding/public/mocks';
++import { uiActionsPluginMock } from '../../ui_actions/public/mocks';
++
++describe('DashboardPlugin', () => {
++  it('setup successfully', () => {
++    const setupMock = coreMock.createSetup();
++    const initializerContext = coreMock.createPluginInitializerContext();
++    const pluginInstance = new DashboardPlugin(initializerContext);
++    expect(() =>
++      pluginInstance.setup(setupMock, {
++        data: dataPluginMock.createSetupContract(),
++        embeddable: embeddablePluginMock.createSetupContract(),
++        opensearchDashboardsLegacy: opensearchDashboardsLegacyPluginMock.createSetupContract(),
++        urlForwarding: urlForwardingPluginMock.createSetupContract(),
++        uiActions: uiActionsPluginMock.createSetupContract(),
++      })
++    ).not.toThrow();
++    expect(setupMock.chrome.navGroup.addNavLinksToGroup).toBeCalledTimes(5);
++  });
++});
+diff --git a/src/plugins/discover/public/plugin.test.ts b/src/plugins/discover/public/plugin.test.ts
+new file mode 100644
+index 0000000000..ead12ffc7d
+--- /dev/null
++++ b/src/plugins/discover/public/plugin.test.ts
+@@ -0,0 +1,35 @@
++/*
++ * Copyright OpenSearch Contributors
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { coreMock } from '../../../core/public/mocks';
++import { DiscoverPlugin } from './plugin';
++import { dataPluginMock } from '../../data/public/mocks';
++import { embeddablePluginMock } from '../../embeddable/public/mocks';
++import { opensearchDashboardsLegacyPluginMock } from '../../opensearch_dashboards_legacy/public/mocks';
++import { urlForwardingPluginMock } from '../../url_forwarding/public/mocks';
++import { uiActionsPluginMock } from '../../ui_actions/public/mocks';
++import { visualizationsPluginMock } from '../../visualizations/public/mocks';
++
++describe('DiscoverPlugin', () => {
++  it('setup successfully', () => {
++    const setupMock = coreMock.createSetup();
++    const initializerContext = coreMock.createPluginInitializerContext();
++    const pluginInstance = new DiscoverPlugin(initializerContext);
++    expect(() =>
++      pluginInstance.setup(setupMock, {
++        data: dataPluginMock.createSetupContract(),
++        embeddable: embeddablePluginMock.createSetupContract(),
++        opensearchDashboardsLegacy: opensearchDashboardsLegacyPluginMock.createSetupContract(),
++        urlForwarding: urlForwardingPluginMock.createSetupContract(),
++        uiActions: uiActionsPluginMock.createSetupContract(),
++        visualizations: visualizationsPluginMock.createSetupContract(),
++        dataExplorer: {
++          registerView: jest.fn(),
++        },
++      })
++    ).not.toThrow();
++    expect(setupMock.chrome.navGroup.addNavLinksToGroup).toBeCalledTimes(5);
++  });
++});
+diff --git a/src/plugins/index_pattern_management/public/plugin.test.ts b/src/plugins/index_pattern_management/public/plugin.test.ts
+new file mode 100644
+index 0000000000..e207af770a
+--- /dev/null
++++ b/src/plugins/index_pattern_management/public/plugin.test.ts
+@@ -0,0 +1,25 @@
++/*
++ * Copyright OpenSearch Contributors
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { coreMock } from '../../../core/public/mocks';
++import { IndexPatternManagementPlugin } from './plugin';
++import { urlForwardingPluginMock } from '../../url_forwarding/public/mocks';
++import { managementPluginMock } from '../../management/public/mocks';
++
++describe('DiscoverPlugin', () => {
++  it('setup successfully', () => {
++    const setupMock = coreMock.createSetup();
++    const initializerContext = coreMock.createPluginInitializerContext();
++    const pluginInstance = new IndexPatternManagementPlugin(initializerContext);
++    expect(() =>
++      pluginInstance.setup(setupMock, {
++        urlForwarding: urlForwardingPluginMock.createSetupContract(),
++        management: managementPluginMock.createSetupContract(),
++      })
++    ).not.toThrow();
++    expect(setupMock.application.register).toBeCalledTimes(1);
++    expect(setupMock.chrome.navGroup.addNavLinksToGroup).toBeCalledTimes(5);
++  });
++});

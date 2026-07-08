@@ -1,0 +1,227 @@
+diff --git a/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/input.svelte b/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/input.svelte
+index f22253163..036d5283f 100644
+--- a/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/input.svelte
++++ b/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/input.svelte
+@@ -1,4 +1,5 @@
+ {#if true}
+ 	{let }
+ 	{const x = }
++	{let x = a / }
+ {/if}
+diff --git a/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/output.json b/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/output.json
+index 882e5f34f..270d16af9 100644
+--- a/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/output.json
++++ b/packages/svelte/tests/parser-modern/samples/loose-declaration-tag/output.json
+@@ -2,7 +2,7 @@
+ 	"css": null,
+ 	"js": [],
+ 	"start": 0,
+-	"end": 38,
++	"end": 54,
+ 	"type": "Root",
+ 	"fragment": {
+ 		"type": "Fragment",
+@@ -11,7 +11,7 @@
+ 				"type": "IfBlock",
+ 				"elseif": false,
+ 				"start": 0,
+-				"end": 38,
++				"end": 54,
+ 				"test": {
+ 					"type": "Literal",
+ 					"start": 5,
+@@ -99,7 +99,39 @@
+ 						{
+ 							"type": "Text",
+ 							"start": 32,
+-							"end": 33,
++							"end": 34,
++							"raw": "\n\t",
++							"data": "\n\t"
++						},
++						{
++							"type": "DeclarationTag",
++							"start": 34,
++							"end": 48,
++							"declaration": {
++								"type": "VariableDeclaration",
++								"kind": "let",
++								"declarations": [
++									{
++										"type": "VariableDeclarator",
++										"id": {
++											"type": "Identifier",
++											"name": "",
++											"start": 47,
++											"end": 47
++										},
++										"init": null,
++										"start": 47,
++										"end": 47
++									}
++								],
++								"start": 35,
++								"end": 47
++							}
++						},
++						{
++							"type": "Text",
++							"start": 48,
++							"end": 49,
+ 							"raw": "\n",
+ 							"data": "\n"
+ 						}
+diff --git a/packages/svelte/tests/parser-modern/samples/tag-type-identifier-probe-comment/input.svelte b/packages/svelte/tests/parser-modern/samples/tag-type-identifier-probe-comment/input.svelte
+new file mode 100644
+index 000000000..fa4195996
+--- /dev/null
++++ b/packages/svelte/tests/parser-modern/samples/tag-type-identifier-probe-comment/input.svelte
+@@ -0,0 +1 @@
++{type instanceof /* probe */ Object}
+diff --git a/packages/svelte/tests/parser-modern/samples/tag-type-identifier-probe-comment/output.json b/packages/svelte/tests/parser-modern/samples/tag-type-identifier-probe-comment/output.json
+new file mode 100644
+index 000000000..4fe646874
+--- /dev/null
++++ b/packages/svelte/tests/parser-modern/samples/tag-type-identifier-probe-comment/output.json
+@@ -0,0 +1,92 @@
++{
++	"css": null,
++	"js": [],
++	"start": 0,
++	"end": 36,
++	"type": "Root",
++	"fragment": {
++		"type": "Fragment",
++		"nodes": [
++			{
++				"type": "ExpressionTag",
++				"start": 0,
++				"end": 36,
++				"expression": {
++					"type": "BinaryExpression",
++					"start": 1,
++					"end": 35,
++					"loc": {
++						"start": {
++							"line": 1,
++							"column": 1
++						},
++						"end": {
++							"line": 1,
++							"column": 35
++						}
++					},
++					"left": {
++						"type": "Identifier",
++						"start": 1,
++						"end": 5,
++						"loc": {
++							"start": {
++								"line": 1,
++								"column": 1
++							},
++							"end": {
++								"line": 1,
++								"column": 5
++							}
++						},
++						"name": "type"
++					},
++					"operator": "instanceof",
++					"right": {
++						"type": "Identifier",
++						"start": 29,
++						"end": 35,
++						"loc": {
++							"start": {
++								"line": 1,
++								"column": 29
++							},
++							"end": {
++								"line": 1,
++								"column": 35
++							}
++						},
++						"name": "Object",
++						"leadingComments": [
++							{
++								"type": "Block",
++								"value": " probe ",
++								"start": 17,
++								"end": 28
++							}
++						]
++					}
++				}
++			}
++		]
++	},
++	"options": null,
++	"comments": [
++		{
++			"type": "Block",
++			"value": " probe ",
++			"start": 17,
++			"end": 28,
++			"loc": {
++				"start": {
++					"line": 1,
++					"column": 17
++				},
++				"end": {
++					"line": 1,
++					"column": 28
++				}
++			}
++		}
++	]
++}
+diff --git a/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/errors.json b/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/errors.json
+index 052636cdd..a375ac577 100644
+--- a/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/errors.json
++++ b/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/errors.json
+@@ -3,12 +3,12 @@
+ 		"code": "declaration_tag_invalid_type",
+ 		"message": "Declaration tags must be `let` or `const` declarations",
+ 		"start": {
+-			"line": 14,
++			"line": 28,
+ 			"column": 2
+ 		},
+ 		"end": {
+-			"line": 14,
+-			"column": 8
++			"line": 28,
++			"column": 20
+ 		}
+ 	}
+ ]
+diff --git a/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/input.svelte b/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/input.svelte
+index 129a8ac7b..88295cad5 100644
+--- a/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/input.svelte
++++ b/packages/svelte/tests/validator/samples/declaration-tag-invalid-type-2/input.svelte
+@@ -1,3 +1,5 @@
++<script lang="ts"></script>
++
+ {#if true}
+ 	<!-- check that these doesn't trigger already -->
+ 	{type}
+@@ -10,6 +12,18 @@
+ 	{type ()}
+ 	{type [1]}
+ 	{type `tag`}
++	{type === 'all' ? 'All types' : type}
++	{type !== 'all'}
++	{type == 'all'}
++	{type != 'all'}
++	{type + 1}
++	{type - 1}
++	{type * 2}
++	{type / 2}
++	{type > 1}
++	{type instanceof Foo}
++	{type instanceof /* comment */ Object}
++	{type in foo}
+ 	<!-- ... this one should trigger though -->
+ 	{type foo = boolean}
+ {/if}

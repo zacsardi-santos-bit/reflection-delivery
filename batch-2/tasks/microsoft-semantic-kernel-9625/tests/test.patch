@@ -1,0 +1,368 @@
+diff --git a/python/tests/conftest.py b/python/tests/conftest.py
+index 7a4b11a7e..40e2ea8d6 100644
+--- a/python/tests/conftest.py
++++ b/python/tests/conftest.py
+@@ -231,6 +231,7 @@ def azure_openai_unit_test_env(monkeypatch, exclude_list, override_env_param_dic
+         "AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME": "test_embedding_deployment",
+         "AZURE_OPENAI_TEXT_TO_IMAGE_DEPLOYMENT_NAME": "test_text_to_image_deployment",
+         "AZURE_OPENAI_AUDIO_TO_TEXT_DEPLOYMENT_NAME": "test_audio_to_text_deployment",
++        "AZURE_OPENAI_TEXT_TO_AUDIO_DEPLOYMENT_NAME": "test_text_to_audio_deployment",
+         "AZURE_OPENAI_API_KEY": "test_api_key",
+         "AZURE_OPENAI_ENDPOINT": "https://test-endpoint.com",
+         "AZURE_OPENAI_API_VERSION": "2023-03-15-preview",
+@@ -266,6 +267,7 @@ def openai_unit_test_env(monkeypatch, exclude_list, override_env_param_dict):
+         "OPENAI_EMBEDDING_MODEL_ID": "test_embedding_model_id",
+         "OPENAI_TEXT_TO_IMAGE_MODEL_ID": "test_text_to_image_model_id",
+         "OPENAI_AUDIO_TO_TEXT_MODEL_ID": "test_audio_to_text_model_id",
++        "OPENAI_TEXT_TO_AUDIO_MODEL_ID": "test_text_to_audio_model_id",
+     }
+ 
+     env_vars.update(override_env_param_dict)
+diff --git a/python/tests/integration/audio_to_text/audio_to_text_test_base.py b/python/tests/integration/audio_to_text/audio_to_text_test_base.py
+index de3ec6147..8375b1b39 100644
+--- a/python/tests/integration/audio_to_text/audio_to_text_test_base.py
++++ b/python/tests/integration/audio_to_text/audio_to_text_test_base.py
+@@ -5,9 +5,8 @@ import os
+ import pytest
+ 
+ from semantic_kernel.connectors.ai.audio_to_text_client_base import AudioToTextClientBase
+-from semantic_kernel.connectors.ai.open_ai.services.azure_audio_to_text import AzureAudioToText
+-from semantic_kernel.connectors.ai.open_ai.services.open_ai_audio_to_text import OpenAIAudioToText
+-from tests.integration.test_utils import is_service_setup_for_testing
++from semantic_kernel.connectors.ai.open_ai import AzureAudioToText, OpenAIAudioToText
++from tests.integration.utils import is_service_setup_for_testing
+ 
+ # There is only the whisper model available on Azure OpenAI for audio to text. And that model is
+ # only available in the North Switzerland region. Therefore, the endpoint is different than the one
+diff --git a/python/tests/integration/audio_to_text/test_audio_to_text.py b/python/tests/integration/audio_to_text/test_audio_to_text.py
+index bd07bc6e6..50c105710 100644
+--- a/python/tests/integration/audio_to_text/test_audio_to_text.py
++++ b/python/tests/integration/audio_to_text/test_audio_to_text.py
+@@ -5,7 +5,7 @@ import os
+ import pytest
+ 
+ from semantic_kernel.connectors.ai.audio_to_text_client_base import AudioToTextClientBase
+-from semantic_kernel.contents.audio_content import AudioContent
++from semantic_kernel.contents import AudioContent
+ from tests.integration.audio_to_text.audio_to_text_test_base import AudioToTextTestBase
+ 
+ pytestmark = pytest.mark.parametrize(
+diff --git a/python/tests/integration/text_to_audio/test_text_to_audio.py b/python/tests/integration/text_to_audio/test_text_to_audio.py
+new file mode 100644
+index 000000000..d9f69b057
+--- /dev/null
++++ b/python/tests/integration/text_to_audio/test_text_to_audio.py
+@@ -0,0 +1,50 @@
++# Copyright (c) Microsoft. All rights reserved.
++
++
++import pytest
++
++from semantic_kernel.connectors.ai.text_to_audio_client_base import TextToAudioClientBase
++from semantic_kernel.contents import AudioContent
++from tests.integration.text_to_audio.text_to_audio_test_base import TextToAudioTestBase
++
++pytestmark = pytest.mark.parametrize(
++    "service_id, text",
++    [
++        pytest.param(
++            "openai",
++            "Hello World!",
++            id="openai",
++        ),
++        pytest.param(
++            "azure_openai",
++            "Hello World!",
++            id="azure_openai",
++        ),
++    ],
++)
++
++
++@pytest.mark.asyncio(scope="module")
++class TestTextToAudio(TextToAudioTestBase):
++    """Test text-to-audio services."""
++
++    @pytest.mark.asyncio
++    async def test_audio_to_text(
++        self,
++        services: dict[str, TextToAudioClientBase],
++        service_id: str,
++        text: str,
++    ) -> None:
++        """Test text-to-audio services.
++
++        Args:
++            services: text-to-audio services.
++            service_id: Service ID.
++            text: Text content.
++        """
++
++        service = services[service_id]
++        result = await service.get_audio_content(text)
++
++        assert isinstance(result, AudioContent)
++        assert result.data is not None
+diff --git a/python/tests/integration/text_to_audio/text_to_audio_test_base.py b/python/tests/integration/text_to_audio/text_to_audio_test_base.py
+new file mode 100644
+index 000000000..2ad5bd11d
+--- /dev/null
++++ b/python/tests/integration/text_to_audio/text_to_audio_test_base.py
+@@ -0,0 +1,25 @@
++# Copyright (c) Microsoft. All rights reserved.
++
++import os
++
++import pytest
++
++from semantic_kernel.connectors.ai.open_ai import AzureTextToAudio, OpenAITextToAudio
++from semantic_kernel.connectors.ai.text_to_audio_client_base import TextToAudioClientBase
++from tests.integration.utils import is_service_setup_for_testing
++
++# TTS model on Azure model is not available in regions at which we have chat completion models.
++# Therefore, we need to use a different endpoint for testing.
++is_service_setup_for_testing(["AZURE_OPENAI_TEXT_TO_AUDIO_ENDPOINT"])
++
++
++class TextToAudioTestBase:
++    """Base class for testing text-to-audio services."""
++
++    @pytest.fixture(scope="module")
++    def services(self) -> dict[str, TextToAudioClientBase]:
++        """Return text-to-audio services."""
++        return {
++            "openai": OpenAITextToAudio(),
++            "azure_openai": AzureTextToAudio(endpoint=os.environ["AZURE_OPENAI_TEXT_TO_AUDIO_ENDPOINT"]),
++        }
+diff --git a/python/tests/unit/connectors/ai/open_ai/services/test_azure_audio_to_text.py b/python/tests/unit/connectors/ai/open_ai/services/test_azure_audio_to_text.py
+index 6b32bbf9e..121067d5b 100644
+--- a/python/tests/unit/connectors/ai/open_ai/services/test_azure_audio_to_text.py
++++ b/python/tests/unit/connectors/ai/open_ai/services/test_azure_audio_to_text.py
+@@ -8,8 +8,8 @@ from openai import AsyncAzureOpenAI
+ from openai.resources.audio.transcriptions import AsyncTranscriptions
+ from openai.types.audio import Transcription
+ 
+-from semantic_kernel.connectors.ai.open_ai.services.azure_audio_to_text import AzureAudioToText
+-from semantic_kernel.contents.audio_content import AudioContent
++from semantic_kernel.connectors.ai.open_ai import AzureAudioToText
++from semantic_kernel.contents import AudioContent
+ from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError, ServiceInvalidRequestError
+ 
+ 
+diff --git a/python/tests/unit/connectors/ai/open_ai/services/test_azure_text_to_audio.py b/python/tests/unit/connectors/ai/open_ai/services/test_azure_text_to_audio.py
+new file mode 100644
+index 000000000..148bb0c33
+--- /dev/null
++++ b/python/tests/unit/connectors/ai/open_ai/services/test_azure_text_to_audio.py
+@@ -0,0 +1,83 @@
++# Copyright (c) Microsoft. All rights reserved.
++
++from unittest.mock import patch
++
++import httpx
++import pytest
++from openai import AsyncAzureOpenAI, _legacy_response
++from openai.resources.audio.speech import AsyncSpeech
++
++from semantic_kernel.connectors.ai.open_ai import AzureTextToAudio
++from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
++
++
++def test_azure_text_to_audio_init(azure_openai_unit_test_env) -> None:
++    azure_text_to_audio = AzureTextToAudio()
++
++    assert azure_text_to_audio.client is not None
++    assert isinstance(azure_text_to_audio.client, AsyncAzureOpenAI)
++    assert azure_text_to_audio.ai_model_id == azure_openai_unit_test_env["AZURE_OPENAI_TEXT_TO_AUDIO_DEPLOYMENT_NAME"]
++
++
++@pytest.mark.parametrize("exclude_list", [["AZURE_OPENAI_TEXT_TO_AUDIO_DEPLOYMENT_NAME"]], indirect=True)
++def test_azure_text_to_audio_init_with_empty_deployment_name(azure_openai_unit_test_env) -> None:
++    with pytest.raises(ServiceInitializationError, match="The Azure OpenAI text to audio deployment name is required."):
++        AzureTextToAudio(env_file_path="test.env")
++
++
++@pytest.mark.parametrize("exclude_list", [["AZURE_OPENAI_API_KEY"]], indirect=True)
++def test_azure_text_to_audio_init_with_empty_api_key(azure_openai_unit_test_env) -> None:
++    with pytest.raises(ServiceInitializationError):
++        AzureTextToAudio(env_file_path="test.env")
++
++
++@pytest.mark.parametrize("exclude_list", [["AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_BASE_URL"]], indirect=True)
++def test_azure_text_to_audio_init_with_empty_endpoint_and_base_url(azure_openai_unit_test_env) -> None:
++    with pytest.raises(ServiceInitializationError, match="Please provide an endpoint or a base_url"):
++        AzureTextToAudio(env_file_path="test.env")
++
++
++@pytest.mark.parametrize("override_env_param_dict", [{"AZURE_OPENAI_ENDPOINT": "http://test.com"}], indirect=True)
++def test_azure_text_to_audio_init_with_invalid_http_endpoint(azure_openai_unit_test_env) -> None:
++    with pytest.raises(ServiceInitializationError, match="Invalid settings: "):
++        AzureTextToAudio()
++
++
++@pytest.mark.parametrize(
++    "override_env_param_dict",
++    [{"AZURE_OPENAI_BASE_URL": "https://test_text_to_audio_deployment.test-base-url.com"}],
++    indirect=True,
++)
++def test_azure_text_to_audio_init_with_from_dict(azure_openai_unit_test_env) -> None:
++    default_headers = {"test_header": "test_value"}
++
++    settings = {
++        "deployment_name": azure_openai_unit_test_env["AZURE_OPENAI_TEXT_TO_AUDIO_DEPLOYMENT_NAME"],
++        "endpoint": azure_openai_unit_test_env["AZURE_OPENAI_ENDPOINT"],
++        "api_key": azure_openai_unit_test_env["AZURE_OPENAI_API_KEY"],
++        "api_version": azure_openai_unit_test_env["AZURE_OPENAI_API_VERSION"],
++        "default_headers": default_headers,
++    }
++
++    azure_text_to_audio = AzureTextToAudio.from_dict(settings=settings)
++
++    assert azure_text_to_audio.client is not None
++    assert isinstance(azure_text_to_audio.client, AsyncAzureOpenAI)
++    assert azure_text_to_audio.ai_model_id == azure_openai_unit_test_env["AZURE_OPENAI_TEXT_TO_AUDIO_DEPLOYMENT_NAME"]
++    assert settings["deployment_name"] in str(azure_text_to_audio.client.base_url)
++    assert azure_text_to_audio.client.api_key == azure_openai_unit_test_env["AZURE_OPENAI_API_KEY"]
++
++    # Assert that the default header we added is present in the client's default headers
++    for key, value in default_headers.items():
++        assert key in azure_text_to_audio.client.default_headers
++        assert azure_text_to_audio.client.default_headers[key] == value
++
++
++@pytest.mark.asyncio
++@patch.object(AsyncSpeech, "create", return_value=_legacy_response.HttpxBinaryResponseContent(httpx.Response(200)))
++async def test_azure_text_to_audio_get_audio_contents(mock_speech_create, azure_openai_unit_test_env) -> None:
++    openai_audio_to_text = AzureTextToAudio()
++
++    audio_contents = await openai_audio_to_text.get_audio_contents("Hello World!")
++    assert len(audio_contents) == 1
++    assert audio_contents[0].ai_model_id == azure_openai_unit_test_env["AZURE_OPENAI_TEXT_TO_AUDIO_DEPLOYMENT_NAME"]
+diff --git a/python/tests/unit/connectors/ai/open_ai/services/test_openai_audio_to_text.py b/python/tests/unit/connectors/ai/open_ai/services/test_openai_audio_to_text.py
+index d0068d50e..cd540b923 100644
+--- a/python/tests/unit/connectors/ai/open_ai/services/test_openai_audio_to_text.py
++++ b/python/tests/unit/connectors/ai/open_ai/services/test_openai_audio_to_text.py
+@@ -9,8 +9,9 @@ from openai import AsyncClient
+ from openai.resources.audio.transcriptions import AsyncTranscriptions
+ from openai.types.audio import Transcription
+ 
++from semantic_kernel.connectors.ai.open_ai import OpenAIAudioToTextExecutionSettings
+ from semantic_kernel.connectors.ai.open_ai.services.open_ai_audio_to_text import OpenAIAudioToText
+-from semantic_kernel.contents.audio_content import AudioContent
++from semantic_kernel.contents import AudioContent
+ from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError, ServiceInvalidRequestError
+ 
+ 
+@@ -57,6 +58,11 @@ def test_init_to_from_dict(openai_unit_test_env):
+     assert dumped_settings["api_key"] == settings["api_key"]
+ 
+ 
++def test_prompt_execution_settings_class(openai_unit_test_env) -> None:
++    openai_audio_to_text = OpenAIAudioToText()
++    assert openai_audio_to_text.get_prompt_execution_settings_class() == OpenAIAudioToTextExecutionSettings
++
++
+ @pytest.mark.asyncio
+ @patch.object(AsyncTranscriptions, "create", return_value=Transcription(text="This is a test audio file."))
+ async def test_get_text_contents(mock_transcription_create, openai_unit_test_env):
+diff --git a/python/tests/unit/connectors/ai/open_ai/services/test_openai_text_to_audio.py b/python/tests/unit/connectors/ai/open_ai/services/test_openai_text_to_audio.py
+new file mode 100644
+index 000000000..959d630b7
+--- /dev/null
++++ b/python/tests/unit/connectors/ai/open_ai/services/test_openai_text_to_audio.py
+@@ -0,0 +1,70 @@
++# Copyright (c) Microsoft. All rights reserved.
++
++
++from unittest.mock import patch
++
++import httpx
++import pytest
++from openai import AsyncClient, _legacy_response
++from openai.resources.audio.speech import AsyncSpeech
++
++from semantic_kernel.connectors.ai.open_ai import OpenAITextToAudio, OpenAITextToAudioExecutionSettings
++from semantic_kernel.exceptions.service_exceptions import ServiceInitializationError
++
++
++def test_init(openai_unit_test_env):
++    openai_text_to_audio = OpenAITextToAudio()
++
++    assert openai_text_to_audio.client is not None
++    assert isinstance(openai_text_to_audio.client, AsyncClient)
++    assert openai_text_to_audio.ai_model_id == openai_unit_test_env["OPENAI_TEXT_TO_AUDIO_MODEL_ID"]
++
++
++def test_init_validation_fail() -> None:
++    with pytest.raises(ServiceInitializationError, match="Failed to create OpenAI settings."):
++        OpenAITextToAudio(api_key="34523", ai_model_id={"test": "dict"})
++
++
++@pytest.mark.parametrize("exclude_list", [["OPENAI_TEXT_TO_AUDIO_MODEL_ID"]], indirect=True)
++def test_init_text_to_audio_model_not_provided(openai_unit_test_env) -> None:
++    with pytest.raises(ServiceInitializationError, match="The OpenAI text to audio model ID is required."):
++        OpenAITextToAudio(
++            env_file_path="test.env",
++        )
++
++
++@pytest.mark.parametrize("exclude_list", [["OPENAI_API_KEY"]], indirect=True)
++def test_init_with_empty_api_key(openai_unit_test_env) -> None:
++    with pytest.raises(ServiceInitializationError):
++        OpenAITextToAudio(
++            env_file_path="test.env",
++        )
++
++
++def test_init_to_from_dict(openai_unit_test_env):
++    default_headers = {"X-Unit-Test": "test-guid"}
++
++    settings = {
++        "ai_model_id": openai_unit_test_env["OPENAI_TEXT_TO_AUDIO_MODEL_ID"],
++        "api_key": openai_unit_test_env["OPENAI_API_KEY"],
++        "default_headers": default_headers,
++    }
++    audio_to_text = OpenAITextToAudio.from_dict(settings)
++    dumped_settings = audio_to_text.to_dict()
++    assert dumped_settings["ai_model_id"] == settings["ai_model_id"]
++    assert dumped_settings["api_key"] == settings["api_key"]
++
++
++def test_prompt_execution_settings_class(openai_unit_test_env) -> None:
++    openai_text_to_audio = OpenAITextToAudio()
++    assert openai_text_to_audio.get_prompt_execution_settings_class() == OpenAITextToAudioExecutionSettings
++
++
++@pytest.mark.asyncio
++@patch.object(AsyncSpeech, "create", return_value=_legacy_response.HttpxBinaryResponseContent(httpx.Response(200)))
++async def test_get_text_contents(mock_speech_create, openai_unit_test_env):
++    openai_text_to_audio = OpenAITextToAudio()
++
++    audio_contents = await openai_text_to_audio.get_audio_contents("Hello World!")
++    assert len(audio_contents) == 1
++    assert audio_contents[0].ai_model_id == openai_unit_test_env["OPENAI_TEXT_TO_AUDIO_MODEL_ID"]
+diff --git a/python/tests/unit/connectors/ai/open_ai/services/test_openai_text_to_image.py b/python/tests/unit/connectors/ai/open_ai/services/test_openai_text_to_image.py
+index c6da2c247..f722569e6 100644
+--- a/python/tests/unit/connectors/ai/open_ai/services/test_openai_text_to_image.py
++++ b/python/tests/unit/connectors/ai/open_ai/services/test_openai_text_to_image.py
+@@ -8,7 +8,7 @@ from openai.resources.images import AsyncImages
+ from openai.types.image import Image
+ from openai.types.images_response import ImagesResponse
+ 
+-from semantic_kernel.connectors.ai.open_ai.services.open_ai_text_to_image import OpenAITextToImage
++from semantic_kernel.connectors.ai.open_ai import OpenAITextToImage, OpenAITextToImageExecutionSettings
+ from semantic_kernel.exceptions.service_exceptions import (
+     ServiceInitializationError,
+     ServiceInvalidExecutionSettingsError,
+@@ -59,6 +59,11 @@ def test_init_with_no_model_id(openai_unit_test_env) -> None:
+         )
+ 
+ 
++def test_prompt_execution_settings_class(openai_unit_test_env) -> None:
++    openai_text_to_image = OpenAITextToImage()
++    assert openai_text_to_image.get_prompt_execution_settings_class() == OpenAITextToImageExecutionSettings
++
++
+ @pytest.mark.asyncio
+ @patch.object(AsyncImages, "generate", return_value=AsyncMock(spec=ImagesResponse))
+ async def test_generate_calls_with_parameters(mock_generate, openai_unit_test_env) -> None:

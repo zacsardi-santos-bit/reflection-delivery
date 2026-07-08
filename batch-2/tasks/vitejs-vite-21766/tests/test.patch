@@ -1,0 +1,15 @@
+diff --git a/playground/optimize-deps/__tests__/optimize-deps.spec.ts b/playground/optimize-deps/__tests__/optimize-deps.spec.ts
+index 60e2e5bd2..03d0b12aa 100644
+--- a/playground/optimize-deps/__tests__/optimize-deps.spec.ts
++++ b/playground/optimize-deps/__tests__/optimize-deps.spec.ts
+@@ -166,6 +166,10 @@ test('CJS dep with css import', async () => {
+   await expect.poll(() => getColor('.cjs-with-assets')).toBe('blue')
+ })
+ 
++test('CJS dep requiring dep with css main field', async () => {
++  await expect.poll(() => getColor('.cjs-require-css-main-field')).toBe('coral')
++})
++
+ test('externalize known non-js files in optimize included dep', async () => {
+   await expect
+     .poll(() => page.textContent('.externalize-known-non-js'))

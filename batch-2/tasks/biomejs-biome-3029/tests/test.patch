@@ -1,0 +1,1337 @@
+diff --git a/crates/biome_cli/tests/cases/mod.rs b/crates/biome_cli/tests/cases/mod.rs
+index 2bebd3943d..fc3e960808 100644
+--- a/crates/biome_cli/tests/cases/mod.rs
++++ b/crates/biome_cli/tests/cases/mod.rs
+@@ -16,5 +16,7 @@ mod overrides_formatter;
+ mod overrides_linter;
+ mod overrides_organize_imports;
+ mod protected_files;
++mod reporter_github;
++mod reporter_junit;
+ mod reporter_summary;
+ mod unknown_files;
+diff --git a/crates/biome_cli/tests/cases/reporter_github.rs b/crates/biome_cli/tests/cases/reporter_github.rs
+new file mode 100644
+index 0000000000..c2a1349314
+--- /dev/null
++++ b/crates/biome_cli/tests/cases/reporter_github.rs
+@@ -0,0 +1,171 @@
++use crate::run_cli;
++use crate::snap_test::{assert_cli_snapshot, SnapshotPayload};
++use biome_console::BufferConsole;
++use biome_fs::MemoryFileSystem;
++use biome_service::DynRef;
++use bpaf::Args;
++use std::path::Path;
++
++const MAIN_1: &str = r#"import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;"#;
++
++const MAIN_2: &str = r#"import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;"#;
++
++#[test]
++fn reports_diagnostics_github_check_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                "--reporter=github",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_github_check_command",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn reports_diagnostics_github_ci_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("ci"),
++                "--reporter=github",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_github_ci_command",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn reports_diagnostics_github_lint_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("lint"),
++                "--reporter=github",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_github_lint_command",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn reports_diagnostics_github_format_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("format"),
++                "--reporter=github",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_github_format_command",
++        fs,
++        console,
++        result,
++    ));
++}
+diff --git a/crates/biome_cli/tests/cases/reporter_junit.rs b/crates/biome_cli/tests/cases/reporter_junit.rs
+new file mode 100644
+index 0000000000..5496de4a5a
+--- /dev/null
++++ b/crates/biome_cli/tests/cases/reporter_junit.rs
+@@ -0,0 +1,171 @@
++use crate::run_cli;
++use crate::snap_test::{assert_cli_snapshot, SnapshotPayload};
++use biome_console::BufferConsole;
++use biome_fs::MemoryFileSystem;
++use biome_service::DynRef;
++use bpaf::Args;
++use std::path::Path;
++
++const MAIN_1: &str = r#"import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;"#;
++
++const MAIN_2: &str = r#"import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;"#;
++
++#[test]
++fn reports_diagnostics_junit_check_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("check"),
++                "--reporter=junit",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_junit_check_command",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn reports_diagnostics_junit_ci_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("ci"),
++                "--reporter=junit",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_junit_ci_command",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn reports_diagnostics_junit_lint_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("lint"),
++                "--reporter=junit",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_junit_lint_command",
++        fs,
++        console,
++        result,
++    ));
++}
++
++#[test]
++fn reports_diagnostics_junit_format_command() {
++    let mut fs = MemoryFileSystem::default();
++    let mut console = BufferConsole::default();
++
++    let file_path1 = Path::new("main.ts");
++    fs.insert(file_path1.into(), MAIN_1.as_bytes());
++
++    let file_path2 = Path::new("index.ts");
++    fs.insert(file_path2.into(), MAIN_2.as_bytes());
++
++    let result = run_cli(
++        DynRef::Borrowed(&mut fs),
++        &mut console,
++        Args::from(
++            [
++                ("format"),
++                "--reporter=junit",
++                file_path1.as_os_str().to_str().unwrap(),
++                file_path2.as_os_str().to_str().unwrap(),
++            ]
++            .as_slice(),
++        ),
++    );
++
++    assert!(result.is_err(), "run_cli returned {result:?}");
++
++    assert_cli_snapshot(SnapshotPayload::new(
++        module_path!(),
++        "reports_diagnostics_junit_format_command",
++        fs,
++        console,
++        result,
++    ));
++}
+diff --git a/crates/biome_cli/tests/snap_test.rs b/crates/biome_cli/tests/snap_test.rs
+index 73c607e761..d77060ba6b 100644
+--- a/crates/biome_cli/tests/snap_test.rs
++++ b/crates/biome_cli/tests/snap_test.rs
+@@ -18,6 +18,7 @@ use std::path::{Path, PathBuf, MAIN_SEPARATOR};
+ 
+ lazy_static! {
+     static ref TIME_REGEX: Regex = Regex::new("\\s[0-9]+[mµn]?s\\.").unwrap();
++    static ref TIME_JUNIT_REGEX: Regex = Regex::new("time=\\\"[.0-9]+\\\"").unwrap();
+ }
+ 
+ #[derive(Default)]
+@@ -158,6 +159,13 @@ fn redact_snapshot(input: &str) -> Option<Cow<'_, str>> {
+         output.to_mut().replace_range(found, " <TIME>.");
+     }
+ 
++    let the_match = TIME_JUNIT_REGEX
++        .find(output.as_ref())
++        .map(|f| f.start()..f.end());
++    if let Some(found) = the_match {
++        output.to_mut().replace_range(found, "time=\"<TIME>\"");
++    }
++
+     // Normalize the name of the current executable to "biome"
+     let current_exe = current_exe()
+         .ok()
+@@ -170,32 +178,6 @@ fn redact_snapshot(input: &str) -> Option<Cow<'_, str>> {
+     output = replace_temp_dir(output);
+     output = replace_biome_dir(output);
+ 
+-    // Ref: https://docs.github.com/actions/learn-github-actions/variables#default-environment-variables
+-    let is_github = std::env::var("GITHUB_ACTIONS")
+-        .ok()
+-        .map_or(false, |value| value == "true");
+-
+-    if is_github {
+-        // GitHub actions sets the env var GITHUB_ACTIONS=true in CI
+-        // Based on that, biome also has a feature that detects if it's running on GH Actions and
+-        // emits additional information in the output (workflow commands, see PR + discussion at #681)
+-        // To avoid polluting snapshots with that, we filter out those lines
+-
+-        let lines: Vec<_> = output
+-            .split('\n')
+-            .filter(|line| {
+-                !line.starts_with("::notice ")
+-                    && !line.starts_with("::warning ")
+-                    && !line.starts_with("::error ")
+-            })
+-            .collect();
+-
+-        output = Cow::Owned(lines.join("\n"));
+-        if output.is_empty() {
+-            return None;
+-        }
+-    }
+-
+     // Normalize Windows-specific path separators to "/"
+     if cfg!(windows) {
+         let mut rest = &*output;
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_check_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_check_command.snap
+new file mode 100644
+index 0000000000..f0ebf744b4
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_check_command.snap
+@@ -0,0 +1,124 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++::error title=lint/suspicious/noDoubleEquals,file=main.ts,line=4,endLine=4,col=3,endColumn=5::Use === instead of ==
++```
++
++```block
++::error title=lint/suspicious/noDebugger,file=main.ts,line=6,endLine=6,col=1,endColumn=9::This is an unexpected use of the debugger statement.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=main.ts,line=8,endLine=8,col=5,endColumn=6::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=main.ts,line=8,endLine=8,col=5,endColumn=6::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=main.ts,line=9,endLine=9,col=7,endColumn=8::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=main.ts,line=9,endLine=9,col=7,endColumn=8::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=main.ts,line=2,endLine=2,col=10,endColumn=11::Shouldn't redeclare 'z'. Consider to delete it or rename it.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=main.ts,line=9,endLine=9,col=7,endColumn=8::Shouldn't redeclare 'f'. Consider to delete it or rename it.
++```
++
++```block
++
++```
++
++```block
++
++```
++
++```block
++::error title=lint/suspicious/noDoubleEquals,file=index.ts,line=4,endLine=4,col=3,endColumn=5::Use === instead of ==
++```
++
++```block
++::error title=lint/suspicious/noDebugger,file=index.ts,line=6,endLine=6,col=1,endColumn=9::This is an unexpected use of the debugger statement.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=index.ts,line=8,endLine=8,col=5,endColumn=6::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=index.ts,line=8,endLine=8,col=5,endColumn=6::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=index.ts,line=9,endLine=9,col=7,endColumn=8::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=index.ts,line=9,endLine=9,col=7,endColumn=8::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=index.ts,line=2,endLine=2,col=10,endColumn=11::Shouldn't redeclare 'z'. Consider to delete it or rename it.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=index.ts,line=9,endLine=9,col=7,endColumn=8::Shouldn't redeclare 'f'. Consider to delete it or rename it.
++```
++
++```block
++
++```
++
++```block
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_ci_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_ci_command.snap
+new file mode 100644
+index 0000000000..09e9c8ee97
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_ci_command.snap
+@@ -0,0 +1,124 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++::error title=lint/suspicious/noDoubleEquals,file=main.ts,line=4,endLine=4,col=3,endColumn=5::Use === instead of ==
++```
++
++```block
++::error title=lint/suspicious/noDebugger,file=main.ts,line=6,endLine=6,col=1,endColumn=9::This is an unexpected use of the debugger statement.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=main.ts,line=8,endLine=8,col=5,endColumn=6::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=main.ts,line=8,endLine=8,col=5,endColumn=6::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=main.ts,line=9,endLine=9,col=7,endColumn=8::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=main.ts,line=9,endLine=9,col=7,endColumn=8::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=main.ts,line=2,endLine=2,col=10,endColumn=11::Shouldn't redeclare 'z'. Consider to delete it or rename it.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=main.ts,line=9,endLine=9,col=7,endColumn=8::Shouldn't redeclare 'f'. Consider to delete it or rename it.
++```
++
++```block
++
++```
++
++```block
++
++```
++
++```block
++::error title=lint/suspicious/noDoubleEquals,file=index.ts,line=4,endLine=4,col=3,endColumn=5::Use === instead of ==
++```
++
++```block
++::error title=lint/suspicious/noDebugger,file=index.ts,line=6,endLine=6,col=1,endColumn=9::This is an unexpected use of the debugger statement.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=index.ts,line=8,endLine=8,col=5,endColumn=6::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=index.ts,line=8,endLine=8,col=5,endColumn=6::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=index.ts,line=9,endLine=9,col=7,endColumn=8::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=index.ts,line=9,endLine=9,col=7,endColumn=8::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=index.ts,line=2,endLine=2,col=10,endColumn=11::Shouldn't redeclare 'z'. Consider to delete it or rename it.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=index.ts,line=9,endLine=9,col=7,endColumn=8::Shouldn't redeclare 'f'. Consider to delete it or rename it.
++```
++
++```block
++
++```
++
++```block
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_format_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_format_command.snap
+new file mode 100644
+index 0000000000..e12181e289
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_format_command.snap
+@@ -0,0 +1,52 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++
++```
++
++```block
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_lint_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_lint_command.snap
+new file mode 100644
+index 0000000000..8024848e05
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_github/reports_diagnostics_github_lint_command.snap
+@@ -0,0 +1,108 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++::error title=lint/suspicious/noDoubleEquals,file=main.ts,line=4,endLine=4,col=3,endColumn=5::Use === instead of ==
++```
++
++```block
++::error title=lint/suspicious/noDebugger,file=main.ts,line=6,endLine=6,col=1,endColumn=9::This is an unexpected use of the debugger statement.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=main.ts,line=8,endLine=8,col=5,endColumn=6::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=main.ts,line=8,endLine=8,col=5,endColumn=6::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=main.ts,line=9,endLine=9,col=7,endColumn=8::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=main.ts,line=9,endLine=9,col=7,endColumn=8::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=main.ts,line=2,endLine=2,col=10,endColumn=11::Shouldn't redeclare 'z'. Consider to delete it or rename it.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=main.ts,line=9,endLine=9,col=7,endColumn=8::Shouldn't redeclare 'f'. Consider to delete it or rename it.
++```
++
++```block
++::error title=lint/suspicious/noDoubleEquals,file=index.ts,line=4,endLine=4,col=3,endColumn=5::Use === instead of ==
++```
++
++```block
++::error title=lint/suspicious/noDebugger,file=index.ts,line=6,endLine=6,col=1,endColumn=9::This is an unexpected use of the debugger statement.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=index.ts,line=8,endLine=8,col=5,endColumn=6::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=index.ts,line=8,endLine=8,col=5,endColumn=6::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/nursery/noEvolvingAny,file=index.ts,line=9,endLine=9,col=7,endColumn=8::This variable's type is not allowed to evolve implicitly, leading to potential any types.
++```
++
++```block
++::error title=lint/suspicious/noImplicitAnyLet,file=index.ts,line=9,endLine=9,col=7,endColumn=8::This variable implicitly has the any type.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=index.ts,line=2,endLine=2,col=10,endColumn=11::Shouldn't redeclare 'z'. Consider to delete it or rename it.
++```
++
++```block
++::error title=lint/suspicious/noRedeclare,file=index.ts,line=9,endLine=9,col=7,endColumn=8::Shouldn't redeclare 'f'. Consider to delete it or rename it.
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_check_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_check_command.snap
+new file mode 100644
+index 0000000000..e2c12d0248
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_check_command.snap
+@@ -0,0 +1,135 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++check ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++<?xml version="1.0" encoding="UTF-8"?>
++<testsuites name="Biome" tests="16" failures="16" errors="20" time="<TIME>">
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
++            <failure message="Use === instead of ==.
++== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
++== is only allowed when comparing against `null`</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
++            <failure message="This is an unexpected use of the debugger statement.">line 5, col 0, This is an unexpected use of the debugger statement.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="8" column="5">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 7, col 4, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="8" column="5">
++            <failure message="This variable implicitly has the any type.">line 7, col 4, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="9" column="7">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 8, col 6, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="9" column="7">
++            <failure message="This variable implicitly has the any type.">line 8, col 6, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="2" column="10">
++            <failure message="Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.">line 1, col 9, Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="9" column="7">
++            <failure message="Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.">line 8, col 6, Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
++            <failure message="Use === instead of ==.
++== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
++== is only allowed when comparing against `null`</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
++            <failure message="This is an unexpected use of the debugger statement.">line 5, col 0, This is an unexpected use of the debugger statement.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="8" column="5">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 7, col 4, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="8" column="5">
++            <failure message="This variable implicitly has the any type.">line 7, col 4, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="9" column="7">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 8, col 6, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="9" column="7">
++            <failure message="This variable implicitly has the any type.">line 8, col 6, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="2" column="10">
++            <failure message="Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.">line 1, col 9, Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="9" column="7">
++            <failure message="Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.">line 8, col 6, Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++</testsuites>
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_ci_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_ci_command.snap
+new file mode 100644
+index 0000000000..90e252d870
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_ci_command.snap
+@@ -0,0 +1,135 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++ci ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++<?xml version="1.0" encoding="UTF-8"?>
++<testsuites name="Biome" tests="16" failures="16" errors="20" time="<TIME>">
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
++            <failure message="Use === instead of ==.
++== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
++== is only allowed when comparing against `null`</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
++            <failure message="This is an unexpected use of the debugger statement.">line 5, col 0, This is an unexpected use of the debugger statement.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="8" column="5">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 7, col 4, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="8" column="5">
++            <failure message="This variable implicitly has the any type.">line 7, col 4, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="9" column="7">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 8, col 6, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="9" column="7">
++            <failure message="This variable implicitly has the any type.">line 8, col 6, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="2" column="10">
++            <failure message="Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.">line 1, col 9, Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="9" column="7">
++            <failure message="Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.">line 8, col 6, Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
++            <failure message="Use === instead of ==.
++== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
++== is only allowed when comparing against `null`</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
++            <failure message="This is an unexpected use of the debugger statement.">line 5, col 0, This is an unexpected use of the debugger statement.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="8" column="5">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 7, col 4, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="8" column="5">
++            <failure message="This variable implicitly has the any type.">line 7, col 4, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="9" column="7">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 8, col 6, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="9" column="7">
++            <failure message="This variable implicitly has the any type.">line 8, col 6, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="2" column="10">
++            <failure message="Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.">line 1, col 9, Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="9" column="7">
++            <failure message="Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.">line 8, col 6, Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++</testsuites>
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_format_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_format_command.snap
+new file mode 100644
+index 0000000000..ee30d587dc
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_format_command.snap
+@@ -0,0 +1,51 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++<?xml version="1.0" encoding="UTF-8"?>
++<testsuites name="Biome" tests="0" failures="0" errors="2" time="<TIME>">
++</testsuites>
++
++```
+diff --git a/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_lint_command.snap b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_lint_command.snap
+new file mode 100644
+index 0000000000..3bd6754c9e
+--- /dev/null
++++ b/crates/biome_cli/tests/snapshots/main_cases_reporter_junit/reports_diagnostics_junit_lint_command.snap
+@@ -0,0 +1,135 @@
++---
++source: crates/biome_cli/tests/snap_test.rs
++expression: content
++---
++## `index.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++## `main.ts`
++
++```ts
++import { z} from "z"
++import { z, b , a} from "lodash"
++
++a ==b
++
++debugger 
++
++let f;
++		let f;
++```
++
++# Termination Message
++
++```block
++lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++  × Some errors were emitted while running checks.
++  
++
++
++```
++
++# Emitted Messages
++
++```block
++<?xml version="1.0" encoding="UTF-8"?>
++<testsuites name="Biome" tests="16" failures="16" errors="16" time="<TIME>">
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
++            <failure message="Use === instead of ==.
++== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
++== is only allowed when comparing against `null`</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
++            <failure message="This is an unexpected use of the debugger statement.">line 5, col 0, This is an unexpected use of the debugger statement.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="8" column="5">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 7, col 4, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="8" column="5">
++            <failure message="This variable implicitly has the any type.">line 7, col 4, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="9" column="7">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 8, col 6, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="9" column="7">
++            <failure message="This variable implicitly has the any type.">line 8, col 6, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="2" column="10">
++            <failure message="Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.">line 1, col 9, Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="main.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="9" column="7">
++            <failure message="Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.">line 8, col 6, Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDoubleEquals" line="4" column="3">
++            <failure message="Use === instead of ==.
++== is only allowed when comparing against `null`">line 3, col 2, Use === instead of ==.
++== is only allowed when comparing against `null`</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noDebugger" line="6" column="1">
++            <failure message="This is an unexpected use of the debugger statement.">line 5, col 0, This is an unexpected use of the debugger statement.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="8" column="5">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 7, col 4, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="8" column="5">
++            <failure message="This variable implicitly has the any type.">line 7, col 4, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.nursery.noEvolvingAny" line="9" column="7">
++            <failure message="This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.">line 8, col 6, This variable&apos;s type is not allowed to evolve implicitly, leading to potential any types.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noImplicitAnyLet" line="9" column="7">
++            <failure message="This variable implicitly has the any type.">line 8, col 6, This variable implicitly has the any type.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="2" column="10">
++            <failure message="Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.">line 1, col 9, Shouldn&apos;t redeclare &apos;z&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++    <testsuite name="index.ts" tests="1" disabled="0" errors="0" failures="1" package="org.biome">
++        <testcase name="org.biome.lint.suspicious.noRedeclare" line="9" column="7">
++            <failure message="Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.">line 8, col 6, Shouldn&apos;t redeclare &apos;f&apos;. Consider to delete it or rename it.</failure>
++        </testcase>
++    </testsuite>
++</testsuites>
++
++```

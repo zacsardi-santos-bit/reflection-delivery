@@ -1,0 +1,31 @@
+diff --git a/internal/codegen/golang/postgresql_type_test.go b/internal/codegen/golang/postgresql_type_test.go
+new file mode 100644
+index 000000000..000000001
+--- /dev/null
++++ b/internal/codegen/golang/postgresql_type_test.go
+@@ -0,0 +1,25 @@
++package golang
++
++import (
++	"testing"
++
++	"github.com/sqlc-dev/sqlc/internal/plugin"
++)
++
++func TestPostgresTypeVarbitPGXV4(t *testing.T) {
++	req := &plugin.CodeGenRequest{
++		Settings: &plugin.Settings{
++			Go: &plugin.GoCode{
++				SqlPackage: SQLPackagePGXV4,
++			},
++		},
++	}
++	col := &plugin.Column{
++		Type: &plugin.Identifier{Name: "varbit"},
++	}
++	got := postgresType(req, col)
++	want := "pgtype.Varbit"
++	if got != want {
++		t.Errorf("got %q, want %q", got, want)
++	}
++}

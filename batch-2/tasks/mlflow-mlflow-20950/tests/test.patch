@@ -1,0 +1,908 @@
+diff --git a/tests/ag2/test_ag2_autolog.py b/tests/ag2/test_ag2_autolog.py
+index 931bd9258..4a29fb0c1 100644
+--- a/tests/ag2/test_ag2_autolog.py
++++ b/tests/ag2/test_ag2_autolog.py
+@@ -11,6 +11,7 @@ from openai.types.chat.chat_completion import ChatCompletionMessage, Choice
+ import mlflow
+ from mlflow.entities.span import SpanType
+ from mlflow.tracing.constant import SpanAttributeKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.helper_functions import start_mock_openai_server
+ from tests.tracing.helper import get_traces
+@@ -131,12 +132,13 @@ def test_tracing_agent(llm_config, mock_litellm_cost):
+         "total_tokens": 21,
+     }
+     assert llm_span.get_attribute(SpanAttributeKey.MESSAGE_FORMAT) == "ag2"
+-    # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
+-    assert llm_span.llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
++        assert llm_span.llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+ 
+     assert llm_span_2.get_attribute(SpanAttributeKey.CHAT_USAGE) == {
+         "input_tokens": 9,
+@@ -144,12 +146,13 @@ def test_tracing_agent(llm_config, mock_litellm_cost):
+         "total_tokens": 21,
+     }
+     assert llm_span_2.get_attribute(SpanAttributeKey.MESSAGE_FORMAT) == "ag2"
+-    # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
+-    assert llm_span_2.llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
++        assert llm_span_2.llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 18,
+diff --git a/tests/anthropic/test_anthropic_autolog.py b/tests/anthropic/test_anthropic_autolog.py
+index f438372e8..0816a5ff4 100644
+--- a/tests/anthropic/test_anthropic_autolog.py
++++ b/tests/anthropic/test_anthropic_autolog.py
+@@ -11,6 +11,7 @@ from anthropic.types import Message, TextBlock, ToolUseBlock, Usage
+ import mlflow.anthropic
+ from mlflow.entities.span import SpanType
+ from mlflow.tracing.constant import SpanAttributeKey, TokenUsageKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -202,12 +203,13 @@ def test_messages_autolog(is_async, mock_litellm_cost):
+     assert span.model_name == "test_model"
+     assert span.get_attribute(SpanAttributeKey.MESSAGE_FORMAT) == "anthropic"
+ 
+-    # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
+-    assert span.llm_cost == {
+-        "input_cost": 10.0,
+-        "output_cost": 36.0,
+-        "total_cost": 46.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
++        assert span.llm_cost == {
++            "input_cost": 10.0,
++            "output_cost": 36.0,
++            "total_cost": 46.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 10,
+@@ -295,12 +297,13 @@ def test_messages_autolog_tool_calling(is_async, mock_litellm_cost):
+     assert span.inputs == DUMMY_CREATE_MESSAGE_WITH_TOOLS_REQUEST
+     assert span.outputs == DUMMY_CREATE_MESSAGE_WITH_TOOLS_RESPONSE.to_dict(exclude_unset=False)
+ 
+-    # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
+-    assert span.llm_cost == {
+-        "input_cost": 10.0,
+-        "output_cost": 36.0,
+-        "total_cost": 46.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
++        assert span.llm_cost == {
++            "input_cost": 10.0,
++            "output_cost": 36.0,
++            "total_cost": 46.0,
++        }
+ 
+     assert span.get_attribute(SpanAttributeKey.CHAT_TOOLS) == [
+         {
+@@ -394,12 +397,13 @@ def test_messages_autolog_with_thinking(is_async, mock_litellm_cost):
+     assert span.model_name == "test_model"
+     assert span.get_attribute(SpanAttributeKey.MESSAGE_FORMAT) == "anthropic"
+ 
+-    # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
+-    assert span.llm_cost == {
+-        "input_cost": 10.0,
+-        "output_cost": 36.0,
+-        "total_cost": 46.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
++        assert span.llm_cost == {
++            "input_cost": 10.0,
++            "output_cost": 36.0,
++            "total_cost": 46.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 10,
+diff --git a/tests/autogen/test_autogen_autolog.py b/tests/autogen/test_autogen_autolog.py
+index b9c12afe5..9c467f53c 100644
+--- a/tests/autogen/test_autogen_autolog.py
++++ b/tests/autogen/test_autogen_autolog.py
+@@ -8,6 +8,7 @@ from autogen_ext.models.replay import ReplayChatCompletionClient
+ import mlflow
+ from mlflow.entities.span import SpanType
+ from mlflow.tracing.constant import SpanAttributeKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -96,12 +97,13 @@ async def test_autolog_assistant_agent(disable, mock_litellm_cost):
+             "output_tokens": 1,
+             "total_tokens": 7,
+         }
+-        # Verify cost is calculated (6 input tokens * 1.0 + 1 output tokens * 2.0)
+-        assert span.llm_cost == {
+-            "input_cost": 6.0,
+-            "output_cost": 2.0,
+-            "total_cost": 8.0,
+-        }
++        if not IS_TRACING_SDK_ONLY:
++            # Verify cost is calculated (6 input tokens * 1.0 + 1 output tokens * 2.0)
++            assert span.llm_cost == {
++                "input_cost": 6.0,
++                "output_cost": 2.0,
++                "total_cost": 8.0,
++            }
+ 
+         assert span.get_attribute(SpanAttributeKey.MESSAGE_FORMAT) == "autogen"
+ 
+@@ -256,11 +258,12 @@ async def test_autolog_tool_agent(mock_litellm_cost):
+         "output_tokens": 1,
+         "total_tokens": 7,
+     }
+-    assert span.llm_cost == {
+-        "input_cost": 6.0,
+-        "output_cost": 2.0,
+-        "total_cost": 8.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span.llm_cost == {
++            "input_cost": 6.0,
++            "output_cost": 2.0,
++            "total_cost": 8.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 6,
+@@ -354,11 +357,12 @@ async def test_autolog_multi_modal(mock_litellm_cost):
+         "output_tokens": 1,
+         "total_tokens": 15,
+     }
+-    assert span.llm_cost == {
+-        "input_cost": 14.0,
+-        "output_cost": 2.0,
+-        "total_cost": 16.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span.llm_cost == {
++            "input_cost": 14.0,
++            "output_cost": 2.0,
++            "total_cost": 16.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 14,
+diff --git a/tests/bedrock/test_bedrock_autolog.py b/tests/bedrock/test_bedrock_autolog.py
+index 498659801..bfedc47fc 100644
+--- a/tests/bedrock/test_bedrock_autolog.py
++++ b/tests/bedrock/test_bedrock_autolog.py
+@@ -12,6 +12,7 @@ from packaging.version import Version
+ 
+ import mlflow
+ from mlflow.tracing.constant import SpanAttributeKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -898,14 +899,15 @@ def test_bedrock_autolog_converse_stream(
+ 
+     # Validate token usage against parameterized expected values
+     _assert_token_usage_matches(span, expected_usage)
+-    # Verify cost is calculated (input_tokens * 1.0 + output_tokens * 2.0)
+-    expected_cost = {
+-        "input_cost": float(expected_usage["input_tokens"]),
+-        "output_cost": float(expected_usage["output_tokens"]) * 2.0,
+-        "total_cost": float(expected_usage["input_tokens"])
+-        + float(expected_usage["output_tokens"]) * 2.0,
+-    }
+-    assert span.llm_cost == expected_cost
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (input_tokens * 1.0 + output_tokens * 2.0)
++        expected_cost = {
++            "input_cost": float(expected_usage["input_tokens"]),
++            "output_cost": float(expected_usage["output_tokens"]) * 2.0,
++            "total_cost": float(expected_usage["input_tokens"])
++            + float(expected_usage["output_tokens"]) * 2.0,
++        }
++        assert span.llm_cost == expected_cost
+ 
+ 
+ def _event_stream(raw_response, chunk_size=10):
+diff --git a/tests/conftest.py b/tests/conftest.py
+index 92fa05694..401578c94 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -739,6 +739,8 @@ def remote_backend_for_tracing_sdk_test():
+                 mlflow_root,
+                 "--with",
+                 "setuptools<82",  # setuptools 82+ removed pkg_resources
++                "--with",
++                "litellm",  # Required for computing cost of LLM calls
+                 "mlflow",
+                 "server",
+                 "--port",
+@@ -1225,11 +1227,17 @@ def mock_litellm_cost():
+     Uses cost of 1.0 per input token and 2.0 per output token.
+     Returns (input_cost, output_cost) based on the token counts passed.
+     """
++    try:
++        import litellm  # noqa: F401
++    except ImportError:
++        # mock.patch will fail if litellm is not installed, e.g. tracing SDK test
++        yield None
++        return
+ 
+     def calculate_cost(model, prompt_tokens, completion_tokens, **kwargs):
+         input_cost = prompt_tokens * 1.0
+         output_cost = completion_tokens * 2.0
+         return (input_cost, output_cost)
+ 
+-    with mock.patch("litellm.cost_per_token", side_effect=calculate_cost) as mock_cost:
++    with mock.patch("litellm.cost_per_token", side_effect=calculate_cost, create=True) as mock_cost:
+         yield mock_cost
+diff --git a/tests/crewai/test_crewai_autolog.py b/tests/crewai/test_crewai_autolog.py
+index eca7a829e..e06a61996 100644
+--- a/tests/crewai/test_crewai_autolog.py
++++ b/tests/crewai/test_crewai_autolog.py
+@@ -323,12 +323,13 @@ def test_kickoff_enable_disable_autolog(simple_agent_1, task_1, autolog, mock_li
+     assert span_3.inputs["messages"] is not None
+     assert span_3.outputs == f"{_FINAL_ANSWER_KEYWORD} {_LLM_ANSWER}"
+     assert span_3.model_name == "openai/gpt-4o-mini"
+-    # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
+-    assert span_3.llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
++        assert span_3.llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+ 
+     # Create Long Term Memory
+     span_4 = traces[0].data.spans[4]
+@@ -464,11 +465,12 @@ def test_kickoff_tool_calling(tool_agent_1, task_1_with_tool, autolog, mock_lite
+     assert span_3.parent_id is span_2.span_id
+     assert span_3.inputs["messages"] is not None
+     assert span_3.model_name == "openai/gpt-4o-mini"
+-    assert span_3.llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span_3.llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+     # Tool trace
+     span_4 = traces[0].data.spans[4]
+     assert span_4.name == "TestTool"
+@@ -483,11 +485,12 @@ def test_kickoff_tool_calling(tool_agent_1, task_1_with_tool, autolog, mock_lite
+     assert span_5.inputs["messages"] is not None
+     assert span_5.outputs == f"{_FINAL_ANSWER_KEYWORD} {_LLM_ANSWER}"
+     assert span_5.model_name == "openai/gpt-4o-mini"
+-    assert span_5.llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span_5.llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+     # Create Long Term Memory
+     span_6 = traces[0].data.spans[6]
+     assert span_6.name == "CrewAgentExecutor._create_long_term_memory"
+diff --git a/tests/gemini/test_gemini_autolog.py b/tests/gemini/test_gemini_autolog.py
+index 87cdaee51..ebe5be25f 100644
+--- a/tests/gemini/test_gemini_autolog.py
++++ b/tests/gemini/test_gemini_autolog.py
+@@ -15,6 +15,7 @@ from packaging.version import Version
+ import mlflow
+ from mlflow.entities.span import SpanType
+ from mlflow.tracing.constant import SpanAttributeKey, TokenUsageKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -191,12 +192,13 @@ def test_generate_content_enable_disable_autolog(is_async, mock_litellm_cost):
+             TokenUsageKey.CACHE_READ_INPUT_TOKENS: 0,
+         }
+ 
+-        # Verify cost is calculated (6 input tokens * 1.0 + 6 output tokens * 2.0)
+-        assert span.llm_cost == {
+-            "input_cost": 6.0,
+-            "output_cost": 12.0,
+-            "total_cost": 18.0,
+-        }
++        if not IS_TRACING_SDK_ONLY:
++            # Verify cost is calculated (6 input tokens * 1.0 + 6 output tokens * 2.0)
++            assert span.llm_cost == {
++                "input_cost": 6.0,
++                "output_cost": 12.0,
++                "total_cost": 18.0,
++            }
+ 
+         assert traces[0].info.token_usage == {
+             "input_tokens": 6,
+@@ -292,11 +294,12 @@ def test_generate_content_image_autolog(mock_litellm_cost):
+         TokenUsageKey.TOTAL_TOKENS: 12,
+         TokenUsageKey.CACHE_READ_INPUT_TOKENS: 0,
+     }
+-    assert span.llm_cost == {
+-        "input_cost": 6.0,
+-        "output_cost": 12.0,
+-        "total_cost": 18.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span.llm_cost == {
++            "input_cost": 6.0,
++            "output_cost": 12.0,
++            "total_cost": 18.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 6,
+@@ -379,11 +382,12 @@ def test_generate_content_tool_calling_autolog(is_async, mock_litellm_cost):
+         TokenUsageKey.TOTAL_TOKENS: 12,
+         TokenUsageKey.CACHE_READ_INPUT_TOKENS: 0,
+     }
+-    assert span.llm_cost == {
+-        "input_cost": 6.0,
+-        "output_cost": 12.0,
+-        "total_cost": 18.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span.llm_cost == {
++            "input_cost": 6.0,
++            "output_cost": 12.0,
++            "total_cost": 18.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 6,
+@@ -502,11 +506,12 @@ def test_generate_content_tool_calling_chat_history_autolog(is_async, mock_litel
+         TokenUsageKey.TOTAL_TOKENS: 12,
+         TokenUsageKey.CACHE_READ_INPUT_TOKENS: 0,
+     }
+-    assert span.llm_cost == {
+-        "input_cost": 6.0,
+-        "output_cost": 12.0,
+-        "total_cost": 18.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span.llm_cost == {
++            "input_cost": 6.0,
++            "output_cost": 12.0,
++            "total_cost": 18.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 6,
+diff --git a/tests/groq/test_groq_autolog.py b/tests/groq/test_groq_autolog.py
+index ea292c2ae..aa24775e0 100644
+--- a/tests/groq/test_groq_autolog.py
++++ b/tests/groq/test_groq_autolog.py
+@@ -16,6 +16,7 @@ from groq.types.chat.chat_completion import (
+ import mlflow.groq
+ from mlflow.entities.span import SpanType
+ from mlflow.tracing.constant import SpanAttributeKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -90,12 +91,13 @@ def test_chat_completion_autolog(mock_litellm_cost):
+         "output_tokens": 648,
+         "total_tokens": 668,
+     }
+-    # Verify cost is calculated (20 input tokens * 1.0 + 648 output tokens * 2.0)
+-    assert span.llm_cost == {
+-        "input_cost": 20.0,
+-        "output_cost": 1296.0,
+-        "total_cost": 1316.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (20 input tokens * 1.0 + 648 output tokens * 2.0)
++        assert span.llm_cost == {
++            "input_cost": 20.0,
++            "output_cost": 1296.0,
++            "total_cost": 1316.0,
++        }
+ 
+     assert span.get_attribute(SpanAttributeKey.MESSAGE_FORMAT) == "groq"
+ 
+diff --git a/tests/haystack/test_haystack_tracing.py b/tests/haystack/test_haystack_tracing.py
+index c29c670d3..017e031fb 100644
+--- a/tests/haystack/test_haystack_tracing.py
++++ b/tests/haystack/test_haystack_tracing.py
+@@ -9,6 +9,7 @@ import mlflow
+ from mlflow.entities import SpanType
+ from mlflow.environment_variables import MLFLOW_USE_DEFAULT_TRACER_PROVIDER
+ from mlflow.tracing.constant import SpanAttributeKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -113,12 +114,13 @@ def test_token_usage_parsed_for_llm_component(mock_litellm_cost):
+         "total_tokens": 3,
+     }
+     assert span.model_name == "gpt-4"
+-    # Verify cost is calculated (1 input token * 1.0 + 2 output tokens * 2.0)
+-    assert span.llm_cost == {
+-        "input_cost": 1.0,
+-        "output_cost": 4.0,
+-        "total_cost": 5.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (1 input token * 1.0 + 2 output tokens * 2.0)
++        assert span.llm_cost == {
++            "input_cost": 1.0,
++            "output_cost": 4.0,
++            "total_cost": 5.0,
++        }
+ 
+     mlflow.haystack.autolog(disable=True)
+ 
+diff --git a/tests/langchain/test_langchain_autolog.py b/tests/langchain/test_langchain_autolog.py
+index fcb9c0da7..353526f76 100644
+--- a/tests/langchain/test_langchain_autolog.py
++++ b/tests/langchain/test_langchain_autolog.py
+@@ -40,6 +40,7 @@ from mlflow.entities.span import SpanType
+ from mlflow.entities.trace import Trace
+ from mlflow.entities.trace_status import TraceStatus
+ from mlflow.tracing.constant import TRACE_SCHEMA_VERSION_KEY, SpanAttributeKey, TraceMetadataKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.langchain.conftest import DeterministicDummyEmbeddings
+ from tests.tracing.conftest import async_logging_enabled
+@@ -748,6 +749,8 @@ async def test_langchain_autolog_token_usage(mock_litellm_cost):
+         assert chat_model_span.model_name == "gpt-3.5-turbo"
+ 
+     def _validate_cost(trace):
++        if IS_TRACING_SDK_ONLY:
++            return
+         # Find the ChatOpenAI span
+         chat_model_span = next(s for s in trace.data.spans if s.name == "ChatOpenAI")
+         assert chat_model_span.llm_cost == {
+diff --git a/tests/langgraph/test_langgraph_autolog.py b/tests/langgraph/test_langgraph_autolog.py
+index e93eea4cb..2816e1997 100644
+--- a/tests/langgraph/test_langgraph_autolog.py
++++ b/tests/langgraph/test_langgraph_autolog.py
+@@ -6,6 +6,7 @@ import mlflow
+ from mlflow.entities.span import SpanType
+ from mlflow.entities.span_status import SpanStatusCode
+ from mlflow.tracing.constant import TokenUsageKey, TraceMetadataKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces, skip_when_testing_trace_sdk
+ 
+@@ -117,12 +118,13 @@ async def test_langgraph_tracing_prebuilt(is_async, mock_litellm_cost):
+     chat_spans = [s for s in traces[0].data.spans if s.span_type == SpanType.CHAT_MODEL]
+     for chat_span in chat_spans:
+         assert chat_span.model_name == "gpt-3.5-turbo"
+-        usage = chat_span.get_attribute("mlflow.chat.tokenUsage")
+-        assert chat_span.llm_cost == {
+-            "input_cost": usage["input_tokens"] * 1.0,
+-            "output_cost": usage["output_tokens"] * 2.0,
+-            "total_cost": usage["input_tokens"] * 1.0 + usage["output_tokens"] * 2.0,
+-        }
++        if not IS_TRACING_SDK_ONLY:
++            usage = chat_span.get_attribute("mlflow.chat.tokenUsage")
++            assert chat_span.llm_cost == {
++                "input_cost": usage["input_tokens"] * 1.0,
++                "output_cost": usage["output_tokens"] * 2.0,
++                "total_cost": usage["input_tokens"] * 1.0 + usage["output_tokens"] * 2.0,
++            }
+ 
+ 
+ @skip_when_testing_trace_sdk
+diff --git a/tests/llama_index/test_llama_index_tracer.py b/tests/llama_index/test_llama_index_tracer.py
+index 2efc9c40f..d283cddd8 100644
+--- a/tests/llama_index/test_llama_index_tracer.py
++++ b/tests/llama_index/test_llama_index_tracer.py
+@@ -34,6 +34,7 @@ from mlflow.llama_index.tracer import (
+ from mlflow.tracing.constant import SpanAttributeKey, TokenUsageKey
+ from mlflow.tracing.provider import _get_tracer
+ from mlflow.tracking._tracking_service.utils import _use_tracking_uri
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces, skip_when_testing_trace_sdk
+ 
+@@ -105,12 +106,13 @@ def test_trace_llm_complete(is_async, mock_litellm_cost):
+         TokenUsageKey.TOTAL_TOKENS: 12,
+     }
+ 
+-    # Verify cost is calculated
+-    assert spans[0].llm_cost == {
+-        "input_cost": 5.0,
+-        "output_cost": 14.0,
+-        "total_cost": 19.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated
++        assert spans[0].llm_cost == {
++            "input_cost": 5.0,
++            "output_cost": 14.0,
++            "total_cost": 19.0,
++        }
+ 
+ 
+ def test_trace_llm_complete_stream():
+@@ -242,11 +244,12 @@ def test_trace_llm_chat(is_async, mock_litellm_cost):
+     assert attr["invocation_params"]["model_name"] == llm.metadata.model_name
+     assert attr["model_dict"]["model"] == llm.metadata.model_name
+     assert spans[0].model_name == llm.metadata.model_name
+-    assert spans[0].llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert spans[0].llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+     assert traces[0].info.token_usage == {
+         TokenUsageKey.INPUT_TOKENS: 9,
+         TokenUsageKey.OUTPUT_TOKENS: 12,
+diff --git a/tests/mistral/test_mistral_autolog.py b/tests/mistral/test_mistral_autolog.py
+index 703bfaf31..73273a21f 100644
+--- a/tests/mistral/test_mistral_autolog.py
++++ b/tests/mistral/test_mistral_autolog.py
+@@ -16,6 +16,7 @@ from pydantic import BaseModel
+ import mlflow.mistral
+ from mlflow.entities.span import SpanType
+ from mlflow.tracing.constant import SpanAttributeKey, TokenUsageKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -176,12 +177,13 @@ def test_chat_complete_autolog(mock_litellm_cost):
+         TokenUsageKey.OUTPUT_TOKENS: 18,
+         TokenUsageKey.TOTAL_TOKENS: 28,
+     }
+-    # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
+-    assert span.llm_cost == {
+-        "input_cost": 10.0,
+-        "output_cost": 36.0,
+-        "total_cost": 46.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (10 input tokens * 1.0 + 18 output tokens * 2.0)
++        assert span.llm_cost == {
++            "input_cost": 10.0,
++            "output_cost": 36.0,
++            "total_cost": 46.0,
++        }
+ 
+     with patch(
+         "mistralai.chat.Chat.do_request",
+diff --git a/tests/openai/test_openai_autolog.py b/tests/openai/test_openai_autolog.py
+index 733e07d9a..852d4d819 100644
+--- a/tests/openai/test_openai_autolog.py
++++ b/tests/openai/test_openai_autolog.py
+@@ -18,6 +18,7 @@ from mlflow.tracing.constant import (
+     TokenUsageKey,
+     TraceMetadataKey,
+ )
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.openai.mock_openai import EMPTY_CHOICES, LIST_CONTENT
+ from tests.tracing.helper import get_traces, skip_when_testing_trace_sdk
+@@ -127,12 +128,13 @@ async def test_chat_completions_autolog(client, mock_litellm_cost):
+     assert span.model_name == "gpt-4o-mini"
+     assert span.get_attribute(SpanAttributeKey.MESSAGE_FORMAT) == "openai"
+ 
+-    # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
+-    assert span.llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
++        assert span.llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+ 
+     assert TraceMetadataKey.SOURCE_RUN not in trace.info.request_metadata
+     assert trace.info.token_usage == {
+@@ -140,11 +142,12 @@ async def test_chat_completions_autolog(client, mock_litellm_cost):
+         TokenUsageKey.OUTPUT_TOKENS: 12,
+         TokenUsageKey.TOTAL_TOKENS: 21,
+     }
+-    assert trace.info.cost == {
+-        CostKey.INPUT_COST: 9.0,
+-        CostKey.OUTPUT_COST: 24.0,
+-        CostKey.TOTAL_COST: 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert trace.info.cost == {
++            CostKey.INPUT_COST: 9.0,
++            CostKey.OUTPUT_COST: 24.0,
++            CostKey.TOTAL_COST: 33.0,
++        }
+ 
+ 
+ @pytest.mark.asyncio
+diff --git a/tests/pydantic_ai/test_pydanticai_tracing.py b/tests/pydantic_ai/test_pydanticai_tracing.py
+index 3563a74a0..e8982685c 100644
+--- a/tests/pydantic_ai/test_pydanticai_tracing.py
++++ b/tests/pydantic_ai/test_pydanticai_tracing.py
+@@ -17,6 +17,7 @@ from mlflow.pydantic_ai.autolog import (
+     _get_tool_attributes,
+ )
+ from mlflow.tracing.constant import SpanAttributeKey, TokenUsageKey
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import get_traces
+ 
+@@ -162,12 +163,13 @@ def test_agent_run_sync_enable_disable_autolog(simple_agent, mock_litellm_cost):
+         TokenUsageKey.TOTAL_TOKENS: 2,
+     }
+     assert span2.model_name == "gpt-4o"
+-    # Verify cost is calculated (1 input token * 1.0 + 1 output token * 2.0)
+-    assert span2.llm_cost == {
+-        "input_cost": 1.0,
+-        "output_cost": 2.0,
+-        "total_cost": 3.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (1 input token * 1.0 + 1 output token * 2.0)
++        assert span2.llm_cost == {
++            "input_cost": 1.0,
++            "output_cost": 2.0,
++            "total_cost": 3.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 1,
+@@ -212,11 +214,12 @@ async def test_agent_run_enable_disable_autolog(simple_agent, mock_litellm_cost)
+         TokenUsageKey.TOTAL_TOKENS: 2,
+     }
+     assert span1.model_name == "gpt-4o"
+-    assert span1.llm_cost == {
+-        "input_cost": 1.0,
+-        "output_cost": 2.0,
+-        "total_cost": 3.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span1.llm_cost == {
++            "input_cost": 1.0,
++            "output_cost": 2.0,
++            "total_cost": 3.0,
++        }
+ 
+     assert traces[0].info.token_usage == {
+         "input_tokens": 1,
+@@ -256,11 +259,12 @@ def test_agent_run_sync_enable_disable_autolog_with_tool(agent_with_tool, mock_l
+     assert span2.span_type == SpanType.LLM
+     assert span2.parent_id == spans[1].span_id
+     assert span2.model_name == "gpt-4o"
+-    assert span2.llm_cost == {
+-        "input_cost": 10.0,
+-        "output_cost": 40.0,
+-        "total_cost": 50.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span2.llm_cost == {
++            "input_cost": 10.0,
++            "output_cost": 40.0,
++            "total_cost": 50.0,
++        }
+ 
+     span3 = spans[3]
+     assert span3.span_type == SpanType.TOOL
+@@ -271,11 +275,12 @@ def test_agent_run_sync_enable_disable_autolog_with_tool(agent_with_tool, mock_l
+     assert span4.span_type == SpanType.LLM
+     assert span4.parent_id == spans[1].span_id
+     assert span4.model_name == "gpt-4o"
+-    assert span4.llm_cost == {
+-        "input_cost": 100.0,
+-        "output_cost": 400.0,
+-        "total_cost": 500.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span4.llm_cost == {
++            "input_cost": 100.0,
++            "output_cost": 400.0,
++            "total_cost": 500.0,
++        }
+ 
+     assert span2.get_attribute(SpanAttributeKey.CHAT_USAGE) == {
+         TokenUsageKey.INPUT_TOKENS: 10,
+@@ -341,21 +346,23 @@ async def test_agent_run_enable_disable_autolog_with_tool(agent_with_tool, mock_
+         TokenUsageKey.OUTPUT_TOKENS: 20,
+         TokenUsageKey.TOTAL_TOKENS: 30,
+     }
+-    assert span1.llm_cost == {
+-        "input_cost": 10.0,
+-        "output_cost": 40.0,
+-        "total_cost": 50.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span1.llm_cost == {
++            "input_cost": 10.0,
++            "output_cost": 40.0,
++            "total_cost": 50.0,
++        }
+     assert span3.get_attribute(SpanAttributeKey.CHAT_USAGE) == {
+         TokenUsageKey.INPUT_TOKENS: 100,
+         TokenUsageKey.OUTPUT_TOKENS: 200,
+         TokenUsageKey.TOTAL_TOKENS: 300,
+     }
+-    assert span3.llm_cost == {
+-        "input_cost": 100.0,
+-        "output_cost": 400.0,
+-        "total_cost": 500.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert span3.llm_cost == {
++            "input_cost": 100.0,
++            "output_cost": 400.0,
++            "total_cost": 500.0,
++        }
+     assert traces[0].info.token_usage == {
+         "input_tokens": 110,
+         "output_tokens": 220,
+diff --git a/tests/semantic_kernel/test_semantic_kernel_autolog.py b/tests/semantic_kernel/test_semantic_kernel_autolog.py
+index ad46c9b92..c60bccf76 100644
+--- a/tests/semantic_kernel/test_semantic_kernel_autolog.py
++++ b/tests/semantic_kernel/test_semantic_kernel_autolog.py
+@@ -26,6 +26,7 @@ from mlflow.tracing.constant import (
+     SpanAttributeKey,
+     TokenUsageKey,
+ )
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.semantic_kernel.resources import (
+     _create_and_invoke_chat_agent,
+@@ -114,12 +115,13 @@ async def test_sk_invoke_simple(mock_openai, with_openai_autolog, mock_litellm_c
+     assert chat_usage[TokenUsageKey.TOTAL_TOKENS] == 21
+     assert spans[3].get_attribute(SpanAttributeKey.SPAN_TYPE) == SpanType.CHAT_MODEL
+     assert spans[3].model_name == "gpt-4o-mini"
+-    # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
+-    assert spans[3].llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        # Verify cost is calculated (9 input tokens * 1.0 + 12 output tokens * 2.0)
++        assert spans[3].llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+ 
+     # OpenAI autologging
+     if with_openai_autolog:
+@@ -137,11 +139,12 @@ async def test_sk_invoke_simple(mock_openai, with_openai_autolog, mock_litellm_c
+             "total_tokens": 21,
+         }
+         assert spans[4].model_name == "gpt-4o-mini"
+-        assert spans[4].llm_cost == {
+-            "input_cost": 9.0,
+-            "output_cost": 24.0,
+-            "total_cost": 33.0,
+-        }
++        if not IS_TRACING_SDK_ONLY:
++            assert spans[4].llm_cost == {
++                "input_cost": 9.0,
++                "output_cost": 24.0,
++                "total_cost": 33.0,
++            }
+ 
+     # Trace level token usage should not double-count
+     assert trace.info.token_usage == {
+@@ -234,11 +237,12 @@ async def test_sk_invoke_complex(mock_openai, mock_litellm_cost):
+     assert chat_usage[TokenUsageKey.INPUT_TOKENS] == 9
+     assert chat_usage[TokenUsageKey.OUTPUT_TOKENS] == 12
+     assert chat_usage[TokenUsageKey.TOTAL_TOKENS] == 21
+-    assert chat_span.llm_cost == {
+-        "input_cost": 9.0,
+-        "output_cost": 24.0,
+-        "total_cost": 33.0,
+-    }
++    if not IS_TRACING_SDK_ONLY:
++        assert chat_span.llm_cost == {
++            "input_cost": 9.0,
++            "output_cost": 24.0,
++            "total_cost": 33.0,
++        }
+ 
+ 
+ @pytest.mark.asyncio
+diff --git a/tests/tracing/otel/test_span_translation.py b/tests/tracing/otel/test_span_translation.py
+index 9a27ce1ef..8b4a62e7d 100644
+--- a/tests/tracing/otel/test_span_translation.py
++++ b/tests/tracing/otel/test_span_translation.py
+@@ -380,7 +380,7 @@ def test_translate_model_name_from_otel(translator: OtelSchemaTranslator, model_
+     span.parent_id = "parent_123"
+     # Test with the first MODEL_NAME_KEY from the translator
+     model_attr_key = translator.MODEL_NAME_KEYS[0]
+-    span_dict = {"attributes": {model_attr_key: json.dumps(model_value)}}
++    span_dict = {"attributes": {model_attr_key: model_value}}
+     span.to_dict.return_value = span_dict
+ 
+     result = translate_span_when_storing(span)
+diff --git a/tests/tracing/utils/test_utils.py b/tests/tracing/utils/test_utils.py
+index 7ea6c3ffa..1e37c7f5a 100644
+--- a/tests/tracing/utils/test_utils.py
++++ b/tests/tracing/utils/test_utils.py
+@@ -36,6 +36,7 @@ from mlflow.tracing.utils import (
+     maybe_get_request_id,
+     parse_trace_id_v4,
+ )
++from mlflow.version import IS_TRACING_SDK_ONLY
+ 
+ from tests.tracing.helper import create_mock_otel_span
+ 
+@@ -579,6 +580,39 @@ def test_get_spans_table_name_for_trace_no_destination():
+         assert result is None
+ 
+ 
++@pytest.mark.skipif(IS_TRACING_SDK_ONLY, reason="mock_litellm_cost cannot affect server-side cost")
++@pytest.mark.parametrize("is_databricks", [True, False])
++def test_cost_not_computed_client_side(is_databricks, mock_litellm_cost):
++    with (
++        mock.patch("mlflow.utils.uri.is_databricks_uri", return_value=is_databricks),
++        mock.patch(
++            "mlflow.entities.span.set_span_cost_attribute", wraps=lambda span: None
++        ) as mock_set_cost,
++    ):
++        with mlflow.start_span(name="llm_span") as span:
++            span.set_attribute(SpanAttributeKey.MODEL, "gpt-5")
++            span.set_attribute(
++                SpanAttributeKey.CHAT_USAGE,
++                {
++                    TokenUsageKey.INPUT_TOKENS: 100,
++                    TokenUsageKey.OUTPUT_TOKENS: 50,
++                    TokenUsageKey.TOTAL_TOKENS: 150,
++                },
++            )
++        # Cost should be computed at server side if not in Databricks
++        if is_databricks:
++            mock_set_cost.assert_called_once()
++        else:
++            mock_set_cost.assert_not_called()
++
++    trace = mlflow.get_trace(trace_id=span.trace_id)
++    # cost should be set
++    assert trace.info.cost is not None
++    assert CostKey.INPUT_COST in trace.info.cost
++    assert CostKey.OUTPUT_COST in trace.info.cost
++    assert CostKey.TOTAL_COST in trace.info.cost
++
++
+ def test_generate_trace_id_v4_from_otel_trace_id():
+     otel_trace_id = 0x12345678901234567890123456789012
+     location = "catalog.schema"

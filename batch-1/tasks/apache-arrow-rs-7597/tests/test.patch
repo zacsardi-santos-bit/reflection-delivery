@@ -1,0 +1,30 @@
+diff --git a/arrow-select/tests/coalesce_test.rs b/arrow-select/tests/coalesce_test.rs
+new file mode 100644
+index 000000000..a421a06
+--- /dev/null
++++ b/arrow-select/tests/coalesce_test.rs
+@@ -0,0 +1,24 @@
++use arrow_array::{Int32Array, RecordBatch};
++use arrow_schema::{DataType, Field, Schema};
++use arrow_select::coalesce::BatchCoalescer;
++use std::sync::Arc;
++
++#[test]
++fn test_batch_coalescer_integration() {
++    let schema = Arc::new(Schema::new(vec![Field::new(
++        "c0",
++        DataType::Int32,
++        false,
++    )]));
++    let mut coalescer = BatchCoalescer::new(Arc::clone(&schema), 4096);
++    let batch = RecordBatch::try_new(
++        Arc::clone(&schema),
++        vec![Arc::new(Int32Array::from(vec![1, 2, 3]))],
++    )
++    .unwrap();
++    coalescer.push_batch(batch).unwrap();
++    coalescer.finish_buffered_batch().unwrap();
++    let result = coalescer.next_completed_batch();
++    assert!(result.is_some());
++    assert_eq!(result.unwrap().num_rows(), 3);
++}

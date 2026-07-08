@@ -1,0 +1,39 @@
+diff --git a/crates/swc_html_codegen/tests/fixture/issue-11748/input.html b/crates/swc_html_codegen/tests/fixture/issue-11748/input.html
+new file mode 100644
+index 0000000000..9139775d18
+--- /dev/null
++++ b/crates/swc_html_codegen/tests/fixture/issue-11748/input.html
+@@ -0,0 +1 @@
++<span><p>TEXT</p></span>
+diff --git a/crates/swc_html_codegen/tests/fixture/issue-11748/output.html b/crates/swc_html_codegen/tests/fixture/issue-11748/output.html
+new file mode 100644
+index 0000000000..282f903ae8
+--- /dev/null
++++ b/crates/swc_html_codegen/tests/fixture/issue-11748/output.html
+@@ -0,0 +1,3 @@
++<html>
++<head></head><body><span><p>TEXT</p></span>
++</body></html>
+\ No newline at end of file
+diff --git a/crates/swc_html_codegen/tests/fixture/issue-11748/output.min.html b/crates/swc_html_codegen/tests/fixture/issue-11748/output.min.html
+new file mode 100644
+index 0000000000..9139775d18
+--- /dev/null
++++ b/crates/swc_html_codegen/tests/fixture/issue-11748/output.min.html
+@@ -0,0 +1 @@
++<span><p>TEXT</p></span>
+diff --git a/crates/swc_html_minifier/tests/recovery/element/issue-11748/input.html b/crates/swc_html_minifier/tests/recovery/element/issue-11748/input.html
+new file mode 100644
+index 0000000000..9139775d18
+--- /dev/null
++++ b/crates/swc_html_minifier/tests/recovery/element/issue-11748/input.html
+@@ -0,0 +1 @@
++<span><p>TEXT</p></span>
+diff --git a/crates/swc_html_minifier/tests/recovery/element/issue-11748/output.min.html b/crates/swc_html_minifier/tests/recovery/element/issue-11748/output.min.html
+new file mode 100644
+index 0000000000..a628d49ff2
+--- /dev/null
++++ b/crates/swc_html_minifier/tests/recovery/element/issue-11748/output.min.html
+@@ -0,0 +1 @@
++<span><p>TEXT</p></span>
+\ No newline at end of file

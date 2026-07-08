@@ -1,0 +1,3233 @@
+diff --git a/tests/disas/winch/aarch64/load/dynamic_heap.wat b/tests/disas/winch/aarch64/load/dynamic_heap.wat
+index 1ee8089ac0..6e884275c6 100644
+--- a/tests/disas/winch/aarch64/load/dynamic_heap.wat
++++ b/tests/disas/winch/aarch64/load/dynamic_heap.wat
+@@ -46,7 +46,7 @@
+ ;;   5c: cmp     x2, x1, uxtx
+ ;;       b.hi    #0x158
+ ;;   64: ldur    x3, [x9, #0x38]
+-;;       add     x3, x3, x0, uxtx
++;;       add     x3, x3, w0, uxtw
+ ;;       mov     x4, #0
+ ;;       cmp     x2, x1, uxtx
+ ;;       csel    x3, x4, x3, hi
+@@ -59,7 +59,7 @@
+ ;;   90: cmp     x3, x2, uxtx
+ ;;       b.hi    #0x160
+ ;;   98: ldur    x4, [x9, #0x38]
+-;;       add     x4, x4, x1, uxtx
++;;       add     x4, x4, w1, uxtw
+ ;;       add     x4, x4, #4
+ ;;       mov     x5, #0
+ ;;       cmp     x3, x2, uxtx
+@@ -75,7 +75,7 @@
+ ;;   d0: cmp     x4, x3, uxtx
+ ;;       b.hi    #0x168
+ ;;   d8: ldur    x5, [x9, #0x38]
+-;;       add     x5, x5, x2, uxtx
++;;       add     x5, x5, w2, uxtw
+ ;;       orr     x16, xzr, #0xfffff
+ ;;       add     x5, x5, x16, uxtx
+ ;;       mov     x6, #0
+diff --git a/tests/disas/winch/aarch64/load/f32.wat b/tests/disas/winch/aarch64/load/f32.wat
+index eaa217d4b5..29b8e2dcc8 100644
+--- a/tests/disas/winch/aarch64/load/f32.wat
++++ b/tests/disas/winch/aarch64/load/f32.wat
+@@ -25,7 +25,7 @@
+ ;;       stur    x1, [x28]
+ ;;       mov     x0, #0
+ ;;       ldur    x1, [x9, #0x38]
+-;;       add     x1, x1, x0, uxtx
++;;       add     x1, x1, w0, uxtw
+ ;;       ldur    s0, [x1]
+ ;;       add     x28, x28, #0x10
+ ;;       mov     sp, x28
+diff --git a/tests/disas/winch/aarch64/load/f64.wat b/tests/disas/winch/aarch64/load/f64.wat
+index 415116440d..ad5fc6a743 100644
+--- a/tests/disas/winch/aarch64/load/f64.wat
++++ b/tests/disas/winch/aarch64/load/f64.wat
+@@ -24,7 +24,7 @@
+ ;;       stur    x1, [x28]
+ ;;       mov     x0, #0
+ ;;       ldur    x1, [x9, #0x38]
+-;;       add     x1, x1, x0, uxtx
++;;       add     x1, x1, w0, uxtw
+ ;;       ldur    d0, [x1]
+ ;;       add     x28, x28, #0x10
+ ;;       mov     sp, x28
+diff --git a/tests/disas/winch/aarch64/load/i32.wat b/tests/disas/winch/aarch64/load/i32.wat
+index b056feacdc..fccf976b36 100644
+--- a/tests/disas/winch/aarch64/load/i32.wat
++++ b/tests/disas/winch/aarch64/load/i32.wat
+@@ -25,7 +25,7 @@
+ ;;       stur    x1, [x28]
+ ;;       mov     x0, #0
+ ;;       ldur    x1, [x9, #0x38]
+-;;       add     x1, x1, x0, uxtx
++;;       add     x1, x1, w0, uxtw
+ ;;       ldur    w0, [x1]
+ ;;       add     x28, x28, #0x10
+ ;;       mov     sp, x28
+diff --git a/tests/disas/winch/aarch64/load/i64.wat b/tests/disas/winch/aarch64/load/i64.wat
+index 76a80970ca..999906081a 100644
+--- a/tests/disas/winch/aarch64/load/i64.wat
++++ b/tests/disas/winch/aarch64/load/i64.wat
+@@ -28,13 +28,13 @@
+ ;;       ldur    x0, [x28]
+ ;;       mov     x1, #8
+ ;;       ldur    x2, [x9, #0x38]
+-;;       add     x2, x2, x1, uxtx
++;;       add     x2, x2, w1, uxtw
+ ;;       sub     sp, x28, #8
+ ;;       sturb   w0, [x2]
+ ;;       mov     sp, x28
+ ;;       mov     x0, #8
+ ;;       ldur    x1, [x9, #0x38]
+-;;       add     x1, x1, x0, uxtx
++;;       add     x1, x1, w0, uxtw
+ ;;       sub     sp, x28, #8
+ ;;       ldursb  x0, [x1]
+ ;;       mov     sp, x28
+diff --git a/tests/disas/winch/aarch64/store/dynamic_heap.wat b/tests/disas/winch/aarch64/store/dynamic_heap.wat
+index 24c7b3455e..c2be4e9701 100644
+--- a/tests/disas/winch/aarch64/store/dynamic_heap.wat
++++ b/tests/disas/winch/aarch64/store/dynamic_heap.wat
+@@ -49,7 +49,7 @@
+ ;;   68: cmp     x3, x2, uxtx
+ ;;       b.hi    #0x12c
+ ;;   70: ldur    x4, [x9, #0x38]
+-;;       add     x4, x4, x1, uxtx
++;;       add     x4, x4, w1, uxtw
+ ;;       mov     x5, #0
+ ;;       cmp     x3, x2, uxtx
+ ;;       csel    x4, x5, x4, hi
+@@ -63,7 +63,7 @@
+ ;;   a0: cmp     x3, x2, uxtx
+ ;;       b.hi    #0x134
+ ;;   a8: ldur    x4, [x9, #0x38]
+-;;       add     x4, x4, x1, uxtx
++;;       add     x4, x4, w1, uxtw
+ ;;       add     x4, x4, #4
+ ;;       mov     x5, #0
+ ;;       cmp     x3, x2, uxtx
+@@ -80,7 +80,7 @@
+ ;;   e4: cmp     x3, x2, uxtx
+ ;;       b.hi    #0x13c
+ ;;   ec: ldur    x4, [x9, #0x38]
+-;;       add     x4, x4, x1, uxtx
++;;       add     x4, x4, w1, uxtw
+ ;;       orr     x16, xzr, #0xfffff
+ ;;       add     x4, x4, x16, uxtx
+ ;;       mov     x5, #0
+diff --git a/tests/disas/winch/aarch64/store/f32.wat b/tests/disas/winch/aarch64/store/f32.wat
+index c9555ba4dc..8717dd199f 100644
+--- a/tests/disas/winch/aarch64/store/f32.wat
++++ b/tests/disas/winch/aarch64/store/f32.wat
+@@ -25,7 +25,7 @@
+ ;;       ldr     s0, #0x70
+ ;;       mov     x0, #0
+ ;;       ldur    x1, [x9, #0x38]
+-;;       add     x1, x1, x0, uxtx
++;;       add     x1, x1, w0, uxtw
+ ;;       stur    s0, [x1]
+ ;;       add     x28, x28, #0x10
+ ;;       mov     sp, x28
+diff --git a/tests/disas/winch/aarch64/store/f64.wat b/tests/disas/winch/aarch64/store/f64.wat
+index f2aee771a2..70bdd13d9f 100644
+--- a/tests/disas/winch/aarch64/store/f64.wat
++++ b/tests/disas/winch/aarch64/store/f64.wat
+@@ -26,7 +26,7 @@
+ ;;       ldr     d0, #0x70
+ ;;       mov     x0, #0
+ ;;       ldur    x1, [x9, #0x38]
+-;;       add     x1, x1, x0, uxtx
++;;       add     x1, x1, w0, uxtw
+ ;;       stur    d0, [x1]
+ ;;       add     x28, x28, #0x10
+ ;;       mov     sp, x28
+diff --git a/tests/disas/winch/aarch64/store/i32.wat b/tests/disas/winch/aarch64/store/i32.wat
+index 48fba51040..d5ab1b9587 100644
+--- a/tests/disas/winch/aarch64/store/i32.wat
++++ b/tests/disas/winch/aarch64/store/i32.wat
+@@ -27,7 +27,7 @@
+ ;;       mov     x0, #1
+ ;;       mov     x1, #0
+ ;;       ldur    x2, [x9, #0x38]
+-;;       add     x2, x2, x1, uxtx
++;;       add     x2, x2, w1, uxtw
+ ;;       stur    w0, [x2]
+ ;;       add     x28, x28, #0x10
+ ;;       mov     sp, x28
+diff --git a/tests/disas/winch/x64/atomic/fence/fence.wat b/tests/disas/winch/x64/atomic/fence/fence.wat
+index 5fb841aa8e..9b4a4b038f 100644
+--- a/tests/disas/winch/x64/atomic/fence/fence.wat
++++ b/tests/disas/winch/x64/atomic/fence/fence.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x62
++;;       ja      0x66
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -24,15 +24,17 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movl    %eax, (%rdx)
+ ;;       mfence
+ ;;       movl    $0, %eax
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    (%rcx), %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   62: ud2
++;;   66: ud2
+diff --git a/tests/disas/winch/x64/atomic/load/i32_atomic_load.wat b/tests/disas/winch/x64/atomic/load/i32_atomic_load.wat
+index f96d7b8d33..fca088c465 100644
+--- a/tests/disas/winch/x64/atomic/load/i32_atomic_load.wat
++++ b/tests/disas/winch/x64/atomic/load/i32_atomic_load.wat
+@@ -13,7 +13,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x5f
++;;       ja      0x61
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x20, %rsp
+ ;;       movq    %rdi, 0x18(%rsp)
+@@ -22,14 +22,15 @@
+ ;;       movl    0xc(%rsp), %eax
+ ;;       andl    $3, %eax
+ ;;       cmpl    $0, %eax
+-;;       jne     0x61
++;;       jne     0x63
+ ;;   46: movl    0xc(%rsp), %eax
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    (%rcx), %eax
+ ;;       addq    $0x20, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   5f: ud2
+ ;;   61: ud2
++;;   63: ud2
+diff --git a/tests/disas/winch/x64/atomic/load/i32_atomic_load16_u.wat b/tests/disas/winch/x64/atomic/load/i32_atomic_load16_u.wat
+index 4c82b1db26..8f190c3b6b 100644
+--- a/tests/disas/winch/x64/atomic/load/i32_atomic_load16_u.wat
++++ b/tests/disas/winch/x64/atomic/load/i32_atomic_load16_u.wat
+@@ -13,7 +13,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x61
++;;       ja      0x63
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x20, %rsp
+ ;;       movq    %rdi, 0x18(%rsp)
+@@ -22,14 +22,15 @@
+ ;;       movl    0xc(%rsp), %eax
+ ;;       andw    $1, %ax
+ ;;       cmpw    $0, %ax
+-;;       jne     0x63
++;;       jne     0x65
+ ;;   46: movl    0xc(%rsp), %eax
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movzwq  (%rcx), %rax
+ ;;       addq    $0x20, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   61: ud2
+ ;;   63: ud2
++;;   65: ud2
+diff --git a/tests/disas/winch/x64/atomic/load/i32_atomic_load8_u.wat b/tests/disas/winch/x64/atomic/load/i32_atomic_load8_u.wat
+index 9a410d10a3..2a4454b864 100644
+--- a/tests/disas/winch/x64/atomic/load/i32_atomic_load8_u.wat
++++ b/tests/disas/winch/x64/atomic/load/i32_atomic_load8_u.wat
+@@ -13,16 +13,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x48
++;;       ja      0x4a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movzbq  (%rcx), %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   48: ud2
++;;   4a: ud2
+diff --git a/tests/disas/winch/x64/atomic/load/i64_atomic_load.wat b/tests/disas/winch/x64/atomic/load/i64_atomic_load.wat
+index be89e8f71b..1482297c2c 100644
+--- a/tests/disas/winch/x64/atomic/load/i64_atomic_load.wat
++++ b/tests/disas/winch/x64/atomic/load/i64_atomic_load.wat
+@@ -14,7 +14,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x5c
++;;       ja      0x5e
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,13 +22,14 @@
+ ;;       movl    $0, %eax
+ ;;       andq    $7, %rax
+ ;;       cmpq    $0, %rax
+-;;       jne     0x5e
++;;       jne     0x60
+ ;;   44: movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movq    (%rcx), %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   5c: ud2
+ ;;   5e: ud2
++;;   60: ud2
+diff --git a/tests/disas/winch/x64/atomic/load/i64_atomic_load16_u.wat b/tests/disas/winch/x64/atomic/load/i64_atomic_load16_u.wat
+index da9c5e1d24..a27b432cb7 100644
+--- a/tests/disas/winch/x64/atomic/load/i64_atomic_load16_u.wat
++++ b/tests/disas/winch/x64/atomic/load/i64_atomic_load16_u.wat
+@@ -14,7 +14,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x5b
++;;       ja      0x5d
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,13 +22,14 @@
+ ;;       movl    $0, %eax
+ ;;       andw    $1, %ax
+ ;;       cmpw    $0, %ax
+-;;       jne     0x5d
++;;       jne     0x5f
+ ;;   42: movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movzwq  (%rcx), %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   5b: ud2
+ ;;   5d: ud2
++;;   5f: ud2
+diff --git a/tests/disas/winch/x64/atomic/load/i64_atomic_load32_u.wat b/tests/disas/winch/x64/atomic/load/i64_atomic_load32_u.wat
+index be4b6bbe01..70a7f10f30 100644
+--- a/tests/disas/winch/x64/atomic/load/i64_atomic_load32_u.wat
++++ b/tests/disas/winch/x64/atomic/load/i64_atomic_load32_u.wat
+@@ -14,7 +14,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x59
++;;       ja      0x5b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,13 +22,14 @@
+ ;;       movl    $0, %eax
+ ;;       andl    $3, %eax
+ ;;       cmpl    $0, %eax
+-;;       jne     0x5b
++;;       jne     0x5d
+ ;;   42: movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    (%rcx), %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   59: ud2
+ ;;   5b: ud2
++;;   5d: ud2
+diff --git a/tests/disas/winch/x64/atomic/load/i64_atomic_load8_u.wat b/tests/disas/winch/x64/atomic/load/i64_atomic_load8_u.wat
+index 4c0117c165..33ffb6d7e8 100644
+--- a/tests/disas/winch/x64/atomic/load/i64_atomic_load8_u.wat
++++ b/tests/disas/winch/x64/atomic/load/i64_atomic_load8_u.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x48
++;;       ja      0x4a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movzbq  (%rcx), %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   48: ud2
++;;   4a: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw16_addu.wat b/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw16_addu.wat
+index 5c18877214..a99c2426dc 100644
+--- a/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw16_addu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw16_addu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x68
++;;       ja      0x6a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,15 +21,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x6a
++;;       jne     0x6c
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       lock xaddw %ax, (%rdx)
+ ;;       movzwl  %ax, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   68: ud2
+ ;;   6a: ud2
++;;   6c: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw8_addu.wat b/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw8_addu.wat
+index b8652f7b97..a84a3ddaef 100644
+--- a/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw8_addu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw8_addu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x53
++;;       ja      0x55
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       lock xaddb %al, (%rdx)
+ ;;       movzbl  %al, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   53: ud2
++;;   55: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw_add.wat b/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw_add.wat
+index 5c1ce19f75..abc3c93bd8 100644
+--- a/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw_add.wat
++++ b/tests/disas/winch/x64/atomic/rmw/add/i32_atomic_rmw_add.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x64
++;;       ja      0x66
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,14 +21,15 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x66
++;;       jne     0x68
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       lock xaddl %eax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   64: ud2
+ ;;   66: ud2
++;;   68: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw16_addu.wat b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw16_addu.wat
+index a66156bea0..2286d393fc 100644
+--- a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw16_addu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw16_addu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x69
++;;       ja      0x6b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,15 +21,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x6b
++;;       jne     0x6d
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       lock xaddw %ax, (%rdx)
+ ;;       movzwq  %ax, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   69: ud2
+ ;;   6b: ud2
++;;   6d: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw32_addu.wat b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw32_addu.wat
+index 6adfe16211..7ae8f45786 100644
+--- a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw32_addu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw32_addu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x64
++;;       ja      0x66
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,14 +21,15 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x66
++;;       jne     0x68
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       lock xaddl %eax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   64: ud2
+ ;;   66: ud2
++;;   68: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw8_addu.wat b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw8_addu.wat
+index 05ee601a5a..1021713945 100644
+--- a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw8_addu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw8_addu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x54
++;;       ja      0x56
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       lock xaddb %al, (%rdx)
+ ;;       movzbq  %al, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   54: ud2
++;;   56: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw_add.wat b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw_add.wat
+index 9ed0adca60..6757431d1a 100644
+--- a/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw_add.wat
++++ b/tests/disas/winch/x64/atomic/rmw/add/i64_atomic_rmw_add.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x67
++;;       ja      0x69
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,14 +21,15 @@
+ ;;       movl    $0, %ecx
+ ;;       andq    $7, %rcx
+ ;;       cmpq    $0, %rcx
+-;;       jne     0x69
++;;       jne     0x6b
+ ;;   4a: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       lock xaddq %rax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   67: ud2
+ ;;   69: ud2
++;;   6b: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw16_andu.wat b/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw16_andu.wat
+index 976fdbea55..057896fc79 100644
+--- a/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw16_andu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw16_andu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x8d
++;;       ja      0x8f
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x8f
++;;       jne     0x91
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -34,10 +35,10 @@
+ ;;       movq    %rax, %r11
+ ;;       andq    %rcx, %r11
+ ;;       lock cmpxchgw %r11w, (%rdx)
+-;;       jne     0x6f
+-;;   81: movzwl  %ax, %eax
++;;       jne     0x71
++;;   83: movzwl  %ax, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   8d: ud2
+ ;;   8f: ud2
++;;   91: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw8_andu.wat b/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw8_andu.wat
+index 59883fd36b..805b4be84c 100644
+--- a/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw8_andu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw8_andu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x78
++;;       ja      0x7a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -30,9 +31,9 @@
+ ;;       movq    %rax, %r11
+ ;;       andq    %rcx, %r11
+ ;;       lock cmpxchgb %r11b, (%rdx)
+-;;       jne     0x5b
+-;;   6c: movzbl  %al, %eax
++;;       jne     0x5d
++;;   6e: movzbl  %al, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   78: ud2
++;;   7a: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw_and.wat b/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw_and.wat
+index 5072b914b8..9f7d6cac30 100644
+--- a/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw_and.wat
++++ b/tests/disas/winch/x64/atomic/rmw/and/i32_atomic_rmw_and.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x87
++;;       ja      0x89
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x89
++;;       jne     0x8b
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -34,9 +35,9 @@
+ ;;       movq    %rax, %r11
+ ;;       andq    %rcx, %r11
+ ;;       lock cmpxchgl %r11d, (%rdx)
+-;;       jne     0x6d
+-;;   7e: addq    $0x10, %rsp
++;;       jne     0x6f
++;;   80: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   87: ud2
+ ;;   89: ud2
++;;   8b: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw16_andu.wat b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw16_andu.wat
+index c7af5bece1..c008dad438 100644
+--- a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw16_andu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw16_andu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x7c
++;;       ja      0x7e
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x7e
++;;       jne     0x80
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,10 +33,10 @@
+ ;;       movq    %rax, %r11
+ ;;       andq    %rcx, %r11
+ ;;       lock cmpxchgw %r11w, (%rdx)
+-;;       jne     0x5d
+-;;   6f: movzwq  %ax, %rax
++;;       jne     0x5f
++;;   71: movzwq  %ax, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   7c: ud2
+ ;;   7e: ud2
++;;   80: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw32_andu.wat b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw32_andu.wat
+index d050fe6d30..ebeac1c6e0 100644
+--- a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw32_andu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw32_andu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x75
++;;       ja      0x77
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x77
++;;       jne     0x79
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,9 +33,9 @@
+ ;;       movq    %rax, %r11
+ ;;       andq    %rcx, %r11
+ ;;       lock cmpxchgl %r11d, (%rdx)
+-;;       jne     0x5b
+-;;   6c: addq    $0x10, %rsp
++;;       jne     0x5d
++;;   6e: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   75: ud2
+ ;;   77: ud2
++;;   79: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw8_andu.wat b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw8_andu.wat
+index a2abddb5c2..0a6d9e215c 100644
+--- a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw8_andu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw8_andu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x67
++;;       ja      0x69
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -28,9 +29,9 @@
+ ;;       movq    %rax, %r11
+ ;;       andq    %rcx, %r11
+ ;;       lock cmpxchgb %r11b, (%rdx)
+-;;       jne     0x49
+-;;   5a: movzbq  %al, %rax
++;;       jne     0x4b
++;;   5c: movzbq  %al, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   67: ud2
++;;   69: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw_and.wat b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw_and.wat
+index 2bea25bb3a..e314c7be1a 100644
+--- a/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw_and.wat
++++ b/tests/disas/winch/x64/atomic/rmw/and/i64_atomic_rmw_and.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x78
++;;       ja      0x7a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andq    $7, %rcx
+ ;;       cmpq    $0, %rcx
+-;;       jne     0x7a
++;;       jne     0x7c
+ ;;   4a: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,9 +33,9 @@
+ ;;       movq    %rax, %r11
+ ;;       andq    %rcx, %r11
+ ;;       lock cmpxchgq %r11, (%rdx)
+-;;       jne     0x5e
+-;;   6f: addq    $0x10, %rsp
++;;       jne     0x60
++;;   71: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   78: ud2
+ ;;   7a: ud2
++;;   7c: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw16_cmpxchgu.wat b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw16_cmpxchgu.wat
+index e7482e01df..1b6a30c9f4 100644
+--- a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw16_cmpxchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw16_cmpxchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x95
++;;       ja      0x97
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,10 +22,11 @@
+ ;;       movl    $0, %edx
+ ;;       andw    $1, %dx
+ ;;       cmpw    $0, %dx
+-;;       jne     0x97
++;;       jne     0x99
+ ;;   4d: movl    $0, %edx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rbx
++;;       movl    %edx, %edx
+ ;;       addq    %rdx, %rbx
+ ;;       subq    $4, %rsp
+ ;;       movl    %ecx, (%rsp)
+@@ -40,5 +41,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   95: ud2
+ ;;   97: ud2
++;;   99: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw8_cmpxchgu.wat b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw8_cmpxchgu.wat
+index fdae2a0131..4bd5ff094b 100644
+--- a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw8_cmpxchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw8_cmpxchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x80
++;;       ja      0x82
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,6 +22,7 @@
+ ;;       movl    $0, %edx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rbx
++;;       movl    %edx, %edx
+ ;;       addq    %rdx, %rbx
+ ;;       subq    $4, %rsp
+ ;;       movl    %ecx, (%rsp)
+@@ -36,4 +37,4 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   80: ud2
++;;   82: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw_cmpxchg.wat b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw_cmpxchg.wat
+index f5dc01fd46..d2e923d3fb 100644
+--- a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw_cmpxchg.wat
++++ b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i32_atomic_rmw_cmpxchg.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x91
++;;       ja      0x93
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,10 +22,11 @@
+ ;;       movl    $0, %edx
+ ;;       andl    $3, %edx
+ ;;       cmpl    $0, %edx
+-;;       jne     0x93
++;;       jne     0x95
+ ;;   4d: movl    $0, %edx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rbx
++;;       movl    %edx, %edx
+ ;;       addq    %rdx, %rbx
+ ;;       subq    $4, %rsp
+ ;;       movl    %ecx, (%rsp)
+@@ -39,5 +40,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   91: ud2
+ ;;   93: ud2
++;;   95: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw16_cmpxchgu.wat b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw16_cmpxchgu.wat
+index 43431830fa..14c5d7b0a3 100644
+--- a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw16_cmpxchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw16_cmpxchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x72
++;;       ja      0x74
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,10 +22,11 @@
+ ;;       movl    $0, %edx
+ ;;       andw    $1, %dx
+ ;;       cmpw    $0, %dx
+-;;       jne     0x74
++;;       jne     0x76
+ ;;   4d: movl    $0, %edx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rbx
++;;       movl    %edx, %edx
+ ;;       addq    %rdx, %rbx
+ ;;       pushq   %rcx
+ ;;       pushq   %rax
+@@ -36,5 +37,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   72: ud2
+ ;;   74: ud2
++;;   76: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw32_cmpxchgu.wat b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw32_cmpxchgu.wat
+index 83aad3af07..2fa2451eae 100644
+--- a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw32_cmpxchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw32_cmpxchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x6d
++;;       ja      0x6f
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,10 +22,11 @@
+ ;;       movl    $0, %edx
+ ;;       andl    $3, %edx
+ ;;       cmpl    $0, %edx
+-;;       jne     0x6f
++;;       jne     0x71
+ ;;   4d: movl    $0, %edx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rbx
++;;       movl    %edx, %edx
+ ;;       addq    %rdx, %rbx
+ ;;       pushq   %rcx
+ ;;       pushq   %rax
+@@ -35,5 +36,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   6d: ud2
+ ;;   6f: ud2
++;;   71: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw8_cmpxchgu.wat b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw8_cmpxchgu.wat
+index 5937429bcc..96898ac61b 100644
+--- a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw8_cmpxchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw8_cmpxchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x5d
++;;       ja      0x5f
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,6 +22,7 @@
+ ;;       movl    $0, %edx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rbx
++;;       movl    %edx, %edx
+ ;;       addq    %rdx, %rbx
+ ;;       pushq   %rcx
+ ;;       pushq   %rax
+@@ -32,4 +33,4 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   5d: ud2
++;;   5f: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw_cmpxchg.wat b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw_cmpxchg.wat
+index 35d973ffcf..08c068ef24 100644
+--- a/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw_cmpxchg.wat
++++ b/tests/disas/winch/x64/atomic/rmw/cmpxchg/i64_atomic_rmw_cmpxchg.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x70
++;;       ja      0x72
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,10 +22,11 @@
+ ;;       movl    $0, %edx
+ ;;       andq    $7, %rdx
+ ;;       cmpq    $0, %rdx
+-;;       jne     0x72
++;;       jne     0x74
+ ;;   4f: movl    $0, %edx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rbx
++;;       movl    %edx, %edx
+ ;;       addq    %rdx, %rbx
+ ;;       pushq   %rcx
+ ;;       pushq   %rax
+@@ -35,5 +36,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   70: ud2
+ ;;   72: ud2
++;;   74: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw16_oru.wat b/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw16_oru.wat
+index 6a38c317e0..ee570769a8 100644
+--- a/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw16_oru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw16_oru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x8d
++;;       ja      0x8f
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x8f
++;;       jne     0x91
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -34,10 +35,10 @@
+ ;;       movq    %rax, %r11
+ ;;       orq     %rcx, %r11
+ ;;       lock cmpxchgw %r11w, (%rdx)
+-;;       jne     0x6f
+-;;   81: movzwl  %ax, %eax
++;;       jne     0x71
++;;   83: movzwl  %ax, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   8d: ud2
+ ;;   8f: ud2
++;;   91: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw8_oru.wat b/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw8_oru.wat
+index d159cb36d4..59b2b5d1bd 100644
+--- a/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw8_oru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw8_oru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x78
++;;       ja      0x7a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -30,9 +31,9 @@
+ ;;       movq    %rax, %r11
+ ;;       orq     %rcx, %r11
+ ;;       lock cmpxchgb %r11b, (%rdx)
+-;;       jne     0x5b
+-;;   6c: movzbl  %al, %eax
++;;       jne     0x5d
++;;   6e: movzbl  %al, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   78: ud2
++;;   7a: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw_or.wat b/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw_or.wat
+index 85bd3a14b1..1472e2d27f 100644
+--- a/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw_or.wat
++++ b/tests/disas/winch/x64/atomic/rmw/or/i32_atomic_rmw_or.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x87
++;;       ja      0x89
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x89
++;;       jne     0x8b
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -34,9 +35,9 @@
+ ;;       movq    %rax, %r11
+ ;;       orq     %rcx, %r11
+ ;;       lock cmpxchgl %r11d, (%rdx)
+-;;       jne     0x6d
+-;;   7e: addq    $0x10, %rsp
++;;       jne     0x6f
++;;   80: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   87: ud2
+ ;;   89: ud2
++;;   8b: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw16_oru.wat b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw16_oru.wat
+index f185ee1a60..76a44e3422 100644
+--- a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw16_oru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw16_oru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x7c
++;;       ja      0x7e
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x7e
++;;       jne     0x80
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,10 +33,10 @@
+ ;;       movq    %rax, %r11
+ ;;       orq     %rcx, %r11
+ ;;       lock cmpxchgw %r11w, (%rdx)
+-;;       jne     0x5d
+-;;   6f: movzwq  %ax, %rax
++;;       jne     0x5f
++;;   71: movzwq  %ax, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   7c: ud2
+ ;;   7e: ud2
++;;   80: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw32_oru.wat b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw32_oru.wat
+index 5c096d070f..56f38739df 100644
+--- a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw32_oru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw32_oru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x75
++;;       ja      0x77
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x77
++;;       jne     0x79
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,9 +33,9 @@
+ ;;       movq    %rax, %r11
+ ;;       orq     %rcx, %r11
+ ;;       lock cmpxchgl %r11d, (%rdx)
+-;;       jne     0x5b
+-;;   6c: addq    $0x10, %rsp
++;;       jne     0x5d
++;;   6e: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   75: ud2
+ ;;   77: ud2
++;;   79: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw8_oru.wat b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw8_oru.wat
+index ddf236cc81..78a1f3acf9 100644
+--- a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw8_oru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw8_oru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x67
++;;       ja      0x69
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -28,9 +29,9 @@
+ ;;       movq    %rax, %r11
+ ;;       orq     %rcx, %r11
+ ;;       lock cmpxchgb %r11b, (%rdx)
+-;;       jne     0x49
+-;;   5a: movzbq  %al, %rax
++;;       jne     0x4b
++;;   5c: movzbq  %al, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   67: ud2
++;;   69: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw_or.wat b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw_or.wat
+index e5413396db..7e2aee8a68 100644
+--- a/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw_or.wat
++++ b/tests/disas/winch/x64/atomic/rmw/or/i64_atomic_rmw_or.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x78
++;;       ja      0x7a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andq    $7, %rcx
+ ;;       cmpq    $0, %rcx
+-;;       jne     0x7a
++;;       jne     0x7c
+ ;;   4a: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,9 +33,9 @@
+ ;;       movq    %rax, %r11
+ ;;       orq     %rcx, %r11
+ ;;       lock cmpxchgq %r11, (%rdx)
+-;;       jne     0x5e
+-;;   6f: addq    $0x10, %rsp
++;;       jne     0x60
++;;   71: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   78: ud2
+ ;;   7a: ud2
++;;   7c: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw16_subu.wat b/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw16_subu.wat
+index 60303b2447..4d36496e59 100644
+--- a/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw16_subu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw16_subu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x6b
++;;       ja      0x6d
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x6d
++;;       jne     0x6f
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       negw    %ax
+ ;;       lock xaddw %ax, (%rdx)
+@@ -32,5 +33,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   6b: ud2
+ ;;   6d: ud2
++;;   6f: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw8_subu.wat b/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw8_subu.wat
+index ef6c163742..e2b8981c78 100644
+--- a/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw8_subu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw8_subu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x55
++;;       ja      0x57
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       negb    %al
+ ;;       lock xaddb %al, (%rdx)
+@@ -28,4 +29,4 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   55: ud2
++;;   57: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw_sub.wat b/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw_sub.wat
+index d1f2c4f1a0..92c60396b4 100644
+--- a/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw_sub.wat
++++ b/tests/disas/winch/x64/atomic/rmw/sub/i32_atomic_rmw_sub.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x66
++;;       ja      0x68
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,15 +21,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x68
++;;       jne     0x6a
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       negl    %eax
+ ;;       lock xaddl %eax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   66: ud2
+ ;;   68: ud2
++;;   6a: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw16_subu.wat b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw16_subu.wat
+index a8c7d943c1..11abf18984 100644
+--- a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw16_subu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw16_subu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x6c
++;;       ja      0x6e
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x6e
++;;       jne     0x70
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       negw    %ax
+ ;;       lock xaddw %ax, (%rdx)
+@@ -32,5 +33,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   6c: ud2
+ ;;   6e: ud2
++;;   70: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw32_subu.wat b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw32_subu.wat
+index 177df49343..889b0e3dfd 100644
+--- a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw32_subu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw32_subu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x66
++;;       ja      0x68
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,15 +21,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x68
++;;       jne     0x6a
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       negl    %eax
+ ;;       lock xaddl %eax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   66: ud2
+ ;;   68: ud2
++;;   6a: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw8_subu.wat b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw8_subu.wat
+index c447ab0fa5..3dccc0cffa 100644
+--- a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw8_subu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw8_subu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x56
++;;       ja      0x58
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       negb    %al
+ ;;       lock xaddb %al, (%rdx)
+@@ -28,4 +29,4 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   56: ud2
++;;   58: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw_sub.wat b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw_sub.wat
+index 8853273adc..9b3ad2543e 100644
+--- a/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw_sub.wat
++++ b/tests/disas/winch/x64/atomic/rmw/sub/i64_atomic_rmw_sub.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x6a
++;;       ja      0x6c
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,15 +21,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andq    $7, %rcx
+ ;;       cmpq    $0, %rcx
+-;;       jne     0x6c
++;;       jne     0x6e
+ ;;   4a: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       negq    %rax
+ ;;       lock xaddq %rax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   6a: ud2
+ ;;   6c: ud2
++;;   6e: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw16_xchgu.wat b/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw16_xchgu.wat
+index 6b23469c5e..5652d7a767 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw16_xchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw16_xchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x66
++;;       ja      0x68
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,15 +21,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x68
++;;       jne     0x6a
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       xchgw   %ax, (%rdx)
+ ;;       movzwl  %ax, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   66: ud2
+ ;;   68: ud2
++;;   6a: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw8_xchgu.wat b/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw8_xchgu.wat
+index 039f1630aa..d8d3e86abc 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw8_xchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw8_xchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x51
++;;       ja      0x53
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       xchgb   %al, (%rdx)
+ ;;       movzbl  %al, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   51: ud2
++;;   53: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw_xchg.wat b/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw_xchg.wat
+index 1b55d38f18..a243a60fbb 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw_xchg.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xchg/i32_atomic_rmw_xchg.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x62
++;;       ja      0x64
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,14 +21,15 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x64
++;;       jne     0x66
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       xchgl   %eax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   62: ud2
+ ;;   64: ud2
++;;   66: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw16_xchgu.wat b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw16_xchgu.wat
+index 582fdd104b..2d698249f8 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw16_xchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw16_xchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x67
++;;       ja      0x69
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,15 +21,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x69
++;;       jne     0x6b
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       xchgw   %ax, (%rdx)
+ ;;       movzwq  %ax, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   67: ud2
+ ;;   69: ud2
++;;   6b: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw32_xchgu.wat b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw32_xchgu.wat
+index c5cbcc4890..87230d7133 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw32_xchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw32_xchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x62
++;;       ja      0x64
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,14 +21,15 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x64
++;;       jne     0x66
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       xchgl   %eax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   62: ud2
+ ;;   64: ud2
++;;   66: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw8_xchgu.wat b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw8_xchgu.wat
+index 0fe33e382e..d3ee516b4f 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw8_xchgu.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw8_xchgu.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x52
++;;       ja      0x54
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       xchgb   %al, (%rdx)
+ ;;       movzbq  %al, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   52: ud2
++;;   54: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw_xchg.wat b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw_xchg.wat
+index 8e16eddf52..72f9400fc6 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw_xchg.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xchg/i64_atomic_rmw_xchg.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x65
++;;       ja      0x67
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,14 +21,15 @@
+ ;;       movl    $0, %ecx
+ ;;       andq    $7, %rcx
+ ;;       cmpq    $0, %rcx
+-;;       jne     0x67
++;;       jne     0x69
+ ;;   4a: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       xchgq   %rax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   65: ud2
+ ;;   67: ud2
++;;   69: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw16_xoru.wat b/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw16_xoru.wat
+index d125eb187f..0f2ff36f13 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw16_xoru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw16_xoru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x8d
++;;       ja      0x8f
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x8f
++;;       jne     0x91
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -34,10 +35,10 @@
+ ;;       movq    %rax, %r11
+ ;;       xorq    %rcx, %r11
+ ;;       lock cmpxchgw %r11w, (%rdx)
+-;;       jne     0x6f
+-;;   81: movzwl  %ax, %eax
++;;       jne     0x71
++;;   83: movzwl  %ax, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   8d: ud2
+ ;;   8f: ud2
++;;   91: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw8_xoru.wat b/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw8_xoru.wat
+index 699c3d7fe1..5c9253842b 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw8_xoru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw8_xoru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x78
++;;       ja      0x7a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -30,9 +31,9 @@
+ ;;       movq    %rax, %r11
+ ;;       xorq    %rcx, %r11
+ ;;       lock cmpxchgb %r11b, (%rdx)
+-;;       jne     0x5b
+-;;   6c: movzbl  %al, %eax
++;;       jne     0x5d
++;;   6e: movzbl  %al, %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   78: ud2
++;;   7a: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw_xor.wat b/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw_xor.wat
+index 7baad5281b..cf0e18bd09 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw_xor.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xor/i32_atomic_rmw_xor.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x14, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x87
++;;       ja      0x89
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x89
++;;       jne     0x8b
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       subq    $4, %rsp
+ ;;       movl    %eax, (%rsp)
+@@ -34,9 +35,9 @@
+ ;;       movq    %rax, %r11
+ ;;       xorq    %rcx, %r11
+ ;;       lock cmpxchgl %r11d, (%rdx)
+-;;       jne     0x6d
+-;;   7e: addq    $0x10, %rsp
++;;       jne     0x6f
++;;   80: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   87: ud2
+ ;;   89: ud2
++;;   8b: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw16_xoru.wat b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw16_xoru.wat
+index 28ab3167a7..a97056891f 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw16_xoru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw16_xoru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x7c
++;;       ja      0x7e
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x7e
++;;       jne     0x80
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,10 +33,10 @@
+ ;;       movq    %rax, %r11
+ ;;       xorq    %rcx, %r11
+ ;;       lock cmpxchgw %r11w, (%rdx)
+-;;       jne     0x5d
+-;;   6f: movzwq  %ax, %rax
++;;       jne     0x5f
++;;   71: movzwq  %ax, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   7c: ud2
+ ;;   7e: ud2
++;;   80: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw32_xoru.wat b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw32_xoru.wat
+index 7c90075772..e86fb4dac9 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw32_xoru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw32_xoru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x75
++;;       ja      0x77
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x77
++;;       jne     0x79
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,9 +33,9 @@
+ ;;       movq    %rax, %r11
+ ;;       xorq    %rcx, %r11
+ ;;       lock cmpxchgl %r11d, (%rdx)
+-;;       jne     0x5b
+-;;   6c: addq    $0x10, %rsp
++;;       jne     0x5d
++;;   6e: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   75: ud2
+ ;;   77: ud2
++;;   79: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw8_xoru.wat b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw8_xoru.wat
+index 7e46836ca4..fc8fdb115c 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw8_xoru.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw8_xoru.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x67
++;;       ja      0x69
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,6 +21,7 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -28,9 +29,9 @@
+ ;;       movq    %rax, %r11
+ ;;       xorq    %rcx, %r11
+ ;;       lock cmpxchgb %r11b, (%rdx)
+-;;       jne     0x49
+-;;   5a: movzbq  %al, %rax
++;;       jne     0x4b
++;;   5c: movzbq  %al, %rax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   67: ud2
++;;   69: ud2
+diff --git a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw_xor.wat b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw_xor.wat
+index 5b42ab4712..ec89efebde 100644
+--- a/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw_xor.wat
++++ b/tests/disas/winch/x64/atomic/rmw/xor/i64_atomic_rmw_xor.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x18, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x78
++;;       ja      0x7a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,10 +21,11 @@
+ ;;       movl    $0, %ecx
+ ;;       andq    $7, %rcx
+ ;;       cmpq    $0, %rcx
+-;;       jne     0x7a
++;;       jne     0x7c
+ ;;   4a: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       pushq   %rax
+ ;;       popq    %rcx
+@@ -32,9 +33,9 @@
+ ;;       movq    %rax, %r11
+ ;;       xorq    %rcx, %r11
+ ;;       lock cmpxchgq %r11, (%rdx)
+-;;       jne     0x5e
+-;;   6f: addq    $0x10, %rsp
++;;       jne     0x60
++;;   71: addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   78: ud2
+ ;;   7a: ud2
++;;   7c: ud2
+diff --git a/tests/disas/winch/x64/atomic/store/i32_atomic_store.wat b/tests/disas/winch/x64/atomic/store/i32_atomic_store.wat
+index 7b42620f4a..a900070a58 100644
+--- a/tests/disas/winch/x64/atomic/store/i32_atomic_store.wat
++++ b/tests/disas/winch/x64/atomic/store/i32_atomic_store.wat
+@@ -11,7 +11,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x65
++;;       ja      0x67
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,15 +20,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x67
++;;       jne     0x69
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movl    %eax, (%rdx)
+ ;;       mfence
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   65: ud2
+ ;;   67: ud2
++;;   69: ud2
+diff --git a/tests/disas/winch/x64/atomic/store/i32_atomic_store16.wat b/tests/disas/winch/x64/atomic/store/i32_atomic_store16.wat
+index 532bf26102..c2f2b03390 100644
+--- a/tests/disas/winch/x64/atomic/store/i32_atomic_store16.wat
++++ b/tests/disas/winch/x64/atomic/store/i32_atomic_store16.wat
+@@ -11,7 +11,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x66
++;;       ja      0x68
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,15 +20,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x68
++;;       jne     0x6a
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movw    %ax, (%rdx)
+ ;;       mfence
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   66: ud2
+ ;;   68: ud2
++;;   6a: ud2
+diff --git a/tests/disas/winch/x64/atomic/store/i32_atomic_store8.wat b/tests/disas/winch/x64/atomic/store/i32_atomic_store8.wat
+index 24f37436f3..18ff875281 100644
+--- a/tests/disas/winch/x64/atomic/store/i32_atomic_store8.wat
++++ b/tests/disas/winch/x64/atomic/store/i32_atomic_store8.wat
+@@ -11,7 +11,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x51
++;;       ja      0x53
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,10 +20,11 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movb    %al, (%rdx)
+ ;;       mfence
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   51: ud2
++;;   53: ud2
+diff --git a/tests/disas/winch/x64/atomic/store/i64_atomic_store.wat b/tests/disas/winch/x64/atomic/store/i64_atomic_store.wat
+index cce1b25e9d..9f931f720e 100644
+--- a/tests/disas/winch/x64/atomic/store/i64_atomic_store.wat
++++ b/tests/disas/winch/x64/atomic/store/i64_atomic_store.wat
+@@ -11,7 +11,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x68
++;;       ja      0x6a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,15 +20,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andq    $7, %rcx
+ ;;       cmpq    $0, %rcx
+-;;       jne     0x6a
++;;       jne     0x6c
+ ;;   4a: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movq    %rax, (%rdx)
+ ;;       mfence
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   68: ud2
+ ;;   6a: ud2
++;;   6c: ud2
+diff --git a/tests/disas/winch/x64/atomic/store/i64_atomic_store16.wat b/tests/disas/winch/x64/atomic/store/i64_atomic_store16.wat
+index 8afe4b346e..6d64ff49f8 100644
+--- a/tests/disas/winch/x64/atomic/store/i64_atomic_store16.wat
++++ b/tests/disas/winch/x64/atomic/store/i64_atomic_store16.wat
+@@ -11,7 +11,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x66
++;;       ja      0x68
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,15 +20,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andw    $1, %cx
+ ;;       cmpw    $0, %cx
+-;;       jne     0x68
++;;       jne     0x6a
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movw    %ax, (%rdx)
+ ;;       mfence
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   66: ud2
+ ;;   68: ud2
++;;   6a: ud2
+diff --git a/tests/disas/winch/x64/atomic/store/i64_atomic_store32.wat b/tests/disas/winch/x64/atomic/store/i64_atomic_store32.wat
+index 96817f3f6c..c8a7d91f62 100644
+--- a/tests/disas/winch/x64/atomic/store/i64_atomic_store32.wat
++++ b/tests/disas/winch/x64/atomic/store/i64_atomic_store32.wat
+@@ -11,7 +11,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x65
++;;       ja      0x67
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,15 +20,16 @@
+ ;;       movl    $0, %ecx
+ ;;       andl    $3, %ecx
+ ;;       cmpl    $0, %ecx
+-;;       jne     0x67
++;;       jne     0x69
+ ;;   48: movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movl    %eax, (%rdx)
+ ;;       mfence
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   65: ud2
+ ;;   67: ud2
++;;   69: ud2
+diff --git a/tests/disas/winch/x64/atomic/store/i64_atomic_store8.wat b/tests/disas/winch/x64/atomic/store/i64_atomic_store8.wat
+index 0379939c3b..a84bb10007 100644
+--- a/tests/disas/winch/x64/atomic/store/i64_atomic_store8.wat
++++ b/tests/disas/winch/x64/atomic/store/i64_atomic_store8.wat
+@@ -11,7 +11,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x51
++;;       ja      0x53
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,10 +20,11 @@
+ ;;       movl    $0, %ecx
+ ;;       movq    0x30(%r14), %r11
+ ;;       movq    (%r11), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movb    %al, (%rdx)
+ ;;       mfence
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   51: ud2
++;;   53: ud2
+diff --git a/tests/disas/winch/x64/load/f32.wat b/tests/disas/winch/x64/load/f32.wat
+index b8f518b9a7..9fdc307e01 100644
+--- a/tests/disas/winch/x64/load/f32.wat
++++ b/tests/disas/winch/x64/load/f32.wat
+@@ -13,16 +13,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x48
++;;       ja      0x4a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movss   (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   48: ud2
++;;   4a: ud2
+diff --git a/tests/disas/winch/x64/load/f64.wat b/tests/disas/winch/x64/load/f64.wat
+index 175b91e048..d496068814 100644
+--- a/tests/disas/winch/x64/load/f64.wat
++++ b/tests/disas/winch/x64/load/f64.wat
+@@ -12,16 +12,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x48
++;;       ja      0x4a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movsd   (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   48: ud2
++;;   4a: ud2
+diff --git a/tests/disas/winch/x64/load/grow_load.wat b/tests/disas/winch/x64/load/grow_load.wat
+index b791c35ef2..1a20b87706 100644
+--- a/tests/disas/winch/x64/load/grow_load.wat
++++ b/tests/disas/winch/x64/load/grow_load.wat
+@@ -34,7 +34,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x70, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x135
++;;       ja      0x137
+ ;;   1c: movq    %rsi, %r14
+ ;;       subq    $0x60, %rsp
+ ;;       movq    %rsi, 0x58(%rsp)
+@@ -65,20 +65,21 @@
+ ;;       movq    %r14, %rdi
+ ;;       movl    0xc(%rsp), %esi
+ ;;       movl    $0, %edx
+-;;       callq   0x2e1
++;;       callq   0x2e9
+ ;;       addq    $0xc, %rsp
+ ;;       addq    $4, %rsp
+ ;;       movq    0x58(%rsp), %r14
+ ;;       movl    %eax, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       addq    $0x23024, %rcx
+ ;;       movsbq  (%rcx), %rax
+-;;       movss   0x5c(%rip), %xmm0
++;;       movss   0x62(%rip), %xmm0
+ ;;       subq    $0xc, %rsp
+-;;       movsd   0x54(%rip), %xmm15
++;;       movsd   0x5a(%rip), %xmm15
+ ;;       movsd   %xmm15, (%rsp)
+-;;       movss   0x3d(%rip), %xmm15
++;;       movss   0x43(%rip), %xmm15
+ ;;       movss   %xmm15, 8(%rsp)
+ ;;       movq    0x14(%rsp), %rax
+ ;;       movsd   (%rsp), %xmm15
+@@ -90,8 +91,7 @@
+ ;;       addq    $0x60, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;  135: ud2
+-;;  137: addb    %al, (%rax)
++;;  137: ud2
+ ;;  139: addb    %al, (%rax)
+ ;;  13b: addb    %al, (%rax)
+ ;;  13d: addb    %al, (%rax)
+@@ -99,3 +99,7 @@
+ ;;  141: addb    %al, (%rax)
+ ;;  143: addb    %al, (%rax)
+ ;;  145: addb    %al, (%rax)
++;;  147: addb    %al, (%rax)
++;;  149: addb    %al, (%rax)
++;;  14b: addb    %al, (%rax)
++;;  14d: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/load/i32.wat b/tests/disas/winch/x64/load/i32.wat
+index 437421af67..6b073fc967 100644
+--- a/tests/disas/winch/x64/load/i32.wat
++++ b/tests/disas/winch/x64/load/i32.wat
+@@ -13,16 +13,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x46
++;;       ja      0x48
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    (%rcx), %eax
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   46: ud2
++;;   48: ud2
+diff --git a/tests/disas/winch/x64/load/i64.wat b/tests/disas/winch/x64/load/i64.wat
+index 510e9f3932..658d268072 100644
+--- a/tests/disas/winch/x64/load/i64.wat
++++ b/tests/disas/winch/x64/load/i64.wat
+@@ -14,7 +14,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x61
++;;       ja      0x65
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x20, %rsp
+ ;;       movq    %rdi, 0x18(%rsp)
+@@ -23,13 +23,15 @@
+ ;;       movq    8(%rsp), %rax
+ ;;       movl    $8, %ecx
+ ;;       movq    0x38(%r14), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movb    %al, (%rdx)
+ ;;       movl    $8, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movsbq  (%rcx), %rax
+ ;;       addq    $0x20, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   61: ud2
++;;   65: ud2
+diff --git a/tests/disas/winch/x64/load/v128.wat b/tests/disas/winch/x64/load/v128.wat
+index 7bdfebed68..c961d2500e 100644
+--- a/tests/disas/winch/x64/load/v128.wat
++++ b/tests/disas/winch/x64/load/v128.wat
+@@ -13,16 +13,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x48
++;;       ja      0x4a
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movdqu  (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   48: ud2
++;;   4a: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load16_splat_avx2.wat b/tests/disas/winch/x64/load/v128_load16_splat_avx2.wat
+index a74f5160e0..ba8a938927 100644
+--- a/tests/disas/winch/x64/load/v128_load16_splat_avx2.wat
++++ b/tests/disas/winch/x64/load/v128_load16_splat_avx2.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpbroadcastw (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load16x4_s_avx.wat b/tests/disas/winch/x64/load/v128_load16x4_s_avx.wat
+index 40cb24794f..9ee5e73e37 100644
+--- a/tests/disas/winch/x64/load/v128_load16x4_s_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load16x4_s_avx.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpmovsxwd (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load16x4_u_avx.wat b/tests/disas/winch/x64/load/v128_load16x4_u_avx.wat
+index 0ccb8a98ea..a73fd80c1a 100644
+--- a/tests/disas/winch/x64/load/v128_load16x4_u_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load16x4_u_avx.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpmovzxwd (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load32_splat_avx2.wat b/tests/disas/winch/x64/load/v128_load32_splat_avx2.wat
+index 00fa17aa47..cb86b36d69 100644
+--- a/tests/disas/winch/x64/load/v128_load32_splat_avx2.wat
++++ b/tests/disas/winch/x64/load/v128_load32_splat_avx2.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpbroadcastd (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load32_zero_avx.wat b/tests/disas/winch/x64/load/v128_load32_zero_avx.wat
+index 3591b14e3e..ea090a4d0f 100644
+--- a/tests/disas/winch/x64/load/v128_load32_zero_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load32_zero_avx.wat
+@@ -14,17 +14,18 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x4c
++;;       ja      0x4e
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    (%rcx), %r11d
+ ;;       vmovd   %r11d, %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   4c: ud2
++;;   4e: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load32x2_s_avx.wat b/tests/disas/winch/x64/load/v128_load32x2_s_avx.wat
+index e01996df75..b3a3c9c600 100644
+--- a/tests/disas/winch/x64/load/v128_load32x2_s_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load32x2_s_avx.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpmovsxdq (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load32x2_s_oob_avx.wat b/tests/disas/winch/x64/load/v128_load32x2_s_oob_avx.wat
+index d34f49b482..01f56b4eb6 100644
+--- a/tests/disas/winch/x64/load/v128_load32x2_s_oob_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load32x2_s_oob_avx.wat
+@@ -14,15 +14,16 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x64
++;;       ja      0x66
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0xfff9, %eax
+ ;;       cmpq    $0xfff8, %rax
+-;;       ja      0x66
++;;       ja      0x68
+ ;;   40: movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    $0, %edx
+ ;;       cmpq    $0xfff8, %rax
+@@ -31,5 +32,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   64: ud2
+ ;;   66: ud2
++;;   68: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load32x2_u_avx.wat b/tests/disas/winch/x64/load/v128_load32x2_u_avx.wat
+index 911b0b0973..a48bc4f2dd 100644
+--- a/tests/disas/winch/x64/load/v128_load32x2_u_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load32x2_u_avx.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpmovzxdq (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load32x2_u_oob_avx.wat b/tests/disas/winch/x64/load/v128_load32x2_u_oob_avx.wat
+index ba0c46d8b5..911768638f 100644
+--- a/tests/disas/winch/x64/load/v128_load32x2_u_oob_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load32x2_u_oob_avx.wat
+@@ -14,15 +14,16 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x64
++;;       ja      0x66
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0xfff9, %eax
+ ;;       cmpq    $0xfff8, %rax
+-;;       ja      0x66
++;;       ja      0x68
+ ;;   40: movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    $0, %edx
+ ;;       cmpq    $0xfff8, %rax
+@@ -31,5 +32,5 @@
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   64: ud2
+ ;;   66: ud2
++;;   68: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load64_splat_avx.wat b/tests/disas/winch/x64/load/v128_load64_splat_avx.wat
+index 5c64a8da91..8e465afb7d 100644
+--- a/tests/disas/winch/x64/load/v128_load64_splat_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load64_splat_avx.wat
+@@ -14,17 +14,18 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x4d
++;;       ja      0x4f
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movsd   (%rcx), %xmm0
+ ;;       vpshufd $0x44, %xmm0, %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   4d: ud2
++;;   4f: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load64_zero_avx.wat b/tests/disas/winch/x64/load/v128_load64_zero_avx.wat
+index 2d555b2990..31fbcdc060 100644
+--- a/tests/disas/winch/x64/load/v128_load64_zero_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load64_zero_avx.wat
+@@ -14,17 +14,18 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x4c
++;;       ja      0x4e
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movq    (%rcx), %r11
+ ;;       vmovq   %r11, %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   4c: ud2
++;;   4e: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load8_splat_avx2.wat b/tests/disas/winch/x64/load/v128_load8_splat_avx2.wat
+index 6ca90831c9..7e96449876 100644
+--- a/tests/disas/winch/x64/load/v128_load8_splat_avx2.wat
++++ b/tests/disas/winch/x64/load/v128_load8_splat_avx2.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpbroadcastb (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load8x8_s_avx.wat b/tests/disas/winch/x64/load/v128_load8x8_s_avx.wat
+index 4df70e0ef0..5e321b7b3d 100644
+--- a/tests/disas/winch/x64/load/v128_load8x8_s_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load8x8_s_avx.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpmovsxbw (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/load/v128_load8x8_u_avx.wat b/tests/disas/winch/x64/load/v128_load8x8_u_avx.wat
+index 7959ba3716..342e4325aa 100644
+--- a/tests/disas/winch/x64/load/v128_load8x8_u_avx.wat
++++ b/tests/disas/winch/x64/load/v128_load8x8_u_avx.wat
+@@ -14,16 +14,17 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x49
++;;       ja      0x4b
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+ ;;       movq    %rsi, (%rsp)
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpmovzxbw (%rcx), %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   49: ud2
++;;   4b: ud2
+diff --git a/tests/disas/winch/x64/store/f32.wat b/tests/disas/winch/x64/store/f32.wat
+index 542b3f784a..9b4435c530 100644
+--- a/tests/disas/winch/x64/store/f32.wat
++++ b/tests/disas/winch/x64/store/f32.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x50
++;;       ja      0x52
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,13 +20,13 @@
+ ;;       movss   0x21(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movss   %xmm0, (%rcx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   50: ud2
+-;;   52: addb    %al, (%rax)
++;;   52: ud2
+ ;;   54: addb    %al, (%rax)
+ ;;   56: addb    %al, (%rax)
+ ;;   58: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/store/f64.wat b/tests/disas/winch/x64/store/f64.wat
+index e3c936e58b..8bcea2421d 100644
+--- a/tests/disas/winch/x64/store/f64.wat
++++ b/tests/disas/winch/x64/store/f64.wat
+@@ -13,7 +13,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x50
++;;       ja      0x52
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -21,13 +21,13 @@
+ ;;       movsd   0x21(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movsd   %xmm0, (%rcx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   50: ud2
+-;;   52: addb    %al, (%rax)
++;;   52: ud2
+ ;;   54: addb    %al, (%rax)
+ ;;   56: addb    %al, (%rax)
+ ;;   58: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/store/i32.wat b/tests/disas/winch/x64/store/i32.wat
+index c27f5a08f6..b5e656d808 100644
+--- a/tests/disas/winch/x64/store/i32.wat
++++ b/tests/disas/winch/x64/store/i32.wat
+@@ -14,7 +14,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x4b
++;;       ja      0x4d
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -22,9 +22,10 @@
+ ;;       movl    $1, %eax
+ ;;       movl    $0, %ecx
+ ;;       movq    0x38(%r14), %rdx
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rdx
+ ;;       movl    %eax, (%rdx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   4b: ud2
++;;   4d: ud2
+diff --git a/tests/disas/winch/x64/store/oob.wat b/tests/disas/winch/x64/store/oob.wat
+index 22ff78b52c..8d32715bb5 100644
+--- a/tests/disas/winch/x64/store/oob.wat
++++ b/tests/disas/winch/x64/store/oob.wat
+@@ -17,7 +17,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x20, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x86
++;;       ja      0x88
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x20, %rsp
+ ;;       movq    %rdi, 0x18(%rsp)
+@@ -29,10 +29,11 @@
+ ;;       movl    %ecx, %ebx
+ ;;       movabsq $0x100000000, %r11
+ ;;       addq    %r11, %rbx
+-;;       jb      0x88
++;;       jb      0x8a
+ ;;   56: cmpq    %rdx, %rbx
+-;;       ja      0x8a
++;;       ja      0x8c
+ ;;   5f: movq    0x38(%r14), %rsi
++;;       movl    %ecx, %ecx
+ ;;       addq    %rcx, %rsi
+ ;;       movl    $0xffffffff, %r11d
+ ;;       addq    %r11, %rsi
+@@ -43,6 +44,6 @@
+ ;;       addq    $0x20, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   86: ud2
+ ;;   88: ud2
+ ;;   8a: ud2
++;;   8c: ud2
+diff --git a/tests/disas/winch/x64/store/v128.wat b/tests/disas/winch/x64/store/v128.wat
+index 665e81f482..d8f87f3dce 100644
+--- a/tests/disas/winch/x64/store/v128.wat
++++ b/tests/disas/winch/x64/store/v128.wat
+@@ -12,7 +12,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x50
++;;       ja      0x52
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -20,13 +20,13 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movdqu  %xmm0, (%rcx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   50: ud2
+-;;   52: addb    %al, (%rax)
++;;   52: ud2
+ ;;   54: addb    %al, (%rax)
+ ;;   56: addb    %al, (%rax)
+ ;;   58: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/table/grow.wat b/tests/disas/winch/x64/table/grow.wat
+index 8994afbea2..46284223f8 100644
+--- a/tests/disas/winch/x64/table/grow.wat
++++ b/tests/disas/winch/x64/table/grow.wat
+@@ -17,7 +17,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x30, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x76
++;;       ja      0x78
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x20, %rsp
+ ;;       movq    %rdi, 0x18(%rsp)
+@@ -30,11 +30,12 @@
+ ;;       movl    $0, %esi
+ ;;       movl    $0xa, %edx
+ ;;       movq    8(%rsp), %rcx
+-;;       callq   0x177
++;;       callq   0x179
+ ;;       addq    $8, %rsp
+ ;;       addq    $8, %rsp
+ ;;       movq    0x18(%rsp), %r14
++;;       movl    %eax, %eax
+ ;;       addq    $0x20, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   76: ud2
++;;   78: ud2
+diff --git a/tests/disas/winch/x64/v128_ops/load_lane/load16.wat b/tests/disas/winch/x64/v128_ops/load_lane/load16.wat
+index 709de01ca2..868ae7ef93 100644
+--- a/tests/disas/winch/x64/v128_ops/load_lane/load16.wat
++++ b/tests/disas/winch/x64/v128_ops/load_lane/load16.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x56
++;;       ja      0x58
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,14 +23,14 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movzwq  (%rcx), %r11
+ ;;       vpinsrw $1, %r11d, %xmm0, %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   56: ud2
+-;;   58: addb    %al, (%rax)
++;;   58: ud2
+ ;;   5a: addb    %al, (%rax)
+ ;;   5c: addb    %al, (%rax)
+ ;;   5e: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/v128_ops/load_lane/load32.wat b/tests/disas/winch/x64/v128_ops/load_lane/load32.wat
+index 5865941aeb..a3c5d244a7 100644
+--- a/tests/disas/winch/x64/v128_ops/load_lane/load32.wat
++++ b/tests/disas/winch/x64/v128_ops/load_lane/load32.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x55
++;;       ja      0x57
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,14 +23,14 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movl    (%rcx), %r11d
+ ;;       vpinsrd $1, %r11d, %xmm0, %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   55: ud2
+-;;   57: addb    %al, (%rax)
++;;   57: ud2
+ ;;   59: addb    %al, (%rax)
+ ;;   5b: addb    %al, (%rax)
+ ;;   5d: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/v128_ops/load_lane/load64.wat b/tests/disas/winch/x64/v128_ops/load_lane/load64.wat
+index 1d06ec35c2..93086310b9 100644
+--- a/tests/disas/winch/x64/v128_ops/load_lane/load64.wat
++++ b/tests/disas/winch/x64/v128_ops/load_lane/load64.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x55
++;;       ja      0x57
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,14 +23,14 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movq    (%rcx), %r11
+ ;;       vpinsrq $1, %r11, %xmm0, %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   55: ud2
+-;;   57: addb    %al, (%rax)
++;;   57: ud2
+ ;;   59: addb    %al, (%rax)
+ ;;   5b: addb    %al, (%rax)
+ ;;   5d: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/v128_ops/load_lane/load8.wat b/tests/disas/winch/x64/v128_ops/load_lane/load8.wat
+index 191a4bb314..f5119c5563 100644
+--- a/tests/disas/winch/x64/v128_ops/load_lane/load8.wat
++++ b/tests/disas/winch/x64/v128_ops/load_lane/load8.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x56
++;;       ja      0x58
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,14 +23,14 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       movzbq  (%rcx), %r11
+ ;;       vpinsrb $1, %r11d, %xmm0, %xmm0
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   56: ud2
+-;;   58: addb    %al, (%rax)
++;;   58: ud2
+ ;;   5a: addb    %al, (%rax)
+ ;;   5c: addb    %al, (%rax)
+ ;;   5e: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/v128_ops/store_lane/store16.wat b/tests/disas/winch/x64/v128_ops/store_lane/store16.wat
+index 80d135641a..64a778736a 100644
+--- a/tests/disas/winch/x64/v128_ops/store_lane/store16.wat
++++ b/tests/disas/winch/x64/v128_ops/store_lane/store16.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x52
++;;       ja      0x54
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,13 +23,13 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpextrw $1, %xmm0, (%rcx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   52: ud2
+-;;   54: addb    %al, (%rax)
++;;   54: ud2
+ ;;   56: addb    %al, (%rax)
+ ;;   58: addb    %al, (%rax)
+ ;;   5a: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/v128_ops/store_lane/store32.wat b/tests/disas/winch/x64/v128_ops/store_lane/store32.wat
+index a9d2dc1ef6..5d0de5d2f9 100644
+--- a/tests/disas/winch/x64/v128_ops/store_lane/store32.wat
++++ b/tests/disas/winch/x64/v128_ops/store_lane/store32.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x52
++;;       ja      0x54
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,13 +23,13 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpextrd $1, %xmm0, (%rcx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   52: ud2
+-;;   54: addb    %al, (%rax)
++;;   54: ud2
+ ;;   56: addb    %al, (%rax)
+ ;;   58: addb    %al, (%rax)
+ ;;   5a: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/v128_ops/store_lane/store64.wat b/tests/disas/winch/x64/v128_ops/store_lane/store64.wat
+index 1b3849f7a3..88f6b69db7 100644
+--- a/tests/disas/winch/x64/v128_ops/store_lane/store64.wat
++++ b/tests/disas/winch/x64/v128_ops/store_lane/store64.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x52
++;;       ja      0x54
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,13 +23,13 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpextrq $1, %xmm0, (%rcx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   52: ud2
+-;;   54: addb    %al, (%rax)
++;;   54: ud2
+ ;;   56: addb    %al, (%rax)
+ ;;   58: addb    %al, (%rax)
+ ;;   5a: addb    %al, (%rax)
+diff --git a/tests/disas/winch/x64/v128_ops/store_lane/store8.wat b/tests/disas/winch/x64/v128_ops/store_lane/store8.wat
+index 6ae64d7886..8417c54845 100644
+--- a/tests/disas/winch/x64/v128_ops/store_lane/store8.wat
++++ b/tests/disas/winch/x64/v128_ops/store_lane/store8.wat
+@@ -15,7 +15,7 @@
+ ;;       movq    0x18(%r11), %r11
+ ;;       addq    $0x10, %r11
+ ;;       cmpq    %rsp, %r11
+-;;       ja      0x52
++;;       ja      0x54
+ ;;   1c: movq    %rdi, %r14
+ ;;       subq    $0x10, %rsp
+ ;;       movq    %rdi, 8(%rsp)
+@@ -23,13 +23,13 @@
+ ;;       movdqu  0x29(%rip), %xmm0
+ ;;       movl    $0, %eax
+ ;;       movq    0x38(%r14), %rcx
++;;       movl    %eax, %eax
+ ;;       addq    %rax, %rcx
+ ;;       vpextrb $1, %xmm0, (%rcx)
+ ;;       addq    $0x10, %rsp
+ ;;       popq    %rbp
+ ;;       retq
+-;;   52: ud2
+-;;   54: addb    %al, (%rax)
++;;   54: ud2
+ ;;   56: addb    %al, (%rax)
+ ;;   58: addb    %al, (%rax)
+ ;;   5a: addb    %al, (%rax)
+diff --git a/tests/misc_testsuite/winch/oob_extend.wast b/tests/misc_testsuite/winch/oob_extend.wast
+new file mode 100644
+index 0000000000..2044985ef2
+--- /dev/null
++++ b/tests/misc_testsuite/winch/oob_extend.wast
+@@ -0,0 +1,11 @@
++(module
++  (memory 1)
++  (data (i32.const 0) "\ff")
++  (data (i32.const 99) "\de\ad\be\ef")
++  (func (export "exploit") (result i32)
++    i32.const 0
++    i32.load8_s
++    i32.load offset=100
++  )
++)
++(assert_trap (invoke "exploit") "out of bounds memory access")
+diff --git a/tests/misc_testsuite/winch/oob_table_grow.wast b/tests/misc_testsuite/winch/oob_table_grow.wast
+new file mode 100644
+index 0000000000..4bcdcc0540
+--- /dev/null
++++ b/tests/misc_testsuite/winch/oob_table_grow.wast
+@@ -0,0 +1,13 @@
++;;! reference_types = true
++
++(module
++  (memory 1)
++  (table $t 1 2 funcref)
++  (func $exploit (result i32)
++    (i32.store offset=1
++      (table.grow $t (table.get $t (i32.const 0)) (i32.const 100))
++      (i32.const 0xDEADBEEF))
++    (i32.load (i32.const 0)))
++  (export "exploit" (func $exploit))
++)
++(assert_trap (invoke "exploit") "out of bounds memory access")

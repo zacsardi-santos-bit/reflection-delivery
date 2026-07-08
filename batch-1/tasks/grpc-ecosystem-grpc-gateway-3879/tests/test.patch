@@ -1,0 +1,20 @@
+diff --git a/runtime/fieldmask_test.go b/runtime/fieldmask_test.go
+index 1af66ab4..04e7ab07 100644
+--- a/runtime/fieldmask_test.go
++++ b/runtime/fieldmask_test.go
+@@ -29,8 +29,13 @@ func TestFieldMaskFromRequestBody(t *testing.T) {
+ 			expected: newFieldMask(),
+ 		},
+ 		{
+-			name: "simple",
+-
++			name:     "EmptyMessage",
++			msg:      &examplepb.ABitOfEverything{},
++			input:    `{"oneof_empty": {}}`,
++			expected: newFieldMask("oneof_empty"),
++		},
++		{
++			name:     "simple",
+ 			msg:      &examplepb.ABitOfEverything{},
+ 			input:    `{"uuid":"1234", "floatValue":3.14}`,
+ 			expected: newFieldMask("uuid", "float_value"),

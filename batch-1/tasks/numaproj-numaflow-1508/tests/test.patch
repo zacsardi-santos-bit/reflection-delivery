@@ -1,0 +1,854 @@
+diff --git a/pkg/reduce/data_forward_test.go b/pkg/reduce/data_forward_test.go
+index 30e80f95e..275aa1e98 100644
+--- a/pkg/reduce/data_forward_test.go
++++ b/pkg/reduce/data_forward_test.go
+@@ -34,6 +34,7 @@ import (
+ 	"github.com/numaproj/numaflow/pkg/isb/stores/simplebuffer"
+ 	"github.com/numaproj/numaflow/pkg/reduce/pbq"
+ 	"github.com/numaproj/numaflow/pkg/reduce/pbq/partition"
++	"github.com/numaproj/numaflow/pkg/reduce/pbq/store"
+ 	"github.com/numaproj/numaflow/pkg/reduce/pbq/store/aligned/memory"
+ 	"github.com/numaproj/numaflow/pkg/reduce/pnf"
+ 	"github.com/numaproj/numaflow/pkg/shared/kvs"
+@@ -386,11 +387,10 @@ func TestDataForward_StartWithNoOpWM(t *testing.T) {
+ 		toVertexName: {to},
+ 	}
+ 
+-	var err error
+-	var pbqManager *pbq.Manager
+-
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(100))
+ 	// create pbqManager
+-	pbqManager, err = pbq.NewManager(child, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(100)),
++	pbqManager, err := pbq.NewManager(child, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -412,7 +412,7 @@ func TestDataForward_StartWithNoOpWM(t *testing.T) {
+ 	op := pnf.NewPnFManager(child, keyedVertex, CounterReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publisher, idleManager, windower)
+ 
+ 	var reduceDataForwarder *DataForward
+-	reduceDataForwarder, err = NewDataForward(child, keyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, wmpublisher, publisher,
++	reduceDataForwarder, err = NewDataForward(child, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, wmpublisher, publisher,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -476,9 +476,12 @@ func TestReduceDataForward_IdleWM(t *testing.T) {
+ 		toVertexName: {toBuffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -505,7 +508,7 @@ func TestReduceDataForward_IdleWM(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, CounterReduceTest{}, toBuffers, pbqManager, CounterReduceTest{}, publisherMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffers, pbqManager, CounterReduceTest{}, f, publisherMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffers, pbqManager, storeManager, CounterReduceTest{}, f, publisherMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -688,9 +691,12 @@ func TestReduceDataForward_Count(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -711,7 +717,7 @@ func TestReduceDataForward_Count(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, CounterReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publisherMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, f, publisherMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, f, publisherMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -769,9 +775,12 @@ func TestReduceDataForward_AllowedLatencyCount(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -794,7 +803,7 @@ func TestReduceDataForward_AllowedLatencyCount(t *testing.T) {
+ 
+ 	var reduceDataForward *DataForward
+ 	allowedLatency := 1000
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, f, publisherMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, f, publisherMap,
+ 		windower, idleManager, op, WithReadBatchSize(int64(batchSize)),
+ 		WithAllowedLateness(time.Duration(allowedLatency)*time.Millisecond),
+ 	)
+@@ -854,9 +863,12 @@ func TestReduceDataForward_Sum(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -877,7 +889,7 @@ func TestReduceDataForward_Sum(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, SumReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publishersMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, f, publishersMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, f, publishersMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -936,9 +948,12 @@ func TestReduceDataForward_Max(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -959,7 +974,7 @@ func TestReduceDataForward_Max(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, MaxReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publishersMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, f, publishersMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, f, publishersMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -1018,9 +1033,12 @@ func TestReduceDataForward_FixedSumWithDifferentKeys(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -1042,7 +1060,7 @@ func TestReduceDataForward_FixedSumWithDifferentKeys(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, SumReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publishersMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, f, publishersMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, f, publishersMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 
+ 	assert.NoError(t, err)
+@@ -1121,9 +1139,12 @@ func TestReduceDataForward_SumWithDifferentKeys(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -1145,7 +1166,7 @@ func TestReduceDataForward_SumWithDifferentKeys(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, SessionSumReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publishersMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, SessionSumReduceTest{}, f, publishersMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, SessionSumReduceTest{}, f, publishersMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 
+ 	assert.NoError(t, err)
+@@ -1222,9 +1243,12 @@ func TestReduceDataForward_NonKeyed(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -1246,7 +1270,7 @@ func TestReduceDataForward_NonKeyed(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, SumReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publishersMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, nonKeyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, f, publishersMap,
++	reduceDataForward, err = NewDataForward(ctx, nonKeyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, f, publishersMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -1309,12 +1333,12 @@ func TestDataForward_WithContextClose(t *testing.T) {
+ 		toVertexName: {buffer},
+ 	}
+ 
+-	// create a store provider
+-	storeProvider := memory.NewMemoryStores(memory.WithStoreSize(1000))
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(100))
+ 
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(cctx, "reduce", pipelineName, 0, storeProvider,
++	pbqManager, err = pbq.NewManager(cctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -1336,7 +1360,7 @@ func TestDataForward_WithContextClose(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, SumReduceTest{}, toBuffer, pbqManager, CounterReduceTest{}, publishersMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(cctx, keyedVertex, fromBuffer, toBuffer, pbqManager, CounterReduceTest{}, f, publishersMap,
++	reduceDataForward, err = NewDataForward(cctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, CounterReduceTest{}, f, publishersMap,
+ 		windower, idleManager, op, WithReadBatchSize(1))
+ 	assert.NoError(t, err)
+ 
+@@ -1360,11 +1384,11 @@ func TestDataForward_WithContextClose(t *testing.T) {
+ 		}
+ 	}
+ 
+-	var discoveredPartitions []partition.ID
++	var discoveredStores []store.Store
+ 	for {
+-		discoveredPartitions, _ = storeProvider.DiscoverPartitions(ctx)
++		discoveredStores, _ = storeManager.DiscoverStores(ctx)
+ 
+-		if len(discoveredPartitions) == 1 {
++		if len(discoveredStores) == 1 {
+ 			break
+ 		}
+ 		select {
+@@ -1377,7 +1401,7 @@ func TestDataForward_WithContextClose(t *testing.T) {
+ 	}
+ 
+ 	// even though we have 2 different keys
+-	assert.Len(t, discoveredPartitions, 1)
++	assert.Len(t, discoveredStores, 1)
+ 
+ }
+ 
+@@ -1406,9 +1430,12 @@ func TestReduceDataForward_SumMultiPartitions(t *testing.T) {
+ 		toVertexName: {buffer1, buffer2},
+ 	}
+ 
++	// create store manager
++	storeManager := memory.NewMemoryStores(memory.WithStoreSize(1000))
++
+ 	// create pbq manager
+ 	var pbqManager *pbq.Manager
+-	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, memory.NewMemoryStores(memory.WithStoreSize(1000)),
++	pbqManager, err = pbq.NewManager(ctx, "reduce", pipelineName, 0, storeManager,
+ 		window.Aligned, pbq.WithReadTimeout(1*time.Second), pbq.WithChannelBufferSize(10))
+ 	assert.NoError(t, err)
+ 
+@@ -1430,7 +1457,7 @@ func TestReduceDataForward_SumMultiPartitions(t *testing.T) {
+ 	op := pnf.NewPnFManager(ctx, keyedVertex, SumReduceTest{}, toBuffer, pbqManager, &myForwardTestRoundRobin{}, publishersMap, idleManager, windower)
+ 
+ 	var reduceDataForward *DataForward
+-	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, &myForwardTestRoundRobin{}, f, publishersMap,
++	reduceDataForward, err = NewDataForward(ctx, keyedVertex, fromBuffer, toBuffer, pbqManager, storeManager, &myForwardTestRoundRobin{}, f, publishersMap,
+ 		windower, idleManager, op, WithReadBatchSize(10))
+ 
+ 	assert.NoError(t, err)
+diff --git a/pkg/reduce/pbq/pbq_test.go b/pkg/reduce/pbq/pbq_test.go
+index e25ba5886..f7d790c94 100644
+--- a/pkg/reduce/pbq/pbq_test.go
++++ b/pkg/reduce/pbq/pbq_test.go
+@@ -81,7 +81,7 @@ func TestPBQ_ReadWrite(t *testing.T) {
+ 	}()
+ 
+ 	for _, msg := range writeRequests {
+-		err := pq.Write(ctx, &msg)
++		err := pq.Write(ctx, &msg, true)
+ 		assert.NoError(t, err)
+ 	}
+ 	pq.CloseOfBook()
+@@ -148,7 +148,7 @@ func Test_PBQReadWithCanceledContext(t *testing.T) {
+ 	}()
+ 
+ 	for _, msg := range windowRequests {
+-		err := pq.Write(ctx, &msg)
++		err := pq.Write(ctx, &msg, true)
+ 		assert.NoError(t, err)
+ 	}
+ 
+@@ -189,7 +189,7 @@ func TestPBQ_WriteWithStoreFull(t *testing.T) {
+ 	assert.NoError(t, err)
+ 
+ 	for _, req := range windowRequests {
+-		err = pq.Write(ctx, &req)
++		err = pq.Write(ctx, &req, true)
+ 	}
+ 	pq.CloseOfBook()
+ 
+diff --git a/pkg/reduce/pbq/pbqmanager_test.go b/pkg/reduce/pbq/pbqmanager_test.go
+index 530d337c5..b1fab18db 100644
+--- a/pkg/reduce/pbq/pbqmanager_test.go
++++ b/pkg/reduce/pbq/pbqmanager_test.go
+@@ -139,7 +139,7 @@ func TestPBQFlow(t *testing.T) {
+ 
+ 	readRequests := testutils.BuildTestWindowRequests(int64(msgsCount), time.Now(), window.Append)
+ 	for _, msg := range readRequests {
+-		err := pq.Write(ctx, &msg)
++		err := pq.Write(ctx, &msg, true)
+ 		assert.NoError(t, err)
+ 	}
+ 
+@@ -196,10 +196,9 @@ func TestPBQFlowWithNoOpStore(t *testing.T) {
+ 
+ 	requests := testutils.BuildTestWindowRequests(int64(msgsCount), time.Now(), window.Append)
+ 	for _, msg := range requests {
+-		err := pq.Write(ctx, &msg)
++		err := pq.Write(ctx, &msg, true)
+ 		assert.NoError(t, err)
+ 	}
+-	pbqManager.Replay(ctx)
+ 
+ 	pq.CloseOfBook()
+ 	assert.NoError(t, err)
+@@ -209,87 +208,3 @@ func TestPBQFlowWithNoOpStore(t *testing.T) {
+ 	// no of windowRequests will be equal to no of produced messages
+ 	assert.Len(t, windowRequests, msgsCount)
+ }
+-
+-func TestManager_Replay(t *testing.T) {
+-	size := int64(100)
+-
+-	ctx := context.Background()
+-	pbqManager, err := NewManager(ctx, "reduce", "test-pipeline", 0, memory.NewMemoryStores(memory.WithStoreSize(size)), window.Aligned, WithReadTimeout(1*time.Second), WithChannelBufferSize(10), WithReadBatchSize(10))
+-	assert.NoError(t, err)
+-	testPartition := partition.ID{
+-		Start: time.Unix(60, 0),
+-		End:   time.Unix(120, 0),
+-		Slot:  "slot-1",
+-	}
+-
+-	var pq ReadWriteCloser
+-	pq, err = pbqManager.CreateNewPBQ(ctx, testPartition)
+-	assert.NoError(t, err)
+-	var wg sync.WaitGroup
+-	wg.Add(1)
+-
+-	var readRequests []*window.TimedWindowRequest
+-	// go routine which reads the requests from pbq
+-	go func() {
+-	readLoop:
+-		for {
+-			select {
+-			case msg, ok := <-pq.ReadCh():
+-				if msg != nil {
+-					readRequests = append(readRequests, msg)
+-				}
+-				if !ok {
+-					break readLoop
+-				}
+-			case <-ctx.Done():
+-				break readLoop
+-			}
+-		}
+-		wg.Done()
+-	}()
+-
+-	// write 50 requests to pbq
+-	msgsCount := 50
+-	writeRequests := testutils.BuildTestWindowRequests(int64(msgsCount), time.Now(), window.Append)
+-
+-	for _, msg := range writeRequests {
+-		err := pq.Write(ctx, &msg)
+-		assert.NoError(t, err)
+-	}
+-
+-	// after writing, replay records from the store using Manager
+-	pbqManager.Replay(ctx)
+-
+-	pq.CloseOfBook()
+-	wg.Wait()
+-	// number of read requests should be twice compared to number of requests produced
+-	// since we replayed the messages which are persisted in store
+-	assert.Len(t, readRequests, 2*msgsCount)
+-}
+-
+-func TestManager_StartUp(t *testing.T) {
+-	size := int64(100)
+-
+-	pID1 := partition.ID{
+-		Start: time.Now(),
+-		End:   time.Now(),
+-		Slot:  "test-partition-1",
+-	}
+-
+-	pID2 := partition.ID{
+-		Start: time.Now(),
+-		End:   time.Now(),
+-		Slot:  "test-partition-2",
+-	}
+-	dp := func(context.Context) ([]partition.ID, error) {
+-		return []partition.ID{pID1,
+-			pID2}, nil
+-	}
+-	stores := memory.NewMemoryStores(memory.WithStoreSize(size), memory.WithDiscoverer(dp))
+-	ctx := context.Background()
+-	pbqManager, err := NewManager(ctx, "reduce", "test-pipeline", 0, stores, window.Aligned, WithReadTimeout(1*time.Second), WithChannelBufferSize(10), WithReadBatchSize(10))
+-	assert.NoError(t, err)
+-	ids, err := pbqManager.GetExistingPartitions(ctx)
+-	assert.NoError(t, err)
+-	assert.Len(t, ids, 2)
+-}
+diff --git a/pkg/reduce/pbq/store/aligned/wal/stores_test.go b/pkg/reduce/pbq/store/aligned/fs/manager_test.go
+similarity index 83%
+rename from pkg/reduce/pbq/store/aligned/wal/stores_test.go
+rename to pkg/reduce/pbq/store/aligned/fs/manager_test.go
+index 41d692914..918d84722 100644
+--- a/pkg/reduce/pbq/store/aligned/wal/stores_test.go
++++ b/pkg/reduce/pbq/store/aligned/fs/manager_test.go
+@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+ 
+-package wal
++package fs
+ 
+ import (
+ 	"context"
+@@ -60,26 +60,25 @@ func TestWalStores(t *testing.T) {
+ 	}
+ 
+ 	tmp := t.TempDir()
+-	storeProvider := NewWALStores(vi, WithStorePath(tmp))
++	storeProvider := NewFSManager(vi, WithStorePath(tmp))
+ 
+ 	for _, partitionID := range partitionIds {
+ 		_, err = storeProvider.CreateStore(ctx, partitionID)
+ 		assert.NoError(t, err)
+ 	}
+ 
+-	var discoveredPartitions []partition.ID
+-	discoveredPartitions, err = storeProvider.DiscoverPartitions(ctx)
++	discoverStores, err := storeProvider.DiscoverStores(ctx)
+ 	assert.NoError(t, err)
+ 
+-	assert.Len(t, discoveredPartitions, len(partitionIds))
++	assert.Len(t, discoverStores, len(partitionIds))
+ 
+ 	for _, partitionID := range partitionIds {
+ 		err = storeProvider.DeleteStore(partitionID)
+ 		assert.NoError(t, err)
+ 	}
+ 
+-	discoveredPartitions, err = storeProvider.DiscoverPartitions(ctx)
++	discoverStores, err = storeProvider.DiscoverStores(ctx)
+ 	assert.NoError(t, err)
+ 
+-	assert.Len(t, discoveredPartitions, 0)
++	assert.Len(t, discoverStores, 0)
+ }
+diff --git a/pkg/reduce/pbq/store/aligned/wal/segment_test.go b/pkg/reduce/pbq/store/aligned/fs/wal_segment_test.go
+similarity index 80%
+rename from pkg/reduce/pbq/store/aligned/wal/segment_test.go
+rename to pkg/reduce/pbq/store/aligned/fs/wal_segment_test.go
+index 495f99a42..6b963bed0 100644
+--- a/pkg/reduce/pbq/store/aligned/wal/segment_test.go
++++ b/pkg/reduce/pbq/store/aligned/fs/wal_segment_test.go
+@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+ 
+-package wal
++package fs
+ 
+ import (
+ 	"bytes"
+@@ -29,6 +29,7 @@ import (
+ 	"github.com/numaproj/numaflow/pkg/isb"
+ 	"github.com/numaproj/numaflow/pkg/isb/testutils"
+ 	"github.com/numaproj/numaflow/pkg/reduce/pbq/partition"
++	"github.com/numaproj/numaflow/pkg/reduce/pbq/store"
+ )
+ 
+ var vi = &dfv1.VertexInstance{
+@@ -50,7 +51,7 @@ func Test_writeReadHeader(t *testing.T) {
+ 	}
+ 
+ 	tmp := t.TempDir()
+-	stores := NewWALStores(vi, WithStorePath(tmp))
++	stores := NewFSManager(vi, WithStorePath(tmp))
+ 	store, err := stores.CreateStore(context.Background(), id)
+ 	assert.NoError(t, err)
+ 	wal := store.(*WAL)
+@@ -63,14 +64,14 @@ func Test_writeReadHeader(t *testing.T) {
+ 	fmt.Println(fName)
+ 	assert.NoError(t, err)
+ 
+-	openWAL, err := wal.walStores.openWAL(fName)
++	openWAL, err := NewWriteOnlyWAL(&id, fName, dfv1.DefaultStoreMaxBufferSize, dfv1.DefaultStoreSyncDuration, "testPipeline", "testVertex", 0)
+ 	assert.NoError(t, err)
+ 	// we have already read the header in OpenWAL
+-	_, err = openWAL.readWALHeader()
++	_, err = openWAL.(*WAL).readWALHeader()
+ 	assert.Error(t, err)
+ 
+ 	// compare the original ID with read ID
+-	assert.Equal(t, id, *openWAL.partitionID)
++	assert.Equal(t, id, *openWAL.(*WAL).partitionID)
+ 
+ 	err = openWAL.Close()
+ 	assert.NoError(t, err)
+@@ -105,7 +106,7 @@ func Test_encodeDecodeHeader(t *testing.T) {
+ 	for _, tt := range tests {
+ 		t.Run(tt.name, func(t *testing.T) {
+ 			tmp := t.TempDir()
+-			stores := NewWALStores(vi, WithStorePath(tmp))
++			stores := NewFSManager(vi, WithStorePath(tmp))
+ 			wal, err := stores.CreateStore(context.Background(), *tt.id)
+ 			assert.NoError(t, err)
+ 			newWal := wal.(*WAL)
+@@ -130,7 +131,7 @@ func Test_writeReadEntry(t *testing.T) {
+ 	}
+ 
+ 	tmp := t.TempDir()
+-	stores := NewWALStores(vi, WithStorePath(tmp))
++	stores := NewFSManager(vi, WithStorePath(tmp))
+ 	wal, err := stores.CreateStore(context.Background(), id)
+ 	assert.NoError(t, err)
+ 
+@@ -144,17 +145,36 @@ func Test_writeReadEntry(t *testing.T) {
+ 	assert.NoError(t, err)
+ 
+ 	// Reopen the WAL for read and write.
+-	store, err := stores.CreateStore(context.Background(), id)
++	discoveredStores, err := stores.DiscoverStores(context.Background())
++	assert.Len(t, discoveredStores, 1)
+ 	assert.NoError(t, err)
++	store := discoveredStores[0]
+ 	newWal := store.(*WAL)
+ 	// we have already read the header in OpenWAL
+ 	_, err = newWal.readWALHeader()
+ 	assert.Error(t, err)
+ 
+-	actualMessages, finished, err := newWal.Read(10000)
+-	assert.NoError(t, err)
++	msgCh, errCh := newWal.Replay()
++	actualMessages := make([]*isb.ReadMessage, 0)
++outerLoop:
++	for {
++		select {
++		case msg, ok := <-msgCh:
++			if msg != nil {
++				actualMessages = append(actualMessages, msg)
++			}
++			if !ok {
++				break outerLoop
++			}
++		case err, ok := <-errCh:
++			if !ok {
++				break outerLoop
++			}
++			assert.NoError(t, err)
++			break outerLoop
++		}
++	}
+ 	// Check we reach the end of file
+-	assert.Equal(t, true, finished)
+ 	assert.Equal(t, newWal.readUpTo, newWal.rOffset)
+ 
+ 	assert.Len(t, actualMessages, 1)
+@@ -207,7 +227,7 @@ func Test_encodeDecodeEntry(t *testing.T) {
+ 	for _, tt := range tests {
+ 		t.Run(tt.name, func(t *testing.T) {
+ 			tmp := t.TempDir()
+-			stores := NewWALStores(vi, WithStorePath(tmp))
++			stores := NewFSManager(vi, WithStorePath(tmp))
+ 			wal, err := stores.CreateStore(context.Background(), partition.ID{})
+ 			assert.NoError(t, err)
+ 			newWal := wal.(*WAL)
+@@ -233,6 +253,7 @@ func Test_encodeDecodeEntry(t *testing.T) {
+ }
+ 
+ func Test_batchSyncWithMaxBatchSize(t *testing.T) {
++	ctx := context.Background()
+ 	id := partition.ID{
+ 		Start: time.Unix(1665109020, 0).In(location),
+ 		End:   time.Unix(1665109020, 0).Add(time.Minute).In(location),
+@@ -240,7 +261,7 @@ func Test_batchSyncWithMaxBatchSize(t *testing.T) {
+ 	}
+ 
+ 	tmp := t.TempDir()
+-	stores := NewWALStores(vi, WithStorePath(tmp))
++	stores := NewFSManager(vi, WithStorePath(tmp))
+ 	wal, err := stores.CreateStore(context.Background(), id)
+ 	assert.NoError(t, err)
+ 
+@@ -257,7 +278,7 @@ func Test_batchSyncWithMaxBatchSize(t *testing.T) {
+ 	assert.Equal(t, int64(0), tempWAL.prevSyncedWOffset)
+ 	assert.NoError(t, err)
+ 
+-	tempWAL.walStores.maxBatchSize = 10
++	tempWAL.maxBatchSize = 10
+ 	assert.NoError(t, err)
+ 	err = wal.Write(&message)
+ 	assert.NoError(t, err)
+@@ -267,17 +288,36 @@ func Test_batchSyncWithMaxBatchSize(t *testing.T) {
+ 	assert.NoError(t, err)
+ 
+ 	// Reopen the WAL for read and write.
+-	store, err := stores.CreateStore(context.Background(), id)
++	discoveredStores, err := stores.DiscoverStores(ctx)
++	assert.Len(t, discoveredStores, 1)
+ 	assert.NoError(t, err)
+-	newWal := store.(*WAL)
++	newWal := discoveredStores[0].(*WAL)
+ 	// we have already read the header in OpenWAL
+ 	_, err = newWal.readWALHeader()
+ 	assert.Error(t, err)
+ 
+-	actualMessages, finished, err := newWal.Read(10000)
+-	assert.NoError(t, err)
++	msgCh, errCh := newWal.Replay()
++	actualMessages := make([]*isb.ReadMessage, 0)
++outerLoop:
++	for {
++		select {
++		case msg, ok := <-msgCh:
++			if msg != nil {
++				actualMessages = append(actualMessages, msg)
++			}
++			if !ok {
++				break outerLoop
++			}
++		case err, ok := <-errCh:
++			if !ok {
++				break outerLoop
++			}
++			assert.NoError(t, err)
++			break outerLoop
++		}
++	}
++
+ 	// Check we reach the end of file
+-	assert.Equal(t, true, finished)
+ 	assert.Equal(t, newWal.readUpTo, newWal.rOffset)
+ 
+ 	assert.Len(t, actualMessages, 2)
+@@ -305,12 +345,20 @@ func Test_batchSyncWithSyncDuration(t *testing.T) {
+ 	}
+ 
+ 	tmp := t.TempDir()
+-	stores := NewWALStores(vi, WithStorePath(tmp))
++	stores := &fsWAL{
++		storePath:    tmp,
++		maxBatchSize: dfv1.DefaultStoreMaxBufferSize,
++		syncDuration: 0,
++		pipelineName: vi.Vertex.Spec.PipelineName,
++		vertexName:   vi.Vertex.Spec.AbstractVertex.Name,
++		replicaIndex: vi.Replica,
++		activeStores: make(map[string]store.Store),
++	}
++
+ 	wal, err := stores.CreateStore(context.Background(), id)
+ 	assert.NoError(t, err)
+ 
+ 	tempWAL := wal.(*WAL)
+-	tempWAL.walStores.syncDuration = 0
+ 
+ 	startTime := time.Unix(1665109020, 0).In(location)
+ 	msgCount := 2
+@@ -323,7 +371,7 @@ func Test_batchSyncWithSyncDuration(t *testing.T) {
+ 	assert.NoError(t, err)
+ 
+ 	storePrevSyncedTime = tempWAL.prevSyncedTime
+-	tempWAL.walStores.syncDuration = 10 * time.Second
++	tempWAL.syncDuration = 10 * time.Second
+ 	assert.NoError(t, err)
+ 	err = wal.Write(&message)
+ 	assert.NoError(t, err)
+@@ -333,17 +381,35 @@ func Test_batchSyncWithSyncDuration(t *testing.T) {
+ 	assert.NoError(t, err)
+ 
+ 	// Reopen the WAL for read and write.
+-	store, err := stores.CreateStore(context.Background(), id)
++	discoverStores, err := stores.DiscoverStores(context.Background())
++	assert.Len(t, discoverStores, 1)
+ 	assert.NoError(t, err)
+-	newWal := store.(*WAL)
++	newWal := discoverStores[0].(*WAL)
+ 	// we have already read the header in OpenWAL
+ 	_, err = newWal.readWALHeader()
+ 	assert.Error(t, err)
+ 
+-	actualMessages, finished, err := newWal.Read(10000)
+-	assert.NoError(t, err)
++	msgCh, errCh := newWal.Replay()
++	actualMessages := make([]*isb.ReadMessage, 0)
++outerLoop:
++	for {
++		select {
++		case msg, ok := <-msgCh:
++			if msg != nil {
++				actualMessages = append(actualMessages, msg)
++			}
++			if !ok {
++				break outerLoop
++			}
++		case err, ok := <-errCh:
++			if !ok {
++				break outerLoop
++			}
++			assert.NoError(t, err)
++			break outerLoop
++		}
++	}
+ 	// Check we reach the end of file
+-	assert.Equal(t, true, finished)
+ 	assert.Equal(t, newWal.readUpTo, newWal.rOffset)
+ 
+ 	assert.Len(t, actualMessages, 2)
+diff --git a/pkg/reduce/pbq/store/aligned/memory/stores_test.go b/pkg/reduce/pbq/store/aligned/memory/manager_test.go
+similarity index 83%
+rename from pkg/reduce/pbq/store/aligned/memory/stores_test.go
+rename to pkg/reduce/pbq/store/aligned/memory/manager_test.go
+index fecc9cc00..89463abdc 100644
+--- a/pkg/reduce/pbq/store/aligned/memory/stores_test.go
++++ b/pkg/reduce/pbq/store/aligned/memory/manager_test.go
+@@ -24,6 +24,7 @@ import (
+ 	"github.com/stretchr/testify/assert"
+ 
+ 	"github.com/numaproj/numaflow/pkg/reduce/pbq/partition"
++	"github.com/numaproj/numaflow/pkg/reduce/pbq/store"
+ )
+ 
+ func TestMemoryStores(t *testing.T) {
+@@ -55,19 +56,19 @@ func TestMemoryStores(t *testing.T) {
+ 		assert.NoError(t, err)
+ 	}
+ 
+-	var discoveredPartitions []partition.ID
+-	discoveredPartitions, err = storeProvider.DiscoverPartitions(ctx)
++	var discoveredStores []store.Store
++	discoveredStores, err = storeProvider.DiscoverStores(ctx)
+ 	assert.NoError(t, err)
+ 
+-	assert.Len(t, discoveredPartitions, len(partitionIds))
++	assert.Len(t, discoveredStores, len(partitionIds))
+ 
+ 	for _, partitionID := range partitionIds {
+ 		err = storeProvider.DeleteStore(partitionID)
+ 		assert.NoError(t, err)
+ 	}
+ 
+-	discoveredPartitions, err = storeProvider.DiscoverPartitions(ctx)
++	discoveredStores, err = storeProvider.DiscoverStores(ctx)
+ 	assert.NoError(t, err)
+ 
+-	assert.Len(t, discoveredPartitions, 0)
++	assert.Len(t, discoveredStores, 0)
+ }
+diff --git a/pkg/reduce/pbq/store/aligned/memory/store_test.go b/pkg/reduce/pbq/store/aligned/memory/wal_test.go
+similarity index 80%
+rename from pkg/reduce/pbq/store/aligned/memory/store_test.go
+rename to pkg/reduce/pbq/store/aligned/memory/wal_test.go
+index ba55a11c3..07e424cae 100644
+--- a/pkg/reduce/pbq/store/aligned/memory/store_test.go
++++ b/pkg/reduce/pbq/store/aligned/memory/wal_test.go
+@@ -73,9 +73,26 @@ func TestMemoryStore_ReadFromStore(t *testing.T) {
+ 		err := memStore.Write(&msg)
+ 		assert.NoError(t, err)
+ 	}
+-	var readMessages []*isb.ReadMessage
+-	readMessages, _, err = memStore.Read(int64(msgCount))
+-	assert.NoError(t, err)
++	msgCh, errCh := memStore.Replay()
++	readMessages := make([]*isb.ReadMessage, 0)
++outerLoop:
++	for {
++		select {
++		case msg, ok := <-msgCh:
++			if msg != nil {
++				readMessages = append(readMessages, msg)
++			}
++			if !ok {
++				break outerLoop
++			}
++		case err, ok := <-errCh:
++			if !ok {
++				break outerLoop
++			}
++			assert.NoError(t, err)
++			break outerLoop
++		}
++	}
+ 	// number of read messages should be equal to msgCount
+ 	assert.Len(t, readMessages, msgCount)
+ }
+@@ -93,11 +110,28 @@ func TestEmptyStore_Read(t *testing.T) {
+ 
+ 	memStore, err := NewMemoryStores(WithStoreSize(storeSize)).CreateStore(ctx, partitionID)
+ 	assert.NoError(t, err)
+-	var eof bool
+-	_, eof, err = memStore.Read(storeSize)
+-	assert.NoError(t, err)
+-	// since store is empty, eof will be true
+-	assert.Equal(t, eof, true)
++	msgCh, errCh := memStore.Replay()
++	readMessages := make([]*isb.ReadMessage, 0)
++outerLoop:
++	for {
++		select {
++		case msg, ok := <-msgCh:
++			if msg != nil {
++				readMessages = append(readMessages, msg)
++			}
++			if !ok {
++				break outerLoop
++			}
++		case err, ok := <-errCh:
++			if !ok {
++				break outerLoop
++			}
++			assert.NoError(t, err)
++			break outerLoop
++		}
++	}
++	// since store is empty, there should not be any messages to read
++	assert.Len(t, readMessages, 0)
+ 
+ }

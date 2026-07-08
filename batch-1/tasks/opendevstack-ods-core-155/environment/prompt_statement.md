@@ -1,11 +1,11 @@
-I'm working on a webhook proxy service that receives build requests and forwards them to an orchestration system. Right now, the service has some gaps in error handling that I need to fix.
+I'm working on a webhook proxy service that takes incoming build requests and forwards them to an orchestration system, and right now the error handling has some real gaps I need to close up.
 
-First, if the incoming request body is malformed and can't be parsed as JSON, the service should return a 400 status with a message saying it couldn't parse the JSON, instead of silently proceeding with bad data.
+First thing, if the incoming request body is malformed and can't be parsed as JSON, I want it to immediately return HTTP 400 with a message saying the JSON couldn't be parsed, instead of silently swallowing the parse error and proceeding with incomplete data (which just leads to confusing downstream failures later).
 
-Second, even if the JSON is well-formed, the payload can still be semantically invalid — for example, if required fields like the branch name are empty. In that case, the service should return 400 with an appropriate invalid input message rather than forwarding an invalid event downstream.
+Second, even when the body parses fine as JSON, the payload can still be semantically invalid, like an empty branch name or other required fields being blank. In that case I don't want it forwarding a bogus event downstream, I want a 400 back with a message that says the input is invalid.
 
-Third — and this is the trickier one — when the downstream system rejects a pipeline creation request (for instance, returning a 422), that status code needs to be propagated back to the original caller along with a meaningful error message. Currently the error is swallowed and the caller gets no useful feedback.
+Third one's the tricky bit, when the downstream orchestration system rejects the pipeline creation (say it returns a 422), that status code needs to actually propagate back to the original caller along with a clear error message about the pipeline not being created. Right now the error just gets swallowed and the caller gets nothing useful, so operators can't tell a bad request apart from a validation failure apart from a downstream rejection. To make this work the pipeline creation function's signature needs to change so it hands back a status code alongside any error, that way the handler can propagate the right status.
 
-Finally, the behavior around missing or incorrect trigger secrets should ensure that no event processing happens at all — not just that a 401 is returned, but that the pipeline creation logic is never invoked.
+And finally, the trigger secret handling. Requests missing a valid secret (absent, empty, or just plain wrong) should keep getting rejected with 401, but the important part is no event processing happens at all in those cases, so the pipeline creation logic should never even be invoked, not just that we return the 401 after the fact.
 
-The pipeline creation function's interface needs to be updated so it returns a status code alongside any error, enabling the handler to propagate the correct status back to callers.
+Basically I want each stage (bad JSON, invalid input, downstream reject, missing auth) to report predictably so clients get real feedback and debugging isn't a guessing game.

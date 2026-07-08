@@ -1,0 +1,1040 @@
+diff --git a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__bits_pattern_requires_v1_9.snap b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__bits_pattern_requires_v1_9.snap
+index 884b182f5..8af9c3d31 100644
+--- a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__bits_pattern_requires_v1_9.snap
++++ b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__bits_pattern_requires_v1_9.snap
+@@ -28,6 +28,8 @@ Use of unaligned bit arrays on the JavaScript target was introduced in
+ version v1.9.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.8.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.9.0"
+diff --git a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__sized_bits_expression_requires_v1_9.snap b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__sized_bits_expression_requires_v1_9.snap
+index c083b3f7e..fe2cee262 100644
+--- a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__sized_bits_expression_requires_v1_9.snap
++++ b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__sized_bits_expression_requires_v1_9.snap
+@@ -20,6 +20,8 @@ Use of unaligned bit arrays on the JavaScript target was introduced in
+ version v1.9.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.8.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.9.0"
+diff --git a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_expression_requires_v1_9.snap b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_expression_requires_v1_9.snap
+index c0db6e4bc..4ef780d82 100644
+--- a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_expression_requires_v1_9.snap
++++ b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_expression_requires_v1_9.snap
+@@ -20,6 +20,8 @@ Use of unaligned bit arrays on the JavaScript target was introduced in
+ version v1.9.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.8.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.9.0"
+diff --git a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_pattern_requires_v1_9.snap b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_pattern_requires_v1_9.snap
+index b2e644925..58102c2ce 100644
+--- a/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_pattern_requires_v1_9.snap
++++ b/compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__bit_arrays__unaligned_int_pattern_requires_v1_9.snap
+@@ -20,6 +20,8 @@ Use of unaligned bit arrays on the JavaScript target was introduced in
+ version v1.9.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.8.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.9.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__shadowed_imported_value_marked_unused.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__shadowed_imported_value_marked_unused.snap
+index 082de9b49..1c6e81b2a 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__shadowed_imported_value_marked_unused.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__shadowed_imported_value_marked_unused.snap
+@@ -32,4 +32,5 @@ warning: Shadowed Import
+ 
+ Definition of wibble shadows an imported value.
+ The imported value could not be used in this module anyway.
++
+ Hint: Either rename the definition or remove the import.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__used_shadowed_imported_value.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__used_shadowed_imported_value.snap
+index 958823334..10f9f7b2b 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__used_shadowed_imported_value.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__dead_code_detection__used_shadowed_imported_value.snap
+@@ -24,4 +24,5 @@ warning: Shadowed Import
+ 
+ Definition of wibble shadows an imported value.
+ The imported value could not be used in this module anyway.
++
+ Hint: Either rename the definition or remove the import.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_f_int_float.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_f_int_float.snap
+index 1bd931298..34b530c56 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_f_int_float.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_f_int_float.snap
+@@ -20,4 +20,4 @@ But this argument has this type:
+ 
+     Int
+ 
+-Hint: the + operator can be used with Ints
++Hint: The + operator can be used with Ints
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_int_float.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_int_float.snap
+index 43fd75886..4b0b9be4b 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_int_float.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__add_int_float.snap
+@@ -20,4 +20,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case_operator_unify_situation.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case_operator_unify_situation.snap
+index 44daa41bb..e5cc273be 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case_operator_unify_situation.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__case_operator_unify_situation.snap
+@@ -20,4 +20,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__double_assignment_in_bit_array.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__double_assignment_in_bit_array.snap
+index b81f0f940..63936d549 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__double_assignment_in_bit_array.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__double_assignment_in_bit_array.snap
+@@ -14,4 +14,5 @@ error: Double variable assignment
+ 
+ This pattern assigns to two different variables at once, which is not
+ possible in bit arrays.
++
+ Hint: Remove the `as` assignment.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__external_annotation_on_custom_type_with_constructors.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__external_annotation_on_custom_type_with_constructors.snap
+index 67f3baafe..068d88da4 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__external_annotation_on_custom_type_with_constructors.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__external_annotation_on_custom_type_with_constructors.snap
+@@ -20,4 +20,5 @@ error: External type with constructors
+ This type is annotated with the `@external` annotation, but it has
+ constructors. The `@external` annotation is only for external types with no
+ constructors.
++
+ Hint: Remove the `@external` annotation
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__float_gtf_int.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__float_gtf_int.snap
+index cd5c0135a..9079acc8e 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__float_gtf_int.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__float_gtf_int.snap
+@@ -20,4 +20,4 @@ But this argument has this type:
+ 
+     Int
+ 
+-Hint: the > operator can be used with Ints
++Hint: The > operator can be used with Ints
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__int_gt_float.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__int_gt_float.snap
+index 5dfe0a672..557d3501e 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__int_gt_float.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__int_gt_float.snap
+@@ -20,4 +20,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the >. operator can be used with Floats
++Hint: The >. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify.snap
+index 30729bf43..f6c04058d 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify.snap
+@@ -20,4 +20,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify2.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify2.snap
+index 30729bf43..f6c04058d 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify2.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__module_could_not_unify2.snap
+@@ -20,4 +20,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__qualified_type_invalid_operands.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__qualified_type_invalid_operands.snap
+index 8dc0fe9dd..d4f31ce62 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__qualified_type_invalid_operands.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__qualified_type_invalid_operands.snap
+@@ -29,7 +29,6 @@ But this argument has this type:
+ 
+     math.Vector
+ 
+-
+ error: Type mismatch
+   ┌─ /src/one/two.gleam:4:7
+   │
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__recursive_var.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__recursive_var.snap
+index 8ca78680c..cddcc249b 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__recursive_var.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__recursive_var.snap
+@@ -14,4 +14,5 @@ error: Recursive type
+ 
+ I don't know how to work out what type this value has. It seems to be
+ defined in terms of itself.
++
+ Hint: Add some type annotations and try again.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_import.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_import.snap
+index 130def30f..9d06da117 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_import.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_import.snap
+@@ -21,4 +21,5 @@ error: Unknown module
+   │   ^^^^^
+ 
+ No module has been found with the name `utils`.
++
+ Hint: Did you mean to import `utils`?
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_imported_module.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_imported_module.snap
+index e02b4859e..43c894783 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_imported_module.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_imported_module.snap
+@@ -22,4 +22,5 @@ error: Unknown module
+   │   ^^^^^
+ 
+ No module has been found with the name `wible`.
++
+ Hint: Did you mean `wibble`?
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_unimported_module.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_unimported_module.snap
+index 7d53bc790..ed6af3e2b 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_unimported_module.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__unknown_module_suggest_typo_for_unimported_module.snap
+@@ -21,4 +21,5 @@ error: Unknown module
+   │   ^^^^^
+ 
+ No module has been found with the name `woble`.
++
+ Hint: Did you mean to import `wibble/wobble` and reference `wobble`?
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_assignment_fault_tolerance.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_assignment_fault_tolerance.snap
+index 8543cd290..3e54b0f38 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_assignment_fault_tolerance.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_assignment_fault_tolerance.snap
+@@ -26,7 +26,7 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+ 
+ 
+ error: Type mismatch
+@@ -43,4 +43,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_expression_fault_tolerance.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_expression_fault_tolerance.snap
+index 8a19962d7..e3b6df9d7 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_expression_fault_tolerance.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__multiple_bad_statement_expression_fault_tolerance.snap
+@@ -26,7 +26,7 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+ 
+ 
+ error: Type mismatch
+@@ -43,4 +43,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__recursive_type.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__recursive_type.snap
+index 27d34ad0e..f1444e7fa 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__recursive_type.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__functions__recursive_type.snap
+@@ -22,4 +22,5 @@ error: Recursive type
+ 
+ I don't know how to work out what type this value has. It seems to be
+ defined in terms of itself.
++
+ Hint: Add some type annotations and try again.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__use___multiple_bad_statement_use_fault_tolerance.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__use___multiple_bad_statement_use_fault_tolerance.snap
+index 9d824f520..6dafc025e 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__use___multiple_bad_statement_use_fault_tolerance.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__use___multiple_bad_statement_use_fault_tolerance.snap
+@@ -27,7 +27,7 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+ 
+ 
+ error: Type mismatch
+@@ -44,4 +44,4 @@ But this argument has this type:
+ 
+     Float
+ 
+-Hint: the +. operator can be used with Floats
++Hint: The +. operator can be used with Floats
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit.snap
+index 6c0e061dd..d7579a576 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit.snap
+@@ -19,4 +19,5 @@ warning: Truncated bit array segment
+ 
+ This segment is a 123-bit long integer, but on the JavaScript target
+ numbers have at most 52 bits. It would be truncated to its first 52 bits.
++
+ Hint: Did you mean to use the `bytes` segment option?
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit_1.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit_1.snap
+index 8c73491f5..8424b7cb4 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit_1.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bit_array_match_on_integer_over_js_limit_1.snap
+@@ -21,4 +21,5 @@ warning: Truncated bit array segment
+ 
+ This segment is a 53-bit long integer, but on the JavaScript target numbers
+ have at most 52 bits. It would be truncated to its first 52 bits.
++
+ Hint: Did you mean to use the `bytes` segment option?
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bool_assert_requires_v1_11.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bool_assert_requires_v1_11.snap
+index 24841c070..5670b45aa 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bool_assert_requires_v1_11.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__bool_assert_requires_v1_11.snap
+@@ -19,6 +19,8 @@ warning: Incompatible gleam version range
+ The bool `assert` statement was introduced in version v1.11.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.11.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__const_record_update_requires_v1_14_warning.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__const_record_update_requires_v1_14_warning.snap
+index 4e0b329a3..e443c7b2b 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__const_record_update_requires_v1_14_warning.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__const_record_update_requires_v1_14_warning.snap
+@@ -20,6 +20,8 @@ The record update syntax for constants was introduced in version v1.14.0.
+ But the Gleam version range specified in your `gleam.toml` would allow this
+ code to run on an earlier version like v1.0.0, resulting in compilation
+ errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.14.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__constant_string_concatenation_requires_v1_4.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__constant_string_concatenation_requires_v1_4.snap
+index 7af5851a4..393be2be0 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__constant_string_concatenation_requires_v1_4.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__constant_string_concatenation_requires_v1_4.snap
+@@ -15,6 +15,8 @@ warning: Incompatible gleam version range
+ Constant strings concatenation was introduced in version v1.4.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.4.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__detached_doc_comment.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__detached_doc_comment.snap
+index 7bb8e3936..bd9e06aa4 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__detached_doc_comment.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__detached_doc_comment.snap
+@@ -20,4 +20,5 @@ warning: Detached doc comment
+ 
+ This doc comment is followed by a regular comment so it is not attached to
+ any definition.
++
+ Hint: Move the comment above the doc comment
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_expression_segment_size_requires_v1_12_warning.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_expression_segment_size_requires_v1_12_warning.snap
+index 6b7ab4dea..7227a404d 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_expression_segment_size_requires_v1_12_warning.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_expression_segment_size_requires_v1_12_warning.snap
+@@ -19,6 +19,8 @@ warning: Incompatible gleam version range
+ Expressions in segment sizes were introduced in version v1.12.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.12.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_pattern_segment_size_requires_v1_12_warning.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_pattern_segment_size_requires_v1_12_warning.snap
+index 2b943ae46..79013f5a1 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_pattern_segment_size_requires_v1_12_warning.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__expression_in_pattern_segment_size_requires_v1_12_warning.snap
+@@ -21,6 +21,8 @@ warning: Incompatible gleam version range
+ Expressions in segment sizes were introduced in version v1.12.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.12.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__external_annotation_on_custom_type_requires_v1_14.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__external_annotation_on_custom_type_requires_v1_14.snap
+index 98f11bf1b..794808f51 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__external_annotation_on_custom_type_requires_v1_14.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__external_annotation_on_custom_type_requires_v1_14.snap
+@@ -19,6 +19,8 @@ The `@external` annotation on custom types was introduced in version
+ v1.14.0. But the Gleam version range specified in your `gleam.toml` would
+ allow this code to run on an earlier version like v1.0.0, resulting in
+ compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.14.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_divide_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_divide_in_guards_requires_v1_3.snap
+index 3db081a08..b8ef9e594 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_divide_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_divide_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_minus_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_minus_in_guards_requires_v1_3.snap
+index 20ffe1e31..83bf279b6 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_minus_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_minus_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_multiplication_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_multiplication_in_guards_requires_v1_3.snap
+index 5bcfbbca4..de2f59d44 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_multiplication_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_multiplication_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_plus_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_plus_in_guards_requires_v1_3.snap
+index cb3305673..e070fda99 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_plus_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__float_plus_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__function_is_impure_if_uses_todo.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__function_is_impure_if_uses_todo.snap
+index 3e3e8f353..dd24443dc 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__function_is_impure_if_uses_todo.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__function_is_impure_if_uses_todo.snap
+@@ -26,4 +26,5 @@ warning: Todo found
+ 
+ This code will crash if it is run. Be sure to finish it before
+ running your program.
++
+ Hint: I think its type is `Int`.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_divide_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_divide_in_guards_requires_v1_3.snap
+index 919737fd7..0eed6eeb7 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_divide_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_divide_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_minus_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_minus_in_guards_requires_v1_3.snap
+index b5b628c2e..a6c42658d 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_minus_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_minus_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_multiplication_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_multiplication_in_guards_requires_v1_3.snap
+index ade155790..fd213917f 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_multiplication_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_multiplication_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_plus_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_plus_in_guards_requires_v1_3.snap
+index 0ad6c6404..bba39f768 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_plus_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_plus_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_remainder_in_guards_requires_v1_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_remainder_in_guards_requires_v1_3.snap
+index dbbd5b33c..3b64a607f 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_remainder_in_guards_requires_v1_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__int_remainder_in_guards_requires_v1_3.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ Arithmetic operations in guards were introduced in version v1.3.0. But the
+ Gleam version range specified in your `gleam.toml` would allow this code to
+ run on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.3.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_constant_requires_v1_1.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_constant_requires_v1_1.snap
+index c526ef27a..fcd74c03b 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_constant_requires_v1_1.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_constant_requires_v1_1.snap
+@@ -18,6 +18,8 @@ warning: Incompatible gleam version range
+ The `@internal` annotation was introduced in version v1.1.0. But the Gleam
+ version range specified in your `gleam.toml` would allow this code to run
+ on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.1.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_function_requires_v1_1.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_function_requires_v1_1.snap
+index 86b25e930..37c5ce1c2 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_function_requires_v1_1.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_function_requires_v1_1.snap
+@@ -18,6 +18,8 @@ warning: Incompatible gleam version range
+ The `@internal` annotation was introduced in version v1.1.0. But the Gleam
+ version range specified in your `gleam.toml` would allow this code to run
+ on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.1.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_type_requires_v1_1.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_type_requires_v1_1.snap
+index f72da9dc7..378a62e1c 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_type_requires_v1_1.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__internal_annotation_on_type_requires_v1_1.snap
+@@ -18,6 +18,8 @@ warning: Incompatible gleam version range
+ The `@internal` annotation was introduced in version v1.1.0. But the Gleam
+ version range specified in your `gleam.toml` would allow this code to run
+ on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.1.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__javascript_external_module_with_at_requires_v1_2.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__javascript_external_module_with_at_requires_v1_2.snap
+index 25bd0ebb2..ed30fcba9 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__javascript_external_module_with_at_requires_v1_2.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__javascript_external_module_with_at_requires_v1_2.snap
+@@ -19,6 +19,8 @@ The ability to have `@` in a Javascript module's name was introduced in
+ version v1.2.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.0.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.2.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_call_requires_v1_4.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_call_requires_v1_4.snap
+index 42067b940..4a09f09bc 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_call_requires_v1_4.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_call_requires_v1_4.snap
+@@ -22,6 +22,8 @@ warning: Incompatible gleam version range
+ The label shorthand syntax was introduced in version v1.4.0. But the Gleam
+ version range specified in your `gleam.toml` would allow this code to run
+ on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.4.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_constand_requires_v1_4.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_constand_requires_v1_4.snap
+index 3397617a8..997fc0f8e 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_constand_requires_v1_4.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_constand_requires_v1_4.snap
+@@ -20,6 +20,8 @@ warning: Incompatible gleam version range
+ The label shorthand syntax was introduced in version v1.4.0. But the Gleam
+ version range specified in your `gleam.toml` would allow this code to run
+ on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.4.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_pattern_requires_v1_4.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_pattern_requires_v1_4.snap
+index e9181ecb5..d698f4b84 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_pattern_requires_v1_4.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__label_shorthand_in_pattern_requires_v1_4.snap
+@@ -23,6 +23,8 @@ warning: Incompatible gleam version range
+ The label shorthand syntax was introduced in version v1.4.0. But the Gleam
+ version range specified in your `gleam.toml` would allow this code to run
+ on an earlier version like v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.4.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__let_assert_with_message_requires_v1_7.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__let_assert_with_message_requires_v1_7.snap
+index e6e5706cf..20dfa3a46 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__let_assert_with_message_requires_v1_7.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__let_assert_with_message_requires_v1_7.snap
+@@ -20,6 +20,8 @@ Specifying a custom panic message when using let assert was introduced in
+ version v1.7.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.0.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.7.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_constant_segment_requires_v1_10.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_constant_segment_requires_v1_10.snap
+index bbedc5c30..13e641ab3 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_constant_segment_requires_v1_10.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_constant_segment_requires_v1_10.snap
+@@ -16,6 +16,8 @@ The ability to omit the `float` annotation for float segments was
+ introduced in version v1.10.0. But the Gleam version range specified in
+ your `gleam.toml` would allow this code to run on an earlier version like
+ v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.10.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_pattern_segment_requires_v1_10.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_pattern_segment_requires_v1_10.snap
+index 09f6896fc..7fbf1aa18 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_pattern_segment_requires_v1_10.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_pattern_segment_requires_v1_10.snap
+@@ -23,6 +23,8 @@ The ability to omit the `float` annotation for float segments was
+ introduced in version v1.10.0. But the Gleam version range specified in
+ your `gleam.toml` would allow this code to run on an earlier version like
+ v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.10.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_segment_requires_v1_10.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_segment_requires_v1_10.snap
+index fdf16b42e..e4db74c5b 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_segment_requires_v1_10.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_float_option_in_bit_array_segment_requires_v1_10.snap
+@@ -20,6 +20,8 @@ The ability to omit the `float` annotation for float segments was
+ introduced in version v1.10.0. But the Gleam version range specified in
+ your `gleam.toml` would allow this code to run on an earlier version like
+ v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.10.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_constant_segment_requires_v1_5.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_constant_segment_requires_v1_5.snap
+index 410b634a3..58e626204 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_constant_segment_requires_v1_5.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_constant_segment_requires_v1_5.snap
+@@ -16,6 +16,8 @@ The ability to omit the `utf8` annotation for string segments was
+ introduced in version v1.5.0. But the Gleam version range specified in your
+ `gleam.toml` would allow this code to run on an earlier version like
+ v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.5.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_pattern_segment_requires_v1_5.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_pattern_segment_requires_v1_5.snap
+index 292104062..69b5f05a0 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_pattern_segment_requires_v1_5.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_pattern_segment_requires_v1_5.snap
+@@ -23,6 +23,8 @@ The ability to omit the `utf8` annotation for string segments was
+ introduced in version v1.5.0. But the Gleam version range specified in your
+ `gleam.toml` would allow this code to run on an earlier version like
+ v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.5.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_segment_requires_v1_5.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_segment_requires_v1_5.snap
+index 825472086..06084d5b2 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_segment_requires_v1_5.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__missing_utf_8_option_in_bit_array_segment_requires_v1_5.snap
+@@ -20,6 +20,8 @@ The ability to omit the `utf8` annotation for string segments was
+ introduced in version v1.5.0. But the Gleam version range specified in your
+ `gleam.toml` would allow this code to run on an earlier version like
+ v1.0.0, resulting in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.5.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__nested_tuple_access_requires_v1_1.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__nested_tuple_access_requires_v1_1.snap
+index 46a8fceae..fe7880966 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__nested_tuple_access_requires_v1_1.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__nested_tuple_access_requires_v1_1.snap
+@@ -21,6 +21,8 @@ The ability to access nested tuple fields was introduced in version v1.1.0.
+ But the Gleam version range specified in your `gleam.toml` would allow this
+ code to run on an earlier version like v1.0.0, resulting in compilation
+ errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.1.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__opaque_external_type_raises_a_warning.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__opaque_external_type_raises_a_warning.snap
+index 648522fad..3b04cf59c 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__opaque_external_type_raises_a_warning.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__opaque_external_type_raises_a_warning.snap
+@@ -13,4 +13,5 @@ warning: Opaque external type
+   │ ^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+ This type has no constructors so making it opaque is redundant.
++
+ Hint: Remove the `opaque` qualifier from the type definition.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_2.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_2.snap
+index 12d023041..b531a153a 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_2.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_2.snap
+@@ -16,6 +16,7 @@ warning: Panic used as a function
+ 
+ `panic` is not a function and will crash before it can do anything with
+ this argument.
++
+ Hint: if you want to display an error message you should write
+ `panic as "my error message"`
+ See: https://tour.gleam.run/advanced-features/panic/
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_3.snap
+index ccffc2bd9..16f2303d1 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__panic_used_as_function_3.snap
+@@ -16,6 +16,7 @@ warning: Panic used as a function
+ 
+ `panic` is not a function and will crash before it can do anything with
+ these arguments.
++
+ Hint: if you want to display an error message you should write
+ `panic as "my error message"`
+ See: https://tour.gleam.run/advanced-features/panic/
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_eq_list_length.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_eq_list_length.snap
+index 725e0b09a..1e55c2d04 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_eq_list_length.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_eq_list_length.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list == []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_lt_list_length.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_lt_list_length.snap
+index 25a9384c4..c459cc408 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_lt_list_length.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_lt_list_length.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list != []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_not_eq_list_length.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_not_eq_list_length.snap
+index 8fa39e02e..44231b75d 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_not_eq_list_length.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_0_not_eq_list_length.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list != []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_0.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_0.snap
+index 83998a333..2108012dc 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_0.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_0.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list == []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_negative_0.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_negative_0.snap
+index be37b3ac0..7c3913324 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_negative_0.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_eq_negative_0.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list == []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_0.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_0.snap
+index edd99080d..8f8506833 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_0.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_0.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list != []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_negative_0.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_negative_0.snap
+index edd99080d..8f8506833 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_negative_0.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_gt_negative_0.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list != []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_1.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_1.snap
+index 2d98404ab..f00830633 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_1.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_1.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list == []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_eq_0.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_eq_0.snap
+index 7b52fcee8..f5baf871e 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_eq_0.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_lt_eq_0.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list == []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_not_eq_0.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_not_eq_0.snap
+index 8efe7dae8..25b7e2c68 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_not_eq_0.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_list_length_not_eq_0.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list != []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_eq_list_length.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_eq_list_length.snap
+index 3f6ff9712..51bacbccd 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_eq_list_length.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_eq_list_length.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list == []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_lt_list_length.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_lt_list_length.snap
+index 25a9384c4..c459cc408 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_lt_list_length.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__prefer_list_is_empty_over_negative_0_lt_list_length.snap
+@@ -26,4 +26,5 @@ warning: Inefficient use of `list.length`
+ The `list.length` function has to iterate across the whole list to
+ calculate the length, which is wasteful if you only need to know if the
+ list is empty or not.
++
+ Hint: You can use `the_list != []` instead.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_access_variant_inference_requires_v1_6.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_access_variant_inference_requires_v1_6.snap
+index 603718eff..790ee8287 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_access_variant_inference_requires_v1_6.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_access_variant_inference_requires_v1_6.snap
+@@ -28,7 +28,9 @@ Field access on custom types when the variant is known was introduced in
+ version v1.6.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.0.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.6.0"
+ 
+@@ -42,6 +44,8 @@ Field access on custom types when the variant is known was introduced in
+ version v1.6.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.0.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.6.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_update_variant_inference_requires_v1_6.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_update_variant_inference_requires_v1_6.snap
+index d492f980b..c8fc11794 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_update_variant_inference_requires_v1_6.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__record_update_variant_inference_requires_v1_6.snap
+@@ -28,6 +28,8 @@ Record updates for custom types when the variant is known was introduced in
+ version v1.6.0. But the Gleam version range specified in your `gleam.toml`
+ would allow this code to run on an earlier version like v1.0.0, resulting
+ in compilation errors!
+-Hint: Remove the version constraint from your `gleam.toml` or update it to be:
++
++Hint: Remove the version constraint from your `gleam.toml` or update it to
++be:
+ 
+     gleam = ">= 1.6.0"
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_constant.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_constant.snap
+index 14ea58061..60dcf1753 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_constant.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_constant.snap
+@@ -32,4 +32,5 @@ warning: Shadowed Import
+ 
+ Definition of value shadows an imported value.
+ The imported value could not be used in this module anyway.
++
+ Hint: Either rename the definition or remove the import.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_function.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_function.snap
+index 02bdc74f1..33b763dbb 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_function.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__shadow_imported_function.snap
+@@ -32,4 +32,5 @@ warning: Shadowed Import
+ 
+ Definition of wibble shadows an imported value.
+ The imported value could not be used in this module anyway.
++
+ Hint: Either rename the definition or remove the import.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function.snap
+index a7c50b0a4..7bc1f09fa 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function.snap
+@@ -16,6 +16,7 @@ warning: Todo found
+ 
+ This code will crash if it is run. Be sure to finish it before
+ running your program.
++
+ Hint: I think its type is `fn() -> a`.
+ 
+ 
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_2.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_2.snap
+index d858a97ba..537c7cb4e 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_2.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_2.snap
+@@ -16,6 +16,7 @@ warning: Todo found
+ 
+ This code will crash if it is run. Be sure to finish it before
+ running your program.
++
+ Hint: I think its type is `fn(Int) -> a`.
+ 
+ 
+@@ -27,6 +28,7 @@ warning: Todo used as a function
+ 
+ `todo` is not a function and will crash before it can do anything with this
+ argument.
++
+ Hint: if you want to display an error message you should write
+ `todo as "my error message"`
+ See: https://tour.gleam.run/advanced-features/todo/
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_3.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_3.snap
+index 2cb0a4d77..bf9ebca7f 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_3.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_used_as_function_3.snap
+@@ -16,6 +16,7 @@ warning: Todo found
+ 
+ This code will crash if it is run. Be sure to finish it before
+ running your program.
++
+ Hint: I think its type is `fn(Int, Nil) -> a`.
+ 
+ 
+@@ -27,6 +28,7 @@ warning: Todo used as a function
+ 
+ `todo` is not a function and will crash before it can do anything with
+ these arguments.
++
+ Hint: if you want to display an error message you should write
+ `todo as "my error message"`
+ See: https://tour.gleam.run/advanced-features/todo/
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_warning_test.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_warning_test.snap
+index bf344d15b..47cc358cb 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_warning_test.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_warning_test.snap
+@@ -14,4 +14,5 @@ warning: Todo found
+ 
+ This code will crash if it is run. Be sure to finish it before
+ running your program.
++
+ Hint: I think its type is `Int`.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_with_known_type.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_with_known_type.snap
+index f8ad35109..40d8fece2 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_with_known_type.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__todo_with_known_type.snap
+@@ -16,4 +16,5 @@ warning: Todo found
+ 
+ This code will crash if it is run. Be sure to finish it before
+ running your program.
++
+ Hint: I think its type is `String`.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__unused_alias_warning_test.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__unused_alias_warning_test.snap
+index fc7cf39cd..9f6f323c3 100644
+--- a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__unused_alias_warning_test.snap
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__warnings__unused_alias_warning_test.snap
+@@ -32,4 +32,5 @@ warning: Shadowed Import
+ 
+ Definition of one shadows an imported value.
+ The imported value could not be used in this module anyway.
++
+ Hint: Either rename the definition or remove the import.

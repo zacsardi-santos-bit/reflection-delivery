@@ -1,5 +1,7 @@
-I need to add support for configuring the maximum number of pods per node in the host configuration for a Kubernetes cluster management tool. Right now, there's no way to specify this per-host pod limit — nodes just use whatever the default is. I'd like to add an optional field to the per-host configuration that lets operators set this value.
+I'm working on our Kubernetes cluster management tool and hit a gap in how we configure hosts. Right now there's no way to cap how many pods land on a given node, so every node just inherits whatever default its runtime hands out. Operators keep asking to tune pod density per host because nodes have different capacities, and we can't tailor resource utilization without it.
 
-I also need validation: if someone sets this field, it has to be a positive number. Setting it to zero or a negative value doesn't make sense and should be caught early with a validation error. If the field is left unset, that should be fine — it just means the host uses its runtime default.
+What I want is an optional maximum pod count field on the per-host configuration. When it's set, the node should honor that limit, and when it's left unset that's totally fine, the host just falls back to its runtime default like it does today.
 
-The validation logic for host configurations already exists — it just needs to be extended to also check the new maximum pod count field.
+The part I really care about is validation. We already have validation logic for host configs, so I just need to extend it to also check this new max pod count. If someone sets it, it has to be a positive number. Zero or a negative value doesn't make sense and should get rejected right there during config validation with a clear error, rather than slipping through and blowing up later during actual node setup. If it's absent, treat the config as valid, no complaints.
+
+So basically: add the optional field, wire it into the existing host config validation path, and make sure positive means ok, zero or negative means error, unset means use the default.

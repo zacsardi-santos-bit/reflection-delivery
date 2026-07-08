@@ -1,9 +1,9 @@
-I'm working with binary data in SQL queries and running into several missing features that I'd expect to find in a standard SQL implementation.
+I'm hitting a bunch of gaps in the SQL layer when I try to work with binary data and it's making the whole thing feel half-finished compared to real SQL dialects.
 
-First, there's no way to write binary data literals inline in SQL. I need to be able to express byte values using bit-pattern notation (strings of zeros and ones) and hexadecimal notation directly in SELECT columns and WHERE clause filters against binary-typed columns. When I write an invalid literal — like a bit pattern containing characters other than 0 or 1, or a hex string with an odd number of digits — I'd expect a clear error message, but right now none of this works at all.
+Biggest one: I can't write binary literals inline. I want bit-string notation, like a sequence of zeros and ones, that gets turned into the matching bytes following standard binary interpretation (MSB-first, zero-padded out to whole bytes), and I also want hex notation where pairs of hex digits become the raw bytes, case-insensitive so uppercase or lowercase both parse. Both of these need to work in SELECT expressions and in WHERE clause comparison filters against binary-typed columns, right now none of it works. And when the literal is bad I want a clear error, so a bit string containing anything other than 0 or 1 should be rejected with a message about non-binary characters, and a hex string with an odd number of digits should be rejected too since you can't make whole bytes out of that.
 
-Second, I noticed that common alternative names for the character-length function are not recognized, and there is no function to get the length of a string measured in bits rather than characters or bytes.
+Also the string length functions feel incomplete. The common alternative names for the character-length function aren't recognized (they should just return character counts), and there's no way to get the length of a string in bits, so I want a bit-length function that returns byte count times 8.
 
-Third, a common plain-English word for the binary data type is not recognized as a type alias when casting columns, even though similar aliases are already supported.
+Oh and casting: a plain-English word for the binary type isn't accepted as a type alias even though similar aliases already work, so that should resolve when I cast a column to it.
 
-Finally, it would help to be able to create an SQL context and register a placeholder empty table — right now passing in no data at all seems to not be supported when setting up the SQL context.
+Last thing, smaller, I want to be able to spin up an SQL context and register a placeholder empty table with no data at all. Right now passing in nothing when setting up the context isn't supported and it blocks me from writing structural queries before I've got real data loaded.

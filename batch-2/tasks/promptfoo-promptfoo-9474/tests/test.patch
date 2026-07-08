@@ -1,0 +1,206 @@
+diff --git a/test/providers/openai/assistant.test.ts b/test/providers/openai/assistant.test.ts
+index 7b93b20a4..e16672738 100644
+--- a/test/providers/openai/assistant.test.ts
++++ b/test/providers/openai/assistant.test.ts
+@@ -141,6 +141,13 @@ describe('OpenAI Provider', () => {
+ 
+       const result = await provider.callApi('Test prompt');
+ 
++      expect(OpenAI).toHaveBeenCalledWith(
++        expect.objectContaining({
++          defaultHeaders: expect.objectContaining({
++            'X-OpenAI-Originator': 'promptfoo',
++          }),
++        }),
++      );
+       expect(result.output).toBe('[Assistant] Test response');
+       expect(mockClient.beta.threads.createAndRun).toHaveBeenCalledTimes(1);
+       expect(mockClient.beta.threads.runs.retrieve).toHaveBeenCalledTimes(1);
+diff --git a/test/providers/openai/chat.test.ts b/test/providers/openai/chat.test.ts
+index 4e81b788d..7d2ab7f3b 100644
+--- a/test/providers/openai/chat.test.ts
++++ b/test/providers/openai/chat.test.ts
+@@ -83,6 +83,8 @@ describe('OpenAI Provider', () => {
+       );
+ 
+       expect(mockFetchWithCache).toHaveBeenCalledTimes(1);
++      const requestHeaders = mockFetchWithCache.mock.calls[0][1]?.headers as Record<string, string>;
++      expect(requestHeaders['X-OpenAI-Originator']).toBe('promptfoo');
+       expect(result.output).toBe('Test output');
+       expect(result.tokenUsage).toEqual({ total: 10, prompt: 5, completion: 5, numRequests: 1 });
+       expect(result.guardrails).toEqual({ flagged: false });
+diff --git a/test/providers/openai/chatkit.test.ts b/test/providers/openai/chatkit.test.ts
+index c63fca80f..fe9e56157 100644
+--- a/test/providers/openai/chatkit.test.ts
++++ b/test/providers/openai/chatkit.test.ts
+@@ -90,7 +90,8 @@ function getGeneratedHTML(provider: OpenAiChatKitProvider): string {
+               headers: {
+                 'Authorization': 'Bearer ${apiKey}',
+                 'Content-Type': 'application/json',
+-                'OpenAI-Beta': 'chatkit_beta=v1'
++                'OpenAI-Beta': 'chatkit_beta=v1',
++                'X-OpenAI-Originator': 'promptfoo'
+               },
+               body: JSON.stringify({
+                 workflow: { id: '${workflowId}'${versionClause} },
+diff --git a/test/providers/openai/completion.test.ts b/test/providers/openai/completion.test.ts
+index a8c11a07d..368cd2324 100644
+--- a/test/providers/openai/completion.test.ts
++++ b/test/providers/openai/completion.test.ts
+@@ -195,6 +195,7 @@ describe('OpenAI Provider', () => {
+         expect.objectContaining({
+           headers: expect.objectContaining({
+             'Content-Type': 'application/json',
++            'X-OpenAI-Originator': 'promptfoo',
+             'X-Test-Header': 'test-value',
+           }),
+         }),
+diff --git a/test/providers/openai/embedding.test.ts b/test/providers/openai/embedding.test.ts
+index 746a3b151..da3ee550f 100644
+--- a/test/providers/openai/embedding.test.ts
++++ b/test/providers/openai/embedding.test.ts
+@@ -90,6 +90,9 @@ describe('OpenAI Provider', () => {
+       expect(fetchWithCache).toHaveBeenCalledWith(
+         expect.stringContaining('/embeddings'),
+         expect.objectContaining({
++          headers: expect.objectContaining({
++            'X-OpenAI-Originator': 'promptfoo',
++          }),
+           body: JSON.stringify({
+             input: 'test text',
+             model: 'text-embedding-3-small',
+diff --git a/test/providers/openai/image.test.ts b/test/providers/openai/image.test.ts
+index 9a140198b..5cbaf5abe 100644
+--- a/test/providers/openai/image.test.ts
++++ b/test/providers/openai/image.test.ts
+@@ -58,6 +58,7 @@ describe('OpenAiImageProvider', () => {
+           headers: expect.objectContaining({
+             'Content-Type': 'application/json',
+             Authorization: 'Bearer test-key',
++            'X-OpenAI-Originator': 'promptfoo',
+           }),
+           body: expect.stringContaining('"prompt":"Generate a cat"'),
+         }),
+diff --git a/test/providers/openai/index.test.ts b/test/providers/openai/index.test.ts
+index f0cb9c521..b3418ba27 100644
+--- a/test/providers/openai/index.test.ts
++++ b/test/providers/openai/index.test.ts
+@@ -1,5 +1,9 @@
+ import { beforeEach, describe, expect, it } from 'vitest';
+-import { OpenAiGenericProvider } from '../../../src/providers/openai/index';
++import {
++  DEFAULT_OPENAI_ORIGINATOR,
++  OPENAI_ORIGINATOR_HEADER,
++  OpenAiGenericProvider,
++} from '../../../src/providers/openai/index';
+ import { mockProcessEnv } from '../../util/utils';
+ 
+ describe('OpenAI Provider', () => {
+@@ -43,6 +47,36 @@ describe('OpenAI Provider', () => {
+       expect(envProvider.getOrganization()).toBe('env-org');
+     });
+ 
++    it('should include the default originator header and allow explicit overrides', () => {
++      expect(provider.getOpenAiRequestHeaders()).toEqual({
++        [OPENAI_ORIGINATOR_HEADER]: DEFAULT_OPENAI_ORIGINATOR,
++        'OpenAI-Organization': 'test-org',
++      });
++
++      expect(
++        provider.getOpenAiRequestHeaders({
++          [OPENAI_ORIGINATOR_HEADER]: 'custom-originator',
++        }),
++      ).toMatchObject({
++        [OPENAI_ORIGINATOR_HEADER]: 'custom-originator',
++      });
++    });
++
++    it('should not attribute compatible endpoints unless explicitly configured', () => {
++      const customProvider = new OpenAiGenericProvider('test-model', {
++        config: { apiBaseUrl: 'https://custom.api.com/openai' },
++      });
++
++      expect(customProvider.getOpenAiRequestHeaders()).not.toHaveProperty(OPENAI_ORIGINATOR_HEADER);
++      expect(
++        customProvider.getOpenAiRequestHeaders({
++          [OPENAI_ORIGINATOR_HEADER]: 'custom-originator',
++        }),
++      ).toMatchObject({
++        [OPENAI_ORIGINATOR_HEADER]: 'custom-originator',
++      });
++    });
++
+     it('should get API key', () => {
+       expect(provider.getApiKey()).toBe('test-key');
+     });
+diff --git a/test/providers/openai/moderation.test.ts b/test/providers/openai/moderation.test.ts
+index 2d17cf559..cb37a8067 100644
+--- a/test/providers/openai/moderation.test.ts
++++ b/test/providers/openai/moderation.test.ts
+@@ -90,6 +90,7 @@ describe('OpenAiModerationProvider', () => {
+             'Content-Type': 'application/json',
+             'x-promptfoo-silent': 'true',
+             Authorization: 'Bearer test-key',
++            'X-OpenAI-Originator': 'promptfoo',
+           }),
+           body: expect.stringContaining('"model":"text-moderation-latest"'),
+         }),
+diff --git a/test/providers/openai/realtime.test.ts b/test/providers/openai/realtime.test.ts
+index a6e033d4c..49bf6e11a 100644
+--- a/test/providers/openai/realtime.test.ts
++++ b/test/providers/openai/realtime.test.ts
+@@ -2901,9 +2901,11 @@ describe('OpenAI Realtime Provider', () => {
+       await promise;
+ 
+       const constructedUrl = (MockWebSocket as any).mock.calls[0][0];
++      const wsOptions = (MockWebSocket as any).mock.calls[0][1];
+       expect(constructedUrl).toBe(
+         'wss://api.openai.com/v1/realtime?model=' + encodeURIComponent('gpt-4o-realtime-preview'),
+       );
++      expect(wsOptions.headers['X-OpenAI-Originator']).toBe('promptfoo');
+     });
+ 
+     it('uses the GA realtime wire shape without the beta header', async () => {
+diff --git a/test/providers/openai/responses/request.test.ts b/test/providers/openai/responses/request.test.ts
+index 576c5a55c..4f59ea1a7 100644
+--- a/test/providers/openai/responses/request.test.ts
++++ b/test/providers/openai/responses/request.test.ts
+@@ -58,6 +58,7 @@ describe('OpenAiResponsesProvider request building', () => {
+         headers: expect.objectContaining({
+           'Content-Type': 'application/json',
+           Authorization: 'Bearer test-key',
++          'X-OpenAI-Originator': 'promptfoo',
+         }),
+       }),
+       expect.any(Number),
+diff --git a/test/providers/openai/transcription.test.ts b/test/providers/openai/transcription.test.ts
+index b0edd941d..629a980e0 100644
+--- a/test/providers/openai/transcription.test.ts
++++ b/test/providers/openai/transcription.test.ts
+@@ -175,6 +175,7 @@ describe('OpenAiTranscriptionProvider', () => {
+           method: 'POST',
+           headers: expect.objectContaining({
+             Authorization: 'Bearer test-key',
++            'X-OpenAI-Originator': 'promptfoo',
+           }),
+         }),
+         expect.any(Number),
+diff --git a/test/providers/openai/video.test.ts b/test/providers/openai/video.test.ts
+index 73e40e1c6..cb7138e8c 100644
+--- a/test/providers/openai/video.test.ts
++++ b/test/providers/openai/video.test.ts
+@@ -319,6 +319,14 @@ describe('OpenAiVideoProvider', () => {
+       expect(result.video?.thumbnail).toContain('storageRef:');
+       expect(result.video?.spritesheet).toContain('storageRef:');
+       expect(result.cost).toBeGreaterThan(0);
++      expect(mockFetchWithProxy).toHaveBeenCalledWith(
++        expect.stringMatching(/\/videos$/),
++        expect.objectContaining({
++          headers: expect.objectContaining({
++            'X-OpenAI-Originator': 'promptfoo',
++          }),
++        }),
++      );
+     });
+ 
+     it('should handle invalid video size', async () => {

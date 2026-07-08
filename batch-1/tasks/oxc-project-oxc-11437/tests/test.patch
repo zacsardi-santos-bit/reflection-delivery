@@ -1,0 +1,14 @@
+diff --git a/crates/oxc_linter/src/rules/eslint/no_loss_of_precision.rs b/crates/oxc_linter/src/rules/eslint/no_loss_of_precision.rs
+--- a/crates/oxc_linter/src/rules/eslint/no_loss_of_precision.rs
++++ b/crates/oxc_linter/src/rules/eslint/no_loss_of_precision.rs
+@@ -284,8 +284,9 @@ fn test() {
+     let pass = vec![
+         ("var x = 12345", None),
++        ("(1000000000000000128).toFixed(0)", None),
+         ("var x = 123.456", None),
+         ("var x = -123.456", None),
+         ("var x = -123456", None),
+         ("var x = 123e34", None),
+         ("var x = 123.0e34", None),
+         ("var x = 123e-34", None),
+         ("var x = -123e34", None),

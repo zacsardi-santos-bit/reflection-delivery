@@ -1,0 +1,2250 @@
+diff --git a/tests/events/server/test_events_counts.py b/tests/events/server/test_events_counts.py
+new file mode 100644
+index 0000000000..815f8060d3
+--- /dev/null
++++ b/tests/events/server/test_events_counts.py
+@@ -0,0 +1,884 @@
++import math
++from datetime import timedelta
++from typing import AsyncGenerator, Dict, List, Tuple, cast
++from uuid import uuid4
++
++import pendulum
++import pytest
++from pendulum.date import Date
++from pendulum.datetime import DateTime
++from sqlalchemy.ext.asyncio import AsyncSession
++
++from prefect.server.events.counting import PIVOT_DATETIME, Countable, TimeUnit
++from prefect.server.events.filters import (
++    EventFilter,
++    EventOccurredFilter,
++)
++from prefect.server.events.schemas.events import EventCount, ReceivedEvent
++from prefect.server.events.storage.database import (
++    count_events,
++    write_events,
++)
++
++# Note: the counts in this module are sensitive to the number and shape of events
++# we produce in conftest.py and may need to be adjusted if we make changes.
++
++
++@pytest.fixture(scope="module")
++def known_dates() -> Tuple[Date, ...]:
++    dates = [Date.today().subtract(days=days_ago) for days_ago in [5, 4, 3, 2, 1]]
++    return cast(Tuple[Date, ...], tuple(dates))
++
++
++@pytest.fixture(scope="module")
++def known_times(known_dates: Tuple[Date, ...]) -> Tuple[DateTime, DateTime]:
++    start, end = known_dates[0], known_dates[-1]
++    return (
++        DateTime(start.year, start.month, start.day).in_timezone("UTC"),
++        DateTime(end.year, end.month, end.day, 23, 59, 59, 999999).in_timezone("UTC"),
++    )
++
++
++@pytest.fixture(scope="module")
++def all_events(known_dates: Tuple[Date, ...]) -> List[ReceivedEvent]:
++    event_options = [
++        "things.happened",
++        "things.happened",
++        "things.happened",
++        "things.didn't",
++        "things.didn't",
++        "other.stuff",
++        "nope.not.this",
++    ]
++
++    resource_options: List[Dict[str, str]] = [
++        {
++            "prefect.resource.id": "foo.1",
++            "prefect.resource.name": "Foo To You",
++            "hello": "world",
++        },
++        {
++            "prefect.resource.id": "foo.2",
++            "prefect.resource.name": "Foo To You Two",
++            "hello": "world",
++        },
++        {
++            "prefect.resource.id": "foo.3",
++            "goodbye": "moon",
++        },
++    ]
++    related_options: List[List[Dict[str, str]]] = [
++        [],
++        [
++            {
++                "prefect.resource.id": "foo.1",
++                "prefect.resource.role": "thing",
++            },
++            {
++                "prefect.resource.id": "foo.2",
++                "prefect.resource.role": "another-thing",
++            },
++            {
++                "prefect.resource.id": "foo.3",
++                "prefect.resource.role": "the-other-thing",
++            },
++            {
++                "prefect.resource.id": "related.4",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++            },
++        ],
++        [
++            {
++                "prefect.resource.id": "foo.1",
++                "prefect.resource.role": "thing",
++                "hello": "world",
++                "another": "label",
++            },
++            {
++                "prefect.resource.id": "foo.2",
++                "prefect.resource.role": "another-thing",
++                "hello": "world",
++            },
++            {
++                "prefect.resource.id": "foo.3",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++            },
++            {
++                "prefect.resource.id": "related.4",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++            },
++            {
++                "prefect.resource.id": "related.5",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++            },
++        ],
++    ]
++
++    events: List[ReceivedEvent] = []
++    for date in known_dates:
++        for i in range(20):
++            occurred = DateTime(
++                date.year,
++                date.month,
++                date.day,
++                hour=i,
++                minute=i * 2,
++                second=i * 2,
++            ).in_timezone("UTC")
++
++            related = list(related_options[i % len(related_options)])
++
++            events.append(
++                ReceivedEvent(
++                    occurred=occurred,
++                    event=event_options[i % len(event_options)],
++                    resource=resource_options[i % len(resource_options)],
++                    related=related,
++                    payload={"hello": "world"},
++                    id=uuid4(),
++                    received=occurred + timedelta(seconds=0.5),
++                )
++            )
++    return events
++
++
++@pytest.fixture
++async def events_query_session(
++    all_events: List[ReceivedEvent],
++    session: AsyncSession,
++) -> AsyncGenerator[AsyncSession, None]:
++    """Opens an appropriate session for the backend, seeds it with the
++    test events, and returns it for use in tests"""
++    await write_events(session, all_events)
++    yield session
++
++
++def datetime_from_date(
++    date: Date, hour: int = 0, minute: int = 0, second: int = 0, microsecond=0
++) -> DateTime:
++    return DateTime(
++        date.year,
++        date.month,
++        date.day,
++        hour=hour,
++        minute=minute,
++        second=second,
++        microsecond=microsecond,
++    ).in_timezone("UTC")
++
++
++async def test_counting_by_day_legacy(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1],
++            ),
++        ),
++        countable=Countable.day,
++        time_unit=TimeUnit.day,
++        time_interval=1.0,
++    )
++
++    assert counts == [
++        EventCount(
++            value="0",
++            label=f"{known_dates[0].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[0]),
++            end_time=datetime_from_date(known_dates[0], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="1",
++            label=f"{known_dates[1].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[1]),
++            end_time=datetime_from_date(known_dates[1], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="2",
++            label=f"{known_dates[2].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[2]),
++            end_time=datetime_from_date(known_dates[2], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="3",
++            label=f"{known_dates[3].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[3]),
++            end_time=datetime_from_date(known_dates[3], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="4",
++            label=f"{known_dates[4].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[4]),
++            end_time=datetime_from_date(known_dates[4], 23, 59, 59, 999999),
++        ),
++    ]
++
++
++async def test_counting_by_time_no_future_events_backfilled(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1].add(days=2).in_timezone("UTC"),
++            ),
++        ),
++        countable=Countable.day,
++        time_unit=TimeUnit.day,
++        time_interval=1.0,
++    )
++
++    assert counts == [
++        EventCount(
++            value="0",
++            label=f"{known_dates[0].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[0]),
++            end_time=datetime_from_date(known_dates[0], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="1",
++            label=f"{known_dates[1].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[1]),
++            end_time=datetime_from_date(known_dates[1], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="2",
++            label=f"{known_dates[2].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[2]),
++            end_time=datetime_from_date(known_dates[2], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="3",
++            label=f"{known_dates[3].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[3]),
++            end_time=datetime_from_date(known_dates[3], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="4",
++            label=f"{known_dates[4].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[4]),
++            end_time=datetime_from_date(known_dates[4], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="5",
++            label=f"{known_dates[4].add(days=1).isoformat()}T00:00:00+00:00",
++            count=0,
++            start_time=datetime_from_date(known_dates[4].add(days=1)),
++            end_time=datetime_from_date(known_dates[4].add(days=1), 23, 59, 59, 999999),
++        ),
++    ]
++
++
++async def test_counting_by_time_per_hour(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1],
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.hour,
++        time_interval=1.0,
++    )
++
++    expected = {}
++    for date in known_dates:
++        for i in range(20):
++            start_time = datetime_from_date(date, hour=i)
++            index = int((start_time - datetime_from_date(known_dates[0])).total_hours())
++            expected[index] = EventCount(
++                value=str(index),
++                label=start_time.isoformat(),
++                count=1,
++                start_time=start_time,
++                end_time=datetime_from_date(date, i, 59, 59, 999999),
++            )
++
++    # When counting events by time we backfill missing data so that the result
++    # contains all of the possible spans in the given time period. `expected`
++    # is only those spans that actually have events in them. So here we assert
++    # about the length of the result and then assert that the result contains
++    # all of the expected spans and assert that the count is 0 for the others.
++
++    assert len(counts) == math.ceil((known_times[1] - known_times[0]).total_hours())
++    assert len(expected) == 100
++
++    for i, count in enumerate(counts):
++        assert isinstance(count, EventCount)
++        if i in expected:
++            assert count == expected[i]
++        else:
++            assert count.count == 0
++
++
++async def test_counting_by_time_per_minute(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[0] + timedelta(minutes=600),
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.minute,
++        time_interval=1.0,
++    )
++
++    expected = {}
++    for date in known_dates:
++        for i in range(20):
++            start_time = datetime_from_date(date, hour=i, minute=i * 2)
++            index = int(
++                (start_time - datetime_from_date(known_dates[0])).total_minutes()
++            )
++            expected[index] = EventCount(
++                value=str(index),
++                label=start_time.isoformat(),
++                count=1,
++                start_time=start_time,
++                end_time=datetime_from_date(date, i, i * 2, 59, 999999),
++            )
++
++    # When counting events by time we backfill missing data so that the result
++    # contains all of the possible spans in the given time period. `expected`
++    # is only those spans that actually have events in them. So here we assert
++    # about the length of the result and then assert that the result contains
++    # all of the expected spans and assert that the count is 0 for the others.
++
++    assert len(counts) == 600
++    assert len(expected) == 100
++
++    for i, count in enumerate(counts):
++        assert isinstance(count, EventCount)
++        if i in expected:
++            assert count == expected[i]
++        else:
++            assert count.count == 0
++
++
++async def test_counting_by_time_per_second(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[0].add(seconds=600),
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.second,
++        time_interval=1.0,
++    )
++
++    expected = {}
++    for date in known_dates:
++        for i in range(20):
++            start_time = datetime_from_date(date, hour=i, minute=i * 2, second=i * 2)
++            index = int(
++                (start_time - datetime_from_date(known_dates[0])).total_seconds()
++            )
++            expected[index] = EventCount(
++                value=str(index),
++                label=start_time.isoformat(),
++                count=1,
++                start_time=start_time,
++                end_time=datetime_from_date(date, i, i * 2, i * 2, 999999),
++            )
++
++    # When counting events by time we backfill missing data so that the result
++    # contains all of the possible spans in the given time period. `expected`
++    # is only those spans that actually have events in them. So here we assert
++    # about the length of the result and then assert that the result contains
++    # all of the expected spans and assert that the count is 0 for the others.
++
++    assert len(counts) == 600
++    assert len(expected) == 100
++
++    for i, count in enumerate(counts):
++        assert isinstance(count, EventCount)
++        if i in expected:
++            assert count == expected[i]
++        else:
++            assert count.count == 0
++
++
++async def test_counting_by_time_large_interval(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    since = datetime_from_date(known_dates[0], 20, 18, 23)
++    until = datetime_from_date(known_dates[1], 4, 18, 23)
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=since,
++                until=until,
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.second,
++        time_interval=1800.0,
++    )
++
++    expected = {
++        8: EventCount(
++            value="8",
++            label=datetime_from_date(known_dates[1], 0, 0, 0).isoformat(),
++            count=1,
++            start_time=datetime_from_date(known_dates[1], 0, 0, 0),
++            end_time=datetime_from_date(known_dates[1], 0, 29, 59, 999999),
++        ),
++        10: EventCount(
++            value="10",
++            label=datetime_from_date(known_dates[1], 1, 0, 0).isoformat(),
++            count=1,
++            start_time=datetime_from_date(known_dates[1], 1, 0, 0),
++            end_time=datetime_from_date(known_dates[1], 1, 29, 59, 999999),
++        ),
++        12: EventCount(
++            value="12",
++            label=datetime_from_date(known_dates[1], 2, 0, 0).isoformat(),
++            count=1,
++            start_time=datetime_from_date(known_dates[1], 2, 0, 0),
++            end_time=datetime_from_date(known_dates[1], 2, 29, 59, 999999),
++        ),
++        14: EventCount(
++            value="14",
++            label=datetime_from_date(known_dates[1], 3, 0, 0).isoformat(),
++            count=1,
++            start_time=datetime_from_date(known_dates[1], 3, 0, 0),
++            end_time=datetime_from_date(known_dates[1], 3, 29, 59, 999999),
++        ),
++        16: EventCount(
++            value="16",
++            label=datetime_from_date(known_dates[1], 4, 0, 0).isoformat(),
++            count=1,
++            start_time=datetime_from_date(known_dates[1], 4, 0, 0),
++            end_time=datetime_from_date(known_dates[1], 4, 29, 59, 999999),
++        ),
++    }
++
++    # When counting events by time we backfill missing data so that the result
++    # contains all of the possible spans in the given time period. `expected`
++    # is only those spans that actually have events in them. So here we assert
++    # about the length of the result and then assert that the result contains
++    # all of the expected spans and assert that the count is 0 for the others.
++
++    assert len(counts) == (until - since).total_hours() * 2 + 1
++    assert len(expected) == 5
++
++    for i, count in enumerate(counts):
++        assert isinstance(count, EventCount)
++        if i in expected:
++            assert count == expected[i]
++        else:
++            assert count.count == 0
++
++
++async def test_buckets_are_stable(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++):
++    since = datetime_from_date(known_dates[0], 0, 18, 23)
++    until = datetime_from_date(known_dates[0], 0, 48, 23)
++
++    first = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=since,
++                until=until,
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.second,
++        time_interval=2.5,
++    )
++
++    second = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=since + timedelta(seconds=9),
++                until=until + timedelta(seconds=9),
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.second,
++        time_interval=2.5,
++    )
++
++    # The `value` of each `EventCount` is the index of that bucket within the
++    # given API response. So while the start/end times of the counts in `first`
++    # and `second` should align, the `value` will be different.
++    #
++    # Also since `second` starts 9 seconds later than `first`, the first 3
++    # buckets in `first` will not appear in `second` and the last 3 buckets in
++    # `second` will not appear in `first`.
++
++    assert len(first) == len(second)
++
++    for i, count in enumerate(first[3:]):
++        assert int(second[i].value) == int(count.value) - 3
++        assert second[i].count == count.count
++        assert second[i].label == count.label
++        assert second[i].start_time == count.start_time
++        assert second[i].end_time == count.end_time
++
++
++async def test_counting_by_time_per_day(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1],
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.day,
++        time_interval=1.0,
++    )
++
++    assert counts == [
++        EventCount(
++            value="0",
++            label=f"{known_dates[0].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[0]),
++            end_time=datetime_from_date(known_dates[0], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="1",
++            label=f"{known_dates[1].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[1]),
++            end_time=datetime_from_date(known_dates[1], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="2",
++            label=f"{known_dates[2].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[2]),
++            end_time=datetime_from_date(known_dates[2], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="3",
++            label=f"{known_dates[3].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[3]),
++            end_time=datetime_from_date(known_dates[3], 23, 59, 59, 999999),
++        ),
++        EventCount(
++            value="4",
++            label=f"{known_dates[4].isoformat()}T00:00:00+00:00",
++            count=20,
++            start_time=datetime_from_date(known_dates[4]),
++            end_time=datetime_from_date(known_dates[4], 23, 59, 59, 999999),
++        ),
++    ]
++
++
++async def test_counting_by_time_per_two_days(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1],
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.day,
++        time_interval=2.0,
++    )
++
++    # Since we compute the count buckets based on a fixed anchor point this
++    # this test will either have the first bucket with 40 events and the last
++    # bucket with 20 or the last the first bucket will have 20 events and the
++    # last 40 depending on which day it runs.
++
++    two_days = pendulum.Duration(days=2)
++    first_span_index = math.floor(
++        (datetime_from_date(known_dates[0]) - PIVOT_DATETIME) / two_days
++    )
++    starting_span = PIVOT_DATETIME + two_days * first_span_index
++
++    if known_dates[0] == starting_span.date():
++        expected = [
++            EventCount(
++                value="0",
++                label=datetime_from_date(known_dates[0]).isoformat(),
++                count=40,
++                start_time=datetime_from_date(known_dates[0]),
++                end_time=datetime_from_date(known_dates[1], 23, 59, 59, 999999),
++            ),
++            EventCount(
++                value="1",
++                label=datetime_from_date(known_dates[2]).isoformat(),
++                count=40,
++                start_time=datetime_from_date(known_dates[2]),
++                end_time=datetime_from_date(known_dates[3], 23, 59, 59, 999999),
++            ),
++            EventCount(
++                value="2",
++                label=datetime_from_date(known_dates[4]).isoformat(),
++                count=20,
++                start_time=datetime_from_date(known_dates[4]),
++                end_time=datetime_from_date(
++                    known_dates[4] + timedelta(days=1), 23, 59, 59, 999999
++                ),
++            ),
++        ]
++    else:
++        expected = [
++            EventCount(
++                value="0",
++                label=datetime_from_date(known_dates[0].subtract(days=1)).isoformat(),
++                count=20,
++                start_time=datetime_from_date(known_dates[0].subtract(days=1)),
++                end_time=datetime_from_date(known_dates[0], 23, 59, 59, 999999),
++            ),
++            EventCount(
++                value="1",
++                label=datetime_from_date(known_dates[1]).isoformat(),
++                count=40,
++                start_time=datetime_from_date(known_dates[1]),
++                end_time=datetime_from_date(known_dates[2], 23, 59, 59, 999999),
++            ),
++            EventCount(
++                value="2",
++                label=datetime_from_date(known_dates[3]).isoformat(),
++                count=40,
++                start_time=datetime_from_date(known_dates[3]),
++                end_time=datetime_from_date(known_dates[4], 23, 59, 59, 999999),
++            ),
++        ]
++
++    assert counts == expected
++
++
++async def test_counting_by_time_per_week(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1],
++            ),
++        ),
++        countable=Countable.time,
++        time_unit=TimeUnit.week,
++        time_interval=1.0,
++    )
++
++    # Since we compute weeks based on the week starting on Monday it's possible
++    # for this test to either encounter a single week or two weeks depending
++    # on what day of the week it's run.
++    counts_by_week = {}
++    for date in known_dates:
++        start_day = (
++            DateTime(year=date.year, month=date.month, day=date.day)
++            .in_timezone("UTC")
++            .start_of("week")
++        )
++        if start_day not in counts_by_week:
++            counts_by_week[start_day] = 0
++        counts_by_week[start_day] += 20  # We generate 20 events per known date
++
++    expected = []
++    for i, (date, count) in enumerate(counts_by_week.items()):
++        expected.append(
++            EventCount(
++                value=str(i),
++                label=date.isoformat(),
++                count=count,
++                start_time=date,
++                end_time=date.end_of("week"),
++            )
++        )
++
++    assert counts == expected
++
++
++async def test_counting_by_event(
++    events_query_session: AsyncSession,
++    known_times: Tuple[DateTime, DateTime],
++    known_dates: List[Date],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1],
++            ),
++        ),
++        countable=Countable.event,
++        time_unit=TimeUnit.day,
++        time_interval=1.0,
++    )
++
++    assert counts == [
++        EventCount(
++            value="things.happened",
++            label="things.happened",
++            count=45,
++            start_time=datetime_from_date(known_dates[0], hour=0, minute=0, second=0),
++            end_time=datetime_from_date(known_dates[4], hour=16, minute=32, second=32),
++        ),
++        EventCount(
++            value="things.didn't",
++            label="things.didn't",
++            count=30,
++            start_time=datetime_from_date(known_dates[0], hour=3, minute=6, second=6),
++            end_time=datetime_from_date(known_dates[4], hour=18, minute=36, second=36),
++        ),
++        EventCount(
++            value="other.stuff",
++            label="other.stuff",
++            count=15,
++            start_time=datetime_from_date(known_dates[0], hour=5, minute=10, second=10),
++            end_time=datetime_from_date(known_dates[4], hour=19, minute=38, second=38),
++        ),
++        EventCount(
++            value="nope.not.this",
++            label="nope.not.this",
++            count=10,
++            start_time=datetime_from_date(known_dates[0], hour=6, minute=12, second=12),
++            end_time=datetime_from_date(known_dates[4], hour=13, minute=26, second=26),
++        ),
++    ]
++
++
++async def test_counting_by_resource(
++    events_query_session: AsyncSession,
++    known_times: Tuple[DateTime, DateTime],
++    known_dates: List[Date],
++):
++    counts = await count_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=EventOccurredFilter(
++                since=known_times[0],
++                until=known_times[1],
++            ),
++        ),
++        countable=Countable.resource,
++        time_unit=TimeUnit.day,
++        time_interval=1.0,
++    )
++
++    assert counts == [
++        EventCount(
++            value="foo.1",
++            label="Foo To You",
++            count=35,
++            start_time=datetime_from_date(known_dates[0]),
++            end_time=datetime_from_date(known_dates[4], hour=18, minute=36, second=36),
++        ),
++        EventCount(
++            value="foo.2",
++            label="Foo To You Two",
++            count=35,
++            start_time=datetime_from_date(known_dates[0], hour=1, minute=2, second=2),
++            end_time=datetime_from_date(known_dates[4], hour=19, minute=38, second=38),
++        ),
++        EventCount(
++            value="foo.3",
++            label="foo.3",
++            count=30,
++            start_time=datetime_from_date(known_dates[0], hour=2, minute=4, second=4),
++            end_time=datetime_from_date(known_dates[4], hour=17, minute=34, second=34),
++        ),
++    ]
++
++
++async def test_counting_by_time_must_interval_be_larger_than_one_hundredth(
++    events_query_session: AsyncSession,
++    known_dates: Tuple[Date, ...],
++    known_times: Tuple[DateTime, DateTime],
++):
++    with pytest.raises(ValueError, match=r"0\.01"):
++        await count_events(
++            session=events_query_session,
++            filter=EventFilter(
++                occurred=EventOccurredFilter(
++                    since=known_times[0],
++                    until=known_times[1],
++                ),
++            ),
++            countable=Countable.time,
++            time_unit=TimeUnit.second,
++            time_interval=0.009,
++        )
++
++
++async def test_counting_by_time_must_result_in_reasonable_number_of_buckets(
++    events_query_session: AsyncSession,
++):
++    with pytest.raises(ValueError, match=r"would create 60480001 buckets"):
++        await count_events(
++            session=events_query_session,
++            filter=EventFilter(
++                occurred=EventOccurredFilter(
++                    since=pendulum.now("UTC").subtract(days=7),
++                    until=pendulum.now("UTC"),
++                ),
++            ),
++            countable=Countable.time,
++            time_unit=TimeUnit.second,
++            time_interval=0.01,
++        )
+diff --git a/tests/events/server/test_events_queries.py b/tests/events/server/test_events_queries.py
+new file mode 100644
+index 0000000000..1e162e77b1
+--- /dev/null
++++ b/tests/events/server/test_events_queries.py
+@@ -0,0 +1,1256 @@
++"""Tests for parity when querying events across our storage backends and streaming"""
++
++from base64 import b64encode
++from datetime import timedelta
++from typing import AsyncGenerator, Dict, List, Tuple, cast
++from uuid import uuid4
++
++import pytest
++from pendulum import Date, now
++from sqlalchemy.ext.asyncio import AsyncSession
++
++from prefect.server.events.filters import (
++    EventAnyResourceFilter,
++    EventFilter,
++    EventIDFilter,
++    EventNameFilter,
++    EventOccurredFilter,
++    EventOrder,
++    EventRelatedFilter,
++    EventResourceFilter,
++)
++from prefect.server.events.schemas.events import ReceivedEvent
++from prefect.server.events.storage import from_page_token
++from prefect.server.events.storage.database import (
++    query_events,
++    query_next_page,
++    write_events,
++)
++
++
++@pytest.fixture(scope="module")
++def known_dates() -> Tuple[Date, ...]:
++    dates = [Date.today().subtract(days=days_ago) for days_ago in [5, 4, 3, 2, 1]]
++    return cast(Tuple[Date, ...], tuple(dates))
++
++
++@pytest.fixture
++def all_events(
++    known_dates: Tuple[Date, ...],
++) -> List[ReceivedEvent]:
++    event_options = [
++        "things.happened",
++        "things.happened",
++        "things.happened",
++        "things.didn't",
++        "things.didn't",
++        "other.stuff",
++        "nope.not.this",
++    ]
++
++    resource_options: List[Dict[str, str]] = [
++        {
++            "prefect.resource.id": "foo.1",
++            "hello": "world",
++            "a-label": "a-good-value",
++        },
++        {
++            "prefect.resource.id": "foo.1",
++            "hello": "world",
++            "a-label": "some other value",
++        },
++        {
++            "prefect.resource.id": "other.3",
++            "goodbye": "moon",
++            "hello": "mars",
++            "a-label": "a-good-string",
++        },
++    ]
++    related_options: List[List[Dict[str, str]]] = [
++        [],
++        [
++            {
++                "prefect.resource.id": "foo.1",
++                "prefect.resource.role": "thing",
++                "a-label": "a-good-related-value",
++            },
++            {
++                "prefect.resource.id": "foo.2",
++                "prefect.resource.role": "another-thing",
++            },
++            {
++                "prefect.resource.id": "foo.3",
++                "prefect.resource.role": "the-other-thing",
++            },
++            {
++                "prefect.resource.id": "related.4",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++            },
++        ],
++        [
++            {
++                "prefect.resource.id": "foo.1",
++                "prefect.resource.role": "thing",
++                "hello": "world",
++                "another": "label",
++                "a-label": "a-good-other-value",
++            },
++            {
++                "prefect.resource.id": "foo.2",
++                "prefect.resource.role": "another-thing",
++                "hello": "world",
++            },
++            {
++                "prefect.resource.id": "foo.3",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++                "hello": "mars",
++            },
++            {
++                "prefect.resource.id": "related.4",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++                "hello": "mars",
++            },
++            {
++                "prefect.resource.id": "related.5",
++                "prefect.resource.role": "that-other-thing",
++                "goodbye": "moon",
++            },
++        ],
++        [
++            {
++                "prefect.resource.id": "foo.1",
++                "prefect.resource.role": "actor",
++            },
++            {
++                "prefect.resource.id": "foo.2",
++                "prefect.resource.role": "not-the-actor",
++            },
++        ],
++    ]
++
++    events: List[ReceivedEvent] = []
++    for date in known_dates:
++        midnight = now("UTC").set(date.year, date.month, date.day).start_of("day")
++        for i in range(22):
++            occurred = midnight.add(seconds=i * 10)
++            related = list(related_options[i % len(related_options)])
++
++            events.append(
++                ReceivedEvent(
++                    occurred=occurred,
++                    event=event_options[i % len(event_options)],
++                    resource=resource_options[i % len(resource_options)],
++                    related=related,
++                    payload={"hello": "world"},
++                    id=uuid4(),
++                    received=occurred + timedelta(seconds=0.5),
++                )
++            )
++    return events
++
++
++@pytest.fixture
++async def events_query_session(
++    all_events: List[ReceivedEvent],
++    session: AsyncSession,
++) -> AsyncGenerator[AsyncSession, None]:
++    """
++    Opens a session, seeds the database with the
++    test events, and returns it for use in tests
++    """
++    await write_events(session, all_events)
++    yield session
++
++
++@pytest.fixture
++def full_occurred_range(all_events: List[ReceivedEvent]) -> EventOccurredFilter:
++    return EventOccurredFilter(
++        since=min(e.occurred for e in all_events),
++        until=max(e.occurred for e in all_events),
++    )
++
++
++def assert_events_ordered_descending(events: List[ReceivedEvent]):
++    if len(events) < 2:
++        return
++
++    last = events[0]
++    for i, event in enumerate(events[1:]):
++        assert event.occurred <= last.occurred, f"Event at index {i+1} is out of order"
++        last = event
++
++
++def assert_events_ordered_ascending(events: List[ReceivedEvent]):
++    if len(events) < 2:
++        return
++
++    last = events[0]
++    for i, event in enumerate(events[1:]):
++        assert event.occurred >= last.occurred, f"Event at index {i+1} is out of order"
++        last = event
++
++
++async def test_returns_empty_results(
++    session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++):
++    filter = EventFilter(
++        occurred=full_occurred_range,
++    )
++
++    events, count, page_token = await query_events(
++        session=session,
++        filter=filter,
++        page_size=5,
++    )
++
++    assert len(events) == 0
++    assert count == 0
++    assert page_token is None
++    assert_events_ordered_descending(events)
++
++
++async def test_returns_pages(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++    all_events: List[ReceivedEvent],
++):
++    # Usually, we'd prefer to use exact counts, but this test is very sensitive to the
++    # structure of the test data, so we'll make the page_size variable in order to
++    # adapt as we change the test suite
++    expected = len(
++        [event for event in all_events if (event.event == "things.happened")]
++    )
++    # Let's make sure we're getting a decent test here by requiring a certain size of
++    # results, etc; if these assertions fail, try changing the test setup data to meet
++    # these criteria instead
++    assert expected >= 10
++    page_size = expected // 3
++    assert page_size > 2
++    remainder = expected % page_size
++    assert remainder > 0
++
++    filter = EventFilter(
++        occurred=full_occurred_range,
++        event=EventNameFilter(name=["things.happened"]),
++    )
++
++    events, count, page_token = await query_events(
++        session=events_query_session,
++        filter=filter,
++        page_size=page_size,
++    )
++
++    assert len(events) == page_size
++    assert count == expected
++    assert page_token is not None
++    assert_events_ordered_descending(events)
++
++    events, count, page_token = await query_next_page(
++        session=events_query_session,
++        page_token=page_token,
++    )
++
++    assert len(events) == page_size
++    assert count == expected
++    assert page_token is not None
++    assert_events_ordered_descending(events)
++
++    events, count, page_token = await query_next_page(
++        session=events_query_session,
++        page_token=page_token,
++    )
++
++    assert len(events) == page_size
++    assert count == expected
++    assert page_token is not None
++    assert_events_ordered_descending(events)
++
++    events, count, page_token = await query_next_page(
++        session=events_query_session,
++        page_token=page_token,
++    )
++
++    assert len(events) == remainder
++    assert count == expected
++    assert page_token is None
++    assert_events_ordered_descending(events)
++
++
++async def test_can_request_in_ascending_order(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(occurred=full_occurred_range, order=EventOrder.ASC),
++    )
++
++    assert events
++    assert len(events) > 2
++    assert len({e.occurred for e in events}) > 1
++    assert_events_ordered_ascending(events)
++
++
++async def test_can_request_in_descending_order(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            order=EventOrder.DESC,
++        ),
++    )
++
++    assert events
++    assert len(events) > 2
++    assert len({e.occurred for e in events}) > 1
++    assert_events_ordered_descending(events)
++
++
++async def test_descending_is_the_default(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    filter = EventFilter(
++        occurred=full_occurred_range,
++    )
++    assert filter.order == EventOrder.DESC
++
++    events, _, _ = await query_events(session=events_query_session, filter=filter)
++
++    assert events
++    assert len(events) > 2
++    assert len({e.occurred for e in events}) > 1
++    assert_events_ordered_descending(events)
++
++
++async def test_querying_by_event_prefixes(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            event=EventNameFilter(prefix=["things."]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.event.startswith("things.")
++
++
++async def test_querying_by_event_names(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            event=EventNameFilter(name=["things.happened", "other.stuff"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.event in {"things.happened", "other.stuff"}
++
++
++async def test_querying_by_event_names_but_excluding_others(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    """Regression test for https://github.com/PrefectHQ/nebula/issues/6634, where
++    combining an event name search with an exclude_name search results in no
++    results."""
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            event=EventNameFilter(
++                name=["things.happened", "other.stuff"],
++                exclude_name=["prefect.log.write"],
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.event in {"things.happened", "other.stuff"}
++
++
++async def test_excluding_event_prefixes(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            event=EventNameFilter(exclude_prefix=["things."]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert not event.event.startswith("things.")
++
++
++async def test_excluding_event_names(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            event=EventNameFilter(exclude_name=["things.happened", "other.stuff"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.event not in {"things.happened", "other.stuff"}
++
++
++async def test_querying_by_any_resource_id(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(id=["foo.1", "foo.2"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id in {"foo.1", "foo.2"} or (
++            any(related.id in {"foo.1", "foo.2"} for related in event.related)
++        )
++
++
++async def test_distinct_querying_by_any_resource_id(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(
++                distinct=True, id=None, id_prefix=None, labels=None
++            ),
++            any_resource=EventAnyResourceFilter(id=["foo.1", "foo.2"]),
++        ),
++    )
++    assert events
++    received_resources = [event.resource.id for event in events]
++    assert len(received_resources) == len(set(received_resources))
++
++
++async def test_querying_by_any_resource_id_prefix(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(id_prefix=["foo"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id.startswith("foo") or (
++            any(related.id.startswith("foo") for related in event.related)
++        )
++
++
++async def test_querying_by_any_resource_id_prefix_can_match_full_ids_too(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(id_prefix=["foo.1"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id == "foo.1" or (
++            any(related.id == "foo.1" for related in event.related)
++        )
++
++
++async def test_querying_by_any_resource_id_label_is_equivalent_to_id(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(
++                labels={"prefect.resource.id": "foo.1"}
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id == "foo.1" or (
++            any(related.id == "foo.1" for related in event.related)
++        )
++
++
++async def test_querying_by_any_resource_id_labels_with_other_labels_positive(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(
++                labels={"prefect.resource.id": "foo.1", "hello": "world"}
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id == "foo.1" or (
++            any(related.id == "foo.1" for related in event.related)
++        )
++
++
++async def test_querying_by_any_resource_id_labels_with_other_labels_negative(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(
++                labels={"prefect.resource.id": "foo.1", "not": "a thing"}
++            ),
++        ),
++    )
++
++    assert not events
++
++
++async def test_querying_by_any_resource_wildcards(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(labels={"a-label": ["a-good*"]}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert (event.resource.get("a-label") or "").startswith("a-good") or (
++            any(
++                (related.get("a-label") or "").startswith("a-good")
++                for related in event.related
++            )
++        )
++
++
++async def test_querying_by_any_resource_wildcards_even_for_ids(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(
++                labels={"prefect.resource.id": ["foo.*"]}
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id.startswith("foo.") or (
++            any(related.id.startswith("foo.") for related in event.related)
++        )
++
++
++async def test_querying_by_any_related_labels_with_resource_ids_as_only_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(
++                labels={"prefect.resource.id": "foo.1"}
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id == "foo.1" or (
++            event.related and any(related.id == "foo.1" for related in event.related)
++        )
++
++
++async def test_querying_by_any_related_labels_with_resource_roles_as_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(
++                labels={
++                    "prefect.resource.role": "thing",
++                    "hello": "world",
++                }
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(
++            related.role == "thing" and related["hello"] == "world"
++            for related in event.related
++        )
++
++
++async def test_querying_by_any_resource_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(labels={"hello": "world"}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.get("hello") == "world" or (
++            any(related.get("hello") == "world" for related in event.related)
++        )
++
++
++async def test_querying_by_any_multiple_resource_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            any_resource=EventAnyResourceFilter(labels={"hello": ["world", "mars"]}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++
++    matched_on_world = 0
++    matched_on_mars = 0
++
++    for event in events:
++        if event.resource.get("hello") == "world" or (
++            any(related.get("hello") == "world" for related in event.related)
++        ):
++            matched_on_world += 1
++        elif event.resource.get("hello") == "mars" or (
++            any(related.get("hello") == "mars" for related in event.related)
++        ):
++            matched_on_mars += 1
++        else:
++            assert False, f"Event {event} matched on neither world nor mars"
++
++    # There should be some events that matched both of these, or else the test setup
++    # may not be covering all of the options
++    assert matched_on_world > 0
++    assert matched_on_mars > 0
++
++
++async def test_querying_by_resource_id(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(id=["foo.1", "foo.2"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id in {"foo.1", "foo.2"}
++
++
++async def test_querying_by_resource_id_is_not_interfered_by_noop_related_filter(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    """Regression test for an issue where the related filter was imposing an extra
++    filter on normal resource ID queries where the events would only match if they
++    had at least one related resource."""
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(id_prefix=["foo.1"]),
++            # An empty related filter should have no bearing on the query
++            related=EventRelatedFilter(),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    had_no_related = 0
++    for event in events:
++        assert event.resource.id == "foo.1"
++        if not event.related:
++            had_no_related += 1
++
++    # At least one of the events should have no related resources, which is the criteria
++    # we missed in the original implementation; but make sure we don't _only_ match
++    # events with no related resources.  We expect a mix here
++    assert 0 < had_no_related < len(events)
++
++
++async def test_querying_by_resource_id_prefix(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(id_prefix=["foo"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id.startswith("foo")
++
++
++async def test_querying_by_resource_id_prefix_can_match_full_ids_too(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(id_prefix=["foo.1"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id == "foo.1"
++
++
++async def test_querying_by_resource_id_label_is_equivalent_to_id(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(labels={"prefect.resource.id": "foo.1"}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id == "foo.1"
++
++
++async def test_querying_by_resource_id_labels_with_other_labels_positive(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(
++                labels={"prefect.resource.id": "foo.1", "hello": "world"}
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id == "foo.1"
++
++
++async def test_querying_by_resource_id_labels_with_other_labels_negative(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(
++                labels={"prefect.resource.id": "foo.1", "not": "a thing"}
++            ),
++        ),
++    )
++
++    assert not events
++
++
++async def test_querying_by_resource_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(labels={"hello": "world"}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource["hello"] == "world"
++
++
++async def test_querying_by_resource_wildcards(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(labels={"a-label": ["a-good*"]}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert (event.resource.get("a-label") or "").startswith("a-good")
++
++
++async def test_querying_by_resource_wildcards_even_for_ids(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(labels={"prefect.resource.id": ["foo.*"]}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource.id.startswith("foo.")
++
++
++async def test_querying_by_related_nothing(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            resource=EventResourceFilter(labels={"hello": "world"}),
++            related=EventRelatedFilter(),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.resource["hello"] == "world"
++        # we aren't filtering on related, so we should get all events that match the
++        # resource filter
++
++
++async def test_querying_by_related_ids(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(id=["foo.1", "foo.2"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(related.id in {"foo.1", "foo.2"} for related in event.related)
++
++
++async def test_querying_by_related_roles(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(role=["thing", "another-thing"]),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(
++            related.role in {"thing", "another-thing"} for related in event.related
++        )
++
++
++async def test_querying_by_resource_in_roles(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(
++                resources_in_roles=[
++                    ["foo.1", "thing"],
++                    ["foo.2", "another-thing"],
++                ]
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(
++            related.id == "foo.1" and related.role == "thing"
++            for related in event.related
++        )
++        assert any(
++            related.id == "foo.2" and related.role == "another-thing"
++            for related in event.related
++        )
++
++
++async def test_querying_by_related_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(labels={"hello": "world", "another": "label"}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(
++            related["hello"] == "world" and related["another"] == "label"
++            for related in event.related
++        )
++
++
++async def test_querying_by_related_labels_with_resource_ids_as_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(
++                labels={
++                    "prefect.resource.id": "foo.1",
++                    "hello": "world",
++                }
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(
++            related.id == "foo.1" and related["hello"] == "world"
++            for related in event.related
++        )
++
++
++async def test_querying_by_related_labels_with_resource_ids_as_only_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(labels={"prefect.resource.id": "foo.1"}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(related.id == "foo.1" for related in event.related)
++
++
++async def test_querying_by_related_labels_with_resource_roles_as_labels(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(
++                labels={
++                    "prefect.resource.role": "thing",
++                    "hello": "world",
++                }
++            ),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert event.related
++        assert any(
++            related.role == "thing" and related["hello"] == "world"
++            for related in event.related
++        )
++
++
++async def test_querying_by_related_resource_wildcards(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(labels={"a-label": ["a-good*"]}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert any(
++            (related.get("a-label") or "").startswith("a-good")
++            for related in event.related
++        )
++
++
++async def test_querying_by_related_resource_wildcards_even_for_ids(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            related=EventRelatedFilter(labels={"prefect.resource.id": ["foo.*"]}),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++    for event in events:
++        assert any(related.id.startswith("foo.") for related in event.related)
++
++
++async def test_querying_by_ids(
++    events_query_session: AsyncSession,
++    all_events: List[ReceivedEvent],
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    expected_ids = set([event.id for event in all_events][:3])
++
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            id=EventIDFilter(id=list(expected_ids)),
++        ),
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++
++    ids_seen = set([event.id for event in events])
++    assert ids_seen == expected_ids
++
++
++async def test_querying_by_ids_with_lower_limit(
++    events_query_session: AsyncSession,
++    all_events: List[ReceivedEvent],
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    expected_ids = set([event.id for event in all_events][:3])
++
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            id=EventIDFilter(id=list(expected_ids)),
++        ),
++        page_size=2,
++    )
++
++    assert events
++    assert_events_ordered_descending(events)
++
++    ids_seen = set([event.id for event in events])
++    assert len(ids_seen) == 2
++    assert ids_seen.issubset(expected_ids)
++
++
++async def test_querying_by_nonexistant_ids(
++    events_query_session: AsyncSession,
++    all_events: List[ReceivedEvent],
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    events, _, _ = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++            id=EventIDFilter(id=[uuid4() for _ in range(10)]),
++        ),
++    )
++
++    assert not events
++
++
++async def test_event_dates_always_have_timezones(
++    events_query_session: AsyncSession,
++    full_occurred_range: EventOccurredFilter,
++) -> None:
++    """Regression test for https://github.com/PrefectHQ/nebula/issues/2282, where
++    date fields were returned from the API without timezone specifiers"""
++
++    page_one, _, next_page = await query_events(
++        session=events_query_session,
++        filter=EventFilter(
++            occurred=full_occurred_range,
++        ),
++        page_size=5,
++    )
++
++    assert page_one
++    assert_events_ordered_descending(page_one)
++
++    assert next_page
++
++    page_two, _, next_page = await query_next_page(
++        session=events_query_session, page_token=next_page
++    )
++
++    assert page_two
++    assert_events_ordered_descending(page_two)
++
++    for event in page_one + page_two:
++        assert event.occurred.tzinfo is not None
++        assert event.received.tzinfo is not None
++
++        event_dict = event.dict(json_compatible=True)
++
++        occurred = event_dict["occurred"]
++        assert isinstance(occurred, str)
++        assert occurred.endswith("+00:00")
++
++        received = event_dict["received"]
++        assert isinstance(received, str)
++        assert received.endswith("+00:00")
++
++
++@pytest.mark.parametrize(
++    "busted_token",
++    [
++        # not base64
++        "foo",
++        # not JSON
++        b64encode(b"foo").decode("utf-8"),
++        # not UTF-8
++        "\x89",
++    ],
++)
++async def test_corrupted_page_tokens_are_treated_as_noops(busted_token: str):
++    with pytest.raises(ValueError):
++        from_page_token(busted_token)
+diff --git a/tests/server/events/services/test_event_persister.py b/tests/server/events/services/test_event_persister.py
+index 613989aa24..6791c465b1 100644
+--- a/tests/server/events/services/test_event_persister.py
++++ b/tests/server/events/services/test_event_persister.py
+@@ -10,8 +10,8 @@ import sqlalchemy as sa
+ from pendulum.datetime import DateTime
+ from pydantic import ValidationError
+ from sqlalchemy.ext.asyncio import AsyncSession
+-from tests._internal.pydantic.test_dynamic_imports import HAS_PYDANTIC_V1
+ 
++from prefect._internal.pydantic import HAS_PYDANTIC_V2
+ from prefect.server.database.dependencies import db_injector
+ from prefect.server.database.interface import PrefectDBInterface
+ from prefect.server.database.orm_models import ORMEventResource
+@@ -19,10 +19,10 @@ from prefect.server.events.schemas.events import ReceivedEvent
+ from prefect.server.events.services import event_persister
+ from prefect.server.utilities.messaging import CapturedMessage, Message, MessageHandler
+ 
+-if HAS_PYDANTIC_V1:
+-    from pydantic import ValidationError
+-else:
++if HAS_PYDANTIC_V2:
+     from pydantic.v1 import ValidationError
++else:
++    from pydantic import ValidationError
+ 
+ 
+ @db_injector
+diff --git a/tests/server/utilities/test_database.py b/tests/server/utilities/test_database.py
+index ae469b9d05..098a5425b5 100644
+--- a/tests/server/utilities/test_database.py
++++ b/tests/server/utilities/test_database.py
+@@ -31,6 +31,7 @@ from prefect.server.utilities.database import (
+     date_diff,
+     interval_add,
+     json_contains,
++    json_extract,
+     json_has_all_keys,
+     json_has_any_key,
+ )
+@@ -404,12 +405,17 @@ class TestJSON:
+         dialect = sa.dialects.postgresql.dialect()
+ 
+         extract_statement = SQLJSONModel.data["x"].compile(dialect=dialect)
++        alt_extract_statement = json_extract(SQLJSONModel.data, "x").compile(
++            dialect=dialect
++        )
+         contains_stmt = json_contains(SQLJSONModel.data, ["x"]).compile(dialect=dialect)
+         any_stmt = json_has_any_key(SQLJSONModel.data, ["x"]).compile(dialect=dialect)
+         all_stmt = json_has_all_keys(SQLJSONModel.data, ["x"]).compile(dialect=dialect)
+ 
+         assert "->" in str(extract_statement)
+         assert "JSON_EXTRACT" not in str(extract_statement)
++        assert "->" in str(alt_extract_statement)
++        assert "JSON_EXTRACT" not in str(alt_extract_statement)
+         assert "@>" in str(contains_stmt)
+         assert "json_each" not in str(contains_stmt)
+         assert "?|" in str(any_stmt)
+@@ -421,12 +427,17 @@ class TestJSON:
+         dialect = sa.dialects.sqlite.dialect()
+ 
+         extract_statement = SQLJSONModel.data["x"].compile(dialect=dialect)
++        alt_extract_statement = json_extract(SQLJSONModel.data, "x").compile(
++            dialect=dialect
++        )
+         contains_stmt = json_contains(SQLJSONModel.data, ["x"]).compile(dialect=dialect)
+         any_stmt = json_has_any_key(SQLJSONModel.data, ["x"]).compile(dialect=dialect)
+         all_stmt = json_has_all_keys(SQLJSONModel.data, ["x"]).compile(dialect=dialect)
+ 
+         assert "->" not in str(extract_statement)
+         assert "JSON_EXTRACT" in str(extract_statement)
++        assert "->" not in str(alt_extract_statement)
++        assert "JSON_EXTRACT" in str(alt_extract_statement)
+         assert "@>" not in str(contains_stmt)
+         assert "json_each" in str(contains_stmt)
+         assert "?|" not in str(any_stmt)
+@@ -434,6 +445,21 @@ class TestJSON:
+         assert "?&" not in str(all_stmt)
+         assert "json_each" in str(all_stmt)
+ 
++    async def test_sqlite_json_extract_wrap_quotes(self):
++        dialect = sa.dialects.sqlite.dialect()
++        extract_statement = json_extract(
++            SQLJSONModel.data, "x.y.z", wrap_quotes=True
++        ).compile(dialect=dialect)
++        assert '$."x.y.z"' in str(extract_statement)
++
++    async def test_postgres_json_extract_no_wrap_quotes(self):
++        dialect = sa.dialects.postgresql.dialect()
++        extract_statement = json_extract(
++            SQLJSONModel.data, "x.y.z", wrap_quotes=True
++        ).compile(dialect=dialect)
++        assert "x.y.z" in str(extract_statement)
++        assert '"x.y.z"' not in str(extract_statement)
++
+     @pytest.mark.parametrize("extrema", [-math.inf, math.nan, +math.inf])
+     async def test_json_floating_point_extrema(
+         self, session: AsyncSession, extrema: float

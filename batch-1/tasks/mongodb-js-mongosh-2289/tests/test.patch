@@ -1,0 +1,320 @@
+diff --git a/packages/build/src/npm-packages/bump.spec.ts b/packages/build/src/npm-packages/bump.spec.ts
+new file mode 100644
+index 00000000..e8a7ee05
+--- /dev/null
++++ b/packages/build/src/npm-packages/bump.spec.ts
+@@ -0,0 +1,68 @@
++import { expect } from 'chai';
++import type { SinonStub } from 'sinon';
++import sinon from 'sinon';
++import {
++  bumpMongoshReleasePackages,
++  updateShellApiMongoshVersion,
++} from './bump';
++import { promises as fs } from 'fs';
++import path from 'path';
++import { PROJECT_ROOT } from './constants';
++
++describe('npm-packages bump', function () {
++  let fsReadFile: SinonStub;
++  let fsWriteFile: SinonStub;
++
++  beforeEach(function () {
++    fsReadFile = sinon.stub(fs, 'readFile');
++
++    fsWriteFile = sinon.stub(fs, 'writeFile');
++    fsWriteFile.resolves();
++  });
++
++  afterEach(function () {
++    sinon.restore();
++  });
++
++  describe('bumpMongoshReleasePackages', function () {
++    it('throws if MONGOSH_RELEASE_VERSION is not set', async function () {
++      process.env.MONGOSH_RELEASE_VERSION = '';
++
++      try {
++        await bumpMongoshReleasePackages();
++        expect.fail('did not error');
++      } catch (error) {
++        expect(error).instanceOf(Error);
++        expect((error as Error).message).equals(
++          'MONGOSH_RELEASE_VERSION version not specified during mongosh bump'
++        );
++      }
++    });
++  });
++
++  describe('updateShellApiMongoshVersion', function () {
++    it('updates the file to the set version', async function () {
++      fsReadFile.resolves(`
++    /** Current mongosh cli-repl version. */
++    export const MONGOSH_VERSION = '2.3.8';`);
++
++      const newVersion = '3.0.0';
++      await updateShellApiMongoshVersion(newVersion);
++
++      expect(fsWriteFile).calledWith(
++        path.join(
++          __dirname,
++          PROJECT_ROOT,
++          'packages',
++          'shell-api',
++          'src',
++          'mongosh-version.ts'
++        ),
++        `
++    /** Current mongosh cli-repl version. */
++    export const MONGOSH_VERSION = '${newVersion}';`,
++        'utf-8'
++      );
++    });
++  });
++});
+diff --git a/packages/build/src/npm-packages/publish.spec.ts b/packages/build/src/npm-packages/publish.spec.ts
+index b1440f90..821b8fe8 100644
+--- a/packages/build/src/npm-packages/publish.spec.ts
++++ b/packages/build/src/npm-packages/publish.spec.ts
+@@ -8,6 +8,16 @@ describe('npm-packages publishNpmPackages', function () {
+   let listNpmPackages: SinonStub;
+   let markBumpedFilesAsAssumeUnchanged: SinonStub;
+   let spawnSync: SinonStub;
++  const lernaBin = path.resolve(
++    __dirname,
++    '..',
++    '..',
++    '..',
++    '..',
++    'node_modules',
++    '.bin',
++    'lerna'
++  );
+ 
+   beforeEach(function () {
+     listNpmPackages = sinon.stub();
+@@ -15,62 +25,71 @@ describe('npm-packages publishNpmPackages', function () {
+     spawnSync = sinon.stub();
+   });
+ 
+-  it('fails if packages have different versions', function () {
+-    listNpmPackages.returns([
+-      { name: 'packageA', version: '0.0.1' },
+-      { name: 'packageB', version: '0.0.2' },
+-    ]);
+-    try {
++  it('throws if mongosh is not existent when publishing all', function () {
++    const packages = [{ name: 'packageA', version: '0.7.0' }];
++    listNpmPackages.returns(packages);
++
++    expect(() =>
+       publishNpmPackages(
+-        false,
++        { isDryRun: false, useAuxiliaryPackagesOnly: false },
+         listNpmPackages,
+         markBumpedFilesAsAssumeUnchanged,
+         spawnSync
+-      );
+-    } catch (e: any) {
+-      expect(markBumpedFilesAsAssumeUnchanged).to.not.have.been.called;
+-      expect(spawnSync).to.not.have.been.called;
+-      return;
+-    }
+-    expect.fail('Expected error');
++      )
++    ).throws('mongosh package not found');
++  });
++
++  it('takes mongosh version and pushes tags', function () {
++    const packages = [
++      { name: 'packageA', version: '0.7.0' },
++      { name: 'mongosh', version: '1.2.0' },
++    ];
++    listNpmPackages.returns(packages);
++
++    publishNpmPackages(
++      { isDryRun: false, useAuxiliaryPackagesOnly: false },
++      listNpmPackages,
++      markBumpedFilesAsAssumeUnchanged,
++      spawnSync
++    );
++
++    expect(spawnSync).calledWith('git', ['tag', '-a', '1.2.0', '-m', '1.2.0']);
++    expect(spawnSync).calledWith('git', ['push', '--follow-tags']);
+   });
+ 
+-  it('fails if packages have placeholder versions', function () {
+-    listNpmPackages.returns([
+-      { name: 'packageA', version: '0.0.0-dev.0' },
+-      { name: 'packageB', version: '0.0.0-dev.0' },
++  it('does not manually push tags with auxiliary packages', function () {
++    const packages = [
++      { name: 'packageA', version: '0.7.0' },
++      { name: 'mongosh', version: '1.2.0' },
++    ];
++    listNpmPackages.returns(packages);
++
++    publishNpmPackages(
++      { isDryRun: false, useAuxiliaryPackagesOnly: true },
++      listNpmPackages,
++      markBumpedFilesAsAssumeUnchanged,
++      spawnSync
++    );
++
++    expect(spawnSync).not.calledWith('git', [
++      'tag',
++      '-a',
++      '1.2.0',
++      '-m',
++      '1.2.0',
+     ]);
+-    try {
+-      publishNpmPackages(
+-        false,
+-        listNpmPackages,
+-        markBumpedFilesAsAssumeUnchanged,
+-        spawnSync
+-      );
+-    } catch (e: any) {
+-      expect(markBumpedFilesAsAssumeUnchanged).to.not.have.been.called;
+-      expect(spawnSync).to.not.have.been.called;
+-      return;
+-    }
+-    expect.fail('Expected error');
++    expect(spawnSync).not.calledWith('git', ['push', '--follow-tags']);
+   });
+ 
+   it('calls lerna to publish packages for a real version', function () {
+-    const lernaBin = path.resolve(
+-      __dirname,
+-      '..',
+-      '..',
+-      '..',
+-      '..',
+-      'node_modules',
+-      '.bin',
+-      'lerna'
+-    );
+-    const packages = [{ name: 'packageA', version: '0.7.0' }];
++    const packages = [
++      { name: 'packageA', version: '0.7.0' },
++      { name: 'mongosh', version: '1.2.0' },
++    ];
+     listNpmPackages.returns(packages);
+ 
+     publishNpmPackages(
+-      false,
++      { isDryRun: false, useAuxiliaryPackagesOnly: false },
+       listNpmPackages,
+       markBumpedFilesAsAssumeUnchanged,
+       spawnSync
+@@ -87,10 +106,7 @@ describe('npm-packages publishNpmPackages', function () {
+         'from-package',
+         '--no-private',
+         '--no-changelog',
+-        '--no-push',
+         '--exact',
+-        '--no-git-tag-version',
+-        '--force-publish',
+         '--yes',
+         '--no-verify-access',
+       ],
+@@ -109,7 +125,7 @@ describe('npm-packages publishNpmPackages', function () {
+ 
+     try {
+       publishNpmPackages(
+-        false,
++        { isDryRun: false, useAuxiliaryPackagesOnly: false },
+         listNpmPackages,
+         markBumpedFilesAsAssumeUnchanged,
+         spawnSync
+diff --git a/packages/connectivity-tests/package.json b/packages/connectivity-tests/package.json
+index 4ef44a9b..b9d76c98 100644
+--- a/packages/connectivity-tests/package.json
++++ b/packages/connectivity-tests/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@mongosh/connectivity-tests",
+-  "version": "0.0.0-dev.0",
++  "version": "2.3.8",
+   "private": true,
+   "license": "Apache-2.0",
+   "scripts": {
+@@ -11,7 +11,7 @@
+     "test-ci-coverage": "nyc --no-clean --cwd ../.. --reporter=none npm run test-ci"
+   },
+   "devDependencies": {
+-    "mongosh": "0.0.0-dev.0"
++    "mongosh": "2.3.8"
+   },
+   "mongosh": {
+     "unitTestsOnly": true,
+diff --git a/packages/e2e-tests/package.json b/packages/e2e-tests/package.json
+index 32664705..a4c2c4dd 100644
+--- a/packages/e2e-tests/package.json
++++ b/packages/e2e-tests/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@mongosh/e2e-tests",
+-  "version": "0.0.0-dev.0",
++  "version": "2.3.8",
+   "private": true,
+   "description": "MongoDB Shell E2E Tests Package",
+   "homepage": "https://github.com/mongodb-js/mongosh",
+@@ -27,8 +27,8 @@
+     "node": ">=16.15.0"
+   },
+   "dependencies": {
+-    "@mongosh/cli-repl": "0.0.0-dev.0",
+-    "@mongosh/service-provider-core": "0.0.0-dev.0",
++    "@mongosh/cli-repl": "2.3.8",
++    "@mongosh/service-provider-core": "2.3.8",
+     "@mongodb-js/oidc-plugin": "^1.1.5",
+     "strip-ansi": "^6.0.0"
+   },
+diff --git a/packages/e2e-tests/test/e2e.spec.ts b/packages/e2e-tests/test/e2e.spec.ts
+index 9fda3fbf..6f6eb79a 100644
+--- a/packages/e2e-tests/test/e2e.spec.ts
++++ b/packages/e2e-tests/test/e2e.spec.ts
+@@ -33,11 +33,15 @@ describe('e2e', function () {
+   const testServer = startSharedTestServer();
+ 
+   describe('--version', function () {
+-    it('shows version', async function () {
++    it('shows version and matches @mongosh/cli-repl', async function () {
++      const expectedPackageVersion: string =
++        // eslint-disable-next-line @typescript-eslint/no-var-requires
++        require('../package.json')['dependencies']['@mongosh/cli-repl'];
++
+       const shell = this.startTestShell({ args: ['--version'] });
+       await shell.waitForSuccessfulExit();
+ 
+-      shell.assertContainsOutput(require('../package.json').version);
++      shell.assertContainsOutput(expectedPackageVersion);
+     });
+   });
+ 
+@@ -445,9 +449,21 @@ describe('e2e', function () {
+     });
+ 
+     it('version', async function () {
+-      const expected = require('../package.json').version;
++      const expectedPackageVersion: string =
++        // eslint-disable-next-line @typescript-eslint/no-var-requires
++        require('../package.json')['dependencies']['@mongosh/cli-repl'];
++
++      expect(expectedPackageVersion).not.null;
++
++      const versionShell = this.startTestShell({ args: ['--version'] });
++      await versionShell.waitForSuccessfulExit();
++
++      const versionFromShell = versionShell.output;
++
+       await shell.executeLine('version()');
+-      shell.assertContainsOutput(expected);
++      shell.assertNoErrors();
++      shell.assertContainsOutput(expectedPackageVersion);
++      shell.assertContainsOutput(versionFromShell);
+     });
+ 
+     it('fle addon is available', async function () {

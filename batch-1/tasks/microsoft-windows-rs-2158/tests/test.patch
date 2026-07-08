@@ -1,0 +1,13 @@
+diff --git a/crates/targets/x86_64_gnu/src/lib.rs b/crates/targets/x86_64_gnu/src/lib.rs
+--- a/crates/targets/x86_64_gnu/src/lib.rs
++++ b/crates/targets/x86_64_gnu/src/lib.rs
+@@ -1,1 +1,9 @@
+ #![no_std]
++
++#[cfg(test)]
++mod tests {
++    #[test]
++    fn test_crate_version() {
++        assert!(env!("CARGO_PKG_VERSION") == "0.43.0");
++    }
++}

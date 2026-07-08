@@ -1,0 +1,457 @@
+diff --git a/tests/data/placebo/test_rest_client_certificate_resource/apigateway.GetClientCertificates_1.json b/tests/data/placebo/test_rest_client_certificate_resource/apigateway.GetClientCertificates_1.json
+new file mode 100644
+index 000000000..a850bac62
+--- /dev/null
++++ b/tests/data/placebo/test_rest_client_certificate_resource/apigateway.GetClientCertificates_1.json
+@@ -0,0 +1,33 @@
++{
++    "status_code": 200,
++    "data": {
++        "ResponseMetadata": {},
++        "items": [
++            {
++                "clientCertificateId": "3kxqri",
++                "description": "Test certificate",
++                "pemEncodedCertificate": "-----BEGIN CERTIFICATE-----\r\nMIIC6TCCAdGgAwIBAgIJAJGrGKG8hmm2MA0GCSqGSIb3DQEBCwUAMDQxCzAJBgNV\r\nBAYTAlVTMRAwDgYDVQQHEwdTZWF0dGxlMRMwEQYDVQQDEwpBcGlHYXRld2F5MB4X\r\nDTIwMTIyNDE2MDEwM1oXDTIxMTIyNDE2MDEwM1owNDELMAkGA1UEBhMCVVMxEDAO\r\nBgNVBAcTB1NlYXR0bGUxEzARBgNVBAMTCkFwaUdhdGV3YXkwggEiMA0GCSqGSIb3\r\nDQEBAQUAA4IBDwAwggEKAoIBAQC7w9E1pHVj3P/Qw07OJI3ta5cZJvrMXF7ijEqg\r\naBXkpou8ZCL6ZmjZIUl5+py78By1P7tmxGKYT18XFH3gsKza1Sh32CC+jtHI4gRG\r\n1LaeD4H154tpd6xLJ1+vR4EIqqiif+2hCxp9a6R/P6Gi6IDeEKhLsc3sXovnCe8y\r\n5irfRfy+2w9P8mZ28KrCTHBy6DSEd52P7TAJuHijEIbQArNdtkEhCoCxtRhzNOiy\r\n66hhI5OC/Rg9x3d6HxfekJS1+S0VPbqNeMkrVWlxcqt4do9vQei/CJWjNyPdfYoS\r\noEbepWWAeNijRMsF/zYyYl4hrM3ERPE70pkB0kxXaIgtdah1AgMBAAEwDQYJKoZI\r\nhvcNAQELBQADggEBAJYEzElxDoKwFD5MXU370PkhZMW4sc7wdxxcLls7/HTAAaAD\r\nb6XkhG7lHSttU+NUn8aM0jzlEpjGtsq71ogFTUnxeN6I9Aa/m1ZpIHJsc9iQ13Bx\r\nFdsiFPMtsVdMlcJWwvG2srXMf6rMO20I0tkH9gDkJx3QQ/XxpY2kXQGIaoaLU5UD\r\n3FnKyth9amLpF0UGCfNvIK1v2aLdwLS3TzX3YMfKGDT8CKP1/FJ4kMeVthkofkLl\r\nfQxPyE5t+WfEEcspPUBBQJ74Tim6sCdF85jh48A3neKjWT+3aqgV0Lcr4kK5o9/i\r\n1p/WuJldRtH6mlShCx7i7ewwYIV4BTCxavtUXXU=\r\n-----END CERTIFICATE-----",
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 11,
++                    "minute": 1,
++                    "second": 3,
++                    "microsecond": 0
++                },
++                "expirationDate": {
++                    "__class__": "datetime",
++                    "year": 2021,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 11,
++                    "minute": 1,
++                    "second": 3,
++                    "microsecond": 0
++                }
++            }
++        ]
++    }
++}
+\ No newline at end of file
+diff --git a/tests/data/placebo/test_rest_stage_certificate_filter_config_source/apigateway.GetClientCertificates_1.json b/tests/data/placebo/test_rest_stage_certificate_filter_config_source/apigateway.GetClientCertificates_1.json
+new file mode 100644
+index 000000000..85427e4c0
+--- /dev/null
++++ b/tests/data/placebo/test_rest_stage_certificate_filter_config_source/apigateway.GetClientCertificates_1.json
+@@ -0,0 +1,33 @@
++{
++    "status_code": 200,
++    "data": {
++        "ResponseMetadata": {},
++        "items": [
++            {
++                "clientCertificateId": "3kxqri",
++                "description": "Test certificate",
++                "pemEncodedCertificate": "-----BEGIN CERTIFICATE-----\r\nMIIC6TCCAdGgAwIBAgIJAJGrGKG8hmm2MA0GCSqGSIb3DQEBCwUAMDQxCzAJBgNV\r\nBAYTAlVTMRAwDgYDVQQHEwdTZWF0dGxlMRMwEQYDVQQDEwpBcGlHYXRld2F5MB4X\r\nDTIwMTIyNDE2MDEwM1oXDTIxMTIyNDE2MDEwM1owNDELMAkGA1UEBhMCVVMxEDAO\r\nBgNVBAcTB1NlYXR0bGUxEzARBgNVBAMTCkFwaUdhdGV3YXkwggEiMA0GCSqGSIb3\r\nDQEBAQUAA4IBDwAwggEKAoIBAQC7w9E1pHVj3P/Qw07OJI3ta5cZJvrMXF7ijEqg\r\naBXkpou8ZCL6ZmjZIUl5+py78By1P7tmxGKYT18XFH3gsKza1Sh32CC+jtHI4gRG\r\n1LaeD4H154tpd6xLJ1+vR4EIqqiif+2hCxp9a6R/P6Gi6IDeEKhLsc3sXovnCe8y\r\n5irfRfy+2w9P8mZ28KrCTHBy6DSEd52P7TAJuHijEIbQArNdtkEhCoCxtRhzNOiy\r\n66hhI5OC/Rg9x3d6HxfekJS1+S0VPbqNeMkrVWlxcqt4do9vQei/CJWjNyPdfYoS\r\noEbepWWAeNijRMsF/zYyYl4hrM3ERPE70pkB0kxXaIgtdah1AgMBAAEwDQYJKoZI\r\nhvcNAQELBQADggEBAJYEzElxDoKwFD5MXU370PkhZMW4sc7wdxxcLls7/HTAAaAD\r\nb6XkhG7lHSttU+NUn8aM0jzlEpjGtsq71ogFTUnxeN6I9Aa/m1ZpIHJsc9iQ13Bx\r\nFdsiFPMtsVdMlcJWwvG2srXMf6rMO20I0tkH9gDkJx3QQ/XxpY2kXQGIaoaLU5UD\r\n3FnKyth9amLpF0UGCfNvIK1v2aLdwLS3TzX3YMfKGDT8CKP1/FJ4kMeVthkofkLl\r\nfQxPyE5t+WfEEcspPUBBQJ74Tim6sCdF85jh48A3neKjWT+3aqgV0Lcr4kK5o9/i\r\n1p/WuJldRtH6mlShCx7i7ewwYIV4BTCxavtUXXU=\r\n-----END CERTIFICATE-----",
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2019,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 11,
++                    "minute": 1,
++                    "second": 3,
++                    "microsecond": 0
++                },
++                "expirationDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 11,
++                    "minute": 1,
++                    "second": 3,
++                    "microsecond": 0
++                }
++            }
++        ]
++    }
++}
+diff --git a/tests/data/placebo/test_rest_stage_certificate_filter_config_source/config.SelectResourceConfig_1.json b/tests/data/placebo/test_rest_stage_certificate_filter_config_source/config.SelectResourceConfig_1.json
+new file mode 100644
+index 000000000..1b8d91c8f
+--- /dev/null
++++ b/tests/data/placebo/test_rest_stage_certificate_filter_config_source/config.SelectResourceConfig_1.json
+@@ -0,0 +1,24 @@
++{
++    "status_code": 200,
++    "data": {
++        "Results": [
++            "{\"resourceId\":\"arn:aws:apigateway:us-east-2::/restapis/3qcpw4j8pi/stages/dev\",\"configuration\":{\"variables\":{},\"lastUpdatedDate\":\"2020-12-24T19:01:19Z\",\"stageName\":\"dev\",\"createdDate\":\"2020-12-24T18:54:52Z\",\"clientCertificateId\":\"3kxqri\",\"deploymentId\":\"fvliur\",\"cacheClusterSize\":\"0.5\",\"cacheClusterEnabled\":false,\"cacheClusterStatus\":\"NOT_AVAILABLE\",\"methodSettings\":{\"*/*\":{\"throttlingBurstLimit\":5000.0,\"throttlingRateLimit\":10000.0,\"requireAuthorizationForCacheControl\":true,\"unauthorizedCacheControlHeaderStrategy\":\"SUCCEED_WITH_RESPONSE_HEADER\",\"cachingEnabled\":false,\"cacheTtlInSeconds\":300.0}},\"tracingEnabled\":false},\"supplementaryConfiguration\":{}}",
++            "{\"resourceId\":\"arn:aws:apigateway:us-east-2::/restapis/3qcpw4j8pi/stages/prod\",\"configuration\":{\"lastUpdatedDate\":\"2020-12-24T18:55:23Z\",\"stageName\":\"prod\",\"createdDate\":\"2020-12-24T18:54:53Z\",\"deploymentId\":\"fvliur\",\"cacheClusterEnabled\":false,\"cacheClusterStatus\":\"NOT_AVAILABLE\",\"methodSettings\":{\"mytestresource/GET\":{\"throttlingBurstLimit\":-1.0,\"metricsEnabled\":true,\"throttlingRateLimit\":-1.0,\"requireAuthorizationForCacheControl\":true,\"unauthorizedCacheControlHeaderStrategy\":\"SUCCEED_WITH_RESPONSE_HEADER\",\"cacheTtlInSeconds\":300.0}},\"tracingEnabled\":false},\"supplementaryConfiguration\":{}}",
++            "{\"resourceId\":\"arn:aws:apigateway:us-east-2::/restapis/d2vdh748ta/stages/api\",\"configuration\":{\"variables\":{},\"lastUpdatedDate\":\"2020-12-24T19:02:09Z\",\"stageName\":\"api\",\"createdDate\":\"2020-12-24T19:02:09Z\",\"deploymentId\":\"rp2mlf\",\"description\":\"2d49180b2988ed5273315098420ef6f7\",\"cacheClusterEnabled\":false,\"cacheClusterStatus\":\"NOT_AVAILABLE\",\"methodSettings\":{},\"tracingEnabled\":false},\"supplementaryConfiguration\":{}}"
++        ],
++        "QueryInfo": {
++            "SelectFields": [
++                {
++                    "Name": "resourceId"
++                },
++                {
++                    "Name": "configuration"
++                },
++                {
++                    "Name": "supplementaryConfiguration"
++                }
++            ]
++        },
++        "ResponseMetadata": {}
++    }
++}
+\ No newline at end of file
+diff --git a/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetClientCertificates_1.json b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetClientCertificates_1.json
+new file mode 100644
+index 000000000..85427e4c0
+--- /dev/null
++++ b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetClientCertificates_1.json
+@@ -0,0 +1,33 @@
++{
++    "status_code": 200,
++    "data": {
++        "ResponseMetadata": {},
++        "items": [
++            {
++                "clientCertificateId": "3kxqri",
++                "description": "Test certificate",
++                "pemEncodedCertificate": "-----BEGIN CERTIFICATE-----\r\nMIIC6TCCAdGgAwIBAgIJAJGrGKG8hmm2MA0GCSqGSIb3DQEBCwUAMDQxCzAJBgNV\r\nBAYTAlVTMRAwDgYDVQQHEwdTZWF0dGxlMRMwEQYDVQQDEwpBcGlHYXRld2F5MB4X\r\nDTIwMTIyNDE2MDEwM1oXDTIxMTIyNDE2MDEwM1owNDELMAkGA1UEBhMCVVMxEDAO\r\nBgNVBAcTB1NlYXR0bGUxEzARBgNVBAMTCkFwaUdhdGV3YXkwggEiMA0GCSqGSIb3\r\nDQEBAQUAA4IBDwAwggEKAoIBAQC7w9E1pHVj3P/Qw07OJI3ta5cZJvrMXF7ijEqg\r\naBXkpou8ZCL6ZmjZIUl5+py78By1P7tmxGKYT18XFH3gsKza1Sh32CC+jtHI4gRG\r\n1LaeD4H154tpd6xLJ1+vR4EIqqiif+2hCxp9a6R/P6Gi6IDeEKhLsc3sXovnCe8y\r\n5irfRfy+2w9P8mZ28KrCTHBy6DSEd52P7TAJuHijEIbQArNdtkEhCoCxtRhzNOiy\r\n66hhI5OC/Rg9x3d6HxfekJS1+S0VPbqNeMkrVWlxcqt4do9vQei/CJWjNyPdfYoS\r\noEbepWWAeNijRMsF/zYyYl4hrM3ERPE70pkB0kxXaIgtdah1AgMBAAEwDQYJKoZI\r\nhvcNAQELBQADggEBAJYEzElxDoKwFD5MXU370PkhZMW4sc7wdxxcLls7/HTAAaAD\r\nb6XkhG7lHSttU+NUn8aM0jzlEpjGtsq71ogFTUnxeN6I9Aa/m1ZpIHJsc9iQ13Bx\r\nFdsiFPMtsVdMlcJWwvG2srXMf6rMO20I0tkH9gDkJx3QQ/XxpY2kXQGIaoaLU5UD\r\n3FnKyth9amLpF0UGCfNvIK1v2aLdwLS3TzX3YMfKGDT8CKP1/FJ4kMeVthkofkLl\r\nfQxPyE5t+WfEEcspPUBBQJ74Tim6sCdF85jh48A3neKjWT+3aqgV0Lcr4kK5o9/i\r\n1p/WuJldRtH6mlShCx7i7ewwYIV4BTCxavtUXXU=\r\n-----END CERTIFICATE-----",
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2019,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 11,
++                    "minute": 1,
++                    "second": 3,
++                    "microsecond": 0
++                },
++                "expirationDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 11,
++                    "minute": 1,
++                    "second": 3,
++                    "microsecond": 0
++                }
++            }
++        ]
++    }
++}
+diff --git a/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetRestApis_1.json b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetRestApis_1.json
+new file mode 100644
+index 000000000..7684f9bdc
+--- /dev/null
++++ b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetRestApis_1.json
+@@ -0,0 +1,70 @@
++{
++    "status_code": 200,
++    "data": {
++        "ResponseMetadata": {},
++        "items": [
++            {
++                "id": "3qcpw4j8pi",
++                "name": "MyDemoAPI",
++                "description": "This is my API for demonstration purposes",
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 13,
++                    "minute": 54,
++                    "second": 50,
++                    "microsecond": 0
++                },
++                "apiKeySource": "HEADER",
++                "endpointConfiguration": {
++                    "types": [
++                        "EDGE"
++                    ]
++                },
++                "disableExecuteApiEndpoint": false
++            },
++            {
++                "id": "d2vdh748ta",
++                "name": "stackapi",
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 14,
++                    "minute": 2,
++                    "second": 8,
++                    "microsecond": 0
++                },
++                "version": "1.0",
++                "binaryMediaTypes": [
++                    "application/octet-stream",
++                    "application/x-tar",
++                    "application/zip",
++                    "audio/basic",
++                    "audio/ogg",
++                    "audio/mp4",
++                    "audio/mpeg",
++                    "audio/wav",
++                    "audio/webm",
++                    "image/png",
++                    "image/jpg",
++                    "image/jpeg",
++                    "image/gif",
++                    "video/ogg",
++                    "video/mpeg",
++                    "video/webm"
++                ],
++                "apiKeySource": "HEADER",
++                "endpointConfiguration": {
++                    "types": [
++                        "EDGE"
++                    ]
++                },
++                "disableExecuteApiEndpoint": false
++            }
++        ]
++    }
++}
+\ No newline at end of file
+diff --git a/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_1.json b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_1.json
+new file mode 100644
+index 000000000..83864871a
+--- /dev/null
++++ b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_1.json
+@@ -0,0 +1,91 @@
++{
++    "status_code": 200,
++    "data": {
++        "ResponseMetadata": {},
++        "item": [
++            {
++                "deploymentId": "fvliur",
++                "clientCertificateId": "3kxqri",
++                "stageName": "dev",
++                "cacheClusterEnabled": false,
++                "cacheClusterSize": "0.5",
++                "cacheClusterStatus": "NOT_AVAILABLE",
++                "methodSettings": {
++                    "*/*": {
++                        "metricsEnabled": false,
++                        "dataTraceEnabled": false,
++                        "throttlingBurstLimit": 5000,
++                        "throttlingRateLimit": 10000.0,
++                        "cachingEnabled": false,
++                        "cacheTtlInSeconds": 300,
++                        "cacheDataEncrypted": false,
++                        "requireAuthorizationForCacheControl": true,
++                        "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
++                    }
++                },
++                "variables": {},
++                "tracingEnabled": false,
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 13,
++                    "minute": 54,
++                    "second": 52,
++                    "microsecond": 0
++                },
++                "lastUpdatedDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 14,
++                    "minute": 1,
++                    "second": 19,
++                    "microsecond": 0
++                }
++            },
++            {
++                "deploymentId": "fvliur",
++                "stageName": "prod",
++                "cacheClusterEnabled": false,
++                "cacheClusterStatus": "NOT_AVAILABLE",
++                "methodSettings": {
++                    "mytestresource/GET": {
++                        "metricsEnabled": true,
++                        "dataTraceEnabled": false,
++                        "throttlingBurstLimit": -1,
++                        "throttlingRateLimit": -1.0,
++                        "cachingEnabled": false,
++                        "cacheTtlInSeconds": 300,
++                        "cacheDataEncrypted": false,
++                        "requireAuthorizationForCacheControl": true,
++                        "unauthorizedCacheControlHeaderStrategy": "SUCCEED_WITH_RESPONSE_HEADER"
++                    }
++                },
++                "tracingEnabled": false,
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 13,
++                    "minute": 54,
++                    "second": 53,
++                    "microsecond": 0
++                },
++                "lastUpdatedDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 13,
++                    "minute": 55,
++                    "second": 23,
++                    "microsecond": 0
++                }
++            }
++        ]
++    }
++}
+\ No newline at end of file
+diff --git a/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_2.json b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_2.json
+new file mode 100644
+index 000000000..56d277b20
+--- /dev/null
++++ b/tests/data/placebo/test_rest_stage_client_certificate_filter/apigateway.GetStages_2.json
+@@ -0,0 +1,38 @@
++{
++    "status_code": 200,
++    "data": {
++        "ResponseMetadata": {},
++        "item": [
++            {
++                "deploymentId": "rp2mlf",
++                "stageName": "api",
++                "description": "2d49180b2988ed5273315098420ef6f7",
++                "cacheClusterEnabled": false,
++                "cacheClusterStatus": "NOT_AVAILABLE",
++                "methodSettings": {},
++                "variables": {},
++                "tracingEnabled": false,
++                "createdDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 14,
++                    "minute": 2,
++                    "second": 9,
++                    "microsecond": 0
++                },
++                "lastUpdatedDate": {
++                    "__class__": "datetime",
++                    "year": 2020,
++                    "month": 12,
++                    "day": 24,
++                    "hour": 14,
++                    "minute": 2,
++                    "second": 9,
++                    "microsecond": 0
++                }
++            }
++        ]
++    }
++}
+\ No newline at end of file
+diff --git a/tests/test_apigw.py b/tests/test_apigw.py
+index d8d94ccc1..a01502394 100644
+--- a/tests/test_apigw.py
++++ b/tests/test_apigw.py
+@@ -390,3 +390,70 @@ class TestRestStage(BaseTest):
+         self.assertEqual(tags.get('tags', {}),
+             {'Env': 'Dev',
+             'custodian_cleanup': 'Resource does not meet policy: update@2019/11/04'})
++
++
++class TestRestClientCertificate(BaseTest):
++
++    def test_rest_client_certificate_resource(self):
++        session_factory = self.replay_flight_data('test_rest_client_certificate_resource',
++            region='us-east-2')
++        p = self.load_policy(
++            {
++                'name': 'list-rest-client-certificates',
++                'resource': 'rest-client-certificate',
++            },
++            session_factory=session_factory,
++            config={'region': 'us-east-2'},
++        )
++        resources = p.run()
++        self.assertEqual(len(resources), 1)
++        self.assertEqual(resources[0]['description'], 'Test certificate')
++
++    def test_rest_stage_client_certificate_filter(self):
++        session_factory = self.replay_flight_data(
++            'test_rest_stage_client_certificate_filter', region='us-east-2')
++        p = self.load_policy(
++            {
++                'name': 'rest-stages-with-expired-certificate',
++                'resource': 'rest-stage',
++                'filters': [
++                    {
++                        'type': 'client-certificate',
++                        'key': 'expirationDate',
++                        'value_type': 'expiration',
++                        'value': 0,
++                        'op': 'lte',
++                    }
++                ]
++            },
++            session_factory=session_factory,
++            config={'region': 'us-east-2'},
++        )
++        resources = p.run()
++        self.assertEqual(len(resources), 1)
++        self.assertIn('expirationDate', resources[0]['c7n:matched-client-certificate'])
++
++    def test_rest_stage_certificate_filter_config_source(self):
++        session_factory = self.replay_flight_data(
++            'test_rest_stage_certificate_filter_config_source', region='us-east-2')
++        p = self.load_policy(
++            {
++                'name': 'rest-stages-with-expired-certificate',
++                'resource': 'rest-stage',
++                'source': 'config',
++                'filters': [
++                    {
++                        'type': 'client-certificate',
++                        'key': 'expirationDate',
++                        'value_type': 'expiration',
++                        'value': 0,
++                        'op': 'lte',
++                    }
++                ]
++            },
++            session_factory=session_factory,
++            config={'region': 'us-east-2'},
++        )
++        resources = p.run()
++        self.assertEqual(len(resources), 1)
++        self.assertIn('expirationDate', resources[0]['c7n:matched-client-certificate'])
+diff --git a/tests/test_policy.py b/tests/test_policy.py
+index e34804176..d92b01391 100644
+--- a/tests/test_policy.py
++++ b/tests/test_policy.py
+@@ -393,7 +393,7 @@ class PolicyMetaLint(BaseTest):
+     def test_resource_arn_info(self):
+         missing = []
+         whitelist_missing = {
+-            'rest-stage', 'rest-resource', 'rest-vpclink'}
++            'rest-stage', 'rest-resource', 'rest-vpclink', 'rest-client-certificate'}
+         explicit = []
+         whitelist_explicit = {
+             'rest-account', 'shield-protection', 'shield-attack',

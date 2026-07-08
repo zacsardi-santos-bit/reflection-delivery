@@ -1,0 +1,32 @@
+diff --git a/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs b/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
+index 9d2bf0781e..3e89addf8d 100644
+--- a/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
++++ b/crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs
+@@ -177,6 +177,14 @@ fn test_vars_self_use() {
+         let cancel = () => {}
+         export function close() { cancel = cancel?.() }
+         ",
++        "
++        class Chain { extend() { return this; } }
++
++        let chain = new Chain();
++        for (let i = 0; i < 10; i++) {
++            chain = chain.extend();
++        }
++        ",
+     ];
+     let fail = vec![
+         "
+@@ -197,6 +205,12 @@ fn test_vars_self_use() {
+         let cancel = () => {};
+         { cancel = cancel?.(); }
+         ",
++        "
++        class Chain { extend() { return this; } }
++
++        let chain = new Chain();
++        chain = chain.extend();
++        ",
+     ];
+ 
+     Tester::new(NoUnusedVars::NAME, NoUnusedVars::PLUGIN, pass, fail)

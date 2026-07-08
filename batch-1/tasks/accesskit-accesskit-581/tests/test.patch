@@ -1,0 +1,9 @@
+diff --git a/consumer/Cargo.toml b/consumer/Cargo.toml
+index abc1234..def5678 100644
+--- a/consumer/Cargo.toml
++++ b/consumer/Cargo.toml
+@@ -1,3 +1,4 @@
++# Test marker
+ [package]
+ name = "accesskit_consumer"
+ version = "0.28.0"

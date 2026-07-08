@@ -1,0 +1,17 @@
+diff --git a/core/engine/src/builtins/array_buffer/tests.rs b/core/engine/src/builtins/array_buffer/tests.rs
+index 5581593b..604bf614 100644
+--- a/core/engine/src/builtins/array_buffer/tests.rs
++++ b/core/engine/src/builtins/array_buffer/tests.rs
+@@ -4,10 +4,10 @@ use crate::Context;
+ fn create_byte_data_block() {
+     let context = &mut Context::default();
+     // Sunny day
+-    assert!(super::create_byte_data_block(100, context).is_ok());
++    assert!(super::create_byte_data_block(100, None, context).is_ok());
+ 
+     // Rainy day
+-    assert!(super::create_byte_data_block(u64::MAX, context).is_err());
++    assert!(super::create_byte_data_block(u64::MAX, None, context).is_err());
+ }
+ 
+ #[test]

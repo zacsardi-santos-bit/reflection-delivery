@@ -1,0 +1,27 @@
+diff --git a/pkg/integration/integration_test.go b/pkg/integration/integration_test.go
+new file mode 100644
+index 0000000..0000000
+--- /dev/null
++++ b/pkg/integration/integration_test.go
+@@ -0,0 +1,21 @@
++package integration_test
++
++import (
++	"testing"
++
++	"github.com/k8sgpt-ai/k8sgpt/pkg/integration"
++	"github.com/stretchr/testify/require"
++)
++
++func TestGetPrometheusIntegration(t *testing.T) {
++	i := integration.NewIntegration()
++	p, err := i.Get("prometheus")
++	require.NoError(t, err)
++	require.NotNil(t, p)
++}
++
++func TestListIntegrations(t *testing.T) {
++	i := integration.NewIntegration()
++	list := i.List()
++	require.Contains(t, list, "prometheus")
++}

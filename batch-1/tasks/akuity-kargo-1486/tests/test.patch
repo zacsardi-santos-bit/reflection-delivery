@@ -1,0 +1,820 @@
+diff --git a/internal/controller/management/projects/projects_test.go b/internal/controller/management/projects/projects_test.go
+index 767c0351..0929186a 100644
+--- a/internal/controller/management/projects/projects_test.go
++++ b/internal/controller/management/projects/projects_test.go
+@@ -19,14 +19,19 @@ import (
+ )
+ 
+ func TestNewReconciler(t *testing.T) {
+-	r := newReconciler(fake.NewClientBuilder().Build())
++	testCfg := ReconcilerConfig{}
++	r := newReconciler(fake.NewClientBuilder().Build(), testCfg)
++	require.Equal(t, testCfg, r.cfg)
+ 	require.NotNil(t, r.client)
+ 	require.NotNil(t, r.getProjectFn)
+ 	require.NotNil(t, r.syncProjectFn)
++	require.NotNil(t, r.ensureNamespaceFn)
+ 	require.NotNil(t, r.patchProjectStatusFn)
+ 	require.NotNil(t, r.getNamespaceFn)
+ 	require.NotNil(t, r.createNamespaceFn)
+ 	require.NotNil(t, r.updateNamespaceFn)
++	require.NotNil(t, r.ensureSecretPermissionsFn)
++	require.NotNil(t, r.createRoleBindingFn)
+ }
+ 
+ func TestReconcile(t *testing.T) {
+@@ -169,15 +174,118 @@ func TestReconcile(t *testing.T) {
+ }
+ 
+ func TestSyncProject(t *testing.T) {
++	testCases := []struct {
++		name       string
++		reconciler *reconciler
++		assertions func(kargoapi.ProjectStatus, error)
++	}{
++		{
++			name: "error ensuring namespace",
++			reconciler: &reconciler{
++				ensureNamespaceFn: func(
++					_ context.Context,
++					project *kargoapi.Project,
++				) (kargoapi.ProjectStatus, error) {
++					return *project.Status.DeepCopy(), errors.New("something went wrong")
++				},
++			},
++			assertions: func(status kargoapi.ProjectStatus, err error) {
++				require.Error(t, err)
++				require.Contains(t, err.Error(), "something went wrong")
++				// Still initializing because retry could succeed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
++			},
++		},
++		{
++			name: "fatal error ensuring namespace",
++			reconciler: &reconciler{
++				ensureNamespaceFn: func(
++					_ context.Context,
++					project *kargoapi.Project,
++				) (kargoapi.ProjectStatus, error) {
++					status := *project.Status.DeepCopy()
++					status.Phase = kargoapi.ProjectPhaseInitializationFailed
++					return status, errors.New("something went very wrong")
++				},
++			},
++			assertions: func(status kargoapi.ProjectStatus, err error) {
++				require.Error(t, err)
++				require.Contains(t, err.Error(), "something went very wrong")
++				// Failed because retry cannot possibly succeed
++				require.Equal(
++					t,
++					kargoapi.ProjectPhaseInitializationFailed,
++					status.Phase,
++				)
++			},
++		},
++		{
++			name: "error ensuring secret permissions",
++			reconciler: &reconciler{
++				ensureNamespaceFn: func(
++					_ context.Context,
++					project *kargoapi.Project,
++				) (kargoapi.ProjectStatus, error) {
++					return *project.Status.DeepCopy(), nil
++				},
++				ensureSecretPermissionsFn: func(
++					context.Context,
++					*kargoapi.Project,
++				) error {
++					return errors.New("something went wrong")
++				},
++			},
++			assertions: func(status kargoapi.ProjectStatus, err error) {
++				require.Error(t, err)
++				require.Contains(t, err.Error(), "something went wrong")
++				// Still initializing because retry could succeed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
++			},
++		},
++		{
++			name: "success",
++			reconciler: &reconciler{
++				ensureNamespaceFn: func(
++					_ context.Context,
++					project *kargoapi.Project,
++				) (kargoapi.ProjectStatus, error) {
++					return *project.Status.DeepCopy(), nil
++				},
++				ensureSecretPermissionsFn: func(
++					context.Context,
++					*kargoapi.Project,
++				) error {
++					return nil
++				},
++			},
++			assertions: func(status kargoapi.ProjectStatus, err error) {
++				require.NoError(t, err)
++				// Success == ready
++				require.Equal(t, kargoapi.ProjectPhaseReady, status.Phase)
++			},
++		},
++	}
++	for _, testCase := range testCases {
++		t.Run(testCase.name, func(t *testing.T) {
++			status, err := testCase.reconciler.syncProject(
++				context.Background(),
++				&kargoapi.Project{
++					Status: kargoapi.ProjectStatus{
++						Phase: kargoapi.ProjectPhaseInitializing,
++					},
++				},
++			)
++			testCase.assertions(status, err)
++		})
++	}
++}
++
++func TestEnsureNamespace(t *testing.T) {
+ 	testCases := []struct {
+ 		name       string
+ 		project    *kargoapi.Project
+ 		reconciler *reconciler
+-		assertions func(
+-			initialStatus kargoapi.ProjectStatus,
+-			newStatus kargoapi.ProjectStatus,
+-			err error,
+-		)
++		assertions func(kargoapi.ProjectStatus, error)
+ 	}{
+ 		{
+ 			name: "error getting namespace",
+@@ -196,18 +304,22 @@ func TestSyncProject(t *testing.T) {
+ 					return errors.New("something went wrong")
+ 				},
+ 			},
+-			assertions: func(initialStatus, newStatus kargoapi.ProjectStatus, err error) {
++			assertions: func(status kargoapi.ProjectStatus, err error) {
+ 				require.Error(t, err)
+ 				require.Contains(t, err.Error(), "something went wrong")
+ 				require.Contains(t, err.Error(), "error getting namespace")
+-				// Status is unchanged
+-				require.Equal(t, initialStatus, newStatus)
++				// Phase wasn't changed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
+ 			},
+ 		},
+ 		{
+ 			name: "namespace exists, is not owned by project, but is labeled " +
+ 				"as a project; error updating namespace",
+-			project: &kargoapi.Project{},
++			project: &kargoapi.Project{
++				Status: kargoapi.ProjectStatus{
++					Phase: kargoapi.ProjectPhaseInitializing,
++				},
++			},
+ 			reconciler: &reconciler{
+ 				getNamespaceFn: func(
+ 					_ context.Context,
+@@ -230,20 +342,22 @@ func TestSyncProject(t *testing.T) {
+ 					return errors.New("something went wrong")
+ 				},
+ 			},
+-			assertions: func(initialStatus, newStatus kargoapi.ProjectStatus, err error) {
++			assertions: func(status kargoapi.ProjectStatus, err error) {
+ 				require.Error(t, err)
+-				// Status should reflect the failure
+ 				require.Contains(t, err.Error(), "error updating namespace")
+ 				require.Contains(t, err.Error(), "something went wrong")
+-				// And is otherwise unchanged
+-				newStatus.Message = initialStatus.Message
+-				require.Equal(t, initialStatus, newStatus)
++				// Phase wasn't changed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
+ 			},
+ 		},
+ 		{
+ 			name: "namespace exists, is not owned by project, but is labeled " +
+ 				"as a project; success updating namespace",
+-			project: &kargoapi.Project{},
++			project: &kargoapi.Project{
++				Status: kargoapi.ProjectStatus{
++					Phase: kargoapi.ProjectPhaseInitializing,
++				},
++			},
+ 			reconciler: &reconciler{
+ 				getNamespaceFn: func(
+ 					_ context.Context,
+@@ -266,15 +380,19 @@ func TestSyncProject(t *testing.T) {
+ 					return nil
+ 				},
+ 			},
+-			assertions: func(initialStatus, newStatus kargoapi.ProjectStatus, err error) {
++			assertions: func(status kargoapi.ProjectStatus, err error) {
+ 				require.NoError(t, err)
+-				require.Equal(t, newStatus.Phase, kargoapi.ProjectPhaseReady)
+-				require.Empty(t, newStatus.Message)
++				// Phase wasn't changed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
+ 			},
+ 		},
+ 		{
+-			name:    "namespace exists, is not owned by project, and is not labeled as a project",
+-			project: &kargoapi.Project{},
++			name: "namespace exists, is not owned by project, and is not labeled as a project",
++			project: &kargoapi.Project{
++				Status: kargoapi.ProjectStatus{
++					Phase: kargoapi.ProjectPhaseInitializing,
++				},
++			},
+ 			reconciler: &reconciler{
+ 				getNamespaceFn: func(
+ 					context.Context,
+@@ -285,11 +403,11 @@ func TestSyncProject(t *testing.T) {
+ 					return nil
+ 				},
+ 			},
+-			assertions: func(initialStatus, newStatus kargoapi.ProjectStatus, err error) {
++			assertions: func(status kargoapi.ProjectStatus, err error) {
+ 				require.Error(t, err)
+-				// Status should reflect the unrecoverable failure
+-				require.Equal(t, newStatus.Phase, kargoapi.ProjectPhaseInitializationFailed)
+ 				require.Contains(t, err.Error(), "failed to initialize Project")
++				// Phase reflects the unrecoverable failure
++				require.Equal(t, status.Phase, kargoapi.ProjectPhaseInitializationFailed)
+ 			},
+ 		},
+ 		{
+@@ -298,6 +416,9 @@ func TestSyncProject(t *testing.T) {
+ 				ObjectMeta: metav1.ObjectMeta{
+ 					UID: types.UID("fake-uid"),
+ 				},
++				Status: kargoapi.ProjectStatus{
++					Phase: kargoapi.ProjectPhaseInitializing,
++				},
+ 			},
+ 			reconciler: &reconciler{
+ 				getNamespaceFn: func(
+@@ -315,10 +436,10 @@ func TestSyncProject(t *testing.T) {
+ 					return nil
+ 				},
+ 			},
+-			assertions: func(_, newStatus kargoapi.ProjectStatus, err error) {
++			assertions: func(status kargoapi.ProjectStatus, err error) {
+ 				require.NoError(t, err)
+-				// Status should reflect that the Project is in a ready state
+-				require.Equal(t, newStatus.Phase, kargoapi.ProjectPhaseReady)
++				// Phase wasn't changed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
+ 			},
+ 		},
+ 		{
+@@ -345,12 +466,12 @@ func TestSyncProject(t *testing.T) {
+ 					return errors.New("something went wrong")
+ 				},
+ 			},
+-			assertions: func(initialStatus, newStatus kargoapi.ProjectStatus, err error) {
++			assertions: func(status kargoapi.ProjectStatus, err error) {
+ 				require.Error(t, err)
+ 				require.Contains(t, err.Error(), "something went wrong")
+ 				require.Contains(t, err.Error(), "error creating namespace")
+-				// Status is unchanged
+-				require.Equal(t, initialStatus, newStatus)
++				// Phase wasn't changed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
+ 			},
+ 		},
+ 		{
+@@ -377,18 +498,87 @@ func TestSyncProject(t *testing.T) {
+ 					return nil
+ 				},
+ 			},
+-			assertions: func(_, newStatus kargoapi.ProjectStatus, err error) {
++			assertions: func(status kargoapi.ProjectStatus, err error) {
+ 				require.NoError(t, err)
+-				// Status should reflect that the Project is in a ready state
+-				require.Equal(t, newStatus.Phase, kargoapi.ProjectPhaseReady)
++				// Phase wasn't changed
++				require.Equal(t, kargoapi.ProjectPhaseInitializing, status.Phase)
+ 			},
+ 		},
+ 	}
+ 	for _, testCase := range testCases {
+ 		t.Run(testCase.name, func(t *testing.T) {
+-			newStatus, err :=
+-				testCase.reconciler.syncProject(context.Background(), testCase.project)
+-			testCase.assertions(testCase.project.Status, newStatus, err)
++			testCase.assertions(
++				testCase.reconciler.ensureNamespace(
++					context.Background(),
++					testCase.project,
++				),
++			)
++		})
++	}
++}
++
++func TestEnsureSecretPermissions(t *testing.T) {
++	testCases := []struct {
++		name       string
++		reconciler *reconciler
++		assertions func(error)
++	}{
++		{
++			name: "error creating role binding",
++			reconciler: &reconciler{
++				createRoleBindingFn: func(
++					context.Context,
++					client.Object,
++					...client.CreateOption,
++				) error {
++					return errors.New("something went wrong")
++				},
++			},
++			assertions: func(err error) {
++				require.Error(t, err)
++				require.Contains(t, err.Error(), "error creating role binding")
++				require.Contains(t, err.Error(), "something went wrong")
++			},
++		},
++		{
++			name: "role binding already exists",
++			reconciler: &reconciler{
++				createRoleBindingFn: func(
++					context.Context,
++					client.Object,
++					...client.CreateOption,
++				) error {
++					return apierrors.NewAlreadyExists(schema.GroupResource{}, "")
++				},
++			},
++			assertions: func(err error) {
++				require.NoError(t, err)
++			},
++		},
++		{
++			name: "success creating role binding",
++			reconciler: &reconciler{
++				createRoleBindingFn: func(
++					context.Context,
++					client.Object,
++					...client.CreateOption,
++				) error {
++					return nil
++				},
++			},
++			assertions: func(err error) {
++				require.NoError(t, err)
++			},
++		},
++	}
++	for _, testCase := range testCases {
++		t.Run(testCase.name, func(t *testing.T) {
++			testCase.assertions(
++				testCase.reconciler.ensureSecretPermissions(
++					context.Background(),
++					&kargoapi.Project{},
++				),
++			)
+ 		})
+ 	}
+ }
+diff --git a/internal/webhook/project/webhook_test.go b/internal/webhook/project/webhook_test.go
+index 4f72ec69..4bbd6b84 100644
+--- a/internal/webhook/project/webhook_test.go
++++ b/internal/webhook/project/webhook_test.go
+@@ -23,12 +23,18 @@ import (
+ )
+ 
+ func TestNewWebhook(t *testing.T) {
+-	w := newWebhook(fake.NewClientBuilder().Build())
++	testCfg := WebhookConfig{
++		KargoNamespace: "fake-namespace",
++	}
++	w := newWebhook(fake.NewClientBuilder().Build(), testCfg)
+ 	require.NotNil(t, w)
++	require.Equal(t, testCfg, w.cfg)
+ 	require.NotNil(t, w.validateSpecFn)
++	require.NotNil(t, w.ensureNamespaceFn)
++	require.NotNil(t, w.ensureSecretPermissionsFn)
+ 	require.NotNil(t, w.getNamespaceFn)
+ 	require.NotNil(t, w.createNamespaceFn)
+-	require.NotNil(t, w.updateNamespaceFn)
++	require.NotNil(t, w.createRoleBindingFn)
+ }
+ 
+ func TestValidateCreate(t *testing.T) {
+@@ -37,15 +43,14 @@ func TestValidateCreate(t *testing.T) {
+ 		webhook    *webhook
+ 		assertions func(error)
+ 	}{
+-
+ 		{
+ 			name: "error validating spec",
+ 			webhook: &webhook{
+-				validateSpecFn: func(f *field.Path, promotionPolicies *kargoapi.ProjectSpec) field.ErrorList {
++				validateSpecFn: func(f *field.Path, spec *kargoapi.ProjectSpec) field.ErrorList {
+ 					return field.ErrorList{
+ 						field.Invalid(
+ 							f,
+-							promotionPolicies,
++							spec,
+ 							"something was invalid",
+ 						),
+ 					}
+@@ -58,20 +63,14 @@ func TestValidateCreate(t *testing.T) {
+ 				require.Equal(t, int32(http.StatusUnprocessableEntity), statusErr.ErrStatus.Code)
+ 			},
+ 		},
+-
+ 		{
+-			name: "error getting namespace",
++			name: "error ensuring namespace",
+ 			webhook: &webhook{
+ 				validateSpecFn: func(*field.Path, *kargoapi.ProjectSpec) field.ErrorList {
+ 					return nil
+ 				},
+-				getNamespaceFn: func(
+-					context.Context,
+-					types.NamespacedName,
+-					client.Object,
+-					...client.GetOption,
+-				) error {
+-					return errors.New("something went wrong")
++				ensureNamespaceFn: func(context.Context, *kargoapi.Project) error {
++					return apierrors.NewInternalError(errors.New("something went wrong"))
+ 				},
+ 			},
+ 			assertions: func(err error) {
+@@ -81,31 +80,107 @@ func TestValidateCreate(t *testing.T) {
+ 				require.Equal(t, int32(http.StatusInternalServerError), statusErr.ErrStatus.Code)
+ 			},
+ 		},
++	}
++	for _, testCase := range testCases {
++		ctx := admission.NewContextWithRequest(
++			context.Background(),
++			admission.Request{
++				AdmissionRequest: admissionv1.AdmissionRequest{
++					DryRun: ptr.To(false),
++				},
++			},
++		)
++		t.Run(testCase.name, func(t *testing.T) {
++			_, err := testCase.webhook.ValidateCreate(
++				ctx,
++				&kargoapi.Project{
++					ObjectMeta: metav1.ObjectMeta{
++						UID: types.UID("fake-uid"),
++					},
++				},
++			)
++			testCase.assertions(err)
++		})
++	}
++}
++
++func TestValidateSpec(t *testing.T) {
++	testCases := []struct {
++		name       string
++		spec       *kargoapi.ProjectSpec
++		assertions func(*kargoapi.ProjectSpec, field.ErrorList)
++	}{
++		{
++			name: "nil",
++			assertions: func(_ *kargoapi.ProjectSpec, errs field.ErrorList) {
++				require.Nil(t, errs)
++			},
++		},
++		{
++			name: "invalid",
++			spec: &kargoapi.ProjectSpec{
++				// Has two conflicting PromotionPolicies...
++				PromotionPolicies: []kargoapi.PromotionPolicy{
++					{Stage: "fake-stage"},
++					{Stage: "fake-stage"},
++				},
++			},
++			assertions: func(spec *kargoapi.ProjectSpec, errs field.ErrorList) {
++				require.Equal(
++					t,
++					field.ErrorList{
++						{
++							Type:     field.ErrorTypeInvalid,
++							Field:    "spec.promotionPolicies",
++							BadValue: spec.PromotionPolicies,
++							Detail:   "multiple spec.promotionPolicies reference stage fake-stage",
++						},
++					},
++					errs,
++				)
++			},
++		},
++		{
++			name: "valid",
++			spec: &kargoapi.ProjectSpec{
++				PromotionPolicies: []kargoapi.PromotionPolicy{
++					{Stage: "fake-stage"},
++				},
++			},
++			assertions: func(_ *kargoapi.ProjectSpec, errs field.ErrorList) {
++				require.Nil(t, errs)
++			},
++		},
++	}
++	w := &webhook{}
++	for _, testCase := range testCases {
++		t.Run(testCase.name, func(t *testing.T) {
++			testCase.assertions(
++				testCase.spec,
++				w.validateSpec(field.NewPath("spec"), testCase.spec),
++			)
++		})
++	}
++}
++
++func TestEnsureNamespace(t *testing.T) {
++	testCases := []struct {
++		name       string
++		webhook    *webhook
++		assertions func(error)
++	}{
+ 
+ 		{
+-			name: "namespace exists, is not owned by project, but is labeled " +
+-				"as a project; error updating namespace",
++			name: "error getting namespace",
+ 			webhook: &webhook{
+ 				validateSpecFn: func(*field.Path, *kargoapi.ProjectSpec) field.ErrorList {
+ 					return nil
+ 				},
+ 				getNamespaceFn: func(
+-					_ context.Context,
+-					_ types.NamespacedName,
+-					obj client.Object,
+-					_ ...client.GetOption,
+-				) error {
+-					ns, ok := obj.(*corev1.Namespace)
+-					require.True(t, ok)
+-					ns.Labels = map[string]string{
+-						kargoapi.ProjectLabelKey: kargoapi.LabelTrueValue,
+-					}
+-					return nil
+-				},
+-				updateNamespaceFn: func(
+ 					context.Context,
++					types.NamespacedName,
+ 					client.Object,
+-					...client.UpdateOption,
++					...client.GetOption,
+ 				) error {
+ 					return errors.New("something went wrong")
+ 				},
+@@ -114,59 +189,51 @@ func TestValidateCreate(t *testing.T) {
+ 				require.Error(t, err)
+ 				statusErr, ok := err.(*apierrors.StatusError)
+ 				require.True(t, ok)
+-				require.Equal(
+-					t,
+-					int32(http.StatusInternalServerError),
+-					statusErr.ErrStatus.Code,
+-				)
++				require.Equal(t, int32(http.StatusInternalServerError), statusErr.ErrStatus.Code)
+ 			},
+ 		},
+ 
+ 		{
+-			name: "namespace exists, is not owned by project, but is labeled " +
+-				"as a project; success updating namespace",
++			name: "namespace exists, has no owner, but isn't labeled as a project",
+ 			webhook: &webhook{
+ 				validateSpecFn: func(*field.Path, *kargoapi.ProjectSpec) field.ErrorList {
+ 					return nil
+ 				},
+ 				getNamespaceFn: func(
+-					_ context.Context,
+-					_ types.NamespacedName,
+-					obj client.Object,
+-					_ ...client.GetOption,
+-				) error {
+-					ns, ok := obj.(*corev1.Namespace)
+-					require.True(t, ok)
+-					ns.Labels = map[string]string{
+-						kargoapi.ProjectLabelKey: kargoapi.LabelTrueValue,
+-					}
+-					return nil
+-				},
+-				updateNamespaceFn: func(
+ 					context.Context,
++					types.NamespacedName,
+ 					client.Object,
+-					...client.UpdateOption,
++					...client.GetOption,
+ 				) error {
+ 					return nil
+ 				},
+ 			},
+ 			assertions: func(err error) {
+-				require.NoError(t, err)
++				require.Error(t, err)
++				statusErr, ok := err.(*apierrors.StatusError)
++				require.True(t, ok)
++				require.Equal(t, int32(http.StatusConflict), statusErr.ErrStatus.Code)
+ 			},
+ 		},
+ 
+ 		{
+-			name: "namespace exists, is not owned by project, and is not labeled as a project",
++			name: "namespace exists and has one owner that isn't the Project",
+ 			webhook: &webhook{
+ 				validateSpecFn: func(*field.Path, *kargoapi.ProjectSpec) field.ErrorList {
+ 					return nil
+ 				},
+ 				getNamespaceFn: func(
+-					context.Context,
+-					types.NamespacedName,
+-					client.Object,
+-					...client.GetOption,
++					_ context.Context,
++					_ types.NamespacedName,
++					obj client.Object,
++					_ ...client.GetOption,
+ 				) error {
++					ns := obj.(*corev1.Namespace) // nolint: forcetypeassert
++					ns.OwnerReferences = []metav1.OwnerReference{
++						{
++							UID: types.UID("wrong-fake-uid"),
++						},
++					}
+ 					return nil
+ 				},
+ 			},
+@@ -179,7 +246,7 @@ func TestValidateCreate(t *testing.T) {
+ 		},
+ 
+ 		{
+-			name: "namespace exists and is owned by project",
++			name: "namespace has multiple owners",
+ 			webhook: &webhook{
+ 				validateSpecFn: func(*field.Path, *kargoapi.ProjectSpec) field.ErrorList {
+ 					return nil
+@@ -191,16 +258,15 @@ func TestValidateCreate(t *testing.T) {
+ 					_ ...client.GetOption,
+ 				) error {
+ 					ns := obj.(*corev1.Namespace) // nolint: forcetypeassert
+-					ns.OwnerReferences = []metav1.OwnerReference{
+-						{
+-							UID: types.UID("fake-uid"),
+-						},
+-					}
++					ns.OwnerReferences = []metav1.OwnerReference{{}, {}}
+ 					return nil
+ 				},
+ 			},
+ 			assertions: func(err error) {
+-				require.NoError(t, err)
++				require.Error(t, err)
++				statusErr, ok := err.(*apierrors.StatusError)
++				require.True(t, ok)
++				require.Equal(t, int32(http.StatusConflict), statusErr.ErrStatus.Code)
+ 			},
+ 		},
+ 
+@@ -275,73 +341,98 @@ func TestValidateCreate(t *testing.T) {
+ 			},
+ 		)
+ 		t.Run(testCase.name, func(t *testing.T) {
+-			_, err := testCase.webhook.ValidateCreate(
+-				ctx,
+-				&kargoapi.Project{
+-					ObjectMeta: metav1.ObjectMeta{
+-						UID: types.UID("fake-uid"),
++			testCase.assertions(
++				testCase.webhook.ensureNamespace(
++					ctx,
++					&kargoapi.Project{
++						ObjectMeta: metav1.ObjectMeta{
++							UID: types.UID("fake-uid"),
++						},
+ 					},
+-				},
++				),
+ 			)
+-			testCase.assertions(err)
+ 		})
+ 	}
+ }
+ 
+-func TestValidateSpec(t *testing.T) {
++func TestEnsureSecretPermissions(t *testing.T) {
+ 	testCases := []struct {
+ 		name       string
+-		spec       *kargoapi.ProjectSpec
+-		assertions func(*kargoapi.ProjectSpec, field.ErrorList)
++		webhook    *webhook
++		assertions func(error)
+ 	}{
+ 		{
+-			name: "nil",
+-			assertions: func(_ *kargoapi.ProjectSpec, errs field.ErrorList) {
+-				require.Nil(t, errs)
+-			},
+-		},
+-		{
+-			name: "invalid",
+-			spec: &kargoapi.ProjectSpec{
+-				// Has two conflicting PromotionPolicies...
+-				PromotionPolicies: []kargoapi.PromotionPolicy{
+-					{Stage: "fake-stage"},
+-					{Stage: "fake-stage"},
++			name: "error creating role binding",
++			webhook: &webhook{
++				createRoleBindingFn: func(
++					context.Context,
++					client.Object,
++					...client.CreateOption,
++				) error {
++					return errors.New("something went wrong")
+ 				},
+ 			},
+-			assertions: func(spec *kargoapi.ProjectSpec, errs field.ErrorList) {
++			assertions: func(err error) {
++				require.Error(t, err)
++				statusErr, ok := err.(*apierrors.StatusError)
++				require.True(t, ok)
+ 				require.Equal(
+ 					t,
+-					field.ErrorList{
+-						{
+-							Type:     field.ErrorTypeInvalid,
+-							Field:    "spec.promotionPolicies",
+-							BadValue: spec.PromotionPolicies,
+-							Detail:   "multiple spec.promotionPolicies reference stage fake-stage",
+-						},
+-					},
+-					errs,
++					int32(http.StatusInternalServerError),
++					statusErr.ErrStatus.Code,
+ 				)
+ 			},
+ 		},
+ 		{
+-			name: "valid",
+-			spec: &kargoapi.ProjectSpec{
+-				PromotionPolicies: []kargoapi.PromotionPolicy{
+-					{Stage: "fake-stage"},
++			name: "role binding already exists",
++			webhook: &webhook{
++				createRoleBindingFn: func(
++					context.Context,
++					client.Object,
++					...client.CreateOption,
++				) error {
++					return apierrors.NewAlreadyExists(schema.GroupResource{}, "")
+ 				},
+ 			},
+-			assertions: func(_ *kargoapi.ProjectSpec, errs field.ErrorList) {
+-				require.Nil(t, errs)
++			assertions: func(err error) {
++				require.NoError(t, err)
++			},
++		},
++		{
++			name: "success creating role binding",
++			webhook: &webhook{
++				createRoleBindingFn: func(
++					context.Context,
++					client.Object,
++					...client.CreateOption,
++				) error {
++					return nil
++				},
++			},
++			assertions: func(err error) {
++				require.NoError(t, err)
+ 			},
+ 		},
+ 	}
+-	w := &webhook{}
+ 	for _, testCase := range testCases {
++		ctx := admission.NewContextWithRequest(
++			context.Background(),
++			admission.Request{
++				AdmissionRequest: admissionv1.AdmissionRequest{
++					DryRun: ptr.To(false),
++				},
++			},
++		)
+ 		t.Run(testCase.name, func(t *testing.T) {
+ 			testCase.assertions(
+-				testCase.spec,
+-				w.validateSpec(field.NewPath("spec"), testCase.spec),
++				testCase.webhook.ensureSecretPermissions(
++					ctx,
++					&kargoapi.Project{
++						ObjectMeta: metav1.ObjectMeta{
++							UID: types.UID("fake-uid"),
++						},
++					},
++				),
+ 			)
+ 		})
+ 	}

@@ -1,0 +1,996 @@
+diff --git a/integration-tests/acp-telemetry.test.ts b/integration-tests/acp-telemetry.test.ts
+index 970239de9..393156df3 100644
+--- a/integration-tests/acp-telemetry.test.ts
++++ b/integration-tests/acp-telemetry.test.ts
+@@ -72,7 +72,6 @@ describe('ACP telemetry', () => {
+           GEMINI_TELEMETRY_ENABLED: 'true',
+           GEMINI_TELEMETRY_TARGET: 'local',
+           GEMINI_TELEMETRY_OUTFILE: telemetryPath,
+-          // GEMINI_DEV_TRACING not set: fake responses aren't instrumented for spans
+         },
+       },
+     );
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.test.tsx b/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
+index 82bda12ca..eb7e029b9 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
++++ b/packages/cli/src/ui/hooks/useGeminiStream.test.tsx
+@@ -25,6 +25,7 @@ import type {
+   Config,
+   EditorType,
+   AnyToolInvocation,
++  SpanMetadata,
+ } from '@google/gemini-cli-core';
+ import {
+   CoreToolCallStatus,
+@@ -39,6 +40,7 @@ import {
+   coreEvents,
+   CoreEvent,
+   MCPDiscoveryState,
++  GeminiCliOperation,
+   getPlanModeExitMessage,
+ } from '@google/gemini-cli-core';
+ import type { Part, PartListUnion } from '@google/genai';
+@@ -101,6 +103,19 @@ const MockValidationRequiredError = vi.hoisted(
+     },
+ );
+ 
++const mockRunInDevTraceSpan = vi.hoisted(() =>
++  vi.fn(async (opts, fn) => {
++    const metadata: SpanMetadata = {
++      name: opts.operation,
++      attributes: opts.attributes || {},
++    };
++    return await fn({
++      metadata,
++      endSpan: vi.fn(),
++    });
++  }),
++);
++
+ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
+   const actualCoreModule = (await importOriginal()) as any;
+   return {
+@@ -113,6 +128,7 @@ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
+     tokenLimit: vi.fn().mockReturnValue(100), // Mock tokenLimit
+     recordToolCallInteractions: vi.fn().mockResolvedValue(undefined),
+     getCodeAssistServer: vi.fn().mockReturnValue(undefined),
++    runInDevTraceSpan: mockRunInDevTraceSpan,
+   };
+ });
+ 
+@@ -794,6 +810,23 @@ describe('useGeminiStream', () => {
+           item.text.includes('Got it. Focusing on tests only.'),
+       ),
+     ).toBe(true);
++
++    expect(mockRunInDevTraceSpan).toHaveBeenCalledWith(
++      expect.objectContaining({
++        operation: GeminiCliOperation.SystemPrompt,
++      }),
++      expect.any(Function),
++    );
++
++    const spanArgs = mockRunInDevTraceSpan.mock.calls[0];
++    const fn = spanArgs[1];
++    const metadata = { attributes: {} };
++    await act(async () => {
++      await fn({ metadata, endSpan: vi.fn() });
++    });
++    expect(metadata).toMatchObject({
++      input: sentParts,
++    });
+   });
+ 
+   it('should handle all tool calls being cancelled', async () => {
+@@ -2452,6 +2485,11 @@ describe('useGeminiStream', () => {
+     // This is the core fix validation: Rationale comes before tools are even scheduled (awaited)
+     expect(rationaleIndex).toBeLessThan(scheduleIndex);
+     expect(rationaleIndex).toBeLessThan(toolGroupIndex);
++
++    // Ensure all state updates from recursive submitQuery are settled
++    await waitFor(() => {
++      expect(result.current.streamingState).toBe(StreamingState.Idle);
++    });
+   });
+ 
+   it('should process @include commands, adding user turn after processing to prevent race conditions', async () => {
+@@ -3554,4 +3592,31 @@ describe('useGeminiStream', () => {
+       expect(result.current.pendingHistoryItems.length).toEqual(0);
+     });
+   });
++
++  it('should trace UserPrompt telemetry on submitQuery', async () => {
++    const { result } = renderTestHook();
++
++    mockSendMessageStream.mockReturnValue(
++      (async function* () {
++        yield { type: ServerGeminiEventType.Content, value: 'Response' };
++      })(),
++    );
++
++    await act(async () => {
++      await result.current.submitQuery('telemetry test query');
++    });
++
++    const userPromptCall = mockRunInDevTraceSpan.mock.calls.find(
++      (call) =>
++        call[0].operation === GeminiCliOperation.UserPrompt ||
++        call[0].operation === 'UserPrompt',
++    );
++    expect(userPromptCall).toBeDefined();
++
++    const spanMetadata = {} as SpanMetadata;
++    await act(async () => {
++      await userPromptCall![1]({ metadata: spanMetadata, endSpan: vi.fn() });
++    });
++    expect(spanMetadata.input).toBe('telemetry test query');
++  });
+ });
+diff --git a/packages/core/src/agents/subagent-tool.test.ts b/packages/core/src/agents/subagent-tool.test.ts
+index 40db4822a..74f005135 100644
+--- a/packages/core/src/agents/subagent-tool.test.ts
++++ b/packages/core/src/agents/subagent-tool.test.ts
+@@ -23,10 +23,30 @@ import type {
+   ToolInvocation,
+   ToolResult,
+ } from '../tools/tools.js';
++import {
++  GeminiCliOperation,
++  GEN_AI_AGENT_DESCRIPTION,
++  GEN_AI_AGENT_NAME,
++} from '../telemetry/constants.js';
+ import type { ToolRegistry } from 'src/tools/tool-registry.js';
+ 
+ vi.mock('./subagent-tool-wrapper.js');
+ 
++// Mock runInDevTraceSpan
++const runInDevTraceSpan = vi.hoisted(() =>
++  vi.fn(async (opts, fn) => {
++    const metadata = { attributes: opts.attributes || {} };
++    return fn({
++      metadata,
++      endSpan: vi.fn(),
++    });
++  }),
++);
++
++vi.mock('../telemetry/trace.js', () => ({
++  runInDevTraceSpan,
++}));
++
+ const MockSubagentToolWrapper = vi.mocked(SubagentToolWrapper);
+ 
+ const testDefinition: LocalAgentDefinition = {
+@@ -155,6 +175,25 @@ describe('SubAgentInvocation', () => {
+       abortSignal,
+       updateOutput,
+     );
++
++    expect(runInDevTraceSpan).toHaveBeenCalledWith(
++      expect.objectContaining({
++        operation: GeminiCliOperation.AgentCall,
++        attributes: expect.objectContaining({
++          [GEN_AI_AGENT_NAME]: testDefinition.name,
++          [GEN_AI_AGENT_DESCRIPTION]: testDefinition.description,
++        }),
++      }),
++      expect.any(Function),
++    );
++
++    // Verify metadata was set on the span
++    const spanCallback = vi.mocked(runInDevTraceSpan).mock.calls[0][1];
++    const mockMetadata = { input: undefined, output: undefined };
++    const mockSpan = { metadata: mockMetadata, endSpan: vi.fn() };
++    await spanCallback(mockSpan as Parameters<typeof spanCallback>[0]);
++    expect(mockMetadata.input).toBe(params);
++    expect(mockMetadata.output).toBe(mockResult);
+   });
+ 
+   describe('withUserHints', () => {
+diff --git a/packages/core/src/core/coreToolScheduler.test.ts b/packages/core/src/core/coreToolScheduler.test.ts
+index 844d930ea..6bdad0ddd 100644
+--- a/packages/core/src/core/coreToolScheduler.test.ts
++++ b/packages/core/src/core/coreToolScheduler.test.ts
+@@ -14,16 +14,14 @@ import {
+   type ErroredToolCall,
+   CoreToolCallStatus,
+ } from '../scheduler/types.js';
+-import type {
+-  ToolCallConfirmationDetails,
+-  ToolConfirmationPayload,
+-  ToolInvocation,
+-  ToolResult,
+-  Config,
+-  ToolRegistry,
+-  MessageBus,
+-} from '../index.js';
+ import {
++  type ToolCallConfirmationDetails,
++  type ToolConfirmationPayload,
++  type ToolInvocation,
++  type ToolResult,
++  type Config,
++  type ToolRegistry,
++  type MessageBus,
+   DEFAULT_TRUNCATE_TOOL_OUTPUT_THRESHOLD,
+   BaseDeclarativeTool,
+   BaseToolInvocation,
+@@ -33,6 +31,8 @@ import {
+   HookSystem,
+   PolicyDecision,
+   ToolErrorType,
++  DiscoveredMCPTool,
++  GeminiCliOperation,
+ } from '../index.js';
+ import { createMockMessageBus } from '../test-utils/mock-message-bus.js';
+ import {
+@@ -43,12 +43,22 @@ import {
+ import * as modifiableToolModule from '../tools/modifiable-tool.js';
+ import { DEFAULT_GEMINI_MODEL } from '../config/models.js';
+ import type { PolicyEngine } from '../policy/policy-engine.js';
+-import { DiscoveredMCPTool } from '../tools/mcp-tool.js';
++import { runInDevTraceSpan, type SpanMetadata } from '../telemetry/trace.js';
+ 
+ vi.mock('fs/promises', () => ({
+   writeFile: vi.fn(),
+ }));
+ 
++vi.mock('../telemetry/trace.js', () => ({
++  runInDevTraceSpan: vi.fn(async (opts, fn) => {
++    const metadata = { attributes: opts.attributes || {} };
++    return fn({
++      metadata,
++      endSpan: vi.fn(),
++    });
++  }),
++}));
++
+ class TestApprovalTool extends BaseDeclarativeTool<{ id: string }, ToolResult> {
+   static readonly Name = 'testApprovalTool';
+ 
+@@ -362,6 +372,21 @@ describe('CoreToolScheduler', () => {
+     const completedCalls = onAllToolCallsComplete.mock
+       .calls[0][0] as ToolCall[];
+     expect(completedCalls[0].status).toBe(CoreToolCallStatus.Cancelled);
++
++    expect(runInDevTraceSpan).toHaveBeenCalledWith(
++      expect.objectContaining({
++        operation: GeminiCliOperation.ScheduleToolCalls,
++      }),
++      expect.any(Function),
++    );
++
++    const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++    const fn = spanArgs[1];
++    const metadata: SpanMetadata = { name: '', attributes: {} };
++    await fn({ metadata, endSpan: vi.fn() });
++    expect(metadata).toMatchObject({
++      input: [request],
++    });
+   });
+ 
+   it('should cancel all tools when cancelAll is called', async () => {
+diff --git a/packages/core/src/core/loggingContentGenerator.test.ts b/packages/core/src/core/loggingContentGenerator.test.ts
+index 01a7162f1..fc9103491 100644
+--- a/packages/core/src/core/loggingContentGenerator.test.ts
++++ b/packages/core/src/core/loggingContentGenerator.test.ts
+@@ -15,7 +15,13 @@ vi.mock('../telemetry/loggers.js', () => ({
+ }));
+ 
+ const runInDevTraceSpan = vi.hoisted(() =>
+-  vi.fn(async (meta, fn) => fn({ metadata: {}, endSpan: vi.fn() })),
++  vi.fn(async (opts, fn) => {
++    const metadata = { attributes: opts.attributes || {} };
++    return fn({
++      metadata,
++      endSpan: vi.fn(),
++    });
++  }),
+ );
+ 
+ vi.mock('../telemetry/trace.js', () => ({
+@@ -38,6 +44,16 @@ import type { Config } from '../config/config.js';
+ import { UserTierId } from '../code_assist/types.js';
+ import { ApiRequestEvent, LlmRole } from '../telemetry/types.js';
+ import { FatalAuthenticationError } from '../utils/errors.js';
++import {
++  GeminiCliOperation,
++  GEN_AI_PROMPT_NAME,
++  GEN_AI_REQUEST_MODEL,
++  GEN_AI_SYSTEM_INSTRUCTIONS,
++  GEN_AI_TOOL_DEFINITIONS,
++  GEN_AI_USAGE_INPUT_TOKENS,
++  GEN_AI_USAGE_OUTPUT_TOKENS,
++} from '../telemetry/constants.js';
++import { type SpanMetadata } from '../telemetry/trace.js';
+ 
+ describe('LoggingContentGenerator', () => {
+   let wrapped: ContentGenerator;
+@@ -73,10 +89,20 @@ describe('LoggingContentGenerator', () => {
+       const req = {
+         contents: [{ role: 'user', parts: [{ text: 'hello' }] }],
+         model: 'gemini-pro',
++        config: {
++          systemInstruction: { parts: [{ text: 'system instructions' }] },
++          tools: [{ functionDeclarations: [{ name: 'myTool' }] }],
++        },
+       };
+       const userPromptId = 'prompt-123';
+       const response: GenerateContentResponse = {
+-        candidates: [],
++        candidates: [
++          {
++            content: {
++              parts: [{ text: 'hello' }],
++            },
++          },
++        ],
+         usageMetadata: {
+           promptTokenCount: 1,
+           candidatesTokenCount: 2,
+@@ -113,12 +139,47 @@ describe('LoggingContentGenerator', () => {
+       );
+       const responseEvent = vi.mocked(logApiResponse).mock.calls[0][1];
+       expect(responseEvent.duration_ms).toBe(1000);
++
++      expect(runInDevTraceSpan).toHaveBeenCalledWith(
++        expect.objectContaining({
++          operation: GeminiCliOperation.LLMCall,
++          attributes: expect.objectContaining({
++            [GEN_AI_REQUEST_MODEL]: 'gemini-pro',
++            [GEN_AI_PROMPT_NAME]: userPromptId,
++            [GEN_AI_SYSTEM_INSTRUCTIONS]: JSON.stringify(
++              req.config.systemInstruction,
++            ),
++            [GEN_AI_TOOL_DEFINITIONS]: JSON.stringify(req.config.tools),
++          }),
++        }),
++        expect.any(Function),
++      );
++
++      const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++      const fn = spanArgs[1];
++      const metadata: SpanMetadata = { name: '', attributes: {} };
++      await fn({ metadata, endSpan: vi.fn() });
++
++      expect(metadata).toMatchObject({
++        input: req.contents,
++        output: response.candidates?.[0]?.content,
++        attributes: {
++          [GEN_AI_USAGE_INPUT_TOKENS]: 1,
++          [GEN_AI_USAGE_OUTPUT_TOKENS]: 2,
++        },
++      });
+     });
+ 
+     it('should log error on failure', async () => {
+       const req = {
+         contents: [{ role: 'user', parts: [{ text: 'hello' }] }],
+         model: 'gemini-pro',
++        config: {
++          systemInstruction: {
++            parts: [{ text: 'stream system instructions' }],
++          },
++          tools: [{ functionDeclarations: [{ name: 'streamTool' }] }],
++        },
+       };
+       const userPromptId = 'prompt-123';
+       const error = new Error('test error');
+@@ -126,7 +187,7 @@ describe('LoggingContentGenerator', () => {
+       const startTime = new Date('2025-01-01T00:00:00.000Z');
+       vi.setSystemTime(startTime);
+ 
+-      const promise = loggingContentGenerator.generateContent(
++      let promise = loggingContentGenerator.generateContent(
+         req,
+         userPromptId,
+         LlmRole.MAIN,
+@@ -142,6 +203,32 @@ describe('LoggingContentGenerator', () => {
+       );
+       const errorEvent = vi.mocked(logApiError).mock.calls[0][1];
+       expect(errorEvent.duration_ms).toBe(1000);
++
++      expect(runInDevTraceSpan).toHaveBeenCalledWith(
++        expect.objectContaining({
++          operation: GeminiCliOperation.LLMCall,
++          attributes: expect.objectContaining({
++            [GEN_AI_REQUEST_MODEL]: 'gemini-pro',
++            [GEN_AI_PROMPT_NAME]: userPromptId,
++            [GEN_AI_SYSTEM_INSTRUCTIONS]: JSON.stringify(
++              req.config.systemInstruction,
++            ),
++            [GEN_AI_TOOL_DEFINITIONS]: JSON.stringify(req.config.tools),
++          }),
++        }),
++        expect.any(Function),
++      );
++
++      const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++      const fn = spanArgs[1];
++      const metadata: SpanMetadata = { name: '', attributes: {} };
++      promise = fn({ metadata, endSpan: vi.fn() });
++
++      await expect(promise).rejects.toThrow(error);
++
++      expect(metadata).toMatchObject({
++        error,
++      });
+     });
+ 
+     describe('error type extraction', () => {
+@@ -163,10 +250,22 @@ describe('LoggingContentGenerator', () => {
+       const req = {
+         contents: [{ role: 'user', parts: [{ text: 'hello' }] }],
+         model: 'gemini-pro',
++        config: {
++          systemInstruction: {
++            parts: [{ text: 'stream system instructions' }],
++          },
++          tools: [{ functionDeclarations: [{ name: 'streamTool' }] }],
++        },
+       };
+       const userPromptId = 'prompt-123';
+       const response = {
+-        candidates: [],
++        candidates: [
++          {
++            content: {
++              parts: [{ text: 'hello' }],
++            },
++          },
++        ],
+         usageMetadata: {
+           promptTokenCount: 1,
+           candidatesTokenCount: 2,
+@@ -186,7 +285,7 @@ describe('LoggingContentGenerator', () => {
+ 
+       vi.setSystemTime(startTime);
+ 
+-      const stream = await loggingContentGenerator.generateContentStream(
++      let stream = await loggingContentGenerator.generateContentStream(
+         req,
+ 
+         userPromptId,
+@@ -211,6 +310,44 @@ describe('LoggingContentGenerator', () => {
+       );
+       const responseEvent = vi.mocked(logApiResponse).mock.calls[0][1];
+       expect(responseEvent.duration_ms).toBe(1000);
++
++      expect(runInDevTraceSpan).toHaveBeenCalledWith(
++        expect.objectContaining({
++          operation: GeminiCliOperation.LLMCall,
++          noAutoEnd: true,
++          attributes: expect.objectContaining({
++            [GEN_AI_REQUEST_MODEL]: 'gemini-pro',
++            [GEN_AI_PROMPT_NAME]: userPromptId,
++            [GEN_AI_SYSTEM_INSTRUCTIONS]: JSON.stringify(
++              req.config.systemInstruction,
++            ),
++            [GEN_AI_TOOL_DEFINITIONS]: JSON.stringify(req.config.tools),
++          }),
++        }),
++        expect.any(Function),
++      );
++
++      const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++      const fn = spanArgs[1];
++      const metadata: SpanMetadata = { name: '', attributes: {} };
++
++      vi.mocked(wrapped.generateContentStream).mockResolvedValue(
++        createAsyncGenerator(),
++      );
++      stream = await fn({ metadata, endSpan: vi.fn() });
++
++      for await (const _ of stream) {
++        // consume stream
++      }
++
++      expect(metadata).toMatchObject({
++        input: req.contents,
++        output: [response.candidates?.[0]?.content],
++        attributes: {
++          [GEN_AI_USAGE_INPUT_TOKENS]: 1,
++          [GEN_AI_USAGE_OUTPUT_TOKENS]: 2,
++        },
++      });
+     });
+ 
+     it('should log error on failure', async () => {
+@@ -328,6 +465,9 @@ describe('LoggingContentGenerator', () => {
+       const req = {
+         contents: [{ role: 'user', parts: [] }],
+         model: 'gemini-pro',
++        config: {
++          mimeType: 'text/plain',
++        },
+       };
+       const response: EmbedContentResponse = { embeddings: [{ values: [] }] };
+       vi.mocked(wrapped.embedContent).mockResolvedValue(response);
+@@ -336,6 +476,26 @@ describe('LoggingContentGenerator', () => {
+ 
+       expect(wrapped.embedContent).toHaveBeenCalledWith(req);
+       expect(result).toBe(response);
++
++      expect(runInDevTraceSpan).toHaveBeenCalledWith(
++        expect.objectContaining({
++          operation: GeminiCliOperation.LLMCall,
++          attributes: expect.objectContaining({
++            [GEN_AI_REQUEST_MODEL]: req.model,
++          }),
++        }),
++        expect.any(Function),
++      );
++
++      const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++      const fn = spanArgs[1];
++      const metadata: SpanMetadata = { name: '', attributes: {} };
++      await fn({ metadata, endSpan: vi.fn() });
++
++      expect(metadata).toMatchObject({
++        input: req.contents,
++        output: response,
++      });
+     });
+   });
+ 
+diff --git a/packages/core/src/scheduler/scheduler.test.ts b/packages/core/src/scheduler/scheduler.test.ts
+index fd5c56221..b2c1adade 100644
+--- a/packages/core/src/scheduler/scheduler.test.ts
++++ b/packages/core/src/scheduler/scheduler.test.ts
+@@ -20,10 +20,18 @@ vi.mock('node:crypto', () => ({
+   randomUUID: vi.fn(),
+ }));
+ 
++const runInDevTraceSpan = vi.hoisted(() =>
++  vi.fn(async (opts, fn) => {
++    const metadata = { attributes: opts.attributes || {} };
++    return fn({
++      metadata,
++      endSpan: vi.fn(),
++    });
++  }),
++);
++
+ vi.mock('../telemetry/trace.js', () => ({
+-  runInDevTraceSpan: vi.fn(async (_opts, fn) =>
+-    fn({ metadata: { input: {}, output: {} } }),
+-  ),
++  runInDevTraceSpan,
+ }));
+ 
+ import { logToolCall } from '../telemetry/loggers.js';
+@@ -81,6 +89,7 @@ import type {
+ } from './types.js';
+ import { CoreToolCallStatus, ROOT_SCHEDULER_ID } from './types.js';
+ import { ToolErrorType } from '../tools/tool-error.js';
++import { GeminiCliOperation } from '../telemetry/constants.js';
+ import * as ToolUtils from '../utils/tool-utils.js';
+ import type { EditorType } from '../utils/editor.js';
+ import {
+@@ -366,6 +375,21 @@ describe('Scheduler (Orchestrator)', () => {
+           }),
+         ]),
+       );
++
++      expect(runInDevTraceSpan).toHaveBeenCalledWith(
++        expect.objectContaining({
++          operation: GeminiCliOperation.ScheduleToolCalls,
++        }),
++        expect.any(Function),
++      );
++
++      const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++      const fn = spanArgs[1];
++      const metadata = { attributes: {} };
++      await fn({ metadata, endSpan: vi.fn() });
++      expect(metadata).toMatchObject({
++        input: [req1],
++      });
+     });
+ 
+     it('should set approvalMode to PLAN when config returns PLAN', async () => {
+diff --git a/packages/core/src/scheduler/scheduler_parallel.test.ts b/packages/core/src/scheduler/scheduler_parallel.test.ts
+index 824cdc4a1..9febf494c 100644
+--- a/packages/core/src/scheduler/scheduler_parallel.test.ts
++++ b/packages/core/src/scheduler/scheduler_parallel.test.ts
+@@ -20,10 +20,18 @@ vi.mock('node:crypto', () => ({
+   randomUUID: vi.fn(),
+ }));
+ 
++const runInDevTraceSpan = vi.hoisted(() =>
++  vi.fn(async (opts, fn) => {
++    const metadata = { name: '', attributes: opts.attributes || {} };
++    return fn({
++      metadata,
++      endSpan: vi.fn(),
++    });
++  }),
++);
++
+ vi.mock('../telemetry/trace.js', () => ({
+-  runInDevTraceSpan: vi.fn(async (_opts, fn) =>
+-    fn({ metadata: { input: {}, output: {} } }),
+-  ),
++  runInDevTraceSpan,
+ }));
+ vi.mock('../telemetry/loggers.js', () => ({
+   logToolCall: vi.fn(),
+@@ -71,6 +79,7 @@ import type {
+   ToolCall,
+ } from './types.js';
+ import { ROOT_SCHEDULER_ID } from './types.js';
++import { GeminiCliOperation } from '../telemetry/constants.js';
+ import type { EditorType } from '../utils/editor.js';
+ 
+ describe('Scheduler Parallel Execution', () => {
+@@ -306,6 +315,21 @@ describe('Scheduler Parallel Execution', () => {
+     );
+ 
+     expect(executionLog).toContain('end-call-3');
++
++    expect(runInDevTraceSpan).toHaveBeenCalledWith(
++      expect.objectContaining({
++        operation: GeminiCliOperation.ScheduleToolCalls,
++      }),
++      expect.any(Function),
++    );
++
++    const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++    const fn = spanArgs[1];
++    const metadata = { name: '', attributes: {} };
++    await fn({ metadata, endSpan: vi.fn() });
++    expect(metadata).toMatchObject({
++      input: [req1, req2, req3],
++    });
+   });
+ 
+   it('should execute non-read-only tools sequentially', async () => {
+diff --git a/packages/core/src/scheduler/tool-executor.test.ts b/packages/core/src/scheduler/tool-executor.test.ts
+index 29db841aa..0d77204f4 100644
+--- a/packages/core/src/scheduler/tool-executor.test.ts
++++ b/packages/core/src/scheduler/tool-executor.test.ts
+@@ -6,8 +6,11 @@
+ 
+ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+ import { ToolExecutor } from './tool-executor.js';
+-import type { Config, AnyToolInvocation } from '../index.js';
+-import type { ToolResult } from '../tools/tools.js';
++import {
++  type Config,
++  type ToolResult,
++  type AnyToolInvocation,
++} from '../index.js';
+ import { makeFakeConfig } from '../test-utils/config.js';
+ import { MockTool } from '../test-utils/mock-tool.js';
+ import type { ScheduledToolCall } from './types.js';
+@@ -17,6 +20,12 @@ import * as fileUtils from '../utils/fileUtils.js';
+ import * as coreToolHookTriggers from '../core/coreToolHookTriggers.js';
+ import { ShellToolInvocation } from '../tools/shell.js';
+ import { createMockMessageBus } from '../test-utils/mock-message-bus.js';
++import {
++  GeminiCliOperation,
++  GEN_AI_TOOL_CALL_ID,
++  GEN_AI_TOOL_DESCRIPTION,
++  GEN_AI_TOOL_NAME,
++} from '../telemetry/constants.js';
+ 
+ // Mock file utils
+ vi.mock('../utils/fileUtils.js', () => ({
+@@ -28,6 +37,24 @@ vi.mock('../utils/fileUtils.js', () => ({
+ vi.mock('../core/coreToolHookTriggers.js', () => ({
+   executeToolWithHooks: vi.fn(),
+ }));
++// Mock runInDevTraceSpan
++const runInDevTraceSpan = vi.hoisted(() =>
++  vi.fn(async (opts, fn) => {
++    const metadata = { attributes: opts.attributes || {} };
++    return fn({
++      metadata,
++      endSpan: vi.fn(),
++    });
++  }),
++);
++
++vi.mock('../index.js', async (importOriginal) => {
++  const actual = await importOriginal<Record<string, unknown>>();
++  return {
++    ...actual,
++    runInDevTraceSpan,
++  };
++});
+ 
+ describe('ToolExecutor', () => {
+   let config: Config;
+@@ -57,6 +84,7 @@ describe('ToolExecutor', () => {
+   it('should execute a tool successfully', async () => {
+     const mockTool = new MockTool({
+       name: 'testTool',
++      description: 'Mock description',
+       execute: async () => ({
+         llmContent: 'Tool output',
+         returnDisplay: 'Tool output',
+@@ -97,11 +125,37 @@ describe('ToolExecutor', () => {
+         ?.response as Record<string, unknown>;
+       expect(response).toEqual({ output: 'Tool output' });
+     }
++
++    expect(runInDevTraceSpan).toHaveBeenCalledWith(
++      expect.objectContaining({
++        operation: GeminiCliOperation.ToolCall,
++        attributes: expect.objectContaining({
++          [GEN_AI_TOOL_NAME]: 'testTool',
++          [GEN_AI_TOOL_CALL_ID]: 'call-1',
++          [GEN_AI_TOOL_DESCRIPTION]: 'Mock description',
++        }),
++      }),
++      expect.any(Function),
++    );
++
++    const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++    const fn = spanArgs[1];
++    const metadata = { attributes: {} };
++    await fn({ metadata, endSpan: vi.fn() });
++    expect(metadata).toMatchObject({
++      input: scheduledCall.request,
++      output: {
++        ...result,
++        durationMs: expect.any(Number),
++        endTime: expect.any(Number),
++      },
++    });
+   });
+ 
+   it('should handle execution errors', async () => {
+     const mockTool = new MockTool({
+       name: 'failTool',
++      description: 'Mock description',
+     });
+     const invocation = mockTool.build({});
+ 
+@@ -134,6 +188,26 @@ describe('ToolExecutor', () => {
+     if (result.status === CoreToolCallStatus.Error) {
+       expect(result.response.error?.message).toBe('Tool Failed');
+     }
++
++    expect(runInDevTraceSpan).toHaveBeenCalledWith(
++      expect.objectContaining({
++        operation: GeminiCliOperation.ToolCall,
++        attributes: expect.objectContaining({
++          [GEN_AI_TOOL_NAME]: 'failTool',
++          [GEN_AI_TOOL_CALL_ID]: 'call-2',
++          [GEN_AI_TOOL_DESCRIPTION]: 'Mock description',
++        }),
++      }),
++      expect.any(Function),
++    );
++
++    const spanArgs = vi.mocked(runInDevTraceSpan).mock.calls[0];
++    const fn = spanArgs[1];
++    const metadata = { attributes: {} };
++    await fn({ metadata, endSpan: vi.fn() });
++    expect(metadata).toMatchObject({
++      error: new Error('Tool Failed'),
++    });
+   });
+ 
+   it('should return cancelled result when signal is aborted', async () => {
+diff --git a/packages/core/src/telemetry/trace.test.ts b/packages/core/src/telemetry/trace.test.ts
+new file mode 100644
+index 000000000..4d9aa0baa
+--- /dev/null
++++ b/packages/core/src/telemetry/trace.test.ts
+@@ -0,0 +1,188 @@
++/**
++ * @license
++ * Copyright 2026 Google LLC
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
++import { trace, SpanStatusCode, diag, type Tracer } from '@opentelemetry/api';
++import { runInDevTraceSpan } from './trace.js';
++import {
++  GeminiCliOperation,
++  GEN_AI_CONVERSATION_ID,
++  GEN_AI_AGENT_DESCRIPTION,
++  GEN_AI_AGENT_NAME,
++  GEN_AI_INPUT_MESSAGES,
++  GEN_AI_OPERATION_NAME,
++  GEN_AI_OUTPUT_MESSAGES,
++  SERVICE_DESCRIPTION,
++  SERVICE_NAME,
++} from './constants.js';
++
++vi.mock('@opentelemetry/api', async (importOriginal) => {
++  const original = await importOriginal<typeof import('@opentelemetry/api')>();
++  return {
++    ...original,
++    trace: {
++      getTracer: vi.fn(),
++    },
++    diag: {
++      error: vi.fn(),
++    },
++  };
++});
++
++vi.mock('../utils/session.js', () => ({
++  sessionId: 'test-session-id',
++}));
++
++describe('runInDevTraceSpan', () => {
++  const mockSpan = {
++    setAttribute: vi.fn(),
++    setStatus: vi.fn(),
++    recordException: vi.fn(),
++    end: vi.fn(),
++  };
++
++  const mockTracer = {
++    startActiveSpan: vi.fn((name, options, callback) => callback(mockSpan)),
++  } as unknown as Tracer;
++
++  beforeEach(() => {
++    vi.clearAllMocks();
++    vi.mocked(trace.getTracer).mockReturnValue(mockTracer);
++  });
++
++  afterEach(() => {
++    vi.unstubAllEnvs();
++  });
++
++  it('should start an active span', async () => {
++    const fn = vi.fn(async () => 'result');
++
++    const result = await runInDevTraceSpan(
++      { operation: GeminiCliOperation.LLMCall },
++      fn,
++    );
++
++    expect(result).toBe('result');
++    expect(trace.getTracer).toHaveBeenCalled();
++    expect(mockTracer.startActiveSpan).toHaveBeenCalledWith(
++      GeminiCliOperation.LLMCall,
++      {},
++      expect.any(Function),
++    );
++  });
++
++  it('should set default attributes on the span metadata', async () => {
++    await runInDevTraceSpan(
++      { operation: GeminiCliOperation.LLMCall },
++      async ({ metadata }) => {
++        expect(metadata.attributes[GEN_AI_OPERATION_NAME]).toBe(
++          GeminiCliOperation.LLMCall,
++        );
++        expect(metadata.attributes[GEN_AI_AGENT_NAME]).toBe(SERVICE_NAME);
++        expect(metadata.attributes[GEN_AI_AGENT_DESCRIPTION]).toBe(
++          SERVICE_DESCRIPTION,
++        );
++        expect(metadata.attributes[GEN_AI_CONVERSATION_ID]).toBe(
++          'test-session-id',
++        );
++      },
++    );
++  });
++
++  it('should set span attributes from metadata on completion', async () => {
++    await runInDevTraceSpan(
++      { operation: GeminiCliOperation.LLMCall },
++      async ({ metadata }) => {
++        metadata.input = { query: 'hello' };
++        metadata.output = { response: 'world' };
++        metadata.attributes['custom.attr'] = 'value';
++      },
++    );
++
++    expect(mockSpan.setAttribute).toHaveBeenCalledWith(
++      GEN_AI_INPUT_MESSAGES,
++      JSON.stringify({ query: 'hello' }),
++    );
++    expect(mockSpan.setAttribute).toHaveBeenCalledWith(
++      GEN_AI_OUTPUT_MESSAGES,
++      JSON.stringify({ response: 'world' }),
++    );
++    expect(mockSpan.setAttribute).toHaveBeenCalledWith('custom.attr', 'value');
++    expect(mockSpan.setStatus).toHaveBeenCalledWith({
++      code: SpanStatusCode.OK,
++    });
++    expect(mockSpan.end).toHaveBeenCalled();
++  });
++
++  it('should handle errors in the wrapped function', async () => {
++    const error = new Error('test error');
++    await expect(
++      runInDevTraceSpan({ operation: GeminiCliOperation.LLMCall }, async () => {
++        throw error;
++      }),
++    ).rejects.toThrow(error);
++
++    expect(mockSpan.setStatus).toHaveBeenCalledWith({
++      code: SpanStatusCode.ERROR,
++      message: 'test error',
++    });
++    expect(mockSpan.recordException).toHaveBeenCalledWith(error);
++    expect(mockSpan.end).toHaveBeenCalled();
++  });
++
++  it('should respect noAutoEnd option', async () => {
++    let capturedEndSpan: () => void = () => {};
++    const result = await runInDevTraceSpan(
++      { operation: GeminiCliOperation.LLMCall, noAutoEnd: true },
++      async ({ endSpan }) => {
++        capturedEndSpan = endSpan;
++        return 'streaming';
++      },
++    );
++
++    expect(result).toBe('streaming');
++    expect(mockSpan.end).not.toHaveBeenCalled();
++
++    capturedEndSpan();
++    expect(mockSpan.end).toHaveBeenCalled();
++  });
++
++  it('should automatically end span on error even if noAutoEnd is true', async () => {
++    const error = new Error('streaming error');
++    await expect(
++      runInDevTraceSpan(
++        { operation: GeminiCliOperation.LLMCall, noAutoEnd: true },
++        async () => {
++          throw error;
++        },
++      ),
++    ).rejects.toThrow(error);
++
++    expect(mockSpan.end).toHaveBeenCalled();
++  });
++
++  it('should handle exceptions in endSpan gracefully', async () => {
++    mockSpan.setAttribute.mockImplementation(() => {
++      throw new Error('attribute error');
++    });
++
++    await runInDevTraceSpan(
++      { operation: GeminiCliOperation.LLMCall },
++      async ({ metadata }) => {
++        metadata.input = 'trigger error';
++      },
++    );
++
++    expect(diag.error).toHaveBeenCalled();
++    expect(mockSpan.setStatus).toHaveBeenCalledWith(
++      expect.objectContaining({
++        code: SpanStatusCode.ERROR,
++        message: expect.stringContaining('attribute error'),
++      }),
++    );
++    expect(mockSpan.end).toHaveBeenCalled();
++  });
++});
+diff --git a/packages/sdk/src/agent.integration.test.ts b/packages/sdk/src/agent.integration.test.ts
+index 78229a81c..bd98890c5 100644
+--- a/packages/sdk/src/agent.integration.test.ts
++++ b/packages/sdk/src/agent.integration.test.ts
+@@ -4,7 +4,7 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import { describe, it, expect } from 'vitest';
++import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+ import { GeminiCliAgent } from './agent.js';
+ import * as path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+@@ -20,6 +20,13 @@ const getGoldenPath = (name: string) =>
+   path.resolve(__dirname, '../test-data', `${name}.json`);
+ 
+ describe('GeminiCliAgent Integration', () => {
++  beforeEach(() => {
++    vi.stubEnv('GEMINI_API_KEY', 'test-api-key');
++  });
++
++  afterEach(() => {
++    vi.unstubAllEnvs();
++  });
+   it('handles static instructions', async () => {
+     const goldenFile = getGoldenPath('agent-static-instructions');

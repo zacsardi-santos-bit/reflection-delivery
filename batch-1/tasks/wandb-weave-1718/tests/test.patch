@@ -1,0 +1,443 @@
+diff --git a/weave/tests/test_client_feedback.py b/weave/tests/test_client_feedback.py
+new file mode 100644
+index 0000000000..3436beca24
+--- /dev/null
++++ b/weave/tests/test_client_feedback.py
+@@ -0,0 +1,216 @@
++import pytest
++
++from ..trace_server import trace_server_interface as tsi
++from ..trace_server.errors import InvalidRequest
++from ..trace_server.interface.query import Query
++
++
++def test_feedback_apis(client):
++
++    project_id = client._project_id()
++
++    # Emoji from Jamie
++    req = tsi.FeedbackCreateReqForInsert(
++        project_id=project_id,
++        wb_user_id="VXNlcjo0NTI1NDQ=",
++        weave_ref="weave:///entity/project/object/name:digest",
++        feedback_type="wandb.reaction.1",
++        payload={"emoji": "🎱"},
++    )
++    res = client.server.feedback_create(req)
++    assert len(res.id) == 36
++    assert res.payload["alias"] == ":pool_8_ball:"
++    id_emoji_1 = res.id
++
++    # Another emoji from Jamie
++    req = tsi.FeedbackCreateReqForInsert(
++        project_id=project_id,
++        wb_user_id="VXNlcjo0NTI1NDQ=",
++        weave_ref="weave:///entity/project/object/name:digest",
++        feedback_type="wandb.reaction.1",
++        payload={"emoji": "👍🏻"},
++    )
++    res = client.server.feedback_create(req)
++    assert len(res.id) == 36
++    assert res.payload["detoned_alias"] == ":thumbs_up:"
++    id_emoji_2 = res.id
++
++    # Emoji from Shawn
++    req = tsi.FeedbackCreateReqForInsert(
++        project_id=project_id,
++        wb_user_id="VXNlcjoxOQ==",
++        weave_ref="weave:///entity/project/object/name:digest",
++        feedback_type="wandb.reaction.1",
++        payload={"emoji": "👍"},
++    )
++    res = client.server.feedback_create(req)
++    assert len(res.id) == 36
++    assert res.payload["detoned_alias"] == ":thumbs_up:"
++    id_emoji_3 = res.id
++
++    # Note from Jamie
++    req = tsi.FeedbackCreateReqForInsert(
++        project_id=project_id,
++        wb_user_id="VXNlcjo0NTI1NDQ=",
++        weave_ref="weave:///entity/project/object/name:digest",
++        feedback_type="wandb.note.1",
++        payload={"note": "this is a note"},
++    )
++    res = client.server.feedback_create(req)
++    assert len(res.id) == 36
++    id_note = res.id
++
++    # Custom from Jamie
++    req = tsi.FeedbackCreateReqForInsert(
++        project_id=project_id,
++        wb_user_id="VXNlcjo0NTI1NDQ=",
++        weave_ref="weave:///entity/project/object/name:digest",
++        feedback_type="custom",
++        payload={"key": "value"},
++    )
++    res = client.server.feedback_create(req)
++    assert len(res.id) == 36
++    id_custom_1 = res.id
++
++    # Custom on another object
++    req = tsi.FeedbackCreateReqForInsert(
++        project_id=project_id,
++        wb_user_id="VXNlcjo0NTI1NDQ=",
++        weave_ref="weave:///entity/project/object/name2:digest",
++        feedback_type="custom",
++        payload={"key": "value"},
++    )
++    res = client.server.feedback_create(req)
++    assert len(res.id) == 36
++    id_custom_2 = res.id
++
++    # Try querying on the published feedback
++    req = tsi.FeedbackQueryReq(
++        project_id=project_id,
++        fields=["count(*)"],
++    )
++    res = client.server.feedback_query(req)
++    assert res.result[0]["count(*)"] == 6
++
++    req = tsi.FeedbackQueryReq(
++        project_id=project_id,
++        fields=["count(*)"],
++        query=Query(
++            **{
++                "$expr": {
++                    "$eq": [
++                        {"$getField": "feedback_type"},
++                        {"$literal": "wandb.reaction.1"},
++                    ],
++                }
++            }
++        ),
++    )
++    res = client.server.feedback_query(req)
++    assert res.result[0]["count(*)"] == 3
++
++    req = tsi.FeedbackQueryReq(
++        project_id=project_id,
++        fields=["count(*)"],
++        query=Query(
++            **{
++                "$expr": {
++                    "$eq": [
++                        {"$getField": "weave_ref"},
++                        {"$literal": "weave:///entity/project/object/name:digest"},
++                    ],
++                }
++            }
++        ),
++    )
++    res = client.server.feedback_query(req)
++    assert res.result[0]["count(*)"] == 5
++
++    # Purge one feedback
++    req = tsi.FeedbackPurgeReq(
++        project_id=project_id,
++        query=Query(
++            **{
++                "$expr": {
++                    "$eq": [
++                        {"$getField": "id"},
++                        {"$literal": id_note},
++                    ],
++                }
++            }
++        ),
++    )
++    res = client.server.feedback_purge(req)
++
++    req = tsi.FeedbackQueryReq(
++        project_id=project_id,
++        fields=["count(*)"],
++    )
++    res = client.server.feedback_query(req)
++    assert res.result[0]["count(*)"] == 5
++
++    # Purge multiple feedbacks
++    req = tsi.FeedbackPurgeReq(
++        project_id=project_id,
++        query=Query(
++            **{
++                "$expr": {
++                    "$or": [
++                        {
++                            "$eq": [
++                                {"$getField": "id"},
++                                {"$literal": id_custom_1},
++                            ],
++                        },
++                        {
++                            "$eq": [
++                                {"$getField": "id"},
++                                {"$literal": id_custom_2},
++                            ],
++                        },
++                    ]
++                }
++            }
++        ),
++    )
++    res = client.server.feedback_purge(req)
++
++    req = tsi.FeedbackQueryReq(
++        project_id=project_id,
++        fields=["count(*)"],
++    )
++    res = client.server.feedback_query(req)
++    assert res.result[0]["count(*)"] == 3
++
++    # Purging with a different shaped query raises
++    with pytest.raises(InvalidRequest):
++        req = tsi.FeedbackPurgeReq(
++            project_id=project_id,
++            query=Query(
++                **{
++                    "$expr": {
++                        "$eq": [
++                            {"$getField": "feedback_type"},
++                            {"$literal": "wandb.reaction.1"},
++                        ],
++                    }
++                }
++            ),
++        )
++        client.server.feedback_purge(req)
++
++
++def test_feedback_create_too_large(client):
++
++    project_id = client._project_id()
++
++    value = "a" * 10000
++    req = tsi.FeedbackCreateReqForInsert(
++        project_id=project_id,
++        wb_user_id="VXNlcjo0NTI1NDQ=",
++        weave_ref="weave:///entity/project/object/name:digest",
++        feedback_type="custom",
++        payload={"value": value},
++    )
++    with pytest.raises(InvalidRequest):
++        client.server.feedback_create(req)
+diff --git a/weave/trace_server/tests/test_emoji_util.py b/weave/trace_server/tests/test_emoji_util.py
+new file mode 100644
+index 0000000000..c4a8fd8c0a
+--- /dev/null
++++ b/weave/trace_server/tests/test_emoji_util.py
+@@ -0,0 +1,32 @@
++from weave.trace_server.emoji_util import detone_emojis, detone_shortcode
++
++SHORTCODE_NO_ZWJ_NO_TONE = ":pool_8_ball:"
++SHORTCODE_NO_ZWJ_TONE = ":thumbs_up_medium-dark_skin_tone:"
++SHORTCODE_ZWJ_ONE_TONE = ":judge_medium-light_skin_tone:"
++SHORTCODE_ZWJ_MULTIPLE_TONES = ":handshake_dark_skin_tone_medium_skin_tone:"
++
++EMOJI_8_BALL = "🎱"
++EMOJI_THUMBS_UP_TONE = "👍🏾"
++EMOJI_THUMBS_UP_NO_TONE = "👍"
++EMOJI_JUDGE_TONE = "🧑🏼‍⚖️"
++EMOJI_JUDGE_NO_TONE = "🧑‍⚖️"
++EMOJI_HANDSHAKE_TONES = "🫱🏿‍🫲🏽"
++EMOJI_HANDSHAKE_NO_TONES = "🤝"
++
++SENTENCE_TONES = f"The {EMOJI_JUDGE_TONE} had us {EMOJI_HANDSHAKE_TONES}."
++SENTENCE_NO_TONES = f"The {EMOJI_JUDGE_NO_TONE} had us {EMOJI_HANDSHAKE_NO_TONES}."
++
++
++def test_detone_shortcode() -> None:
++    assert detone_shortcode(SHORTCODE_NO_ZWJ_NO_TONE) == ":pool_8_ball:"
++    assert detone_shortcode(SHORTCODE_NO_ZWJ_TONE) == ":thumbs_up:"
++    assert detone_shortcode(SHORTCODE_ZWJ_ONE_TONE) == ":judge:"
++    assert detone_shortcode(SHORTCODE_ZWJ_MULTIPLE_TONES) == ":handshake:"
++
++
++def test_detone_emoji() -> None:
++    assert detone_emojis(EMOJI_8_BALL) == EMOJI_8_BALL
++    assert detone_emojis(EMOJI_THUMBS_UP_TONE) == EMOJI_THUMBS_UP_NO_TONE
++    assert detone_emojis(EMOJI_JUDGE_TONE) == EMOJI_JUDGE_NO_TONE
++    assert detone_emojis(EMOJI_HANDSHAKE_TONES) == EMOJI_HANDSHAKE_NO_TONES
++    assert detone_emojis(SENTENCE_TONES) == SENTENCE_NO_TONES
+diff --git a/weave/trace_server/tests/test_orm.py b/weave/trace_server/tests/test_orm.py
+new file mode 100644
+index 0000000000..99a5c38101
+--- /dev/null
++++ b/weave/trace_server/tests/test_orm.py
+@@ -0,0 +1,177 @@
++import pytest
++
++from weave.trace_server.orm import (
++    ParamBuilder,
++    Table,
++    Column,
++    _combine_conditions,
++    _transform_external_field_to_internal_field,
++)
++
++
++def test_parambuilder_clickhouse():
++    pb = ParamBuilder(database_type="clickhouse")
++    name = pb.add("bar", "foo", "String")
++    assert name == "{foo:String}"
++    name = pb.add(12, "bim")
++    assert name == "{bim:UInt64}"
++    assert pb.get_params() == {
++        "foo": "bar",
++        "bim": 12,
++    }
++
++
++def test_parambuilder_sqlite():
++    pb = ParamBuilder(database_type="sqlite")
++    placeholder = pb.add("bar", "foo", "String")
++    assert placeholder == ":foo"
++    placeholder = pb.add(12, "bim")
++    assert placeholder == ":bim"
++    assert pb.get_params() == {
++        "foo": "bar",
++        "bim": 12,
++    }
++
++
++def test_combine_conditions():
++    with pytest.raises(ValueError):
++        _combine_conditions([], "NOT")
++
++    assert _combine_conditions([], "AND") == ""
++    assert _combine_conditions(["foo = 'bar'"], "AND") == "foo = 'bar'"
++    assert _combine_conditions(["foo = 'bar'"], "OR") == "foo = 'bar'"
++    assert (
++        _combine_conditions(["foo = 'bar'", "bim = 12"], "AND")
++        == "((foo = 'bar') AND (bim = 12))"
++    )
++    assert (
++        _combine_conditions(["foo = 'bar'", "bim = 12"], "OR")
++        == "((foo = 'bar') OR (bim = 12))"
++    )
++
++
++def test_transform_external_field_to_internal_field():
++    all_columns = ["id", "creator", "payload_dump"]
++    json_columns = ["payload"]
++
++    # Transforming a column that doesn't exist should raise
++    with pytest.raises(ValueError):
++        _transform_external_field_to_internal_field("foo", all_columns, json_columns)
++
++    result = _transform_external_field_to_internal_field(
++        "id", all_columns, json_columns
++    )
++    assert result[0] == "id"
++    assert result[2] == {"id"}
++    result = _transform_external_field_to_internal_field(
++        "payload", all_columns, json_columns
++    )
++    assert result[0] == "payload_dump"
++    assert result[2] == {"payload_dump"}
++    pb = ParamBuilder(prefix="pb", database_type="sqlite")
++    result = _transform_external_field_to_internal_field(
++        "payload.address", all_columns, json_columns, param_builder=pb
++    )
++    assert result[0] == "json_extract(payload_dump, :pb_0)"
++    assert result[2] == {"payload_dump"}
++    pb = ParamBuilder(prefix="pb", database_type="clickhouse")
++    result = _transform_external_field_to_internal_field(
++        "payload.address", all_columns, json_columns, param_builder=pb
++    )
++    assert result[0] == "toString(JSON_VALUE(payload_dump, {pb_0:String}))"
++    assert result[2] == {"payload_dump"}
++
++
++def test_table_create_sql():
++    table = Table(
++        "users",
++        [
++            Column("id", "string"),
++            Column("creator", "string", nullable=True),
++            Column("payload", "json", db_name="payload_dump"),
++        ],
++    )
++    assert (
++        table.create_sql()
++        == "CREATE TABLE IF NOT EXISTS users (\n    id TEXT,\n    creator TEXT,\n    payload_dump TEXT\n)"
++    )
++
++
++def test_table_drop_sql():
++    table = Table(
++        "users",
++        [
++            Column("id", "string"),
++            Column("creator", "string", nullable=True),
++            Column("payload", "json", db_name="payload_dump"),
++        ],
++    )
++    assert table.drop_sql() == "DROP TABLE IF EXISTS users"
++
++
++def test_select_basic():
++    table = Table(
++        "users",
++        [
++            Column("id", "string"),
++            Column("creator", "string", nullable=True),
++            Column("payload", "json", db_name="payload_dump"),
++        ],
++    )
++    select = table.select()
++    select = select.limit(10)
++    sql, parameters, fieldnames = select.prepare(database_type="clickhouse")
++    assert (
++        sql
++        == """SELECT id, creator, payload_dump
++FROM users
++LIMIT {limit:UInt64}"""
++    )
++    assert parameters == {"limit": 10}
++    assert fieldnames == ["id", "creator", "payload_dump"]
++
++    sql, parameters, fieldnames = select.prepare(database_type="sqlite")
++    assert (
++        sql
++        == """SELECT id, creator, payload_dump
++FROM users
++LIMIT :limit"""
++    )
++    assert parameters == {"limit": 10}
++    assert fieldnames == ["id", "creator", "payload_dump"]
++
++
++def test_select_fields():
++    table = Table(
++        "users",
++        [
++            Column("id", "string"),
++            Column("creator", "string", nullable=True),
++            Column("payload", "json", db_name="payload_dump"),
++        ],
++    )
++    select = table.select()
++    select = select.fields(["id", "payload.address"])
++
++    # More complicated than normal usage to fix the ParamBuilder prefix.
++    pb = ParamBuilder(prefix="pb", database_type="sqlite")
++    sql, parameters, fields = select.prepare(database_type="sqlite", param_builder=pb)
++    assert (
++        sql
++        == """SELECT id, json_extract(payload_dump, :pb_0)
++FROM users"""
++    )
++    assert parameters == {"pb_0": '$."address"'}
++    assert fields == ["id", "payload.address"]
++
++    pb = ParamBuilder(prefix="pb", database_type="clickhouse")
++    sql, parameters, fields = select.prepare(
++        database_type="clickhouse", param_builder=pb
++    )
++    assert (
++        sql
++        == """SELECT id, toString(JSON_VALUE(payload_dump, {pb_0:String}))
++FROM users"""
++    )
++    assert parameters == {"pb_0": '$."address"'}
++    assert fields == ["id", "payload.address"]

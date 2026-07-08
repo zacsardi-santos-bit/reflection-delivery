@@ -1,0 +1,23 @@
+diff --git a/pkg/namespace/namespace_test.go b/pkg/namespace/namespace_test.go
+index ce06cc03c9..2611e0d0e7 100644
+--- a/pkg/namespace/namespace_test.go
++++ b/pkg/namespace/namespace_test.go
+@@ -1,6 +1,7 @@
+ package namespace
+ 
+ import (
++	"os"
+ 	"reflect"
+ 	"testing"
+ 
+@@ -372,3 +373,10 @@ func TestGetAllPodMetricsesFromCluster(t *testing.T) {
+ 		return
+ 	}
+ }
++func TestNamespaceDataPlatformProbationRecruitmentAppDevExists(t *testing.T) {
++	path := "../../namespaces/live.cloud-platform.service.justice.gov.uk/data-platform-app-probation-recruitment-app-dev/00-namespace.yaml"
++	_, err := os.Stat(path)
++	if err != nil {
++		t.Fatalf("namespace file does not exist: %v", err)
++	}
++}

@@ -1,0 +1,590 @@
+diff --git a/packages/svelte/tests/snapshot/samples/await-block-scope/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/await-block-scope/_expected/client-functional/index.svelte.js
+index 262454e9c..44b0cd155 100644
+--- a/packages/svelte/tests/snapshot/samples/await-block-scope/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/await-block-scope/_expected/client-functional/index.svelte.js
+@@ -5,23 +5,7 @@ function increment(_, counter) {
+ 	counter.count += 1;
+ }
+ 
+-var root = $.template_fn(
+-	() => {
+-		var button = document.createElement('button');
+-		var text = document.createTextNode(' ');
+-
+-		button.insertBefore(text, undefined)
+-
+-		var text_1 = document.createTextNode(' ');
+-		var comment = document.createComment('');
+-		var text_2 = document.createTextNode(' ');
+-		var fragment = document.createDocumentFragment();
+-
+-		fragment.append(button, text_1, comment, text_2)
+-		return fragment;
+-	},
+-	1
+-);
++var root = $.template_fn([{ e: 'button', c: [' '] }, ' ', , ' '], 1);
+ 
+ export default function Await_block_scope($$anchor) {
+ 	let counter = $.proxy({ count: 0 });
+diff --git a/packages/svelte/tests/snapshot/samples/bind-component-snippet/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/bind-component-snippet/_expected/client-functional/index.svelte.js
+index 8c15aa74b..e06c3bbf6 100644
+--- a/packages/svelte/tests/snapshot/samples/bind-component-snippet/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/bind-component-snippet/_expected/client-functional/index.svelte.js
+@@ -10,18 +10,7 @@ const snippet = ($$anchor) => {
+ 	$.append($$anchor, text);
+ };
+ 
+-var root = $.template_fn(
+-	() => {
+-		var comment = document.createComment('');
+-		var comment_1 = document.createComment('');
+-		var text = document.createTextNode(' ');
+-		var fragment = document.createDocumentFragment();
+-
+-		fragment.append(comment, comment_1, text)
+-		return fragment;
+-	},
+-	1
+-);
++var root = $.template_fn([,, ' '], 1);
+ 
+ export default function Bind_component_snippet($$anchor) {
+ 	let value = $.state('');
+diff --git a/packages/svelte/tests/snapshot/samples/dynamic-attributes-casing/_expected/client-functional/main.svelte.js b/packages/svelte/tests/snapshot/samples/dynamic-attributes-casing/_expected/client-functional/main.svelte.js
+index c05184f1f..6bf2d77a0 100644
+--- a/packages/svelte/tests/snapshot/samples/dynamic-attributes-casing/_expected/client-functional/main.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/dynamic-attributes-casing/_expected/client-functional/main.svelte.js
+@@ -2,23 +2,19 @@ import 'svelte/internal/disclose-version';
+ import * as $ from 'svelte/internal/client';
+ 
+ var root = $.template_fn(
+-	() => {
+-		var div = document.createElement('div');
+-		var text = document.createTextNode(' ');
+-		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+-		var text_1 = document.createTextNode(' ');
+-		var custom_element = document.createElement('custom-element');
+-		var text_2 = document.createTextNode(' ');
+-		var div_1 = document.createElement('div');
+-		var text_3 = document.createTextNode(' ');
+-		var svg_1 = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+-		var text_4 = document.createTextNode(' ');
+-		var custom_element_1 = document.createElement('custom-element');
+-		var fragment = document.createDocumentFragment();
+-
+-		fragment.append(div, text, svg, text_1, custom_element, text_2, div_1, text_3, svg_1, text_4, custom_element_1)
+-		return fragment;
+-	},
++	[
++		{ e: 'div' },
++		' ',
++		{ e: 'svg' },
++		' ',
++		{ e: 'custom-element' },
++		' ',
++		{ e: 'div' },
++		' ',
++		{ e: 'svg' },
++		' ',
++		{ e: 'custom-element' }
++	],
+ 	3
+ );
+ 
+diff --git a/packages/svelte/tests/snapshot/samples/hello-world/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/hello-world/_expected/client-functional/index.svelte.js
+index 5f55a12c2..3cc497188 100644
+--- a/packages/svelte/tests/snapshot/samples/hello-world/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/hello-world/_expected/client-functional/index.svelte.js
+@@ -2,17 +2,7 @@ import 'svelte/internal/disclose-version';
+ import 'svelte/internal/flags/legacy';
+ import * as $ from 'svelte/internal/client';
+ 
+-var root = $.template_fn(() => {
+-	var h1 = document.createElement('h1');
+-	var text = document.createTextNode('hello world');
+-
+-	h1.insertBefore(text, undefined)
+-
+-	var fragment = document.createDocumentFragment();
+-
+-	fragment.append(h1)
+-	return fragment;
+-});
++var root = $.template_fn([{ e: 'h1', c: ['hello world'] }]);
+ 
+ export default function Hello_world($$anchor) {
+ 	var h1 = root();
+diff --git a/packages/svelte/tests/snapshot/samples/hmr/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/hmr/_expected/client-functional/index.svelte.js
+index 6196ed18b..d5bb01474 100644
+--- a/packages/svelte/tests/snapshot/samples/hmr/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/hmr/_expected/client-functional/index.svelte.js
+@@ -2,17 +2,7 @@ import 'svelte/internal/disclose-version';
+ import 'svelte/internal/flags/legacy';
+ import * as $ from 'svelte/internal/client';
+ 
+-var root = $.template_fn(() => {
+-	var h1 = document.createElement('h1');
+-	var text = document.createTextNode('hello world');
+-
+-	h1.insertBefore(text, undefined)
+-
+-	var fragment = document.createDocumentFragment();
+-
+-	fragment.append(h1)
+-	return fragment;
+-});
++var root = $.template_fn([{ e: 'h1', c: ['hello world'] }]);
+ 
+ function Hmr($$anchor) {
+ 	var h1 = root();
+diff --git a/packages/svelte/tests/snapshot/samples/nullish-coallescence-omittance/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/nullish-coallescence-omittance/_expected/client-functional/index.svelte.js
+index 6b48b0363..3a2d0ecaa 100644
+--- a/packages/svelte/tests/snapshot/samples/nullish-coallescence-omittance/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/nullish-coallescence-omittance/_expected/client-functional/index.svelte.js
+@@ -4,23 +4,15 @@ import * as $ from 'svelte/internal/client';
+ var on_click = (_, count) => $.update(count);
+ 
+ var root = $.template_fn(
+-	() => {
+-		var h1 = document.createElement('h1');
+-		var text = document.createTextNode(' ');
+-		var b = document.createElement('b');
+-		var text_1 = document.createTextNode(' ');
+-		var button = document.createElement('button');
+-		var text_2 = document.createTextNode(' ');
+-
+-		button.insertBefore(text_2, undefined)
+-
+-		var text_3 = document.createTextNode(' ');
+-		var h1_1 = document.createElement('h1');
+-		var fragment = document.createDocumentFragment();
+-
+-		fragment.append(h1, text, b, text_1, button, text_3, h1_1)
+-		return fragment;
+-	},
++	[
++		{ e: 'h1' },
++		' ',
++		{ e: 'b' },
++		' ',
++		{ e: 'button', c: [' '] },
++		' ',
++		{ e: 'h1' }
++	],
+ 	1
+ );
+ 
+diff --git a/packages/svelte/tests/snapshot/samples/purity/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/purity/_expected/client-functional/index.svelte.js
+index 409a0d93a..d6de4ff4d 100644
+--- a/packages/svelte/tests/snapshot/samples/purity/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/purity/_expected/client-functional/index.svelte.js
+@@ -2,20 +2,7 @@ import 'svelte/internal/disclose-version';
+ import 'svelte/internal/flags/legacy';
+ import * as $ from 'svelte/internal/client';
+ 
+-var root = $.template_fn(
+-	() => {
+-		var p = document.createElement('p');
+-		var text = document.createTextNode(' ');
+-		var p_1 = document.createElement('p');
+-		var text_1 = document.createTextNode(' ');
+-		var comment = document.createComment('');
+-		var fragment = document.createDocumentFragment();
+-
+-		fragment.append(p, text, p_1, text_1, comment)
+-		return fragment;
+-	},
+-	1
+-);
++var root = $.template_fn([{ e: 'p' }, ' ', { e: 'p' }, ' ', ,], 1);
+ 
+ export default function Purity($$anchor) {
+ 	var fragment = root();
+diff --git a/packages/svelte/tests/snapshot/samples/skip-static-subtree/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/skip-static-subtree/_expected/client-functional/index.svelte.js
+index 802373899..b838acb2d 100644
+--- a/packages/svelte/tests/snapshot/samples/skip-static-subtree/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/skip-static-subtree/_expected/client-functional/index.svelte.js
+@@ -2,238 +2,94 @@ import 'svelte/internal/disclose-version';
+ import * as $ from 'svelte/internal/client';
+ 
+ var root = $.template_fn(
+-	() => {
+-		var header = document.createElement('header');
+-		var nav = document.createElement('nav');
+-
+-		header.insertBefore(nav, undefined)
+-
+-		var a = document.createElement('a');
+-
+-		nav.insertBefore(a, undefined)
+-		a.setAttribute('href', '/')
+-
+-		var text = document.createTextNode('Home');
+-
+-		a.insertBefore(text, undefined)
+-
+-		var text_1 = document.createTextNode(' ');
+-
+-		nav.insertBefore(text_1, undefined)
+-
+-		var a_1 = document.createElement('a');
+-
+-		nav.insertBefore(a_1, undefined)
+-		a_1.setAttribute('href', '/away')
+-
+-		var text_2 = document.createTextNode('Away');
+-
+-		a_1.insertBefore(text_2, undefined)
+-
+-		var text_3 = document.createTextNode(' ');
+-		var main = document.createElement('main');
+-		var h1 = document.createElement('h1');
+-
+-		main.insertBefore(h1, undefined)
+-
+-		var text_4 = document.createTextNode(' ');
+-
+-		h1.insertBefore(text_4, undefined)
+-
+-		var text_5 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_5, undefined)
+-
+-		var div = document.createElement('div');
+-
+-		main.insertBefore(div, undefined)
+-		div.setAttribute('class', 'static')
+-
+-		var p = document.createElement('p');
+-
+-		div.insertBefore(p, undefined)
+-
+-		var text_6 = document.createTextNode('we don\'t need to traverse these nodes');
+-
+-		p.insertBefore(text_6, undefined)
+-
+-		var text_7 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_7, undefined)
+-
+-		var p_1 = document.createElement('p');
+-
+-		main.insertBefore(p_1, undefined)
+-
+-		var text_8 = document.createTextNode('or');
+-
+-		p_1.insertBefore(text_8, undefined)
+-
+-		var text_9 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_9, undefined)
+-
+-		var p_2 = document.createElement('p');
+-
+-		main.insertBefore(p_2, undefined)
+-
+-		var text_10 = document.createTextNode('these');
+-
+-		p_2.insertBefore(text_10, undefined)
+-
+-		var text_11 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_11, undefined)
+-
+-		var p_3 = document.createElement('p');
+-
+-		main.insertBefore(p_3, undefined)
+-
+-		var text_12 = document.createTextNode('ones');
+-
+-		p_3.insertBefore(text_12, undefined)
+-
+-		var text_13 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_13, undefined)
+-
+-		var comment = document.createComment('');
+-
+-		main.insertBefore(comment, undefined)
+-
+-		var text_14 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_14, undefined)
+-
+-		var p_4 = document.createElement('p');
+-
+-		main.insertBefore(p_4, undefined)
+-
+-		var text_15 = document.createTextNode('these');
+-
+-		p_4.insertBefore(text_15, undefined)
+-
+-		var text_16 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_16, undefined)
+-
+-		var p_5 = document.createElement('p');
+-
+-		main.insertBefore(p_5, undefined)
+-
+-		var text_17 = document.createTextNode('trailing');
+-
+-		p_5.insertBefore(text_17, undefined)
+-
+-		var text_18 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_18, undefined)
+-
+-		var p_6 = document.createElement('p');
+-
+-		main.insertBefore(p_6, undefined)
+-
+-		var text_19 = document.createTextNode('nodes');
+-
+-		p_6.insertBefore(text_19, undefined)
+-
+-		var text_20 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_20, undefined)
+-
+-		var p_7 = document.createElement('p');
+-
+-		main.insertBefore(p_7, undefined)
+-
+-		var text_21 = document.createTextNode('can');
+-
+-		p_7.insertBefore(text_21, undefined)
+-
+-		var text_22 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_22, undefined)
+-
+-		var p_8 = document.createElement('p');
+-
+-		main.insertBefore(p_8, undefined)
+-
+-		var text_23 = document.createTextNode('be');
+-
+-		p_8.insertBefore(text_23, undefined)
+-
+-		var text_24 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_24, undefined)
+-
+-		var p_9 = document.createElement('p');
+-
+-		main.insertBefore(p_9, undefined)
+-
+-		var text_25 = document.createTextNode('completely');
+-
+-		p_9.insertBefore(text_25, undefined)
+-
+-		var text_26 = document.createTextNode(' ');
+-
+-		main.insertBefore(text_26, undefined)
+-
+-		var p_10 = document.createElement('p');
+-
+-		main.insertBefore(p_10, undefined)
+-
+-		var text_27 = document.createTextNode('ignored');
+-
+-		p_10.insertBefore(text_27, undefined)
+-
+-		var text_28 = document.createTextNode(' ');
+-		var cant_skip = document.createElement('cant-skip');
+-		var custom_elements = document.createElement('custom-elements');
+-
+-		cant_skip.insertBefore(custom_elements, undefined)
+-
+-		var text_29 = document.createTextNode(' ');
+-		var div_1 = document.createElement('div');
+-		var input = document.createElement('input');
+-
+-		div_1.insertBefore(input, undefined)
+-
+-		var text_30 = document.createTextNode(' ');
+-		var div_2 = document.createElement('div');
+-		var source = document.createElement('source');
+-
+-		div_2.insertBefore(source, undefined)
+-
+-		var text_31 = document.createTextNode(' ');
+-		var select = document.createElement('select');
+-		var option = document.createElement('option');
+-
+-		select.insertBefore(option, undefined)
+-
+-		var text_32 = document.createTextNode('a');
+-
+-		option.insertBefore(text_32, undefined)
+-
+-		var text_33 = document.createTextNode(' ');
+-		var img = document.createElement('img');
+-
+-		img.setAttribute('src', '...')
+-		img.setAttribute('alt', '')
+-		img.setAttribute('loading', 'lazy')
+-
+-		var text_34 = document.createTextNode(' ');
+-		var div_3 = document.createElement('div');
+-		var img_1 = document.createElement('img');
+-
+-		div_3.insertBefore(img_1, undefined)
+-		img_1.setAttribute('src', '...')
+-		img_1.setAttribute('alt', '')
+-		img_1.setAttribute('loading', 'lazy')
+-
+-		var fragment = document.createDocumentFragment();
+-
+-		fragment.append(header, text_3, main, text_28, cant_skip, text_29, div_1, text_30, div_2, text_31, select, text_33, img, text_34, div_3)
+-		return fragment;
+-	},
++	[
++		{
++			e: 'header',
++			c: [
++				{
++					e: 'nav',
++					c: [
++						{ e: 'a', p: { href: '/' }, c: ['Home'] },
++						' ',
++						{
++							e: 'a',
++							p: { href: '/away' },
++							c: ['Away']
++						}
++					]
++				}
++			]
++		},
++		' ',
++		{
++			e: 'main',
++			c: [
++				{ e: 'h1', c: [' '] },
++				' ',
++				{
++					e: 'div',
++					p: { class: 'static' },
++					c: [
++						{
++							e: 'p',
++							c: ['we don\'t need to traverse these nodes']
++						}
++					]
++				},
++				' ',
++				{ e: 'p', c: ['or'] },
++				' ',
++				{ e: 'p', c: ['these'] },
++				' ',
++				{ e: 'p', c: ['ones'] },
++				' ',
++				,
++				' ',
++				{ e: 'p', c: ['these'] },
++				' ',
++				{ e: 'p', c: ['trailing'] },
++				' ',
++				{ e: 'p', c: ['nodes'] },
++				' ',
++				{ e: 'p', c: ['can'] },
++				' ',
++				{ e: 'p', c: ['be'] },
++				' ',
++				{ e: 'p', c: ['completely'] },
++				' ',
++				{ e: 'p', c: ['ignored'] }
++			]
++		},
++		' ',
++		{
++			e: 'cant-skip',
++			c: [{ e: 'custom-elements' }]
++		},
++		' ',
++		{ e: 'div', c: [{ e: 'input' }] },
++		' ',
++		{ e: 'div', c: [{ e: 'source' }] },
++		' ',
++		{
++			e: 'select',
++			c: [{ e: 'option', c: ['a'] }]
++		},
++		' ',
++		{
++			e: 'img',
++			p: { src: '...', alt: '', loading: 'lazy' }
++		},
++		' ',
++		{
++			e: 'div',
++			c: [
++				{
++					e: 'img',
++					p: { src: '...', alt: '', loading: 'lazy' }
++				}
++			]
++		}
++	],
+ 	3
+ );
+ 
+diff --git a/packages/svelte/tests/snapshot/samples/state-proxy-literal/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/state-proxy-literal/_expected/client-functional/index.svelte.js
+index 4247dcfda..2be761b88 100644
+--- a/packages/svelte/tests/snapshot/samples/state-proxy-literal/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/state-proxy-literal/_expected/client-functional/index.svelte.js
+@@ -9,21 +9,13 @@ function reset(_, str, tpl) {
+ }
+ 
+ var root = $.template_fn(
+-	() => {
+-		var input = document.createElement('input');
+-		var text = document.createTextNode(' ');
+-		var input_1 = document.createElement('input');
+-		var text_1 = document.createTextNode(' ');
+-		var button = document.createElement('button');
+-		var text_2 = document.createTextNode('reset');
+-
+-		button.insertBefore(text_2, undefined)
+-
+-		var fragment = document.createDocumentFragment();
+-
+-		fragment.append(input, text, input_1, text_1, button)
+-		return fragment;
+-	},
++	[
++		{ e: 'input' },
++		' ',
++		{ e: 'input' },
++		' ',
++		{ e: 'button', c: ['reset'] }
++	],
+ 	1
+ );
+ 
+diff --git a/packages/svelte/tests/snapshot/samples/text-nodes-deriveds/_expected/client-functional/index.svelte.js b/packages/svelte/tests/snapshot/samples/text-nodes-deriveds/_expected/client-functional/index.svelte.js
+index 5163dc350..9176f1ab9 100644
+--- a/packages/svelte/tests/snapshot/samples/text-nodes-deriveds/_expected/client-functional/index.svelte.js
++++ b/packages/svelte/tests/snapshot/samples/text-nodes-deriveds/_expected/client-functional/index.svelte.js
+@@ -1,17 +1,7 @@
+ import 'svelte/internal/disclose-version';
+ import * as $ from 'svelte/internal/client';
+ 
+-var root = $.template_fn(() => {
+-	var p = document.createElement('p');
+-	var text = document.createTextNode(' ');
+-
+-	p.insertBefore(text, undefined)
+-
+-	var fragment = document.createDocumentFragment();
+-
+-	fragment.append(p)
+-	return fragment;
+-});
++var root = $.template_fn([{ e: 'p', c: [' '] }]);
+ 
+ export default function Text_nodes_deriveds($$anchor) {
+ 	let count1 = 0;

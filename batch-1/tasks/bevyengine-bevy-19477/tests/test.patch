@@ -1,0 +1,19 @@
+diff --git a/crates/bevy_ecs/src/system/mod.rs b/crates/bevy_ecs/src/system/mod.rs
+--- a/crates/bevy_ecs/src/system/mod.rs
++++ b/crates/bevy_ecs/src/system/mod.rs
+@@ -1177,6 +1177,15 @@ mod tests {
+         assert_eq!(conflicts, vec![b_id, d_id].into());
+     }
+
++    #[test]
++    fn system_initialize_returns_access_set() {
++        fn sys_a(_: Res<A>) {}
++        let mut world = World::default();
++        let mut sys = IntoSystem::into_system(sys_a);
++        let access = sys.initialize(&mut world);
++        let _ = access.get_conflicts(&access);
++    }
++
+     #[test]
+     fn query_is_empty() {
+         fn without_filter(not_empty: Query<&A>, empty: Query<&B>) {

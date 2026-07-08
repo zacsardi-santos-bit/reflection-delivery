@@ -1,0 +1,34 @@
+diff --git a/modules/svg/pr31616_test.go b/modules/svg/pr31616_test.go
+new file mode 100644
+--- /dev/null
++++ b/modules/svg/pr31616_test.go
+@@ -0,0 +1,29 @@
++// Copyright 2024 The Gitea Authors. All rights reserved.
++// SPDX-License-Identifier: MIT
++
++package svg
++
++import (
++	"os"
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++)
++
++func TestNewOcticonsExist(t *testing.T) {
++	newIcons := []string{
++		"octicon-accessibility-inset.svg",
++		"octicon-ai-model.svg",
++		"octicon-bookmark-filled.svg",
++		"octicon-bookmark-slash-fill.svg",
++		"octicon-file-media.svg",
++		"octicon-home-fill.svg",
++		"octicon-tab.svg",
++	}
++	svgDir := "../../public/assets/img/svg"
++	for _, icon := range newIcons {
++		p := svgDir + "/" + icon
++		_, err := os.Stat(p)
++		assert.NoError(t, err, "SVG icon should exist: %s", icon)
++	}
++}

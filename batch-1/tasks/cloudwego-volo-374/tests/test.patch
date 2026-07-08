@@ -1,0 +1,9 @@
+diff --git a/rustfmt.toml b/rustfmt.toml
+index 8db4808..dde0c6e 100644
+--- a/rustfmt.toml
++++ b/rustfmt.toml
+@@ -7,3 +7,4 @@ imports_granularity = "Crate"
+ normalize_comments = true
+ normalize_doc_attributes = true
+ wrap_comments = true
++# test

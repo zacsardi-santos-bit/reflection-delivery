@@ -1,0 +1,244 @@
+diff --git a/installing/deps-installer/test/install/peerDependencies.ts b/installing/deps-installer/test/install/peerDependencies.ts
+index a924420ccf..f27f1ac0e2 100644
+--- a/installing/deps-installer/test/install/peerDependencies.ts
++++ b/installing/deps-installer/test/install/peerDependencies.ts
+@@ -2044,6 +2044,26 @@ test('peer dependency cache is invalidated correctly when the peer of a peer mis
+   expect(lockfile.snapshots['@pnpm.e2e/repeat-peers.d@1.0.0(@pnpm.e2e/repeat-peers.b@1.0.0(@pnpm.e2e/repeat-peers.a@2.0.0))']).toBeTruthy()
+ })
+ 
++// https://github.com/pnpm/pnpm/issues/12079
++// peer-diamond-plugin peer-depends both peer-diamond-parser and peer-diamond-ts,
++// and peer-diamond-parser peer-depends peer-diamond-ts. The plugin's parser and
++// its ts must agree. A top-level parser resolved against ts@2.0.0 must not be
++// reused for the plugin, which is nested under ts@1.0.0.
++test('a peer shared through a diamond is resolved consistently', async () => {
++  const project = prepareEmpty()
++  await addDependenciesToPackage({}, [
++    '@pnpm.e2e/peer-diamond-ts@2.0.0',
++    '@pnpm.e2e/peer-diamond-parser@1.0.0',
++    '@pnpm.e2e/peer-diamond-app@1.0.0',
++  ], testDefaults({ autoInstallPeers: true }))
++
++  const lockfile = project.readLockfile()
++  const pluginSnapshots = Object.keys(lockfile.snapshots).filter((key) => key.includes('peer-diamond-plugin'))
++  expect(pluginSnapshots).toStrictEqual([
++    '@pnpm.e2e/peer-diamond-plugin@1.0.0(@pnpm.e2e/peer-diamond-parser@1.0.0(@pnpm.e2e/peer-diamond-ts@1.0.0))(@pnpm.e2e/peer-diamond-ts@1.0.0)',
++  ])
++})
++
+ // Covers https://github.com/pnpm/pnpm/issues/8759
+ test('detection of circular peer dependencies should not crash with aliased dependencies', async () => {
+   prepareEmpty()
+diff --git a/installing/deps-resolver/test/resolvePeers.ts b/installing/deps-resolver/test/resolvePeers.ts
+index c7446f44af..bbc348c580 100644
+--- a/installing/deps-resolver/test/resolvePeers.ts
++++ b/installing/deps-resolver/test/resolvePeers.ts
+@@ -925,4 +925,130 @@ describe('dedupePeers', () => {
+     expect(dependenciesByProjectId['project-a'].get('plugin')).toBe('plugin/1.0.0(react@17.0.0)')
+     expect(dependenciesByProjectId['project-b'].get('plugin')).toBe('plugin/1.0.0(react@18.0.0)')
+   })
++
++  // https://github.com/pnpm/pnpm/issues/12079
++  test("a peer's own peer is shared with a sibling that peer-depends both", async () => {
++    // plugin peer-depends both parser and typescript; parser peer-depends typescript.
++    // So plugin's parser and plugin's typescript must agree. A top-level parser that
++    // resolved typescript@2.0.0 must not shadow umbrella's own parser, which resolves
++    // typescript@1.0.0 — the version that plugin itself uses.
++    const ts1Pkg = {
++      name: 'typescript',
++      pkgIdWithPatchHash: 'typescript/1.0.0' as PkgIdWithPatchHash,
++      version: '1.0.0',
++      peerDependencies: {} as PeerDependencies,
++      id: '' as PkgResolutionId,
++    }
++    const ts2Pkg = {
++      name: 'typescript',
++      pkgIdWithPatchHash: 'typescript/2.0.0' as PkgIdWithPatchHash,
++      version: '2.0.0',
++      peerDependencies: {} as PeerDependencies,
++      id: '' as PkgResolutionId,
++    }
++    const parserPkg = {
++      name: 'parser',
++      pkgIdWithPatchHash: 'parser/1.0.0' as PkgIdWithPatchHash,
++      version: '1.0.0',
++      peerDependencies: { typescript: { version: '*' } },
++      id: '' as PkgResolutionId,
++    }
++    const pluginPkg = {
++      name: 'plugin',
++      pkgIdWithPatchHash: 'plugin/1.0.0' as PkgIdWithPatchHash,
++      version: '1.0.0',
++      peerDependencies: { parser: { version: '*' }, typescript: { version: '*' } },
++      id: '' as PkgResolutionId,
++    }
++    const umbrellaPkg = {
++      name: 'umbrella',
++      pkgIdWithPatchHash: 'umbrella/1.0.0' as PkgIdWithPatchHash,
++      version: '1.0.0',
++      peerDependencies: { typescript: { version: '*' } },
++      id: '' as PkgResolutionId,
++    }
++    const appPkg = {
++      name: 'app',
++      pkgIdWithPatchHash: 'app/1.0.0' as PkgIdWithPatchHash,
++      version: '1.0.0',
++      peerDependencies: {} as PeerDependencies,
++      id: '' as PkgResolutionId,
++    }
++    const { dependenciesGraph } = await resolvePeers({
++      allPeerDepNames: new Set(['typescript', 'parser']),
++      projects: [
++        {
++          directNodeIdsByAlias: new Map([
++            ['typescript', '>typescript/2.0.0>' as NodeId],
++            ['parser', '>parser/1.0.0>' as NodeId],
++            ['app', '>app/1.0.0>' as NodeId],
++          ]),
++          topParents: [],
++          rootDir: '' as ProjectRootDir,
++          id: '.',
++        },
++      ],
++      resolvedImporters: {},
++      dependenciesTree: new Map<NodeId, DependenciesTreeNode<PartialResolvedPackage>>([
++        ['>typescript/2.0.0>' as NodeId, {
++          children: {},
++          installable: true,
++          resolvedPackage: ts2Pkg,
++          depth: 0,
++        }],
++        ['>parser/1.0.0>' as NodeId, {
++          children: {},
++          installable: true,
++          resolvedPackage: parserPkg,
++          depth: 0,
++        }],
++        ['>app/1.0.0>' as NodeId, {
++          children: {
++            typescript: '>app/1.0.0>typescript/1.0.0>' as NodeId,
++            umbrella: '>app/1.0.0>umbrella/1.0.0>' as NodeId,
++          },
++          installable: true,
++          resolvedPackage: appPkg,
++          depth: 0,
++        }],
++        ['>app/1.0.0>typescript/1.0.0>' as NodeId, {
++          children: {},
++          installable: true,
++          resolvedPackage: ts1Pkg,
++          depth: 1,
++        }],
++        ['>app/1.0.0>umbrella/1.0.0>' as NodeId, {
++          children: {
++            plugin: '>app/1.0.0>umbrella/1.0.0>plugin/1.0.0>' as NodeId,
++            parser: '>app/1.0.0>umbrella/1.0.0>parser/1.0.0>' as NodeId,
++          },
++          installable: true,
++          resolvedPackage: umbrellaPkg,
++          depth: 1,
++        }],
++        ['>app/1.0.0>umbrella/1.0.0>plugin/1.0.0>' as NodeId, {
++          children: {},
++          installable: true,
++          resolvedPackage: pluginPkg,
++          depth: 2,
++        }],
++        ['>app/1.0.0>umbrella/1.0.0>parser/1.0.0>' as NodeId, {
++          children: {},
++          installable: true,
++          resolvedPackage: parserPkg,
++          depth: 2,
++        }],
++      ]),
++      virtualStoreDir: '',
++      virtualStoreDirMaxLength: 120,
++      lockfileDir: '',
++      peersSuffixMaxLength: 1000,
++      workspaceProjectIds: new Set(),
++    })
++    // plugin and its parser both use typescript@1.0.0; the typescript@2.0.0 parser
++    // from the top level is not pulled into plugin.
++    const depPaths = Object.keys(dependenciesGraph)
++    expect(depPaths).toContain('plugin/1.0.0(parser/1.0.0(typescript/1.0.0))(typescript/1.0.0)')
++    expect(depPaths).not.toContain('plugin/1.0.0(parser/1.0.0(typescript/2.0.0))(typescript/1.0.0)')
++  })
+ })
+diff --git a/pacquet/crates/cli/tests/install.rs b/pacquet/crates/cli/tests/install.rs
+index cb46da4edd..fbb256335f 100644
+--- a/pacquet/crates/cli/tests/install.rs
++++ b/pacquet/crates/cli/tests/install.rs
+@@ -5,15 +5,14 @@ use assert_cmd::prelude::*;
+ use command_extra::CommandExtra;
+ use pacquet_testing_utils::{
+     bin::{AddMockedRegistry, CommandTempCwd},
+-    fixtures::{BIG_LOCKFILE, BIG_MANIFEST},
+     fs::{get_all_files, get_all_folders, is_symlink_or_junction},
+ };
+ #[cfg(unix)]
+ use pipe_trait::Pipe;
+-use std::{
+-    fs::{self, OpenOptions},
+-    io::Write,
+-};
++use std::fs;
++
++use pacquet_testing_utils::fixtures::{BIG_LOCKFILE, BIG_MANIFEST};
++use std::{fs::OpenOptions, io::Write};
+ 
+ #[test]
+ fn should_install_dependencies() {
+@@ -366,6 +365,53 @@ fn auto_install_peers_hoists_missing_peers_at_importer() {
+     drop((root, mock_instance)); // cleanup
+ }
+ 
++/// `peer-diamond-plugin` peer-depends both `peer-diamond-parser` and
++/// `peer-diamond-ts`, and `peer-diamond-parser` peer-depends
++/// `peer-diamond-ts`. The plugin's parser and its ts must agree: when
++/// the plugin resolves `ts@1.0.0`, its parser peer must also be the
++/// `ts@1.0.0` instance, not a `ts@2.0.0` parser hoisted at the root.
++///
++/// This is the scenario behind the pnpm regression in
++/// [pnpm/pnpm#12079](https://github.com/pnpm/pnpm/issues/12079). pacquet
++/// resolves it consistently — `bump_occurrence_on_shadow` always prefers
++/// the node's own child over an inherited same-version instance, so it
++/// never reuses the root-level `ts@2.0.0` parser for the nested plugin.
++/// Mirrors the upstream coverage in
++/// [`installing/deps-installer/test/install/peerDependencies.ts`](https://github.com/pnpm/pnpm/blob/762e80be49/installing/deps-installer/test/install/peerDependencies.ts).
++#[test]
++fn peer_shared_through_a_diamond_is_resolved_consistently() {
++    let CommandTempCwd { pacquet, root, workspace, npmrc_info, .. } =
++        CommandTempCwd::init().add_mocked_registry();
++    let AddMockedRegistry { mock_instance, .. } = npmrc_info;
++
++    let manifest_path = workspace.join("package.json");
++    let package_json_content = serde_json::json!({
++        "dependencies": {
++            "@pnpm.e2e/peer-diamond-ts": "2.0.0",
++            "@pnpm.e2e/peer-diamond-parser": "1.0.0",
++            "@pnpm.e2e/peer-diamond-app": "1.0.0",
++        },
++    });
++    fs::write(&manifest_path, package_json_content.to_string()).expect("write to package.json");
++
++    pacquet.with_arg("install").assert().success();
++
++    let lockfile =
++        fs::read_to_string(workspace.join("pnpm-lock.yaml")).expect("read pnpm-lock.yaml");
++    let consistent = "@pnpm.e2e/peer-diamond-plugin@1.0.0(@pnpm.e2e/peer-diamond-parser@1.0.0(@pnpm.e2e/peer-diamond-ts@1.0.0))(@pnpm.e2e/peer-diamond-ts@1.0.0)";
++    let inconsistent = "@pnpm.e2e/peer-diamond-plugin@1.0.0(@pnpm.e2e/peer-diamond-parser@1.0.0(@pnpm.e2e/peer-diamond-ts@2.0.0))";
++    assert!(
++        lockfile.contains(consistent),
++        "expected the plugin to share ts@1.0.0 with its parser; lockfile:\n{lockfile}",
++    );
++    assert!(
++        !lockfile.contains(inconsistent),
++        "the plugin must not be paired with a ts@2.0.0 parser; lockfile:\n{lockfile}",
++    );
++
++    drop((root, mock_instance)); // cleanup
++}
++
+ /// `catalog:` on a direct dep should be dereferenced through
+ /// `pnpm-workspace.yaml`'s `catalog` section before the npm resolver
+ /// sees it. The fetched virtual-store entry is the catalog's resolved

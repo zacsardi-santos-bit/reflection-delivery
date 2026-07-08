@@ -1,0 +1,25 @@
+diff --git a/prqlc/prqlc/tests/integration/sql.rs b/prqlc/prqlc/tests/integration/sql.rs
+index 9d8b9c44..6e3a10de 100644
+--- a/prqlc/prqlc/tests/integration/sql.rs
++++ b/prqlc/prqlc/tests/integration/sql.rs
+@@ -1591,6 +1591,20 @@ fn test_interval() {
+     FROM
+       projects
+     "#);
++
++    let query = r###"
++    prql target:sql.snowflake
++
++    from projects
++    derive first_check_in = start + 10days
++    "###;
++    assert_snapshot!((compile(query).unwrap()), @r#"
++    SELECT
++      *,
++      "start" + INTERVAL '10 DAY' AS "first_check_in"
++    FROM
++      "projects"
++    "#);
+ }
+ 
+ #[test]

@@ -1,0 +1,612 @@
+diff --git a/internal/storage/v1/cassandra/factory_test.go b/internal/storage/v1/cassandra/factory_test.go
+index cd7b65b2..598894ed 100644
+--- a/internal/storage/v1/cassandra/factory_test.go
++++ b/internal/storage/v1/cassandra/factory_test.go
+@@ -17,12 +17,6 @@ import (
+ 	"github.com/jaegertracing/jaeger/internal/storage/cassandra/mocks"
+ )
+ 
+-func TestCreateSpanReaderError(t *testing.T) {
+-	f := NewFactory()
+-	_, err := f.CreateSpanReader()
+-	require.ErrorContains(t, err, "not implemented")
+-}
+-
+ func TestConfigureFromOptions(t *testing.T) {
+ 	f := NewFactory()
+ 	o := NewOptions()
+diff --git a/internal/storage/v1/cassandra/savetracetest/main.go b/internal/storage/v1/cassandra/savetracetest/main.go
+index 6efac3fe..c51024fe 100644
+--- a/internal/storage/v1/cassandra/savetracetest/main.go
++++ b/internal/storage/v1/cassandra/savetracetest/main.go
+@@ -6,11 +6,11 @@ package main
+ 
+ import (
+ 	"context"
++	"strconv"
+ 	"time"
+ 
+ 	"go.uber.org/zap"
+ 
+-	"github.com/jaegertracing/jaeger-idl/model/v1"
+ 	"github.com/jaegertracing/jaeger/internal/jtracer"
+ 	"github.com/jaegertracing/jaeger/internal/metrics"
+ 	cascfg "github.com/jaegertracing/jaeger/internal/storage/cassandra/config"
+@@ -56,13 +56,13 @@ func main() {
+ 		logger.Fatal("Failed to create span reader", zap.Error(err))
+ 	}
+ 	ctx := context.Background()
+-	if err = spanStore.WriteSpan(ctx, getSomeSpan()); err != nil {
++	span := getSomeSpan()
++	if err = spanStore.WriteSpan(span); err != nil {
+ 		logger.Fatal("Failed to save", zap.Error(err))
+ 	} else {
+-		logger.Info("Saved span", zap.String("spanID", getSomeSpan().SpanID.String()))
++		logger.Info("Saved span", zap.String("spanID", strconv.FormatInt(span.SpanID, 10)))
+ 	}
+-	s := getSomeSpan()
+-	spans, err := spanReader.GetTrace(ctx, dbmodel.TraceIDFromDomain(s.TraceID))
++	spans, err := spanReader.GetTrace(ctx, span.TraceID)
+ 	if err != nil {
+ 		logger.Fatal("Failed to read", zap.Error(err))
+ 	} else {
+@@ -111,56 +111,68 @@ func queryAndPrint(ctx context.Context, spanReader *cspanstore.SpanReader, tqp *
+ 	}
+ }
+ 
+-func getSomeProcess() *model.Process {
++func getSomeProcess() dbmodel.Process {
+ 	processTagVal := "indexMe"
+-	return &model.Process{
++	return dbmodel.Process{
+ 		ServiceName: "someServiceName",
+-		Tags: model.KeyValues{
+-			model.String("processTagKey", processTagVal),
++		Tags: []dbmodel.KeyValue{
++			{
++				Key:         "processTagKey",
++				ValueString: processTagVal,
++				ValueType:   dbmodel.StringType,
++			},
+ 		},
+ 	}
+ }
+ 
+-func getSomeSpan() *model.Span {
+-	traceID := model.NewTraceID(1, 2)
+-	return &model.Span{
++func getSomeSpan() *dbmodel.Span {
++	traceID := [16]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
++	return &dbmodel.Span{
+ 		TraceID:       traceID,
+-		SpanID:        model.NewSpanID(3),
++		SpanID:        3,
+ 		OperationName: "opName",
+-		References:    model.MaybeAddParentSpanID(traceID, 4, getReferences()),
+-		Flags:         model.Flags(uint32(5)),
+-		StartTime:     time.Now(),
+-		Duration:      50000 * time.Microsecond,
++		Refs:          getReferences(),
++		Flags:         5,
++		StartTime:     time.Now().UnixMicro(),
++		Duration:      (50000 * time.Microsecond).Microseconds(),
+ 		Tags:          getTags(),
+ 		Logs:          getLogs(),
+ 		Process:       getSomeProcess(),
+ 	}
+ }
+ 
+-func getReferences() []model.SpanRef {
+-	return []model.SpanRef{
++func getReferences() []dbmodel.SpanRef {
++	return []dbmodel.SpanRef{
+ 		{
+-			RefType: model.ChildOf,
+-			TraceID: model.NewTraceID(1, 1),
+-			SpanID:  model.NewSpanID(4),
++			RefType: dbmodel.ChildOf,
++			TraceID: [16]byte{0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1},
++			SpanID:  4,
+ 		},
+ 	}
+ }
+ 
+-func getTags() model.KeyValues {
++func getTags() []dbmodel.KeyValue {
+ 	someVal := "someVal"
+-	return model.KeyValues{
+-		model.String("someKey", someVal),
++	return []dbmodel.KeyValue{
++		{
++			Key:         "someKey",
++			ValueString: someVal,
++			ValueType:   dbmodel.StringType,
++		},
+ 	}
+ }
+ 
+-func getLogs() []model.Log {
++func getLogs() []dbmodel.Log {
+ 	logTag := "this is a msg"
+-	return []model.Log{
++	return []dbmodel.Log{
+ 		{
+-			Timestamp: time.Now(),
+-			Fields: model.KeyValues{
+-				model.String("event", logTag),
++			Timestamp: time.Now().UnixMicro(),
++			Fields: []dbmodel.KeyValue{
++				{
++					Key:         "event",
++					ValueString: logTag,
++					ValueType:   dbmodel.StringType,
++				},
+ 			},
+ 		},
+ 	}
+diff --git a/internal/storage/v1/cassandra/spanstore/dbmodel/model_test.go b/internal/storage/v1/cassandra/spanstore/dbmodel/model_test.go
+index cea27ec2..e81b070e 100644
+--- a/internal/storage/v1/cassandra/spanstore/dbmodel/model_test.go
++++ b/internal/storage/v1/cassandra/spanstore/dbmodel/model_test.go
+@@ -529,6 +529,39 @@ func Test_compareInt64(t *testing.T) {
+ 	}
+ }
+ 
++func Test_GetSpanKind(t *testing.T) {
++	tests := []struct {
++		name     string
++		tags     []KeyValue
++		expected string
++	}{
++		{
++			name: "no span kind tag",
++			tags: []KeyValue{
++				{Key: "foo", ValueString: "bar"},
++			},
++			expected: "",
++		},
++		{
++			name: "span kind tag present",
++			tags: []KeyValue{
++				{Key: "foo", ValueString: "bar"},
++				{Key: model.SpanKindKey, ValueString: "server"},
++			},
++			expected: "server",
++		},
++	}
++
++	for _, tc := range tests {
++		t.Run(tc.name, func(t *testing.T) {
++			span := &Span{
++				Tags: tc.tags,
++			}
++			assert.Equal(t, tc.expected, GetSpanKind(span))
++		})
++	}
++}
++
+ func makeSpan(kv KeyValue) Span {
+ 	return Span{
+ 		TraceID:       TraceID{1},
+diff --git a/internal/storage/v1/cassandra/spanstore/writer_test.go b/internal/storage/v1/cassandra/spanstore/writer_test.go
+index 42a1126d..abcac0ed 100644
+--- a/internal/storage/v1/cassandra/spanstore/writer_test.go
++++ b/internal/storage/v1/cassandra/spanstore/writer_test.go
+@@ -5,11 +5,9 @@
+ package spanstore
+ 
+ import (
+-	"context"
+ 	"errors"
+ 	"fmt"
+ 	"strings"
+-	"sync/atomic"
+ 	"testing"
+ 	"time"
+ 
+@@ -18,14 +16,14 @@ import (
+ 	"github.com/stretchr/testify/require"
+ 	"go.uber.org/zap"
+ 
+-	"github.com/jaegertracing/jaeger-idl/model/v1"
+ 	"github.com/jaegertracing/jaeger/internal/metricstest"
+ 	"github.com/jaegertracing/jaeger/internal/storage/cassandra/mocks"
+-	"github.com/jaegertracing/jaeger/internal/storage/v1/api/spanstore"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore/dbmodel"
+ 	"github.com/jaegertracing/jaeger/internal/testutils"
+ )
+ 
++var traceId = [16]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
++
+ type spanWriterTest struct {
+ 	session   *mocks.Session
+ 	logger    *zap.Logger
+@@ -54,7 +52,7 @@ func withSpanWriter(t *testing.T, writeCacheTTL time.Duration, fn func(w *spanWr
+ 	fn(w)
+ }
+ 
+-var _ spanstore.Writer = &SpanWriter{} // check API conformance
++var _ CoreSpanWriter = &SpanWriter{} // check API conformance
+ 
+ func TestNewSpanWriter(t *testing.T) {
+ 	t.Run("test span writer creation", func(t *testing.T) {
+@@ -179,20 +177,25 @@ func TestSpanWriter(t *testing.T) {
+ 		testCase := tc // capture loop var
+ 		t.Run(testCase.caption, func(t *testing.T) {
+ 			withSpanWriter(t, 0, func(w *spanWriterTest) {
+-				span := &model.Span{
+-					TraceID:       model.NewTraceID(0, 1),
++				span := &dbmodel.Span{
++					TraceID:       traceId,
+ 					OperationName: "operation-a",
+-					Tags: model.KeyValues{
+-						model.String("x", "y"),
+-						model.String("json", `{"x":"y"}`), // string tag with json value will not be inserted
++					Tags: []dbmodel.KeyValue{
++						{
++							Key:         "x",
++							ValueType:   dbmodel.StringType,
++							ValueString: "y",
++						},
++						{
++							Key:         "json",
++							ValueType:   dbmodel.StringType,
++							ValueString: `{"x":"y"}`,
++						}, // string tag with json value will not be inserted
+ 					},
+-					Process: &model.Process{
++					Process: dbmodel.Process{
+ 						ServiceName: "service-a",
+ 					},
+ 				}
+-				if testCase.firehose {
+-					span.Flags = model.FirehoseFlag
+-				}
+ 
+ 				spanQuery := &mocks.Query{}
+ 				spanQuery.On("Bind", mock.Anything).Return(spanQuery)
+@@ -228,7 +231,7 @@ func TestSpanWriter(t *testing.T) {
+ 
+ 				w.writer.serviceNamesWriter = func(_ /* serviceName */ string) error { return testCase.serviceNameError }
+ 				w.writer.operationNamesWriter = func(_ dbmodel.Operation) error { return testCase.serviceNameError }
+-				err := w.writer.WriteSpan(context.Background(), span)
++				err := w.writer.WriteSpan(span)
+ 
+ 				if testCase.expectedError == "" {
+ 					require.NoError(t, err)
+@@ -318,9 +321,9 @@ func TestStorageMode_IndexOnly(t *testing.T) {
+ 	withSpanWriter(t, 0, func(w *spanWriterTest) {
+ 		w.writer.serviceNamesWriter = func(_ /* serviceName */ string) error { return nil }
+ 		w.writer.operationNamesWriter = func(_ dbmodel.Operation) error { return nil }
+-		span := &model.Span{
+-			TraceID: model.NewTraceID(0, 1),
+-			Process: &model.Process{
++		span := &dbmodel.Span{
++			TraceID: traceId,
++			Process: dbmodel.Process{
+ 				ServiceName: "service-a",
+ 			},
+ 		}
+@@ -341,7 +344,7 @@ func TestStorageMode_IndexOnly(t *testing.T) {
+ 		w.session.On("Query", serviceOperationIndex).Return(serviceOperationNameQuery)
+ 		w.session.On("Query", durationIndex).Return(durationNoOperationQuery).Once()
+ 
+-		err := w.writer.WriteSpan(context.Background(), span)
++		err := w.writer.WriteSpan(span)
+ 
+ 		require.NoError(t, err)
+ 		serviceNameQuery.AssertExpectations(t)
+@@ -361,13 +364,13 @@ func TestStorageMode_IndexOnly_WithFilter(t *testing.T) {
+ 		w.writer.indexFilter = filterEverything
+ 		w.writer.serviceNamesWriter = func(_ /* serviceName */ string) error { return nil }
+ 		w.writer.operationNamesWriter = func(_ dbmodel.Operation) error { return nil }
+-		span := &model.Span{
+-			TraceID: model.NewTraceID(0, 1),
+-			Process: &model.Process{
++		span := &dbmodel.Span{
++			TraceID: traceId,
++			Process: dbmodel.Process{
+ 				ServiceName: "service-a",
+ 			},
+ 		}
+-		err := w.writer.WriteSpan(context.Background(), span)
++		err := w.writer.WriteSpan(span)
+ 		require.NoError(t, err)
+ 		w.session.AssertExpectations(t)
+ 		w.session.AssertNotCalled(t, "Query", serviceOperationIndex, mock.Anything)
+@@ -376,67 +379,15 @@ func TestStorageMode_IndexOnly_WithFilter(t *testing.T) {
+ 	}, StoreIndexesOnly())
+ }
+ 
+-func TestStorageMode_IndexOnly_FirehoseSpan(t *testing.T) {
+-	withSpanWriter(t, 0, func(w *spanWriterTest) {
+-		var serviceWritten atomic.Pointer[string]
+-		var operationWritten atomic.Pointer[dbmodel.Operation]
+-		empty := ""
+-		serviceWritten.Store(&empty)
+-		operationWritten.Store(&dbmodel.Operation{})
+-		w.writer.serviceNamesWriter = func(serviceName string) error {
+-			serviceWritten.Store(&serviceName)
+-			return nil
+-		}
+-		w.writer.operationNamesWriter = func(operation dbmodel.Operation) error {
+-			operationWritten.Store(&operation)
+-			return nil
+-		}
+-		span := &model.Span{
+-			TraceID:       model.NewTraceID(0, 1),
+-			OperationName: "package-delivery",
+-			Process: &model.Process{
+-				ServiceName: "planet-express",
+-			},
+-			Flags: model.Flags(8),
+-		}
+-
+-		serviceNameQuery := &mocks.Query{}
+-		serviceNameQuery.On("Bind", mock.Anything).Return(serviceNameQuery)
+-		serviceNameQuery.On("Exec").Return(nil)
+-		serviceNameQuery.On("String").Return("select from service_name_index")
+-
+-		serviceOperationNameQuery := &mocks.Query{}
+-		serviceOperationNameQuery.On("Bind", mock.Anything).Return(serviceOperationNameQuery)
+-		serviceOperationNameQuery.On("Exec").Return(nil)
+-		serviceOperationNameQuery.On("String").Return("select from service_operation_index")
+-
+-		// Define expected queries
+-		w.session.On("Query", serviceNameIndex).Return(serviceNameQuery)
+-		w.session.On("Query", serviceOperationIndex).Return(serviceOperationNameQuery)
+-
+-		err := w.writer.WriteSpan(context.Background(), span)
+-		require.NoError(t, err)
+-		w.session.AssertExpectations(t)
+-		w.session.AssertNotCalled(t, "Query", tagIndex, mock.Anything)
+-		w.session.AssertNotCalled(t, "Query", durationIndex, mock.Anything)
+-		assert.Equal(t, "planet-express", *serviceWritten.Load())
+-		assert.Equal(t, dbmodel.Operation{
+-			ServiceName:   "planet-express",
+-			SpanKind:      "",
+-			OperationName: "package-delivery",
+-		}, *operationWritten.Load())
+-	}, StoreIndexesOnly())
+-}
+-
+ func TestStorageMode_StoreWithoutIndexing(t *testing.T) {
+ 	withSpanWriter(t, 0, func(w *spanWriterTest) {
+ 		w.writer.serviceNamesWriter = func(_ /* serviceName */ string) error {
+ 			assert.Fail(t, "Non indexing store shouldn't index")
+ 			return nil
+ 		}
+-		span := &model.Span{
+-			TraceID: model.NewTraceID(0, 1),
+-			Process: &model.Process{
++		span := &dbmodel.Span{
++			TraceID: traceId,
++			Process: dbmodel.Process{
+ 				ServiceName: "service-a",
+ 			},
+ 		}
+@@ -444,7 +395,7 @@ func TestStorageMode_StoreWithoutIndexing(t *testing.T) {
+ 		spanQuery.On("Exec").Return(nil)
+ 		w.session.On("Query", insertSpan, mock.Anything).Return(spanQuery)
+ 
+-		err := w.writer.WriteSpan(context.Background(), span)
++		err := w.writer.WriteSpan(span)
+ 
+ 		require.NoError(t, err)
+ 		spanQuery.AssertExpectations(t)
+diff --git a/internal/storage/v2/cassandra/factory_test.go b/internal/storage/v2/cassandra/factory_test.go
+index e81f3309..85ce3a7e 100644
+--- a/internal/storage/v2/cassandra/factory_test.go
++++ b/internal/storage/v2/cassandra/factory_test.go
+@@ -5,6 +5,7 @@ package cassandra
+ 
+ import (
+ 	"errors"
++	"fmt"
+ 	"testing"
+ 
+ 	"github.com/stretchr/testify/mock"
+@@ -111,25 +112,101 @@ func TestCreateTraceReaderError(t *testing.T) {
+ }
+ 
+ func TestCreateTraceWriterErr(t *testing.T) {
+-	v1Factory := cassandra.NewFactory()
+-	v1Factory.Options = &cassandra.Options{
+-		Configuration: config.DefaultConfiguration(),
+-		Index: cassandra.IndexConfig{
+-			TagBlackList: "a,b,c",
+-			TagWhiteList: "a,b,c",
++	tests := []struct {
++		name        string
++		factoryFunc func() *Factory
++		expectedErr string
++	}{
++		{
++			name: "error from writerOptions",
++			factoryFunc: func() *Factory {
++				v1Factory := cassandra.NewFactory()
++				v1Factory.Options = &cassandra.Options{
++					Configuration: config.DefaultConfiguration(),
++					Index: cassandra.IndexConfig{
++						TagBlackList: "a,b,c",
++						TagWhiteList: "a,b,c",
++					},
++				}
++				var (
++					session = &mocks.Session{}
++					query   = &mocks.Query{}
++				)
++				session.On("Query", mock.AnythingOfType("string"), mock.Anything).Return(query)
++				query.On("Exec").Return(nil)
++				cassandra.MockSession(v1Factory, session, nil)
++				require.NoError(t, v1Factory.Initialize(metrics.NullFactory, zap.NewNop(), noop.NewTracerProvider()))
++				f := createFactory(t, v1Factory)
++				return f
++			},
++			expectedErr: "only one of TagIndexBlacklist and TagIndexWhitelist can be specified",
++		},
++		{
++			name: "error from NewTraceWriter",
++			factoryFunc: func() *Factory {
++				v1Factory := cassandra.NewFactory()
++				tableCheckStmt := "SELECT * from %s limit 1"
++				session := &mocks.Session{}
++				query := &mocks.Query{}
++				query.On("Exec").Return(errors.New("some error"))
++				session.On("Query",
++					fmt.Sprintf(tableCheckStmt, "operation_names"),
++					mock.Anything).Return(query)
++				session.On("Query",
++					fmt.Sprintf(tableCheckStmt, "operation_names_v2"),
++					mock.Anything).Return(query)
++				cassandra.MockSession(v1Factory, session, nil)
++				require.NoError(t, v1Factory.Initialize(metrics.NullFactory, zap.NewNop(), noop.NewTracerProvider()))
++				f := createFactory(t, v1Factory)
++				return f
++			},
++			expectedErr: "neither table operation_names_v2 nor operation_names exist",
+ 		},
+ 	}
+-	var (
+-		session = &mocks.Session{}
+-		query   = &mocks.Query{}
+-	)
+-	session.On("Query", mock.AnythingOfType("string"), mock.Anything).Return(query)
+-	query.On("Exec").Return(nil)
+-	cassandra.MockSession(v1Factory, session, nil)
+-	require.NoError(t, v1Factory.Initialize(metrics.NullFactory, zap.NewNop(), noop.NewTracerProvider()))
+-	f := createFactory(t, v1Factory)
+-	_, err := f.CreateTraceWriter()
+-	require.ErrorContains(t, err, "only one of TagIndexBlacklist and TagIndexWhitelist can be specified")
++	for _, test := range tests {
++		t.Run(test.name, func(t *testing.T) {
++			_, err := test.factoryFunc().CreateTraceWriter()
++			require.ErrorContains(t, err, test.expectedErr)
++		})
++	}
++}
++
++func Test_writerOptionsEdgeCases(t *testing.T) {
++	tests := []struct {
++		name    string
++		options *cassandra.Options
++	}{
++		{
++			name: "blacklist filter",
++			options: &cassandra.Options{
++				Index: cassandra.IndexConfig{
++					Logs:         true,
++					Tags:         false,
++					ProcessTags:  true,
++					TagBlackList: "tag1,tag2",
++				},
++			},
++		},
++		{
++			name: "whitelist filter",
++			options: &cassandra.Options{
++				Index: cassandra.IndexConfig{
++					Logs:         true,
++					Tags:         true,
++					ProcessTags:  true,
++					TagWhiteList: "tag1,tag2",
++				},
++			},
++		},
++	}
++
++	for _, test := range tests {
++		t.Run(test.name, func(t *testing.T) {
++			opts, err := writerOptions(test.options)
++			require.NoError(t, err)
++			require.Len(t, opts, 1)
++		})
++	}
+ }
+ 
+ func createFactory(t *testing.T, v1Factory *cassandra.Factory) *Factory {
+diff --git a/internal/storage/v2/cassandra/tracestore/writer_test.go b/internal/storage/v2/cassandra/tracestore/writer_test.go
+new file mode 100644
+index 00000000..f4625316
+--- /dev/null
++++ b/internal/storage/v2/cassandra/tracestore/writer_test.go
+@@ -0,0 +1,79 @@
++// Copyright (c) 2026 The Jaeger Authors.
++// SPDX-License-Identifier: Apache-2.0
++
++package tracestore
++
++import (
++	"context"
++	"errors"
++	"fmt"
++	"testing"
++
++	"github.com/stretchr/testify/mock"
++	"github.com/stretchr/testify/require"
++	"go.opentelemetry.io/collector/pdata/ptrace"
++
++	"github.com/jaegertracing/jaeger/internal/metricstest"
++	"github.com/jaegertracing/jaeger/internal/storage/cassandra/mocks"
++	storemocks "github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore/mocks"
++	"github.com/jaegertracing/jaeger/internal/testutils"
++)
++
++var traceId = [16]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
++
++func TestErrNewTraceWriter(t *testing.T) {
++	session := getSessionWithError(errors.New("test error"))
++	metricsFactory := metricstest.NewFactory(0)
++	logger, _ := testutils.NewLogger()
++	_, err := NewTraceWriter(session, 0, metricsFactory, logger)
++	require.ErrorContains(t, err, "neither table operation_names_v2 nor operation_names exist")
++}
++
++func TestWriteTraces(t *testing.T) {
++	td := ptrace.NewTraces()
++	resourceSpan := td.ResourceSpans().AppendEmpty()
++	resourceSpan.Resource().Attributes().PutStr("service.name", "service-a")
++	span := resourceSpan.ScopeSpans().AppendEmpty().Spans().AppendEmpty()
++	span.SetTraceID(traceId)
++	span.SetName("operation-a")
++	span.Attributes().PutStr("x", "y")
++	mockWriter := &storemocks.CoreSpanWriter{}
++	dbSpan := ToDBModel(td)[0]
++	mockWriter.On("WriteSpan", &dbSpan).Return(nil)
++	writer := TraceWriter{writer: mockWriter}
++	require.NoError(t, writer.WriteTraces(context.Background(), td))
++}
++
++func TestWriteTracesWithError(t *testing.T) {
++	td := ptrace.NewTraces()
++	td.ResourceSpans().AppendEmpty().ScopeSpans().AppendEmpty().Spans().AppendEmpty().SetName("operation-a")
++	td.ResourceSpans().AppendEmpty().ScopeSpans().AppendEmpty().Spans().AppendEmpty().SetName("operation-b")
++	mockWriter := &storemocks.CoreSpanWriter{}
++	expectedErr := errors.New("test error")
++	mockWriter.On("WriteSpan", mock.Anything).Return(expectedErr)
++	writer := TraceWriter{writer: mockWriter}
++	err := writer.WriteTraces(context.Background(), td)
++	expected := "test error\ntest error"
++	require.ErrorContains(t, err, expected)
++}
++
++func TestTraceWriterClose(t *testing.T) {
++	mockWriter := &storemocks.CoreSpanWriter{}
++	mockWriter.On("Close").Return(nil)
++	writer := TraceWriter{writer: mockWriter}
++	require.NoError(t, writer.Close())
++}
++
++func getSessionWithError(err error) *mocks.Session {
++	tableCheckStmt := "SELECT * from %s limit 1"
++	session := &mocks.Session{}
++	query := &mocks.Query{}
++	query.On("Exec").Return(err)
++	session.On("Query",
++		fmt.Sprintf(tableCheckStmt, "operation_names"),
++		mock.Anything).Return(query)
++	session.On("Query",
++		fmt.Sprintf(tableCheckStmt, "operation_names_v2"),
++		mock.Anything).Return(query)
++	return session
++}

@@ -1,0 +1,61 @@
+diff --git a/spring-cloud-alibaba-starters/pom.xml b/spring-cloud-alibaba-starters/pom.xml
+index 0476ad9..47c2dd6 100644
+--- a/spring-cloud-alibaba-starters/pom.xml
++++ b/spring-cloud-alibaba-starters/pom.xml
+@@ -52,4 +52,12 @@
+             </plugin>
+         </plugins>
+     </build>
++
++    <dependencies>
++        <dependency>
++            <groupId>org.springframework.boot</groupId>
++            <artifactId>spring-boot-starter-test</artifactId>
++            <scope>test</scope>
++        </dependency>
++    </dependencies>
+ </project>
+\ No newline at end of file
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/test/java/com/alibaba/cloud/ai/tongyi/TongYiChatOptionsTest.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/test/java/com/alibaba/cloud/ai/tongyi/TongYiChatOptionsTest.java
+new file mode 100644
+index 000000000..abc1234
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/test/java/com/alibaba/cloud/ai/tongyi/TongYiChatOptionsTest.java
+@@ -0,0 +1,37 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi;
++
++import org.junit.jupiter.api.Test;
++
++import static org.assertj.core.api.Assertions.assertThat;
++
++/**
++ * Tests for {@link TongYiChatOptions}.
++ *
++ * @since 2023.0.0.0
++ */
++public class TongYiChatOptionsTest {
++
++	@Test
++	public void testTongYiChatOptionsDefaultValues() {
++		TongYiChatOptions options = TongYiChatOptions.builder().build();
++		assertThat(options).isNotNull();
++		assertThat(options.getMaxTokens()).isEqualTo(1500);
++	}
++
++}

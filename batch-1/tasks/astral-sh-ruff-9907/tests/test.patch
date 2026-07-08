@@ -1,0 +1,56 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/pycodestyle/E30.py b/crates/ruff_linter/resources/test/fixtures/pycodestyle/E30.py
+index 37c2e6d803..8a53b73032 100644
+--- a/crates/ruff_linter/resources/test/fixtures/pycodestyle/E30.py
++++ b/crates/ruff_linter/resources/test/fixtures/pycodestyle/E30.py
+@@ -436,6 +436,15 @@ class Test:
+ # end
+ 
+ 
++# no error
++def test():
++    pass
++  
++  # Wrongly indented comment
++    pass
++# end
++
++
+ # E301
+ class Class(object):
+ 
+@@ -534,6 +543,20 @@ def g():
+ # end
+ 
+ 
++# E302
++class Test:
++	
++	pass
++	
++	def method1():
++		return 1
++		
++		
++	def method2():
++		return 22
++# end
++
++
+ # E303
+ def fn():
+     _ = None
+@@ -648,6 +671,15 @@ class Test:
+ # end
+ 
+ 
++# E303
++def fn():
++    pass
++
++ 
++    pass
++# end
++
++
+ # E304
+ @decorator

@@ -1,0 +1,455 @@
+diff --git a/pkg/cmd/auth/setupgit/setupgit_test.go b/pkg/cmd/auth/setupgit/setupgit_test.go
+index 9e6550e54..8d9dc2d21 100644
+--- a/pkg/cmd/auth/setupgit/setupgit_test.go
++++ b/pkg/cmd/auth/setupgit/setupgit_test.go
+@@ -15,19 +15,16 @@ import (
+ 	"github.com/stretchr/testify/require"
+ )
+ 
+-type mockGitConfigurer struct {
++type gitCredentialsConfigurerSpy struct {
+ 	hosts    []string
+ 	setupErr error
+ }
+ 
+-func (gf *mockGitConfigurer) SetupFor(hostname string) []string {
+-	return gf.hosts
+-}
+-
+-func (gf *mockGitConfigurer) Setup(hostname, username, authToken string) error {
++func (gf *gitCredentialsConfigurerSpy) ConfigureOurs(hostname string) error {
+ 	gf.hosts = append(gf.hosts, hostname)
+ 	return gf.setupErr
+ }
++
+ func TestNewCmdSetupGit(t *testing.T) {
+ 	tests := []struct {
+ 		name     string
+@@ -183,8 +180,8 @@ func Test_setupGitRun(t *testing.T) {
+ 				}
+ 			}
+ 
+-			gcSpy := &mockGitConfigurer{setupErr: tt.setupErr}
+-			tt.opts.gitConfigure = gcSpy
++			credentialsConfigurerSpy := &gitCredentialsConfigurerSpy{setupErr: tt.setupErr}
++			tt.opts.CredentialsHelperConfig = credentialsConfigurerSpy
+ 
+ 			err := setupGitRun(tt.opts)
+ 			if tt.expectedErr != nil {
+@@ -194,7 +191,7 @@ func Test_setupGitRun(t *testing.T) {
+ 			}
+ 
+ 			if tt.expectedHostsSetup != nil {
+-				require.Equal(t, tt.expectedHostsSetup, gcSpy.hosts)
++				require.Equal(t, tt.expectedHostsSetup, credentialsConfigurerSpy.hosts)
+ 			}
+ 
+ 			require.Equal(t, tt.expectedErrOut, stderr.String())
+diff --git a/pkg/cmd/auth/shared/git_credential_test.go b/pkg/cmd/auth/shared/git_credential_test.go
+index 9d3e90cc4..19ab9b752 100644
+--- a/pkg/cmd/auth/shared/git_credential_test.go
++++ b/pkg/cmd/auth/shared/git_credential_test.go
+@@ -5,22 +5,24 @@ import (
+ 
+ 	"github.com/cli/cli/v2/git"
+ 	"github.com/cli/cli/v2/internal/run"
++	"github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials"
+ )
+ 
+-func TestGitCredentialSetup_configureExisting(t *testing.T) {
++func TestSetup_configureExisting(t *testing.T) {
+ 	cs, restoreRun := run.Stub()
+ 	defer restoreRun(t)
+ 	cs.Register(`git credential reject`, 0, "")
+ 	cs.Register(`git credential approve`, 0, "")
+ 
+ 	f := GitCredentialFlow{
+-		Executable: "gh",
+-		helper:     "osxkeychain",
+-		GitClient:  &git.Client{GitPath: "some/path/git"},
++		helper: gitcredentials.Helper{Cmd: "osxkeychain"},
++		Updater: &gitcredentials.Updater{
++			GitClient: &git.Client{GitPath: "some/path/git"},
++		},
+ 	}
+ 
+-	if err := f.gitCredentialSetup("example.com", "monalisa", "PASSWD"); err != nil {
+-		t.Errorf("GitCredentialSetup() error = %v", err)
++	if err := f.Setup("example.com", "monalisa", "PASSWD"); err != nil {
++		t.Errorf("Setup() error = %v", err)
+ 	}
+ }
+ 
+@@ -61,18 +63,20 @@ func TestGitCredentialsSetup_setOurs_GH(t *testing.T) {
+ 	})
+ 
+ 	f := GitCredentialFlow{
+-		Executable: "/path/to/gh",
+-		helper:     "",
+-		GitClient:  &git.Client{GitPath: "some/path/git"},
++		helper: gitcredentials.Helper{},
++		HelperConfig: &gitcredentials.HelperConfig{
++			SelfExecutablePath: "/path/to/gh",
++			GitClient:          &git.Client{GitPath: "some/path/git"},
++		},
+ 	}
+ 
+-	if err := f.gitCredentialSetup("github.com", "monalisa", "PASSWD"); err != nil {
+-		t.Errorf("GitCredentialSetup() error = %v", err)
++	if err := f.Setup("github.com", "monalisa", "PASSWD"); err != nil {
++		t.Errorf("Setup() error = %v", err)
+ 	}
+ 
+ }
+ 
+-func TestGitCredentialSetup_setOurs_nonGH(t *testing.T) {
++func TestSetup_setOurs_nonGH(t *testing.T) {
+ 	cs, restoreRun := run.Stub()
+ 	defer restoreRun(t)
+ 	cs.Register(`git config --global --replace-all credential\.`, 0, "", func(args []string) {
+@@ -93,53 +97,14 @@ func TestGitCredentialSetup_setOurs_nonGH(t *testing.T) {
+ 	})
+ 
+ 	f := GitCredentialFlow{
+-		Executable: "/path/to/gh",
+-		helper:     "",
+-		GitClient:  &git.Client{GitPath: "some/path/git"},
+-	}
+-
+-	if err := f.gitCredentialSetup("example.com", "monalisa", "PASSWD"); err != nil {
+-		t.Errorf("GitCredentialSetup() error = %v", err)
+-	}
+-}
+-
+-func Test_isOurCredentialHelper(t *testing.T) {
+-	tests := []struct {
+-		name string
+-		arg  string
+-		want bool
+-	}{
+-		{
+-			name: "blank",
+-			arg:  "",
+-			want: false,
+-		},
+-		{
+-			name: "invalid",
+-			arg:  "!",
+-			want: false,
+-		},
+-		{
+-			name: "osxkeychain",
+-			arg:  "osxkeychain",
+-			want: false,
+-		},
+-		{
+-			name: "looks like gh but isn't",
+-			arg:  "gh auth",
+-			want: false,
+-		},
+-		{
+-			name: "ours",
+-			arg:  "!/path/to/gh auth",
+-			want: true,
++		helper: gitcredentials.Helper{},
++		HelperConfig: &gitcredentials.HelperConfig{
++			SelfExecutablePath: "/path/to/gh",
++			GitClient:          &git.Client{GitPath: "some/path/git"},
+ 		},
+ 	}
+-	for _, tt := range tests {
+-		t.Run(tt.name, func(t *testing.T) {
+-			if got := isOurCredentialHelper(tt.arg); got != tt.want {
+-				t.Errorf("isOurCredentialHelper() = %v, want %v", got, tt.want)
+-			}
+-		})
++
++	if err := f.Setup("example.com", "monalisa", "PASSWD"); err != nil {
++		t.Errorf("Setup() error = %v", err)
+ 	}
+ }
+diff --git a/pkg/cmd/auth/shared/gitcredentials/helper_config_test.go b/pkg/cmd/auth/shared/gitcredentials/helper_config_test.go
+new file mode 100644
+index 000000000..b7ddbb883
+--- /dev/null
++++ b/pkg/cmd/auth/shared/gitcredentials/helper_config_test.go
+@@ -0,0 +1,188 @@
++package gitcredentials_test
++
++import (
++	"context"
++	"path/filepath"
++	"runtime"
++	"testing"
++
++	"github.com/cli/cli/v2/git"
++	"github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials"
++	"github.com/stretchr/testify/require"
++)
++
++func withIsolatedGitConfig(t *testing.T) {
++	t.Helper()
++
++	// https://git-scm.com/docs/git-config#ENVIRONMENT
++	// Set the global git config to a temporary file
++	tmpDir := t.TempDir()
++	configFile := filepath.Join(tmpDir, ".gitconfig")
++	t.Setenv("GIT_CONFIG_GLOBAL", configFile)
++
++	// And disable git reading the system config
++	t.Setenv("GIT_CONFIG_NOSYSTEM", "true")
++}
++
++func configureTestCredentialHelper(t *testing.T, key string) {
++	t.Helper()
++
++	gc := &git.Client{}
++	cmd, err := gc.Command(context.Background(), "config", "--global", "--add", key, "test-helper")
++	require.NoError(t, err)
++	require.NoError(t, cmd.Run())
++}
++
++func TestConfigureOursNoPreexistingHelpersConfigured(t *testing.T) {
++	// Given there are no credential helpers configured
++	withIsolatedGitConfig(t)
++
++	// When we configure ourselves as the git credential helper
++	hc := gitcredentials.HelperConfig{
++		SelfExecutablePath: "/path/to/gh",
++		GitClient:          &git.Client{},
++	}
++	require.NoError(t, hc.ConfigureOurs("github.com"))
++
++	// Then the git config should be updated to use our credential helper for both repos and gists
++	repoHelper, err := hc.ConfiguredHelper("github.com")
++	require.NoError(t, err)
++	require.True(t, repoHelper.IsConfigured(), "expected our helper to be configured")
++	require.True(t, repoHelper.IsOurs(), "expected the helper to be ours but was %q", repoHelper.Cmd)
++
++	gistHelper, err := hc.ConfiguredHelper("gist.github.com")
++	require.NoError(t, err)
++	require.True(t, gistHelper.IsConfigured(), "expected our helper to be configured")
++	require.True(t, gistHelper.IsOurs(), "expected the helper to be ours but was %q", gistHelper.Cmd)
++}
++
++func TestConfigureOursWithPreexistingHelpersConfigured(t *testing.T) {
++	// Given there are other credential helpers configured
++	withIsolatedGitConfig(t)
++	configureTestCredentialHelper(t, "credential.helper")
++	configureTestCredentialHelper(t, "credential.https://github.com.helper")
++
++	// When we configure ourselves as the git credential helper
++	hc := gitcredentials.HelperConfig{
++		SelfExecutablePath: "/path/to/gh",
++		GitClient:          &git.Client{},
++	}
++	require.NoError(t, hc.ConfigureOurs("github.com"))
++
++	// Then the git config should be updated to use our credential repoHelper for both repos and gists
++	repoHelper, err := hc.ConfiguredHelper("github.com")
++	require.NoError(t, err)
++	require.True(t, repoHelper.IsConfigured(), "expected our helper to be configured")
++	require.True(t, repoHelper.IsOurs(), "expected the helper to be ours but was %q", repoHelper.Cmd)
++
++	gistHelper, err := hc.ConfiguredHelper("gist.github.com")
++	require.NoError(t, err)
++	require.True(t, gistHelper.IsConfigured(), "expected our helper to be configured")
++	require.True(t, gistHelper.IsOurs(), "expected the helper to be ours but was %q", gistHelper.Cmd)
++}
++
++func TestConfiguredHelperNoPreexistingHelpersConfigured(t *testing.T) {
++	// Given there are no credential helpers configured
++	withIsolatedGitConfig(t)
++
++	// When we check the configured helper for a hostname
++	hc := gitcredentials.HelperConfig{
++		SelfExecutablePath: "/path/to/gh",
++		GitClient:          &git.Client{},
++	}
++	helper, err := hc.ConfiguredHelper("github.com")
++
++	// Then the helper should not be configured and not ours
++	require.NoError(t, err)
++	require.False(t, helper.IsConfigured(), "expected no helper to be configured")
++	require.False(t, helper.IsOurs(), "expected the helper not to be ours but was %q", helper.Cmd)
++}
++
++func TestConfiguredHelperWithPreexistingGlobalHelperConfigured(t *testing.T) {
++	// Given there is a global credential helper configured
++	withIsolatedGitConfig(t)
++	configureTestCredentialHelper(t, "credential.helper")
++
++	// When we check the configured helper for a hostname
++	hc := gitcredentials.HelperConfig{
++		SelfExecutablePath: "/path/to/gh",
++		GitClient:          &git.Client{},
++	}
++	helper, err := hc.ConfiguredHelper("github.com")
++
++	// Then the helper should be configured, but not ours
++	require.NoError(t, err)
++	require.True(t, helper.IsConfigured(), "expected no helper to be configured")
++	require.False(t, helper.IsOurs(), "expected the helper not to be ours but was %q", helper.Cmd)
++}
++
++func TestConfiguredHelperWithPreexistingHostHelperConfigured(t *testing.T) {
++	// Given there is a credential helper configured for a hostname
++	withIsolatedGitConfig(t)
++	configureTestCredentialHelper(t, "credential.https://github.com.helper")
++
++	// When we check the configured helper for a hostname
++	hc := gitcredentials.HelperConfig{
++		SelfExecutablePath: "/path/to/gh",
++		GitClient:          &git.Client{},
++	}
++	helper, err := hc.ConfiguredHelper("github.com")
++
++	// Then the helper should be configured, but not ours
++	require.NoError(t, err)
++	require.True(t, helper.IsConfigured(), "expected no helper to be configured")
++	require.False(t, helper.IsOurs(), "expected the helper not to be ours but was %q", helper.Cmd)
++}
++
++func TestHelperIsOurs(t *testing.T) {
++	tests := []struct {
++		name        string
++		cmd         string
++		want        bool
++		windowsOnly bool
++	}{
++		{
++			name: "blank",
++			cmd:  "",
++			want: false,
++		},
++		{
++			name: "invalid",
++			cmd:  "!",
++			want: false,
++		},
++		{
++			name: "osxkeychain",
++			cmd:  "osxkeychain",
++			want: false,
++		},
++		{
++			name: "looks like gh but isn't",
++			cmd:  "gh auth",
++			want: false,
++		},
++		{
++			name: "ours",
++			cmd:  "!/path/to/gh auth",
++			want: true,
++		},
++		{
++			name:        "ours - Windows edition",
++			cmd:         `!'C:\Program Files\GitHub CLI\gh.exe' auth git-credential`,
++			want:        true,
++			windowsOnly: true,
++		},
++	}
++	for _, tt := range tests {
++		t.Run(tt.name, func(t *testing.T) {
++			if tt.windowsOnly && runtime.GOOS != "windows" {
++				t.Skip("skipping test on non-Windows platform")
++			}
++
++			h := gitcredentials.Helper{Cmd: tt.cmd}
++			if got := h.IsOurs(); got != tt.want {
++				t.Errorf("IsOurs() = %v, want %v", got, tt.want)
++			}
++		})
++	}
++}
+diff --git a/pkg/cmd/auth/shared/gitcredentials/updater_test.go b/pkg/cmd/auth/shared/gitcredentials/updater_test.go
+new file mode 100644
+index 000000000..10a9c5c6c
+--- /dev/null
++++ b/pkg/cmd/auth/shared/gitcredentials/updater_test.go
+@@ -0,0 +1,85 @@
++package gitcredentials_test
++
++import (
++	"bytes"
++	"context"
++	"fmt"
++	"path/filepath"
++	"testing"
++
++	"github.com/MakeNowJust/heredoc"
++	"github.com/cli/cli/v2/git"
++	"github.com/cli/cli/v2/pkg/cmd/auth/shared/gitcredentials"
++	"github.com/stretchr/testify/require"
++)
++
++func configureStoreCredentialHelper(t *testing.T) {
++	t.Helper()
++	tmpCredentialsFile := filepath.Join(t.TempDir(), "credentials")
++
++	gc := &git.Client{}
++	// Use `--file` to store credentials in a temporary file that gets cleaned up when the test has finished running
++	cmd, err := gc.Command(context.Background(), "config", "--global", "--add", "credential.helper", fmt.Sprintf("store --file %s", tmpCredentialsFile))
++	require.NoError(t, err)
++	require.NoError(t, cmd.Run())
++}
++
++func fillCredentials(t *testing.T) string {
++	gc := &git.Client{}
++	fillCmd, err := gc.Command(context.Background(), "credential", "fill")
++	require.NoError(t, err)
++
++	fillCmd.Stdin = bytes.NewBufferString(heredoc.Docf(`
++		protocol=https
++		host=%s
++	`, "github.com"))
++
++	b, err := fillCmd.Output()
++	require.NoError(t, err)
++
++	return string(b)
++}
++
++func TestUpdateAddsNewCredentials(t *testing.T) {
++	// Given we have an isolated git config and we're using the built in store credential helper
++	// https://git-scm.com/docs/git-credential-store
++	withIsolatedGitConfig(t)
++	configureStoreCredentialHelper(t)
++
++	// When we add new credentials
++	u := &gitcredentials.Updater{
++		GitClient: &git.Client{},
++	}
++	require.NoError(t, u.Update("github.com", "monalisa", "password"))
++
++	// Then our credential description is successfully filled
++	require.Equal(t, heredoc.Doc(`
++protocol=https
++host=github.com
++username=monalisa
++password=password
++`), fillCredentials(t))
++}
++
++func TestUpdateReplacesOldCredentials(t *testing.T) {
++	// Given we have an isolated git config and we're using the built in store credential helper
++	// https://git-scm.com/docs/git-credential-store
++	// and we have existing credentials
++	withIsolatedGitConfig(t)
++	configureStoreCredentialHelper(t)
++
++	// When we replace old credentials
++	u := &gitcredentials.Updater{
++		GitClient: &git.Client{},
++	}
++	require.NoError(t, u.Update("github.com", "monalisa", "old-password"))
++	require.NoError(t, u.Update("github.com", "monalisa", "new-password"))
++
++	// Then our credential description is successfully filled
++	require.Equal(t, heredoc.Doc(`
++protocol=https
++host=github.com
++username=monalisa
++password=new-password
++`), fillCredentials(t))
++}

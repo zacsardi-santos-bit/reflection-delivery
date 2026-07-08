@@ -1,9 +1,11 @@
-I'm working on improving how Saleor handles the interaction between its legacy payment flow and the newer transaction-based payment flow. There are several related issues I need to address.
+I'm cleaning up how Saleor's two payment systems talk to each other, the old legacy payment flow and the newer transaction-based one, because right now they step on each other and it's causing conflicts, missing audit info, and race conditions.
 
-First, when an order becomes fully paid, the event recorded for that should include which payment gateway was used. Right now that information isn't stored in the event parameters at all, which makes it hard to trace how a payment was processed.
+A few things I need fixed. When an order becomes fully paid we record an event for it, but that event's parameters don't say which payment gateway actually handled the payment, so there's no traceability. I want the fully-paid order event to include the gateway that was responsible so merchants and admins can trace how a payment got processed.
 
-Second, when a checkout has existing legacy payment records and a transaction is then initialized or processed on it, those legacy payments should be automatically deactivated. Leaving them active can cause conflicts between the two payment systems.
+Next, when a checkout already has legacy payment records sitting on it and then a transaction gets initialized or processed against that same checkout, the old legacy payments just stay active, which lets both systems fight over the same money. Initializing or processing a transaction should automatically deactivate those existing legacy payments so we don't end up double-paying.
 
-Third, there's no protection against race conditions when checkout completion is already underway. If checkout completion has already started, any attempt to initialize or process a transaction on that checkout should be rejected with a clear error — something that tells the caller the checkout is currently being completed and the operation cannot proceed.
+Also there's no guard against concurrent completion. If checkout completion has already kicked off, someone can still fire transaction init or processing at the same time and we get a race. I want those attempts rejected with a clear error telling the caller the checkout is currently being completed and the operation can't proceed while that's happening.
 
-Finally, the logic that picks which payment flow to use when completing a partially-authorized checkout needs to be correct: if the checkout has an active legacy payment, it should go through the legacy payment flow; if it only has transaction items (and no active legacy payment), it should use the transaction flow.
+Last thing, the flow-selection logic for a partially-authorized checkout at completion time isn't right. If the checkout has an active legacy payment it should go down the legacy payment flow, and if it only has transaction items with no active legacy payment it should use the transaction flow. Right now when a checkout has both it may pick wrong.
+
+All of this lives around the checkout and payment handling in Saleor (`@saleor/checkout` and `@saleor/payment`), and the point is to prevent double-payment, fix the audit trail, and kill the race conditions during transaction-based completion.

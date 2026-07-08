@@ -1,0 +1,596 @@
+diff --git a/onnxruntime/test/python/transformers/qwen3_model_generator.py b/onnxruntime/test/python/transformers/qwen3_model_generator.py
+index 42af7b01f8..89a574c8f6 100644
+--- a/onnxruntime/test/python/transformers/qwen3_model_generator.py
++++ b/onnxruntime/test/python/transformers/qwen3_model_generator.py
+@@ -10,7 +10,7 @@ Qwen3 is a decoder-only architecture with:
+   - RMSNorm (SimplifiedLayerNormalization) instead of LayerNorm
+   - Grouped Query Attention (GQA): fewer KV heads than Q heads
+   - QK-Norm: RMSNorm applied to Q and K after projection
+-  - RoPE: rotary positional embeddings
++  - RoPE: rotary positional embeddings (on-the-fly computation)
+   - SwiGLU activation in FFN
+ """
+ 
+@@ -59,18 +59,258 @@ def _rmsnorm_initializers(prefix, hidden_size, eps=1e-6):
+     ]
+ 
+ 
++def _rotate_half_nodes(prefix, input_name, output_name, cos_name, sin_name):
++    """Build the rotate_half + apply_rotary_pos_emb pattern with dynamic Shape→Gather→Div.
++
++    Pattern: x_embed = (x * cos) + (rotate_half(x) * sin)
++    Where rotate_half(x) = concat(-x[..., dim//2:], x[..., :dim//2])
++
++    Uses the dynamic Shape→Gather→Div→Cast→Cast→Unsqueeze pattern for Slice indices,
++    matching Qwen3's TorchScript export.
++    """
++    nodes = []
++
++    # Compute dim//2 dynamically: Shape → Gather(dim=-1) → Div(2) → Cast → Cast → Unsqueeze
++    nodes.append(helper.make_node("Shape", [input_name], [f"{prefix}_shape"], f"{prefix}_shape"))
++    nodes.append(
++        helper.make_node(
++            "Gather", [f"{prefix}_shape", f"{prefix}_dim_idx"], [f"{prefix}_last_dim"], f"{prefix}_gather_dim"
++        )
++    )
++    nodes.append(
++        helper.make_node("Div", [f"{prefix}_last_dim", f"{prefix}_two"], [f"{prefix}_half_dim"], f"{prefix}_div2")
++    )
++    # Cast nodes (from floor division tracing in TorchScript)
++    nodes.append(
++        helper.make_node("Cast", [f"{prefix}_half_dim"], [f"{prefix}_half_cast1"], f"{prefix}_cast1", to=7)
++    )  # to INT64
++    nodes.append(helper.make_node("Cast", [f"{prefix}_half_cast1"], [f"{prefix}_half_cast2"], f"{prefix}_cast2", to=7))
++
++    # Unsqueeze for Slice starts/ends
++    nodes.append(
++        helper.make_node(
++            "Unsqueeze",
++            [f"{prefix}_half_cast2", f"{prefix}_unsq_axis"],
++            [f"{prefix}_half_unsq"],
++            f"{prefix}_unsq_half",
++        )
++    )
++
++    # x1 = x[..., :dim//2]  (Slice with starts=0, ends=half_dim, axes=-1)
++    nodes.append(
++        helper.make_node(
++            "Slice",
++            [input_name, f"{prefix}_zero_start", f"{prefix}_half_unsq", f"{prefix}_slice_axis", f"{prefix}_one_step"],
++            [f"{prefix}_x1"],
++            f"{prefix}_slice_x1",
++        )
++    )
++
++    # x2 = x[..., dim//2:]  (Slice with starts=half_dim, ends=INT64_MAX, axes=-1)
++    nodes.append(
++        helper.make_node(
++            "Slice",
++            [input_name, f"{prefix}_half_unsq", f"{prefix}_large_end", f"{prefix}_slice_axis", f"{prefix}_one_step"],
++            [f"{prefix}_x2"],
++            f"{prefix}_slice_x2",
++        )
++    )
++
++    # rotate_half = concat(-x2, x1)
++    nodes.append(helper.make_node("Neg", [f"{prefix}_x2"], [f"{prefix}_neg_x2"], f"{prefix}_neg"))
++    nodes.append(
++        helper.make_node(
++            "Concat", [f"{prefix}_neg_x2", f"{prefix}_x1"], [f"{prefix}_rotated"], f"{prefix}_concat", axis=-1
++        )
++    )
++
++    # x * cos
++    nodes.append(helper.make_node("Mul", [input_name, cos_name], [f"{prefix}_x_cos"], f"{prefix}_mul_cos"))
++
++    # rotate_half(x) * sin
++    nodes.append(helper.make_node("Mul", [f"{prefix}_rotated", sin_name], [f"{prefix}_rot_sin"], f"{prefix}_mul_sin"))
++
++    # x_embed = x*cos + rotate_half(x)*sin
++    nodes.append(helper.make_node("Add", [f"{prefix}_x_cos", f"{prefix}_rot_sin"], [output_name], f"{prefix}_add_rope"))
++
++    return nodes
++
++
++def _rotate_half_initializers(prefix):
++    """Initializers for the dynamic Slice index computation in rotate_half."""
++    return [
++        helper.make_tensor(f"{prefix}_dim_idx", TensorProto.INT64, [], [3]),  # last dim index
++        helper.make_tensor(f"{prefix}_two", TensorProto.INT64, [], [2]),
++        helper.make_tensor(f"{prefix}_unsq_axis", TensorProto.INT64, [1], [0]),
++        helper.make_tensor(f"{prefix}_zero_start", TensorProto.INT64, [1], [0]),
++        helper.make_tensor(f"{prefix}_large_end", TensorProto.INT64, [1], [9223372036854775807]),  # INT64_MAX
++        helper.make_tensor(f"{prefix}_slice_axis", TensorProto.INT64, [1], [-1]),
++        helper.make_tensor(f"{prefix}_one_step", TensorProto.INT64, [1], [1]),
++    ]
++
++
++def _on_the_fly_rope_nodes(prefix, head_dim, include_expand=False):
++    """Build the on-the-fly RoPE computation: MatMul(inv_freq, positions) → Cos/Sin → Mul(scaling).
++
++    This matches Qwen3's RoPE pattern:
++        inv_freq_expanded @ position_ids_expanded → Transpose → Concat(freqs, freqs) → Cos/Sin → Mul(scaling)
++
++    When include_expand=True, adds Cast → Expand → Where nodes between inv_freq and MatMul,
++    matching the pattern seen in some exports where inv_freq is explicitly expanded to batch size.
++    """
++    nodes = []
++
++    # Unsqueeze position_ids: (B, S) → (B, 1, S)
++    nodes.append(
++        helper.make_node(
++            "Unsqueeze",
++            ["position_ids", f"{prefix}_unsq_axis"],
++            [f"{prefix}_pos_unsq"],
++            f"{prefix}_pos_unsqueeze",
++        )
++    )
++    # Cast to float for MatMul
++    nodes.append(helper.make_node("Cast", [f"{prefix}_pos_unsq"], [f"{prefix}_pos_float"], f"{prefix}_pos_cast", to=1))
++
++    # inv_freq path: optionally add Cast → Expand → Where between inv_freq and MatMul
++    if include_expand:
++        matmul_inv_freq_input = f"{prefix}_inv_freq_where"
++        nodes.append(
++            helper.make_node(
++                "Cast",
++                [f"{prefix}_inv_freq"],
++                [f"{prefix}_inv_freq_cast"],
++                f"{prefix}_inv_freq_cast",
++                to=1,
++            )
++        )
++        nodes.append(
++            helper.make_node(
++                "Expand",
++                [f"{prefix}_inv_freq_cast", f"{prefix}_expand_shape"],
++                [f"{prefix}_inv_freq_expand"],
++                f"{prefix}_inv_freq_expand",
++            )
++        )
++        nodes.append(
++            helper.make_node(
++                "Where",
++                [f"{prefix}_where_cond", f"{prefix}_inv_freq_expand", f"{prefix}_where_zero"],
++                [matmul_inv_freq_input],
++                f"{prefix}_inv_freq_where",
++            )
++        )
++    else:
++        matmul_inv_freq_input = f"{prefix}_inv_freq"
++
++    # MatMul: inv_freq @ position_ids → freqs
++    # inv_freq shape: (1, head_dim/2, 1) → expand not needed in test
++    # position_ids shape: (B, 1, S)
++    # Output: (B, head_dim/2, S) or (1, head_dim/2, S)
++    nodes.append(
++        helper.make_node(
++            "MatMul",
++            [matmul_inv_freq_input, f"{prefix}_pos_float"],
++            [f"{prefix}_freqs_raw"],
++            f"{prefix}_freq_matmul",
++        )
++    )
++
++    # Transpose: (B, head_dim/2, S) → (B, S, head_dim/2)
++    nodes.append(
++        helper.make_node(
++            "Transpose", [f"{prefix}_freqs_raw"], [f"{prefix}_freqs"], f"{prefix}_freq_transpose", perm=[0, 2, 1]
++        )
++    )
++
++    # Concat(freqs, freqs): (B, S, head_dim/2) → (B, S, head_dim)
++    nodes.append(
++        helper.make_node(
++            "Concat", [f"{prefix}_freqs", f"{prefix}_freqs"], [f"{prefix}_emb"], f"{prefix}_freq_concat", axis=-1
++        )
++    )
++
++    # Cos and Sin
++    nodes.append(helper.make_node("Cos", [f"{prefix}_emb"], [f"{prefix}_cos_raw"], f"{prefix}_cos"))
++    nodes.append(helper.make_node("Sin", [f"{prefix}_emb"], [f"{prefix}_sin_raw"], f"{prefix}_sin"))
++
++    # Mul by attention_scaling (1.0 for test)
++    nodes.append(
++        helper.make_node(
++            "Mul", [f"{prefix}_cos_raw", f"{prefix}_scaling"], [f"{prefix}_cos_scaled"], f"{prefix}_cos_scale"
++        )
++    )
++    nodes.append(
++        helper.make_node(
++            "Mul", [f"{prefix}_sin_raw", f"{prefix}_scaling"], [f"{prefix}_sin_scaled"], f"{prefix}_sin_scale"
++        )
++    )
++
++    # Unsqueeze to add head dimension: (B, S, head_dim) → (B, 1, S, head_dim)
++    nodes.append(
++        helper.make_node(
++            "Unsqueeze",
++            [f"{prefix}_cos_scaled", f"{prefix}_head_unsq_axis"],
++            [f"{prefix}_cos_out"],
++            f"{prefix}_cos_unsqueeze",
++        )
++    )
++    nodes.append(
++        helper.make_node(
++            "Unsqueeze",
++            [f"{prefix}_sin_scaled", f"{prefix}_head_unsq_axis"],
++            [f"{prefix}_sin_out"],
++            f"{prefix}_sin_unsqueeze",
++        )
++    )
++
++    return nodes
++
++
++def _on_the_fly_rope_initializers(prefix, head_dim, batch_size=1, include_expand=False, inv_freq_as_graph_input=False):
++    """Initializers for on-the-fly RoPE computation."""
++    inv_freq = 1.0 / (10000.0 ** (np.arange(0, head_dim, 2, dtype=np.float32) / head_dim))
++    inits = [
++        helper.make_tensor(f"{prefix}_unsq_axis", TensorProto.INT64, [1], [1]),
++        helper.make_tensor(f"{prefix}_scaling", TensorProto.FLOAT, [], [1.0]),
++        helper.make_tensor(f"{prefix}_head_unsq_axis", TensorProto.INT64, [1], [1]),
++    ]
++    if not inv_freq_as_graph_input:
++        inits.append(
++            helper.make_tensor(f"{prefix}_inv_freq", TensorProto.FLOAT, [1, head_dim // 2, 1], inv_freq.tolist())
++        )
++    if include_expand:
++        inits.extend(
++            [
++                helper.make_tensor(f"{prefix}_expand_shape", TensorProto.INT64, [3], [batch_size, head_dim // 2, 1]),
++                helper.make_tensor(
++                    f"{prefix}_where_cond",
++                    TensorProto.BOOL,
++                    [batch_size, head_dim // 2, 1],
++                    [True] * (batch_size * (head_dim // 2)),
++                ),
++                helper.make_tensor(f"{prefix}_where_zero", TensorProto.FLOAT, [], [0.0]),
++            ]
++        )
++    return inits
++
++
+ def create_qwen3_decoder_layer(
+     hidden_size=64,
+     num_heads=8,
+     num_kv_heads=2,
+     batch_size=1,
+     seq_len=4,
++    include_rope=False,
++    include_expand_in_inv_freq=False,
++    inv_freq_as_graph_input=False,
+ ):
+     """Create a single Qwen3 decoder layer with RMSNorm, Q/K/V projections, QK-Norm, and residual Add.
+ 
+     The generated graph exercises:
+       - SimplifiedLayerNormalization fusion (pre-attn RMSNorm, Q-norm, K-norm)
+       - SkipSimplifiedLayerNormalization fusion (residual Add + post-attn RMSNorm)
++      - RotaryEmbedding fusion (when include_rope=True)
+ 
+     Returns an onnx.ModelProto.
+     """
+@@ -79,6 +319,9 @@ def create_qwen3_decoder_layer(
+ 
+     nodes = []
+     initializers = []
++    inputs = [
++        helper.make_tensor_value_info("input_0", TensorProto.FLOAT, [batch_size, seq_len, hidden_size]),
++    ]
+ 
+     # --- Pre-attention RMSNorm ---
+     nodes.extend(_rmsnorm_nodes("pre_ln", "input_0", "pre_ln_weight", "pre_ln_out"))
+@@ -121,13 +364,47 @@ def create_qwen3_decoder_layer(
+     nodes.append(helper.make_node("Transpose", ["q_normed"], ["q_transposed"], "q_transpose", perm=[0, 2, 1, 3]))
+     nodes.append(helper.make_node("Transpose", ["k_normed"], ["k_transposed"], "k_transpose", perm=[0, 2, 1, 3]))
+ 
++    if include_rope:
++        # --- On-the-fly RoPE computation (shared cos/sin) ---
++        nodes.extend(_on_the_fly_rope_nodes("rope", head_dim, include_expand=include_expand_in_inv_freq))
++        initializers.extend(
++            _on_the_fly_rope_initializers(
++                "rope",
++                head_dim,
++                batch_size=batch_size,
++                include_expand=include_expand_in_inv_freq,
++                inv_freq_as_graph_input=inv_freq_as_graph_input,
++            )
++        )
++        inputs.append(
++            helper.make_tensor_value_info("position_ids", TensorProto.INT64, [batch_size, seq_len]),
++        )
++        if inv_freq_as_graph_input:
++            inputs.append(
++                helper.make_tensor_value_info("rope_inv_freq", TensorProto.FLOAT, [1, head_dim // 2, 1]),
++            )
++
++        # --- Apply RoPE to Q ---
++        nodes.extend(_rotate_half_nodes("q_rope", "q_transposed", "q_rope_out", "rope_cos_out", "rope_sin_out"))
++        initializers.extend(_rotate_half_initializers("q_rope"))
++
++        # --- Apply RoPE to K ---
++        nodes.extend(_rotate_half_nodes("k_rope", "k_transposed", "k_rope_out", "rope_cos_out", "rope_sin_out"))
++        initializers.extend(_rotate_half_initializers("k_rope"))
++
++        q_for_attn = "q_rope_out"
++        k_for_attn = "k_rope_out"
++    else:
++        q_for_attn = "q_transposed"
++        k_for_attn = "k_transposed"
++
+     # --- V reshape + transpose ---
+     nodes.append(helper.make_node("Reshape", ["v_proj", "k_shape"], ["v_reshaped"], "v_reshape"))
+     nodes.append(helper.make_node("Transpose", ["v_reshaped"], ["v_transposed"], "v_transpose", perm=[0, 2, 1, 3]))
+ 
+     # --- Simplified attention: QK^T -> Softmax -> *V ---
+-    nodes.append(helper.make_node("Transpose", ["k_transposed"], ["k_T"], "k_transpose_for_matmul", perm=[0, 1, 3, 2]))
+-    nodes.append(helper.make_node("MatMul", ["q_transposed", "k_T"], ["qk_scores"], "qk_matmul"))
++    nodes.append(helper.make_node("Transpose", [k_for_attn], ["k_T"], "k_transpose_for_matmul", perm=[0, 1, 3, 2]))
++    nodes.append(helper.make_node("MatMul", [q_for_attn, "k_T"], ["qk_scores"], "qk_matmul"))
+     nodes.append(helper.make_node("Mul", ["qk_scores", "scale_factor"], ["qk_scaled"], "qk_scale"))
+     initializers.append(helper.make_tensor("scale_factor", TensorProto.FLOAT, [1], [1.0 / (head_dim**0.5)]))
+     nodes.append(helper.make_node("Softmax", ["qk_scaled"], ["attn_weights"], "softmax", axis=-1))
+@@ -163,9 +440,7 @@ def create_qwen3_decoder_layer(
+     graph = helper.make_graph(
+         nodes,
+         "qwen3_decoder_layer",
+-        [
+-            helper.make_tensor_value_info("input_0", TensorProto.FLOAT, [batch_size, seq_len, hidden_size]),
+-        ],
++        inputs,
+         [
+             helper.make_tensor_value_info("output_0", TensorProto.FLOAT, [batch_size, seq_len, hidden_size]),
+         ],
+diff --git a/onnxruntime/test/python/transformers/test_attention_fusion.py b/onnxruntime/test/python/transformers/test_attention_fusion.py
+index caaaa1aa62..965eba0b92 100644
+--- a/onnxruntime/test/python/transformers/test_attention_fusion.py
++++ b/onnxruntime/test/python/transformers/test_attention_fusion.py
+@@ -8,11 +8,13 @@ import os
+ import tempfile
+ import unittest
+ 
++import numpy as np
+ import onnx
+ from bart_model_generator import create_bart_attention_sdpa
+ from bert_model_generator import create_bert_attention, create_bert_attention_pre_ln, create_tf2onnx_attention_3d
+ from gpt2_model_generator import create_gpt2_attention, create_gpt2_attention_no_past
+ from model_loader import get_test_data_path
++from onnx import numpy_helper
+ from parity_utilities import find_transformers_source
+ from qwen3_model_generator import create_qwen3_decoder_layer
+ 
+@@ -361,9 +363,7 @@ class TestFusion(unittest.TestCase):
+     def test_qwen3_normalization_fusion(self):
+         """Test Qwen3 decoder layer optimization.
+ 
+-        Verifies that the optimizer fuses:
+-          - RMSNorm patterns into SimplifiedLayerNormalization (pre-attn, Q-norm, K-norm)
+-          - Add + RMSNorm into SkipSimplifiedLayerNormalization (residual connection)
++        Verifies that the optimizer fuses RMSNorm patterns into SimplifiedLayerNormalization.
+         """
+         hidden_size = 64
+         num_heads = 8
+@@ -392,22 +392,216 @@ class TestFusion(unittest.TestCase):
+ 
+         nodes = optimized_model.model.graph.node
+         sln_count = sum(1 for n in nodes if n.op_type == "SimplifiedLayerNormalization")
+-        ssln_count = sum(1 for n in nodes if n.op_type == "SkipSimplifiedLayerNormalization")
+ 
+-        # 4 RMSNorm patterns: pre-attn, Q-norm, K-norm, post-attn.
+-        # Fallback for SkipLayerNormalization is disabled, so post-attn RMSNorm does not fuse.
+-        # All 4 stay as SimplifiedLayerNormalization.
++        # 4 RMSNorm patterns all fuse into SimplifiedLayerNormalization:
++        # pre-attn, Q-norm, K-norm, post-attn.
+         self.assertEqual(
+             sln_count,
+             4,
+-            f"Expected 4 SimplifiedLayerNormalization (pre-attn + Q-norm + K-norm + post-attn), got {sln_count}",
++            f"Expected 4 SimplifiedLayerNormalization, got {sln_count}",
++        )
++
++    def test_qwen3_rotary_embedding_fusion(self):
++        """Test Qwen3 RotaryEmbedding fusion for on-the-fly RoPE with dynamic Slice indices.
++
++        Verifies that the optimizer fuses:
++          - On-the-fly RoPE (MatMul → Cos/Sin → Mul(scaling)) into RotaryEmbedding nodes
++          - Both Q and K paths get RotaryEmbedding fusion (2 total)
++        """
++        hidden_size = 64
++        num_heads = 8
++        num_kv_heads = 2
++
++        model = create_qwen3_decoder_layer(
++            hidden_size=hidden_size,
++            num_heads=num_heads,
++            num_kv_heads=num_kv_heads,
++            include_rope=True,
++        )
++
++        dir = tempfile.mkdtemp()
++        model_path = os.path.join(dir, "qwen3_decoder_rope.onnx")
++        onnx.save(model, model_path)
++
++        options = FusionOptions("qwen3")
++        optimized_model = optimize_model(
++            model_path,
++            model_type="qwen3",
++            num_heads=num_heads,
++            hidden_size=hidden_size,
++            optimization_options=options,
+         )
++
++        os.remove(model_path)
++
++        nodes = optimized_model.model.graph.node
++        rope_count = sum(1 for n in nodes if n.op_type == "RotaryEmbedding")
++        sln_count = sum(1 for n in nodes if n.op_type == "SimplifiedLayerNormalization")
++
+         self.assertEqual(
+-            ssln_count,
++            rope_count,
++            2,
++            f"Expected 2 RotaryEmbedding (Q + K), got {rope_count}",
++        )
++        self.assertEqual(
++            sln_count,
++            4,
++            f"Expected 4 SimplifiedLayerNormalization, got {sln_count}",
++        )
++
++    def test_qwen3_rotary_embedding_fusion_with_expand(self):
++        """Test RotaryEmbedding fusion when inv_freq path includes Cast → Expand → Where nodes."""
++        hidden_size = 64
++        num_heads = 8
++        num_kv_heads = 2
++
++        model = create_qwen3_decoder_layer(
++            hidden_size=hidden_size,
++            num_heads=num_heads,
++            num_kv_heads=num_kv_heads,
++            include_rope=True,
++            include_expand_in_inv_freq=True,
++        )
++
++        dir = tempfile.mkdtemp()
++        model_path = os.path.join(dir, "qwen3_decoder_rope_expand.onnx")
++        onnx.save(model, model_path)
++
++        options = FusionOptions("qwen3")
++        optimized_model = optimize_model(
++            model_path,
++            model_type="qwen3",
++            num_heads=num_heads,
++            hidden_size=hidden_size,
++            optimization_options=options,
++        )
++
++        os.remove(model_path)
++
++        nodes = optimized_model.model.graph.node
++        rope_count = sum(1 for n in nodes if n.op_type == "RotaryEmbedding")
++
++        self.assertEqual(
++            rope_count,
++            2,
++            f"Expected 2 RotaryEmbedding (Q + K) with Expand in inv_freq path, got {rope_count}",
++        )
++
++    def test_qwen3_rotary_embedding_fusion_negative_dynamic_inv_freq(self):
++        """Test that RotaryEmbedding fusion gracefully falls back when inv_freq is a dynamic graph input.
++
++        When inv_freq is not a constant initializer (e.g., computed dynamically), the fusion cannot
++        extract the values at optimization time and should skip fusion without crashing.
++        """
++        hidden_size = 64
++        num_heads = 8
++        num_kv_heads = 2
++
++        model = create_qwen3_decoder_layer(
++            hidden_size=hidden_size,
++            num_heads=num_heads,
++            num_kv_heads=num_kv_heads,
++            include_rope=True,
++            inv_freq_as_graph_input=True,
++        )
++
++        dir = tempfile.mkdtemp()
++        model_path = os.path.join(dir, "qwen3_decoder_rope_dynamic_inv_freq.onnx")
++        onnx.save(model, model_path)
++
++        options = FusionOptions("qwen3")
++        optimized_model = optimize_model(
++            model_path,
++            model_type="qwen3",
++            num_heads=num_heads,
++            hidden_size=hidden_size,
++            optimization_options=options,
++        )
++
++        os.remove(model_path)
++
++        nodes = optimized_model.model.graph.node
++        rope_count = sum(1 for n in nodes if n.op_type == "RotaryEmbedding")
++
++        # Fusion should gracefully skip — 0 RotaryEmbedding nodes, no crash
++        self.assertEqual(
++            rope_count,
+             0,
+-            f"Expected 0 SkipSimplifiedLayerNormalization (residual + post-attn RMSNorm failed to fuse), got {ssln_count}",
++            f"Expected 0 RotaryEmbedding when inv_freq is dynamic, got {rope_count}",
++        )
++
++    def test_qwen3_rotary_embedding_fusion_cache_numerical_validation(self):
++        """Test that the generated cos/sin caches have correct values.
++
++        Verifies the mathematical correctness of the precomputed caches:
++            freqs[pos, i] = pos * inv_freq[i]
++            cos_cache[pos, i] = cos(freqs[pos, i]) * scaling
++            sin_cache[pos, i] = sin(freqs[pos, i]) * scaling
++        """
++        hidden_size = 64
++        num_heads = 8
++        num_kv_heads = 2
++        head_dim = hidden_size // num_heads  # 8
++        half_dim = head_dim // 2  # 4
++
++        model = create_qwen3_decoder_layer(
++            hidden_size=hidden_size,
++            num_heads=num_heads,
++            num_kv_heads=num_kv_heads,
++            include_rope=True,
+         )
+ 
++        dir = tempfile.mkdtemp()
++        model_path = os.path.join(dir, "qwen3_decoder_rope_numerical.onnx")
++        onnx.save(model, model_path)
++
++        options = FusionOptions("qwen3")
++        optimized_model = optimize_model(
++            model_path,
++            model_type="qwen3",
++            num_heads=num_heads,
++            hidden_size=hidden_size,
++            optimization_options=options,
++        )
++
++        os.remove(model_path)
++
++        # Verify cos/sin cache initializers exist
++        cos_init = optimized_model.get_initializer("cos_cache")
++        sin_init = optimized_model.get_initializer("sin_cache")
++        self.assertIsNotNone(cos_init, "cos_cache initializer not found after fusion")
++        self.assertIsNotNone(sin_init, "sin_cache initializer not found after fusion")
++
++        cos_data = numpy_helper.to_array(cos_init)
++        sin_data = numpy_helper.to_array(sin_init)
++
++        # Verify shape: (max_seq_len, head_dim // 2)
++        self.assertEqual(cos_data.shape[1], half_dim, f"cos_cache dim 1 should be {half_dim}")
++        self.assertEqual(sin_data.shape[1], half_dim, f"sin_cache dim 1 should be {half_dim}")
++        self.assertEqual(cos_data.shape, sin_data.shape, "cos_cache and sin_cache shapes should match")
++
++        # Recompute expected values from inv_freq (must match the generator's formula)
++        inv_freq = 1.0 / (10000.0 ** (np.arange(0, head_dim, 2, dtype=np.float32) / head_dim))
++        scaling = 1.0  # attention_scaling in the test generator
++
++        # Spot-check at several positions
++        for pos in [0, 1, 7, 100, 1000]:
++            expected_freqs = pos * inv_freq
++            expected_cos = np.cos(expected_freqs) * scaling
++            expected_sin = np.sin(expected_freqs) * scaling
++            np.testing.assert_allclose(
++                cos_data[pos],
++                expected_cos,
++                rtol=1e-6,
++                err_msg=f"cos_cache mismatch at position {pos}",
++            )
++            np.testing.assert_allclose(
++                sin_data[pos],
++                expected_sin,
++                rtol=1e-6,
++                err_msg=f"sin_cache mismatch at position {pos}",
++            )
++
+ 
+ if __name__ == "__main__":
+     unittest.main()

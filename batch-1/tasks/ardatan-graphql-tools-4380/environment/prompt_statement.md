@@ -1,7 +1,9 @@
-I'm using the schema pruning utility from this library and I've noticed a few cases where the pruner leaves types in the schema that it should be removing.
+I'm hitting some gaps in the schema pruning utility and want to get them fixed so pruning actually removes everything it should.
 
-First, if I define a custom scalar type in my schema but never actually use it in any field, the pruner keeps it around. I'd expect an unused scalar to be cleaned up the same way unused object types or enums are.
+First issue: if I define a custom scalar type in my schema but never reference it from any field reachable from the root, the pruner just leaves it there. I'd expect an unused scalar to get cleaned up the same way unused object types or enums do, so any custom scalar that isn't reachable from a root type should be removed during pruning. Oh and there's an option flag that skips pruning of unused types, and when that's set it should cover unused custom scalars too, keeping them around like the other unused types.
 
-Second, if I have several types that all implement the same interface, but only one of them is actually referenced from a query field, the others stick around after pruning. I'd expect any object type that isn't reachable from the root to be removed, regardless of whether it implements an interface.
+Second: when I've got several types that all implement the same interface but only one of them is actually referenced from a query field, the others stick around after pruning. Any object type that isn't reachable from the root should be removed, even if it implements an interface, since no query path can reach those unreachable implementations.
 
-Third, I'm using the option that lets you supply a custom filter function to protect certain types from being pruned. When I mark a type as "do not prune" using that filter, the interfaces that type implements still get pruned away, which leaves the kept type in a broken state. I'd expect that if a type is kept by the filter, all of the types it depends on — like the interfaces it implements — should also be preserved automatically.
+Third, I use the option that takes a custom filter function to protect certain types from being pruned. When I mark a type as do-not-prune with that filter, the interfaces that type implements still get pruned away, which leaves the kept type in a broken, inconsistent state. I'd expect that if a type is kept because the filter matched it, all the types it depends on, like the interfaces it implements, get preserved automatically too.
+
+Basically I want pruning to be complete and correct, and safe to use alongside the custom type-protection filter.

@@ -1,0 +1,9 @@
+diff --git a/README.md b/README.md
+index fdf6186..cf70f7f 100644
+--- a/README.md
++++ b/README.md
+@@ -108,3 +108,4 @@ Other useful commands:
+     ./third_party/depot_tools/gn help
+ 
+ Env vars: `DENO_BUILD_MODE`, `DENO_BUILD_PATH`, `DENO_BUILD_ARGS`.
++

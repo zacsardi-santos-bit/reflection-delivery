@@ -1,0 +1,23 @@
+diff --git a/crates/arrow_sql_gen/src/statement.rs b/crates/arrow_sql_gen/src/statement.rs
+--- a/crates/arrow_sql_gen/src/statement.rs
++++ b/crates/arrow_sql_gen/src/statement.rs
+@@ -732,3 +732,19 @@
+         );
+     }
+ }
++
++#[cfg(test)]
++mod create_table_postgres_tests {
++    use super::*;
++    use std::sync::Arc;
++    use arrow::datatypes::{DataType, Field, Schema};
++
++    #[test]
++    fn test_build_postgres_returns_vec() {
++        let schema = Schema::new(vec![
++            Field::new("id", DataType::Int32, false),
++        ]);
++        let stmts = CreateTableBuilder::new(Arc::new(schema), "t1").build_postgres();
++        assert_eq!(stmts.len(), 1usize);
++    }
++}

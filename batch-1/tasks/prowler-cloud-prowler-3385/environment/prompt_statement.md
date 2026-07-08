@@ -1,10 +1,5 @@
-I'm working on adding Azure MySQL Flexible Server support to our cloud security scanning tool. Right now we have no checks at all for MySQL Flexible Servers on Azure — we're missing coverage for some pretty important security controls.
+We've got zero coverage for Azure MySQL Flexible Servers in our cloud security scanner right now, and that's a real gap since these databases can end up allowing unencrypted connections, running outdated TLS versions, or shipping with audit logging switched off, all of which raise the odds of data exposure and make suspicious activity harder to catch. I want to close that hole.
 
-Specifically, I need to implement the underlying service layer to fetch MySQL Flexible Server instances and their configuration settings from Azure, as well as four new security checks:
+First I need the service layer that talks to Azure and pulls back each MySQL Flexible Server instance plus its configuration settings, since that's the data everything else leans on. On top of that I want four new checks. One confirms audit logging is globally enabled on each server. One confirms connection events are actually being captured in the audit log events. One confirms the server requires encrypted connections and rejects unencrypted ones. And one confirms only sufficiently modern encryption protocol versions are permitted, flagging any server that still allows outdated ones.
 
-1. A check that confirms audit logging is enabled on each server.
-2. A check that confirms connection events are being captured in the audit log.
-3. A check that confirms the server requires encrypted connections and won't accept unencrypted ones.
-4. A check that confirms only sufficiently modern encryption protocol versions are permitted — servers allowing outdated versions should be flagged.
-
-Each check should produce a pass or fail result for each server, with a human-readable message that identifies the server and subscription. If a server has no relevant configuration at all (not just a misconfigured one), the check should still report a failure for that server. Checks should handle the case where there are no subscriptions or no servers gracefully by returning no results.
+Each check runs per server and emits a PASS when the control is set up right and a FAIL when it's missing or misconfigured, with a human-readable message naming the server and its subscription. Important detail: if a server has no relevant configuration at all (not just a bad one), that's still a FAIL for that server, don't skip it. And if there are no subscriptions, or a subscription has no servers, just return no results, don't blow up.

@@ -1,0 +1,16 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py b/crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py
+index 60091c7eea..edb729eb98 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py
+@@ -368,3 +368,11 @@ def foo() -> int:
+     if baz() > 3:
+         return 1
+     bar()
++
++
++def f():
++    if a:
++        return b
++    else:
++        with c:
++            d

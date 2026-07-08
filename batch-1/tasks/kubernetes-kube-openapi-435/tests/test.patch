@@ -1,0 +1,1523 @@
+diff --git a/pkg/generators/markers_test.go b/pkg/generators/markers_test.go
+new file mode 100644
+index 0000000..e7601c5
+--- /dev/null
++++ b/pkg/generators/markers_test.go
+@@ -0,0 +1,481 @@
++/*
++Copyright 2023 The Kubernetes Authors.
++
++Licensed under the Apache License, Version 2.0 (the "License");
++you may not use this file except in compliance with the License.
++You may obtain a copy of the License at
++
++    http://www.apache.org/licenses/LICENSE-2.0
++
++Unless required by applicable law or agreed to in writing, software
++distributed under the License is distributed on an "AS IS" BASIS,
++WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++See the License for the specific language governing permissions and
++limitations under the License.
++*/
++
++package generators_test
++
++import (
++	"testing"
++
++	"github.com/stretchr/testify/require"
++	"k8s.io/gengo/types"
++	"k8s.io/kube-openapi/pkg/generators"
++	"k8s.io/kube-openapi/pkg/validation/spec"
++	"k8s.io/utils/ptr"
++)
++
++func TestParseCommentTags(t *testing.T) {
++
++	structKind := createType("struct")
++
++	numKind := createType("float")
++
++	cases := []struct {
++		t        *types.Type
++		name     string
++		comments []string
++		expected generators.CommentTags
++
++		// regex pattern matching the error, or empty string/unset if no error
++		// is expected
++		expectedError string
++	}{
++		{
++			t:    &structKind,
++			name: "basic example",
++			comments: []string{
++				"comment",
++				"another + comment",
++				"+k8s:validation:minimum=10.0",
++				"+k8s:validation:maximum=20.0",
++				"+k8s:validation:minLength=20",
++				"+k8s:validation:maxLength=30",
++				`+k8s:validation:pattern="asdf"`,
++				"+k8s:validation:multipleOf=1.0",
++				"+k8s:validation:minItems=1",
++				"+k8s:validation:maxItems=2",
++				"+k8s:validation:uniqueItems=true",
++				"exclusiveMaximum=true",
++				"not+k8s:validation:Minimum=0.0",
++			},
++			expected: generators.CommentTags{
++				spec.SchemaProps{
++					Maximum:     ptr.To(20.0),
++					Minimum:     ptr.To(10.0),
++					MinLength:   ptr.To[int64](20),
++					MaxLength:   ptr.To[int64](30),
++					Pattern:     "asdf",
++					MultipleOf:  ptr.To(1.0),
++					MinItems:    ptr.To[int64](1),
++					MaxItems:    ptr.To[int64](2),
++					UniqueItems: true,
++				},
++			},
++		},
++		{
++			t:    &structKind,
++			name: "empty",
++		},
++		{
++			t:    &numKind,
++			name: "single",
++			comments: []string{
++				"+k8s:validation:minimum=10.0",
++			},
++			expected: generators.CommentTags{
++				spec.SchemaProps{
++					Minimum: ptr.To(10.0),
++				},
++			},
++		},
++		{
++			t:    &numKind,
++			name: "multiple",
++			comments: []string{
++				"+k8s:validation:minimum=10.0",
++				"+k8s:validation:maximum=20.0",
++			},
++			expected: generators.CommentTags{
++				spec.SchemaProps{
++					Maximum: ptr.To(20.0),
++					Minimum: ptr.To(10.0),
++				},
++			},
++		},
++		{
++			t:    &numKind,
++			name: "invalid duplicate key",
++			comments: []string{
++				"+k8s:validation:minimum=10.0",
++				"+k8s:validation:maximum=20.0",
++				"+k8s:validation:minimum=30.0",
++			},
++			expectedError: `cannot unmarshal array into Go struct field CommentTags.minimum of type float64`,
++		},
++		{
++			t:    &structKind,
++			name: "unrecognized key is ignored",
++			comments: []string{
++				"+ignored=30.0",
++			},
++		},
++		{
++			t:    &numKind,
++			name: "invalid: invalid value",
++			comments: []string{
++				"+k8s:validation:minimum=asdf",
++			},
++			expectedError: `invalid value for key k8s:validation:minimum`,
++		},
++		{
++
++			t:    &structKind,
++			name: "invalid: invalid value",
++			comments: []string{
++				"+k8s:validation:",
++			},
++			expectedError: `failed to parse marker comments: cannot have empty key for marker comment`,
++		},
++		{
++			t:    &numKind,
++			name: "ignore refs",
++			comments: []string{
++				"+k8s:validation:pattern=ref(asdf)",
++			},
++		},
++	}
++
++	for _, tc := range cases {
++		t.Run(tc.name, func(t *testing.T) {
++			actual, err := generators.ParseCommentTags(tc.t, tc.comments, "k8s:validation:")
++			if tc.expectedError != "" {
++				require.Error(t, err)
++				require.Regexp(t, tc.expectedError, err.Error())
++				return
++			} else {
++				require.NoError(t, err)
++			}
++
++			require.Equal(t, tc.expected, actual)
++		})
++	}
++}
++
++// Test comment tag validation function
++func TestCommentTags_Validate(t *testing.T) {
++
++	testCases := []struct {
++		name          string
++		commentParams map[string]any
++		t             types.Type
++		errorMessage  string
++	}{
++		{
++			name: "invalid minimum type",
++			commentParams: map[string]any{
++				"minimum": 10.5,
++			},
++			t:            createType("string"),
++			errorMessage: "minimum can only be used on numeric types",
++		},
++		{
++			name: "invalid minLength type",
++			commentParams: map[string]any{
++				"minLength": 10,
++			},
++			t:            createType("bool"),
++			errorMessage: "minLength can only be used on string types",
++		},
++		{
++			name: "invalid minItems type",
++			commentParams: map[string]any{
++				"minItems": 10,
++			},
++			t:            createType("string"),
++			errorMessage: "minItems can only be used on array types",
++		},
++		{
++			name: "invalid minProperties type",
++			commentParams: map[string]any{
++				"minProperties": 10,
++			},
++			t:            createType("string"),
++			errorMessage: "minProperties can only be used on map types",
++		},
++		{
++			name: "invalid exclusiveMinimum type",
++			commentParams: map[string]any{
++				"exclusiveMinimum": true,
++			},
++			t:            createType("array"),
++			errorMessage: "exclusiveMinimum can only be used on numeric types",
++		},
++		{
++			name: "invalid maximum type",
++			commentParams: map[string]any{
++				"maximum": 10.5,
++			},
++			t:            createType("array"),
++			errorMessage: "maximum can only be used on numeric types",
++		},
++		{
++			name: "invalid maxLength type",
++			commentParams: map[string]any{
++				"maxLength": 10,
++			},
++			t:            createType("map"),
++			errorMessage: "maxLength can only be used on string types",
++		},
++		{
++			name: "invalid maxItems type",
++			commentParams: map[string]any{
++				"maxItems": 10,
++			},
++			t:            createType("bool"),
++			errorMessage: "maxItems can only be used on array types",
++		},
++		{
++			name: "invalid maxProperties type",
++			commentParams: map[string]any{
++				"maxProperties": 10,
++			},
++			t:            createType("bool"),
++			errorMessage: "maxProperties can only be used on map types",
++		},
++		{
++			name: "invalid exclusiveMaximum type",
++			commentParams: map[string]any{
++				"exclusiveMaximum": true,
++			},
++			t:            createType("map"),
++			errorMessage: "exclusiveMaximum can only be used on numeric types",
++		},
++		{
++			name: "invalid pattern type",
++			commentParams: map[string]any{
++				"pattern": ".*",
++			},
++			t:            createType("int"),
++			errorMessage: "pattern can only be used on string types",
++		},
++		{
++			name: "invalid multipleOf type",
++			commentParams: map[string]any{
++				"multipleOf": 10.5,
++			},
++			t:            createType("string"),
++			errorMessage: "multipleOf can only be used on numeric types",
++		},
++		{
++			name: "invalid uniqueItems type",
++			commentParams: map[string]any{
++				"uniqueItems": true,
++			},
++			t:            createType("int"),
++			errorMessage: "uniqueItems can only be used on array types",
++		},
++		{
++			name: "negative minLength",
++			commentParams: map[string]any{
++				"minLength": -10,
++			},
++			t:            createType("string"),
++			errorMessage: "minLength cannot be negative",
++		},
++		{
++			name: "negative minItems",
++			commentParams: map[string]any{
++				"minItems": -10,
++			},
++			t:            createType("array"),
++			errorMessage: "minItems cannot be negative",
++		},
++		{
++			name: "negative minProperties",
++			commentParams: map[string]any{
++				"minProperties": -10,
++			},
++			t:            createType("map"),
++			errorMessage: "minProperties cannot be negative",
++		},
++		{
++			name: "negative maxLength",
++			commentParams: map[string]any{
++				"maxLength": -10,
++			},
++			t:            createType("string"),
++			errorMessage: "maxLength cannot be negative",
++		},
++		{
++			name: "negative maxItems",
++			commentParams: map[string]any{
++				"maxItems": -10,
++			},
++			t:            createType("array"),
++			errorMessage: "maxItems cannot be negative",
++		},
++		{
++			name: "negative maxProperties",
++			commentParams: map[string]any{
++				"maxProperties": -10,
++			},
++			t:            createType("map"),
++			errorMessage: "maxProperties cannot be negative",
++		},
++		{
++			name: "minimum > maximum",
++			commentParams: map[string]any{
++				"minimum": 10.5,
++				"maximum": 5.5,
++			},
++			t:            createType("float"),
++			errorMessage: "minimum 10.500000 is greater than maximum 5.500000",
++		},
++		{
++			name: "exclusiveMinimum when minimum == maximum",
++			commentParams: map[string]any{
++				"minimum":          10.5,
++				"maximum":          10.5,
++				"exclusiveMinimum": true,
++			},
++			t:            createType("float"),
++			errorMessage: "exclusiveMinimum/Maximum cannot be set when minimum == maximum",
++		},
++		{
++			name: "exclusiveMaximum when minimum == maximum",
++			commentParams: map[string]any{
++				"minimum":          10.5,
++				"maximum":          10.5,
++				"exclusiveMaximum": true,
++			},
++			t:            createType("float"),
++			errorMessage: "exclusiveMinimum/Maximum cannot be set when minimum == maximum",
++		},
++		{
++			name: "minLength > maxLength",
++			commentParams: map[string]any{
++				"minLength": 10,
++				"maxLength": 5,
++			},
++			t:            createType("string"),
++			errorMessage: "minLength 10 is greater than maxLength 5",
++		},
++		{
++			name: "minItems > maxItems",
++			commentParams: map[string]any{
++				"minItems": 10,
++				"maxItems": 5,
++			},
++			t:            createType("array"),
++			errorMessage: "minItems 10 is greater than maxItems 5",
++		},
++		{
++			name: "minProperties > maxProperties",
++			commentParams: map[string]any{
++				"minProperties": 10,
++				"maxProperties": 5,
++			},
++			t:            createType("map"),
++			errorMessage: "minProperties 10 is greater than maxProperties 5",
++		},
++		{
++			name: "invalid pattern",
++			commentParams: map[string]any{
++				"pattern": "([a-z]+",
++			},
++			t:            createType("string"),
++			errorMessage: "invalid pattern \"([a-z]+\": error parsing regexp: missing closing ): `([a-z]+`",
++		},
++		{
++			name: "multipleOf = 0",
++			commentParams: map[string]any{
++				"multipleOf": 0.0,
++			},
++			t:            createType("int"),
++			errorMessage: "multipleOf cannot be 0",
++		},
++		{
++			name: "valid comment tags with no invalid validations",
++			commentParams: map[string]any{
++				"pattern": ".*",
++			},
++			t:            createType("string"),
++			errorMessage: "",
++		},
++	}
++
++	for _, tc := range testCases {
++		t.Run(tc.name, func(t *testing.T) {
++			commentTags := createCommentTags(tc.commentParams)
++			err := commentTags.Validate()
++			if err == nil {
++				err = commentTags.ValidateType(&tc.t)
++			}
++			if tc.errorMessage != "" {
++				require.Error(t, err)
++				require.Equal(t, tc.errorMessage, err.Error())
++			} else {
++				require.NoError(t, err)
++			}
++		})
++	}
++}
++
++func createCommentTags(input map[string]any) generators.CommentTags {
++
++	ct := generators.CommentTags{}
++
++	for key, value := range input {
++
++		switch key {
++		case "minimum":
++			ct.Minimum = ptr.To(value.(float64))
++		case "maximum":
++			ct.Maximum = ptr.To(value.(float64))
++		case "minLength":
++			ct.MinLength = ptr.To(int64(value.(int)))
++		case "maxLength":
++			ct.MaxLength = ptr.To(int64(value.(int)))
++		case "pattern":
++			ct.Pattern = value.(string)
++		case "multipleOf":
++			ct.MultipleOf = ptr.To(value.(float64))
++		case "minItems":
++			ct.MinItems = ptr.To(int64(value.(int)))
++		case "maxItems":
++			ct.MaxItems = ptr.To(int64(value.(int)))
++		case "uniqueItems":
++			ct.UniqueItems = value.(bool)
++		case "exclusiveMaximum":
++			ct.ExclusiveMaximum = value.(bool)
++		case "exclusiveMinimum":
++			ct.ExclusiveMinimum = value.(bool)
++		case "minProperties":
++			ct.MinProperties = ptr.To(int64(value.(int)))
++		case "maxProperties":
++			ct.MaxProperties = ptr.To(int64(value.(int)))
++		}
++	}
++
++	return ct
++}
++
++func createType(name string) types.Type {
++	switch name {
++	case "string":
++		return *types.String
++	case "int":
++		return *types.Int64
++	case "float":
++		return *types.Float64
++	case "bool":
++		return *types.Bool
++	case "array":
++		return types.Type{Kind: types.Slice, Name: types.Name{Name: "[]int"}}
++	case "map":
++		return types.Type{Kind: types.Map, Name: types.Name{Name: "map[string]int"}}
++	}
++	return types.Type{Kind: types.Struct, Name: types.Name{Name: "struct"}}
++}
+diff --git a/pkg/generators/openapi_test.go b/pkg/generators/openapi_test.go
+index 80ced14..1276554 100644
+--- a/pkg/generators/openapi_test.go
++++ b/pkg/generators/openapi_test.go
+@@ -1727,7 +1727,7 @@ type Blah struct {
+ 	`)
+ 	assert.NoError(funcErr)
+ 	assert.NoError(callErr)
+-	assert.ElementsMatch(imports, []string{`v1 "k8s.io/api/v1"`, `foo "base/foo"`, `common "k8s.io/kube-openapi/pkg/common"`, `spec "k8s.io/kube-openapi/pkg/validation/spec"`})
++	assert.ElementsMatch(imports, []string{`foo "base/foo"`, `v1 "k8s.io/api/v1"`, `common "k8s.io/kube-openapi/pkg/common"`, `spec "k8s.io/kube-openapi/pkg/validation/spec"`})
+ 
+ 	if formatted, err := format.Source(funcBuffer.Bytes()); err != nil {
+ 		t.Fatal(err)
+@@ -1900,3 +1900,218 @@ type Blah struct {
+ 	}
+ 
+ }
++
++func TestMarkerComments(t *testing.T) {
++
++	callErr, funcErr, assert, _, funcBuffer, imports := testOpenAPITypeWriter(t, `
++package foo
++
++// +k8s:openapi-gen=true
++// +k8s:validation:maxProperties=10
++// +k8s:validation:minProperties=1
++// +k8s:validation:exclusiveMinimum
++// +k8s:validation:exclusiveMaximum
++type Blah struct {
++
++	// Integer with min and max values
++	// +k8s:validation:minimum=0
++	// +k8s:validation:maximum=10
++	// +k8s:validation:exclusiveMinimum
++	// +k8s:validation:exclusiveMaximum
++	IntValue int
++
++	// String with min and max lengths
++	// +k8s:validation:minLength=1
++	// +k8s:validation:maxLength=10
++	// +k8s:validation:pattern="^foo$[0-9]+"
++	StringValue string
++
++	// +k8s:validation:maxitems=10
++	// +k8s:validation:minItems=1
++	// +k8s:validation:uniqueItems
++	ArrayValue []string
++
++	// +k8s:validation:maxProperties=10
++	// +k8s:validation:minProperties=1
++	ObjValue map[string]interface{}
++}
++	`)
++	assert.NoError(funcErr)
++	assert.NoError(callErr)
++	assert.ElementsMatch(imports, []string{`foo "base/foo"`, `common "k8s.io/kube-openapi/pkg/common"`, `spec "k8s.io/kube-openapi/pkg/validation/spec"`, `ptr "k8s.io/utils/ptr"`})
++
++	if formatted, err := format.Source(funcBuffer.Bytes()); err != nil {
++		t.Fatalf("%v\n%v", err, string(funcBuffer.Bytes()))
++	} else {
++		formatted_expected, ree := format.Source([]byte(`func schema_base_foo_Blah(ref common.ReferenceCallback) common.OpenAPIDefinition {
++		return common.OpenAPIDefinition{
++			Schema: spec.Schema{
++				SchemaProps: spec.SchemaProps{
++					Type: 			  []string{"object"},
++					ExclusiveMinimum: true,
++					ExclusiveMaximum: true,
++					MinProperties:    ptr.To[int64](1),
++					MaxProperties:    ptr.To[int64](10),
++					Properties: map[string]spec.Schema{
++						"IntValue": {
++							SchemaProps: spec.SchemaProps{
++								Description: "Integer with min and max values",
++								Default: 	 0,
++								Minimum:	 ptr.To[float64](0),
++								Maximum:	 ptr.To[float64](10),
++								ExclusiveMinimum: true,
++								ExclusiveMaximum: true,
++								Type:        []string{"integer"},
++								Format:	  	 "int32",
++							},
++						},
++						"StringValue": {
++							SchemaProps: spec.SchemaProps{
++								Description: "String with min and max lengths",
++								Default:	 "",
++								MinLength:	 ptr.To[int64](1),
++								MaxLength:	 ptr.To[int64](10),
++								Pattern:	 "^foo$[0-9]+",
++								Type:        []string{"string"},
++								Format:	  	 "",
++							},
++						},
++						"ArrayValue": {
++							SchemaProps: spec.SchemaProps{
++								MinItems:	 ptr.To[int64](1),
++								MaxItems:	 ptr.To[int64](10),
++								UniqueItems: true,
++								Type: []string{"array"},
++								Items: &spec.SchemaOrArray{
++									Schema: &spec.Schema{
++										SchemaProps: spec.SchemaProps{
++											Default: "",
++											Type:    []string{"string"},
++											Format:  "",
++										},
++									},
++								},
++							},
++						},
++						"ObjValue": {
++							SchemaProps: spec.SchemaProps{
++								MinProperties:	 ptr.To[int64](1),
++								MaxProperties:	 ptr.To[int64](10),
++								Type: []string{"object"},
++									AdditionalProperties: &spec.SchemaOrBool{
++										Allows: true,
++										Schema: &spec.Schema{
++											SchemaProps: spec.SchemaProps{
++												Type:   []string{"object"},
++												Format: "",
++											},
++										},
++									},
++							},
++						},
++					},
++					Required: []string{"IntValue", "StringValue", "ArrayValue", "ObjValue"},
++				},
++			},
++		}
++	}
++
++`))
++		if ree != nil {
++			t.Fatal(ree)
++		}
++		assert.Equal(string(formatted), string(formatted_expected))
++	}
++}
++
++func TestMarkerCommentsCustomDefsV3(t *testing.T) {
++	callErr, funcErr, assert, callBuffer, funcBuffer, _ := testOpenAPITypeWriter(t, `
++package foo
++
++import openapi "k8s.io/kube-openapi/pkg/common"
++
++// +k8s:validation:maxProperties=10
++type Blah struct {
++}
++
++func (_ Blah) OpenAPIV3Definition() openapi.OpenAPIDefinition {
++	return openapi.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Type:   []string{"object"},
++				MaxProperties: ptr.To[int64](10),
++				Format: "ipv4",
++			},
++		},
++	}
++}
++
++func (_ Blah) OpenAPISchemaType() []string { return []string{"object"} }
++func (_ Blah) OpenAPISchemaFormat() string { return "ipv4" }
++`)
++	if callErr != nil {
++		t.Fatal(callErr)
++	}
++	if funcErr != nil {
++		t.Fatal(funcErr)
++	}
++	assert.Equal(`"base/foo.Blah": schema_base_foo_Blah(ref),
++`, callBuffer.String())
++	assert.Equal(`func schema_base_foo_Blah(ref common.ReferenceCallback) common.OpenAPIDefinition {
++return common.EmbedOpenAPIDefinitionIntoV2Extension(foo.Blah{}.OpenAPIV3Definition(), common.OpenAPIDefinition{
++Schema: spec.Schema{
++SchemaProps: spec.SchemaProps{
++Type:foo.Blah{}.OpenAPISchemaType(),
++Format:foo.Blah{}.OpenAPISchemaFormat(),
++MaxProperties: ptr.To[int64](10),
++},
++},
++})
++}
++
++`, funcBuffer.String())
++}
++
++func TestMarkerCommentsV3OneOfTypes(t *testing.T) {
++	callErr, funcErr, assert, callBuffer, funcBuffer, _ := testOpenAPITypeWriter(t, `
++package foo
++
++// +k8s:validation:maxLength=10
++type Blah struct {
++}
++
++func (_ Blah) OpenAPISchemaType() []string { return []string{"string"} }
++func (_ Blah) OpenAPIV3OneOfTypes() []string { return []string{"string", "array"} }
++func (_ Blah) OpenAPISchemaFormat() string { return "ipv4" }
++
++`)
++	if callErr != nil {
++		t.Fatal(callErr)
++	}
++	if funcErr != nil {
++		t.Fatal(funcErr)
++	}
++	assert.Equal(`"base/foo.Blah": schema_base_foo_Blah(ref),
++`, callBuffer.String())
++	assert.Equal(`func schema_base_foo_Blah(ref common.ReferenceCallback) common.OpenAPIDefinition {
++return common.EmbedOpenAPIDefinitionIntoV2Extension(common.OpenAPIDefinition{
++Schema: spec.Schema{
++SchemaProps: spec.SchemaProps{
++OneOf:common.GenerateOpenAPIV3OneOfSchema(foo.Blah{}.OpenAPIV3OneOfTypes()),
++Format:foo.Blah{}.OpenAPISchemaFormat(),
++MaxLength: ptr.To[int64](10),
++},
++},
++},common.OpenAPIDefinition{
++Schema: spec.Schema{
++SchemaProps: spec.SchemaProps{
++Type:foo.Blah{}.OpenAPISchemaType(),
++Format:foo.Blah{}.OpenAPISchemaFormat(),
++MaxLength: ptr.To[int64](10),
++},
++},
++})
++}
++
++`, funcBuffer.String())
++}
+diff --git a/test/integration/go.mod b/test/integration/go.mod
+index 2eed330..9872f08 100644
+--- a/test/integration/go.mod
++++ b/test/integration/go.mod
+@@ -8,11 +8,12 @@ require (
+ 	github.com/onsi/ginkgo/v2 v2.1.4
+ 	github.com/onsi/gomega v1.19.0
+ 	k8s.io/kube-openapi v0.0.0
++	k8s.io/utils v0.0.0-20230726121419-3b25d923346b
+ )
+ 
+ require (
+ 	github.com/ghodss/yaml v1.0.0 // indirect
+-	github.com/go-logr/logr v0.2.0 // indirect
++	github.com/go-logr/logr v1.2.0 // indirect
+ 	github.com/go-openapi/jsonpointer v0.19.6 // indirect
+ 	github.com/go-openapi/jsonreference v0.20.1 // indirect
+ 	github.com/go-openapi/swag v0.22.3 // indirect
+@@ -34,7 +35,7 @@ require (
+ 	gopkg.in/yaml.v2 v2.4.0 // indirect
+ 	gopkg.in/yaml.v3 v3.0.1 // indirect
+ 	k8s.io/gengo v0.0.0-20230829151522-9cce18d56c01 // indirect
+-	k8s.io/klog/v2 v2.2.0 // indirect
++	k8s.io/klog/v2 v2.80.1 // indirect
+ )
+ 
+ // Use the relative local source of the github.com/google/cadvisor library to build
+diff --git a/test/integration/go.sum b/test/integration/go.sum
+index c65fdb2..4627bd0 100644
+--- a/test/integration/go.sum
++++ b/test/integration/go.sum
+@@ -8,8 +8,9 @@ github.com/getkin/kin-openapi v0.76.0 h1:j77zg3Ec+k+r+GA3d8hBoXpAc6KX9TbBPrwQGBI
+ github.com/getkin/kin-openapi v0.76.0/go.mod h1:660oXbgy5JFMKreazJaQTw7o+X00qeSyhcnluiMv+Xg=
+ github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
+ github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
+-github.com/go-logr/logr v0.2.0 h1:QvGt2nLcHH0WK9orKa+ppBPAxREcH364nPUedEpK0TY=
+ github.com/go-logr/logr v0.2.0/go.mod h1:z6/tIYblkpsD+a4lm/fGIIU9mZ+XfAiaFtq7xTgseGU=
++github.com/go-logr/logr v1.2.0 h1:QK40JKJyMdUDz+h+xvCsru/bJhvG0UxvePV0ufL/AcE=
++github.com/go-logr/logr v1.2.0/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
+ github.com/go-openapi/jsonpointer v0.19.5/go.mod h1:Pl9vOtqEWErmShwVjC8pYs9cog34VGT37dQOVbmoatg=
+ github.com/go-openapi/jsonpointer v0.19.6 h1:eCs3fxoIi3Wh6vtgmLTOjdhSpiqphQ+DaPn38N2ZdrE=
+ github.com/go-openapi/jsonpointer v0.19.6/go.mod h1:osyAmYz/mB/C3I+WsTTSgw1ONzaLJoLCyoi6/zppojs=
+@@ -115,7 +116,10 @@ gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+ gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+ k8s.io/gengo v0.0.0-20230829151522-9cce18d56c01 h1:pWEwq4Asjm4vjW7vcsmijwBhOr1/shsbSYiWXmNGlks=
+ k8s.io/gengo v0.0.0-20230829151522-9cce18d56c01/go.mod h1:FiNAH4ZV3gBg2Kwh89tzAEV2be7d5xI0vBa/VySYy3E=
+-k8s.io/klog/v2 v2.2.0 h1:XRvcwJozkgZ1UQJmfMGpvRthQHOvihEhYtDfAaxMz/A=
+ k8s.io/klog/v2 v2.2.0/go.mod h1:Od+F08eJP+W3HUb4pSrPpgp9DGU4GzlpG/TmITuYh/Y=
++k8s.io/klog/v2 v2.80.1 h1:atnLQ121W371wYYFawwYx1aEY2eUfs4l3J72wtgAwV4=
++k8s.io/klog/v2 v2.80.1/go.mod h1:y1WjHnz7Dj687irZUWR/WLkLc5N1YHtjLdmgWjndZn0=
++k8s.io/utils v0.0.0-20230726121419-3b25d923346b h1:sgn3ZU783SCgtaSJjpcVVlRqd6GSnlTLKgpAAttJvpI=
++k8s.io/utils v0.0.0-20230726121419-3b25d923346b/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
+ sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd h1:EDPBXCAspyGV4jQlpZSudPeMmr1bNJefnuqLsRAsHZo=
+ sigs.k8s.io/yaml v1.2.0/go.mod h1:yfXDCHCao9+ENCvLSE62v9VSji2MKu5jeNfTrofGhJc=
+diff --git a/test/integration/integration_suite_test.go b/test/integration/integration_suite_test.go
+index cb100c6..dae43a9 100644
+--- a/test/integration/integration_suite_test.go
++++ b/test/integration/integration_suite_test.go
+@@ -38,6 +38,7 @@ const (
+ 		"," + testPkgDir + "/uniontype" +
+ 		"," + testPkgDir + "/enumtype" +
+ 		"," + testPkgDir + "/custom" +
++		"," + testPkgDir + "/valuevalidation" +
+ 		"," + testPkgDir + "/defaults"
+ 	outputBase                 = "pkg"
+ 	outputPackage              = "generated"
+diff --git a/test/integration/pkg/generated/openapi_generated.go b/test/integration/pkg/generated/openapi_generated.go
+index 99c80bd..d8aad66 100644
+--- a/test/integration/pkg/generated/openapi_generated.go
++++ b/test/integration/pkg/generated/openapi_generated.go
+@@ -29,6 +29,8 @@ import (
+ 	custom "k8s.io/kube-openapi/test/integration/testdata/custom"
+ 	defaults "k8s.io/kube-openapi/test/integration/testdata/defaults"
+ 	enumtype "k8s.io/kube-openapi/test/integration/testdata/enumtype"
++	valuevalidation "k8s.io/kube-openapi/test/integration/testdata/valuevalidation"
++	ptr "k8s.io/utils/ptr"
+ )
+ 
+ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
+@@ -62,6 +64,11 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
+ 		"k8s.io/kube-openapi/test/integration/testdata/uniontype.TopLevelUnion":             schema_test_integration_testdata_uniontype_TopLevelUnion(ref),
+ 		"k8s.io/kube-openapi/test/integration/testdata/uniontype.Union":                     schema_test_integration_testdata_uniontype_Union(ref),
+ 		"k8s.io/kube-openapi/test/integration/testdata/uniontype.Union2":                    schema_test_integration_testdata_uniontype_Union2(ref),
++		"k8s.io/kube-openapi/test/integration/testdata/valuevalidation.Foo":                 schema_test_integration_testdata_valuevalidation_Foo(ref),
++		"k8s.io/kube-openapi/test/integration/testdata/valuevalidation.Foo2":                schema_test_integration_testdata_valuevalidation_Foo2(ref),
++		"k8s.io/kube-openapi/test/integration/testdata/valuevalidation.Foo3":                schema_test_integration_testdata_valuevalidation_Foo3(ref),
++		"k8s.io/kube-openapi/test/integration/testdata/valuevalidation.Foo4":                valuevalidation.Foo4{}.OpenAPIDefinition(),
++		"k8s.io/kube-openapi/test/integration/testdata/valuevalidation.Foo5":                schema_test_integration_testdata_valuevalidation_Foo5(ref),
+ 	}
+ }
+ 
+@@ -1005,3 +1012,122 @@ func schema_test_integration_testdata_uniontype_Union2(ref common.ReferenceCallb
+ 		},
+ 	}
+ }
++
++func schema_test_integration_testdata_valuevalidation_Foo(ref common.ReferenceCallback) common.OpenAPIDefinition {
++	return common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Type:          []string{"object"},
++				MinProperties: ptr.To[int64](1),
++				MaxProperties: ptr.To[int64](5),
++				Properties: map[string]spec.Schema{
++					"StringValue": {
++						SchemaProps: spec.SchemaProps{
++							Default:   "",
++							MinLength: ptr.To[int64](1),
++							MaxLength: ptr.To[int64](5),
++							Pattern:   "^a.*b$",
++							Type:      []string{"string"},
++							Format:    "",
++						},
++					},
++					"NumberValue": {
++						SchemaProps: spec.SchemaProps{
++							Default:          0,
++							Minimum:          ptr.To[float64](1),
++							Maximum:          ptr.To[float64](5),
++							ExclusiveMinimum: true,
++							ExclusiveMaximum: true,
++							MultipleOf:       ptr.To[float64](2),
++							Type:             []string{"number"},
++							Format:           "double",
++						},
++					},
++					"ArrayValue": {
++						SchemaProps: spec.SchemaProps{
++							MinItems:    ptr.To[int64](1),
++							MaxItems:    ptr.To[int64](5),
++							UniqueItems: true,
++							Type:        []string{"array"},
++							Items: &spec.SchemaOrArray{
++								Schema: &spec.Schema{
++									SchemaProps: spec.SchemaProps{
++										Default: "",
++										Type:    []string{"string"},
++										Format:  "",
++									},
++								},
++							},
++						},
++					},
++					"MapValue": {
++						SchemaProps: spec.SchemaProps{
++							MinProperties: ptr.To[int64](1),
++							MaxProperties: ptr.To[int64](5),
++							Type:          []string{"object"},
++							AdditionalProperties: &spec.SchemaOrBool{
++								Allows: true,
++								Schema: &spec.Schema{
++									SchemaProps: spec.SchemaProps{
++										Default: "",
++										Type:    []string{"string"},
++										Format:  "",
++									},
++								},
++							},
++						},
++					},
++				},
++				Required: []string{"StringValue", "NumberValue", "ArrayValue", "MapValue"},
++			},
++		},
++	}
++}
++
++func schema_test_integration_testdata_valuevalidation_Foo2(ref common.ReferenceCallback) common.OpenAPIDefinition {
++	return common.EmbedOpenAPIDefinitionIntoV2Extension(valuevalidation.Foo2{}.OpenAPIV3Definition(), common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Description:   "This one has an open API v3 definition",
++				Type:          valuevalidation.Foo2{}.OpenAPISchemaType(),
++				Format:        valuevalidation.Foo2{}.OpenAPISchemaFormat(),
++				MaxProperties: ptr.To[int64](5),
++			},
++		},
++	})
++}
++
++func schema_test_integration_testdata_valuevalidation_Foo3(ref common.ReferenceCallback) common.OpenAPIDefinition {
++	return common.EmbedOpenAPIDefinitionIntoV2Extension(common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Description:   "This one has a OneOf",
++				OneOf:         common.GenerateOpenAPIV3OneOfSchema(valuevalidation.Foo3{}.OpenAPIV3OneOfTypes()),
++				Format:        valuevalidation.Foo3{}.OpenAPISchemaFormat(),
++				MaxProperties: ptr.To[int64](5),
++			},
++		},
++	}, common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Description:   "This one has a OneOf",
++				Type:          valuevalidation.Foo3{}.OpenAPISchemaType(),
++				Format:        valuevalidation.Foo3{}.OpenAPISchemaFormat(),
++				MaxProperties: ptr.To[int64](5),
++			},
++		},
++	})
++}
++
++func schema_test_integration_testdata_valuevalidation_Foo5(ref common.ReferenceCallback) common.OpenAPIDefinition {
++	return common.EmbedOpenAPIDefinitionIntoV2Extension(valuevalidation.Foo5{}.OpenAPIV3Definition(), common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Type:          valuevalidation.Foo5{}.OpenAPISchemaType(),
++				Format:        valuevalidation.Foo5{}.OpenAPISchemaFormat(),
++				MinProperties: ptr.To[int64](1),
++				MaxProperties: ptr.To[int64](5),
++			},
++		},
++	})
++}
+diff --git a/test/integration/testdata/golden.v2.json b/test/integration/testdata/golden.v2.json
+index ce35021..0dfbca9 100644
+--- a/test/integration/testdata/golden.v2.json
++++ b/test/integration/testdata/golden.v2.json
+@@ -604,6 +604,138 @@
+       }
+      }
+     }
++   },
++   "/test/valuevalidation": {
++    "post": {
++     "produces": [
++      "application/json"
++     ],
++     "schemes": [
++      "https"
++     ],
++     "operationId": "create-valuevalidation.Foo",
++     "responses": {
++      "201": {
++       "description": "Created",
++       "schema": {
++        "$ref": "#/definitions/valuevalidation.Foo"
++       }
++      },
++      "404": {
++       "$ref": "#/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo": {
++    "get": {
++     "produces": [
++      "application/json"
++     ],
++     "schemes": [
++      "https"
++     ],
++     "operationId": "get-valuevalidation.Foo",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "schema": {
++        "$ref": "#/definitions/valuevalidation.Foo"
++       }
++      },
++      "404": {
++       "$ref": "#/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo2": {
++    "get": {
++     "produces": [
++      "application/json"
++     ],
++     "schemes": [
++      "https"
++     ],
++     "operationId": "get-valuevalidation.Foo2",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "schema": {
++        "$ref": "#/definitions/valuevalidation.Foo2"
++       }
++      },
++      "404": {
++       "$ref": "#/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo3": {
++    "get": {
++     "produces": [
++      "application/json"
++     ],
++     "schemes": [
++      "https"
++     ],
++     "operationId": "get-valuevalidation.Foo3",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "schema": {
++        "$ref": "#/definitions/valuevalidation.Foo3"
++       }
++      },
++      "404": {
++       "$ref": "#/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo4": {
++    "get": {
++     "produces": [
++      "application/json"
++     ],
++     "schemes": [
++      "https"
++     ],
++     "operationId": "get-valuevalidation.Foo4",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "schema": {
++        "$ref": "#/definitions/valuevalidation.Foo4"
++       }
++      },
++      "404": {
++       "$ref": "#/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo5": {
++    "get": {
++     "produces": [
++      "application/json"
++     ],
++     "schemes": [
++      "https"
++     ],
++     "operationId": "get-valuevalidation.Foo5",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "schema": {
++        "$ref": "#/definitions/valuevalidation.Foo5"
++       }
++      },
++      "404": {
++       "$ref": "#/responses/NotFound"
++      }
++     }
++    }
+    }
+   },
+   "definitions": {
+@@ -1086,6 +1218,76 @@
+       }
+      }
+     ]
++   },
++   "valuevalidation.Foo": {
++    "type": "object",
++    "maxProperties": 5,
++    "minProperties": 1,
++    "required": [
++     "StringValue",
++     "NumberValue",
++     "ArrayValue",
++     "MapValue"
++    ],
++    "properties": {
++     "ArrayValue": {
++      "type": "array",
++      "maxItems": 5,
++      "minItems": 1,
++      "uniqueItems": true,
++      "items": {
++       "type": "string",
++       "default": ""
++      }
++     },
++     "MapValue": {
++      "type": "object",
++      "maxProperties": 5,
++      "minProperties": 1,
++      "additionalProperties": {
++       "type": "string",
++       "default": ""
++      }
++     },
++     "NumberValue": {
++      "type": "number",
++      "format": "double",
++      "default": 0,
++      "maximum": 5,
++      "exclusiveMaximum": true,
++      "minimum": 1,
++      "exclusiveMinimum": true,
++      "multipleOf": 2
++     },
++     "StringValue": {
++      "type": "string",
++      "default": "",
++      "maxLength": 5,
++      "minLength": 1,
++      "pattern": "^a.*b$"
++     }
++    }
++   },
++   "valuevalidation.Foo2": {
++    "description": "This one has an open API v3 definition",
++    "type": "test-type",
++    "format": "test-format",
++    "maxProperties": 5
++   },
++   "valuevalidation.Foo3": {
++    "description": "This one has a OneOf",
++    "type": "string",
++    "format": "string",
++    "maxProperties": 5
++   },
++   "valuevalidation.Foo4": {
++    "type": "integer"
++   },
++   "valuevalidation.Foo5": {
++    "type": "test-type",
++    "format": "test-format",
++    "maxProperties": 5,
++    "minProperties": 1
+    }
+   },
+   "responses": {
+diff --git a/test/integration/testdata/golden.v2.report b/test/integration/testdata/golden.v2.report
+index e434071..bc1a712 100644
+--- a/test/integration/testdata/golden.v2.report
++++ b/test/integration/testdata/golden.v2.report
+@@ -1,5 +1,6 @@
+ API rule violation: list_type_missing,k8s.io/kube-openapi/test/integration/testdata/defaults,Defaulted,List
+ API rule violation: list_type_missing,k8s.io/kube-openapi/test/integration/testdata/listtype,UntypedList,Field
++API rule violation: list_type_missing,k8s.io/kube-openapi/test/integration/testdata/valuevalidation,Foo,ArrayValue
+ API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/defaults,Defaulted,Field
+ API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/defaults,Defaulted,List
+ API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/defaults,Defaulted,Map
+@@ -33,4 +34,8 @@ API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/st
+ API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/structtype,FieldLevelOverrideStruct,OtherField
+ API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/structtype,GranularStruct,Field
+ API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/structtype,GranularStruct,OtherField
++API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/valuevalidation,Foo,ArrayValue
++API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/valuevalidation,Foo,MapValue
++API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/valuevalidation,Foo,NumberValue
++API rule violation: names_match,k8s.io/kube-openapi/test/integration/testdata/valuevalidation,Foo,StringValue
+ API rule violation: omitempty_match_case,k8s.io/kube-openapi/test/integration/testdata/listtype,Item,C
+diff --git a/test/integration/testdata/golden.v3.json b/test/integration/testdata/golden.v3.json
+index cbbc552..98b2da7 100644
+--- a/test/integration/testdata/golden.v3.json
++++ b/test/integration/testdata/golden.v3.json
+@@ -554,6 +554,126 @@
+       }
+      }
+     }
++   },
++   "/test/valuevalidation": {
++    "post": {
++     "operationId": "create-valuevalidation.Foo",
++     "responses": {
++      "201": {
++       "description": "Created",
++       "content": {
++        "application/json": {
++         "schema": {
++          "$ref": "#/components/schemas/valuevalidation.Foo"
++         }
++        }
++       }
++      },
++      "404": {
++       "$ref": "#/components/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo": {
++    "get": {
++     "operationId": "get-valuevalidation.Foo",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "content": {
++        "application/json": {
++         "schema": {
++          "$ref": "#/components/schemas/valuevalidation.Foo"
++         }
++        }
++       }
++      },
++      "404": {
++       "$ref": "#/components/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo2": {
++    "get": {
++     "operationId": "get-valuevalidation.Foo2",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "content": {
++        "application/json": {
++         "schema": {
++          "$ref": "#/components/schemas/valuevalidation.Foo2"
++         }
++        }
++       }
++      },
++      "404": {
++       "$ref": "#/components/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo3": {
++    "get": {
++     "operationId": "get-valuevalidation.Foo3",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "content": {
++        "application/json": {
++         "schema": {
++          "$ref": "#/components/schemas/valuevalidation.Foo3"
++         }
++        }
++       }
++      },
++      "404": {
++       "$ref": "#/components/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo4": {
++    "get": {
++     "operationId": "get-valuevalidation.Foo4",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "content": {
++        "application/json": {
++         "schema": {
++          "$ref": "#/components/schemas/valuevalidation.Foo4"
++         }
++        }
++       }
++      },
++      "404": {
++       "$ref": "#/components/responses/NotFound"
++      }
++     }
++    }
++   },
++   "/test/valuevalidation/foo5": {
++    "get": {
++     "operationId": "get-valuevalidation.Foo5",
++     "responses": {
++      "200": {
++       "description": "OK",
++       "content": {
++        "application/json": {
++         "schema": {
++          "$ref": "#/components/schemas/valuevalidation.Foo5"
++         }
++        }
++       }
++      },
++      "404": {
++       "$ref": "#/components/responses/NotFound"
++      }
++     }
++    }
+    }
+   },
+   "components": {
+@@ -1060,6 +1180,77 @@
+        }
+       }
+      ]
++    },
++    "valuevalidation.Foo": {
++     "type": "object",
++     "maxProperties": 5,
++     "minProperties": 1,
++     "required": [
++      "StringValue",
++      "NumberValue",
++      "ArrayValue",
++      "MapValue"
++     ],
++     "properties": {
++      "ArrayValue": {
++       "type": "array",
++       "maxItems": 5,
++       "minItems": 1,
++       "uniqueItems": true,
++       "items": {
++        "type": "string",
++        "default": ""
++       }
++      },
++      "MapValue": {
++       "type": "object",
++       "maxProperties": 5,
++       "minProperties": 1,
++       "additionalProperties": {
++        "type": "string",
++        "default": ""
++       }
++      },
++      "NumberValue": {
++       "type": "number",
++       "format": "double",
++       "default": 0,
++       "maximum": 5,
++       "exclusiveMaximum": true,
++       "minimum": 1,
++       "exclusiveMinimum": true,
++       "multipleOf": 2
++      },
++      "StringValue": {
++       "type": "string",
++       "default": "",
++       "maxLength": 5,
++       "minLength": 1,
++       "pattern": "^a.*b$"
++      }
++     }
++    },
++    "valuevalidation.Foo2": {
++     "type": "object"
++    },
++    "valuevalidation.Foo3": {
++     "description": "This one has a OneOf",
++     "format": "string",
++     "maxProperties": 5,
++     "oneOf": [
++      {
++       "type": "number"
++      },
++      {
++       "type": "string"
++      }
++     ]
++    },
++    "valuevalidation.Foo4": {
++     "type": "integer"
++    },
++    "valuevalidation.Foo5": {
++     "type": "object"
+     }
+    },
+    "responses": {
+diff --git a/test/integration/testdata/valuevalidation/alpha.go b/test/integration/testdata/valuevalidation/alpha.go
+new file mode 100644
+index 0000000..011470f
+--- /dev/null
++++ b/test/integration/testdata/valuevalidation/alpha.go
+@@ -0,0 +1,113 @@
++package valuevalidation
++
++import (
++	"k8s.io/kube-openapi/pkg/common"
++	"k8s.io/kube-openapi/pkg/validation/spec"
++)
++
++// Dummy type to test the openapi-gen API rule checker.
++// The API rule violations are in format of:
++// -> +k8s:validation:[validation rule]=[value]
++
++// +k8s:validation:maxProperties=5
++// +k8s:validation:minProperties=1
++// +k8s:openapi-gen=true
++type Foo struct {
++	// +k8s:validation:maxLength=5
++	// +k8s:validation:minLength=1
++	// +k8s:validation:pattern="^a.*b$"
++	StringValue string
++
++	// +k8s:validation:maximum=5.0
++	// +k8s:validation:minimum=1.0
++	// +k8s:validation:exclusiveMinimum=true
++	// +k8s:validation:exclusiveMaximum=true
++	// +k8s:validation:multipleOf=2.0
++	NumberValue float64
++
++	// +k8s:validation:maxItems=5
++	// +k8s:validation:minItems=1
++	// +k8s:validation:uniqueItems=true
++	ArrayValue []string
++
++	// +k8s:validation:minProperties=1
++	// +k8s:validation:maxProperties=5
++	MapValue map[string]string
++}
++
++// This one has an open API v3 definition
++// +k8s:validation:maxProperties=5
++// +k8s:openapi-gen=true
++type Foo2 struct{}
++
++func (Foo2) OpenAPIV3Definition() common.OpenAPIDefinition {
++	return common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Type: []string{"object"},
++			},
++		},
++	}
++}
++
++func (Foo2) OpenAPISchemaType() []string {
++	return []string{"test-type"}
++}
++
++func (Foo2) OpenAPISchemaFormat() string {
++	return "test-format"
++}
++
++// This one has a OneOf
++// +k8s:openapi-gen=true
++// +k8s:validation:maxProperties=5
++// +k8s:openapi-gen=true
++type Foo3 struct{}
++
++func (Foo3) OpenAPIV3OneOfTypes() []string {
++	return []string{"number", "string"}
++}
++func (Foo3) OpenAPISchemaType() []string {
++	return []string{"string"}
++}
++func (Foo3) OpenAPISchemaFormat() string {
++	return "string"
++}
++
++// this one should ignore marker comments
++// +k8s:openapi-gen=true
++// +k8s:validation:maximum=6
++type Foo4 struct{}
++
++func (Foo4) OpenAPIDefinition() common.OpenAPIDefinition {
++	return common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Type: []string{"integer"},
++			},
++		},
++	}
++}
++
++// +k8s:openapi-gen=true
++// +k8s:validation:maxProperties=5
++// +k8s:validation:minProperties=1
++type Foo5 struct{}
++
++func (Foo5) OpenAPIV3Definition() common.OpenAPIDefinition {
++	return common.OpenAPIDefinition{
++		Schema: spec.Schema{
++			SchemaProps: spec.SchemaProps{
++				Type: []string{"object"},
++			},
++		},
++	}
++}
++
++func (Foo5) OpenAPISchemaType() []string {
++	return []string{"test-type"}
++}
++
++func (Foo5) OpenAPISchemaFormat() string {
++	return "test-format"
++}
+diff --git a/test/integration/testutil/testutil.go b/test/integration/testutil/testutil.go
+index 344b861..119cf65 100644
+--- a/test/integration/testutil/testutil.go
++++ b/test/integration/testutil/testutil.go
+@@ -95,6 +95,10 @@ func CreateWebServices(includeV2SchemaAnnotation bool) []*restful.WebService {
+ 	if includeV2SchemaAnnotation {
+ 		addRoutes(w, buildRouteForType(w, "custom", "Bac")...)
+ 		addRoutes(w, buildRouteForType(w, "custom", "Bah")...)
++		addRoutes(w, buildRouteForType(w, "valuevalidation", "Foo2")...)
++		addRoutes(w, buildRouteForType(w, "valuevalidation", "Foo3")...)
++		addRoutes(w, buildRouteForType(w, "valuevalidation", "Foo4")...)
++		addRoutes(w, buildRouteForType(w, "valuevalidation", "Foo5")...)
+ 	}
+ 	addRoutes(w, buildRouteForType(w, "maptype", "GranularMap")...)
+ 	addRoutes(w, buildRouteForType(w, "maptype", "AtomicMap")...)
+@@ -103,6 +107,7 @@ func CreateWebServices(includeV2SchemaAnnotation bool) []*restful.WebService {
+ 	addRoutes(w, buildRouteForType(w, "structtype", "AtomicStruct")...)
+ 	addRoutes(w, buildRouteForType(w, "structtype", "DeclaredAtomicStruct")...)
+ 	addRoutes(w, buildRouteForType(w, "defaults", "Defaulted")...)
++	addRoutes(w, buildRouteForType(w, "valuevalidation", "Foo")...)
+ 	return []*restful.WebService{w}
+ }

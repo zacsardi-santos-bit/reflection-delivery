@@ -1,0 +1,434 @@
+diff --git a/src/vs/workbench/contrib/chat/test/common/promptSyntax/computeAutomaticInstructions.test.ts b/src/vs/workbench/contrib/chat/test/common/promptSyntax/computeAutomaticInstructions.test.ts
+index 899d04339a4..88ace7b82e6 100644
+--- a/src/vs/workbench/contrib/chat/test/common/promptSyntax/computeAutomaticInstructions.test.ts
++++ b/src/vs/workbench/contrib/chat/test/common/promptSyntax/computeAutomaticInstructions.test.ts
+@@ -76,6 +76,7 @@ suite('ComputeAutomaticInstructions', () => {
+ 		testConfigService.setUserConfiguration(PromptsConfig.USE_AGENT_SKILLS, true);
+ 		testConfigService.setUserConfiguration(PromptsConfig.INCLUDE_APPLYING_INSTRUCTIONS, true);
+ 		testConfigService.setUserConfiguration(PromptsConfig.INCLUDE_REFERENCED_INSTRUCTIONS, true);
++		testConfigService.setUserConfiguration(PromptsConfig.SEARCH_ROOT_REPO_CUSTOMIZATIONS, false);
+ 		testConfigService.setUserConfiguration(PromptsConfig.INSTRUCTIONS_LOCATION_KEY, { [INSTRUCTIONS_DEFAULT_SOURCE_FOLDER]: true, [CLAUDE_RULES_SOURCE_FOLDER]: true });
+ 		testConfigService.setUserConfiguration(PromptsConfig.PROMPT_LOCATIONS_KEY, { [PROMPT_DEFAULT_SOURCE_FOLDER]: true });
+ 		testConfigService.setUserConfiguration(PromptsConfig.MODE_LOCATION_KEY, { [LEGACY_MODE_DEFAULT_SOURCE_FOLDER]: true });
+@@ -1628,6 +1629,114 @@ suite('ComputeAutomaticInstructions', () => {
+ 		assert.ok(!paths.includes(`${rootFolder}/.claude/CLAUDE.md`), 'Should not include .claude/CLAUDE.md when disabled');
+ 	});
+ 
++	test('should collect parent folder CLAUDE configurations when includeWorkspaceFolderParents is enabled', async () => {
++		const parentFolderName = 'collect-claude-parent-test';
++		const parentFolder = `/${parentFolderName}`;
++		const rootFolder = `${parentFolder}/repo`;
++		const rootFolderUri = URI.file(rootFolder);
++
++		workspaceContextService.setWorkspace(testWorkspace(rootFolderUri));
++
++		await mockFiles(fileService, [
++			{
++				path: `${parentFolder}/CLAUDE.md`,
++				contents: ['Parent Claude guidelines'],
++			},
++			{
++				path: `${parentFolder}/.claude/CLAUDE.md`,
++				contents: ['Parent .claude Claude guidelines'],
++			},
++			{
++				path: `${rootFolder}/src/file.ts`,
++				contents: ['console.log("test");'],
++			},
++		]);
++
++		testConfigService.setUserConfiguration(PromptsConfig.USE_CLAUDE_MD, true);
++		testConfigService.setUserConfiguration(PromptsConfig.SEARCH_ROOT_REPO_CUSTOMIZATIONS, false);
++
++		const disabledParentContextComputer = instaService.createInstance(ComputeAutomaticInstructions, ChatModeKind.Agent, undefined, undefined, undefined);
++		const disabledParentVariables = new ChatRequestVariableSet();
++		disabledParentVariables.add(toFileVariableEntry(URI.joinPath(rootFolderUri, 'src/file.ts')));
++
++		await disabledParentContextComputer.collect(disabledParentVariables, CancellationToken.None);
++
++		let paths = disabledParentVariables.asArray()
++			.filter(v => isPromptFileVariableEntry(v))
++			.map(i => isPromptFileVariableEntry(i) ? i.value.path : undefined);
++		assert.ok(!paths.includes(`${parentFolder}/CLAUDE.md`), 'Should not include parent CLAUDE.md when parent search is disabled');
++		assert.ok(!paths.includes(`${parentFolder}/.claude/CLAUDE.md`), 'Should not include parent .claude/CLAUDE.md when parent search is disabled');
++
++		// Parent folder settings should allow finding both root and .claude CLAUDE files above the workspace folder.
++		testConfigService.setUserConfiguration(PromptsConfig.SEARCH_ROOT_REPO_CUSTOMIZATIONS, true);
++
++		const enabledParentContextComputer = instaService.createInstance(ComputeAutomaticInstructions, ChatModeKind.Agent, undefined, undefined, undefined);
++		const enabledParentVariables = new ChatRequestVariableSet();
++		enabledParentVariables.add(toFileVariableEntry(URI.joinPath(rootFolderUri, 'src/file.ts')));
++
++		await enabledParentContextComputer.collect(enabledParentVariables, CancellationToken.None);
++
++		paths = enabledParentVariables.asArray()
++			.filter(v => isPromptFileVariableEntry(v))
++			.map(i => isPromptFileVariableEntry(i) ? i.value.path : undefined);
++		assert.ok(paths.includes(`${parentFolder}/CLAUDE.md`), 'Should include parent CLAUDE.md when parent search is enabled');
++		assert.ok(paths.includes(`${parentFolder}/.claude/CLAUDE.md`), 'Should include parent .claude/CLAUDE.md when parent search is enabled');
++	});
++
++	test('should collect parent folder copilot-instructions.md and AGENTS.md when includeWorkspaceFolderParents is enabled', async () => {
++		const parentFolderName = 'collect-agent-parent-test';
++		const parentFolder = `/${parentFolderName}`;
++		const rootFolder = `${parentFolder}/repo`;
++		const rootFolderUri = URI.file(rootFolder);
++
++		workspaceContextService.setWorkspace(testWorkspace(rootFolderUri));
++
++		await mockFiles(fileService, [
++			{
++				path: `${parentFolder}/.github/copilot-instructions.md`,
++				contents: ['Parent copilot instructions'],
++			},
++			{
++				path: `${parentFolder}/AGENTS.md`,
++				contents: ['Parent agent guidelines'],
++			},
++			{
++				path: `${rootFolder}/src/file.ts`,
++				contents: ['console.log("test");'],
++			},
++		]);
++
++		testConfigService.setUserConfiguration(PromptsConfig.USE_COPILOT_INSTRUCTION_FILES, true);
++		testConfigService.setUserConfiguration(PromptsConfig.USE_AGENT_MD, true);
++		testConfigService.setUserConfiguration(PromptsConfig.SEARCH_ROOT_REPO_CUSTOMIZATIONS, false);
++
++		const disabledParentContextComputer = instaService.createInstance(ComputeAutomaticInstructions, ChatModeKind.Agent, undefined, undefined, undefined);
++		const disabledParentVariables = new ChatRequestVariableSet();
++		disabledParentVariables.add(toFileVariableEntry(URI.joinPath(rootFolderUri, 'src/file.ts')));
++
++		await disabledParentContextComputer.collect(disabledParentVariables, CancellationToken.None);
++
++		let paths = disabledParentVariables.asArray()
++			.filter(v => isPromptFileVariableEntry(v))
++			.map(i => isPromptFileVariableEntry(i) ? i.value.path : undefined);
++		assert.ok(!paths.includes(`${parentFolder}/.github/copilot-instructions.md`), 'Should not include parent copilot-instructions.md when parent search is disabled');
++		assert.ok(!paths.includes(`${parentFolder}/AGENTS.md`), 'Should not include parent AGENTS.md when parent search is disabled');
++
++		testConfigService.setUserConfiguration(PromptsConfig.SEARCH_ROOT_REPO_CUSTOMIZATIONS, true);
++
++		const enabledParentContextComputer = instaService.createInstance(ComputeAutomaticInstructions, ChatModeKind.Agent, undefined, undefined, undefined);
++		const enabledParentVariables = new ChatRequestVariableSet();
++		enabledParentVariables.add(toFileVariableEntry(URI.joinPath(rootFolderUri, 'src/file.ts')));
++
++		await enabledParentContextComputer.collect(enabledParentVariables, CancellationToken.None);
++
++		paths = enabledParentVariables.asArray()
++			.filter(v => isPromptFileVariableEntry(v))
++			.map(i => isPromptFileVariableEntry(i) ? i.value.path : undefined);
++		assert.ok(paths.includes(`${parentFolder}/.github/copilot-instructions.md`), 'Should include parent copilot-instructions.md when parent search is enabled');
++		assert.ok(paths.includes(`${parentFolder}/AGENTS.md`), 'Should include parent AGENTS.md when parent search is enabled');
++	});
++
+ 	test('should collect ~/.claude/CLAUDE.md when enabled', async () => {
+ 		const rootFolderName = 'collect-claude-home-test';
+ 		const rootFolder = `/${rootFolderName}`;
+diff --git a/src/vs/workbench/contrib/chat/test/common/promptSyntax/service/promptsService.test.ts b/src/vs/workbench/contrib/chat/test/common/promptSyntax/service/promptsService.test.ts
+index 20cecffea32..cd839af20aa 100644
+--- a/src/vs/workbench/contrib/chat/test/common/promptSyntax/service/promptsService.test.ts
++++ b/src/vs/workbench/contrib/chat/test/common/promptSyntax/service/promptsService.test.ts
+@@ -80,6 +80,7 @@ suite('PromptsService', () => {
+ 		testConfigService.setUserConfiguration(PromptsConfig.USE_NESTED_AGENT_MD, false);
+ 		testConfigService.setUserConfiguration(PromptsConfig.INCLUDE_REFERENCED_INSTRUCTIONS, true);
+ 		testConfigService.setUserConfiguration(PromptsConfig.INCLUDE_APPLYING_INSTRUCTIONS, true);
++		testConfigService.setUserConfiguration(PromptsConfig.SEARCH_ROOT_REPO_CUSTOMIZATIONS, false);
+ 		testConfigService.setUserConfiguration(PromptsConfig.INSTRUCTIONS_LOCATION_KEY, { [INSTRUCTIONS_DEFAULT_SOURCE_FOLDER]: true });
+ 		testConfigService.setUserConfiguration(PromptsConfig.PROMPT_LOCATIONS_KEY, { [PROMPT_DEFAULT_SOURCE_FOLDER]: true });
+ 		testConfigService.setUserConfiguration(PromptsConfig.MODE_LOCATION_KEY, { [LEGACY_MODE_DEFAULT_SOURCE_FOLDER]: true });
+@@ -1431,8 +1432,7 @@ suite('PromptsService', () => {
+ 			};
+ 			instaService.stub(IUserDataProfileService, customUserDataProfileService);
+ 
+-			// Recreate the service with the new stub (dispose existing to avoid duplicate filesystem registration)
+-			service.dispose();
++			// Recreate the service with the new stub
+ 			const testService = disposables.add(instaService.createInstance(PromptsService));
+ 
+ 			// Create agent files in both workspace and user data folder
+@@ -1514,8 +1514,7 @@ suite('PromptsService', () => {
+ 			};
+ 			instaService.stub(IUserDataProfileService, customUserDataProfileService);
+ 
+-			// Recreate the service with the new stub (dispose existing to avoid duplicate filesystem registration)
+-			service.dispose();
++			// Recreate the service with the new stub
+ 			const testService = disposables.add(instaService.createInstance(PromptsService));
+ 
+ 			// Create prompt files in both workspace and user data folder
+@@ -1580,8 +1579,7 @@ suite('PromptsService', () => {
+ 			};
+ 			instaService.stub(IUserDataProfileService, customUserDataProfileService);
+ 
+-			// Recreate the service with the new stub (dispose existing to avoid duplicate filesystem registration)
+-			service.dispose();
++			// Recreate the service with the new stub
+ 			const testService = disposables.add(instaService.createInstance(PromptsService));
+ 
+ 			// Create instructions files in both workspace and user data folder
+@@ -1663,7 +1661,7 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const result = (await service.listPromptFiles(PromptsType.skill, CancellationToken.None)).filter(s => s.storage !== PromptsStorage.internal);
++			const result = await service.listPromptFiles(PromptsType.skill, CancellationToken.None);
+ 
+ 			assert.strictEqual(result.length, 2, 'Should find 2 skills');
+ 
+@@ -1754,7 +1752,7 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const result = (await service.listPromptFiles(PromptsType.skill, CancellationToken.None)).filter(s => s.storage !== PromptsStorage.internal);
++			const result = await service.listPromptFiles(PromptsType.skill, CancellationToken.None);
+ 
+ 			assert.strictEqual(result.length, 0, 'Should not find any skills in non-skill locations');
+ 		});
+@@ -1840,7 +1838,7 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const result = (await service.listPromptFiles(PromptsType.skill, CancellationToken.None)).filter(s => s.storage !== PromptsStorage.internal);
++			const result = await service.listPromptFiles(PromptsType.skill, CancellationToken.None);
+ 
+ 			assert.strictEqual(result.length, 1, 'Should find only 1 skill (from enabled folder)');
+ 			assert.ok(result[0].uri.path.includes('.claude/skills'), 'Should only find skill from .claude/skills');
+@@ -1876,7 +1874,7 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const result = (await service.listPromptFiles(PromptsType.skill, CancellationToken.None)).filter(s => s.storage !== PromptsStorage.internal);
++			const result = await service.listPromptFiles(PromptsType.skill, CancellationToken.None);
+ 
+ 			assert.strictEqual(result.length, 1, 'Should find 1 skill from tilde-expanded path');
+ 			assert.ok(result[0].uri.path.includes('/home/user/my-custom-skills'), 'Path should be expanded from tilde');
+@@ -2018,7 +2016,6 @@ suite('PromptsService', () => {
+ 				}
+ 			}();
+ 			instaService.stub(IContextKeyService, testContextKeyService);
+-			service.dispose();
+ 			const testService = disposables.add(instaService.createInstance(PromptsService));
+ 
+ 			const registered = testService.registerContributedFile(
+@@ -2271,10 +2268,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results when agent skills are enabled');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results when agent skills are enabled');
+ 			assert.strictEqual(result.length, 4, 'Should find 4 skills total');
+ 
+ 			// Check project skills (both from .github/skills and .claude/skills)
+@@ -2340,11 +2336,10 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+ 			// Should still return the valid skill, even if one has parsing errors
+-			assert.ok(allResult, 'Should return results even with parsing errors');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results even with parsing errors');
+ 			assert.strictEqual(result.length, 1, 'Should find 1 valid skill');
+ 			assert.strictEqual(result[0].name, 'Valid Skill');
+ 			assert.strictEqual(result[0].storage, PromptsStorage.local);
+@@ -2362,10 +2357,9 @@ suite('PromptsService', () => {
+ 			// Create empty mock filesystem
+ 			await mockFiles(fileService, []);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results array');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results array');
+ 			assert.strictEqual(result.length, 0, 'Should find no skills');
+ 		});
+ 
+@@ -2397,10 +2391,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 1, 'Should find 1 skill');
+ 			assert.strictEqual(result[0].name.length, 64, 'Name should be truncated to 64 characters');
+ 			assert.strictEqual(result[0].description?.length, 1024, 'Description should be truncated to 1024 characters');
+@@ -2430,10 +2423,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 1, 'Should find 1 skill');
+ 			assert.strictEqual(result[0].name, 'Skill with XML tags', 'XML tags should be removed from name');
+ 			assert.strictEqual(result[0].description, 'Description with HTML and other tags', 'XML tags should be removed from description');
+@@ -2467,10 +2459,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 1, 'Should find 1 skill');
+ 			// XML tags are removed first, then truncation happens
+ 			assert.ok(!result[0].name.includes('<'), 'Name should not contain XML tags');
+@@ -2526,10 +2517,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 2, 'Should find 2 skills (duplicate skipped)');
+ 
+ 			const duplicateSkill = result.find(s => s.name === 'Duplicate Skill');
+@@ -2575,10 +2565,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 1, 'Should find 1 skill (duplicates resolved by priority)');
+ 			assert.strictEqual(result[0].description, 'Workspace version - highest priority', 'Workspace should win over user');
+ 			assert.strictEqual(result[0].storage, PromptsStorage.local);
+@@ -2619,10 +2608,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 1, 'Should find only 1 skill (mismatched one skipped)');
+ 			assert.strictEqual(result[0].name, 'Valid Skill', 'Should only find the valid skill');
+ 		});
+@@ -2659,10 +2647,9 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 1, 'Should find only 1 skill (one without name skipped)');
+ 			assert.strictEqual(result[0].name, 'Valid Named Skill', 'Should only find skill with name attribute');
+ 		});
+@@ -2715,10 +2702,9 @@ suite('PromptsService', () => {
+ 
+ 			const registered = service.registerPromptFileProvider(extension, PromptsType.skill, provider);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 2, 'Should find 2 skills (workspace + extension)');
+ 
+ 			const workspaceSkill = result.find(s => s.name === 'Workspace Skill');
+@@ -2778,10 +2764,9 @@ suite('PromptsService', () => {
+ 				'A contributed skill from extension'
+ 			);
+ 
+-			const allResult = await service.findAgentSkills(CancellationToken.None);
++			const result = await service.findAgentSkills(CancellationToken.None);
+ 
+-			assert.ok(allResult, 'Should return results');
+-			const result = allResult.filter(s => s.storage !== PromptsStorage.internal);
++			assert.ok(result, 'Should return results');
+ 			assert.strictEqual(result.length, 2, 'Should find 2 skills (local + contributed)');
+ 
+ 			const localSkill = result.find(s => s.name === 'Local Skill');
+@@ -2795,7 +2780,7 @@ suite('PromptsService', () => {
+ 			registered.dispose();
+ 
+ 			// After disposal, only local skill should remain
+-			const resultAfterDispose = (await service.findAgentSkills(CancellationToken.None))?.filter(s => s.storage !== PromptsStorage.internal);
++			const resultAfterDispose = await service.findAgentSkills(CancellationToken.None);
+ 			assert.strictEqual(resultAfterDispose?.length, 1, 'Should find 1 skill after disposal');
+ 			assert.strictEqual(resultAfterDispose?.[0].name, 'Local Skill');
+ 		});
+@@ -3469,7 +3454,7 @@ suite('PromptsService', () => {
+ 				},
+ 			]);
+ 
+-			const slashCommands = (await service.getPromptSlashCommands(CancellationToken.None)).filter(c => c.promptPath.storage !== PromptsStorage.internal);
++			const slashCommands = await service.getPromptSlashCommands(CancellationToken.None);
+ 
+ 			// All commands should be present in the raw list
+ 			assert.strictEqual(slashCommands.length, 4, 'Should find all 4 commands');
+@@ -3686,6 +3671,33 @@ suite('PromptsService', () => {
+ 			assert.strictEqual(reTrustedResult.hooks[HookType.PreToolUse]?.length, 1);
+ 		});
+ 
++		test('discovery info marks hooks as skipped when workspace is untrusted', async function () {
++			workspaceContextService.setWorkspace(testWorkspace(URI.file('/test-workspace')));
++			testConfigService.setUserConfiguration(PromptsConfig.USE_CHAT_HOOKS, true);
++			testConfigService.setUserConfiguration(PromptsConfig.HOOKS_LOCATION_KEY, { [HOOKS_SOURCE_FOLDER]: true });
++
++			await mockFiles(fileService, [
++				{
++					path: '/test-workspace/.github/hooks/my-hook.json',
++					contents: [
++						JSON.stringify({
++							hooks: {
++								[HookType.PreToolUse]: [
++									{ type: 'command', command: 'echo test' },
++								],
++							},
++						}),
++					],
++				},
++			]);
++
++			await workspaceTrustService.setWorkspaceTrust(false);
++			const discoveryInfo = await service.getPromptDiscoveryInfo(PromptsType.hook, CancellationToken.None);
++			assert.strictEqual(discoveryInfo.files.length, 1, 'Expected one discovery result');
++			assert.strictEqual(discoveryInfo.files[0].status, 'skipped');
++			assert.strictEqual(discoveryInfo.files[0].skipReason, 'workspace-untrusted');
++		});
++
+ 		test('suppresses plugin hooks when workspace is untrusted', async function () {
+ 			testConfigService.setUserConfiguration(PromptsConfig.USE_CHAT_HOOKS, true);
+ 			testConfigService.setUserConfiguration(PromptsConfig.HOOKS_LOCATION_KEY, {});
+diff --git a/src/vs/workbench/contrib/chat/test/common/promptSyntax/utils/promptFilesLocator.test.ts b/src/vs/workbench/contrib/chat/test/common/promptSyntax/utils/promptFilesLocator.test.ts
+index 2dde1dfb0a2..4d030f7c342 100644
+--- a/src/vs/workbench/contrib/chat/test/common/promptSyntax/utils/promptFilesLocator.test.ts
++++ b/src/vs/workbench/contrib/chat/test/common/promptSyntax/utils/promptFilesLocator.test.ts
+@@ -101,6 +101,7 @@ suite('PromptFilesLocator', () => {
+ 			'explorer.excludeGitIgnore': false,
+ 			'files.exclude': {},
+ 			'search.exclude': {},
++			[PromptsConfig.SEARCH_ROOT_REPO_CUSTOMIZATIONS]: false,
+ 			[PromptsConfig.PROMPT_LOCATIONS_KEY]: configValue,
+ 			[PromptsConfig.INSTRUCTIONS_LOCATION_KEY]: configValue,
+ 			[PromptsConfig.MODE_LOCATION_KEY]: configValue,

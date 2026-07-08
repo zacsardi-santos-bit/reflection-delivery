@@ -1,0 +1,15 @@
+diff --git a/utils/utils_test.go b/utils/utils_test.go
+index c9838da6..17c46f13 100644
+--- a/utils/utils_test.go
++++ b/utils/utils_test.go
+@@ -32,5 +32,9 @@ func (s *UtilsSuite) TestDirIsAccessibleNotExist(c *C) {
+ }
+ 
+ func (s *UtilsSuite) TestDirIsAccessibleNotAccessible(c *C) {
+-	c.Check(DirIsAccessible(s.tempfile.Name()).Error(), Equals, fmt.Errorf("'%s' is inaccessible, check access rights", s.tempfile.Name()).Error())
++	accessible := DirIsAccessible(s.tempfile.Name())
++	if accessible == nil {
++            c.Fatalf("Test dir should not be accessible: %s", s.tempfile.Name())
++        }
++	c.Check(accessible.Error(), Equals, fmt.Errorf("'%s' is inaccessible, check access rights", s.tempfile.Name()).Error())
+ }

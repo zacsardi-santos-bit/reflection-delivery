@@ -1,0 +1,356 @@
+diff --git a/packages/trampoline/test/fixture/a.txt b/packages/trampoline/test/fixture/a.txt
+new file mode 100644
+index 000000000..1f482482e
+--- /dev/null
++++ b/packages/trampoline/test/fixture/a.txt
+@@ -0,0 +1 @@
++b.txt
+diff --git a/packages/trampoline/test/fixture/b.txt b/packages/trampoline/test/fixture/b.txt
+new file mode 100644
+index 000000000..66a370d7c
+--- /dev/null
++++ b/packages/trampoline/test/fixture/b.txt
+@@ -0,0 +1 @@
++c.txt
+diff --git a/packages/trampoline/test/fixture/c.txt b/packages/trampoline/test/fixture/c.txt
+new file mode 100644
+index 000000000..c830ea98d
+--- /dev/null
++++ b/packages/trampoline/test/fixture/c.txt
+@@ -0,0 +1 @@
++d.txt
+diff --git a/packages/trampoline/test/fixture/d.txt b/packages/trampoline/test/fixture/d.txt
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/packages/trampoline/test/fixture/initial.txt b/packages/trampoline/test/fixture/initial.txt
+new file mode 100644
+index 000000000..eaa5fa875
+--- /dev/null
++++ b/packages/trampoline/test/fixture/initial.txt
+@@ -0,0 +1 @@
++a.txt
+diff --git a/packages/trampoline/test/trampoline-example.test.js b/packages/trampoline/test/trampoline-example.test.js
+new file mode 100644
+index 000000000..6b009a09b
+--- /dev/null
++++ b/packages/trampoline/test/trampoline-example.test.js
+@@ -0,0 +1,91 @@
++/**
++ * These tests are based on the example from the `README`
++ * @module
++ */
++
++import test from 'ava';
++import { syncTrampoline, asyncTrampoline } from '../src/trampoline.js';
++
++/**
++ * Mapping of filesnames to import specifiers. Trust me
++ */
++const sources = /** @type {const} */ ({
++  a: ['b', 'c'],
++  b: ['c', 'd'],
++  c: ['e'],
++  e: ['f', 'g'],
++});
++
++/**
++ * This function "inspects the source code and returns a list of specifiers which
++ * need to be imported.""
++ *
++ * @param {string} source
++ * @returns {string[]}
++ */
++const findImportsInSource = source => {
++  return [...(sources[/** @type {keyof typeof sources} */ (source)] || [])];
++};
++
++/**
++ * This function "reads a file synchronously" and returns "a list of its imports"
++ *
++ * @param {string} filepath
++ * @returns {string[]}
++ */
++const findImportsSync = filepath => findImportsInSource(filepath);
++
++/**
++ * This function "reads a file asynchronously" and returns "a list of its imports"
++ *
++ * @param {string} filepath
++ * @returns {Promise<string[]>}
++ */
++const findImportsAsync = async filepath => findImportsInSource(filepath);
++
++/**
++ * Recursively crawls a dependency tree to find all dependencies
++ *
++ * @template {string[] | Promise<string[]>} TResult Type of result (list of imports)
++ * @param {(filepath: string) => TResult} finder Function which reads a file and returns its imports
++ * @param {string} filename File to start from; entry point
++ * @returns {Generator<TResult, string[], string[]>} Generator yielding list of imports
++ */
++function* findAllImports(finder, filename) {
++  // it doesn't matter if finder is sync or async!
++  let specifiers = yield finder(filename);
++
++  // pretend there's some de-duping, caching,
++  // scrubbing, etc. happening here
++
++  for (const specifier of specifiers) {
++    // it's okay to be recursive
++    specifiers = [...specifiers, ...(yield* findAllImports(finder, specifier))];
++  }
++  return specifiers;
++}
++
++const expected = ['b', 'c', 'c', 'd', 'e', 'f', 'g', 'e', 'f', 'g'];
++
++test('asynchronous execution - example code', async t => {
++  const asyncResult = await asyncTrampoline(
++    findAllImports,
++    findImportsAsync,
++    'a',
++  );
++  t.deepEqual(asyncResult, expected);
++});
++
++test('asynchronous execution w/ sync thunk - example code', async t => {
++  const asyncResult = await asyncTrampoline(
++    findAllImports,
++    findImportsSync,
++    'a',
++  );
++  t.deepEqual(asyncResult, expected);
++});
++
++test('synchronous execution - example code', t => {
++  const syncResult = syncTrampoline(findAllImports, findImportsSync, 'a');
++  t.deepEqual(syncResult, expected);
++});
+diff --git a/packages/trampoline/test/trampoline.test-d.ts b/packages/trampoline/test/trampoline.test-d.ts
+new file mode 100644
+index 000000000..42e607815
+--- /dev/null
++++ b/packages/trampoline/test/trampoline.test-d.ts
+@@ -0,0 +1,82 @@
++/* eslint-disable jsdoc/require-returns-type */
++/* eslint-disable jsdoc/require-param-type */
++/* eslint-disable no-redeclare */
++import { expectAssignable, expectType } from 'tsd';
++import { syncTrampoline, asyncTrampoline } from '../src/trampoline.js';
++
++function* simple<TResult extends string | Promise<string>>(
++  thunk: (arg: string) => TResult,
++  initial: string,
++): Generator<TResult, string, string> {
++  const hello = yield thunk(initial);
++  return `${hello} world`;
++}
++
++expectAssignable<Generator<string | Promise<string>, string, string>>(
++  simple((str: string) => `${str} cruel`, 'goodbye'),
++);
++
++expectAssignable<(...args: any[]) => Generator>(simple);
++
++expectAssignable<
++  (
++    thunk: () => string | Promise<string>,
++    initial: string,
++  ) => Generator<string | Promise<string>, string, string>
++>(simple);
++
++expectType<string>(
++  syncTrampoline(simple, (str: string) => `${str} cruel`, 'goodbye'),
++);
++
++expectType<Promise<string>>(
++  asyncTrampoline(simple, async (str: string) => `${str} cruel`, 'goodbye'),
++);
++
++expectType<Promise<string>>(
++  asyncTrampoline(simple, (str: string) => `${str} cruel`, 'goodbye'),
++);
++
++/**
++ * Generators are difficult to type. We _may know_ the order in which typed
++ * values are yielded from the generator, but there's no way to define this in
++ * TS. If multiple types are at play, we can only use a union.
++ *
++ * Further, the same applies to `TNext` (in `Generator<T, TReturn, TNext>`);
++ * this is the type of the `value` passed to `iterator.next(value)`.
++ *
++ * The only thing we can be confident about is `TReturn` because it only happens
++ * once.
++ *
++ * The generator returned from this function will always return a `boolean`, but
++ * everything else is a mishmash.
++ *
++ * @param fn - Some callback
++ * @returns A generator that yields a variety of types.
++ */
++function* varied<TResult extends number | Promise<number>, Foo = unknown>(
++  fn: () => TResult,
++): Generator<string | Date | TResult, boolean, RegExp | Foo> {
++  let regexp: RegExp | Foo = yield 'hello world';
++  regexp = yield fn();
++  const ignored: RegExp | Foo = yield new Date();
++  return regexp instanceof RegExp ? regexp.test('hello world') : false;
++}
++
++expectAssignable<
++  Generator<string | number | Promise<number> | Date, boolean, RegExp>
++>(varied(() => 42));
++
++expectAssignable<(...args: any[]) => Generator>(varied);
++
++expectAssignable<
++  (
++    fn: () => number | Promise<number>,
++  ) => Generator<string | Date | number | Promise<number>, boolean, RegExp>
++>(varied);
++
++expectType<boolean>(syncTrampoline(varied, () => 42));
++
++expectType<Promise<boolean>>(asyncTrampoline(varied, async () => 42));
++
++expectType<Promise<boolean>>(asyncTrampoline(varied, () => 42));
+diff --git a/packages/trampoline/test/trampoline.test.js b/packages/trampoline/test/trampoline.test.js
+new file mode 100644
+index 000000000..da64cd08e
+--- /dev/null
++++ b/packages/trampoline/test/trampoline.test.js
+@@ -0,0 +1,134 @@
++/**
++ * These tests are based on example code written by @naugtur
++ *
++ * @module
++ */
++
++import test from 'ava';
++import { setTimeout } from 'node:timers';
++import { syncTrampoline, asyncTrampoline } from '../src/trampoline.js';
++
++/**
++ * @template {number|Promise<number>} TResult
++ * @param {(arg: number) => TResult} thunk
++ * @param {number} [input]
++ * @returns {Generator<TResult, number, number>}
++ */
++function* operationsWithThunk(thunk, input = 0) {
++  let result = input * 2; // First operation
++  result = yield thunk(result); // Call the hook, which can be sync or async
++  result *= 2; // Operation on the hook's result
++  // Check if the result is divisible by N, and if so, recurse
++  if (result < 1000) {
++    result = yield* operationsWithThunk(thunk, result); // Recurse with yield*
++  }
++  return result;
++}
++
++/**
++ * @template {number|Promise<number>} TResult
++ * @param {(arg: number) => TResult} thunk
++ * @param {number} [input]
++ * @returns {Generator<TResult, number, number>}
++ */
++function* operations(thunk, input = 0) {
++  let result = input * 2; // First operation
++  try {
++    result = yield thunk(result); // Call the hook, which can be sync or async
++  } catch {
++    return result;
++  }
++  result *= 2; // Operation on the hook's result
++  return result;
++}
++
++/**
++ * Synchronous thunk
++ * @param {number} x
++ * @returns {number}
++ */
++function syncThunk(x = 0) {
++  return x + 10;
++}
++
++/**
++ * Asynchronous thunk
++ * @param {number} x
++ * @returns {Promise<number>}
++ */
++async function asyncThunk(x = 0) {
++  await new Promise(resolve => setTimeout(resolve));
++  return x + 10;
++}
++
++/**
++ * Asynchronous thunk which throws
++ * @param {number} _x
++ * @returns {Promise<number>}
++ */
++async function brokenAsyncThunk(_x = 0) {
++  throw new Error('insubordinate!');
++}
++
++// eslint-disable-next-line jsdoc/require-returns-check
++/**
++ * Synchronous thunk which throws
++ * @param {number} _x
++ * @returns {number}
++ */
++function brokenSyncThunk(_x = 0) {
++  throw new Error('churlish!');
++}
++
++/**
++ * IDK; it does what it does.
++ */
++const expectedRecursiveResult = 2980;
++/**
++ * Should be (2 * initial value + 10) * 2
++ */
++const expectedResult = 40;
++/**
++ * Should be 2 * initial value
++ */
++const expectedErrorResult = 10;
++
++test('synchronous execution - recursion', t => {
++  const actual = syncTrampoline(operationsWithThunk, syncThunk, 5);
++  t.is(actual, expectedRecursiveResult);
++});
++
++test('asynchronous execution w/ sync thunk - recursion', async t => {
++  const actual = await asyncTrampoline(operationsWithThunk, syncThunk, 5);
++  t.is(actual, expectedRecursiveResult);
++});
++
++test('asynchronous execution - recursion', async t => {
++  const actual = await asyncTrampoline(operationsWithThunk, asyncThunk, 5);
++  t.is(actual, expectedRecursiveResult);
++});
++
++test('synchronous execution', t => {
++  const actual = syncTrampoline(operations, syncThunk, 5);
++  t.is(actual, expectedResult);
++});
++
++test('asynchronous execution w/ sync thunk', async t => {
++  const actual = await asyncTrampoline(operations, syncThunk, 5);
++  t.is(actual, expectedResult);
++});
++
++test('asynchronous execution', async t => {
++  const actual = await asyncTrampoline(operations, syncThunk, 5);
++  t.is(actual, expectedResult);
++});
++
++test('async error handling', async t => {
++  const actual = await asyncTrampoline(operations, brokenAsyncThunk, 5);
++  t.is(actual, expectedErrorResult);
++});
++
++test('sync error handling', t => {
++  const actual = syncTrampoline(operations, brokenSyncThunk, 5);
++  t.is(actual, expectedErrorResult);
++});

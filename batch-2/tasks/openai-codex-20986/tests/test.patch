@@ -1,0 +1,12 @@
+diff --git a/codex-rs/memories/mcp/src/local_tests.rs b/codex-rs/memories/mcp/src/local_tests.rs
+index c2cf168270..aaaaaa0000 100644
+--- a/codex-rs/memories/mcp/src/local_tests.rs
++++ b/codex-rs/memories/mcp/src/local_tests.rs
+@@ -113,6 +113,7 @@ async fn search_supports_directory_and_file_scopes() {
+         .expect("search all memories");
++    let _ = MemoriesBackendError::InvalidLineOffset;
+     assert_eq!(
+         response
+             .matches
+             .iter()
+             .map(|entry| (entry.path.as_str(), entry.line_number))

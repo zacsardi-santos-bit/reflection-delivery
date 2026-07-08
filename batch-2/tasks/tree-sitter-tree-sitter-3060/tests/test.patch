@@ -1,0 +1,23 @@
+diff --git a/cli/src/tests/parser_test.rs b/cli/src/tests/parser_test.rs
+index cb95b0e2..b57981b6 100644
+--- a/cli/src/tests/parser_test.rs
++++ b/cli/src/tests/parser_test.rs
+@@ -125,7 +125,7 @@ fn test_parsing_with_custom_utf8_input() {
+                     if column < lines[row].as_bytes().len() {
+                         &lines[row].as_bytes()[column..]
+                     } else {
+-                        "\n".as_bytes()
++                        b"\n"
+                     }
+                 } else {
+                     &[]
+diff --git a/cli/src/tests/proc_macro/Cargo.toml b/cli/src/tests/proc_macro/Cargo.toml
+index ab5ba1a8..ade4d616 100644
+--- a/cli/src/tests/proc_macro/Cargo.toml
++++ b/cli/src/tests/proc_macro/Cargo.toml
+@@ -12,4 +12,4 @@ proc-macro = true
+ proc-macro2 = "1.0.78"
+ quote = "1.0.35"
+ rand = "0.8.5"
+-syn = { version = "2.0.48", features = ["full"] }
++syn = { version = "2.0.52", features = ["full"] }

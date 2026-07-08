@@ -1,0 +1,9 @@
+diff --git a/README.md b/README.md
+index 438121d2c..bc47e05df 100644
+--- a/README.md
++++ b/README.md
+@@ -17,3 +17,4 @@ If you're contributing to chezmoi, then please read the [developer guide](https:
+ ## License
+ 
+ MIT
++

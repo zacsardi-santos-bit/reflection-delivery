@@ -1,0 +1,21 @@
+diff --git a/cot/src/config.rs b/cot/src/config.rs
+--- a/cot/src/config.rs
++++ b/cot/src/config.rs
+@@ -1059,5 +1059,17 @@ mod tests {
+         assert!(result.is_err());
+     }
+
++    #[test]
++    fn test_same_site_lax_from_config() {
++        let config = ProjectConfig::from_toml(
++            r#"
++            [middlewares.session]
++            same_site = "lax"
++            "#,
++        )
++        .unwrap();
++        assert_eq!(config.middlewares.session.same_site, SameSite::Lax);
++    }
++
+     #[test]
+     fn from_toml_missing_fields() {

@@ -1,0 +1,20 @@
+diff --git a/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java b/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java
+index 281cc12fa3..d1a2b3c4e5 100644
+--- a/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java
++++ b/hadoop-hdds/client/src/test/java/org/apache/hadoop/hdds/scm/client/TestHddsClientUtils.java
+@@ -382,4 +382,14 @@
+     assertNull(
+         HddsClientUtils.containsException(ex3, IllegalStateException.class));
+   }
+-}
++
++  @Test
++  public void testNumericNameLengthViolation() {
++    final String tooShortNumeric = "12";
++    Throwable thrown = assertThrows(
++        IllegalArgumentException.class,
++        () -> HddsClientUtils.verifyResourceName(tooShortNumeric));
++    assertTrue(thrown.getMessage().contains("length is illegal"),
++        "Expected 'length is illegal' in message but got: " + thrown.getMessage());
++  }
++}

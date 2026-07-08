@@ -1,0 +1,20 @@
+diff --git a/client/tracing_vendor_test.go b/client/tracing_vendor_test.go
+new file mode 100644
+--- /dev/null
++++ b/client/tracing_vendor_test.go
+@@ -0,0 +1,15 @@
++package client
++
++import (
++	"testing"
++
++	"go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace"
++)
++
++func TestOtelHTTPTraceVersion(t *testing.T) {
++	const want = "0.45.0"
++	got := otelhttptrace.Version()
++	if got != want {
++		t.Errorf("otelhttptrace.Version() = %q; want %q", got, want)
++	}
++}

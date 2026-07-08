@@ -1,0 +1,28 @@
+diff --git a/tests/bed_types_test.rs b/tests/bed_types_test.rs
+new file mode 100644
+index 0000000..21d5aaf
+--- /dev/null
++++ b/tests/bed_types_test.rs
+@@ -0,0 +1,22 @@
++#[cfg(test)]
++mod bed_types_tests {
++    use bedrs::{Bed3, Bed4, Bed6, Bed12};
++    use bedrs::Coordinates;
++
++    #[test]
++    fn test_bed3_new() {
++        let a = Bed3::new(1, 20, 30);
++        assert_eq!(*a.chr(), 1);
++        assert_eq!(a.start(), 20);
++        assert_eq!(a.end(), 30);
++    }
++
++    #[test]
++    fn test_bed4_new() {
++        let a = Bed4::new(1, 20, 30, "name".to_string());
++        assert_eq!(*a.chr(), 1);
++        assert_eq!(a.start(), 20);
++        assert_eq!(a.end(), 30);
++        assert_eq!(a.name(), "name");
++    }
++}

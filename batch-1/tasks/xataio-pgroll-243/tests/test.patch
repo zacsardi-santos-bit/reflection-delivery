@@ -1,0 +1,328 @@
+diff --git a/pkg/migrations/op_add_column_test.go b/pkg/migrations/op_add_column_test.go
+index dee111f..d39cbb0 100644
+--- a/pkg/migrations/op_add_column_test.go
++++ b/pkg/migrations/op_add_column_test.go
+@@ -9,6 +9,7 @@ import (
+ 	"github.com/stretchr/testify/assert"
+ 
+ 	"github.com/xataio/pgroll/pkg/migrations"
++	"github.com/xataio/pgroll/pkg/testutils"
+ )
+ 
+ func TestAddColumn(t *testing.T) {
+@@ -184,10 +185,10 @@ func TestAddForeignKeyColumn(t *testing.T) {
+ 				})
+ 
+ 				// Inserting a row into the referencing table fails as the referenced row does not exist.
+-				MustNotInsert(t, db, "public", "02_create_table_with_fk", "orders", map[string]string{
++				MustNotInsert(t, db, "public", "02_add_column", "orders", map[string]string{
+ 					"user_id":  "2",
+ 					"quantity": "200",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 			},
+ 			afterRollback: func(t *testing.T, db *sql.DB) {
+ 				// The new column has been dropped, so the foreign key constraint is gone.
+@@ -211,7 +212,7 @@ func TestAddForeignKeyColumn(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_add_column", "orders", map[string]string{
+ 					"user_id":  "3",
+ 					"quantity": "300",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 			},
+ 		},
+ 		{
+@@ -287,10 +288,10 @@ func TestAddForeignKeyColumn(t *testing.T) {
+ 				})
+ 
+ 				// Inserting a row into the referencing table fails as the referenced row does not exist.
+-				MustNotInsert(t, db, "public", "02_create_table_with_fk", "orders", map[string]string{
++				MustNotInsert(t, db, "public", "02_add_column", "orders", map[string]string{
+ 					"user_id":  "2",
+ 					"quantity": "200",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 			},
+ 			afterRollback: func(t *testing.T, db *sql.DB) {
+ 				// The new column has been dropped, so the foreign key constraint is gone.
+@@ -314,7 +315,7 @@ func TestAddForeignKeyColumn(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_add_column", "orders", map[string]string{
+ 					"user_id":  "3",
+ 					"quantity": "300",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 			},
+ 		},
+ 	})
+@@ -542,7 +543,7 @@ func TestAddNotNullColumnWithNoDefault(t *testing.T) {
+ 			// Inserting a null description through the new view fails.
+ 			MustNotInsert(t, db, "public", "02_add_column", "products", map[string]string{
+ 				"name": "banana",
+-			})
++			}, testutils.CheckViolationErrorCode)
+ 		},
+ 		afterRollback: func(t *testing.T, db *sql.DB) {
+ 			// the check constraint has been dropped.
+@@ -557,7 +558,7 @@ func TestAddNotNullColumnWithNoDefault(t *testing.T) {
+ 			// can't insert a null description into the new view; the column now has a NOT NULL constraint.
+ 			MustNotInsert(t, db, "public", "02_add_column", "products", map[string]string{
+ 				"name": "orange",
+-			})
++			}, testutils.NotNullViolationErrorCode)
+ 		},
+ 	}})
+ }
+@@ -733,7 +734,7 @@ func TestAddColumnWithCheckConstraint(t *testing.T) {
+ 			MustNotInsert(t, db, "public", "02_add_column", "users", map[string]string{
+ 				"name": "bob",
+ 				"age":  "3",
+-			})
++			}, testutils.CheckViolationErrorCode)
+ 		},
+ 		afterRollback: func(t *testing.T, db *sql.DB) {
+ 		},
+@@ -748,7 +749,7 @@ func TestAddColumnWithCheckConstraint(t *testing.T) {
+ 			MustNotInsert(t, db, "public", "02_add_column", "users", map[string]string{
+ 				"name": "dana",
+ 				"age":  "3",
+-			})
++			}, testutils.CheckViolationErrorCode)
+ 		},
+ 	}})
+ }
+diff --git a/pkg/migrations/op_common_test.go b/pkg/migrations/op_common_test.go
+index feb1932..c9ca266 100644
+--- a/pkg/migrations/op_common_test.go
++++ b/pkg/migrations/op_common_test.go
+@@ -492,12 +492,22 @@ func MustInsert(t *testing.T, db *sql.DB, schema, version, table string, record
+ 	}
+ }
+ 
+-func MustNotInsert(t *testing.T, db *sql.DB, schema, version, table string, record map[string]string) {
++func MustNotInsert(t *testing.T, db *sql.DB, schema, version, table string, record map[string]string, errorCode string) {
+ 	t.Helper()
+ 
+-	if err := insert(t, db, schema, version, table, record); err == nil {
++	err := insert(t, db, schema, version, table, record)
++	if err == nil {
+ 		t.Fatal("Expected INSERT to fail")
+ 	}
++
++	var pqErr *pq.Error
++	if ok := errors.As(err, &pqErr); ok {
++		if pqErr.Code.Name() != errorCode {
++			t.Fatalf("Expected INSERT to fail with %q, got %q", errorCode, pqErr.Code.Name())
++		}
++	} else {
++		t.Fatalf("INSERT failed with unknown error: %v", err)
++	}
+ }
+ 
+ func insert(t *testing.T, db *sql.DB, schema, version, table string, record map[string]string) error {
+diff --git a/pkg/migrations/op_create_table_test.go b/pkg/migrations/op_create_table_test.go
+index cc60cf3..2ac9c18 100644
+--- a/pkg/migrations/op_create_table_test.go
++++ b/pkg/migrations/op_create_table_test.go
+@@ -7,6 +7,7 @@ import (
+ 	"testing"
+ 
+ 	"github.com/xataio/pgroll/pkg/migrations"
++	"github.com/xataio/pgroll/pkg/testutils"
+ 
+ 	"github.com/stretchr/testify/assert"
+ )
+@@ -145,7 +146,7 @@ func TestCreateTable(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_create_table_with_fk", "orders", map[string]string{
+ 					"user_id":  "2",
+ 					"quantity": "200",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 			},
+ 			afterRollback: func(t *testing.T, db *sql.DB) {
+ 				// The table has been dropped, so the foreign key constraint is gone.
+@@ -168,7 +169,7 @@ func TestCreateTable(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_create_table_with_fk", "orders", map[string]string{
+ 					"user_id":  "3",
+ 					"quantity": "300",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 			},
+ 		},
+ 		{
+@@ -210,7 +211,7 @@ func TestCreateTable(t *testing.T) {
+ 				// Inserting a row into the table fails when the check constraint is not satisfied.
+ 				MustNotInsert(t, db, "public", "01_create_table", "users", map[string]string{
+ 					"name": "b",
+-				})
++				}, testutils.CheckViolationErrorCode)
+ 			},
+ 			afterRollback: func(t *testing.T, db *sql.DB) {
+ 				// The table has been dropped, so the check constraint is gone.
+@@ -227,7 +228,7 @@ func TestCreateTable(t *testing.T) {
+ 				// Inserting a row into the table fails when the check constraint is not satisfied.
+ 				MustNotInsert(t, db, "public", "01_create_table", "users", map[string]string{
+ 					"name": "c",
+-				})
++				}, testutils.CheckViolationErrorCode)
+ 			},
+ 		},
+ 		{
+diff --git a/pkg/migrations/op_drop_constraint_test.go b/pkg/migrations/op_drop_constraint_test.go
+index 23637a1..8feb6f1 100644
+--- a/pkg/migrations/op_drop_constraint_test.go
++++ b/pkg/migrations/op_drop_constraint_test.go
+@@ -8,6 +8,7 @@ import (
+ 
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/xataio/pgroll/pkg/migrations"
++	"github.com/xataio/pgroll/pkg/testutils"
+ )
+ 
+ func TestDropConstraint(t *testing.T) {
+@@ -75,7 +76,7 @@ func TestDropConstraint(t *testing.T) {
+ 				// Inserting a row that does not meet the check constraint into the old view fails.
+ 				MustNotInsert(t, db, "public", "02_add_check_constraint", "posts", map[string]string{
+ 					"title": "b",
+-				})
++				}, testutils.CheckViolationErrorCode)
+ 
+ 				// The inserted row has been backfilled into the new view.
+ 				rows := MustSelect(t, db, "public", "03_drop_check_constraint", "posts")
+@@ -320,7 +321,7 @@ func TestDropConstraint(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_add_fk_constraint", "posts", map[string]string{
+ 					"title":   "post by unknown user",
+ 					"user_id": "3",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 
+ 				// The post that was inserted successfully has been backfilled into the new view.
+ 				rows = MustSelect(t, db, "public", "03_drop_fk_constraint", "posts")
+@@ -422,7 +423,7 @@ func TestDropConstraint(t *testing.T) {
+ 				// Inserting a row that does not meet the unique constraint into the old view fails.
+ 				MustNotInsert(t, db, "public", "01_add_tables", "users", map[string]string{
+ 					"name": "alice",
+-				})
++				}, testutils.UniqueViolationErrorCode)
+ 
+ 				// Inserting a row that does not meet the unique constraint into the new view works.
+ 				MustInsert(t, db, "public", "02_drop_unique_constraint", "users", map[string]string{
+diff --git a/pkg/migrations/op_set_check_test.go b/pkg/migrations/op_set_check_test.go
+index ae5cec8..777e781 100644
+--- a/pkg/migrations/op_set_check_test.go
++++ b/pkg/migrations/op_set_check_test.go
+@@ -8,6 +8,7 @@ import (
+ 
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/xataio/pgroll/pkg/migrations"
++	"github.com/xataio/pgroll/pkg/testutils"
+ )
+ 
+ func TestSetCheckConstraint(t *testing.T) {
+@@ -85,7 +86,7 @@ func TestSetCheckConstraint(t *testing.T) {
+ 				// Inserting a row that does not meet the check constraint into the new view fails.
+ 				MustNotInsert(t, db, "public", "02_add_check_constraint", "posts", map[string]string{
+ 					"title": "d",
+-				})
++				}, testutils.CheckViolationErrorCode)
+ 
+ 				// The row that was inserted into the new view has been backfilled into the old view.
+ 				rows = MustSelect(t, db, "public", "01_add_table", "posts")
+@@ -124,7 +125,7 @@ func TestSetCheckConstraint(t *testing.T) {
+ 				// Inserting a row that does not meet the check constraint into the new view fails.
+ 				MustNotInsert(t, db, "public", "02_add_check_constraint", "posts", map[string]string{
+ 					"title": "e",
+-				})
++				}, testutils.CheckViolationErrorCode)
+ 
+ 				// The data in the new `posts` view is as expected.
+ 				rows := MustSelect(t, db, "public", "02_add_check_constraint", "posts")
+diff --git a/pkg/migrations/op_set_fk_test.go b/pkg/migrations/op_set_fk_test.go
+index 5e466c5..73db8cf 100644
+--- a/pkg/migrations/op_set_fk_test.go
++++ b/pkg/migrations/op_set_fk_test.go
+@@ -8,6 +8,7 @@ import (
+ 
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/xataio/pgroll/pkg/migrations"
++	"github.com/xataio/pgroll/pkg/testutils"
+ )
+ 
+ func TestSetForeignKey(t *testing.T) {
+@@ -96,7 +97,7 @@ func TestSetForeignKey(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_add_fk_constraint", "posts", map[string]string{
+ 					"title":   "post by unknown user",
+ 					"user_id": "3",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 
+ 				// The post that was inserted successfully has been backfilled into the old view.
+ 				rows := MustSelect(t, db, "public", "01_add_tables", "posts")
+@@ -156,7 +157,7 @@ func TestSetForeignKey(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_add_fk_constraint", "posts", map[string]string{
+ 					"title":   "post by unknown user",
+ 					"user_id": "3",
+-				})
++				}, testutils.FKViolationErrorCode)
+ 
+ 				// The data in the new `posts` view is as expected.
+ 				rows := MustSelect(t, db, "public", "02_add_fk_constraint", "posts")
+diff --git a/pkg/migrations/op_set_notnull_test.go b/pkg/migrations/op_set_notnull_test.go
+index f15d2c6..82ed051 100644
+--- a/pkg/migrations/op_set_notnull_test.go
++++ b/pkg/migrations/op_set_notnull_test.go
+@@ -8,6 +8,7 @@ import (
+ 
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/xataio/pgroll/pkg/migrations"
++	"github.com/xataio/pgroll/pkg/testutils"
+ )
+ 
+ func TestSetNotNull(t *testing.T) {
+@@ -67,7 +68,7 @@ func TestSetNotNull(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_set_nullable", "reviews", map[string]string{
+ 					"username": "alice",
+ 					"product":  "apple",
+-				})
++				}, testutils.CheckViolationErrorCode)
+ 
+ 				// Inserting a non-NULL value into the new `review` column should succeed
+ 				MustInsert(t, db, "public", "02_set_nullable", "reviews", map[string]string{
+@@ -143,7 +144,7 @@ func TestSetNotNull(t *testing.T) {
+ 				MustNotInsert(t, db, "public", "02_set_nullable", "reviews", map[string]string{
+ 					"username": "daisy",
+ 					"product":  "durian",
+-				})
++				}, testutils.NotNullViolationErrorCode)
+ 
+ 				// The up function no longer exists.
+ 				FunctionMustNotExist(t, db, "public", migrations.TriggerFunctionName("reviews", "review"))
+diff --git a/pkg/migrations/op_set_unique_test.go b/pkg/migrations/op_set_unique_test.go
+index ae63cc3..459ed93 100644
+--- a/pkg/migrations/op_set_unique_test.go
++++ b/pkg/migrations/op_set_unique_test.go
+@@ -8,6 +8,7 @@ import (
+ 
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/xataio/pgroll/pkg/migrations"
++	"github.com/xataio/pgroll/pkg/testutils"
+ )
+ 
+ func TestSetColumnUnique(t *testing.T) {
+@@ -76,7 +77,7 @@ func TestSetColumnUnique(t *testing.T) {
+ 				})
+ 				MustNotInsert(t, db, "public", "02_set_unique", "reviews", map[string]string{
+ 					"username": "dana", "product": "durian", "review": "bad",
+-				})
++				}, testutils.UniqueViolationErrorCode)
+ 			},
+ 			afterRollback: func(t *testing.T, db *sql.DB) {
+ 				// The new (temporary) `review` column should not exist on the underlying table.
+@@ -112,7 +113,7 @@ func TestSetColumnUnique(t *testing.T) {
+ 				})
+ 				MustNotInsert(t, db, "public", "02_set_unique", "reviews", map[string]string{
+ 					"username": "flora", "product": "fig", "review": "ok",
+-				})
++				}, testutils.UniqueViolationErrorCode)
+ 			},
+ 		},
+ 		{

@@ -1,0 +1,24 @@
+diff --git a/src/ui/button.test.tsx b/src/ui/button.test.tsx
+index 2d6d429..5828550 100644
+--- a/src/ui/button.test.tsx
++++ b/src/ui/button.test.tsx
+@@ -82,7 +82,8 @@ describe('Button component ', () => {
+     render(<Button testID="button" size="lg" />);
+     const button = screen.getByTestId('button');
+     // TODO: should be fixed to use haveStyle instead of comparing the class name
+-    const expectedStyle = 'font-[600] font-jakarta text-white text-xl';
++    const expectedStyle =
++      'font-[600] font-jakarta text-white dark:text-black text-xl';
+     const receivedStyle =
+       button.props.children[0].props.children.props.className;
+     expect(receivedStyle).toContain(expectedStyle);
+diff --git a/src/ui/select.test.tsx b/src/ui/select.test.tsx
+index c2f2113..9969b04 100644
+--- a/src/ui/select.test.tsx
++++ b/src/ui/select.test.tsx
+@@ -1,4 +1,5 @@
+ /* eslint-disable max-lines-per-function */
++
+ import React from 'react';
+ 
+ import { cleanup, fireEvent, render, screen } from '@/core/test-utils';

@@ -1,0 +1,22 @@
+diff --git a/cranelift/filetests/filetests/isa/riscv64/float.clif b/cranelift/filetests/filetests/isa/riscv64/float.clif
+index c7f65aa341..718959709d 100644
+--- a/cranelift/filetests/filetests/isa/riscv64/float.clif
++++ b/cranelift/filetests/filetests/isa/riscv64/float.clif
+@@ -699,7 +699,7 @@ block0(v0: i32):
+ 
+ ; VCode:
+ ; block0:
+-;   fcvt.d.wu fa0,a0
++;   fcvt.d.wu fa0,a0,rne
+ ;   ret
+ ;
+ ; Disassembled:
+@@ -715,7 +715,7 @@ block0(v0: i32):
+ 
+ ; VCode:
+ ; block0:
+-;   fcvt.d.w fa0,a0
++;   fcvt.d.w fa0,a0,rne
+ ;   ret
+ ;
+ ; Disassembled:

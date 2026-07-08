@@ -1,0 +1,2739 @@
+diff --git a/packages/bruno-converters/tests/openapi/openapi-to-bruno/swagger2-import.spec.js b/packages/bruno-converters/tests/openapi/openapi-to-bruno/swagger2-import.spec.js
+new file mode 100644
+index 000000000..1f2e6e7a1
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/openapi-to-bruno/swagger2-import.spec.js
+@@ -0,0 +1,71 @@
++import { describe, it, expect } from '@jest/globals';
++import openApiToBruno from '../../../src/openapi/openapi-to-bruno';
++
++/**
++ * Integration test: verifies that Swagger 2.0 specs are correctly routed
++ * through openApiToBruno to the dedicated swagger2ToBruno converter.
++ *
++ * Detailed feature tests live in tests/openapi/swagger2-to-bruno/.
++ */
++describe('Swagger 2.0 → Bruno integration (via openApiToBruno entry point)', () => {
++  it('should route Swagger 2.0 JSON specs through the dedicated converter', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Petstore', version: '1.0.0' },
++      host: 'petstore.swagger.io',
++      basePath: '/v2',
++      schemes: ['https'],
++      paths: {
++        '/pet': {
++          get: {
++            tags: ['pet'],
++            summary: 'List pets',
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = openApiToBruno(spec);
++    expect(collection).toBeDefined();
++    expect(collection.name).toBe('Petstore');
++    expect(collection.version).toBe('1');
++  });
++
++  it('should accept YAML string input for Swagger 2.0', () => {
++    const yamlSpec = `
++swagger: "2.0"
++info:
++  title: YAML Petstore
++  version: "1.0"
++host: api.example.com
++basePath: /v1
++schemes:
++  - https
++paths:
++  /pets:
++    get:
++      summary: List pets
++      responses:
++        "200":
++          description: OK
++`;
++    const collection = openApiToBruno(yamlSpec);
++    expect(collection.name).toBe('YAML Petstore');
++    expect(collection.environments.length).toBeGreaterThan(0);
++  });
++
++  it('should not confuse Swagger 2.0 with OpenAPI 3.0 specs', () => {
++    const oas3Spec = {
++      openapi: '3.0.0',
++      info: { title: 'OAS3 API', version: '1.0' },
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = openApiToBruno(oas3Spec);
++    expect(collection).toBeDefined();
++    expect(collection.name).toBe('OAS3 API');
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-auth.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-auth.spec.js
+new file mode 100644
+index 000000000..0ce3d636c
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-auth.spec.js
+@@ -0,0 +1,315 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++
++describe('swagger2-to-bruno auth', () => {
++  it('maps basic auth security definition to collection-level auth', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Basic Auth API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        basicAuth: { type: 'basic' }
++      },
++      security: [{ basicAuth: [] }],
++      paths: {
++        '/secure': {
++          get: { summary: 'Secure endpoint', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++
++    expect(collection.root.request.auth.mode).toBe('basic');
++    expect(collection.root.request.auth.basic.username).toBe('{{username}}');
++    expect(collection.root.request.auth.basic.password).toBe('{{password}}');
++  });
++
++  it('maps apiKey in header to apikey auth on the request', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'API Key API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        api_key: { type: 'apiKey', name: 'X-API-Key', in: 'header' }
++      },
++      paths: {
++        '/data': {
++          get: {
++            summary: 'Get data',
++            security: [{ api_key: [] }],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get data');
++
++    expect(req.request.auth.mode).toBe('apikey');
++    expect(req.request.auth.apikey.key).toBe('X-API-Key');
++    expect(req.request.auth.apikey.placement).toBe('header');
++
++    // Should also inject header
++    const header = req.request.headers.find((h) => h.name === 'X-API-Key');
++    expect(header).toBeDefined();
++    expect(header.value).toBe('{{apiKey}}');
++  });
++
++  it('maps apiKey in query and injects query param', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Query Key API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        api_key: { type: 'apiKey', name: 'api_key', in: 'query' }
++      },
++      paths: {
++        '/search': {
++          get: {
++            summary: 'Search',
++            security: [{ api_key: [] }],
++            parameters: [
++              { in: 'query', name: 'q', type: 'string' }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Search');
++
++    expect(req.request.auth.mode).toBe('apikey');
++    expect(req.request.auth.apikey.placement).toBe('queryparams');
++
++    const hasQueryParam = req.request.params.some((p) => p.name === 'api_key' && p.type === 'query');
++    expect(hasQueryParam).toBe(true);
++  });
++
++  it('maps oauth2 implicit flow', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'OAuth2 API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        petstore_auth: {
++          type: 'oauth2',
++          flow: 'implicit',
++          authorizationUrl: 'https://example.com/oauth/authorize',
++          scopes: { 'read:pets': 'read', 'write:pets': 'write' }
++        }
++      },
++      paths: {
++        '/pets': {
++          get: {
++            summary: 'List pets',
++            security: [{ petstore_auth: ['read:pets'] }],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'List pets');
++
++    expect(req.request.auth.mode).toBe('oauth2');
++    expect(req.request.auth.oauth2.grantType).toBe('implicit');
++    expect(req.request.auth.oauth2.authorizationUrl).toBe('https://example.com/oauth/authorize');
++    expect(req.request.auth.oauth2.scope).toContain('read:pets');
++  });
++
++  it('maps oauth2 accessCode flow to authorization_code', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'OAuth2 Code API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        oauth: {
++          type: 'oauth2',
++          flow: 'accessCode',
++          authorizationUrl: 'https://example.com/oauth/authorize',
++          tokenUrl: 'https://example.com/oauth/token',
++          scopes: { read: 'read access' }
++        }
++      },
++      paths: {
++        '/data': {
++          get: {
++            summary: 'Get data',
++            security: [{ oauth: ['read'] }],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get data');
++
++    expect(req.request.auth.mode).toBe('oauth2');
++    expect(req.request.auth.oauth2.grantType).toBe('authorization_code');
++    expect(req.request.auth.oauth2.accessTokenUrl).toBe('https://example.com/oauth/token');
++  });
++
++  it('maps oauth2 application flow to client_credentials', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'OAuth2 App API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        oauth: {
++          type: 'oauth2',
++          flow: 'application',
++          tokenUrl: 'https://example.com/oauth/token',
++          scopes: { admin: 'admin access' }
++        }
++      },
++      paths: {
++        '/admin': {
++          get: {
++            summary: 'Admin',
++            security: [{ oauth: ['admin'] }],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Admin');
++
++    expect(req.request.auth.mode).toBe('oauth2');
++    expect(req.request.auth.oauth2.grantType).toBe('client_credentials');
++  });
++
++  it('maps oauth2 password flow', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'OAuth2 Password API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        oauth: {
++          type: 'oauth2',
++          flow: 'password',
++          tokenUrl: 'https://example.com/oauth/token',
++          scopes: { read: 'read' }
++        }
++      },
++      paths: {
++        '/me': {
++          get: {
++            summary: 'Get me',
++            security: [{ oauth: ['read'] }],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get me');
++
++    expect(req.request.auth.mode).toBe('oauth2');
++    expect(req.request.auth.oauth2.grantType).toBe('password');
++  });
++
++  it('sets auth mode to inherit when operation security is explicitly empty', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Mixed Auth API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        api_key: { type: 'apiKey', name: 'X-API-Key', in: 'header' }
++      },
++      security: [{ api_key: [] }],
++      paths: {
++        '/public': {
++          get: {
++            summary: 'Public endpoint',
++            security: [],
++            responses: { 200: { description: 'OK' } }
++          }
++        },
++        '/private': {
++          get: {
++            summary: 'Private endpoint',
++            security: [{ api_key: [] }],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const publicReq = collection.items.find((i) => i.name === 'Public endpoint');
++    const privateReq = collection.items.find((i) => i.name === 'Private endpoint');
++
++    // Public endpoint should have no auth (explicitly empty security overrides global)
++    expect(publicReq.request.auth.mode).toBe('none');
++
++    // Private endpoint should have apikey auth
++    expect(privateReq.request.auth.mode).toBe('apikey');
++  });
++
++  it('should set auth mode to inherit when no global security schemes exist', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'No Security API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/open': {
++          get: {
++            summary: 'Open endpoint',
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Open endpoint');
++    expect(req.request.auth.mode).toBe('inherit');
++  });
++
++  it('should set collection-level auth from global security', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Global Auth API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        api_key: { type: 'apiKey', name: 'Authorization', in: 'header' }
++      },
++      security: [{ api_key: [] }],
++      paths: {
++        '/data': {
++          get: { summary: 'Get data', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++
++    // Collection root should have apikey auth
++    expect(collection.root.request.auth.mode).toBe('apikey');
++    expect(collection.root.request.auth.apikey.key).toBe('Authorization');
++  });
++
++  it('should set folder root auth to inherit', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Folder Auth API', version: '1.0' },
++      host: 'api.example.com',
++      securityDefinitions: {
++        basicAuth: { type: 'basic' }
++      },
++      security: [{ basicAuth: [] }],
++      paths: {
++        '/users': {
++          get: {
++            tags: ['users'],
++            summary: 'List users',
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const folder = collection.items.find((i) => i.type === 'folder' && i.name === 'users');
++    expect(folder).toBeDefined();
++    expect(folder.root.request.auth.mode).toBe('inherit');
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-body.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-body.spec.js
+new file mode 100644
+index 000000000..64c5473ec
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-body.spec.js
+@@ -0,0 +1,427 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++
++describe('swagger2-to-bruno body handling', () => {
++  it('should convert body parameter to JSON body', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'JSON Body API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['application/json'],
++      paths: {
++        '/items': {
++          post: {
++            summary: 'Create item',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: {
++                  type: 'object',
++                  properties: {
++                    name: { type: 'string', example: 'Widget' },
++                    count: { type: 'integer' },
++                    active: { type: 'boolean' }
++                  }
++                }
++              }
++            ],
++            responses: { 201: { description: 'Created' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Create item');
++
++    expect(req.request.body.mode).toBe('json');
++    const body = JSON.parse(req.request.body.json);
++    expect(body.name).toBe('Widget');
++    expect(body.count).toBe(0);
++    expect(body.active).toBe(false);
++  });
++
++  it('should handle array body schema', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Array Body API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          post: {
++            summary: 'Create users',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: {
++                  type: 'array',
++                  items: {
++                    type: 'object',
++                    properties: {
++                      username: { type: 'string' },
++                      email: { type: 'string' }
++                    }
++                  }
++                }
++              }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Create users');
++
++    expect(req.request.body.mode).toBe('json');
++    const body = JSON.parse(req.request.body.json);
++    expect(Array.isArray(body)).toBe(true);
++    expect(body[0]).toHaveProperty('username');
++    expect(body[0]).toHaveProperty('email');
++  });
++
++  it('should handle body with explicit example', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Example Body API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/data': {
++          post: {
++            summary: 'Post data',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: {
++                  type: 'object',
++                  example: { key: 'value', nested: { a: 1 } }
++                }
++              }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Post data');
++    const body = JSON.parse(req.request.body.json);
++    expect(body.key).toBe('value');
++    expect(body.nested.a).toBe(1);
++  });
++
++  it('should handle formUrlEncoded body from formData params', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Form API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['application/x-www-form-urlencoded'],
++      paths: {
++        '/login': {
++          post: {
++            summary: 'Login',
++            parameters: [
++              { in: 'formData', name: 'username', type: 'string', required: true },
++              { in: 'formData', name: 'password', type: 'string', required: true }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Login');
++
++    expect(req.request.body.mode).toBe('formUrlEncoded');
++    expect(req.request.body.formUrlEncoded.length).toBe(2);
++    expect(req.request.body.formUrlEncoded[0].name).toBe('username');
++    expect(req.request.body.formUrlEncoded[1].name).toBe('password');
++  });
++
++  it('should handle multipart/form-data with file upload', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Upload API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['multipart/form-data'],
++      paths: {
++        '/upload': {
++          post: {
++            summary: 'Upload file',
++            parameters: [
++              { in: 'formData', name: 'description', type: 'string' },
++              { in: 'formData', name: 'file', type: 'file' }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Upload file');
++
++    expect(req.request.body.mode).toBe('multipartForm');
++
++    const fileField = req.request.body.multipartForm.find((f) => f.name === 'file');
++    expect(fileField).toBeDefined();
++    expect(fileField.type).toBe('file');
++
++    const textField = req.request.body.multipartForm.find((f) => f.name === 'description');
++    expect(textField).toBeDefined();
++    expect(textField.type).toBe('text');
++  });
++
++  it('should handle XML body via consumes', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'XML API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['application/xml'],
++      paths: {
++        '/data': {
++          post: {
++            summary: 'Submit XML',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: {
++                  type: 'object',
++                  properties: {
++                    name: { type: 'string' },
++                    value: { type: 'integer' }
++                  }
++                }
++              }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Submit XML');
++
++    expect(req.request.body.mode).toBe('xml');
++    expect(req.request.body.xml).toContain('<?xml');
++    expect(req.request.body.xml).toContain('<name>');
++    expect(req.request.body.xml).toContain('<value>');
++  });
++
++  it('should handle text/xml content type', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Text XML API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['text/xml'],
++      paths: {
++        '/data': {
++          post: {
++            summary: 'Submit Text XML',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: { type: 'object', properties: { key: { type: 'string' } } }
++              }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Submit Text XML');
++    expect(req.request.body.mode).toBe('xml');
++  });
++
++  it('should handle JSON variant content types like application/ld+json', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'JSON-LD API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['application/ld+json'],
++      paths: {
++        '/data': {
++          post: {
++            summary: 'Post JSON-LD',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: { type: 'object', properties: { id: { type: 'string' } } }
++              }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Post JSON-LD');
++    expect(req.request.body.mode).toBe('json');
++  });
++
++  it('should handle */* content type as text', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Wildcard API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['*/*'],
++      paths: {
++        '/data': {
++          post: {
++            summary: 'Post wildcard',
++            parameters: [
++              { in: 'body', name: 'body', schema: { type: 'string' } }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Post wildcard');
++    expect(req.request.body.mode).toBe('text');
++  });
++
++  it('should handle application/octet-stream as text', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Binary API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['application/octet-stream'],
++      paths: {
++        '/upload': {
++          post: {
++            summary: 'Upload binary',
++            parameters: [
++              { in: 'body', name: 'body', schema: { type: 'string' } }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Upload binary');
++    expect(req.request.body.mode).toBe('text');
++  });
++
++  it('should use operation-level consumes over global consumes', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Override API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['application/json'],
++      paths: {
++        '/data': {
++          post: {
++            summary: 'Submit data',
++            consumes: ['application/xml'],
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: { type: 'object', properties: { name: { type: 'string' } } }
++              }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Submit data');
++    expect(req.request.body.mode).toBe('xml');
++  });
++
++  it('should handle XML body with string example (raw XML)', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Raw XML API', version: '1.0' },
++      host: 'api.example.com',
++      consumes: ['application/xml'],
++      paths: {
++        '/data': {
++          post: {
++            summary: 'Post raw XML',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: {
++                  type: 'object',
++                  example: '<root><item>hello</item></root>'
++                }
++              }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Post raw XML');
++    expect(req.request.body.mode).toBe('xml');
++    expect(req.request.body.xml).toBe('<root><item>hello</item></root>');
++  });
++
++  it('should not crash when body param has no schema', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'No Schema API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/test': {
++          post: {
++            summary: 'Post test',
++            parameters: [
++              { in: 'body', name: 'body' }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Post test');
++    expect(req).toBeDefined();
++    expect(req.request.body.mode).toBe('none');
++  });
++
++  it('should handle formData with default and example values', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Form Values API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/submit': {
++          post: {
++            summary: 'Submit form',
++            consumes: ['application/x-www-form-urlencoded'],
++            parameters: [
++              { in: 'formData', name: 'name', type: 'string', example: 'John' },
++              { in: 'formData', name: 'age', type: 'integer', default: 25 },
++              { in: 'formData', name: 'role', type: 'string', enum: ['admin', 'user'] }
++            ],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Submit form');
++
++    expect(req.request.body.mode).toBe('formUrlEncoded');
++    const nameField = req.request.body.formUrlEncoded.find((f) => f.name === 'name');
++    const ageField = req.request.body.formUrlEncoded.find((f) => f.name === 'age');
++    const roleField = req.request.body.formUrlEncoded.find((f) => f.name === 'role');
++
++    expect(nameField.value).toBe('John');
++    expect(ageField.value).toBe('25');
++    expect(roleField.value).toBe('admin');
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-circular-references.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-circular-references.spec.js
+new file mode 100644
+index 000000000..b49f0ae56
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-circular-references.spec.js
+@@ -0,0 +1,148 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++
++describe('swagger2-to-bruno circular references', () => {
++  it('should handle simple circular references in definitions', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Circular Ref API', version: '1.0' },
++      host: 'api.example.com',
++      definitions: {
++        TreeNode: {
++          type: 'object',
++          properties: {
++            name: { type: 'string' },
++            children: {
++              type: 'array',
++              items: { $ref: '#/definitions/TreeNode' }
++            }
++          }
++        }
++      },
++      paths: {
++        '/tree': {
++          post: {
++            summary: 'Create tree',
++            operationId: 'createTree',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: { $ref: '#/definitions/TreeNode' }
++              }
++            ],
++            responses: {
++              200: {
++                description: 'OK',
++                schema: { $ref: '#/definitions/TreeNode' }
++              }
++            }
++          }
++        }
++      }
++    };
++
++    // Should not throw due to circular references
++    expect(() => swagger2ToBruno(spec)).not.toThrow();
++
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Create tree');
++    expect(req).toBeDefined();
++    expect(req.request.body.mode).toBe('json');
++
++    // Should have a JSON body with at least the name field
++    const body = JSON.parse(req.request.body.json);
++    expect(body).toHaveProperty('name');
++  });
++
++  it('should handle complex circular reference chains (A → B → A)', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Complex Circular API', version: '1.0' },
++      host: 'api.example.com',
++      definitions: {
++        Category: {
++          type: 'object',
++          properties: {
++            name: { type: 'string' },
++            parentCategory: { $ref: '#/definitions/SubCategory' }
++          }
++        },
++        SubCategory: {
++          type: 'object',
++          properties: {
++            id: { type: 'integer' },
++            category: { $ref: '#/definitions/Category' }
++          }
++        }
++      },
++      paths: {
++        '/categories': {
++          post: {
++            summary: 'Create category',
++            operationId: 'createCategory',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: { $ref: '#/definitions/Category' }
++              }
++            ],
++            responses: {
++              201: {
++                description: 'Created',
++                schema: { $ref: '#/definitions/Category' }
++              }
++            }
++          }
++        }
++      }
++    };
++
++    expect(() => swagger2ToBruno(spec)).not.toThrow();
++
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Create category');
++    expect(req).toBeDefined();
++    expect(req.request.body.mode).toBe('json');
++
++    const body = JSON.parse(req.request.body.json);
++    expect(body).toHaveProperty('name');
++    expect(body).toHaveProperty('parentCategory');
++  });
++
++  it('should handle self-referencing definitions', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Self Ref API', version: '1.0' },
++      host: 'api.example.com',
++      definitions: {
++        LinkedList: {
++          type: 'object',
++          properties: {
++            value: { type: 'string' },
++            next: { $ref: '#/definitions/LinkedList' }
++          }
++        }
++      },
++      paths: {
++        '/list': {
++          get: {
++            summary: 'Get list',
++            operationId: 'getList',
++            responses: {
++              200: {
++                description: 'OK',
++                schema: { $ref: '#/definitions/LinkedList' }
++              }
++            }
++          }
++        }
++      }
++    };
++
++    expect(() => swagger2ToBruno(spec)).not.toThrow();
++    const collection = swagger2ToBruno(spec);
++    expect(collection).toBeDefined();
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-examples.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-examples.spec.js
+new file mode 100644
+index 000000000..4bfc59b13
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-examples.spec.js
+@@ -0,0 +1,351 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++
++describe('swagger2-to-bruno response examples', () => {
++  it('should generate response examples from response schema', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Schema Example API', version: '1.0' },
++      host: 'api.example.com',
++      definitions: {
++        Pet: {
++          type: 'object',
++          properties: {
++            id: { type: 'integer' },
++            name: { type: 'string', example: 'doggie' },
++            status: { type: 'string', enum: ['available', 'pending', 'sold'] }
++          }
++        }
++      },
++      paths: {
++        '/pets/{petId}': {
++          get: {
++            summary: 'Find pet by ID',
++            operationId: 'getPetById',
++            produces: ['application/json'],
++            parameters: [
++              { in: 'path', name: 'petId', type: 'integer', required: true }
++            ],
++            responses: {
++              200: {
++                description: 'successful operation',
++                schema: { $ref: '#/definitions/Pet' }
++              },
++              404: {
++                description: 'Pet not found'
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Find pet by ID');
++
++    expect(req.examples).toBeDefined();
++    expect(req.examples.length).toBeGreaterThan(0);
++
++    const okExample = req.examples.find((e) => e.response.status === 200);
++    expect(okExample).toBeDefined();
++    expect(okExample.name).toBe('200 Response');
++    expect(okExample.response.statusText).toBe('OK');
++    expect(okExample.response.body.type).toBe('json');
++
++    // Should contain the resolved Pet schema fields
++    const body = JSON.parse(okExample.response.body.content);
++    expect(body).toHaveProperty('id');
++    expect(body).toHaveProperty('name');
++    expect(body.name).toBe('doggie'); // from example
++    expect(body.status).toBe('available'); // first enum value
++  });
++
++  it('should generate response examples from response.examples (MIME-keyed)', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'MIME Examples API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/data': {
++          get: {
++            summary: 'Get data',
++            responses: {
++              200: {
++                description: 'OK',
++                examples: {
++                  'application/json': { key: 'value', count: 42 }
++                }
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get data');
++
++    expect(req.examples).toBeDefined();
++    expect(req.examples.length).toBe(1);
++
++    const example = req.examples[0];
++    expect(example.response.status).toBe(200);
++    expect(example.response.body.type).toBe('json');
++
++    const content = JSON.parse(example.response.body.content);
++    expect(content.key).toBe('value');
++    expect(content.count).toBe(42);
++
++    // Should have Content-Type header
++    const ctHeader = example.response.headers.find((h) => h.name === 'Content-Type');
++    expect(ctHeader.value).toBe('application/json');
++  });
++
++  it('should handle multiple MIME-keyed examples for same status code', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Multi MIME API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/data': {
++          get: {
++            summary: 'Get data',
++            produces: ['application/json', 'application/xml'],
++            responses: {
++              200: {
++                description: 'OK',
++                examples: {
++                  'application/json': { key: 'value' },
++                  'application/xml': '<root><key>value</key></root>'
++                }
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get data');
++
++    expect(req.examples.length).toBe(2);
++
++    const jsonExample = req.examples.find((e) => e.response.body.type === 'json');
++    const xmlExample = req.examples.find((e) => e.response.body.type === 'xml');
++    expect(jsonExample).toBeDefined();
++    expect(xmlExample).toBeDefined();
++  });
++
++  it('should include request body schema in response examples', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Body+Response API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/items': {
++          post: {
++            summary: 'Create item',
++            parameters: [
++              {
++                in: 'body',
++                name: 'body',
++                schema: {
++                  type: 'object',
++                  properties: { name: { type: 'string' }, count: { type: 'integer' } }
++                }
++              }
++            ],
++            responses: {
++              201: {
++                description: 'Created',
++                schema: {
++                  type: 'object',
++                  properties: { id: { type: 'integer' }, name: { type: 'string' } }
++                }
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Create item');
++
++    expect(req.examples).toBeDefined();
++    const example = req.examples[0];
++    expect(example.response.status).toBe(201);
++
++    // Request body should be populated from the body param schema
++    expect(example.request.body.mode).toBe('json');
++    const reqBody = JSON.parse(example.request.body.json);
++    expect(reqBody).toHaveProperty('name');
++    expect(reqBody).toHaveProperty('count');
++  });
++
++  it('should skip default responses when generating examples', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Default Response API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/data': {
++          get: {
++            summary: 'Get data',
++            responses: {
++              200: {
++                description: 'OK',
++                schema: { type: 'object', properties: { id: { type: 'integer' } } }
++              },
++              default: {
++                description: 'Error'
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get data');
++
++    // Should only have 200 example, not default
++    expect(req.examples.length).toBe(1);
++    expect(req.examples[0].response.status).toBe(200);
++  });
++
++  it('should not generate examples when responses have no schema or examples', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'No Schema API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/data': {
++          delete: {
++            summary: 'Delete data',
++            responses: {
++              204: { description: 'No Content' },
++              404: { description: 'Not Found' }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Delete data');
++
++    // No schema or examples → no examples array
++    expect(req.examples).toBeUndefined();
++  });
++
++  it('should set correct statusText in response examples', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Status Text API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/items': {
++          post: {
++            summary: 'Create item',
++            responses: {
++              201: {
++                description: 'Created',
++                schema: { type: 'object', properties: { id: { type: 'integer' } } }
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Create item');
++    const example = req.examples[0];
++
++    expect(example.response.status).toBe(201);
++    expect(example.response.statusText).toBe('Created');
++  });
++
++  it('should use produces content type for response examples when no examples key', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Produces API', version: '1.0' },
++      host: 'api.example.com',
++      produces: ['application/xml'],
++      paths: {
++        '/data': {
++          get: {
++            summary: 'Get data',
++            responses: {
++              200: {
++                description: 'OK',
++                schema: { type: 'object', properties: { name: { type: 'string' } } }
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get data');
++
++    const example = req.examples[0];
++    const ctHeader = example.response.headers.find((h) => h.name === 'Content-Type');
++    expect(ctHeader.value).toBe('application/xml');
++    expect(example.response.body.type).toBe('xml');
++  });
++
++  it('should use operation-level produces over global produces', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Override Produces API', version: '1.0' },
++      host: 'api.example.com',
++      produces: ['application/xml'],
++      paths: {
++        '/data': {
++          get: {
++            summary: 'Get data',
++            produces: ['application/json'],
++            responses: {
++              200: {
++                description: 'OK',
++                schema: { type: 'object', properties: { key: { type: 'string' } } }
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Get data');
++
++    const example = req.examples[0];
++    const ctHeader = example.response.headers.find((h) => h.name === 'Content-Type');
++    expect(ctHeader.value).toBe('application/json');
++    expect(example.response.body.type).toBe('json');
++  });
++
++  it('should preserve example structure including uid, itemUid, and type', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Structure API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/items': {
++          get: {
++            summary: 'List items',
++            responses: {
++              200: {
++                description: 'OK',
++                schema: { type: 'object', properties: { id: { type: 'integer' } } }
++              }
++            }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'List items');
++    const example = req.examples[0];
++
++    expect(example.uid).toBeDefined();
++    expect(example.itemUid).toBe(req.uid);
++    expect(example.type).toBe('http-request');
++    expect(example.request.url).toBe(req.request.url);
++    expect(example.request.method).toBe(req.request.method);
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-grouping.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-grouping.spec.js
+new file mode 100644
+index 000000000..4f09f0d82
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-grouping.spec.js
+@@ -0,0 +1,237 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++
++describe('swagger2-to-bruno grouping', () => {
++  describe('tag-based grouping', () => {
++    it('should group requests by tags by default', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Tags API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/users': {
++            get: { tags: ['users'], summary: 'List users', responses: { 200: { description: 'OK' } } }
++          },
++          '/pets': {
++            get: { tags: ['pets'], summary: 'List pets', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const folderNames = collection.items.filter((i) => i.type === 'folder').map((i) => i.name);
++      expect(folderNames).toContain('users');
++      expect(folderNames).toContain('pets');
++    });
++
++    it('should place untagged requests at root level', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Mixed Tags API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/users': {
++            get: { tags: ['users'], summary: 'List users', responses: { 200: { description: 'OK' } } }
++          },
++          '/health': {
++            get: { summary: 'Health check', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++
++      // Health check should be at root level (not in a folder)
++      const rootRequests = collection.items.filter((i) => i.type === 'http-request');
++      expect(rootRequests.some((r) => r.name === 'Health check')).toBe(true);
++    });
++
++    it('should group multiple requests under the same tag into one folder', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Grouped API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/users': {
++            get: { tags: ['users'], summary: 'List users', responses: { 200: { description: 'OK' } } },
++            post: { tags: ['users'], summary: 'Create user', responses: { 201: { description: 'Created' } } }
++          },
++          '/users/{id}': {
++            get: { tags: ['users'], summary: 'Get user', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const usersFolder = collection.items.find((i) => i.type === 'folder' && i.name === 'users');
++      expect(usersFolder).toBeDefined();
++      expect(usersFolder.items.length).toBe(3);
++    });
++
++    it('should set folder root with inherit auth and meta name', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Folder Root API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: { tags: ['items'], summary: 'List items', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const folder = collection.items.find((i) => i.type === 'folder');
++      expect(folder.root).toBeDefined();
++      expect(folder.root.request.auth.mode).toBe('inherit');
++      expect(folder.root.meta.name).toBe('items');
++    });
++  });
++
++  describe('path-based grouping', () => {
++    it('should group requests by path when specified', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Path API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/users': {
++            get: { summary: 'List users', responses: { 200: { description: 'OK' } } }
++          },
++          '/users/{id}': {
++            get: { summary: 'Get user', responses: { 200: { description: 'OK' } } }
++          },
++          '/pets': {
++            get: { summary: 'List pets', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec, { groupBy: 'path' });
++      const folderNames = collection.items.map((i) => i.name);
++      expect(folderNames).toContain('users');
++      expect(folderNames).toContain('pets');
++    });
++
++    it('should create nested folders for deep paths', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Deep Path API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/api/v1/users': {
++            get: { summary: 'List users', responses: { 200: { description: 'OK' } } }
++          },
++          '/api/v1/users/{id}': {
++            get: { summary: 'Get user', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec, { groupBy: 'path' });
++
++      // Should have top-level 'api' folder
++      const apiFolder = collection.items.find((i) => i.name === 'api');
++      expect(apiFolder).toBeDefined();
++      expect(apiFolder.type).toBe('folder');
++    });
++
++    it('should handle path with only one segment', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Flat Path API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/health': {
++            get: { summary: 'Health', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec, { groupBy: 'path' });
++
++      const healthFolder = collection.items.find((i) => i.name === 'health');
++      expect(healthFolder).toBeDefined();
++      expect(healthFolder.items.length).toBe(1);
++    });
++  });
++
++  describe('duplicate name handling', () => {
++    it('should make duplicate operation names unique by appending method', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Dup Names API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: { summary: 'Items', responses: { 200: { description: 'OK' } } },
++            post: { summary: 'Items', responses: { 201: { description: 'Created' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const names = collection.items.map((i) => i.name);
++
++      // Should have unique names
++      const uniqueNames = new Set(names);
++      expect(uniqueNames.size).toBe(names.length);
++    });
++
++    it('should deduplicate operation names across folders in tag-based grouping', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Cross Folder API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/users': {
++            get: { tags: ['users'], summary: 'List items', responses: { 200: { description: 'OK' } } }
++          },
++          '/pets': {
++            get: { tags: ['pets'], summary: 'List items', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const usersFolder = collection.items.find((i) => i.name === 'users');
++      const petsFolder = collection.items.find((i) => i.name === 'pets');
++
++      // Tag-based grouping shares a global usedNames set, so second occurrence gets a suffix
++      expect(usersFolder.items[0].name).toBe('List items');
++      expect(petsFolder.items[0].name).toBe('List items (GET)');
++    });
++
++    it('should not add suffixes to duplicate names in different path-based folders', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Cross Path API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/users': {
++            get: { summary: 'List items', responses: { 200: { description: 'OK' } } }
++          },
++          '/pets': {
++            get: { summary: 'List items', responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec, { groupBy: 'path' });
++      const usersFolder = collection.items.find((i) => i.name === 'users');
++      const petsFolder = collection.items.find((i) => i.name === 'pets');
++
++      // Path-based grouping uses per-folder usedNames, so both keep original name
++      expect(usersFolder.items[0].name).toBe('List items');
++      expect(petsFolder.items[0].name).toBe('List items');
++    });
++
++    it('should use method+path as name when summary and operationId are missing', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'No Name API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: { responses: { 200: { description: 'OK' } } }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items[0];
++
++      // Should fall back to method + path
++      expect(req.name).toContain('get');
++    });
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-parameters.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-parameters.spec.js
+new file mode 100644
+index 000000000..f059146a1
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-parameters.spec.js
+@@ -0,0 +1,591 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++
++describe('swagger2-to-bruno parameters', () => {
++  describe('path-item level parameters', () => {
++    it('should apply path-item parameters to all operations when no operation params exist', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Path Params API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items/{itemId}': {
++            parameters: [
++              { name: 'itemId', in: 'path', required: true, type: 'string', description: 'The item ID' }
++            ],
++            get: {
++              summary: 'Get item',
++              operationId: 'getItem',
++              responses: { 200: { description: 'OK' } }
++            },
++            put: {
++              summary: 'Update item',
++              operationId: 'updateItem',
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const getItem = collection.items.find((i) => i.name === 'Get item');
++      const putItem = collection.items.find((i) => i.name === 'Update item');
++
++      expect(getItem.request.params).toEqual(
++        expect.arrayContaining([expect.objectContaining({ name: 'itemId', type: 'path', enabled: true })])
++      );
++      expect(putItem.request.params).toEqual(
++        expect.arrayContaining([expect.objectContaining({ name: 'itemId', type: 'path', enabled: true })])
++      );
++    });
++
++    it('should preserve operation-only parameters unchanged', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Op Params API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/search': {
++            get: {
++              summary: 'Search',
++              operationId: 'search',
++              parameters: [
++                { name: 'q', in: 'query', required: true, type: 'string', description: 'Search query' }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const search = collection.items.find((i) => i.name === 'Search');
++      const queryParams = search.request.params.filter((p) => p.type === 'query');
++      expect(queryParams).toHaveLength(1);
++      expect(queryParams[0].name).toBe('q');
++    });
++
++    it('should merge path-item and operation params with no overlap', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Merge Params API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/users/{userId}': {
++            parameters: [
++              { name: 'userId', in: 'path', required: true, type: 'string' }
++            ],
++            get: {
++              summary: 'Get user',
++              parameters: [
++                { name: 'fields', in: 'query', type: 'string' }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const getUser = collection.items.find((i) => i.name === 'Get user');
++
++      const pathParam = getUser.request.params.find((p) => p.name === 'userId' && p.type === 'path');
++      const queryParam = getUser.request.params.find((p) => p.name === 'fields' && p.type === 'query');
++      expect(pathParam).toBeDefined();
++      expect(queryParam).toBeDefined();
++    });
++
++    it('should let operation param override path-item param with same name and in', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Override Params API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items/{id}': {
++            parameters: [
++              { name: 'id', in: 'path', required: true, type: 'string', description: 'Path-level ID' }
++            ],
++            get: {
++              summary: 'Get item',
++              parameters: [
++                { name: 'id', in: 'path', required: true, type: 'integer', description: 'Operation-level ID' }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Get item');
++      const idParams = req.request.params.filter((p) => p.name === 'id' && p.type === 'path');
++
++      // Should only have one 'id' param (operation overrides path-item)
++      expect(idParams).toHaveLength(1);
++      expect(idParams[0].description).toBe('Operation-level ID');
++    });
++
++    it('should handle path-item params with different in values (query, path, header)', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Mixed Params API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items/{id}': {
++            parameters: [
++              { name: 'id', in: 'path', required: true, type: 'string' },
++              { name: 'X-Request-ID', in: 'header', type: 'string' },
++              { name: 'format', in: 'query', type: 'string' }
++            ],
++            get: {
++              summary: 'Get item',
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Get item');
++
++      expect(req.request.params.find((p) => p.name === 'id' && p.type === 'path')).toBeDefined();
++      expect(req.request.params.find((p) => p.name === 'format' && p.type === 'query')).toBeDefined();
++      expect(req.request.headers.find((h) => h.name === 'X-Request-ID')).toBeDefined();
++    });
++  });
++
++  describe('parameter value priority', () => {
++    it('should use param.example as the value when present', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Example Param API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/test': {
++            get: {
++              summary: 'Test',
++              parameters: [
++                { name: 'q', in: 'query', type: 'string', example: 'hello world' }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Test');
++      const param = req.request.params.find((p) => p.name === 'q');
++      expect(param.value).toBe('hello world');
++      expect(param.enabled).toBe(true);
++    });
++
++    it('should use param.default when no example is present', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Default Param API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/test': {
++            get: {
++              summary: 'Test',
++              parameters: [
++                { name: 'limit', in: 'query', type: 'integer', default: 20 }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Test');
++      const param = req.request.params.find((p) => p.name === 'limit');
++      expect(param.value).toBe('20');
++      expect(param.enabled).toBe(true);
++    });
++
++    it('should use first enum value as fallback when no example or default', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Enum Param API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/test': {
++            get: {
++              summary: 'Test',
++              parameters: [
++                { name: 'sort', in: 'query', type: 'string', enum: ['asc', 'desc'], required: true }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Test');
++      const sortParams = req.request.params.filter((p) => p.name === 'sort');
++
++      // Should create entry for each enum value
++      expect(sortParams.length).toBe(2);
++      expect(sortParams[0].value).toBe('asc');
++      expect(sortParams[0].enabled).toBe(true); // first + required
++      expect(sortParams[1].value).toBe('desc');
++    });
++
++    it('should fall back to empty string when no example, default, or enum', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Empty Param API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/test': {
++            get: {
++              summary: 'Test',
++              parameters: [
++                { name: 'q', in: 'query', type: 'string' }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Test');
++      const param = req.request.params.find((p) => p.name === 'q');
++      expect(param.value).toBe('');
++      expect(param.enabled).toBe(false);
++    });
++
++    it('should prefer param.example over param.default', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Priority Param API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/test': {
++            get: {
++              summary: 'Test',
++              parameters: [
++                { name: 'q', in: 'query', type: 'string', example: 'from-example', default: 'from-default' }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Test');
++      const param = req.request.params.find((p) => p.name === 'q');
++      expect(param.value).toBe('from-example');
++    });
++
++    it('should enable param with default when enum has matching default', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Enum Default API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/test': {
++            get: {
++              summary: 'Test',
++              parameters: [
++                { name: 'status', in: 'query', type: 'string', enum: ['active', 'inactive', 'pending'], default: 'pending' }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Test');
++      const statusParams = req.request.params.filter((p) => p.name === 'status');
++
++      // The default value should be enabled
++      const pendingParam = statusParams.find((p) => p.value === 'pending');
++      expect(pendingParam.enabled).toBe(true);
++
++      // Non-default values should be disabled
++      const activeParam = statusParams.find((p) => p.value === 'active');
++      expect(activeParam.enabled).toBe(false);
++    });
++  });
++
++  describe('collectionFormat support', () => {
++    it('should handle collectionFormat=multi by creating separate entries', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Multi API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/pets': {
++            get: {
++              summary: 'Find pets',
++              parameters: [
++                {
++                  in: 'query', name: 'status', type: 'array',
++                  items: { type: 'string', enum: ['available', 'pending', 'sold'] },
++                  collectionFormat: 'multi',
++                  required: true
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Find pets');
++      const statusParams = req.request.params.filter((p) => p.name === 'status' && p.type === 'query');
++
++      expect(statusParams.length).toBe(3);
++      expect(statusParams.map((p) => p.value)).toEqual(['available', 'pending', 'sold']);
++    });
++
++    it('should handle collectionFormat=csv by joining values with comma', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'CSV API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: {
++              summary: 'List items',
++              parameters: [
++                {
++                  in: 'query', name: 'tags', type: 'array',
++                  items: { type: 'string', enum: ['a', 'b', 'c'] },
++                  collectionFormat: 'csv'
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'List items');
++      const tagsParams = req.request.params.filter((p) => p.name === 'tags');
++
++      expect(tagsParams.length).toBe(1);
++      expect(tagsParams[0].value).toBe('a,b,c');
++    });
++
++    it('should handle collectionFormat=pipes by joining with pipe', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Pipes API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: {
++              summary: 'List items',
++              parameters: [
++                {
++                  in: 'query', name: 'ids', type: 'array',
++                  items: { type: 'string', enum: ['x', 'y', 'z'] },
++                  collectionFormat: 'pipes'
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'List items');
++      const idsParams = req.request.params.filter((p) => p.name === 'ids');
++
++      expect(idsParams.length).toBe(1);
++      expect(idsParams[0].value).toBe('x|y|z');
++    });
++
++    it('should handle collectionFormat=ssv by joining with space', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'SSV API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: {
++              summary: 'List items',
++              parameters: [
++                {
++                  in: 'query', name: 'tags', type: 'array',
++                  items: { type: 'string', enum: ['a', 'b'] },
++                  collectionFormat: 'ssv'
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'List items');
++      const tagsParams = req.request.params.filter((p) => p.name === 'tags');
++
++      expect(tagsParams.length).toBe(1);
++      expect(tagsParams[0].value).toBe('a b');
++    });
++
++    it('should handle collectionFormat=tsv by joining with tab', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'TSV API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: {
++              summary: 'List items',
++              parameters: [
++                {
++                  in: 'query', name: 'tags', type: 'array',
++                  items: { type: 'string', enum: ['a', 'b'] },
++                  collectionFormat: 'tsv'
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'List items');
++      const tagsParams = req.request.params.filter((p) => p.name === 'tags');
++
++      expect(tagsParams.length).toBe(1);
++      expect(tagsParams[0].value).toBe('a\tb');
++    });
++
++    it('should default to csv collectionFormat when not specified for array params with enum', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Default Format API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items': {
++            get: {
++              summary: 'List items',
++              parameters: [
++                {
++                  in: 'query', name: 'colors', type: 'array',
++                  items: { type: 'string', enum: ['red', 'blue'] }
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'List items');
++      const colorParams = req.request.params.filter((p) => p.name === 'colors');
++
++      expect(colorParams.length).toBe(1);
++      expect(colorParams[0].value).toBe('red,blue');
++    });
++  });
++
++  describe('object parameter expansion', () => {
++    it('should expand object-type query params into individual properties', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Object Param API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/search': {
++            get: {
++              summary: 'Search',
++              parameters: [
++                {
++                  in: 'query', name: 'filter', type: 'object',
++                  required: ['status'],
++                  properties: {
++                    status: { type: 'string', description: 'Filter by status', enum: ['active', 'inactive'] },
++                    limit: { type: 'integer', description: 'Max results', default: 10 }
++                  }
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Search');
++
++      const statusParam = req.request.params.find((p) => p.name === 'status' && p.type === 'query');
++      const limitParam = req.request.params.find((p) => p.name === 'limit' && p.type === 'query');
++      expect(statusParam).toBeDefined();
++      expect(statusParam.value).toBe('active');
++      expect(limitParam).toBeDefined();
++      expect(limitParam.value).toBe('10');
++
++      // Should NOT have a 'filter' param
++      const filterParam = req.request.params.find((p) => p.name === 'filter');
++      expect(filterParam).toBeUndefined();
++    });
++
++    it('should expand object-type path params into individual properties', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Path Object API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/items/{composite}': {
++            get: {
++              summary: 'Get item',
++              parameters: [
++                {
++                  in: 'path', name: 'composite', type: 'object',
++                  properties: {
++                    type: { type: 'string', example: 'widget' },
++                    id: { type: 'integer', example: 42 }
++                  }
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Get item');
++
++      const typeParam = req.request.params.find((p) => p.name === 'type' && p.type === 'path');
++      const idParam = req.request.params.find((p) => p.name === 'id' && p.type === 'path');
++      expect(typeParam).toBeDefined();
++      expect(typeParam.value).toBe('widget');
++      expect(idParam).toBeDefined();
++      expect(idParam.value).toBe('42');
++    });
++
++    it('should expand object-type header params into individual headers', () => {
++      const spec = {
++        swagger: '2.0',
++        info: { title: 'Header Object API', version: '1.0' },
++        host: 'api.example.com',
++        paths: {
++          '/data': {
++            get: {
++              summary: 'Get data',
++              parameters: [
++                {
++                  in: 'header', name: 'X-Custom', type: 'object',
++                  properties: {
++                    'X-Trace-ID': { type: 'string', example: 'abc123' },
++                    'X-Version': { type: 'string', default: 'v2' }
++                  }
++                }
++              ],
++              responses: { 200: { description: 'OK' } }
++            }
++          }
++        }
++      };
++      const collection = swagger2ToBruno(spec);
++      const req = collection.items.find((i) => i.name === 'Get data');
++
++      const traceHeader = req.request.headers.find((h) => h.name === 'X-Trace-ID');
++      const versionHeader = req.request.headers.find((h) => h.name === 'X-Version');
++      expect(traceHeader).toBeDefined();
++      expect(traceHeader.value).toBe('abc123');
++      expect(versionHeader).toBeDefined();
++      expect(versionHeader.value).toBe('v2');
++    });
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-tags.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-tags.spec.js
+new file mode 100644
+index 000000000..d1dd381f8
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-tags.spec.js
+@@ -0,0 +1,238 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++
++/**
++ * Helper function to find a request by name in the collection.
++ * Searches recursively through folders.
++ */
++const findRequestByName = (items, name) => {
++  for (const item of items) {
++    if (item.type === 'http-request' && item.name === name) {
++      return item;
++    }
++    if (item.type === 'folder' && item.items) {
++      const found = findRequestByName(item.items, name);
++      if (found) return found;
++    }
++  }
++  return undefined;
++};
++
++/**
++ * Helper function to find a folder by name in the collection.
++ */
++const findFolderByName = (items, name) => {
++  for (const item of items) {
++    if (item.type === 'folder' && item.name === name) {
++      return item;
++    }
++    if (item.type === 'folder' && item.items) {
++      const found = findFolderByName(item.items, name);
++      if (found) return found;
++    }
++  }
++  return undefined;
++};
++
++describe('Swagger 2.0 Import - Tag Sanitization', () => {
++  it('should replace spaces with underscores in tags', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            operationId: 'getUsers',
++            summary: 'Get users',
++            tags: ['User Management'],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++    const request = findRequestByName(result.items, 'Get users');
++    expect(request).toBeDefined();
++    expect(request.tags).toEqual(['User_Management']);
++  });
++
++  it('should sanitize tags with dots', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            operationId: 'getUsers',
++            summary: 'Get users',
++            tags: ['api.v1.users'],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++    const request = findRequestByName(result.items, 'Get users');
++    expect(request).toBeDefined();
++    // Dots are replaced with underscores for BRU format compatibility
++    expect(request.tags).toEqual(['api_v1_users']);
++  });
++
++  it('should sanitize tags with special characters', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            summary: 'Get users',
++            tags: ['users/admin', 'data@v2', 'test#tag'],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++    const request = findRequestByName(result.items, 'Get users');
++    expect(request).toBeDefined();
++    // Tags should be sanitized (special chars removed/replaced)
++    request.tags.forEach((tag) => {
++      expect(tag).not.toContain('/');
++      expect(tag).not.toContain('@');
++      expect(tag).not.toContain('#');
++    });
++  });
++
++  it('should preserve valid tags', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            summary: 'Get users',
++            tags: ['users', 'admin_panel', 'v2-api'],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++    const request = findRequestByName(result.items, 'Get users');
++    expect(request).toBeDefined();
++    expect(request.tags).toContain('users');
++    expect(request.tags).toContain('admin_panel');
++  });
++
++  it('should handle empty tags array', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            summary: 'Get users',
++            tags: [],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++    const request = findRequestByName(result.items, 'Get users');
++    expect(request).toBeDefined();
++    expect(request.tags).toEqual([]);
++  });
++
++  it('should handle missing tags property', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            summary: 'Get users',
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++    const request = findRequestByName(result.items, 'Get users');
++    expect(request).toBeDefined();
++    expect(request.tags).toEqual([]);
++  });
++
++  it('should remove duplicate tags after sanitization', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            summary: 'Get users',
++            tags: ['user management', 'user_management'],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++    const request = findRequestByName(result.items, 'Get users');
++    expect(request).toBeDefined();
++    // After sanitization both become user_management, duplicates should be removed
++    const uniqueTags = new Set(request.tags);
++    expect(uniqueTags.size).toBe(request.tags.length);
++  });
++
++  it('should use sanitized tag names for folder grouping', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            summary: 'Get users',
++            tags: ['User Management'],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++    const result = swagger2ToBruno(spec);
++
++    // The folder name should be sanitized (first tag)
++    const folder = findFolderByName(result.items, 'User_Management');
++    expect(folder).toBeDefined();
++  });
++
++  it('should handle UTF-8 characters in tags', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Tags API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/users': {
++          get: {
++            summary: 'Get users',
++            tags: ['Ünïcödé', '日本語'],
++            responses: { 200: { description: 'Success' } }
++          }
++        }
++      }
++    };
++
++    // Should not throw
++    expect(() => swagger2ToBruno(spec)).not.toThrow();
++    const result = swagger2ToBruno(spec);
++    expect(result).toBeDefined();
++  });
++});
+diff --git a/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-to-bruno.spec.js b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-to-bruno.spec.js
+new file mode 100644
+index 000000000..71c090255
+--- /dev/null
++++ b/packages/bruno-converters/tests/openapi/swagger2-to-bruno/swagger2-to-bruno.spec.js
+@@ -0,0 +1,307 @@
++import { describe, it, expect } from '@jest/globals';
++import { swagger2ToBruno } from '../../../src/openapi/swagger2-to-bruno';
++import openApiToBruno from '../../../src/openapi/openapi-to-bruno';
++
++describe('swagger2-collection', () => {
++  it('should correctly import a valid Swagger 2.0 spec', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Basic API', version: '1.0' },
++      host: 'api.example.com',
++      basePath: '/v1',
++      schemes: ['https'],
++      paths: {
++        '/users': {
++          get: {
++            summary: 'List users',
++            operationId: 'listUsers',
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++
++    expect(collection).toBeDefined();
++    expect(collection.name).toBe('Basic API');
++    expect(collection.version).toBe('1');
++    expect(collection.uid).toBeDefined();
++    expect(collection.items.length).toBeGreaterThan(0);
++    expect(collection.environments.length).toBeGreaterThan(0);
++  });
++
++  it('should route Swagger 2.0 specs through the dedicated converter via openApiToBruno', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Routed API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/test': {
++          get: {
++            summary: 'Test',
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = openApiToBruno(spec);
++    expect(collection).toBeDefined();
++    expect(collection.name).toBe('Routed API');
++  });
++
++  it('should accept YAML string input for Swagger 2.0', () => {
++    const yamlSpec = `
++swagger: "2.0"
++info:
++  title: YAML Petstore
++  version: "1.0"
++host: api.example.com
++basePath: /v1
++schemes:
++  - https
++paths:
++  /pets:
++    get:
++      summary: List pets
++      responses:
++        "200":
++          description: OK
++`;
++    const collection = openApiToBruno(yamlSpec);
++    expect(collection.name).toBe('YAML Petstore');
++    expect(collection.environments.length).toBeGreaterThan(0);
++  });
++
++  it('trims whitespace from info.title and uses the trimmed value as the collection name', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: '  My API  ', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    expect(collection.name).toBe('My API');
++  });
++
++  it('defaults to Untitled Collection if info.title is only whitespace', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: '   ', version: '1.0' },
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    expect(collection.name).toBe('Untitled Collection');
++  });
++
++  it('defaults to Untitled Collection if info.title is an empty string', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: '', version: '1.0' },
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    expect(collection.name).toBe('Untitled Collection');
++  });
++
++  it('defaults to Untitled Collection if info.title is missing', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { version: '1.0' },
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    expect(collection.name).toBe('Untitled Collection');
++  });
++
++  it('defaults to Untitled Collection if info is missing entirely', () => {
++    const spec = {
++      swagger: '2.0',
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    expect(collection.name).toBe('Untitled Collection');
++  });
++
++  it('should create environments from host/basePath/schemes', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Env API', version: '1.0' },
++      host: 'petstore.swagger.io',
++      basePath: '/v2',
++      schemes: ['https'],
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++
++    expect(collection.environments).toBeDefined();
++    expect(collection.environments.length).toBe(1);
++
++    const env = collection.environments[0];
++    const baseUrlVar = env.variables.find((v) => v.name === 'baseUrl');
++    expect(baseUrlVar).toBeDefined();
++    expect(baseUrlVar.value).toBe('https://petstore.swagger.io/v2');
++  });
++
++  it('should create multiple environments for multiple schemes', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Multi Scheme API', version: '1.0' },
++      host: 'petstore.swagger.io',
++      basePath: '/v2',
++      schemes: ['https', 'http'],
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++
++    expect(collection.environments.length).toBe(2);
++    expect(collection.environments[0].variables[0].value).toBe('https://petstore.swagger.io/v2');
++    expect(collection.environments[1].variables[0].value).toBe('http://petstore.swagger.io/v2');
++    expect(collection.environments[0].name).toBe('Environment 1');
++    expect(collection.environments[1].name).toBe('Environment 2');
++  });
++
++  it('should handle basePath without host', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'BasePath Only API', version: '1.0' },
++      basePath: '/api/v1',
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++
++    expect(collection.environments.length).toBe(1);
++    expect(collection.environments[0].variables[0].value).toBe('/api/v1');
++  });
++
++  it('should default scheme to https when schemes is empty', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'No Scheme API', version: '1.0' },
++      host: 'api.example.com',
++      basePath: '/v1',
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const baseUrlVar = collection.environments[0].variables.find((v) => v.name === 'baseUrl');
++    expect(baseUrlVar.value).toBe('https://api.example.com/v1');
++  });
++
++  it('should handle spec with no host (empty server)', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'No Host API', version: '1.0' },
++      paths: {
++        '/test': {
++          get: { summary: 'Test endpoint', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    expect(collection).toBeDefined();
++    expect(collection.name).toBe('No Host API');
++    expect(collection.environments.length).toBe(0);
++  });
++
++  it('should set auth mode to inherit when no security is defined in the collection', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'No Auth API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/test': {
++          get: { summary: 'Test', responses: { 200: { description: 'OK' } } }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++
++    // Request auth should be inherit (no security defined)
++    const req = collection.items.find((i) => i.name === 'Test');
++    expect(req.request.auth.mode).toBe('inherit');
++  });
++
++  it('should use operation summary as request name, falling back to operationId', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Names API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/with-summary': {
++          get: {
++            summary: 'My Summary',
++            operationId: 'getSummary',
++            responses: { 200: { description: 'OK' } }
++          }
++        },
++        '/no-summary': {
++          get: {
++            operationId: 'noSummary',
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const withSummary = collection.items.find((i) => i.name === 'My Summary');
++    const noSummary = collection.items.find((i) => i.name === 'noSummary');
++    expect(withSummary).toBeDefined();
++    expect(noSummary).toBeDefined();
++  });
++
++  it('should handle requestBody with empty content object (undefined mimeType)', () => {
++    const spec = {
++      swagger: '2.0',
++      info: { title: 'Empty Body API', version: '1.0' },
++      host: 'api.example.com',
++      paths: {
++        '/test': {
++          post: {
++            summary: 'Post test',
++            parameters: [],
++            responses: { 200: { description: 'OK' } }
++          }
++        }
++      }
++    };
++    const collection = swagger2ToBruno(spec);
++    const req = collection.items.find((i) => i.name === 'Post test');
++    expect(req).toBeDefined();
++    expect(req.request.body.mode).toBe('none');
++  });
++});

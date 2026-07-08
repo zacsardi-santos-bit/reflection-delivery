@@ -1,0 +1,977 @@
+diff --git a/extensions/resteasy-classic/resteasy/deployment/src/test/java/io/quarkus/resteasy/test/UserFriendlyQuarkusRESTCapabilityCombinationTest.java b/extensions/resteasy-classic/resteasy/deployment/src/test/java/io/quarkus/resteasy/test/UserFriendlyQuarkusRESTCapabilityCombinationTest.java
+new file mode 100644
+index 00000000000..371aebc3399
+--- /dev/null
++++ b/extensions/resteasy-classic/resteasy/deployment/src/test/java/io/quarkus/resteasy/test/UserFriendlyQuarkusRESTCapabilityCombinationTest.java
+@@ -0,0 +1,31 @@
++package io.quarkus.resteasy.test;
++
++import static org.junit.jupiter.api.Assertions.assertTrue;
++import static org.junit.jupiter.api.Assertions.fail;
++
++import java.util.List;
++
++import org.junit.jupiter.api.Test;
++import org.junit.jupiter.api.extension.RegisterExtension;
++
++import io.quarkus.builder.Version;
++import io.quarkus.deployment.Capability;
++import io.quarkus.maven.dependency.Dependency;
++import io.quarkus.test.QuarkusUnitTest;
++
++class UserFriendlyQuarkusRESTCapabilityCombinationTest {
++
++    @RegisterExtension
++    static final QuarkusUnitTest config = new QuarkusUnitTest()
++            .setForcedDependencies(List.of(Dependency.of("io.quarkus", "quarkus-rest-deployment", Version.getVersion())))
++            .assertException(t -> {
++                assertTrue(t.getMessage().contains("only one provider of the following capabilities"), t.getMessage());
++                assertTrue(t.getMessage().contains("capability %s is provided by".formatted(Capability.REST)), t.getMessage());
++            });
++
++    @Test
++    public void test() {
++        fail();
++    }
++
++}
+diff --git a/extensions/resteasy-reactive/rest-client/deployment/src/test/java/io/quarkus/rest/client/reactive/FormListTest.java b/extensions/resteasy-reactive/rest-client/deployment/src/test/java/io/quarkus/rest/client/reactive/FormListTest.java
+index b05f4c58b80..fe0bfd9543c 100644
+--- a/extensions/resteasy-reactive/rest-client/deployment/src/test/java/io/quarkus/rest/client/reactive/FormListTest.java
++++ b/extensions/resteasy-reactive/rest-client/deployment/src/test/java/io/quarkus/rest/client/reactive/FormListTest.java
+@@ -5,6 +5,7 @@
+ import java.net.URI;
+ import java.util.List;
+ 
++import jakarta.ws.rs.BeanParam;
+ import jakarta.ws.rs.POST;
+ import jakarta.ws.rs.Path;
+ 
+@@ -26,19 +27,21 @@ public class FormListTest {
+     URI baseUri;
+ 
+     @Test
+-    void testHeadersWithSubresource() {
++    void test() {
+         Client client = RestClientBuilder.newBuilder().baseUri(baseUri).build(Client.class);
+ 
+-        assertThat(client.call(List.of("first", "second", "third"))).isEqualTo("first-second-third");
+-        assertThat(client.call(List.of("first"))).isEqualTo("first");
++        Holder holder = new Holder();
++        holder.input2 = List.of("1", "2");
++        assertThat(client.call(List.of("first", "second", "third"), holder)).isEqualTo("first-second-third/1-2");
++        assertThat(client.call(List.of("first"), holder)).isEqualTo("first/1-2");
+     }
+ 
+     @Path("/test")
+     public static class Resource {
+ 
+         @POST
+-        public String response(@RestForm List<String> input) {
+-            return String.join("-", input);
++        public String response(@RestForm List<String> input, @RestForm List<String> input2) {
++            return String.join("-", input) + "/" + String.join("-", input2);
+         }
+     }
+ 
+@@ -46,6 +49,11 @@ public String response(@RestForm List<String> input) {
+     public interface Client {
+ 
+         @POST
+-        String call(@RestForm List<String> input);
++        String call(@RestForm List<String> input, @BeanParam Holder holder);
++    }
++
++    public static class Holder {
++        @RestForm
++        public List<String> input2;
+     }
+ }
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/RuntimeErrorTest.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/RuntimeErrorTest.java
+index a519c95ea9b..420f0ba1515 100644
+--- a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/RuntimeErrorTest.java
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/RuntimeErrorTest.java
+@@ -80,8 +80,8 @@ String decodingError(BinaryDecodeException e) {
+         Uni<Void> runtimeProblem(RuntimeException e, WebSocketConnection connection) {
+             assertTrue(Context.isOnEventLoopThread());
+             assertEquals(connection.id(), this.connection.id());
+-            // The request context from @OnBinaryMessage is reused
+-            assertEquals("ok", requestBean.getState());
++            // A new request context is used
++            assertEquals("nok", requestBean.getState());
+             return connection.sendText(e.getMessage());
+         }
+ 
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/UniFailureErrorTest.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/UniFailureErrorTest.java
+index 933f681c26f..17164eb9883 100644
+--- a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/UniFailureErrorTest.java
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/errors/UniFailureErrorTest.java
+@@ -80,8 +80,8 @@ String decodingError(BinaryDecodeException e) {
+         String runtimeProblem(RuntimeException e, WebSocketConnection connection) {
+             assertTrue(Context.isOnWorkerThread());
+             assertEquals(connection.id(), this.connection.id());
+-            // The request context from @OnBinaryMessage is reused
+-            assertEquals("ok", requestBean.getState());
++            // A new request context is used
++            assertEquals("nok", requestBean.getState());
+             return e.getMessage();
+         }
+ 
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/AdminService.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/AdminService.java
+new file mode 100644
+index 00000000000..38905495f4e
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/AdminService.java
+@@ -0,0 +1,14 @@
++package io.quarkus.websockets.next.test.security;
++
++import jakarta.annotation.security.RolesAllowed;
++import jakarta.enterprise.context.ApplicationScoped;
++
++@RolesAllowed("admin")
++@ApplicationScoped
++public class AdminService {
++
++    public String ping() {
++        return "" + 24;
++    }
++
++}
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityTest.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityTest.java
+new file mode 100644
+index 00000000000..506c1a5a55c
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityTest.java
+@@ -0,0 +1,59 @@
++package io.quarkus.websockets.next.test.security;
++
++import jakarta.annotation.security.RolesAllowed;
++import jakarta.inject.Inject;
++
++import org.jboss.shrinkwrap.api.asset.StringAsset;
++import org.junit.jupiter.api.extension.RegisterExtension;
++
++import io.quarkus.security.Authenticated;
++import io.quarkus.security.ForbiddenException;
++import io.quarkus.security.identity.CurrentIdentityAssociation;
++import io.quarkus.security.test.utils.TestIdentityController;
++import io.quarkus.security.test.utils.TestIdentityProvider;
++import io.quarkus.test.QuarkusUnitTest;
++import io.quarkus.websockets.next.OnError;
++import io.quarkus.websockets.next.OnOpen;
++import io.quarkus.websockets.next.OnTextMessage;
++import io.quarkus.websockets.next.WebSocket;
++import io.quarkus.websockets.next.test.utils.WSClient;
++
++public class EagerSecurityTest extends SecurityTestBase {
++
++    @RegisterExtension
++    static final QuarkusUnitTest config = new QuarkusUnitTest()
++            .withApplicationRoot((jar) -> jar
++                    .addAsResource(new StringAsset("quarkus.http.auth.proactive=true\n" +
++                            "quarkus.http.auth.permission.secured.paths=/end\n" +
++                            "quarkus.http.auth.permission.secured.policy=authenticated\n"), "application.properties")
++                    .addClasses(Endpoint.class, WSClient.class, TestIdentityProvider.class, TestIdentityController.class));
++
++    @Authenticated
++    @WebSocket(path = "/end")
++    public static class Endpoint {
++
++        @Inject
++        CurrentIdentityAssociation currentIdentity;
++
++        @OnOpen
++        String open() {
++            return "ready";
++        }
++
++        @RolesAllowed("admin")
++        @OnTextMessage
++        String echo(String message) {
++            if (!currentIdentity.getIdentity().hasRole("admin")) {
++                throw new IllegalStateException();
++            }
++            return message;
++        }
++
++        @OnError
++        String error(ForbiddenException t) {
++            return "forbidden:" + currentIdentity.getIdentity().getPrincipal().getName();
++        }
++
++    }
++
++}
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityUniTest.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityUniTest.java
+new file mode 100644
+index 00000000000..809bacfdb06
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/EagerSecurityUniTest.java
+@@ -0,0 +1,60 @@
++package io.quarkus.websockets.next.test.security;
++
++import jakarta.annotation.security.RolesAllowed;
++import jakarta.inject.Inject;
++
++import org.jboss.shrinkwrap.api.asset.StringAsset;
++import org.junit.jupiter.api.extension.RegisterExtension;
++
++import io.quarkus.security.Authenticated;
++import io.quarkus.security.ForbiddenException;
++import io.quarkus.security.identity.CurrentIdentityAssociation;
++import io.quarkus.security.test.utils.TestIdentityController;
++import io.quarkus.security.test.utils.TestIdentityProvider;
++import io.quarkus.test.QuarkusUnitTest;
++import io.quarkus.websockets.next.OnError;
++import io.quarkus.websockets.next.OnOpen;
++import io.quarkus.websockets.next.OnTextMessage;
++import io.quarkus.websockets.next.WebSocket;
++import io.quarkus.websockets.next.test.utils.WSClient;
++import io.smallrye.mutiny.Uni;
++
++public class EagerSecurityUniTest extends SecurityTestBase {
++
++    @RegisterExtension
++    static final QuarkusUnitTest config = new QuarkusUnitTest()
++            .withApplicationRoot((jar) -> jar
++                    .addAsResource(new StringAsset("quarkus.http.auth.proactive=true\n" +
++                            "quarkus.http.auth.permission.secured.paths=/end\n" +
++                            "quarkus.http.auth.permission.secured.policy=authenticated\n"), "application.properties")
++                    .addClasses(Endpoint.class, WSClient.class, TestIdentityProvider.class, TestIdentityController.class));
++
++    @Authenticated
++    @WebSocket(path = "/end")
++    public static class Endpoint {
++
++        @Inject
++        CurrentIdentityAssociation currentIdentity;
++
++        @OnOpen
++        String open() {
++            return "ready";
++        }
++
++        @RolesAllowed("admin")
++        @OnTextMessage
++        Uni<String> echo(String message) {
++            if (!currentIdentity.getIdentity().hasRole("admin")) {
++                throw new IllegalStateException();
++            }
++            return Uni.createFrom().item(message);
++        }
++
++        @OnError
++        String error(ForbiddenException t) {
++            return "forbidden:" + currentIdentity.getIdentity().getPrincipal().getName();
++        }
++
++    }
++
++}
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityTest.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityTest.java
+new file mode 100644
+index 00000000000..7d21f28dbc2
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityTest.java
+@@ -0,0 +1,60 @@
++package io.quarkus.websockets.next.test.security;
++
++import jakarta.annotation.security.RolesAllowed;
++import jakarta.inject.Inject;
++
++import org.jboss.shrinkwrap.api.asset.StringAsset;
++import org.junit.jupiter.api.extension.RegisterExtension;
++
++import io.quarkus.security.Authenticated;
++import io.quarkus.security.ForbiddenException;
++import io.quarkus.security.identity.CurrentIdentityAssociation;
++import io.quarkus.security.test.utils.TestIdentityController;
++import io.quarkus.security.test.utils.TestIdentityProvider;
++import io.quarkus.test.QuarkusUnitTest;
++import io.quarkus.websockets.next.OnError;
++import io.quarkus.websockets.next.OnOpen;
++import io.quarkus.websockets.next.OnTextMessage;
++import io.quarkus.websockets.next.WebSocket;
++import io.quarkus.websockets.next.test.security.EagerSecurityTest.Endpoint;
++import io.quarkus.websockets.next.test.utils.WSClient;
++
++public class LazySecurityTest extends SecurityTestBase {
++
++    @RegisterExtension
++    static final QuarkusUnitTest config = new QuarkusUnitTest()
++            .withApplicationRoot((jar) -> jar
++                    .addAsResource(new StringAsset("quarkus.http.auth.proactive=false\n" +
++                            "quarkus.http.auth.permission.secured.paths=/end\n" +
++                            "quarkus.http.auth.permission.secured.policy=authenticated\n"), "application.properties")
++                    .addClasses(Endpoint.class, WSClient.class, TestIdentityProvider.class, TestIdentityController.class));
++
++    @Authenticated
++    @WebSocket(path = "/end")
++    public static class Endpoint {
++
++        @Inject
++        CurrentIdentityAssociation currentIdentity;
++
++        @OnOpen
++        String open() {
++            return "ready";
++        }
++
++        @RolesAllowed("admin")
++        @OnTextMessage
++        String echo(String message) {
++            if (!currentIdentity.getIdentity().hasRole("admin")) {
++                throw new IllegalStateException();
++            }
++            return message;
++        }
++
++        @OnError
++        String error(ForbiddenException t) {
++            return "forbidden:" + currentIdentity.getIdentity().getPrincipal().getName();
++        }
++
++    }
++
++}
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityUniTest.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityUniTest.java
+new file mode 100644
+index 00000000000..cb968d397f8
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/LazySecurityUniTest.java
+@@ -0,0 +1,60 @@
++package io.quarkus.websockets.next.test.security;
++
++import jakarta.annotation.security.RolesAllowed;
++import jakarta.inject.Inject;
++
++import org.jboss.shrinkwrap.api.asset.StringAsset;
++import org.junit.jupiter.api.extension.RegisterExtension;
++
++import io.quarkus.security.Authenticated;
++import io.quarkus.security.ForbiddenException;
++import io.quarkus.security.identity.CurrentIdentityAssociation;
++import io.quarkus.security.test.utils.TestIdentityController;
++import io.quarkus.security.test.utils.TestIdentityProvider;
++import io.quarkus.test.QuarkusUnitTest;
++import io.quarkus.websockets.next.OnError;
++import io.quarkus.websockets.next.OnOpen;
++import io.quarkus.websockets.next.OnTextMessage;
++import io.quarkus.websockets.next.WebSocket;
++import io.quarkus.websockets.next.test.utils.WSClient;
++import io.smallrye.mutiny.Uni;
++
++public class LazySecurityUniTest extends SecurityTestBase {
++
++    @RegisterExtension
++    static final QuarkusUnitTest config = new QuarkusUnitTest()
++            .withApplicationRoot((jar) -> jar
++                    .addAsResource(new StringAsset("quarkus.http.auth.proactive=false\n" +
++                            "quarkus.http.auth.permission.secured.paths=/end\n" +
++                            "quarkus.http.auth.permission.secured.policy=authenticated\n"), "application.properties")
++                    .addClasses(Endpoint.class, WSClient.class, TestIdentityProvider.class, TestIdentityController.class));
++
++    @Authenticated
++    @WebSocket(path = "/end")
++    public static class Endpoint {
++
++        @Inject
++        CurrentIdentityAssociation currentIdentity;
++
++        @OnOpen
++        String open() {
++            return "ready";
++        }
++
++        @RolesAllowed("admin")
++        @OnTextMessage
++        Uni<String> echo(String message) {
++            if (!currentIdentity.getIdentity().hasRole("admin")) {
++                throw new IllegalStateException();
++            }
++            return Uni.createFrom().item(message);
++        }
++
++        @OnError
++        String error(ForbiddenException t) {
++            return "forbidden:" + currentIdentity.getIdentity().getPrincipal().getName();
++        }
++
++    }
++
++}
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/RbacServiceSecurityTest.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/RbacServiceSecurityTest.java
+new file mode 100644
+index 00000000000..0207d3f1b03
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/RbacServiceSecurityTest.java
+@@ -0,0 +1,84 @@
++package io.quarkus.websockets.next.test.security;
++
++import static org.junit.jupiter.api.Assertions.assertEquals;
++
++import java.net.URI;
++import java.util.Set;
++
++import jakarta.inject.Inject;
++
++import org.junit.jupiter.api.BeforeAll;
++import org.junit.jupiter.api.Test;
++import org.junit.jupiter.api.extension.RegisterExtension;
++
++import io.quarkus.security.ForbiddenException;
++import io.quarkus.security.test.utils.TestIdentityController;
++import io.quarkus.security.test.utils.TestIdentityProvider;
++import io.quarkus.test.QuarkusUnitTest;
++import io.quarkus.test.common.http.TestHTTPResource;
++import io.quarkus.websockets.next.OnError;
++import io.quarkus.websockets.next.OnTextMessage;
++import io.quarkus.websockets.next.WebSocket;
++import io.quarkus.websockets.next.test.utils.WSClient;
++import io.vertx.core.Vertx;
++
++public class RbacServiceSecurityTest extends SecurityTestBase {
++
++    @RegisterExtension
++    static final QuarkusUnitTest config = new QuarkusUnitTest()
++            .withApplicationRoot(root -> root.addClasses(Endpoint.class, AdminService.class, UserService.class,
++                    TestIdentityProvider.class, TestIdentityController.class, WSClient.class));
++
++    @Inject
++    Vertx vertx;
++
++    @TestHTTPResource("end")
++    URI endUri;
++
++    @BeforeAll
++    public static void setupUsers() {
++        TestIdentityController.resetRoles()
++                .add("admin", "admin", "admin")
++                .add("user", "user", "user");
++    }
++
++    @Test
++    public void testEndpoint() {
++        try (WSClient client = new WSClient(vertx)) {
++            client.connect(basicAuth("admin", "admin"), endUri);
++            client.sendAndAwait("hello"); // admin service
++            client.sendAndAwait("hi"); // forbidden
++            client.waitForMessages(2);
++            assertEquals(Set.of("24", "forbidden"), Set.copyOf(client.getMessages().stream().map(Object::toString).toList()));
++        }
++        try (WSClient client = new WSClient(vertx)) {
++            client.connect(basicAuth("user", "user"), endUri);
++            client.sendAndAwait("hello"); // forbidden
++            client.sendAndAwait("hi"); // user service
++            client.waitForMessages(2);
++            assertEquals(Set.of("42", "forbidden"), Set.copyOf(client.getMessages().stream().map(Object::toString).toList()));
++        }
++    }
++
++    @WebSocket(path = "/end")
++    public static class Endpoint {
++
++        @Inject
++        UserService userService;
++
++        @Inject
++        AdminService adminService;
++
++        @OnTextMessage
++        String echo(String message) {
++            return message.equals("hello") ? adminService.ping() : userService.ping();
++        }
++
++        @OnError
++        String error(ForbiddenException t) {
++            return "forbidden";
++        }
++
++    }
++
++}
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/SecurityTestBase.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/SecurityTestBase.java
+new file mode 100644
+index 00000000000..a9c94143ae5
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/SecurityTestBase.java
+@@ -0,0 +1,71 @@
++package io.quarkus.websockets.next.test.security;
++
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertThrows;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++
++import java.net.URI;
++import java.util.concurrent.CompletionException;
++
++import jakarta.inject.Inject;
++
++import org.junit.jupiter.api.BeforeAll;
++import org.junit.jupiter.api.Test;
++
++import io.quarkus.runtime.util.ExceptionUtil;
++import io.quarkus.security.test.utils.TestIdentityController;
++import io.quarkus.test.common.http.TestHTTPResource;
++import io.quarkus.websockets.next.test.utils.WSClient;
++import io.vertx.core.Vertx;
++import io.vertx.core.http.HttpHeaders;
++import io.vertx.core.http.UpgradeRejectedException;
++import io.vertx.core.http.WebSocketConnectOptions;
++import io.vertx.ext.auth.authentication.UsernamePasswordCredentials;
++
++public abstract class SecurityTestBase {
++
++    @Inject
++    Vertx vertx;
++
++    @TestHTTPResource("end")
++    URI endUri;
++
++    @BeforeAll
++    public static void setupUsers() {
++        TestIdentityController.resetRoles()
++                .add("admin", "admin", "admin")
++                .add("user", "user", "user");
++    }
++
++    @Test
++    public void testEndpoint() {
++        try (WSClient client = new WSClient(vertx)) {
++            CompletionException ce = assertThrows(CompletionException.class, () -> client.connect(endUri));
++            Throwable root = ExceptionUtil.getRootCause(ce);
++            assertTrue(root instanceof UpgradeRejectedException);
++            assertTrue(root.getMessage().contains("401"));
++        }
++        try (WSClient client = new WSClient(vertx)) {
++            client.connect(basicAuth("admin", "admin"), endUri);
++            client.waitForMessages(1);
++            assertEquals("ready", client.getMessages().get(0).toString());
++            client.sendAndAwait("hello");
++            client.waitForMessages(2);
++            assertEquals("hello", client.getMessages().get(1).toString());
++        }
++        try (WSClient client = new WSClient(vertx)) {
++            client.connect(basicAuth("user", "user"), endUri);
++            client.waitForMessages(1);
++            assertEquals("ready", client.getMessages().get(0).toString());
++            client.sendAndAwait("hello");
++            client.waitForMessages(2);
++            assertEquals("forbidden:user", client.getMessages().get(1).toString());
++        }
++    }
++
++    static WebSocketConnectOptions basicAuth(String username, String password) {
++        return new WebSocketConnectOptions().addHeader(HttpHeaders.AUTHORIZATION.toString(),
++                new UsernamePasswordCredentials(username, password).applyHttpChallenge(null).toHttpAuthorization());
++    }
++
++}
+diff --git a/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/UserService.java b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/UserService.java
+new file mode 100644
+index 00000000000..b8e80453145
+--- /dev/null
++++ b/extensions/websockets-next/deployment/src/test/java/io/quarkus/websockets/next/test/security/UserService.java
+@@ -0,0 +1,14 @@
++package io.quarkus.websockets.next.test.security;
++
++import jakarta.annotation.security.RolesAllowed;
++import jakarta.enterprise.context.ApplicationScoped;
++
++@RolesAllowed("user")
++@ApplicationScoped
++public class UserService {
++
++    public String ping() {
++        return "" + 42;
++    }
++
++}
+diff --git a/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/CustomTenantResolver.java b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/CustomTenantResolver.java
+index 2915157d827..759473eea05 100644
+--- a/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/CustomTenantResolver.java
++++ b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/CustomTenantResolver.java
+@@ -52,7 +52,7 @@ public String resolve(RoutingContext context) {
+             return "tenant-autorefresh";
+         }
+ 
+-        if (path.contains("tenant-refresh")) {
++        if (path.endsWith("tenant-refresh")) {
+             return "tenant-refresh";
+         }
+ 
+diff --git a/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/GlobalOidcRedirectFilter.java b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/GlobalOidcRedirectFilter.java
+new file mode 100644
+index 00000000000..cc97c22ae61
+--- /dev/null
++++ b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/GlobalOidcRedirectFilter.java
+@@ -0,0 +1,19 @@
++package io.quarkus.it.keycloak;
++
++import jakarta.enterprise.context.ApplicationScoped;
++
++import io.quarkus.arc.Unremovable;
++import io.quarkus.oidc.OidcRedirectFilter;
++
++@ApplicationScoped
++@Unremovable
++public class GlobalOidcRedirectFilter implements OidcRedirectFilter {
++
++    @Override
++    public void filter(OidcRedirectContext context) {
++        if (context.redirectUri().contains("/session-expired-page")) {
++            context.additionalQueryParams().add("redirect-filtered", "true,");
++        }
++    }
++
++}
+diff --git a/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/SessionExpiredOidcRedirectFilter.java b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/SessionExpiredOidcRedirectFilter.java
+new file mode 100644
+index 00000000000..c7672dc753d
+--- /dev/null
++++ b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/SessionExpiredOidcRedirectFilter.java
+@@ -0,0 +1,38 @@
++package io.quarkus.it.keycloak;
++
++import jakarta.enterprise.context.ApplicationScoped;
++
++import org.eclipse.microprofile.jwt.Claims;
++
++import io.quarkus.arc.Unremovable;
++import io.quarkus.oidc.AuthorizationCodeTokens;
++import io.quarkus.oidc.OidcRedirectFilter;
++import io.quarkus.oidc.TenantFeature;
++import io.quarkus.oidc.runtime.OidcUtils;
++import io.smallrye.jwt.build.Jwt;
++
++@ApplicationScoped
++@Unremovable
++@TenantFeature("tenant-refresh")
++public class SessionExpiredOidcRedirectFilter implements OidcRedirectFilter {
++
++    @Override
++    public void filter(OidcRedirectContext context) {
++
++        if (!"tenant-refresh".equals(context.oidcTenantConfig().tenantId.get())) {
++            throw new RuntimeException("Invalid tenant id");
++        }
++
++        if (context.redirectUri().contains("/session-expired-page")) {
++            AuthorizationCodeTokens tokens = context.routingContext().get(AuthorizationCodeTokens.class.getName());
++            String userName = OidcUtils.decodeJwtContent(tokens.getIdToken()).getString(Claims.preferred_username.name());
++            String jwe = Jwt.preferredUserName(userName).jwe()
++                    .encryptWithSecret(context.oidcTenantConfig().credentials.secret.get());
++            OidcUtils.createCookie(context.routingContext(), context.oidcTenantConfig(), "session_expired",
++                    jwe + "|" + context.oidcTenantConfig().tenantId.get(), 10);
++
++            context.additionalQueryParams().add("session-expired", "true");
++        }
++    }
++
++}
+diff --git a/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/TenantRefresh.java b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/TenantRefresh.java
+index 4ea2986944d..c1c4646559d 100644
+--- a/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/TenantRefresh.java
++++ b/integration-tests/oidc-code-flow/src/main/java/io/quarkus/it/keycloak/TenantRefresh.java
+@@ -1,10 +1,19 @@
+ package io.quarkus.it.keycloak;
+ 
+ import jakarta.inject.Inject;
++import jakarta.ws.rs.CookieParam;
+ import jakarta.ws.rs.GET;
+ import jakarta.ws.rs.Path;
++import jakarta.ws.rs.QueryParam;
+ 
++import org.eclipse.microprofile.jwt.Claims;
++import org.eclipse.microprofile.jwt.JsonWebToken;
++
++import io.quarkus.oidc.OidcTenantConfig;
++import io.quarkus.oidc.runtime.OidcUtils;
++import io.quarkus.oidc.runtime.TenantConfigBean;
+ import io.quarkus.security.Authenticated;
++import io.smallrye.jwt.auth.principal.DefaultJWTParser;
+ import io.vertx.ext.web.RoutingContext;
+ 
+ @Path("/tenant-refresh")
+@@ -12,9 +21,33 @@ public class TenantRefresh {
+     @Inject
+     RoutingContext context;
+ 
++    @Inject
++    TenantConfigBean tenantConfig;
++
+     @Authenticated
+     @GET
+     public String getTenantRefresh() {
+         return "Tenant Refresh, refreshed: " + (context.get("refresh_token_grant_response") != null);
+     }
++
++    @GET
++    @Path("/session-expired-page")
++    public String sessionExpired(@CookieParam("session_expired") String sessionExpired,
++            @QueryParam("session-expired") boolean expired, @QueryParam("redirect-filtered") String filtered)
++            throws Exception {
++        if (expired && filtered.equals("true,")) {
++            // Cookie format: jwt|<tenant id>
++
++            String[] pair = sessionExpired.split("\\|");
++            OidcTenantConfig oidcConfig = tenantConfig.getStaticTenantsConfig().get(pair[1]).getOidcTenantConfig();
++            JsonWebToken jwt = new DefaultJWTParser().decrypt(pair[0], oidcConfig.credentials.secret.get());
++
++            OidcUtils.removeCookie(context, oidcConfig, "session_expired");
++
++            return jwt.getClaim(Claims.preferred_username) + ", your session has expired. "
++                    + "Please login again at http://localhost:8081/" + oidcConfig.tenantId.get();
++        }
++
++        throw new RuntimeException("Invalid session expired page redirect");
++    }
+ }
+diff --git a/integration-tests/oidc-code-flow/src/main/resources/application.properties b/integration-tests/oidc-code-flow/src/main/resources/application.properties
+index 0d61acc332a..9ce1a549b48 100644
+--- a/integration-tests/oidc-code-flow/src/main/resources/application.properties
++++ b/integration-tests/oidc-code-flow/src/main/resources/application.properties
+@@ -75,7 +75,7 @@ quarkus.oidc.tenant-3.application-type=web-app
+ 
+ quarkus.oidc.tenant-logout.auth-server-url=${keycloak.url}/realms/logout-realm
+ quarkus.oidc.tenant-logout.client-id=quarkus-app
+-quarkus.oidc.tenant-logout.credentials.secret=secret
++quarkus.oidc.tenant-logout.credentials.secret=eUk1p7UB3nFiXZGUXi0uph1Y9p34YhBU
+ quarkus.oidc.tenant-logout.application-type=web-app
+ quarkus.oidc.tenant-logout.authentication.cookie-path=/tenant-logout
+ quarkus.oidc.tenant-logout.logout.path=/tenant-logout/logout
+@@ -85,11 +85,11 @@ quarkus.oidc.tenant-logout.token.refresh-expired=true
+ 
+ quarkus.oidc.tenant-refresh.auth-server-url=${keycloak.url}/realms/logout-realm
+ quarkus.oidc.tenant-refresh.client-id=quarkus-app
+-quarkus.oidc.tenant-refresh.credentials.secret=secret
++quarkus.oidc.tenant-refresh.credentials.secret=eUk1p7UB3nFiXZGUXi0uph1Y9p34YhBU
+ quarkus.oidc.tenant-refresh.application-type=web-app
+ quarkus.oidc.tenant-refresh.authentication.cookie-path=/tenant-refresh
+ quarkus.oidc.tenant-refresh.authentication.session-age-extension=2M
+-quarkus.oidc.tenant-refresh.authentication.session-expired-path=/session-expired-page
++quarkus.oidc.tenant-refresh.authentication.session-expired-path=/tenant-refresh/session-expired-page
+ quarkus.oidc.tenant-refresh.token.refresh-expired=true
+ 
+ quarkus.oidc.tenant-autorefresh.auth-server-url=${quarkus.oidc.auth-server-url}
+diff --git a/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/CodeFlowTest.java b/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/CodeFlowTest.java
+index 1f62617f0c1..6481db98a79 100644
+--- a/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/CodeFlowTest.java
++++ b/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/CodeFlowTest.java
+@@ -751,8 +751,18 @@ public Boolean call() throws Exception {
+ 
+                             if (statusCode == 302) {
+                                 assertNull(getSessionCookie(webClient, "tenant-refresh"));
+-                                assertEquals("http://localhost:8081/session-expired-page",
+-                                        webResponse.getResponseHeaderValue("location"));
++                                String redirect = webResponse.getResponseHeaderValue("location");
++                                assertTrue(redirect.equals(
++                                        "http://localhost:8081/tenant-refresh/session-expired-page?redirect-filtered=true%2C&session-expired=true")
++                                        || redirect.equals(
++                                                "http://localhost:8081/tenant-refresh/session-expired-page?session-expired=true&redirect-filtered=true%2C"));
++                                assertNotNull(webClient.getCookieManager().getCookie("session_expired"));
++                                webResponse = webClient.loadWebResponse(
++                                        new WebRequest(URI.create(redirect).toURL()));
++                                assertEquals(
++                                        "alice, your session has expired. Please login again at http://localhost:8081/tenant-refresh",
++                                        webResponse.getContentAsString());
++                                assertNull(webClient.getCookieManager().getCookie("session_expired"));
+                                 return true;
+                             }
+ 
+diff --git a/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/KeycloakRealmResourceManager.java b/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/KeycloakRealmResourceManager.java
+index fd749a8f866..338208e6e50 100644
+--- a/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/KeycloakRealmResourceManager.java
++++ b/integration-tests/oidc-code-flow/src/test/java/io/quarkus/it/keycloak/KeycloakRealmResourceManager.java
+@@ -27,11 +27,11 @@ public class KeycloakRealmResourceManager implements QuarkusTestResourceLifecycl
+     @Override
+     public Map<String, String> start() {
+ 
+-        RealmRepresentation realm = createRealm(KEYCLOAK_REALM);
++        RealmRepresentation realm = createRealm(KEYCLOAK_REALM, "secret");
+         client.createRealm(realm);
+         realms.add(realm);
+ 
+-        RealmRepresentation logoutRealm = createRealm("logout-realm");
++        RealmRepresentation logoutRealm = createRealm("logout-realm", "eUk1p7UB3nFiXZGUXi0uph1Y9p34YhBU");
+         // revoke refresh tokens so that they can only be used once
+         logoutRealm.setRevokeRefreshToken(true);
+         logoutRealm.setRefreshTokenMaxReuse(0);
+@@ -42,7 +42,7 @@ public Map<String, String> start() {
+         return Collections.emptyMap();
+     }
+ 
+-    private static RealmRepresentation createRealm(String name) {
++    private static RealmRepresentation createRealm(String name, String defaultClientSecret) {
+         RealmRepresentation realm = new RealmRepresentation();
+ 
+         realm.setRealm(name);
+@@ -62,7 +62,7 @@ private static RealmRepresentation createRealm(String name) {
+         realm.getRoles().getRealm().add(new RoleRepresentation("admin", null, false));
+         realm.getRoles().getRealm().add(new RoleRepresentation("confidential", null, false));
+ 
+-        realm.getClients().add(createClient("quarkus-app"));
++        realm.getClients().add(createClient("quarkus-app", defaultClientSecret));
+         realm.getClients().add(createClientJwt("quarkus-app-jwt"));
+         realm.getUsers().add(createUser("alice", "user"));
+         realm.getUsers().add(createUser("admin", "user", "admin"));
+@@ -83,14 +83,14 @@ private static ClientRepresentation createClientJwt(String clientId) {
+         return client;
+     }
+ 
+-    private static ClientRepresentation createClient(String clientId) {
++    private static ClientRepresentation createClient(String clientId, String secret) {
+         ClientRepresentation client = new ClientRepresentation();
+ 
+         client.setClientId(clientId);
+         client.setEnabled(true);
+         client.setRedirectUris(Arrays.asList("*"));
+         client.setClientAuthenticatorType("client-secret");
+-        client.setSecret("secret");
++        client.setSecret(secret);
+ 
+         return client;
+     }
+diff --git a/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusProdModeTest.java b/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusProdModeTest.java
+index bb75fc407f5..f2f9de9fd5b 100644
+--- a/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusProdModeTest.java
++++ b/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusProdModeTest.java
+@@ -74,7 +74,7 @@
+ public class QuarkusProdModeTest
+         implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, TestWatcher, InvocationInterceptor {
+ 
+-    private static final String EXPECTED_OUTPUT_FROM_SUCCESSFULLY_STARTED = "features";
++    private static final String EXPECTED_OUTPUT_FROM_SUCCESSFULLY_STARTED = "Installed features";
+     private static final int DEFAULT_HTTP_PORT_INT = 8081;
+     private static final String DEFAULT_HTTP_PORT = "" + DEFAULT_HTTP_PORT_INT;
+     private static final String QUARKUS_HTTP_PORT_PROPERTY = "quarkus.http.port";
+diff --git a/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusUnitTest.java b/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusUnitTest.java
+index f8b0fffd805..9b37b885209 100644
+--- a/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusUnitTest.java
++++ b/test-framework/junit5-internal/src/main/java/io/quarkus/test/QuarkusUnitTest.java
+@@ -734,6 +734,9 @@ public void afterAll(ExtensionContext extensionContext) throws Exception {
+         rootLogger.setHandlers(originalHandlers);
+         inMemoryLogHandler.clearRecords();
+         inMemoryLogHandler.setFilter(null);
++        if (testMethodInvokers != null) {
++            testMethodInvokers.clear();
++        }
+ 
+         try {
+             if (runningQuarkusApplication != null) {
+diff --git a/test-framework/junit5-internal/src/test/java/io/quarkus/test/QuarkusProdModeTestConfusingLogTest.java b/test-framework/junit5-internal/src/test/java/io/quarkus/test/QuarkusProdModeTestConfusingLogTest.java
+new file mode 100644
+index 00000000000..2450c616328
+--- /dev/null
++++ b/test-framework/junit5-internal/src/test/java/io/quarkus/test/QuarkusProdModeTestConfusingLogTest.java
+@@ -0,0 +1,110 @@
++package io.quarkus.test;
++
++import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertNotNull;
++import static org.junit.jupiter.api.Assertions.assertNull;
++import static org.junit.jupiter.api.Assertions.assertThrows;
++
++import java.io.IOException;
++import java.io.OutputStream;
++import java.net.InetSocketAddress;
++import java.net.URI;
++import java.net.http.HttpClient;
++import java.net.http.HttpRequest;
++import java.net.http.HttpResponse;
++import java.time.Duration;
++
++import org.junit.jupiter.api.BeforeAll;
++import org.junit.jupiter.api.Test;
++import org.junit.jupiter.api.extension.RegisterExtension;
++
++import com.sun.net.httpserver.HttpServer;
++
++import io.quarkus.runtime.Quarkus;
++import io.quarkus.runtime.annotations.QuarkusMain;
++
++public class QuarkusProdModeTestConfusingLogTest {
++
++    @RegisterExtension
++    static final QuarkusProdModeTest simpleApp = new QuarkusProdModeTest()
++            .withApplicationRoot(jar -> jar.addClass(Main.class))
++            .setApplicationName("simple-app")
++            .setApplicationVersion("0.1-SNAPSHOT")
++            .setRun(true);
++
++    static HttpClient client;
++
++    @BeforeAll
++    static void setUp() {
++        // No tear down, because there's no way to shut down the client explicitly before Java 21 :(
++        // We'll just hope no connection is left hanging.
++        client = HttpClient.newBuilder()
++                .connectTimeout(Duration.ofMillis(100))
++                .build();
++    }
++
++    @Test
++    public void shouldWaitForAppActuallyStarted() {
++        thenAppIsRunning();
++
++        whenStopApp();
++        thenAppIsNotRunning();
++
++        whenStartApp();
++        thenAppIsRunning();
++    }
++
++    private void whenStopApp() {
++        simpleApp.stop();
++    }
++
++    private void whenStartApp() {
++        simpleApp.start();
++    }
++
++    private void thenAppIsNotRunning() {
++        assertNotNull(simpleApp.getExitCode(), "App is running");
++        assertThrows(IOException.class, this::tryReachApp, "App's HTTP server is still running");
++    }
++
++    private void thenAppIsRunning() {
++        assertNull(simpleApp.getExitCode(), "App is not running");
++        assertDoesNotThrow(this::tryReachApp, "App's HTTP server is not reachable");
++    }
++
++    private void tryReachApp() throws IOException, InterruptedException {
++        String response = client.send(HttpRequest.newBuilder().uri(URI.create("http://localhost:8081/test")).GET().build(),
++                HttpResponse.BodyHandlers.ofString())
++                .body();
++        // If the app is reachable, this is the expected response.
++        assertEquals("OK", response, "App returned unexpected response");
++    }
++
++    @QuarkusMain
++    public static class Main {
++        public static void main(String[] args) {
++            // Use an unrelated log to trick QuarkusProdModeTest into thinking the app started
++            System.out.println(
++                    "HHH000511: The -9999.-9999.-9999 version for [org.hibernate.dialect.PostgreSQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 12.0.0. Check the community dialects project for available legacy versions.");
++            try {
++                // Delay the actual app start so there's a decent chance of QuarkusProdModeTest
++                // being ahead of the app -- otherwise we wouldn't reproduce the bug.
++                Thread.sleep(500);
++                // Expose an endpoint proving the app is up
++                HttpServer server = HttpServer.create(new InetSocketAddress(8081), 0);
++                server.createContext("/test", exchange -> {
++                    String response = "OK";
++                    exchange.sendResponseHeaders(200, response.length());
++                    OutputStream os = exchange.getResponseBody();
++                    os.write(response.getBytes());
++                    os.close();
++                });
++                server.start();
++                Quarkus.run(args);
++            } catch (InterruptedException | IOException e) {
++                throw new RuntimeException(e);
++            }
++        }
++    }
++}
