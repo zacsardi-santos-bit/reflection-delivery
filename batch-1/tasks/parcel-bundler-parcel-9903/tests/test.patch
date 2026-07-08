@@ -1,0 +1,14 @@
+diff --git a/crates/parcel_filesystem/src/os_file_system/canonicalize.rs b/crates/parcel_filesystem/src/os_file_system/canonicalize.rs
+index 8979e26af..aabbccdd1 100644
+--- a/crates/parcel_filesystem/src/os_file_system/canonicalize.rs
++++ b/crates/parcel_filesystem/src/os_file_system/canonicalize.rs
+@@ -152,3 +152,8 @@
+     Ok(())
+   }
+-}
++
++  #[test]
++  fn test_file_system_real_path_cache_default() {
++    let _cache = crate::FileSystemRealPathCache::default();
++  }
++}

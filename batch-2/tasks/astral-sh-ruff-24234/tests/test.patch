@@ -1,0 +1,25 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/ruff/RUF050.py b/crates/ruff_linter/resources/test/fixtures/ruff/RUF050.py
+index b49f2e1192..c67d44da9d 100644
+--- a/crates/ruff_linter/resources/test/fixtures/ruff/RUF050.py
++++ b/crates/ruff_linter/resources/test/fixtures/ruff/RUF050.py
+@@ -58,6 +58,20 @@ if bar.baz():
+ if x and foo():
+     pass
+ 
++# Multiline expression that needs outer parentheses
++if (
++    id(0)
++    + 0
++):
++    pass
++
++# Multiline call stays a single expression statement
++if foo(
++    1,
++    2,
++):
++    pass
++
+ # Walrus operator with call
+ if (x := foo()):
+     pass

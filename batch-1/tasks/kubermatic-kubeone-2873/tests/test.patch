@@ -1,0 +1,942 @@
+diff --git a/test/e2e/prow.yaml b/test/e2e/prow.yaml
+index d36eb818..d38da343 100644
+--- a/test/e2e/prow.yaml
++++ b/test/e2e/prow.yaml
+@@ -328,8 +328,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -353,8 +351,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -378,8 +374,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -403,8 +397,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -808,8 +800,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -833,8 +823,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -858,8 +846,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -883,8 +869,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -1332,7 +1316,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1362,7 +1346,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1392,7 +1376,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1422,7 +1406,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1453,7 +1437,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1483,7 +1467,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1511,7 +1495,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1539,7 +1523,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1567,7 +1551,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1595,7 +1579,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1623,7 +1607,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1651,7 +1635,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1679,7 +1663,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1709,7 +1693,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1739,7 +1723,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1769,7 +1753,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1800,7 +1784,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -1830,7 +1814,7 @@ presubmits:
+   clone_uri: ssh://git@github.com/kubermatic/kubeone.git
+   decorate: true
+   extra_refs:
+-  - base_ref: main
++  - base_ref: release/v1.6
+     org: kubermatic
+     path_alias: k8c.io/kubeone-stable
+     repo: kubeone
+@@ -2223,8 +2207,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2253,8 +2235,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2283,8 +2263,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2313,8 +2291,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2343,8 +2319,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2804,8 +2778,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2829,8 +2801,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2854,8 +2824,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -2879,8 +2847,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -3558,8 +3524,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -3583,8 +3547,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -3608,8 +3570,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -3633,8 +3593,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4235,8 +4193,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4260,8 +4216,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4285,8 +4239,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4310,8 +4262,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4714,8 +4664,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4739,8 +4687,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4764,8 +4710,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -4789,8 +4733,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5411,8 +5353,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5436,8 +5376,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5461,8 +5399,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5486,8 +5422,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5867,8 +5801,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5892,8 +5824,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5917,8 +5847,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -5942,8 +5870,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7000,8 +6926,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7025,8 +6949,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7050,8 +6972,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7075,8 +6995,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7686,8 +7604,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7711,8 +7627,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7736,8 +7650,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -7761,8 +7673,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -8372,8 +8282,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -8397,8 +8305,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -8422,8 +8328,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -8447,8 +8351,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9059,8 +8961,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9084,8 +8984,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9109,8 +9007,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9134,8 +9030,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9832,8 +9726,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9862,8 +9754,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9892,8 +9782,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9922,8 +9810,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -9952,8 +9838,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -10665,8 +10549,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -10695,8 +10577,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -10725,8 +10605,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -10755,8 +10633,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -10785,8 +10661,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -11498,8 +11372,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -11528,8 +11400,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -11558,8 +11428,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -11588,8 +11456,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -11618,8 +11484,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -12244,8 +12108,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -12269,8 +12131,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -12294,8 +12154,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -12319,8 +12177,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -12930,8 +12786,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -12955,8 +12809,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -12980,8 +12832,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -13005,8 +12855,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -13616,8 +13464,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -13641,8 +13487,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -13666,8 +13510,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -13691,8 +13533,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -14302,8 +14142,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -14327,8 +14165,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -14352,8 +14188,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+@@ -14377,8 +14211,6 @@ presubmits:
+       env:
+       - name: PROVIDER
+         value: openstack
+-      - name: TEST_TIMEOUT
+-        value: 120m
+       image: quay.io/kubermatic/build:go-1.20-node-18-8
+       imagePullPolicy: Always
+       name: ""
+diff --git a/test/tests.yml b/test/tests.yml
+index 08839a43..1841f0ad 100644
+--- a/test/tests.yml
++++ b/test/tests.yml
+@@ -75,7 +75,6 @@
+ - scenario: upgrade_containerd
+   initVersion: v1.26.6
+   upgradedVersion: v1.27.3
+-  initKubeOneVersion: "main"
+   infrastructures:
+     - name: azure_default_stable
+     - name: azure_centos_stable
+@@ -87,7 +86,6 @@
+ - scenario: upgrade_containerd
+   initVersion: v1.25.11
+   upgradedVersion: v1.26.6
+-  initKubeOneVersion: "main"
+   infrastructures:
+     - name: aws_amzn_stable
+     - name: aws_centos_stable

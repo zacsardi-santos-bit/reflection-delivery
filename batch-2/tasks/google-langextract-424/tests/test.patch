@@ -1,0 +1,989 @@
+diff --git a/tests/openai_batch_test.py b/tests/openai_batch_test.py
+new file mode 100644
+index 0000000..cdd8681
+--- /dev/null
++++ b/tests/openai_batch_test.py
+@@ -0,0 +1,778 @@
++# Copyright 2025 Google LLC.
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++
++"""Tests for OpenAI Batch API helper."""
++
++# pylint: disable=too-few-public-methods
++
++from __future__ import annotations
++
++import json
++import types as py_types
++from unittest import mock
++
++from absl.testing import absltest
++from absl.testing import parameterized
++
++from langextract.core import exceptions
++from langextract.providers import openai_batch
++
++
++class _FakeFiles:
++
++  def __init__(self):
++    self.created = []
++    self.deleted = []
++    self._content_by_id = {}
++
++  def create(self, *, file, purpose):
++    self.created.append({'file': file, 'purpose': purpose})
++    return py_types.SimpleNamespace(id=f'file-{len(self.created)}')
++
++  def content(self, file_id):
++    return py_types.SimpleNamespace(text=self._content_by_id[file_id])
++
++  def delete(self, file_id):
++    self.deleted.append(file_id)
++
++  def set_content(self, file_id: str, text: str) -> None:
++    self._content_by_id[file_id] = text
++
++
++class _FakeBatches:
++
++  def __init__(self):
++    self.created = []
++    self.cancelled = []
++    self._retrieve_queue = []
++
++  def create(self, **kwargs):
++    self.created.append(kwargs)
++    return py_types.SimpleNamespace(id=f'batch-{len(self.created)}')
++
++  def retrieve(self, _batch_id):
++    if not self._retrieve_queue:
++      raise RuntimeError('retrieve queue empty')
++    return self._retrieve_queue.pop(0)
++
++  def cancel(self, batch_id):
++    self.cancelled.append(batch_id)
++
++  def push_retrieve(self, obj):
++    self._retrieve_queue.append(obj)
++
++
++class _FakeClient:
++
++  def __init__(self):
++    self.files = _FakeFiles()
++    self.batches = _FakeBatches()
++
++
++class _StatusError(Exception):
++
++  def __init__(self, status_code: int):
++    super().__init__(f'Error code: {status_code}')
++    self.status_code = status_code
++
++
++def _make_output_line(custom_id: str, content: str) -> str:
++  obj = {
++      'custom_id': custom_id,
++      'response': {
++          'status_code': 200,
++          'body': {
++              'choices': [
++                  {'message': {'content': content}},
++              ]
++          },
++      },
++      'error': None,
++  }
++  return json.dumps(obj)
++
++
++def _make_error_line(
++    custom_id: str, message: str, status_code: int = 400
++) -> str:
++  obj = {
++      'custom_id': custom_id,
++      'response': {
++          'status_code': status_code,
++          'body': {'error': {'message': message}},
++      },
++      'error': {'message': message},
++  }
++  return json.dumps(obj)
++
++
++def _make_refusal_line(custom_id: str, refusal: str) -> str:
++  obj = {
++      'custom_id': custom_id,
++      'response': {
++          'status_code': 200,
++          'body': {
++              'choices': [
++                  {'message': {'content': None, 'refusal': refusal}},
++              ]
++          },
++      },
++      'error': None,
++  }
++  return json.dumps(obj)
++
++
++class OpenAIBatchConfigTest(absltest.TestCase):
++
++  def test_default_timeout_covers_completion_window(self):
++    cfg = openai_batch.BatchConfig(enabled=True)
++
++    self.assertGreater(cfg.timeout, 24 * 60 * 60)
++
++  def test_from_dict_accepts_batch_config(self):
++    cfg = openai_batch.BatchConfig(enabled=True, threshold=1)
++
++    self.assertIs(openai_batch.BatchConfig.from_dict(cfg), cfg)
++
++  def test_from_dict_accepts_boolean_shorthand(self):
++    enabled = openai_batch.BatchConfig.from_dict(True)
++    disabled = openai_batch.BatchConfig.from_dict(False)
++
++    self.assertTrue(enabled.enabled)
++    self.assertFalse(disabled.enabled)
++
++  def test_from_dict_rejects_invalid_type(self):
++    with self.assertRaisesRegex(TypeError, 'batch must be a mapping'):
++      openai_batch.BatchConfig.from_dict([])
++
++  def test_infer_batch_rejects_invalid_batch_size(self):
++    cfg = openai_batch.BatchConfig(enabled=True, threshold=1)
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceConfigError, 'batch_size must be > 0'
++    ):
++      openai_batch.infer_batch(
++          client=_FakeClient(),
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++          batch_size=0,
++      )
++
++
++class OpenAIBatchHelperTest(parameterized.TestCase):
++
++  @mock.patch(
++      'langextract.providers.openai_batch.time.sleep', return_value=None
++  )
++  def test_orders_results_by_custom_id(self, _mock_sleep):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(py_types.SimpleNamespace(status='in_progress'))
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++
++    out = '\n'.join([
++        _make_output_line('idx-000001', 'B'),
++        _make_output_line('idx-000000', 'A'),
++    ])
++    client.files.set_content('out-1', out)
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    res = openai_batch.infer_batch(
++        client=client,
++        model_id='gpt-test',
++        prompts=['p0', 'p1'],
++        cfg=cfg,
++        request_builder=lambda p: {
++            'model': 'gpt-test',
++            'messages': [{'role': 'user', 'content': p}],
++        },
++    )
++
++    self.assertEqual(res, ['A', 'B'])
++
++  @mock.patch(
++      'langextract.providers.openai_batch.time.sleep', return_value=None
++  )
++  def test_splits_jobs_by_batch_size(self, _mock_sleep):
++    client = _FakeClient()
++
++    for job_idx in range(3):
++      client.batches.push_retrieve(
++          py_types.SimpleNamespace(status='in_progress')
++      )
++      client.batches.push_retrieve(
++          py_types.SimpleNamespace(
++              status='completed', output_file_id=f'out-{job_idx}'
++          )
++      )
++
++    client.files.set_content(
++        'out-0',
++        '\n'.join([
++            _make_output_line('idx-000000', '0'),
++            _make_output_line('idx-000001', '1'),
++        ]),
++    )
++    client.files.set_content(
++        'out-1',
++        '\n'.join([
++            _make_output_line('idx-000002', '2'),
++            _make_output_line('idx-000003', '3'),
++        ]),
++    )
++    client.files.set_content(
++        'out-2',
++        _make_output_line('idx-000004', '4'),
++    )
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++        max_requests_per_job=100,
++    )
++
++    prompts = ['p0', 'p1', 'p2', 'p3', 'p4']
++    res = openai_batch.infer_batch(
++        client=client,
++        model_id='gpt-test',
++        prompts=prompts,
++        cfg=cfg,
++        request_builder=lambda p: {
++            'model': 'gpt-test',
++            'messages': [{'role': 'user', 'content': p}],
++        },
++        batch_size=2,
++    )
++
++    self.assertEqual(res, ['0', '1', '2', '3', '4'])
++    self.assertLen(client.batches.created, 3)
++    self.assertLen(client.files.created, 3)
++
++  def test_metadata_and_job_create_hook_are_used(self):
++    client = _FakeClient()
++    created_jobs = []
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.set_content('out-1', _make_output_line('idx-000000', 'ok'))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++        metadata={'purpose': 'test'},
++        on_job_create=created_jobs.append,
++    )
++
++    res = openai_batch.infer_batch(
++        client=client,
++        model_id='gpt-test',
++        prompts=['p0'],
++        cfg=cfg,
++        request_builder=lambda p: {
++            'model': 'gpt-test',
++            'messages': [{'role': 'user', 'content': p}],
++        },
++    )
++
++    self.assertEqual(res, ['ok'])
++    self.assertEqual(client.batches.created[0]['metadata'], {'purpose': 'test'})
++    self.assertLen(created_jobs, 1)
++    self.assertEqual(created_jobs[0].id, 'batch-1')
++
++  def test_item_error_raises(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++
++    obj = {
++        'custom_id': 'idx-000000',
++        'error': {'message': 'boom'},
++        'response': None,
++    }
++    client.files.set_content('out-1', json.dumps(obj))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'per-item errors'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  def test_job_create_failure_deletes_uploaded_input_file(self):
++    client = _FakeClient()
++    client.batches.create = mock.Mock(side_effect=RuntimeError('boom'))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'job create failed'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++    self.assertEqual(client.files.deleted, ['file-1'])
++
++  def test_failed_job_reports_errors_field(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(
++            status='failed',
++            errors={'data': [{'message': 'invalid request'}]},
++        )
++    )
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'invalid request'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  @parameterized.named_parameters(
++      dict(testcase_name='failed', status='failed'),
++      dict(testcase_name='expired', status='expired'),
++      dict(testcase_name='cancelled', status='cancelled'),
++  )
++  def test_terminal_job_status_reports_status(self, status):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(py_types.SimpleNamespace(status=status))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, f'status={status}'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  def test_completed_job_missing_output_reports_custom_id(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.set_content('out-1', _make_output_line('idx-000000', 'ok'))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'custom_id=idx-000001'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0', 'p1'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  def test_completed_job_without_output_or_error_file_raises(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(py_types.SimpleNamespace(status='completed'))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'no output_file_id or error_file_id'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  def test_unexpected_custom_id_logs_warning(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.set_content('out-1', _make_output_line('bad-id', 'ok'))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertLogs(level='WARNING') as logs:
++      with self.assertRaisesRegex(
++          exceptions.InferenceRuntimeError, 'custom_id=idx-000000'
++      ):
++        openai_batch.infer_batch(
++            client=client,
++            model_id='gpt-test',
++            prompts=['p0'],
++            cfg=cfg,
++            request_builder=lambda p: {
++                'model': 'gpt-test',
++                'messages': [{'role': 'user', 'content': p}],
++            },
++        )
++
++    self.assertIn('unexpected custom_id', '\n'.join(logs.output))
++
++  @mock.patch(
++      'langextract.providers.openai_batch.time.sleep', return_value=None
++  )
++  def test_output_download_retries_transient_forbidden(self, mock_sleep):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.content = mock.Mock(
++        side_effect=[
++            _StatusError(403),
++            py_types.SimpleNamespace(
++                text=_make_output_line('idx-000000', 'ok')
++            ),
++        ]
++    )
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    res = openai_batch.infer_batch(
++        client=client,
++        model_id='gpt-test',
++        prompts=['p0'],
++        cfg=cfg,
++        request_builder=lambda p: {
++            'model': 'gpt-test',
++            'messages': [{'role': 'user', 'content': p}],
++        },
++    )
++
++    self.assertEqual(res, ['ok'])
++    self.assertEqual(client.files.content.call_count, 2)
++    mock_sleep.assert_called_once_with(1)
++
++  @mock.patch(
++      'langextract.providers.openai_batch.time.sleep', return_value=None
++  )
++  def test_output_download_forbidden_mentions_files_permission(
++      self, mock_sleep
++  ):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.content = mock.Mock(side_effect=_StatusError(403))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'Files Read permission'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++    self.assertEqual(client.files.content.call_count, 3)
++    self.assertEqual(mock_sleep.call_count, 2)
++
++  def test_completed_job_reads_error_file(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(
++            status='completed',
++            output_file_id='out-1',
++            error_file_id='err-1',
++        )
++    )
++    client.files.set_content('out-1', _make_output_line('idx-000000', 'ok'))
++    client.files.set_content(
++        'err-1', _make_error_line('idx-000001', 'rate limited', 429)
++    )
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'rate limited'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0', 'p1'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  def test_non_2xx_response_raises_item_error(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.set_content(
++        'out-1', _make_error_line('idx-000000', 'rate limited', 429)
++    )
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'status_code=429'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  def test_refusal_message_is_reported(self):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.set_content(
++        'out-1', _make_refusal_line('idx-000000', 'cannot comply')
++    )
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceRuntimeError, 'cannot comply'
++    ):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++  @mock.patch('langextract.providers.openai_batch.time.time')
++  def test_timeout_cancels_job(self, mock_time):
++    # The second clock read crosses the timeout immediately, without sleeping.
++    mock_time.side_effect = [0, 10]
++    client = _FakeClient()
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        completion_window='24h',
++        poll_interval=1,
++        timeout=5,
++    )
++
++    with self.assertRaisesRegex(exceptions.InferenceRuntimeError, 'timed out'):
++      openai_batch.infer_batch(
++          client=client,
++          model_id='gpt-test',
++          prompts=['p0'],
++          cfg=cfg,
++          request_builder=lambda p: {
++              'model': 'gpt-test',
++              'messages': [{'role': 'user', 'content': p}],
++          },
++      )
++
++    self.assertEqual(client.batches.cancelled, ['batch-1'])
++
++  @mock.patch(
++      'langextract.providers.openai_batch.time.sleep', return_value=None
++  )
++  def test_default_completion_window_is_sent(self, _mock_sleep):
++    client = _FakeClient()
++
++    client.batches.push_retrieve(
++        py_types.SimpleNamespace(status='completed', output_file_id='out-1')
++    )
++    client.files.set_content('out-1', _make_output_line('idx-000000', 'ok'))
++
++    cfg = openai_batch.BatchConfig(
++        enabled=True,
++        threshold=1,
++        poll_interval=1,
++        timeout=5,
++    )
++
++    res = openai_batch.infer_batch(
++        client=client,
++        model_id='gpt-test',
++        prompts=['p0'],
++        cfg=cfg,
++        request_builder=lambda p: {
++            'model': 'gpt-test',
++            'messages': [{'role': 'user', 'content': p}],
++        },
++    )
++
++    self.assertEqual(res, ['ok'])
++    self.assertLen(client.batches.created, 1)
++    self.assertEqual(client.batches.created[0]['completion_window'], '24h')
++
++  def test_unsupported_completion_window_raises(self):
++    with self.assertRaisesRegex(ValueError, 'completion_window'):
++      openai_batch.BatchConfig(enabled=True, completion_window='1h')
++
++
++if __name__ == '__main__':
++  absltest.main()
+diff --git a/tests/test_kwargs_passthrough.py b/tests/test_kwargs_passthrough.py
+index 5c4467d..9fea460 100644
+--- a/tests/test_kwargs_passthrough.py
++++ b/tests/test_kwargs_passthrough.py
+@@ -25,6 +25,7 @@ from langextract.core import data
+ from langextract.core import exceptions
+ from langextract.providers import ollama
+ from langextract.providers import openai
++from langextract.providers import openai_batch
+ from langextract.providers import schemas
+ 
+ 
+@@ -52,6 +53,116 @@ def _condition_examples(attributes=None):
+   ]
+ 
+ 
++class TestOpenAIBatchKwargsPassthrough(unittest.TestCase):
++  """Test OpenAI provider Batch API kwargs handling."""
++
++  @mock.patch.object(openai_batch, 'infer_batch', autospec=True)
++  @mock.patch('openai.OpenAI', autospec=True)
++  def test_infer_batch_reuses_structured_output_params(
++      self, mock_openai_class, mock_infer_batch
++  ):
++    """OpenAI batch requests use the same schema-aware params as direct calls."""
++    mock_client = _configure_openai_mock(mock_openai_class)
++    mock_infer_batch.return_value = ['{"extractions": []}']
++    openai_schema = schemas.openai.OpenAISchema.from_examples(
++        _condition_examples(attributes={'status': 'present'})
++    )
++
++    model = openai.OpenAILanguageModel(
++        model_id='gpt-4o-mini',
++        api_key='test-key',
++        openai_schema=openai_schema,
++        batch={'enabled': True, 'threshold': 1, 'poll_interval': 1},
++        seed=42,
++    )
++
++    outputs = model.infer_batch(['test prompt'], batch_size=5)
++
++    call_kwargs = mock_infer_batch.call_args.kwargs
++    request_params = call_kwargs['request_builder']('test prompt')
++    self.assertIs(call_kwargs['client'], mock_client)
++    self.assertEqual(call_kwargs['batch_size'], 5)
++    self.assertEqual(
++        request_params['response_format'], openai_schema.response_format
++    )
++    self.assertEqual(request_params['seed'], 42)
++    self.assertEqual(outputs[0][0].output, '{"extractions": []}')
++
++  @mock.patch('openai.OpenAI', autospec=True)
++  def test_infer_batch_rejects_invalid_batch_size(self, mock_openai_class):
++    _configure_openai_mock(mock_openai_class)
++    model = openai.OpenAILanguageModel(
++        model_id='gpt-4o-mini',
++        api_key='test-key',
++        batch={'enabled': True, 'threshold': 1},
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceConfigError, 'batch_size must be > 0'
++    ):
++      model.infer_batch(['test prompt'], batch_size=0)
++
++  @mock.patch.object(openai_batch, 'infer_batch', autospec=True)
++  @mock.patch('openai.OpenAI', autospec=True)
++  def test_infer_propagates_batch_size_config_error(
++      self, mock_openai_class, mock_infer_batch
++  ):
++    _configure_openai_mock(mock_openai_class)
++    mock_infer_batch.side_effect = exceptions.InferenceConfigError(
++        'batch_size must be > 0'
++    )
++    model = openai.OpenAILanguageModel(
++        model_id='gpt-4o-mini',
++        api_key='test-key',
++        batch={'enabled': True, 'threshold': 1},
++    )
++
++    with self.assertRaisesRegex(
++        exceptions.InferenceConfigError, 'batch_size must be > 0'
++    ):
++      list(model.infer(['test prompt'], batch_size=-1))
++
++  @mock.patch('openai.OpenAI', autospec=True)
++  def test_batch_config_does_not_leak_to_chat_completions(
++      self, mock_openai_class
++  ):
++    """OpenAI batch configuration is provider-local, not an API parameter."""
++    mock_client = _configure_openai_mock(mock_openai_class)
++
++    model = openai.OpenAILanguageModel(
++        model_id='gpt-4o-mini',
++        api_key='test-key',
++        batch={'enabled': False},
++    )
++
++    list(model.infer(['test prompt']))
++
++    self.assertNotIn(
++        'batch', mock_client.chat.completions.create.call_args.kwargs
++    )
++
++  @mock.patch.object(openai_batch, 'infer_batch', autospec=True)
++  @mock.patch('openai.OpenAI', autospec=True)
++  def test_batch_mode_logs_when_below_threshold(
++      self, mock_openai_class, mock_infer_batch
++  ):
++    """OpenAI reports when enabled batch mode falls back to real-time calls."""
++    mock_client = _configure_openai_mock(mock_openai_class)
++
++    model = openai.OpenAILanguageModel(
++        model_id='gpt-4o-mini',
++        api_key='test-key',
++        batch={'enabled': True, 'threshold': 2},
++    )
++
++    with self.assertLogs(level='INFO') as logs:
++      list(model.infer(['test prompt']))
++
++    self.assertIn('below the threshold', '\n'.join(logs.output))
++    mock_infer_batch.assert_not_called()
++    mock_client.chat.completions.create.assert_called()
++
++
+ class TestOpenAIKwargsPassthrough(unittest.TestCase):
+   """Test OpenAI provider's enhanced kwargs handling."""
+ 
+diff --git a/tests/test_live_api.py b/tests/test_live_api.py
+index 36b2022..d30636b 100644
+--- a/tests/test_live_api.py
++++ b/tests/test_live_api.py
+@@ -39,6 +39,7 @@ from langextract import data
+ import langextract as lx
+ from langextract.core import tokenizer as tokenizer_lib
+ from langextract.providers import gemini_batch as gb
++from langextract.providers import openai_batch
+ 
+ dotenv.load_dotenv(override=True)
+ 
+@@ -846,6 +847,63 @@ class TestCrossChunkContext(unittest.TestCase):
+ class TestLiveAPIOpenAI(unittest.TestCase):
+   """Tests using real OpenAI API."""
+ 
++  @skip_if_no_openai
++  @live_api
++  @retry_on_transient_errors(max_retries=1)
++  @mock.patch.object(
++      openai_batch, "infer_batch", wraps=openai_batch.infer_batch, autospec=True
++  )
++  def test_batch_extraction_uses_openai_batch_api(self, mock_infer_batch):
++    """OpenAI batch mode runs a real Batch API extraction."""
++    prompt = textwrap.dedent("""\
++        Extract medication information including medication name, dosage, route,
++        frequency, and duration in the order they appear in the text.""")
++    examples = get_basic_medication_examples()
++    documents = [
++        lx.data.Document(
++            document_id="openai_batch_doc1",
++            text="Patient took 400 mg PO Ibuprofen q4h for two days.",
++        ),
++        lx.data.Document(
++            document_id="openai_batch_doc2",
++            text="Administered 2 mg IV Morphine once for acute pain.",
++        ),
++    ]
++    expected_meds = ["Ibuprofen", "Morphine"]
++    language_model_params = {
++        **OPENAI_MODEL_PARAMS,
++        "max_output_tokens": 512,
++        "batch": {
++            "enabled": True,
++            "threshold": 1,
++            "poll_interval": 5,
++            "timeout": 900,
++        },
++    }
++
++    batch_result = lx.extract(
++        text_or_documents=documents,
++        prompt_description=prompt,
++        examples=examples,
++        model_id="gpt-4o-mini",
++        api_key=OPENAI_API_KEY,
++        use_schema_constraints=False,
++        language_model_params=language_model_params,
++    )
++
++    mock_infer_batch.assert_called()
++    call_args = mock_infer_batch.call_args
++    self.assertTrue(call_args.kwargs["cfg"].enabled)
++    self.assertEqual(call_args.kwargs["cfg"].threshold, 1)
++
++    self.assertIsInstance(batch_result, list)
++    self.assertEqual(len(batch_result), len(documents))
++    for result, expected_med in zip(batch_result, expected_meds):
++      self.assertIsInstance(result, lx.data.AnnotatedDocument)
++      medication_texts = extract_by_class(result, _CLASS_MEDICATION)
++      self.assertIn(expected_med, medication_texts)
++      assert_valid_char_intervals(self, result)
++
+   @skip_if_no_openai
+   @live_api
+   @retry_on_transient_errors(max_retries=2)

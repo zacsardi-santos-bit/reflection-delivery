@@ -1,0 +1,18 @@
+diff --git a/node-graph/gcore/src/graphic_element/renderer.rs b/node-graph/gcore/src/graphic_element/renderer.rs
+--- a/node-graph/gcore/src/graphic_element/renderer.rs
++++ b/node-graph/gcore/src/graphic_element/renderer.rs
+@@ -699,3 +699,14 @@ impl<'a> SvgRenderAttrs<'a> {
+ 		self.0.svg.push(value.into());
+ 	}
+ }
++
++#[cfg(test)]
++mod quad_contains_test {
++	use super::Quad;
++	use glam::DVec2;
++
++	#[test]
++	fn test_quad_contains_large_point() {
++		assert!(Quad::from_box([DVec2::splat(300.), DVec2::splat(500.)]).contains(DVec2::splat(350.)));
++	}
++}

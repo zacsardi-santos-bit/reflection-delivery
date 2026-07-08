@@ -1,0 +1,21 @@
+diff --git a/core/events/http2_test.go b/core/events/http2_test.go
+new file mode 100644
+--- /dev/null
++++ b/core/events/http2_test.go
+@@ -0,0 +1,16 @@
++package events_test
++
++import (
++	"testing"
++
++	nethttp2 "golang.org/x/net/http2"
++)
++
++func TestHttp2SettingEnableConnectProtocol(t *testing.T) {
++	s := nethttp2.SettingID(0x8)
++	expected := "ENABLE_CONNECT_PROTOCOL"
++	got := s.String()
++	if got != expected {
++		t.Fatalf("expected SettingID(0x8).String() == %q, got %q", expected, got)
++	}
++}

@@ -1,0 +1,16 @@
+diff --git a/packages/nx/src/native/glob/glob_parser.rs b/packages/nx/src/native/glob/glob_parser.rs
+--- a/packages/nx/src/native/glob/glob_parser.rs
++++ b/packages/nx/src/native/glob/glob_parser.rs
+@@ -387,4 +387,12 @@
+             )
+         );
+     }
++
++    #[test]
++    fn test_angular_version_is_rc() {
++        let manifest_dir = env!("CARGO_MANIFEST_DIR");
++        let path = format!("{}/../../packages/angular/src/utils/versions.ts", manifest_dir);
++        let content = std::fs::read_to_string(path).unwrap();
++        assert!(content.contains("angularDevkitVersion = '~19.2.0-rc.0'"));
++    }
+ }

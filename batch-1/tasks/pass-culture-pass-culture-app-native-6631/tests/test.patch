@@ -1,0 +1,309 @@
+diff --git a/src/features/errors/pages/AsyncErrorBoundary.native.test.tsx b/src/features/errors/pages/AsyncErrorBoundary.native.test.tsx
+index 9f66ef5768..ba94f50795 100644
+--- a/src/features/errors/pages/AsyncErrorBoundary.native.test.tsx
++++ b/src/features/errors/pages/AsyncErrorBoundary.native.test.tsx
+@@ -7,6 +7,7 @@ import * as useGoBack from 'features/navigation/useGoBack'
+ import { DEFAULT_REMOTE_CONFIG } from 'libs/firebase/remoteConfig/remoteConfig.constants'
+ import * as useRemoteConfigContext from 'libs/firebase/remoteConfig/RemoteConfigProvider'
+ import { AsyncError, eventMonitoring, MonitoringError, ScreenError } from 'libs/monitoring'
++import { LogTypeEnum } from 'libs/monitoring/errors'
+ import { fireEvent, render, screen } from 'tests/utils'
+ 
+ import { AsyncErrorBoundary } from './AsyncErrorBoundary'
+@@ -39,7 +40,7 @@ describe('AsyncErrorBoundary component', () => {
+     const retry = jest.fn()
+     render(
+       <AsyncErrorBoundary
+-        error={new AsyncError('error', { retry })}
++        error={new AsyncError('error', { retry, logType: LogTypeEnum.ERROR })}
+         resetErrorBoundary={jest.fn()}
+       />
+     )
+@@ -165,17 +166,23 @@ describe('AsyncErrorBoundary component', () => {
+       expect(eventMonitoring.captureException).toHaveBeenCalledTimes(1)
+     })
+ 
+-    it('when error is ScreenError', () => {
+-      const error = new ScreenError('error', { Screen: MaintenanceErrorPage })
++    it('when error is ScreenError and log type is ignored', () => {
++      const error = new ScreenError('error', {
++        Screen: MaintenanceErrorPage,
++        logType: LogTypeEnum.IGNORED,
++      })
+       render(<AsyncErrorBoundary error={error} resetErrorBoundary={jest.fn()} />)
+ 
+-      expect(eventMonitoring.captureException).not.toHaveBeenCalledWith(error)
++      expect(eventMonitoring.captureException).not.toHaveBeenCalled()
+     })
+   })
+ 
+   describe('should capture message', () => {
+-    it('when error is ScreenError', () => {
+-      const error = new ScreenError('error-1', { Screen: MaintenanceErrorPage })
++    it('when error is ScreenError and log type is info', () => {
++      const error = new ScreenError('error-1', {
++        Screen: MaintenanceErrorPage,
++        logType: LogTypeEnum.INFO,
++      })
+       render(<AsyncErrorBoundary error={error} resetErrorBoundary={jest.fn()} />)
+ 
+       expect(eventMonitoring.captureException).toHaveBeenCalledWith('error-1', { level: 'info' })
+diff --git a/src/features/errors/pages/AsyncErrorBoundary.web.test.tsx b/src/features/errors/pages/AsyncErrorBoundary.web.test.tsx
+index adb513e685..01689dfdc4 100644
+--- a/src/features/errors/pages/AsyncErrorBoundary.web.test.tsx
++++ b/src/features/errors/pages/AsyncErrorBoundary.web.test.tsx
+@@ -2,6 +2,7 @@ import React from 'react'
+ 
+ import * as useGoBack from 'features/navigation/useGoBack'
+ import { AsyncError } from 'libs/monitoring'
++import { LogTypeEnum } from 'libs/monitoring/errors'
+ import { checkAccessibilityFor, fireEvent, render, screen } from 'tests/utils/web'
+ 
+ import { AsyncErrorBoundary } from './AsyncErrorBoundary'
+@@ -54,7 +55,7 @@ describe('AsyncErrorBoundary component', () => {
+     const retry = jest.fn()
+     render(
+       <AsyncErrorBoundary
+-        error={new AsyncError('error', { retry })}
++        error={new AsyncError('error', { retry, logType: LogTypeEnum.ERROR })}
+         resetErrorBoundary={resetErrorBoundary}
+       />
+     )
+diff --git a/src/features/profile/helpers/useEmailUpdateStatus.native.test.ts b/src/features/profile/helpers/useEmailUpdateStatus.native.test.ts
+index d2f023e0fa..de2dc7bee0 100644
+--- a/src/features/profile/helpers/useEmailUpdateStatus.native.test.ts
++++ b/src/features/profile/helpers/useEmailUpdateStatus.native.test.ts
+@@ -1,5 +1,6 @@
+ import { EmailHistoryEventTypeEnum, EmailUpdateStatus } from 'api/gen'
+ import { eventMonitoring } from 'libs/monitoring'
++import { LogTypeEnum } from 'libs/monitoring/errors'
+ import { mockServer } from 'tests/mswServer'
+ 
+ import { getEmailUpdateStatus } from './useEmailUpdateStatus'
+@@ -24,7 +25,7 @@ jest.mock('libs/firebase/analytics/analytics')
+ describe('getEmailUpdateStatus', () => {
+   it('should capture a Sentry exception when error code is 422 and return undefined', async () => {
+     simulateEmailUpdateStatusError(422)
+-    const emailUpdateStatus = await getEmailUpdateStatus({ shouldLogInfo: false })
++    const emailUpdateStatus = await getEmailUpdateStatus({ logType: LogTypeEnum.IGNORED })
+ 
+     expect(eventMonitoring.captureException).toHaveBeenCalledTimes(1)
+     expect(emailUpdateStatus).toEqual(undefined)
+@@ -38,19 +39,19 @@ describe('getEmailUpdateStatus', () => {
+     503, // Service Unavailable
+     504, // Gateway Timeout
+   ])(
+-    'should not capture a Sentry exception when error code is %s and return undefined',
++    'should not capture a Sentry exception when error code is %s and log type is ignored and return undefined',
+     async (statusCode) => {
+       simulateEmailUpdateStatusError(statusCode)
+-      const emailUpdateStatus = await getEmailUpdateStatus({ shouldLogInfo: false })
++      const emailUpdateStatus = await getEmailUpdateStatus({ logType: LogTypeEnum.IGNORED })
+ 
+-      expect(eventMonitoring.captureException).not.toHaveBeenCalledWith({ level: 'info' })
++      expect(eventMonitoring.captureException).toHaveBeenCalledTimes(0)
+       expect(emailUpdateStatus).toEqual(undefined)
+     }
+   )
+ 
+-  it('should capture a Sentry info and return undefined when error code is 401 and shouldLogEvent is true', async () => {
++  it('should capture a Sentry info and return undefined when error code is 401 and log type from remote config is info', async () => {
+     simulateEmailUpdateStatusError(401)
+-    const emailUpdateStatus = await getEmailUpdateStatus({ shouldLogInfo: true })
++    const emailUpdateStatus = await getEmailUpdateStatus({ logType: LogTypeEnum.INFO })
+ 
+     expect(eventMonitoring.captureException).toHaveBeenCalledWith(
+       `Échec de la requête https://localhost/native/v1/profile/email_update/status, code: 401`,
+@@ -59,9 +60,9 @@ describe('getEmailUpdateStatus', () => {
+     expect(emailUpdateStatus).toEqual(undefined)
+   })
+ 
+-  it('should not capture a Sentry info and return undefined when error code is 401 and shouldLogEvent is false', async () => {
++  it('should not capture a Sentry info and return undefined when error code is 401 and log type from remote config is ignored', async () => {
+     simulateEmailUpdateStatusError(401)
+-    const emailUpdateStatus = await getEmailUpdateStatus({ shouldLogInfo: false })
++    const emailUpdateStatus = await getEmailUpdateStatus({ logType: LogTypeEnum.IGNORED })
+ 
+     expect(eventMonitoring.captureException).toHaveBeenCalledTimes(0)
+     expect(emailUpdateStatus).toEqual(undefined)
+@@ -73,10 +74,10 @@ describe('getEmailUpdateStatus', () => {
+     503, // Service Unavailable
+     504, // Gateway Timeout
+   ])(
+-    'should not capture a Sentry info when error code is %s and return undefined',
++    'should not capture a Sentry info when error code is %s and log type is ignored and return undefined',
+     async (statusCode) => {
+       simulateEmailUpdateStatusError(statusCode)
+-      const emailUpdateStatus = await getEmailUpdateStatus({ shouldLogInfo: false })
++      const emailUpdateStatus = await getEmailUpdateStatus({ logType: LogTypeEnum.IGNORED })
+ 
+       expect(eventMonitoring.captureException).toHaveBeenCalledTimes(0)
+       expect(emailUpdateStatus).toEqual(undefined)
+diff --git a/src/libs/hooks/useLogTypeFromRemoteConfig.native.test.ts b/src/libs/hooks/useLogTypeFromRemoteConfig.native.test.ts
+new file mode 100644
+index 0000000000..40facc8050
+--- /dev/null
++++ b/src/libs/hooks/useLogTypeFromRemoteConfig.native.test.ts
+@@ -0,0 +1,47 @@
++import { DEFAULT_REMOTE_CONFIG } from 'libs/firebase/remoteConfig/remoteConfig.constants'
++import * as useRemoteConfigContext from 'libs/firebase/remoteConfig/RemoteConfigProvider'
++import { useLogTypeFromRemoteConfig } from 'libs/hooks/useLogTypeFromRemoteConfig'
++import { LogTypeEnum } from 'libs/monitoring/errors'
++import { renderHook } from 'tests/utils'
++
++const useRemoteConfigContextSpy = jest.spyOn(useRemoteConfigContext, 'useRemoteConfigContext')
++
++describe('useLogTypeFromRemoteConfig', () => {
++  describe('When shouldLogInfo remote config is false', () => {
++    beforeAll(() => {
++      useRemoteConfigContextSpy.mockReturnValue({
++        ...DEFAULT_REMOTE_CONFIG,
++        shouldLogInfo: false,
++      })
++    })
++
++    afterAll(() => {
++      useRemoteConfigContextSpy.mockReturnValue(DEFAULT_REMOTE_CONFIG)
++    })
++
++    it('should return ignored as log type', () => {
++      const { result } = renderHook(() => useLogTypeFromRemoteConfig())
++
++      expect(result.current.logType).toEqual(LogTypeEnum.IGNORED)
++    })
++  })
++
++  describe('When shouldLogInfo remote config is true', () => {
++    beforeAll(() => {
++      useRemoteConfigContextSpy.mockReturnValue({
++        ...DEFAULT_REMOTE_CONFIG,
++        shouldLogInfo: true,
++      })
++    })
++
++    afterAll(() => {
++      useRemoteConfigContextSpy.mockReturnValue(DEFAULT_REMOTE_CONFIG)
++    })
++
++    it('should return info as log type', () => {
++      const { result } = renderHook(() => useLogTypeFromRemoteConfig())
++
++      expect(result.current.logType).toEqual(LogTypeEnum.INFO)
++    })
++  })
++})
+diff --git a/src/libs/monitoring/errors.test.ts b/src/libs/monitoring/errors.test.ts
+index c5947943e8..ea6489a356 100644
+--- a/src/libs/monitoring/errors.test.ts
++++ b/src/libs/monitoring/errors.test.ts
+@@ -3,7 +3,7 @@ import { CaptureContext, Extras } from '@sentry/types'
+ import { PageNotFound } from 'features/navigation/pages/PageNotFound'
+ import { eventMonitoring } from 'libs/monitoring'
+ 
+-import { MonitoringError, OfferNotFoundError, VenueNotFoundError } from './errors'
++import { LogTypeEnum, MonitoringError, OfferNotFoundError, VenueNotFoundError } from './errors'
+ 
+ describe('MonitoringError', () => {
+   it('should call eventMonitoring.captureException() on new MonitoringError instance', () => {
+@@ -14,7 +14,7 @@ describe('MonitoringError', () => {
+   })
+ 
+   it('should rename MonitoringError to RenamedError', () => {
+-    const error = new MonitoringError('error', { name: 'RenamedError' })
++    const error = new MonitoringError('error', { name: 'RenamedError', logType: LogTypeEnum.ERROR })
+ 
+     expect(eventMonitoring.captureException).toHaveBeenCalledWith(error, undefined)
+     expect(error.name).toBe('RenamedError')
+@@ -25,7 +25,7 @@ describe('MonitoringError', () => {
+     const captureContext: CaptureContext = {
+       extra,
+     }
+-    const error = new MonitoringError('error', { captureContext })
++    const error = new MonitoringError('error', { captureContext, logType: LogTypeEnum.ERROR })
+ 
+     expect(eventMonitoring.captureException).toHaveBeenCalledWith(error, captureContext)
+     expect(error.name).toBe('MonitoringError')
+@@ -36,30 +36,26 @@ describe('MonitoringError', () => {
+     const captureContext: CaptureContext = {
+       extra,
+     }
+-    const error = new MonitoringError('error', { name: 'RenamedError', captureContext })
++    const error = new MonitoringError('error', {
++      name: 'RenamedError',
++      captureContext,
++      logType: LogTypeEnum.ERROR,
++    })
+ 
+     expect(eventMonitoring.captureException).toHaveBeenCalledWith(error, captureContext)
+     expect(error.name).toBe('RenamedError')
+   })
+ 
+-  it('should captureMessage as info on new MonitoringError instance when shouldBeCapturedAsInfo is true', () => {
+-    const error = new MonitoringError('error', { shouldBeCapturedAsInfo: true })
++  it('should captureMessage as info on new MonitoringError instance when log type is info', () => {
++    const error = new MonitoringError('error', { logType: LogTypeEnum.INFO })
+ 
+     expect(eventMonitoring.captureException).toHaveBeenNthCalledWith(1, error.message, {
+       level: 'info',
+     })
+   })
+ 
+-  it('should not captureMessage as info on new MonitoringError instance when shouldBeCapturedAsInfo is false', () => {
+-    new MonitoringError('error', { shouldBeCapturedAsInfo: false })
+-
+-    expect(eventMonitoring.captureException).not.toHaveBeenCalledWith('error', {
+-      level: 'info',
+-    })
+-  })
+-
+-  it('should not captureMessage as info on new MonitoringError instance when shouldBeCapturedAsInfo is undefined', () => {
+-    new MonitoringError('error')
++  it('should not captureMessage on new MonitoringError instance when log type is ignored', () => {
++    new MonitoringError('error', { logType: LogTypeEnum.IGNORED })
+ 
+     expect(eventMonitoring.captureException).not.toHaveBeenCalledWith('error', {
+       level: 'info',
+@@ -69,13 +65,19 @@ describe('MonitoringError', () => {
+ 
+ describe('OfferNotFoundError', () => {
+   it('should return message with offer id when it defined', () => {
+-    const error = new OfferNotFoundError(10000, { Screen: PageNotFound })
++    const error = new OfferNotFoundError(10000, {
++      Screen: PageNotFound,
++      logType: LogTypeEnum.IGNORED,
++    })
+ 
+     expect(error.message).toBe('Offer 10000 could not be retrieved')
+   })
+ 
+   it('should return message without offer id when it undefined', () => {
+-    const error = new OfferNotFoundError(undefined, { Screen: PageNotFound })
++    const error = new OfferNotFoundError(undefined, {
++      Screen: PageNotFound,
++      logType: LogTypeEnum.IGNORED,
++    })
+ 
+     expect(error.message).toBe('offerId is undefined')
+   })
+@@ -83,13 +85,19 @@ describe('OfferNotFoundError', () => {
+ 
+ describe('VenueNotFoundError', () => {
+   it('should return message with offer id when it defined', () => {
+-    const error = new VenueNotFoundError(5000, { Screen: PageNotFound })
++    const error = new VenueNotFoundError(5000, {
++      Screen: PageNotFound,
++      logType: LogTypeEnum.IGNORED,
++    })
+ 
+     expect(error.message).toBe('Venue 5000 could not be retrieved')
+   })
+ 
+   it('should return message without offer id when it undefined', () => {
+-    const error = new VenueNotFoundError(undefined, { Screen: PageNotFound })
++    const error = new VenueNotFoundError(undefined, {
++      Screen: PageNotFound,
++      logType: LogTypeEnum.IGNORED,
++    })
+ 
+     expect(error.message).toBe('venueId is undefined')
+   })

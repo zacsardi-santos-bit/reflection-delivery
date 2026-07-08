@@ -1,0 +1,459 @@
+diff --git a/core/test/audits/webmcp-form-coverage-test.js b/core/test/audits/webmcp-form-coverage-test.js
+index c5bbab36a..7582654bc 100644
+--- a/core/test/audits/webmcp-form-coverage-test.js
++++ b/core/test/audits/webmcp-form-coverage-test.js
+@@ -9,6 +9,7 @@ import WebMcpFormCoverage from '../../audits/webmcp-form-coverage.js';
+ describe('WebMCP: form-coverage audit', () => {
+   it('lists forms that lack WebMCP annotations', () => {
+     const artifacts = {
++      WebMCP: {isSupported: true, tools: []},
+       Inputs: {
+         forms: [
+           {
+@@ -46,8 +47,9 @@ describe('WebMCP: form-coverage audit', () => {
+     });
+   });
+ 
+-  it('empty table if all forms have WebMCP annotations', () => {
++  it('is not applicable if all forms have WebMCP annotations', () => {
+     const artifacts = {
++      WebMCP: {isSupported: true, tools: []},
+       Inputs: {
+         forms: [
+           {
+@@ -64,13 +66,13 @@ describe('WebMCP: form-coverage audit', () => {
+       },
+     };
+ 
+-    const {score, details} = WebMcpFormCoverage.audit(artifacts);
++    const result = WebMcpFormCoverage.audit(artifacts);
+ 
+-    expect(score).toBe(1);
+-    expect(details).toBeUndefined();
++    expect(result.score).toBe(1);
++    expect(result.notApplicable).toBe(true);
+   });
+ 
+-  it('empty table if no forms are found', () => {
++  it('is not applicable if no forms are found', () => {
+     const artifacts = {
+       Inputs: {
+         forms: [],
+@@ -79,10 +81,26 @@ describe('WebMCP: form-coverage audit', () => {
+       },
+     };
+ 
+-    const {score, details} = WebMcpFormCoverage.audit(artifacts);
++    const result = WebMcpFormCoverage.audit(artifacts);
+ 
+-    expect(score).toBe(1);
+-    expect(details).toBeUndefined();
++    expect(result.score).toBe(1);
++    expect(result.notApplicable).toBe(true);
++  });
++
++  it('is not applicable when modelContext is not defined', () => {
++    const artifacts = {
++      WebMCP: {isSupported: false, tools: []},
++      Inputs: {
++        forms: [],
++        inputs: [],
++        labels: [],
++      },
++    };
++
++    const result = WebMcpFormCoverage.audit(artifacts);
++
++    expect(result.score).toEqual(1);
++    expect(result.notApplicable).toEqual(true);
+   });
+ });
+ 
+diff --git a/core/test/audits/webmcp-registered-tools-test.js b/core/test/audits/webmcp-registered-tools-test.js
+index 0ee713b0e..e869352b6 100644
+--- a/core/test/audits/webmcp-registered-tools-test.js
++++ b/core/test/audits/webmcp-registered-tools-test.js
+@@ -9,42 +9,45 @@ import WebMCPRegisteredTools from '../../audits/webmcp-registered-tools.js';
+ describe('WebMCPRegisteredTools Audit', () => {
+   it('renders a table with registered tools', async () => {
+     const artifacts = {
+-      WebMCPTools: [
+-        {
+-          name: 'book_table_le_petit_bistro',
+-          description: 'Creates a confirmed dining reservation at Le Petit Bistro.',
+-          inputSchema: {
+-            type: 'object',
+-            properties: {
+-              name: {type: 'string'},
++      WebMCP: {
++        isSupported: true,
++        tools: [
++          {
++            name: 'book_table_le_petit_bistro',
++            description: 'Creates a confirmed dining reservation at Le Petit Bistro.',
++            inputSchema: {
++              type: 'object',
++              properties: {
++                name: {type: 'string'},
++              },
+             },
+-          },
+-          frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
+-          backendNodeId: 1,
+-          nodeDetails: {
+-            lhId: 'node-1',
+-            devtoolsNodePath: '1,HTML,1,BODY,0,DIV',
+-            selector: 'div#reservation',
+-            boundingRect: {top: 0, left: 0, width: 100, height: 100},
+-            snippet: '<div id="reservation">',
+-            nodeLabel: 'Reservation Div',
+-          },
+-        },
+-        {
+-          name: 'get_weather',
+-          description: 'Get current weather.',
+-          inputSchema: {
+-            type: 'object',
+-            properties: {
+-              location: {type: 'string'},
++            frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
++            backendNodeId: 1,
++            nodeDetails: {
++              lhId: 'node-1',
++              devtoolsNodePath: '1,HTML,1,BODY,0,DIV',
++              selector: 'div#reservation',
++              boundingRect: {top: 0, left: 0, width: 100, height: 100},
++              snippet: '<div id="reservation">',
++              nodeLabel: 'Reservation Div',
+             },
+           },
+-          frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
+-          stackTrace: {
+-            callFrames: [{url: 'https://example.com/mcp.js', lineNumber: 34}],
++          {
++            name: 'get_weather',
++            description: 'Get current weather.',
++            inputSchema: {
++              type: 'object',
++              properties: {
++                location: {type: 'string'},
++              },
++            },
++            frameId: 'F9F2B9BAF7F692B8EBEF6C0332C423C4',
++            stackTrace: {
++              callFrames: [{url: 'https://example.com/mcp.js', lineNumber: 34}],
++            },
+           },
+-        },
+-      ],
++        ],
++      },
+     };
+ 
+     const result = await WebMCPRegisteredTools.audit(artifacts);
+@@ -87,7 +90,7 @@ describe('WebMCPRegisteredTools Audit', () => {
+ 
+   it('handles empty tools list', async () => {
+     const artifacts = {
+-      WebMCPTools: [],
++      WebMCP: {isSupported: true, tools: []},
+     };
+ 
+     const result = await WebMCPRegisteredTools.audit(artifacts);
+@@ -95,4 +98,15 @@ describe('WebMCPRegisteredTools Audit', () => {
+     expect(result.score).toEqual(1);
+     expect(result.details).toBeUndefined();
+   });
++
++  it('is not applicable when webmcp not supported', async () => {
++    const artifacts = {
++      WebMCP: {isSupported: false, tools: []},
++    };
++
++    const result = await WebMCPRegisteredTools.audit(artifacts);
++
++    expect(result.score).toEqual(1);
++    expect(result.notApplicable).toEqual(true);
++  });
+ });
+diff --git a/core/test/audits/webmcp-schema-validity-test.js b/core/test/audits/webmcp-schema-validity-test.js
+index 6a5fe1eef..533c650c4 100644
+--- a/core/test/audits/webmcp-schema-validity-test.js
++++ b/core/test/audits/webmcp-schema-validity-test.js
+@@ -4,32 +4,40 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import assert from 'assert/strict';
+-
+ import WebMcpSchemaValidityAudit from '../../audits/webmcp-schema-validity.js';
+ 
+ describe('WebMcpSchemaValidity audit', () => {
+-  it('passes when no issues were found (not applicable)', async () => {
++  it('is not applicable when modelContext is not defined', async () => {
++    const auditResult = await WebMcpSchemaValidityAudit.audit({
++      WebMCP: {isSupported: false, tools: []},
++      WebMcpSchemaIssues: [],
++    }, {});
++    expect(auditResult.score).toEqual(1);
++    expect(auditResult.notApplicable).toEqual(true);
++  });
++
++  it('not applicable when no issues and no tools were found', async () => {
+     const auditResult = await WebMcpSchemaValidityAudit.audit({
+-      WebMCPTools: [],
++      WebMCP: {isSupported: true, tools: []},
+       WebMcpSchemaIssues: [],
+     }, {});
+-    assert.equal(auditResult.score, 1);
+-    assert.equal(auditResult.notApplicable, true);
++    expect(auditResult.score).toEqual(1);
++    expect(auditResult.notApplicable).toEqual(true);
+   });
+ 
+   it('passes when valid tools are found without issues', async () => {
+     const auditResult = await WebMcpSchemaValidityAudit.audit({
+-      WebMCPTools: [{name: 'tool1'}],
++      WebMCP: {isSupported: true, tools: [{name: 'tool1'}]},
+       WebMcpSchemaIssues: [],
+     }, {});
+-    assert.equal(auditResult.score, 1);
+-    assert.equal(auditResult.notApplicable, undefined);
++    expect(auditResult.score).toEqual(1);
++    expect(auditResult.notApplicable).toEqual(undefined);
+   });
+ 
+ 
+   it('fails when WebMCP issues are found', async () => {
+     const auditResult = await WebMcpSchemaValidityAudit.audit({
++      WebMCP: {isSupported: true, tools: []},
+       WebMcpSchemaIssues: [
+         {
+           errorType: 'FormModelContextParameterMissingTitleAndDescription',
+@@ -44,16 +52,17 @@ describe('WebMcpSchemaValidity audit', () => {
+       ],
+     }, {});
+ 
+-    assert.equal(auditResult.score, 0);
+-    assert.equal(auditResult.details.items.length, 2);
+-    assert.equal(auditResult.details.items[0].issue.formattedDefault,
++    expect(auditResult.score).toEqual(0);
++    expect(auditResult.details.items.length).toEqual(2);
++    expect(auditResult.details.items[0].issue.formattedDefault).toEqual(
+       'Form level `toolname` attribute is missing. Add it to define the tool name.');
+-    assert.equal(auditResult.details.items[1].issue.formattedDefault,
++    expect(auditResult.details.items[1].issue.formattedDefault).toEqual(
+       'Add a description to make this form more accessible for AI agents.');
+   });
+ 
+   it('deduplicates identical issues on the same node', async () => {
+     const auditResult = await WebMcpSchemaValidityAudit.audit({
++      WebMCP: {isSupported: true, tools: []},
+       WebMcpSchemaIssues: [
+         {
+           errorType: 'FormModelContextParameterMissingTitleAndDescription',
+@@ -73,11 +82,11 @@ describe('WebMcpSchemaValidity audit', () => {
+       ],
+     }, {});
+ 
+-    assert.equal(auditResult.score, 0.5);
+-    assert.equal(auditResult.details.items.length, 2);
+-    assert.equal(auditResult.details.items[0].issue.formattedDefault,
++    expect(auditResult.score).toEqual(0.5);
++    expect(auditResult.details.items.length).toEqual(2);
++    expect(auditResult.details.items[0].issue.formattedDefault).toEqual(
+       'Add a description to make this form more accessible for AI agents.');
+-    assert.equal(auditResult.details.items[1].issue.formattedDefault,
++    expect(auditResult.details.items[1].issue.formattedDefault).toEqual(
+       'Missing `name` attribute for an optional field. Add it to define the parameter name.');
+   });
+ });
+diff --git a/core/test/gather/gatherers/webmcp-tools-test.js b/core/test/gather/gatherers/webmcp-test.js
+similarity index 66%
+rename from core/test/gather/gatherers/webmcp-tools-test.js
+rename to core/test/gather/gatherers/webmcp-test.js
+index 55ebe724c..49a7f001d 100644
+--- a/core/test/gather/gatherers/webmcp-tools-test.js
++++ b/core/test/gather/gatherers/webmcp-test.js
+@@ -4,15 +4,15 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import assert from 'assert/strict';
+-
+-import WebMCPToolsGatherer from '../../../gather/gatherers/webmcp-tools.js';
++import WebMCP from '../../../gather/gatherers/webmcp.js';
+ import {createMockContext} from '../mock-driver.js';
+ 
+-describe('WebMCPTools Gatherer', () => {
++describe('WebMCP Gatherer', () => {
+   it('collects tools from events', async () => {
+-    const gatherer = new WebMCPToolsGatherer();
++    const gatherer = new WebMCP();
+     const mockContext = createMockContext();
++    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
++
+     const eventData = {
+       tools: [
+         {
+@@ -32,20 +32,21 @@ describe('WebMCPTools Gatherer', () => {
+       .mockResponse('WebMCP.disable');
+ 
+     await gatherer.startInstrumentation(mockContext.asContext());
+-    // Wait for event to fire (createMockOnFn uses setTimeout)
+     await new Promise(resolve => setTimeout(resolve, 0));
+     await gatherer.stopInstrumentation(mockContext.asContext());
+ 
+     const artifact = await gatherer.getArtifact(mockContext.asContext());
+ 
+     // Should have 1 tool from event
+-    assert.equal(artifact.length, 1);
+-    assert.equal(artifact[0].name, 'new_tool');
++    expect(artifact.tools.length).toEqual(1);
++    expect(artifact.tools[0].name).toEqual('new_tool');
++    expect(artifact.isSupported).toEqual(true);
+   });
+ 
+   it('removes duplicates', async () => {
+-    const gatherer = new WebMCPToolsGatherer();
++    const gatherer = new WebMCP();
+     const mockContext = createMockContext();
++    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
+ 
+     const eventData1 = {
+       tools: [
+@@ -84,14 +85,15 @@ describe('WebMCPTools Gatherer', () => {
+     const artifact = await gatherer.getArtifact(mockContext.asContext());
+ 
+     // Should only have 1 tool because of deduplication
+-    assert.equal(artifact.length, 1);
+-    assert.equal(artifact[0].name, 'tool1');
+-    assert.equal(artifact[0].description, 'Duplicate tool');
++    expect(artifact.tools.length).toEqual(1);
++    expect(artifact.tools[0].name).toEqual('tool1');
++    expect(artifact.tools[0].description).toEqual('Duplicate tool');
+   });
+ 
+   it('removes tools on toolsRemoved event', async () => {
+-    const gatherer = new WebMCPToolsGatherer();
++    const gatherer = new WebMCP();
+     const mockContext = createMockContext();
++    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
+ 
+     const addEventData = {
+       tools: [
+@@ -130,28 +132,40 @@ describe('WebMCPTools Gatherer', () => {
+     const artifact = await gatherer.getArtifact(mockContext.asContext());
+ 
+     // Should be empty
+-    assert.equal(artifact.length, 0);
++    expect(artifact.tools.length).toEqual(0);
+   });
+ 
+-  it('handles error on enable', async () => {
+-    const gatherer = new WebMCPToolsGatherer();
++  it('returns isSupported false when WebMCP.enable fails', async () => {
++    const gatherer = new WebMCP();
+     const mockContext = createMockContext();
++    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
++    mockContext.driver.defaultSession.sendCommand.mockResponse(
++      'WebMCP.enable',
++      () => Promise.reject(new Error('\'WebMCP.enable\' wasn\'t found'))
++    );
+ 
+-    mockContext.driver.defaultSession.sendCommand
+-      .mockResponse('WebMCP.enable', () =>
+-        Promise.reject(new Error('Protocol error: WebMCP.enable not found')));
+-
+-    try {
+-      await gatherer.startInstrumentation(mockContext.asContext());
+-      assert.fail('Should have thrown an error');
+-    } catch (e) {
+-      assert.equal(e.message, 'Protocol error: WebMCP.enable not found');
+-    }
++    await gatherer.startInstrumentation(mockContext.asContext());
++    const artifact = await gatherer.getArtifact(mockContext.asContext());
++    expect(artifact.isSupported).toEqual(false);
++    expect(artifact.tools.length).toEqual(0);
++  });
++
++  it('returns isSupported false when modelContext is not found', async () => {
++    const gatherer = new WebMCP();
++    const mockContext = createMockContext();
++    mockContext.driver._executionContext.evaluate.mockResolvedValue(false);
++    mockContext.driver.defaultSession.sendCommand.mockResponse('WebMCP.enable');
++
++    await gatherer.startInstrumentation(mockContext.asContext());
++    const artifact = await gatherer.getArtifact(mockContext.asContext());
++    expect(artifact.isSupported).toEqual(false);
++    expect(artifact.tools.length).toEqual(0);
+   });
+ 
+   it('returns empty array when no tools are registered', async () => {
+-    const gatherer = new WebMCPToolsGatherer();
++    const gatherer = new WebMCP();
+     const mockContext = createMockContext();
++    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
+ 
+     mockContext.driver.defaultSession.sendCommand
+       .mockResponse('WebMCP.enable')
+@@ -162,12 +176,13 @@ describe('WebMCPTools Gatherer', () => {
+ 
+     const artifact = await gatherer.getArtifact(mockContext.asContext());
+ 
+-    assert.equal(artifact.length, 0);
++    expect(artifact.tools.length).toEqual(0);
+   });
+ 
+   it('resolves backendNodeId to nodeDetails', async () => {
+-    const gatherer = new WebMCPToolsGatherer();
++    const gatherer = new WebMCP();
+     const mockContext = createMockContext();
++    mockContext.driver._executionContext.evaluate.mockResolvedValue(true);
+ 
+     const eventData = {
+       tools: [
+@@ -197,8 +212,8 @@ describe('WebMCPTools Gatherer', () => {
+ 
+     const artifact = await gatherer.getArtifact(mockContext.asContext());
+ 
+-    assert.equal(artifact.length, 1);
+-    assert.equal(artifact[0].name, 'declarative_tool');
+-    assert.deepEqual(artifact[0].nodeDetails, {snippet: '<form></form>', selector: 'form'});
++    expect(artifact.tools.length).toEqual(1);
++    expect(artifact.tools[0].name).toEqual('declarative_tool');
++    expect(artifact.tools[0].nodeDetails).toEqual({snippet: '<form></form>', selector: 'form'});
+   });
+ });
+diff --git a/core/test/results/artifacts/artifacts.json b/core/test/results/artifacts/artifacts.json
+index 79eacc318..8947efbeb 100644
+--- a/core/test/results/artifacts/artifacts.json
++++ b/core/test/results/artifacts/artifacts.json
+@@ -8303,7 +8303,9 @@
+       }
+     }
+   ],
+-  "WebMCPTools": [
++  "WebMCP": {
++    "isSupported": true,
++    "tools": [
+     {
+       "name": "book_table_le_petit_bistro",
+       "description": "Creates a confirmed dining reservation at Le Petit Bistro.",
+@@ -8352,7 +8354,8 @@
+         ]
+       }
+     }
+-  ],
++    ]
++  },
+   "WebMcpSchemaIssues": [
+     {
+       "errorType": "FormModelContextParameterMissingTitleAndDescription",
+@@ -8375,4 +8378,4 @@
+     "status": 404,
+     "content": null
+   }
+-}
+\ No newline at end of file
++}

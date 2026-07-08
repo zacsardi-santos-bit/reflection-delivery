@@ -1,0 +1,52 @@
+diff --git a/packages/experimental/ExperimentalIcon/src/__tests__/Icon.test.tsx b/packages/experimental/ExperimentalIcon/src/__tests__/Icon.test.tsx
+new file mode 100644
+index 000000000..1b1f1a23f
+--- /dev/null
++++ b/packages/experimental/ExperimentalIcon/src/__tests__/Icon.test.tsx
+@@ -0,0 +1,25 @@
++import * as React from 'react';
++import { FontIcon } from '../';
++import * as renderer from 'react-test-renderer';
++
++import { checkRenderConsistency, checkReRender } from '@fluentui-react-native/test-tools';
++
++const fontProps = {
++  fontFamily: 'Arial',
++  codepoint: 0x2663,
++  color: '#f07',
++};
++describe('Icon component tests', () => {
++  it('SVG Icon', () => {
++    const tree = renderer.create(<FontIcon {...fontProps} />).toJSON();
++    expect(tree).toMatchSnapshot();
++  });
++
++  it('Icon checkRenderConsistency', () => {
++    checkRenderConsistency(() => <FontIcon {...fontProps} />, 2);
++  });
++
++  it('Icon re-renders correctly', () => {
++    checkReRender(() => <FontIcon {...fontProps} />, 2);
++  });
++});
+diff --git a/packages/experimental/ExperimentalIcon/src/__tests__/__snapshots__/Icon.test.tsx.snap b/packages/experimental/ExperimentalIcon/src/__tests__/__snapshots__/Icon.test.tsx.snap
+new file mode 100644
+index 000000000..0300f95df
+--- /dev/null
++++ b/packages/experimental/ExperimentalIcon/src/__tests__/__snapshots__/Icon.test.tsx.snap
+@@ -0,0 +1,15 @@
++// Jest Snapshot v1, https://goo.gl/fbAQLP
++
++exports[`Icon component tests SVG Icon 1`] = `
++<Text
++  style={
++    Object {
++      "color": "#f07",
++      "fontFamily": "Arial",
++      "fontSize": undefined,
++    }
++  }
++>
++  ♣
++</Text>
++`;

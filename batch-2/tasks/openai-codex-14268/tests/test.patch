@@ -1,0 +1,16 @@
+diff --git a/codex-rs/core/src/memories/phase1_tests.rs b/codex-rs/core/src/memories/phase1_tests.rs
+--- a/codex-rs/core/src/memories/phase1_tests.rs
++++ b/codex-rs/core/src/memories/phase1_tests.rs
+@@ -65,3 +65,12 @@ fn count_outcomes_keeps_usage_empty_when_no_job_reports_it() {
+     assert_eq!(counts.claimed, 2);
+     assert_eq!(counts.total_token_usage, None);
+ }
++
++#[test]
++fn test_serialize_filtered_accessible() {
++    use super::job::serialize_filtered_rollout_response_items;
++    let result = serialize_filtered_rollout_response_items(&[]).expect("serialize");
++    let parsed: Vec<codex_protocol::models::ResponseItem> =
++        serde_json::from_str(&result).expect("parse");
++    assert!(parsed.is_empty());
++}

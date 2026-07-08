@@ -1,0 +1,23 @@
+diff --git a/codex-rs/codex-api/src/provider.rs b/codex-rs/codex-api/src/provider.rs
+index 45f2512dc3..3c7f3b2bd5 100644
+--- a/codex-rs/codex-api/src/provider.rs
++++ b/codex-rs/codex-api/src/provider.rs
+@@ -167,3 +167,18 @@ mod tests {
+         }
+     }
+ }
++
++#[cfg(test)]
++mod fedramp_tests {
++    use crate::CoreAuthProvider;
++
++    #[test]
++    fn fedramp_field_exists() {
++        let auth = CoreAuthProvider {
++            token: None,
++            account_id: None,
++            is_fedramp_account: true,
++        };
++        assert!(auth.is_fedramp_account);
++    }
++}

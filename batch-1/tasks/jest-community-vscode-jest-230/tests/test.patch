@@ -1,0 +1,248 @@
+diff --git a/tests/DebugCodeLens/DebugCodeLensProvider.test.ts b/tests/DebugCodeLens/DebugCodeLensProvider.test.ts
+index b2c1ebc..1194a9b 100644
+--- a/tests/DebugCodeLens/DebugCodeLensProvider.test.ts
++++ b/tests/DebugCodeLens/DebugCodeLensProvider.test.ts
+@@ -46,10 +46,9 @@ jest.mock('vscode', () => {
+ })
+ 
+ import { DebugCodeLensProvider } from '../../src/DebugCodeLens/DebugCodeLensProvider'
+-import { TestResultProvider, TestResult } from '../../src/TestResultProvider'
++import { TestResultProvider, TestResult, TestReconciliationState } from '../../src/TestResults'
+ import { DebugCodeLens } from '../../src/DebugCodeLens/DebugCodeLens'
+ import { extensionName } from '../../src/appGlobals'
+-import { TestReconciliationState } from '../../src/TestReconciliationState'
+ import { basename } from 'path'
+ import * as vscode from 'vscode'
+ 
+diff --git a/tests/TestResults/TestResult.test.ts b/tests/TestResults/TestResult.test.ts
+new file mode 100644
+index 0000000..8f6ad77
+--- /dev/null
++++ b/tests/TestResults/TestResult.test.ts
+@@ -0,0 +1,126 @@
++jest.unmock('../../src/TestResults/TestResult')
++jest.mock('path', () => ({ sep: require.requireActual('path').sep }))
++
++import {
++  resultsWithLowerCaseWindowsDriveLetters,
++  coverageMapWithLowerCaseWindowsDriveLetters,
++  testResultsWithLowerCaseWindowsDriveLetters,
++  withLowerCaseWindowsDriveLetter,
++} from '../../src/TestResults/TestResult'
++import * as path from 'path'
++
++describe('TestResult', () => {
++  describe('resultsWithLowerCaseWindowsDriveLetters', () => {
++    describe('on POSIX systems', () => {
++      it('should return the results unchanged', () => {
++        ;(path as any).sep = '/'
++        const expected: any = {}
++
++        expect(resultsWithLowerCaseWindowsDriveLetters(expected)).toBe(expected)
++      })
++    })
++
++    describe('on Windows systems', () => {
++      beforeEach(() => {
++        jest.doMock('../../src/TestResults/TestResult', () => ({
++          ...require.requireActual('../../src/TestResults/TestResult'),
++          coverageMapWithLowerCaseWindowsDriveLetters: jest.fn(),
++          testResultsWithLowerCaseWindowsDriveLetters: jest.fn(),
++        }))
++        ;(path as any).sep = '\\'
++      })
++
++      it('should normalize paths in the coverage map', () => {
++        const {
++          resultsWithLowerCaseWindowsDriveLetters,
++          coverageMapWithLowerCaseWindowsDriveLetters,
++        } = require('../../src/TestResults/TestResult')
++        const expected = {}
++        coverageMapWithLowerCaseWindowsDriveLetters.mockReturnValueOnce(expected)
++
++        const data: any = { coverageMap: {} }
++        expect(resultsWithLowerCaseWindowsDriveLetters(data)).toEqual({
++          coverageMap: expected,
++        })
++      })
++
++      it('should normalize paths in the test results', () => {
++        const {
++          resultsWithLowerCaseWindowsDriveLetters,
++          testResultsWithLowerCaseWindowsDriveLetters,
++        } = require('../../src/TestResults/TestResult')
++        const expected = {}
++        testResultsWithLowerCaseWindowsDriveLetters.mockReturnValueOnce(expected)
++
++        const data: any = { coverageMap: {} }
++        expect(resultsWithLowerCaseWindowsDriveLetters(data)).toEqual({
++          coverageMap: expected,
++        })
++      })
++    })
++  })
++
++  describe('testResultsWithLowerCaseWindowsDriveLetters', () => {
++    it('should return nothing the test results when the results are undefined', () => {
++      const testResults: any = undefined
++      expect(testResultsWithLowerCaseWindowsDriveLetters(testResults)).toBeUndefined()
++    })
++
++    it('should return the test results when no tests were run', () => {
++      const testResults: any = []
++      expect(testResultsWithLowerCaseWindowsDriveLetters(testResults)).toEqual(testResults)
++    })
++
++    it('should normalizes paths in the test results when provided', () => {
++      const testResults: any = [{ name: 'c:\\drive\\is\\lowercase' }, { name: 'D:\\drive\\is\\uppercase' }]
++      expect(testResultsWithLowerCaseWindowsDriveLetters(testResults)).toEqual([
++        { name: 'c:\\drive\\is\\lowercase' },
++        { name: 'd:\\drive\\is\\uppercase' },
++      ])
++    })
++  })
++
++  describe('coverageMapWithLowerCaseWindowsDriveLetters', () => {
++    it('should return nothing when coverage was not collected', () => {
++      const data: any = {}
++      expect(coverageMapWithLowerCaseWindowsDriveLetters(data)).toBeUndefined()
++    })
++
++    it('should normalizes paths in the coverage map when collected', () => {
++      const data: any = {
++        coverageMap: {
++          'c:\\drive\\is\\lowercase': {
++            path: 'c:\\drive\\is\\lowercase',
++            property: {},
++          },
++          'D:\\drive\\is\\uppercase': {
++            path: 'D:\\drive\\is\\uppercase',
++            property: {},
++          },
++        },
++      }
++      expect(coverageMapWithLowerCaseWindowsDriveLetters(data)).toEqual({
++        'c:\\drive\\is\\lowercase': {
++          path: 'c:\\drive\\is\\lowercase',
++          property: {},
++        },
++        'd:\\drive\\is\\uppercase': {
++          path: 'd:\\drive\\is\\uppercase',
++          property: {},
++        },
++      })
++    })
++  })
++
++  describe('withLowerCaseDriveLetter', () => {
++    it('should return a new file path when provided a path with an upper case drive letter', () => {
++      const filePath = 'C:\\path\\file.ext'
++      expect(withLowerCaseWindowsDriveLetter(filePath)).toBe('c:\\path\\file.ext')
++    })
++
++    it('should indicate no change is required otherwise', () => {
++      const filePath = 'c:\\path\\file.ext'
++      expect(withLowerCaseWindowsDriveLetter(filePath)).toBeUndefined()
++    })
++  })
++})
+diff --git a/tests/TestResultProvider.test.ts b/tests/TestResults/TestResultProvider.test.ts
+similarity index 86%
+rename from tests/TestResultProvider.test.ts
+rename to tests/TestResults/TestResultProvider.test.ts
+index f3cda2c..5bcb772 100644
+--- a/tests/TestResultProvider.test.ts
++++ b/tests/TestResults/TestResultProvider.test.ts
+@@ -1,4 +1,4 @@
+-jest.unmock('../src/TestResultProvider')
++jest.unmock('../../src/TestResults/TestResultProvider')
+ 
+ const updateFileWithJestStatus = jest.fn()
+ const assertionsForTestFile = jest.fn()
+@@ -30,9 +30,9 @@ jest.mock('path', () => {
+   return path
+ })
+ 
+-import { TestResultProvider } from '../src/TestResultProvider'
+-import { TestReconciliationState } from '../src/TestReconciliationState'
+-import { parseTest } from '../src/TestParser'
++import { TestResultProvider } from '../../src/TestResults/TestResultProvider'
++import { TestReconciliationState } from '../../src/TestResults'
++import { parseTest } from '../../src/TestParser'
+ 
+ describe('TestResultProvider', () => {
+   describe('getResults()', () => {
+@@ -149,28 +149,24 @@ describe('TestResultProvider', () => {
+   })
+ 
+   describe('updateTestResults()', () => {
+-    afterEach(() => pathProperties.sep.mockReset())
+-
+-    it('should update the cached file status', () => {
++    it('should reset the cache', () => {
+       const sut = new TestResultProvider()
+       const results: any = {}
++      sut.resetCache = jest.fn()
+       sut.updateTestResults(results)
+ 
+-      expect(updateFileWithJestStatus).toBeCalledWith(results)
++      expect(sut.resetCache).toBeCalled()
+     })
+ 
+-    it('should test file paths to use lowercase drive letters on Windows', () => {
+-      pathProperties.sep.mockReturnValue('\\')
++    it('should update the cached file status', () => {
++      const expected: any = {}
++      updateFileWithJestStatus.mockReturnValueOnce(expected)
+ 
+       const sut = new TestResultProvider()
+-      const results: any = {
+-        testResults: [{ name: 'relative.js' }, { name: 'c:\\stays-lowercase' }, { name: 'D:\\changes-case' }],
+-      }
+-      sut.updateTestResults(results)
++      const results: any = {}
+ 
+-      expect(updateFileWithJestStatus).toBeCalledWith({
+-        testResults: [{ name: 'relative.js' }, { name: 'c:\\stays-lowercase' }, { name: 'd:\\changes-case' }],
+-      })
++      expect(sut.updateTestResults(results)).toBe(expected)
++      expect(updateFileWithJestStatus).toBeCalledWith(results)
+     })
+   })
+ })
+diff --git a/tests/TestResults/__snapshots__/index.test.ts.snap b/tests/TestResults/__snapshots__/index.test.ts.snap
+new file mode 100644
+index 0000000..659aa18
+--- /dev/null
++++ b/tests/TestResults/__snapshots__/index.test.ts.snap
+@@ -0,0 +1,15 @@
++// Jest Snapshot v1, https://goo.gl/fbAQLP
++
++exports[`TestResults module.exports should match the snapshot 1`] = `
++Object {
++  "TestReconciliationState": Object {
++    "KnownFail": "KnownFail",
++    "KnownSkip": "KnownSkip",
++    "KnownSuccess": "KnownSuccess",
++    "Unknown": "Unknown",
++  },
++  "TestResult": undefined,
++  "TestResultProvider": [Function],
++  "resultsWithLowerCaseWindowsDriveLetters": [Function],
++}
++`;
+diff --git a/tests/TestResults/index.test.ts b/tests/TestResults/index.test.ts
+new file mode 100644
+index 0000000..e83b08c
+--- /dev/null
++++ b/tests/TestResults/index.test.ts
+@@ -0,0 +1,9 @@
++jest.disableAutomock()
++
++describe('TestResults', () => {
++  describe('module.exports', () => {
++    it('should match the snapshot', () => {
++      expect(require('../../src/TestResults')).toMatchSnapshot()
++    })
++  })
++})

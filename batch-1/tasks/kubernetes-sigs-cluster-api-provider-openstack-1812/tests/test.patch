@@ -1,0 +1,12 @@
+diff --git a/test/e2e/data/kustomize/flatcar-sysext/kustomization.yaml b/test/e2e/data/kustomize/flatcar-sysext/kustomization.yaml
+index f8d0816c..c3d83b26 100644
+--- a/test/e2e/data/kustomize/flatcar-sysext/kustomization.yaml
++++ b/test/e2e/data/kustomize/flatcar-sysext/kustomization.yaml
+@@ -1,6 +1,6 @@
+ ---
+ resources:
+-- ../../../../../kustomize/v1alpha7/flatcar-sysext
++- ../../../../../kustomize/v1alpha8/flatcar-sysext
+ 
+ components:
+ - ../common-patches/cni

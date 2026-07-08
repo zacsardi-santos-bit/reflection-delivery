@@ -1,0 +1,413 @@
+diff --git a/lib/collection/tests/integration/collection_test.rs b/lib/collection/tests/integration/collection_test.rs
+index 8c76b6ba0..45848da9e 100644
+--- a/lib/collection/tests/integration/collection_test.rs
++++ b/lib/collection/tests/integration/collection_test.rs
+@@ -745,11 +745,8 @@ async fn test_collection_delete_points_by_filter_with_shards(shard_number: u32)
+ 
+     // delete points with id (0, 3)
+     let to_be_deleted: HashSet<PointIdType> = vec![0.into(), 3.into()].into_iter().collect();
+-    let delete_filter = segment::types::Filter {
+-        should: None,
+-        must: Some(vec![Condition::HasId(HasIdCondition::from(to_be_deleted))]),
+-        must_not: None,
+-    };
++    let delete_filter =
++        segment::types::Filter::new_must(Condition::HasId(HasIdCondition::from(to_be_deleted)));
+ 
+     let delete_points = CollectionUpdateOperations::PointOperation(
+         PointOperations::DeletePointsByFilter(delete_filter),
+diff --git a/lib/segment/tests/integration/nested_filtering_test.rs b/lib/segment/tests/integration/nested_filtering_test.rs
+index aa6dfbeaa..7b11632c3 100644
+--- a/lib/segment/tests/integration/nested_filtering_test.rs
++++ b/lib/segment/tests/integration/nested_filtering_test.rs
+@@ -102,6 +102,7 @@ fn test_filtering_context_consistency() {
+                     Condition::Field(FieldCondition::new_match("c", 1.into())),
+                 ]),
+                 should: None,
++                min_should: None,
+                 must_not: Some(vec![Condition::Field(FieldCondition::new_range(
+                     "d",
+                     Range {
+@@ -144,6 +145,7 @@ fn test_filtering_context_consistency() {
+                     Condition::Field(FieldCondition::new_match("d", 0.into())),
+                 ]),
+                 should: None,
++                min_should: None,
+                 must_not: None,
+             },
+         );
+@@ -178,6 +180,7 @@ fn test_filtering_context_consistency() {
+                     Condition::Field(FieldCondition::new_match("d", 0.into())),
+                 ]),
+                 should: None,
++                min_should: None,
+                 must_not: None,
+             },
+         );
+@@ -200,14 +203,7 @@ fn test_filtering_context_consistency() {
+     {
+         let nested_condition_3 = Condition::new_nested(
+             "arr1",
+-            Filter {
+-                must: Some(vec![Condition::Field(FieldCondition::new_match(
+-                    "b",
+-                    1.into(),
+-                ))]),
+-                should: None,
+-                must_not: None,
+-            },
++            Filter::new_must(Condition::Field(FieldCondition::new_match("b", 1.into()))),
+         );
+ 
+         let nester_condition_3_1 = Condition::new_nested(
+@@ -215,16 +211,10 @@ fn test_filtering_context_consistency() {
+             Filter {
+                 must: Some(vec![Condition::new_nested(
+                     "arr3",
+-                    Filter {
+-                        must: Some(vec![Condition::Field(FieldCondition::new_match(
+-                            "b",
+-                            10.into(),
+-                        ))]),
+-                        should: None,
+-                        must_not: None,
+-                    },
++                    Filter::new_must(Condition::Field(FieldCondition::new_match("b", 10.into()))),
+                 )]),
+                 should: None,
++                min_should: None,
+                 must_not: None,
+             },
+         );
+@@ -232,6 +222,7 @@ fn test_filtering_context_consistency() {
+         let nested_filter_3 = Filter {
+             must: Some(vec![nested_condition_3, nester_condition_3_1]),
+             should: None,
++            min_should: None,
+             must_not: None,
+         };
+ 
+diff --git a/lib/segment/tests/integration/segment_tests.rs b/lib/segment/tests/integration/segment_tests.rs
+index 44696d4aa..333c99b15 100644
+--- a/lib/segment/tests/integration/segment_tests.rs
++++ b/lib/segment/tests/integration/segment_tests.rs
+@@ -44,11 +44,7 @@ fn test_point_exclusion() {
+ 
+     let ids: HashSet<_> = HashSet::from_iter([3.into()]);
+ 
+-    let frt = Filter {
+-        should: None,
+-        must: None,
+-        must_not: Some(vec![Condition::HasId(ids.into())]),
+-    };
++    let frt = Filter::new_must_not(Condition::HasId(ids.into()));
+ 
+     let res = segment
+         .search(
+@@ -105,6 +101,7 @@ fn test_named_vector_search() {
+ 
+     let frt = Filter {
+         should: None,
++        min_should: None,
+         must: None,
+         must_not: Some(vec![Condition::HasId(ids.into())]),
+     };
+diff --git a/openapi/tests/openapi_integration/helpers/collection_setup.py b/openapi/tests/openapi_integration/helpers/collection_setup.py
+index 7f5a648b2..fea7a3b01 100644
+--- a/openapi/tests/openapi_integration/helpers/collection_setup.py
++++ b/openapi/tests/openapi_integration/helpers/collection_setup.py
+@@ -218,6 +218,90 @@ def basic_collection_setup(
+     )
+     assert response.ok
+ 
++def multipayload_collection_setup(
++    collection_name='test_collection',
++    on_disk_payload=False,
++    on_disk_vectors=False,
++):
++    drop_collection(collection_name)
++
++    response = request_with_validation(
++        api='/collections/{collection_name}',
++        method="PUT",
++        path_params={'collection_name': collection_name},
++        body={
++            "vectors": {
++                "size": 4,
++                "distance": "Dot",
++                "on_disk": on_disk_vectors,
++            },
++            "sparse_vectors": {
++                "sparse-text": {},
++            },
++            "on_disk_payload": on_disk_payload
++        }
++    )
++    assert response.ok
++
++    response = request_with_validation(
++        api='/collections/{collection_name}',
++        method="GET",
++        path_params={'collection_name': collection_name},
++    )
++    assert response.ok
++
++    response = request_with_validation(
++        api='/collections/{collection_name}/points',
++        method="PUT",
++        path_params={'collection_name': collection_name},
++        query_params={'wait': 'true'},
++        body={
++            "points": [
++                {
++                    "id": 1,
++                    "vector": [0.05, 0.61, 0.76, 0.74],
++                    "payload": {"city": "Berlin", "color": "red"}
++                },
++                {
++                    "id": 2,
++                    "vector": [0.19, 0.81, 0.75, 0.11],
++                    "payload": {"city": ["Berlin", "London"], "color": "green"}
++                },
++                {
++                    "id": 3,
++                    "vector": [0.36, 0.55, 0.47, 0.94],
++                    "payload": {"city": ["Berlin", "Moscow"], "color": "blue"}
++                },
++                {
++                    "id": 4,
++                    "vector": [0.18, 0.01, 0.85, 0.80],
++                    "payload": {"city": ["London", "Moscow"], "color": "red"}
++                },
++                {
++                    "id": 5,
++                    "vector": [0.24, 0.18, 0.22, 0.44],
++                    "payload": {"city": "Seoul", "color": "red", "count": 0}
++                },
++                {
++                    "id": 6,
++                    "vector": [0.35, 0.08, 0.11, 0.44],
++                    "payload": {"city": "Berlin", "color": "red", "count": 1, "price": 10.0}
++                },
++                {
++                    "id": 7,
++                    "vector": [0.25, 0.98, 0.14, 0.43],
++                    "payload": {"city": "London", "color": "red", "count": 0, "price": 50.0}
++                },
++                {
++                    "id": 8,
++                    "vector": [0.19, 0.53, 0.72, 0.15],
++                    "payload": {"city": "Moscow", "color": "red", "count": 1, "price": 100.0}
++                },
++            ]
++        }
++    )
++    assert response.ok
++
+ 
+ def multivec_collection_setup(
+         collection_name='test_collection',
+diff --git a/openapi/tests/openapi_integration/test_filter_min_should.py b/openapi/tests/openapi_integration/test_filter_min_should.py
+new file mode 100644
+index 000000000..e61d6a15c
+--- /dev/null
++++ b/openapi/tests/openapi_integration/test_filter_min_should.py
+@@ -0,0 +1,197 @@
++import pytest
++
++from .helpers.collection_setup import multipayload_collection_setup, drop_collection
++from .helpers.helpers import request_with_validation
++
++collection_name = 'test_collection_filter_min_should'
++
++
++@pytest.fixture(autouse=True, scope="module")
++def setup(on_disk_vectors):
++    multipayload_collection_setup(collection_name=collection_name, on_disk_vectors=on_disk_vectors)
++    yield
++    drop_collection(collection_name=collection_name)
++
++
++def test_min_should():
++    response = request_with_validation(
++        api='/collections/{collection_name}/points/search',
++        method="POST",
++        path_params={'collection_name': collection_name},
++        body={
++            "vector": [0.2, 0.1, 0.9, 0.7],
++            "with_payload": ["city", "color", "count", "price"],
++            "limit": 6,
++            "filter": {
++                "min_should": {
++                    "conditions": [
++                        {
++                            "key": "city",
++                            "match": {
++                                "any": ["Berlin", "Moscow"]
++                            }
++                        },
++                        {
++                            "key": "color",
++                            "match": {
++                                "value": "red"
++                            }
++                        },
++                        {
++                            "key": "count",
++                            "match": {
++                                "value": 0
++                            }
++                        }
++                    ],
++                    "min_count": 2
++                }
++
++            }
++        }
++    )
++    assert response.ok
++
++    json = response.json()
++    assert len(json['result']) == 6
++
++    ids = [x['id'] for x in json['result']]
++    assert 1 in ids
++    assert 4 in ids
++    assert 5 in ids
++    assert 6 in ids
++    assert 7 in ids
++    assert 8 in ids
++
++
++def test_min_should_combined_with_must():
++    response = request_with_validation(
++        api='/collections/{collection_name}/points/search',
++        method="POST",
++        path_params={'collection_name': collection_name},
++        body={
++            "vector": [0.2, 0.1, 0.9, 0.7],
++            "with_payload": ["city", "color", "count", "price"],
++            "limit": 2,
++            "filter": {
++                "min_should": {
++                    "conditions": [
++                        {
++                            "key": "city",
++                            "match": {
++                                "any": ["Berlin", "Moscow"]
++                            }
++                        },
++                        {
++                            "key": "color",
++                            "match": {
++                                "value": "red"
++                            }
++                        },
++                        {
++                            "key": "count",
++                            "match": {
++                                "value": 0
++                            }
++                        }
++                    ],
++                    "min_count": 2
++                },
++                "must": [
++                    {
++                        "key": "price",
++                        "range": {
++                            "gt": None,
++                            "gte": 50.0,
++                            "lt": None,
++                            "lte": 200.0
++                        }
++                    }
++                ]
++            }
++        }
++    )
++    assert response.ok
++
++    json = response.json()
++    assert len(json['result']) == 2
++
++    ids = [x['id'] for x in json['result']]
++    assert 7 in ids
++    assert 8 in ids
++
++
++def test_nested_min_should():
++    response = request_with_validation(
++        api='/collections/{collection_name}/points/search',
++        method="POST",
++        path_params={'collection_name': collection_name},
++        body={
++            "vector": [0.2, 0.1, 0.9, 0.7],
++            "with_payload": ["city", "color", "count", "price"],
++            "limit": 2,
++            "filter": {
++                "must_not": [
++                    {
++                        "min_should": {
++                            "conditions": [
++                                {
++                                    "key": "city",
++                                    "match": {
++                                        "any": ["Berlin", "Moscow"]
++                                    }
++                                },
++                                {
++                                    "key": "color",
++                                    "match": {
++                                        "value": "red"
++                                    }
++                                },
++                                {
++                                    "key": "count",
++                                    "match": {
++                                        "value": 0
++                                    }
++                                }
++                            ],
++                            "min_count": 2
++                        },
++                    }
++                ] 
++            }
++        }
++    )
++    assert response.ok
++
++    json = response.json()
++    assert len(json['result']) == 2
++
++    ids = [x['id'] for x in json['result']]
++    assert 2 in ids
++    assert 3 in ids
++
++
++def test_missing_min_count():
++    response = request_with_validation(
++        api='/collections/{collection_name}/points/search',
++        method="POST",
++        path_params={'collection_name': collection_name},
++        body={
++            "vector": [0.2, 0.1, 0.9, 0.7],
++            "limit": 3,
++            "filter": {
++                "min_should": {
++                    "conditions": [
++                        {
++                            "key": "city",
++                            "match": {
++                                "any": ["London", "Moscow"]
++                            }
++                        }
++                    ]
++                }
++            }
++        }
++    )
++    assert not response.ok
++    assert response.status_code == 400
+\ No newline at end of file

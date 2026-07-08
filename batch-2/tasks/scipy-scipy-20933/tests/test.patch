@@ -1,0 +1,655 @@
+diff --git a/scipy/cluster/tests/test_vq.py b/scipy/cluster/tests/test_vq.py
+index 2f015f04d0..8565521667 100644
+--- a/scipy/cluster/tests/test_vq.py
++++ b/scipy/cluster/tests/test_vq.py
+@@ -355,7 +355,7 @@ class TestKMean:
+             init = _krandinit(data, k, rng, xp)
+             orig_cov = cov(data.T)
+             init_cov = cov(init.T)
+-            xp_assert_close(orig_cov, init_cov, atol=1e-2)
++            xp_assert_close(orig_cov, init_cov, atol=1.1e-2)
+ 
+     def test_kmeans2_empty(self, xp):
+         # Regression test for gh-1032.
+diff --git a/scipy/integrate/_ivp/tests/test_ivp.py b/scipy/integrate/_ivp/tests/test_ivp.py
+index 2443553f65..9c050b3e5b 100644
+--- a/scipy/integrate/_ivp/tests/test_ivp.py
++++ b/scipy/integrate/_ivp/tests/test_ivp.py
+@@ -7,7 +7,7 @@ import numpy as np
+ from scipy.optimize._numdiff import group_columns
+ from scipy.integrate import solve_ivp, RK23, RK45, DOP853, Radau, BDF, LSODA
+ from scipy.integrate import OdeSolution
+-from scipy.integrate._ivp.common import num_jac
++from scipy.integrate._ivp.common import num_jac, select_initial_step
+ from scipy.integrate._ivp.base import ConstantDenseOutput
+ from scipy.sparse import coo_matrix, csc_matrix
+ 
+@@ -598,7 +598,7 @@ def test_max_step():
+                 solver = method(fun_rational, t_span[0], y0, t_span[1],
+                                 rtol=rtol, atol=atol, max_step=1e-20)
+                 message = solver.step()
+-
++                message = solver.step()  # First step succeeds but second step fails.
+                 assert_equal(solver.status, 'failed')
+                 assert_("step size is less" in message)
+                 assert_raises(RuntimeError, solver.step)
+@@ -1128,9 +1128,117 @@ def test_args_single_value():
+     sol = solve_ivp(fun_with_arg, (0, 0.1), [1], args=(-1,))
+     assert_allclose(sol.y[0, -1], np.exp(-0.1))
+ 
++
+ @pytest.mark.parametrize("f0_fill", [np.nan, np.inf])
+ def test_initial_state_finiteness(f0_fill):
+     # regression test for gh-17846
+     msg = "All components of the initial state `y0` must be finite."
+     with pytest.raises(ValueError, match=msg):
+         solve_ivp(fun_zero, [0, 10], np.full(3, f0_fill))
++
++
++@pytest.mark.parametrize('method', ['RK23', 'RK45', 'DOP853', 'Radau', 'BDF'])
++def test_zero_interval(method):
++    # Case where upper and lower limits of integration are the same
++    # Result of integration should match initial state.
++    # f[y(t)] = 2y(t)
++    def f(t, y):
++        return 2 * y
++    res = solve_ivp(f, (0.0, 0.0), np.array([1.0]), method=method)
++    assert res.success
++    assert_allclose(res.y[0, -1], 1.0)
++    
++
++@pytest.mark.parametrize('method', ['RK23', 'RK45', 'DOP853', 'Radau', 'BDF'])
++def test_tbound_respected_small_interval(method):
++    """Regression test for gh-17341"""
++    SMALL = 1e-4
++
++    # f[y(t)] = 2y(t) on t in [0,SMALL]
++    #           undefined otherwise 
++    def f(t, y):
++        if t > SMALL:
++            raise ValueError("Function was evaluated outside interval")
++        return 2 * y
++    res = solve_ivp(f, (0.0, SMALL), np.array([1]), method=method)
++    assert res.success
++
++
++@pytest.mark.parametrize('method', ['RK23', 'RK45', 'DOP853', 'Radau', 'BDF'])
++def test_tbound_respected_larger_interval(method):
++    """Regression test for gh-8848"""
++    def V(r):
++        return -11/r + 10 * r / (0.05 + r**2)
++
++    def func(t, p):
++        if t < -17 or t > 2:
++            raise ValueError("Function was evaluated outside interval")
++        P = p[0]
++        Q = p[1]
++        r = np.exp(t)
++        dPdr = r * Q
++        dQdr = -2.0 * r * ((-0.2 - V(r)) * P + 1 / r * Q)
++        return np.array([dPdr, dQdr])
++
++    result = solve_ivp(func, 
++                       (-17, 2),
++                       y0=np.array([1, -11]),
++                       max_step=0.03,
++                       vectorized=False,
++                       t_eval=None,
++                       atol=1e-8, 
++                       rtol=1e-5)
++    assert result.success
++
++
++@pytest.mark.parametrize('method', ['RK23', 'RK45', 'DOP853', 'Radau', 'BDF'])
++def test_tbound_respected_oscillator(method):
++    "Regression test for gh-9198"
++    def reactions_func(t, y):
++        if (t > 205): 
++            raise ValueError("Called outside interval")
++        yprime = np.array([1.73307544e-02, 
++                           6.49376470e-06, 
++                           0.00000000e+00, 
++                           0.00000000e+00])
++        return yprime
++
++    def run_sim2(t_end, n_timepoints=10, shortest_delay_line=10000000):
++        init_state = np.array([134.08298555, 138.82348612, 100., 0.])
++        t0 = 100.0
++        t1 = 200.0
++        return solve_ivp(reactions_func,
++                         (t0, t1),
++                         init_state.copy(), 
++                         dense_output=True, 
++                         max_step=t1 - t0)
++    result = run_sim2(1000, 100, 100)
++    assert result.success
++
++
++def test_inital_maxstep():
++    """Verify that select_inital_step respects max_step"""
++    rtol = 1e-3
++    atol = 1e-6
++    y0 = np.array([1/3, 2/9])
++    for (t0, t_bound) in ((5, 9), (5, 1)):
++        for method_order in [RK23.error_estimator_order,
++                            RK45.error_estimator_order,
++                            DOP853.error_estimator_order,
++                            3, #RADAU
++                            1 #BDF
++                            ]:
++            step_no_max = select_initial_step(fun_rational, t0, y0, t_bound,
++                                            np.inf,
++                                            fun_rational(t0,y0), 
++                                            np.sign(t_bound - t0),
++                                            method_order,
++                                            rtol, atol)
++            max_step = step_no_max/2
++            step_with_max = select_initial_step(fun_rational, t0, y0, t_bound,
++                                            max_step,
++                                            fun_rational(t0, y0),
++                                            np.sign(t_bound - t0),
++                                            method_order, 
++                                            rtol, atol)
++            assert_equal(max_step, step_with_max)
+diff --git a/scipy/linalg/tests/test_decomp.py b/scipy/linalg/tests/test_decomp.py
+index 40904fea4c..b43016c027 100644
+--- a/scipy/linalg/tests/test_decomp.py
++++ b/scipy/linalg/tests/test_decomp.py
+@@ -181,7 +181,8 @@ class TestEig:
+         assert_equal(w, np.inf)
+         assert_allclose(vr, 1)
+ 
+-    def _check_gen_eig(self, A, B, atol_homog=1e-13, rtol_homog=1e-13):
++    def _check_gen_eig(self, A, B, atol_homog=1e-13, rtol_homog=1e-13,
++                                   atol=1e-13, rtol=1e-13):
+         if B is not None:
+             A, B = asarray(A), asarray(B)
+             B0 = B
+@@ -230,7 +231,7 @@ class TestEig:
+         for i in range(res.shape[1]):
+             if np.all(isfinite(res[:, i])):
+                 assert_allclose(res[:, i], 0,
+-                                rtol=1e-13, atol=1e-13, err_msg=msg)
++                                rtol=rtol, atol=atol, err_msg=msg)
+ 
+         # try to consistently order eigenvalues, including complex conjugate pairs
+         w_fin = w[isfinite(w)]
+@@ -269,7 +270,7 @@ class TestEig:
+                    [24, 35, 18, 21, 22]])
+ 
+         with np.errstate(all='ignore'):
+-            self._check_gen_eig(A, B, atol_homog=5e-13)
++            self._check_gen_eig(A, B, atol_homog=5e-13, atol=5e-13)
+ 
+     def test_falker(self):
+         # Test matrices giving some Nan generalized eigenvalues.
+diff --git a/scipy/optimize/tests/test__differential_evolution.py b/scipy/optimize/tests/test__differential_evolution.py
+index 1c71d332ee..536f928a84 100644
+--- a/scipy/optimize/tests/test__differential_evolution.py
++++ b/scipy/optimize/tests/test__differential_evolution.py
+@@ -1420,6 +1420,7 @@ class TestDifferentialEvolutionSolver:
+         assert_(np.all(res.x >= np.array(bounds)[:, 0]))
+         assert_(np.all(res.x <= np.array(bounds)[:, 1]))
+ 
++    @pytest.mark.fail_slow(5)
+     def test_L9(self):
+         # Lampinen ([5]) test problem 9
+ 
+diff --git a/scipy/optimize/tests/test_differentiate.py b/scipy/optimize/tests/test_differentiate.py
+index ad9407675b..195fec2f18 100644
+--- a/scipy/optimize/tests/test_differentiate.py
++++ b/scipy/optimize/tests/test_differentiate.py
+@@ -64,7 +64,7 @@ class TestDifferentiate:
+         assert_equal(res.df.shape, shape)
+ 
+         ref_error = [ref.error for ref in refs]
+-        assert_allclose(res.error.ravel(), ref_error, atol=5e-15)
++        assert_allclose(res.error.ravel(), ref_error, atol=1e-12)
+         assert_equal(res.error.shape, shape)
+ 
+         ref_success = [ref.success for ref in refs]
+diff --git a/scipy/signal/tests/meson.build b/scipy/signal/tests/meson.build
+index 28f45e1424..18cb3de8bf 100644
+--- a/scipy/signal/tests/meson.build
++++ b/scipy/signal/tests/meson.build
+@@ -17,7 +17,6 @@ py3.install_sources([
+     'test_short_time_fft.py',
+     'test_signaltools.py',
+     'test_spectral.py',
+-    'test_splines.py',
+     'test_upfirdn.py',
+     'test_waveforms.py',
+     'test_wavelets.py',
+diff --git a/scipy/signal/tests/test_splines.py b/scipy/signal/tests/test_splines.py
+deleted file mode 100644
+index bc4fbb3d3c..0000000000
+--- a/scipy/signal/tests/test_splines.py
++++ /dev/null
+@@ -1,312 +0,0 @@
+-# pylint: disable=missing-docstring
+-import numpy as np
+-from numpy import array
+-from numpy.testing import assert_allclose, assert_raises
+-import pytest
+-
+-from scipy.signal._spline import (
+-    symiirorder1_ic, symiirorder2_ic_fwd, symiirorder2_ic_bwd)
+-from scipy.signal._splines import symiirorder1, symiirorder2
+-
+-
+-def _compute_symiirorder2_bwd_hs(k, cs, rsq, omega):
+-    cssq = cs * cs
+-    k = np.abs(k)
+-    rsupk = np.power(rsq, k / 2.0)
+-
+-    c0 = (cssq * (1.0 + rsq) / (1.0 - rsq) /
+-          (1 - 2 * rsq * np.cos(2 * omega) + rsq * rsq))
+-    gamma = (1.0 - rsq) / (1.0 + rsq) / np.tan(omega)
+-    return c0 * rsupk * (np.cos(omega * k) + gamma * np.sin(omega * k))
+-
+-
+-class TestSymIIR:
+-    @pytest.mark.parametrize(
+-        'dtype', [np.float32, np.float64, np.complex64, np.complex128])
+-    @pytest.mark.parametrize('precision', [-1.0, 0.7, 0.5, 0.25, 0.0075])
+-    def test_symiir1_ic(self, dtype, precision):
+-        c_precision = precision
+-        if precision <= 0.0 or precision > 1.0:
+-            if dtype in {np.float32, np.complex64}:
+-                c_precision = 1e-6
+-            else:
+-                c_precision = 1e-11
+-
+-        # Symmetrical initial conditions for a IIR filter of order 1 are:
+-        # x[0] + z1 * \sum{k = 0}^{n - 1} x[k] * z1^k
+-
+-        # Check the initial condition for a low-pass filter
+-        # with coefficient b = 0.85 on a step signal. The initial condition is
+-        # a geometric series: 1 + b * \sum_{k = 0}^{n - 1} u[k] b^k.
+-
+-        # Finding the initial condition corresponds to
+-        # 1. Computing the index n such that b**n < precision, which
+-        # corresponds to ceil(log(precision) / log(b))
+-        # 2. Computing the geometric series until n, this can be computed
+-        # using the partial sum formula: (1 - b**n) / (1 - b)
+-        # This holds due to the input being a step signal.
+-        b = 0.85
+-        n_exp = int(np.ceil(np.log(c_precision) / np.log(b)))
+-        expected = np.asarray([[(1 - b ** n_exp) / (1 - b)]], dtype=dtype)
+-        expected = 1 + b * expected
+-
+-        # Create a step signal of size n + 1
+-        x = np.ones(n_exp + 1, dtype=dtype)
+-        assert_allclose(symiirorder1_ic(x, b, precision), expected,
+-                        atol=2e-6, rtol=2e-7)
+-
+-        # Check the conditions for a exponential decreasing signal with base 2.
+-        # Same conditions hold, as the product of 0.5^n * 0.85^n is
+-        # still a geometric series
+-        b_d = array(b, dtype=dtype)
+-        expected = np.asarray(
+-            [[(1 - (0.5 * b_d) ** n_exp) / (1 - (0.5 * b_d))]], dtype=dtype)
+-        expected = 1 + b_d * expected
+-
+-        # Create an exponential decreasing signal of size n + 1
+-        x = 2 ** -np.arange(n_exp + 1, dtype=dtype)
+-        assert_allclose(symiirorder1_ic(x, b, precision), expected,
+-                        atol=2e-6, rtol=2e-7)
+-
+-    def test_symiir1_ic_fails(self):
+-        # Test that symiirorder1_ic fails whenever \sum_{n = 1}^{n} b^n > eps
+-        b = 0.85
+-        # Create a step signal of size 100
+-        x = np.ones(100, dtype=np.float64)
+-
+-        # Compute the closed form for the geometrical series
+-        precision = 1 / (1 - b)
+-        assert_raises(ValueError, symiirorder1_ic, x, b, precision)
+-
+-        # Test that symiirorder1_ic fails when |z1| >= 1
+-        assert_raises(ValueError, symiirorder1_ic, x, 1.0, -1)
+-        assert_raises(ValueError, symiirorder1_ic, x, 2.0, -1)
+-
+-    @pytest.mark.parametrize(
+-        'dtype', [np.float32, np.float64, np.complex64, np.complex128])
+-    @pytest.mark.parametrize('precision', [-1.0, 0.7, 0.5, 0.25, 0.0075])
+-    def test_symiir1(self, dtype, precision):
+-        c_precision = precision
+-        if precision <= 0.0 or precision > 1.0:
+-            if dtype in {np.float32, np.complex64}:
+-                c_precision = 1e-6
+-            else:
+-                c_precision = 1e-11
+-
+-        # Test for a low-pass filter with c0 = 0.15 and z1 = 0.85
+-        # using an unit step over 200 samples.
+-        c0 = 0.15
+-        z1 = 0.85
+-        n = 200
+-        signal = np.ones(n, dtype=dtype)
+-
+-        # Find the initial condition. See test_symiir1_ic for a detailed
+-        # explanation
+-        n_exp = int(np.ceil(np.log(c_precision) / np.log(z1)))
+-        initial = np.asarray((1 - z1 ** n_exp) / (1 - z1), dtype=dtype)
+-        initial = 1 + z1 * initial
+-
+-        # Forward pass
+-        # The transfer function for the system 1 / (1 - z1 * z^-1) when
+-        # applied to an unit step with initial conditions y0 is
+-        # 1 / (1 - z1 * z^-1) * (z^-1 / (1 - z^-1) + y0)
+-
+-        # Solving the inverse Z-transform for the given expression yields:
+-        # y[n] = y0 * z1**n * u[n] +
+-        #        -z1 / (1 - z1) * z1**(k - 1) * u[k - 1] +
+-        #        1 / (1 - z1) * u[k - 1]
+-        # d is the Kronecker delta function, and u is the unit step
+-
+-        # y0 * z1**n * u[n]
+-        pos = np.arange(n, dtype=dtype)
+-        comp1 = initial * z1**pos
+-
+-        # -z1 / (1 - z1) * z1**(k - 1) * u[k - 1]
+-        comp2 = np.zeros(n, dtype=dtype)
+-        comp2[1:] = -z1 / (1 - z1) * z1**pos[:-1]
+-
+-        # 1 / (1 - z1) * u[k - 1]
+-        comp3 = np.zeros(n, dtype=dtype)
+-        comp3[1:] = 1 / (1 - z1)
+-
+-        expected_fwd = comp1 + comp2 + comp3
+-
+-        # Reverse condition
+-        sym_cond = -c0 / (z1 - 1.0) * expected_fwd[-1]
+-
+-        # Backward pass
+-        # The transfer function for the forward result is equivalent to
+-        # the forward system times c0 / (1 - z1 * z).
+-
+-        # Computing a closed form for the complete expression is difficult
+-        # The result will be computed iteratively from the difference equation
+-        exp_out = np.zeros(n, dtype=dtype)
+-        exp_out[0] = sym_cond
+-
+-        for i in range(1, n):
+-            exp_out[i] = c0 * expected_fwd[n - 1 - i] + z1 * exp_out[i - 1]
+-
+-        exp_out = exp_out[::-1]
+-
+-        out = symiirorder1(signal, c0, z1, precision)
+-        assert_allclose(out, exp_out, atol=4e-6, rtol=6e-7)
+-
+-    @pytest.mark.parametrize(
+-        'dtype', [np.float32, np.float64])
+-    @pytest.mark.parametrize('precision', [-1.0, 0.7, 0.5, 0.25, 0.0075])
+-    def test_symiir2_initial_fwd(self, dtype, precision):
+-        c_precision = precision
+-        if precision <= 0.0 or precision > 1.0:
+-            if dtype in {np.float32, np.complex64}:
+-                c_precision = 1e-6
+-            else:
+-                c_precision = 1e-11
+-
+-        # Compute the initial conditions for a order-two symmetrical low-pass
+-        # filter with r = 0.5 and omega = pi / 3 for an unit step input.
+-        r = np.asarray(0.5, dtype=dtype)
+-        omega = np.asarray(np.pi / 3.0, dtype=dtype)
+-        cs = 1 - 2 * r * np.cos(omega) + r**2
+-
+-        # The index n for the initial condition is bound from 0 to the
+-        # first position where sin(omega * (n + 2)) = 0 => omega * (n + 2) = pi
+-        # For omega = pi / 3, the maximum initial condition occurs when
+-        # sqrt(3) / 2 * r**n < precision.
+-        # => n = log(2 * sqrt(3) / 3 * precision) / log(r)
+-        ub = np.ceil(np.log(c_precision / np.sin(omega)) / np.log(c_precision))
+-        lb = np.ceil(np.pi / omega) - 2
+-        n_exp = min(ub, lb)
+-
+-        # The forward initial condition for a filter of order two is:
+-        # \frac{cs}{\sin(\omega)} \sum_{n = 0}^{N - 1} {
+-        #    r^(n + 1) \sin{\omega(n + 2)}} + cs
+-        # The closed expression for this sum is:
+-        # s[n] = 2 * r * np.cos(omega) -
+-        #        r**2 - r**(n + 2) * np.sin(omega * (n + 3)) / np.sin(omega) +
+-        #        r**(n + 3) * np.sin(omega * (n + 2)) / np.sin(omega) + cs
+-        fwd_initial_1 = (
+-            cs +
+-            2 * r * np.cos(omega) -
+-            r**2 -
+-            r**(n_exp + 2) * np.sin(omega * (n_exp + 3)) / np.sin(omega) +
+-            r**(n_exp + 3) * np.sin(omega * (n_exp + 2)) / np.sin(omega))
+-
+-        # The second initial condition is given by
+-        # s[n] = 1 / np.sin(omega) * (
+-        #        r**2 * np.sin(3 * omega) -
+-        #        r**3 * np.sin(2 * omega) -
+-        #        r**(n + 3) * np.sin(omega * (n + 4)) +
+-        #        r**(n + 4) * np.sin(omega * (n + 3)))
+-        ub = np.ceil(np.log(c_precision / np.sin(omega)) / np.log(c_precision))
+-        lb = np.ceil(np.pi / omega) - 3
+-        n_exp = min(ub, lb)
+-
+-        fwd_initial_2 = (
+-            cs + cs * 2 * r * np.cos(omega) +
+-            (r**2 * np.sin(3 * omega) -
+-             r**3 * np.sin(2 * omega) -
+-             r**(n_exp + 3) * np.sin(omega * (n_exp + 4)) +
+-             r**(n_exp + 4) * np.sin(omega * (n_exp + 3))) / np.sin(omega))
+-
+-        expected = np.r_[fwd_initial_1, fwd_initial_2][None, :]
+-
+-        n = 100
+-        signal = np.ones(n, dtype=dtype)
+-
+-        out = symiirorder2_ic_fwd(signal, r, omega, precision)
+-        assert_allclose(out, expected, atol=4e-6, rtol=6e-7)
+-
+-    @pytest.mark.parametrize(
+-        'dtype', [np.float32, np.float64])
+-    @pytest.mark.parametrize('precision', [-1.0, 0.7, 0.5, 0.25, 0.0075])
+-    def test_symiir2_initial_bwd(self, dtype, precision):
+-        c_precision = precision
+-        if precision <= 0.0 or precision > 1.0:
+-            if dtype in {np.float32, np.complex64}:
+-                c_precision = 1e-6
+-            else:
+-                c_precision = 1e-11
+-
+-        r = np.asarray(0.5, dtype=dtype)
+-        omega = np.asarray(np.pi / 3.0, dtype=dtype)
+-        cs = 1 - 2 * r * np.cos(omega) + r * r
+-        a2 = 2 * r * np.cos(omega)
+-        a3 = -r * r
+-
+-        n = 100
+-        signal = np.ones(n, dtype=dtype)
+-
+-        # Compute initial forward conditions
+-        ic = symiirorder2_ic_fwd(signal, r, omega, precision)
+-        out = np.zeros(n + 2, dtype=dtype)
+-        out[:2] = ic[0]
+-
+-        # Apply the forward system cs / (1 - a2 * z^-1 - a3 * z^-2))
+-        for i in range(2, n + 2):
+-            out[i] = cs * signal[i - 2] + a2 * out[i - 1] + a3 * out[i - 2]
+-
+-        # Find the backward initial conditions
+-        ic2 = np.zeros(2, dtype=dtype)
+-        idx = np.arange(n)
+-
+-        diff = (_compute_symiirorder2_bwd_hs(idx, cs, r * r, omega) +
+-                _compute_symiirorder2_bwd_hs(idx + 1, cs, r * r, omega))
+-        ic2_0_all = np.cumsum(diff * out[:1:-1])
+-        pos = np.where(diff ** 2 < c_precision)[0]
+-        ic2[0] = ic2_0_all[pos[0]]
+-
+-        diff = (_compute_symiirorder2_bwd_hs(idx - 1, cs, r * r, omega) +
+-                _compute_symiirorder2_bwd_hs(idx + 2, cs, r * r, omega))
+-        ic2_1_all = np.cumsum(diff * out[:1:-1])
+-        pos = np.where(diff ** 2 < c_precision)[0]
+-        ic2[1] = ic2_1_all[pos[0]]
+-
+-        out_ic = symiirorder2_ic_bwd(out, r, omega, precision)[0]
+-        assert_allclose(out_ic, ic2, atol=4e-6, rtol=6e-7)
+-
+-    @pytest.mark.parametrize(
+-        'dtype', [np.float32, np.float64])
+-    @pytest.mark.parametrize('precision', [-1.0, 0.7, 0.5, 0.25, 0.0075])
+-    def test_symiir2(self, dtype, precision):
+-        r = np.asarray(0.5, dtype=dtype)
+-        omega = np.asarray(np.pi / 3.0, dtype=dtype)
+-        cs = 1 - 2 * r * np.cos(omega) + r * r
+-        a2 = 2 * r * np.cos(omega)
+-        a3 = -r * r
+-
+-        n = 100
+-        signal = np.ones(n, dtype=dtype)
+-
+-        # Compute initial forward conditions
+-        ic = symiirorder2_ic_fwd(signal, r, omega, precision)
+-        out1 = np.zeros(n + 2, dtype=dtype)
+-        out1[:2] = ic[0]
+-
+-        # Apply the forward system cs / (1 - a2 * z^-1 - a3 * z^-2))
+-        for i in range(2, n + 2):
+-            out1[i] = cs * signal[i - 2] + a2 * out1[i - 1] + a3 * out1[i - 2]
+-
+-        # Find the backward initial conditions
+-        ic2 = symiirorder2_ic_bwd(out1, r, omega, precision)[0]
+-
+-        # Apply the system cs / (1 - a2 * z - a3 * z^2)) in backwards
+-        exp = np.empty(n, dtype=dtype)
+-        exp[-2:] = ic2[::-1]
+-
+-        for i in range(n - 3, -1, -1):
+-            exp[i] = cs * out1[i] + a2 * exp[i + 1] + a3 * exp[i + 2]
+-
+-        out = symiirorder2(signal, r, omega, precision)
+-        assert_allclose(out, exp, atol=4e-6, rtol=6e-7)
+-
+-    def test_symiir1_integer_input(self):
+-        s = np.where(np.arange(100) % 2, -1, 1)
+-        expected = symiirorder1(s.astype(float), 0.5, 0.5)
+-        out = symiirorder1(s, 0.5, 0.5)
+-        assert_allclose(out, expected)
+-
+-    def test_symiir2_integer_input(self):
+-        s = np.where(np.arange(100) % 2, -1, 1)
+-        expected = symiirorder2(s.astype(float), 0.5, np.pi / 3.0)
+-        out = symiirorder2(s, 0.5, np.pi / 3.0)
+-        assert_allclose(out, expected)
+\ No newline at end of file
+diff --git a/scipy/sparse/linalg/_isolve/tests/test_iterative.py b/scipy/sparse/linalg/_isolve/tests/test_iterative.py
+index 2fda70fcb3..c57232352d 100644
+--- a/scipy/sparse/linalg/_isolve/tests/test_iterative.py
++++ b/scipy/sparse/linalg/_isolve/tests/test_iterative.py
+@@ -506,7 +506,7 @@ def test_x0_working(solver):
+ 
+     x, info = solver(A, b, x0=x0, **kw)
+     assert info == 0
+-    assert norm(A @ x - b) <= 2e-6*norm(b)
++    assert norm(A @ x - b) <= 3e-6*norm(b)
+ 
+ 
+ def test_x0_equals_Mb(case):
+diff --git a/scipy/special/tests/test_hyp2f1.py b/scipy/special/tests/test_hyp2f1.py
+index f5a7978abe..6c2f6ec103 100644
+--- a/scipy/special/tests/test_hyp2f1.py
++++ b/scipy/special/tests/test_hyp2f1.py
+@@ -791,7 +791,7 @@ class TestHyp2f1:
+                     c=2.0397202577726152,
+                     z=(-0.3157894736842106+0.7368421052631575j),
+                     expected=(54749.216391029935-23078.144720887536j),
+-                    rtol=1e-15,
++                    rtol=2e-15,
+                 ),
+             ),
+             pytest.param(
+@@ -2183,7 +2183,7 @@ class TestHyp2f1:
+                     c=16.088264119063613,
+                     z=(0.26551724137931054+1.024137931034483j),
+                     expected=(-0.18515160890991517+0.7959014164484782j),
+-                    rtol=1.1e-15,
++                    rtol=2e-15,
+                 ),
+             ),
+             pytest.param(
+diff --git a/scipy/stats/tests/test_axis_nan_policy.py b/scipy/stats/tests/test_axis_nan_policy.py
+index 1c548fd631..bf01307a14 100644
+--- a/scipy/stats/tests/test_axis_nan_policy.py
++++ b/scipy/stats/tests/test_axis_nan_policy.py
+@@ -547,11 +547,15 @@ def test_axis_nan_policy_axis_is_None(hypotest, args, kwds, n_samples,
+ #     - Zero-sized output
+ @pytest.mark.filterwarnings('ignore:All axis-slices of one...')
+ @pytest.mark.filterwarnings('ignore:After omitting NaNs...')
++# These were added in gh-20734 for `ttest_1samp`; they should be addressed and removed
++@pytest.mark.filterwarnings('ignore:divide by zero encountered...')
++@pytest.mark.filterwarnings('ignore:invalid value encountered...')
+ @pytest.mark.parametrize("nan_policy", ("omit", "propagate"))
+ @pytest.mark.parametrize(
+     ("hypotest", "args", "kwds", "n_samples", "unpacker"),
+     ((stats.gmean, tuple(), dict(), 1, lambda x: (x,)),
+-     (stats.mannwhitneyu, tuple(), {'method': 'asymptotic'}, 2, None))
++     (stats.mannwhitneyu, tuple(), {'method': 'asymptotic'}, 2, None),
++     (stats.ttest_1samp, (0,), dict(), 1, unpack_ttest_result))
+ )
+ @pytest.mark.parametrize(
+     ("sample_shape", "axis_cases"),
+diff --git a/scipy/stats/tests/test_distributions.py b/scipy/stats/tests/test_distributions.py
+index 4e8dfc5257..ae3ffa7a6f 100644
+--- a/scipy/stats/tests/test_distributions.py
++++ b/scipy/stats/tests/test_distributions.py
+@@ -7338,7 +7338,20 @@ class TestTrapezoid:
+     def test_trapz(self):
+         # Basic test for alias
+         x = np.linspace(0, 1, 10)
+-        assert_almost_equal(stats.trapz.pdf(x, 0, 1), stats.uniform.pdf(x))
++        with pytest.deprecated_call(match="`trapz.pdf` is deprecated"):
++            result = stats.trapz.pdf(x, 0, 1)
++        assert_almost_equal(result, stats.uniform.pdf(x))
++
++    @pytest.mark.parametrize('method', ['pdf', 'logpdf', 'cdf', 'logcdf',
++                                        'sf', 'logsf', 'ppf', 'isf'])
++    def test_trapz_deprecation(self, method):
++        c, d = 0.2, 0.8
++        expected = getattr(stats.trapezoid, method)(1, c, d)
++        with pytest.deprecated_call(
++            match=f"`trapz.{method}` is deprecated",
++        ):
++            result = getattr(stats.trapz, method)(1, c, d)
++        assert result == expected
+ 
+ 
+ class TestTriang:
+diff --git a/scipy/stats/tests/test_resampling.py b/scipy/stats/tests/test_resampling.py
+index 2d296f4d0d..8972d626d7 100644
+--- a/scipy/stats/tests/test_resampling.py
++++ b/scipy/stats/tests/test_resampling.py
+@@ -732,6 +732,27 @@ def test_vector_valued_statistic_gh17715():
+                     ref.confidence_interval.high, atol=1e-15)
+ 
+ 
++def test_gh_20850():
++    rng = np.random.default_rng(2085020850)
++    x = rng.random((10, 2))
++    y = rng.random((11, 2))
++    def statistic(x, y, axis):
++        return stats.ttest_ind(x, y, axis=axis).statistic
++
++    # The shapes do *not* need to be the same along axis
++    stats.bootstrap((x, y), statistic)
++    stats.bootstrap((x.T, y.T), statistic, axis=1)
++    # But even when the shapes *are* the same along axis, the lengths
++    # along other dimensions have to be the same (or `bootstrap` warns).
++    message = "Ignoring the dimension specified by `axis`..."
++    with pytest.warns(FutureWarning, match=message):
++        stats.bootstrap((x, y[:10, 0]), statistic)  # this won't work after 1.16
++    with pytest.warns(FutureWarning, match=message):
++        stats.bootstrap((x, y[:10, 0:1]), statistic)  # this will
++    with pytest.warns(FutureWarning, match=message):
++        stats.bootstrap((x.T, y.T[0:1, :10]), statistic, axis=1)  # this will
++
++
+ # --- Test Monte Carlo Hypothesis Test --- #
+ 
+ class TestMonteCarloHypothesisTest:

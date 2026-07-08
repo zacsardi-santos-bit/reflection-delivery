@@ -1,0 +1,18 @@
+diff --git a/src/docker/shared.rs b/src/docker/shared.rs
+--- a/src/docker/shared.rs
++++ b/src/docker/shared.rs
+@@ -1297,4 +1297,14 @@ mod tests {
+             assert_eq!(Vec::<MountDetail>::new(), actual);
+         }
+     }
++
++    mod assemble_api_tests {
++        use super::*;
++
++        #[test]
++        fn test_directories_assemble_renamed() {
++            let _ = Directories::assemble;
++        }
++    }
++
+ }

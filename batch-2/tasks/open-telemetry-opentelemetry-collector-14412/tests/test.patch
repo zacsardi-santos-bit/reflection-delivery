@@ -1,0 +1,1031 @@
+diff --git a/service/internal/resource/config_test.go b/service/internal/resource/config_test.go
+deleted file mode 100644
+index 3ebfd04e3..000000000
+--- a/service/internal/resource/config_test.go
++++ /dev/null
+@@ -1,169 +0,0 @@
+-// Copyright The OpenTelemetry Authors
+-// SPDX-License-Identifier: Apache-2.0
+-
+-package resource
+-
+-import (
+-	"testing"
+-
+-	"github.com/google/uuid"
+-	"github.com/stretchr/testify/assert"
+-	"github.com/stretchr/testify/require"
+-	sdkresource "go.opentelemetry.io/otel/sdk/resource"
+-
+-	"go.opentelemetry.io/collector/component"
+-	"go.opentelemetry.io/collector/pdata/pcommon"
+-)
+-
+-const (
+-	randomUUIDSpecialValue = "random-uuid"
+-)
+-
+-var buildInfo = component.BuildInfo{
+-	Command: "otelcol",
+-	Version: "1.0.0",
+-}
+-
+-func ptr[T any](v T) *T {
+-	return &v
+-}
+-
+-func TestNew(t *testing.T) {
+-	tests := []struct {
+-		name        string
+-		resourceCfg map[string]*string
+-		want        map[string]string
+-	}{
+-		{
+-			name:        "empty",
+-			resourceCfg: map[string]*string{},
+-			want: map[string]string{
+-				"service.name":        "otelcol",
+-				"service.version":     "1.0.0",
+-				"service.instance.id": randomUUIDSpecialValue,
+-			},
+-		},
+-		{
+-			name: "overwrite",
+-			resourceCfg: map[string]*string{
+-				"service.name":        ptr("my-service"),
+-				"service.version":     ptr("1.2.3"),
+-				"service.instance.id": ptr("123"),
+-			},
+-			want: map[string]string{
+-				"service.name":        "my-service",
+-				"service.version":     "1.2.3",
+-				"service.instance.id": "123",
+-			},
+-		},
+-		{
+-			name: "remove",
+-			resourceCfg: map[string]*string{
+-				"service.name":        nil,
+-				"service.version":     nil,
+-				"service.instance.id": nil,
+-			},
+-			want: map[string]string{},
+-		},
+-		{
+-			name: "add",
+-			resourceCfg: map[string]*string{
+-				"host.name": ptr("my-host"),
+-			},
+-			want: map[string]string{
+-				"service.name":        "otelcol",
+-				"service.version":     "1.0.0",
+-				"service.instance.id": randomUUIDSpecialValue,
+-				"host.name":           "my-host",
+-			},
+-		},
+-	}
+-
+-	for _, tt := range tests {
+-		t.Run(tt.name, func(t *testing.T) {
+-			res := New(buildInfo, tt.resourceCfg)
+-			got := make(map[string]string)
+-			for _, attr := range res.Attributes() {
+-				got[string(attr.Key)] = attr.Value.Emit()
+-			}
+-
+-			if tt.want["service.instance.id"] == randomUUIDSpecialValue {
+-				assert.Contains(t, got, "service.instance.id")
+-
+-				// Check that the value is a valid UUID.
+-				_, err := uuid.Parse(got["service.instance.id"])
+-				require.NoError(t, err)
+-
+-				// Remove so that we can compare the rest of the map.
+-				delete(got, "service.instance.id")
+-				delete(tt.want, "service.instance.id")
+-			}
+-
+-			assert.Equal(t, tt.want, got)
+-		})
+-	}
+-}
+-
+-func pdataFromSdk(res *sdkresource.Resource) pcommon.Resource {
+-	// pcommon.NewResource is the best way to generate a new resource currently and is safe to use outside of tests.
+-	// Because the resource is signal agnostic, and we need a net new resource, not an existing one, this is the only
+-	// method of creating it without exposing internal packages.
+-	pcommonRes := pcommon.NewResource()
+-	for _, keyValue := range res.Attributes() {
+-		pcommonRes.Attributes().PutStr(string(keyValue.Key), keyValue.Value.AsString())
+-	}
+-	return pcommonRes
+-}
+-
+-func TestBuildResource(t *testing.T) {
+-	buildInfo := component.NewDefaultBuildInfo()
+-
+-	// Check default config
+-	var resMap map[string]*string
+-	otelRes := New(buildInfo, resMap)
+-	res := pdataFromSdk(otelRes)
+-
+-	assert.Equal(t, 3, res.Attributes().Len())
+-	value, ok := res.Attributes().Get("service.name")
+-	assert.True(t, ok)
+-	assert.Equal(t, buildInfo.Command, value.AsString())
+-	value, ok = res.Attributes().Get("service.version")
+-	assert.True(t, ok)
+-	assert.Equal(t, buildInfo.Version, value.AsString())
+-
+-	_, ok = res.Attributes().Get("service.instance.id")
+-	assert.True(t, ok)
+-
+-	// Check override by nil
+-	resMap = map[string]*string{
+-		"service.name":        nil,
+-		"service.version":     nil,
+-		"service.instance.id": nil,
+-	}
+-	otelRes = New(buildInfo, resMap)
+-	res = pdataFromSdk(otelRes)
+-
+-	// Attributes should not exist since we nil-ified all.
+-	assert.Equal(t, 0, res.Attributes().Len())
+-
+-	// Check override values
+-	strPtr := func(v string) *string { return &v }
+-	resMap = map[string]*string{
+-		"service.name":        strPtr("a"),
+-		"service.version":     strPtr("b"),
+-		"service.instance.id": strPtr("c"),
+-	}
+-	otelRes = New(buildInfo, resMap)
+-	res = pdataFromSdk(otelRes)
+-
+-	assert.Equal(t, 3, res.Attributes().Len())
+-	value, ok = res.Attributes().Get("service.name")
+-	assert.True(t, ok)
+-	assert.Equal(t, "a", value.AsString())
+-	value, ok = res.Attributes().Get("service.version")
+-	assert.True(t, ok)
+-	assert.Equal(t, "b", value.AsString())
+-	value, ok = res.Attributes().Get("service.instance.id")
+-	assert.True(t, ok)
+-	assert.Equal(t, "c", value.AsString())
+-}
+diff --git a/service/telemetry/otelconftelemetry/config_test.go b/service/telemetry/otelconftelemetry/config_test.go
+index 86f6d6dd4..278b6488a 100644
+--- a/service/telemetry/otelconftelemetry/config_test.go
++++ b/service/telemetry/otelconftelemetry/config_test.go
+@@ -18,6 +18,7 @@ import (
+ 	"go.opentelemetry.io/collector/confmap"
+ 	"go.opentelemetry.io/collector/confmap/confmaptest"
+ 	"go.opentelemetry.io/collector/confmap/xconfmap"
++	"go.opentelemetry.io/collector/service/telemetry/otelconftelemetry/internal/migration"
+ )
+ 
+ func TestComponentConfigStruct(t *testing.T) {
+@@ -126,3 +127,36 @@ func TestConfig(t *testing.T) {
+ 		})
+ 	}
+ }
++
++func TestConfigMarshalResource(t *testing.T) {
++	cfg := createDefaultConfig().(*Config)
++	cfg.Resource = migration.ResourceConfigV030{
++		Resource: config.Resource{
++			Attributes: []config.AttributeNameValue{
++				{Name: "service.name", Value: "custom-service"},
++			},
++		},
++		LegacyAttributes: map[string]any{
++			"legacy.attr":     "legacy-value",
++			"service.version": nil,
++		},
++	}
++
++	cm := confmap.New()
++	require.NoError(t, cm.Marshal(cfg))
++	raw := cm.ToStringMap()
++
++	resourceRaw, ok := raw["resource"].(map[string]any)
++	require.True(t, ok)
++	assert.Equal(t, "legacy-value", resourceRaw["legacy.attr"])
++	assert.Contains(t, resourceRaw, "service.version")
++	assert.Nil(t, resourceRaw["service.version"])
++
++	attrs, ok := resourceRaw["attributes"].([]any)
++	require.True(t, ok)
++	require.Len(t, attrs, 1)
++	attr, ok := attrs[0].(map[string]any)
++	require.True(t, ok)
++	assert.Equal(t, "service.name", attr["name"])
++	assert.Equal(t, "custom-service", attr["value"])
++}
+diff --git a/service/telemetry/otelconftelemetry/internal/migration/v0.3.0_test.go b/service/telemetry/otelconftelemetry/internal/migration/v0.3.0_test.go
+index 48a400172..b8a91fa26 100644
+--- a/service/telemetry/otelconftelemetry/internal/migration/v0.3.0_test.go
++++ b/service/telemetry/otelconftelemetry/internal/migration/v0.3.0_test.go
+@@ -12,6 +12,7 @@ import (
+ 
+ 	"go.opentelemetry.io/collector/confmap"
+ 	"go.opentelemetry.io/collector/confmap/confmaptest"
++	"go.opentelemetry.io/collector/confmap/xconfmap"
+ )
+ 
+ func TestUnmarshalLogsConfigV030(t *testing.T) {
+@@ -99,3 +100,142 @@ func TestMarshalMetricsConfigV030(t *testing.T) {
+ 
+ 	assert.Equal(t, cm2.ToStringMap(), cm3.ToStringMap())
+ }
++
++func TestResourceConfigV030UnmarshalLegacyFormat(t *testing.T) {
++	t.Run("unknown keys treated as legacy", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"service.name": "my-service",
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Empty(t, cfg.Attributes)
++		assert.Equal(t, "my-service", cfg.LegacyAttributes["service.name"])
++	})
++
++	t.Run("schema_url declared", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"schema_url": "https://opentelemetry.io/schemas/1.38.0",
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Empty(t, cfg.Attributes)
++		require.NotNil(t, cfg.SchemaUrl)
++		assert.Equal(t, "https://opentelemetry.io/schemas/1.38.0", *cfg.SchemaUrl)
++	})
++
++	t.Run("no declarative keys", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"custom.attr": "value",
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Empty(t, cfg.Attributes)
++		assert.Equal(t, "value", cfg.LegacyAttributes["custom.attr"])
++	})
++
++	t.Run("legacy with removed values", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"service.name":  nil,
++			"service.other": "value",
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Equal(t, "value", cfg.LegacyAttributes["service.other"])
++	})
++
++	t.Run("legacy validation error", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"bad.value": map[string]any{"nested": "value"},
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		require.Error(t, xconfmap.Validate(&cfg))
++	})
++}
++
++func TestResourceConfigV030UnmarshalDeclarativeFormat(t *testing.T) {
++	t.Run("attributes list", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"attributes": []any{
++				map[string]any{"name": "service.name", "value": "svc"},
++			},
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Len(t, cfg.Attributes, 1)
++		assert.Equal(t, "service.name", cfg.Attributes[0].Name)
++		assert.Equal(t, "svc", cfg.Attributes[0].Value)
++		assert.Empty(t, cfg.LegacyAttributes)
++	})
++
++	t.Run("schema_url only", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"schema_url": "https://opentelemetry.io/schemas/1.38.0",
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Empty(t, cfg.Attributes)
++		require.NotNil(t, cfg.SchemaUrl)
++		assert.Equal(t, "https://opentelemetry.io/schemas/1.38.0", *cfg.SchemaUrl)
++	})
++
++	t.Run("schema keys with legacy attributes", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"schema_url":  "https://opentelemetry.io/schemas/1.38.0",
++			"legacy.attr": "value",
++			"remove.attr": nil,
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Equal(t, "value", cfg.LegacyAttributes["legacy.attr"])
++	})
++
++	t.Run("attributes with legacy attributes validation error", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"attributes":  []any{map[string]any{"name": "service.name", "value": "svc"}},
++			"legacy.attr": "value",
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		require.ErrorContains(t, xconfmap.Validate(&cfg), "resource::attributes cannot be used together with legacy inline resource attributes")
++	})
++
++	t.Run("declarative only with detectors", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"detectors": map[string]any{
++				"attributes": map[string]any{
++					"included": []any{"host"},
++				},
++			},
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Empty(t, cfg.Attributes)
++	})
++
++	t.Run("nil raw map", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any(nil))
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		assert.Empty(t, cfg.Attributes)
++	})
++
++	t.Run("declarative unmarshal error", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"attributes_list": 123,
++		})
++		var cfg ResourceConfigV030
++		require.Error(t, conf.Unmarshal(&cfg))
++	})
++
++	t.Run("declarative null value allowed", func(t *testing.T) {
++		conf := confmap.NewFromStringMap(map[string]any{
++			"attributes": []any{
++				map[string]any{"name": "service.name", "value": nil},
++			},
++		})
++		var cfg ResourceConfigV030
++		require.NoError(t, conf.Unmarshal(&cfg))
++		require.NoError(t, xconfmap.Validate(&cfg))
++	})
++}
+diff --git a/service/telemetry/otelconftelemetry/logger_test.go b/service/telemetry/otelconftelemetry/logger_test.go
+index d2e8f5231..df9430d21 100644
+--- a/service/telemetry/otelconftelemetry/logger_test.go
++++ b/service/telemetry/otelconftelemetry/logger_test.go
+@@ -28,6 +28,7 @@ import (
+ 	"go.opentelemetry.io/collector/pdata/plog/plogotlp"
+ 	"go.opentelemetry.io/collector/service/internal/componentattribute"
+ 	"go.opentelemetry.io/collector/service/telemetry"
++	"go.opentelemetry.io/collector/service/telemetry/otelconftelemetry/internal/migration"
+ )
+ 
+ const (
+@@ -168,11 +169,36 @@ func TestCreateLogger(t *testing.T) {
+ 	}
+ }
+ 
++func TestCreateLogger_MissingResource(t *testing.T) {
++	cfg := createDefaultConfig().(*Config)
++
++	_, shutdown, err := createLogger(t.Context(), telemetry.LoggerSettings{
++		BuildZapLogger: zap.Config.Build,
++	}, cfg)
++	require.ErrorIs(t, err, errMissingCollectorResource)
++	assert.Nil(t, shutdown)
++}
++
++func TestCreateLogger_BuildZapLoggerError(t *testing.T) {
++	cfg := createDefaultConfig().(*Config)
++	resource, err := createResource(t.Context(), telemetry.Settings{}, cfg)
++	require.NoError(t, err)
++
++	_, shutdown, err := createLogger(t.Context(), telemetry.LoggerSettings{
++		Settings: telemetry.Settings{Resource: &resource},
++		BuildZapLogger: func(zap.Config, ...zap.Option) (*zap.Logger, error) {
++			return nil, assert.AnError
++		},
++	}, cfg)
++	require.ErrorIs(t, err, assert.AnError)
++	assert.Nil(t, shutdown)
++}
++
+ func TestCreateLoggerWithResource(t *testing.T) {
+ 	tests := []struct {
+ 		name           string
+ 		buildInfo      component.BuildInfo
+-		resourceConfig map[string]*string
++		resourceConfig migration.ResourceConfigV030
+ 		wantFields     map[string]string
+ 		setConfig      func(cfg *Config)
+ 	}{
+@@ -182,7 +208,7 @@ func TestCreateLoggerWithResource(t *testing.T) {
+ 				Command: "mycommand",
+ 				Version: "1.0.0",
+ 			},
+-			resourceConfig: map[string]*string{},
++			resourceConfig: migration.ResourceConfigV030{},
+ 			wantFields: map[string]string{
+ 				"service.name":        "mycommand",
+ 				"service.version":     "1.0.0",
+@@ -195,8 +221,12 @@ func TestCreateLoggerWithResource(t *testing.T) {
+ 				Command: "mycommand",
+ 				Version: "1.0.0",
+ 			},
+-			resourceConfig: map[string]*string{
+-				"service.name": ptr("custom-service"),
++			resourceConfig: migration.ResourceConfigV030{
++				Resource: config.Resource{
++					Attributes: []config.AttributeNameValue{
++						{Name: "service.name", Value: "custom-service"},
++					},
++				},
+ 			},
+ 			wantFields: map[string]string{
+ 				"service.name":        "custom-service",
+@@ -210,8 +240,12 @@ func TestCreateLoggerWithResource(t *testing.T) {
+ 				Command: "mycommand",
+ 				Version: "1.0.0",
+ 			},
+-			resourceConfig: map[string]*string{
+-				"service.version": ptr("2.0.0"),
++			resourceConfig: migration.ResourceConfigV030{
++				Resource: config.Resource{
++					Attributes: []config.AttributeNameValue{
++						{Name: "service.version", Value: "2.0.0"},
++					},
++				},
+ 			},
+ 			wantFields: map[string]string{
+ 				"service.name":        "mycommand",
+@@ -225,8 +259,12 @@ func TestCreateLoggerWithResource(t *testing.T) {
+ 				Command: "mycommand",
+ 				Version: "1.0.0",
+ 			},
+-			resourceConfig: map[string]*string{
+-				"custom.field": ptr("custom-value"),
++			resourceConfig: migration.ResourceConfigV030{
++				Resource: config.Resource{
++					Attributes: []config.AttributeNameValue{
++						{Name: "custom.field", Value: "custom-value"},
++					},
++				},
+ 			},
+ 			wantFields: map[string]string{
+ 				"service.name":        "mycommand",
+@@ -238,7 +276,7 @@ func TestCreateLoggerWithResource(t *testing.T) {
+ 		{
+ 			name:           "resource with no attributes",
+ 			buildInfo:      component.BuildInfo{},
+-			resourceConfig: nil,
++			resourceConfig: migration.ResourceConfigV030{},
+ 			wantFields: map[string]string{
+ 				// A random UUID is injected for service.instance.id by default
+ 				"service.instance.id": "", // Just check presence
+@@ -250,7 +288,7 @@ func TestCreateLoggerWithResource(t *testing.T) {
+ 				Command: "mycommand",
+ 				Version: "1.0.0",
+ 			},
+-			resourceConfig: map[string]*string{},
++			resourceConfig: migration.ResourceConfigV030{},
+ 			wantFields:     map[string]string{},
+ 			setConfig: func(cfg *Config) {
+ 				cfg.Logs.DisableZapResource = true
+@@ -318,6 +356,44 @@ func TestCreateLoggerWithResource(t *testing.T) {
+ 	}
+ }
+ 
++func TestCreateLoggerWarnsOnLegacyResourceAttributes(t *testing.T) {
++	core, observedLogs := observer.New(zapcore.DebugLevel)
++	cfg := &Config{
++		Logs: LogsConfig{
++			Level:    zapcore.InfoLevel,
++			Encoding: "json",
++		},
++		Resource: migration.ResourceConfigV030{
++			LegacyAttributes: map[string]any{
++				"service.name": nil,
++				"legacy.attr":  "value",
++			},
++		},
++	}
++
++	resource, err := createResource(t.Context(), telemetry.Settings{}, cfg)
++	require.NoError(t, err)
++
++	set := telemetry.LoggerSettings{
++		Settings: telemetry.Settings{Resource: &resource},
++		BuildZapLogger: func(zap.Config, ...zap.Option) (*zap.Logger, error) {
++			return zap.New(core), nil
++		},
++	}
++
++	_, shutdown, err := createLogger(t.Context(), set, cfg)
++	require.NoError(t, err)
++	defer func() {
++		assert.NoError(t, shutdown.Shutdown(t.Context()))
++	}()
++
++	logs := observedLogs.All()
++	require.NotEmpty(t, logs)
++	first := logs[0]
++	assert.Equal(t, zapcore.WarnLevel, first.Level)
++	assert.Contains(t, first.Message, "legacy service.telemetry.resource inline map format")
++}
++
+ func TestCreateLogger_020MigrationWarning(t *testing.T) {
+ 	core, observedLogs := observer.New(zapcore.DebugLevel)
+ 
+@@ -478,10 +554,14 @@ func newOTLPLogger(t *testing.T, level zapcore.Level, handler func(plogotlp.Expo
+ 			// OutputPaths is empty, so logs are only
+ 			// written to the OTLP processor
+ 		},
+-		Resource: map[string]*string{
+-			"service.name":    ptr(service),
+-			"service.version": ptr(version),
+-			testAttribute:     ptr(testValue),
++		Resource: migration.ResourceConfigV030{
++			Resource: config.Resource{
++				Attributes: []config.AttributeNameValue{
++					{Name: "service.name", Value: service},
++					{Name: "service.version", Value: version},
++					{Name: testAttribute, Value: testValue},
++				},
++			},
+ 		},
+ 	}
+ 
+@@ -526,10 +606,12 @@ func TestLogAttributeInjection(t *testing.T) {
+ 	t.Cleanup(srv.Close)
+ 
+ 	cfg := &Config{
+-		Resource: map[string]*string{
+-			"service.instance.id": nil,
+-			"service.name":        nil,
+-			"service.version":     nil,
++		Resource: migration.ResourceConfigV030{
++			LegacyAttributes: map[string]any{
++				"service.instance.id": nil,
++				"service.name":        nil,
++				"service.version":     nil,
++			},
+ 		},
+ 		Logs: LogsConfig{
+ 			Encoding: "json",
+@@ -564,6 +646,7 @@ func TestLogAttributeInjection(t *testing.T) {
+ 	defer func() {
+ 		assert.NoError(t, loggerProvider.Shutdown(t.Context()))
+ 	}()
++	consoleLogs.TakeAll()
+ 
+ 	ts := componenttest.NewNopTelemetrySettings()
+ 	ts.Logger = sourceLogger
+@@ -594,9 +677,24 @@ func checkScopes(t *testing.T, logger *zap.Logger, consoleLogs *observer.Observe
+ 	require.NoError(t, err)
+ 	fieldsStr := strings.TrimSuffix(fieldsBuf.String(), "\n")
+ 
+-	require.Len(t, *otlpLogs, 1)
+-	req := (*otlpLogs)[0]
++	require.NotEmpty(t, *otlpLogs)
++	var req plogotlp.ExportRequest
++	for _, candidate := range *otlpLogs {
++		rls := candidate.Logs().ResourceLogs()
++		if rls.Len() == 0 {
++			continue
++		}
++		sls := rls.At(0).ScopeLogs()
++		if sls.Len() == 0 || sls.At(0).LogRecords().Len() == 0 {
++			continue
++		}
++		if sls.At(0).LogRecords().At(0).Body().AsString() == "Test log message" {
++			req = candidate
++			break
++		}
++	}
+ 	*otlpLogs = nil
++	require.NotEqual(t, 0, req.Logs().ResourceLogs().Len(), "expected exported OTLP log for Test log message")
+ 	rls := req.Logs().ResourceLogs()
+ 	require.Equal(t, 1, rls.Len())
+ 	sls := rls.At(0).ScopeLogs()
+diff --git a/service/telemetry/otelconftelemetry/metrics_test.go b/service/telemetry/otelconftelemetry/metrics_test.go
+index fc4002bb2..35991760d 100644
+--- a/service/telemetry/otelconftelemetry/metrics_test.go
++++ b/service/telemetry/otelconftelemetry/metrics_test.go
+@@ -29,6 +29,7 @@ import (
+ 	"go.opentelemetry.io/collector/pdata/pmetric/pmetricotlp"
+ 	"go.opentelemetry.io/collector/service/internal/promtest"
+ 	"go.opentelemetry.io/collector/service/telemetry"
++	"go.opentelemetry.io/collector/service/telemetry/otelconftelemetry/internal/migration"
+ )
+ 
+ const (
+@@ -101,10 +102,14 @@ func TestCreateMeterProvider(t *testing.T) {
+ 				}},
+ 			},
+ 		}
+-		cfg.Resource = map[string]*string{
+-			"service.name":        ptr("otelcol"),
+-			"service.version":     ptr("latest"),
+-			"service.instance.id": ptr(testInstanceID),
++		cfg.Resource = migration.ResourceConfigV030{
++			Resource: config.Resource{
++				Attributes: []config.AttributeNameValue{
++					{Name: "service.name", Value: "otelcol"},
++					{Name: "service.version", Value: "latest"},
++					{Name: "service.instance.id", Value: testInstanceID},
++				},
++			},
+ 		}
+ 
+ 		t.Run(tt.name, func(t *testing.T) {
+@@ -257,6 +262,14 @@ func TestCreateMeterProvider_Invalid(t *testing.T) {
+ 	require.EqualError(t, err, "no valid metric exporter")
+ }
+ 
++func TestCreateMeterProvider_MissingResource(t *testing.T) {
++	cfg := createDefaultConfig().(*Config)
++
++	mp, err := createMeterProvider(t.Context(), telemetry.MeterSettings{}, cfg)
++	require.ErrorIs(t, err, errMissingCollectorResource)
++	assert.Nil(t, mp)
++}
++
+ func TestCreateMeterProvider_Disabled(t *testing.T) {
+ 	cfg := createDefaultConfig().(*Config)
+ 	cfg.Metrics.Readers = []config.MetricReader{{
+@@ -417,7 +430,13 @@ func TestTelemetryMetrics_DefaultViews(t *testing.T) {
+ 			}}
+ 
+ 			factory := NewFactory()
+-			settings := telemetry.MeterSettings{DefaultViews: defaultViews}
++			resource, err := factory.CreateResource(t.Context(), telemetry.Settings{}, cfg)
++			require.NoError(t, err)
++
++			settings := telemetry.MeterSettings{
++				Settings:     telemetry.Settings{Resource: &resource},
++				DefaultViews: defaultViews,
++			}
+ 			provider, err := factory.CreateMeterProvider(t.Context(), settings, cfg)
+ 			require.NoError(t, err)
+ 
+diff --git a/service/telemetry/otelconftelemetry/resource_test.go b/service/telemetry/otelconftelemetry/resource_test.go
+index 362452353..1a945160a 100644
+--- a/service/telemetry/otelconftelemetry/resource_test.go
++++ b/service/telemetry/otelconftelemetry/resource_test.go
+@@ -8,10 +8,14 @@ import (
+ 
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	"go.opentelemetry.io/otel/attribute"
++	config "go.opentelemetry.io/contrib/otelconf/v0.3.0"
+ 
+ 	"go.opentelemetry.io/collector/component"
++	"go.opentelemetry.io/collector/confmap"
++	"go.opentelemetry.io/collector/confmap/xconfmap"
++	"go.opentelemetry.io/collector/pdata/pcommon"
+ 	"go.opentelemetry.io/collector/service/telemetry"
++	"go.opentelemetry.io/collector/service/telemetry/otelconftelemetry/internal/migration"
+ )
+ 
+ func TestCreateResource(t *testing.T) {
+@@ -29,14 +33,15 @@ func TestCreateResource(t *testing.T) {
+ 			"service.version": "latest",
+ 		}, raw)
+ 	})
+-	t.Run("with resource attributes", func(t *testing.T) {
++	t.Run("with resource attributes (legacy format)", func(t *testing.T) {
+ 		cfg := createDefaultConfig().(*Config)
+-		cfg.Resource = map[string]*string{
+-			"extra.attr":          ptr("value"),
+-			"service.name":        ptr("custom-service"),
+-			"service.version":     ptr("0.1.0"),
+-			"service.instance.id": nil, // removes the attribute
+-		}
++		legacy := confmap.NewFromStringMap(map[string]any{
++			"extra.attr":          "value",
++			"service.name":        "custom-service",
++			"service.version":     "0.1.0",
++			"service.instance.id": nil,
++		})
++		require.NoError(t, legacy.Unmarshal(&cfg.Resource))
+ 		set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
+ 		res, err := createResource(t.Context(), set, cfg)
+ 		require.NoError(t, err)
+@@ -48,37 +53,267 @@ func TestCreateResource(t *testing.T) {
+ 			"service.version": "0.1.0",
+ 		}, raw)
+ 	})
++	t.Run("with legacy format removing default attributes", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config)
++		legacy := confmap.NewFromStringMap(map[string]any{
++			"custom.attr":         "value",
++			"service.name":        nil,
++			"service.version":     nil,
++			"service.instance.id": nil,
++		})
++		require.NoError(t, legacy.Unmarshal(&cfg.Resource))
++		set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++		res, err := createResource(t.Context(), set, cfg)
++		require.NoError(t, err)
++
++		raw := res.Attributes().AsRaw()
++		assert.Equal(t, map[string]any{
++			"custom.attr": "value",
++		}, raw)
++	})
++	t.Run("with resource attributes (new format)", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config)
++		cfg.Resource.Attributes = []config.AttributeNameValue{
++			{Name: "extra.attr", Value: "value"},
++			{Name: "service.name", Value: "custom-service"},
++			{Name: "service.version", Value: "0.1.0"},
++			{Name: "service.instance.id", Value: nil},
++		}
++		set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++		res, err := createResource(t.Context(), set, cfg)
++		require.NoError(t, err)
++
++		raw := res.Attributes().AsRaw()
++		assert.Equal(t, map[string]any{
++			"extra.attr":          "value",
++			"service.name":        "custom-service",
++			"service.version":     "0.1.0",
++			"service.instance.id": "<nil>",
++		}, raw)
++	})
++	t.Run("with custom schema_url", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config)
++		customSchemaURL := "https://opentelemetry.io/schemas/1.39.0"
++		cfg.Resource.SchemaUrl = &customSchemaURL
++		cfg.Resource.Attributes = []config.AttributeNameValue{
++			{Name: "service.name", Value: "test-service"},
++		}
++		set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++		res, err := createResource(t.Context(), set, cfg)
++		require.NoError(t, err)
++
++		raw := res.Attributes().AsRaw()
++		assert.Contains(t, raw, "service.name")
++		assert.Equal(t, "test-service", raw["service.name"])
++		assert.Contains(t, raw, "service.instance.id")
++		assert.Contains(t, raw, "service.version")
++	})
++	t.Run("with detectors for forward compatibility", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config)
++		cfg.Resource.Detectors = &config.Detectors{
++			Attributes: &config.DetectorsAttributes{
++				Included: []string{"host", "os"},
++			},
++		}
++		cfg.Resource.Attributes = []config.AttributeNameValue{
++			{Name: "service.name", Value: "test-service"},
++		}
++		set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++		res, err := createResource(t.Context(), set, cfg)
++		require.NoError(t, err)
++
++		raw := res.Attributes().AsRaw()
++		assert.Contains(t, raw, "service.name")
++		assert.Equal(t, "test-service", raw["service.name"])
++	})
++	t.Run("with typed attributes", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config)
++		cfg.Resource.Attributes = []config.AttributeNameValue{
++			{Name: "bool.attr", Value: true},
++			{Name: "int64.attr", Value: int64(42)},
++			{Name: "int32.attr", Value: int32(-32)},
++			{Name: "int16.attr", Value: int16(-16)},
++			{Name: "int8.attr", Value: int8(-8)},
++			{Name: "uint.attr", Value: uint(200)},
++			{Name: "int.attr", Value: int(123)},
++			{Name: "uint64.attr", Value: uint64(100)},
++			{Name: "uint32.attr", Value: uint32(32)},
++			{Name: "uint16.attr", Value: uint16(16)},
++			{Name: "uint8.attr", Value: uint8(8)},
++			{Name: "float64.attr", Value: 3.14},
++			{Name: "float32.attr", Value: float32(2.71)},
++			{Name: "string.attr", Value: "test"},
++		}
++		set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++		res, err := createResource(t.Context(), set, cfg)
++		require.NoError(t, err)
++
++		raw := res.Attributes().AsRaw()
++		assert.Equal(t, true, raw["bool.attr"])
++		assert.Equal(t, int64(42), raw["int64.attr"])
++		assert.Equal(t, int64(-32), raw["int32.attr"])
++		assert.Equal(t, int64(-16), raw["int16.attr"])
++		assert.Equal(t, int64(-8), raw["int8.attr"])
++		assert.Equal(t, int64(123), raw["int.attr"])
++		// uint and uint64 may not fit in OTLP's int64, so the Go SDK systematically converts them to strings
++		assert.Equal(t, "200", raw["uint.attr"])
++		assert.Equal(t, "100", raw["uint64.attr"])
++		assert.Equal(t, int64(32), raw["uint32.attr"])
++		assert.Equal(t, int64(16), raw["uint16.attr"])
++		assert.Equal(t, int64(8), raw["uint8.attr"])
++		assert.InDelta(t, 3.14, raw["float64.attr"], 0.001)
++		assert.InDelta(t, 2.71, raw["float32.attr"], 0.01)
++		assert.Equal(t, "test", raw["string.attr"])
++	})
++	t.Run("with unsupported type", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config)
++		cfg.Resource.Attributes = []config.AttributeNameValue{
++			{Name: "complex.attr", Value: complex(1, 2)},
++		}
++		set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++		res, err := createResource(t.Context(), set, cfg)
++		require.NoError(t, err)
++
++		raw := res.Attributes().AsRaw()
++		assert.Equal(t, "(1+2i)", raw["complex.attr"])
++	})
++}
++
++func TestCreateResource_DefaultAttributeValuesError(t *testing.T) {
++	cfg := createDefaultConfig().(*Config)
++	set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++
++	orig := defaultAttributeValues
++	t.Cleanup(func() { defaultAttributeValues = orig })
++	defaultAttributeValues = func(component.BuildInfo) (map[string]string, error) {
++		return nil, assert.AnError
++	}
++
++	res, err := createResource(t.Context(), set, cfg)
++	require.ErrorIs(t, err, assert.AnError)
++	assert.Equal(t, pcommon.Resource{}, res)
+ }
+ 
+-func TestAttributeValueString(t *testing.T) {
+-	t.Run("string attribute", func(t *testing.T) {
+-		val := attribute.StringValue("test-value")
+-		result, err := attributeValueString("test.attr", val)
++func TestDefaultAttributeValues(t *testing.T) {
++	buildInfo := component.BuildInfo{
++		Command: "otelcol",
++		Version: "1.0.0",
++	}
++
++	t.Run("defaults included", func(t *testing.T) {
++		defaults, err := defaultAttributeValues(buildInfo)
+ 		require.NoError(t, err)
+-		assert.Equal(t, "test-value", result)
++		assert.Equal(t, buildInfo.Command, defaults["service.name"])
++		assert.Equal(t, buildInfo.Version, defaults["service.version"])
++		_, ok := defaults["service.instance.id"]
++		assert.True(t, ok)
+ 	})
+ 
+-	t.Run("int64 attribute returns error", func(t *testing.T) {
+-		val := attribute.Int64Value(42)
+-		result, err := attributeValueString("test.attr", val)
+-		require.Error(t, err)
+-		assert.Empty(t, result)
+-		assert.Contains(t, err.Error(), `attribute "test.attr": expected string, got INT64`)
++	t.Run("uuid failure", func(t *testing.T) {
++		orig := defaultAttributeValues
++		t.Cleanup(func() { defaultAttributeValues = orig })
++		defaultAttributeValues = func(component.BuildInfo) (map[string]string, error) {
++			return nil, assert.AnError
++		}
++
++		_, err := defaultAttributeValues(buildInfo)
++		require.ErrorContains(t, err, assert.AnError.Error())
+ 	})
++}
+ 
+-	t.Run("bool attribute returns error", func(t *testing.T) {
+-		val := attribute.BoolValue(true)
+-		result, err := attributeValueString("test.attr", val)
+-		require.Error(t, err)
+-		assert.Empty(t, result)
+-		assert.Contains(t, err.Error(), `attribute "test.attr": expected string, got BOOL`)
++func TestCreateInitialResourceConfig(t *testing.T) {
++	t.Run("empty config defaults", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config).Resource
++		resourceConfig, err := createInitialResourceConfig(component.BuildInfo{Command: "cmd", Version: "1.0.0"}, &cfg)
++		require.NoError(t, err)
++		assert.NotNil(t, resourceConfig.SchemaUrl)
++		assert.NotEmpty(t, resourceConfig.Attributes)
+ 	})
+ 
+-	t.Run("float64 attribute returns error", func(t *testing.T) {
+-		val := attribute.Float64Value(3.14)
+-		result, err := attributeValueString("test.attr", val)
+-		require.Error(t, err)
+-		assert.Empty(t, result)
+-		assert.Contains(t, err.Error(), `attribute "test.attr": expected string, got FLOAT64`)
++	t.Run("legacy removed default", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config).Resource
++		legacy := confmap.NewFromStringMap(map[string]any{
++			"service.name":        nil,
++			"service.version":     nil,
++			"service.instance.id": nil,
++		})
++		require.NoError(t, legacy.Unmarshal(&cfg))
++		resourceConfig, err := createInitialResourceConfig(component.BuildInfo{Command: "cmd", Version: "1.0.0"}, &cfg)
++		require.NoError(t, err)
++		for _, attr := range resourceConfig.Attributes {
++			assert.NotContains(t, []string{"service.name", "service.version", "service.instance.id"}, attr.Name)
++		}
+ 	})
++
++	t.Run("default values error", func(t *testing.T) {
++		cfg := createDefaultConfig().(*Config).Resource
++
++		orig := defaultAttributeValues
++		t.Cleanup(func() { defaultAttributeValues = orig })
++		defaultAttributeValues = func(component.BuildInfo) (map[string]string, error) {
++			return nil, assert.AnError
++		}
++
++		_, err := createInitialResourceConfig(component.BuildInfo{Command: "cmd", Version: "1.0.0"}, &cfg)
++		require.ErrorContains(t, err, assert.AnError.Error())
++	})
++}
++
++func TestResourceConfigValidateAttributesListUnsupported(t *testing.T) {
++	cfg := migration.ResourceConfigV030{}
++	conf := confmap.NewFromStringMap(map[string]any{
++		"attributes_list": "service.name=override",
++	})
++	require.NoError(t, conf.Unmarshal(&cfg))
++	err := xconfmap.Validate(&cfg)
++	require.ErrorContains(t, err, "resource::attributes_list is not currently supported")
++}
++
++func TestCreateFixedResourceConfig(t *testing.T) {
++	cfg := createDefaultConfig().(*Config)
++	set := telemetry.Settings{BuildInfo: component.BuildInfo{Command: "otelcol", Version: "latest"}}
++
++	res, err := createResource(t.Context(), set, cfg)
++	require.NoError(t, err)
++
++	resourceConfig, err := createFixedResourceConfig(&cfg.Resource, &res)
++	require.NoError(t, err)
++	require.NotNil(t, resourceConfig.SchemaUrl)
++	assert.Equal(t, *cfg.Resource.SchemaUrl, *resourceConfig.SchemaUrl)
++
++	got := make(map[string]any, len(resourceConfig.Attributes))
++	for _, attr := range resourceConfig.Attributes {
++		got[attr.Name] = attr.Value
++	}
++	assert.Equal(t, "otelcol", got["service.name"])
++	assert.Equal(t, "latest", got["service.version"])
++	assert.Contains(t, got, "service.instance.id")
++
++	t.Run("missing resource errors", func(t *testing.T) {
++		_, err := createFixedResourceConfig(&cfg.Resource, nil)
++		require.ErrorIs(t, err, errMissingCollectorResource)
++	})
++}
++
++func TestFactoryDoesNotCacheResourceAcrossConfigs(t *testing.T) {
++	factory := NewFactory()
++
++	cfg1 := createDefaultConfig().(*Config)
++	cfg1.Resource.Attributes = []config.AttributeNameValue{{Name: "service.name", Value: "svc-1"}}
++
++	cfg2 := createDefaultConfig().(*Config)
++	cfg2.Resource.Attributes = []config.AttributeNameValue{{Name: "service.name", Value: "svc-2"}}
++
++	res1, err := factory.CreateResource(t.Context(), telemetry.Settings{
++		BuildInfo: component.BuildInfo{Command: "otelcol", Version: "1.0.0"},
++	}, cfg1)
++	require.NoError(t, err)
++
++	res2, err := factory.CreateResource(t.Context(), telemetry.Settings{
++		BuildInfo: component.BuildInfo{Command: "otelcol", Version: "2.0.0"},
++	}, cfg2)
++	require.NoError(t, err)
++
++	assert.Equal(t, "svc-1", res1.Attributes().AsRaw()["service.name"])
++	assert.Equal(t, "svc-2", res2.Attributes().AsRaw()["service.name"])
+ }
+diff --git a/service/telemetry/otelconftelemetry/tracer_test.go b/service/telemetry/otelconftelemetry/tracer_test.go
+index 269d86584..83de10e77 100644
+--- a/service/telemetry/otelconftelemetry/tracer_test.go
++++ b/service/telemetry/otelconftelemetry/tracer_test.go
+@@ -90,6 +90,14 @@ func TestCreateTracerProvider_Invalid(t *testing.T) {
+ 	require.EqualError(t, err, "no valid span exporter")
+ }
+ 
++func TestCreateTracerProvider_MissingResource(t *testing.T) {
++	cfg := createDefaultConfig().(*Config)
++
++	provider, err := createTracerProvider(t.Context(), telemetry.TracerSettings{}, cfg)
++	require.ErrorIs(t, err, errMissingCollectorResource)
++	assert.Nil(t, provider)
++}
++
+ func TestCreateTracerProvider_Propagators(t *testing.T) {
+ 	mux := http.NewServeMux()
+ 	mux.HandleFunc("/v1/traces", func(http.ResponseWriter, *http.Request) {})

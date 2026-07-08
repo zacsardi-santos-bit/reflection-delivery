@@ -1,0 +1,282 @@
+diff --git a/pkg/internal/netolly/flow/deduper_test.go b/pkg/internal/netolly/flow/deduper_test.go
+index bdf3cee01..c4aa27db1 100644
+--- a/pkg/internal/netolly/flow/deduper_test.go
++++ b/pkg/internal/netolly/flow/deduper_test.go
+@@ -38,14 +38,12 @@ func init() {
+ 	}, Metrics: ebpf.NetFlowMetrics{
+ 		Packets: 2, Bytes: 456, Flags: 1,
+ 	}}, Attrs: ebpf.RecordAttrs{Interface: "eth0"}}
+-	oneIf1.Id.SrcMac, oneIf1.Id.DstMac = [6]uint8{0x1}, [6]uint8{0x1}
+ 
+ 	oneIf2 = &ebpf.Record{NetFlowRecordT: ebpf.NetFlowRecordT{Id: ebpf.NetFlowId{
+ 		EthProtocol: 1, Direction: 1, SrcPort: 123, DstPort: 456, IfIndex: 2,
+ 	}, Metrics: ebpf.NetFlowMetrics{
+ 		Packets: 2, Bytes: 456, Flags: 1,
+ 	}}, Attrs: ebpf.RecordAttrs{Interface: "123456789"}}
+-	oneIf2.Id.SrcMac, oneIf2.Id.DstMac = [6]uint8{0x2}, [6]uint8{0x2}
+ 
+ 	// twoIf1 and twoIf2 are another fow from 2 different interfaces and directions
+ 	twoIf1 = &ebpf.Record{NetFlowRecordT: ebpf.NetFlowRecordT{Id: ebpf.NetFlowId{
+@@ -53,75 +51,38 @@ func init() {
+ 	}, Metrics: ebpf.NetFlowMetrics{
+ 		Packets: 2, Bytes: 456, Flags: 1,
+ 	}}, Attrs: ebpf.RecordAttrs{Interface: "eth0"}}
+-	twoIf1.Id.SrcMac, twoIf1.Id.DstMac = [6]uint8{0x1}, [6]uint8{0x1}
+ 
+ 	twoIf2 = &ebpf.Record{NetFlowRecordT: ebpf.NetFlowRecordT{Id: ebpf.NetFlowId{
+ 		EthProtocol: 1, Direction: 0, SrcPort: 333, DstPort: 456, IfIndex: 2,
+ 	}, Metrics: ebpf.NetFlowMetrics{
+ 		Packets: 2, Bytes: 456, Flags: 1,
+ 	}}, Attrs: ebpf.RecordAttrs{Interface: "123456789"}}
+-	twoIf2.Id.SrcMac, twoIf2.Id.DstMac = [6]uint8{0x2}, [6]uint8{0x2}
+-
+ }
+ 
+ func TestDedupe(t *testing.T) {
+ 	input := make(chan []*ebpf.Record, 100)
+ 	output := make(chan []*ebpf.Record, 100)
+ 
+-	dedupe, err := DeduperProvider(Deduper{Type: DeduperFirstCome, ExpireTime: time.Minute, JustMark: false})
++	dedupe, err := DeduperProvider(Deduper{Type: DeduperFirstCome, ExpireTime: time.Minute})
+ 	require.NoError(t, err)
+ 	go dedupe(input, output)
+ 
+ 	input <- []*ebpf.Record{
+-		oneIf2, // record 1 at interface 2: should be accepted
+-		twoIf1, // record 2 at interface 1: should be accepted
+-		oneIf1, // record 1 duplicate at interface 1: should NOT be accepted
+-		oneIf1, //                                        (same record key, different interface)
+-		twoIf2, // record 2 duplicate at interface 2: should NOT be accepted
+-		oneIf2, // record 1 at interface 1: should be accepted (same record key, same interface)
++		clone(oneIf2), // record 1 at interface 2: should be accepted
++		clone(twoIf1), // record 2 at interface 1: should be accepted
++		clone(oneIf1), // record 1 duplicate at interface 1: should NOT be accepted
++		clone(oneIf1), //                                        (same record key, different interface)
++		clone(twoIf2), // record 2 duplicate at interface 2: should NOT be accepted
++		clone(oneIf2), // record 1 at interface 1: should be accepted (same record key, same interface)
+ 	}
+ 	deduped := receiveTimeout(t, output)
+-	assert.Equal(t, []*ebpf.Record{oneIf2, twoIf1, oneIf2}, deduped)
++	assert.Equal(t, []*ebpf.Record{unset(oneIf2), unset(twoIf1), unset(oneIf2)}, deduped)
+ 
+ 	// should still accept records with same key, same interface,
+ 	// and discard these with same key, different interface
+-	input <- []*ebpf.Record{oneIf1, oneIf2}
+-	deduped = receiveTimeout(t, output)
+-	assert.Equal(t, []*ebpf.Record{oneIf2}, deduped)
+-}
+-
+-func TestDedupe_JustMark(t *testing.T) {
+-	input := make(chan []*ebpf.Record, 100)
+-	output := make(chan []*ebpf.Record, 100)
+-
+-	dedupe, err := DeduperProvider(Deduper{Type: DeduperFirstCome, ExpireTime: time.Minute, JustMark: true})
+-	require.NoError(t, err)
+-	go dedupe(input, output)
+-
+-	input <- []*ebpf.Record{
+-		clone(oneIf2), // record 1 at interface 2: not duplicate
+-		clone(twoIf1), // record 2 at interface 1: not duplicate
+-		clone(oneIf1), // record 1 duplicate at interface 1: should be marked as duplicate
+-		clone(oneIf1), //                                        (same record key, different interface)
+-		clone(twoIf2), // record 2 duplicate at interface 2: should be marked as duplicate
+-		clone(oneIf2), // record 1 at interface 1: not duplicate (same record key, same interface)
+-	}
+-	deduped := receiveTimeout(t, output)
+-
+-	assert.Equal(t, []*ebpf.Record{
+-		oneIf2,
+-		twoIf1,
+-		asDuplicate(oneIf1),
+-		asDuplicate(oneIf1),
+-		asDuplicate(twoIf2),
+-		oneIf2,
+-	}, deduped)
+-
+-	// should still accept as non-duplicate records with same key, same interface,
+-	// and mark as duplicate these with same key, different interface
+ 	input <- []*ebpf.Record{clone(oneIf1), clone(oneIf2)}
+ 	deduped = receiveTimeout(t, output)
+-	assert.Equal(t, []*ebpf.Record{asDuplicate(oneIf1), oneIf2}, deduped)
++	assert.Equal(t, []*ebpf.Record{unset(oneIf2)}, deduped)
+ }
+ 
+ func TestDedupe_EvictFlows(t *testing.T) {
+@@ -130,7 +91,7 @@ func TestDedupe_EvictFlows(t *testing.T) {
+ 	input := make(chan []*ebpf.Record, 100)
+ 	output := make(chan []*ebpf.Record, 100)
+ 
+-	dedupe, err := DeduperProvider(Deduper{Type: DeduperFirstCome, ExpireTime: 15 * time.Second, JustMark: false})
++	dedupe, err := DeduperProvider(Deduper{Type: DeduperFirstCome, ExpireTime: 15 * time.Second})
+ 	require.NoError(t, err)
+ 	go dedupe(input, output)
+ 
+@@ -186,8 +147,9 @@ func clone(in *ebpf.Record) *ebpf.Record {
+ 	return &out
+ }
+ 
+-func asDuplicate(in *ebpf.Record) *ebpf.Record {
++func unset(in *ebpf.Record) *ebpf.Record {
+ 	out := clone(in)
+-	out.Duplicate = true
++	out.Id.IfIndex = ebpf.InterfaceUnset
++	out.Id.Direction = ebpf.DirectionUnset
+ 	return out
+ }
+diff --git a/test/integration/docker-compose-netolly.yml b/test/integration/docker-compose-netolly.yml
+new file mode 100644
+index 000000000..148034084
+--- /dev/null
++++ b/test/integration/docker-compose-netolly.yml
+@@ -0,0 +1,75 @@
++version: '3.8'
++
++services:
++  testserver:
++    build:
++      context: ../..
++      dockerfile: test/integration/components/testserver/Dockerfile${TESTSERVER_DOCKERFILE_SUFFIX}
++    image: hatest-testserver
++    ports:
++      - "8080:8080"
++      - "8081:8081"
++      - "8082:8082"
++      - "8083:8083"
++      - "8087:8087"
++      - "50051:50051"
++    environment:
++      LOG_LEVEL: DEBUG
++
++  autoinstrumenter:
++    build:
++      context: ../..
++      dockerfile: ./test/integration/components/beyla/Dockerfile
++    volumes:
++      - ./configs/:/configs
++      - ./system/sys/kernel/security:/sys/kernel/security
++      - ../../testoutput:/coverage
++      - ../../testoutput/run:/var/run/beyla
++    image: hatest-autoinstrumenter
++    privileged: true
++    network_mode: service:testserver
++    environment:
++      GOCOVERDIR: "/coverage"
++      BEYLA_NETWORK_METRICS: "true"
++      BEYLA_NETWORK_PRINT_FLOWS: "true"
++      BEYLA_NETWORK_DEDUPER: ${BEYLA_NETWORK_DEDUPER}
++      OTEL_EXPORTER_OTLP_ENDPOINT: http://otelcol:4318
++      BEYLA_LOG_LEVEL: "DEBUG"
++      BEYLA_BPF_DEBUG: "TRUE"
++      BEYLA_HOSTNAME: "beyla"
++
++  # OpenTelemetry Collector for Metrics. For Traces, we use directly Jaeger
++  otelcol:
++    image: otel/opentelemetry-collector-contrib:0.77.0
++    container_name: otel-col
++    deploy:
++      resources:
++        limits:
++          memory: 125M
++    restart: unless-stopped
++    command: [ "--config=/etc/otelcol-config/otelcol-config.yml" ]
++    volumes:
++      - ./configs/:/etc/otelcol-config
++    ports:
++      - "4317"          # OTLP over gRPC receiver
++      - "4318"          # OTLP over HTTP receiver
++      - "9464"          # Prometheus exporter
++      - "8888"          # metrics endpoint
++    depends_on:
++      prometheus:
++        condition: service_started
++
++  # Prometheus
++  prometheus:
++    image: quay.io/prometheus/prometheus:v2.34.0
++    container_name: prometheus
++    command:
++      - --storage.tsdb.retention.time=1m
++      - --config.file=/etc/prometheus/prometheus-config${PROM_CONFIG_SUFFIX}.yml
++      - --storage.tsdb.path=/prometheus
++      - --web.enable-lifecycle
++      - --web.route-prefix=/
++    volumes:
++      - ./configs/:/etc/prometheus
++    ports:
++      - "9090:9090"
+diff --git a/test/integration/suites_network_test.go b/test/integration/suites_network_test.go
+new file mode 100644
+index 000000000..39c72d91b
+--- /dev/null
++++ b/test/integration/suites_network_test.go
+@@ -0,0 +1,70 @@
++//go:build integration
++
++package integration
++
++import (
++	"net/http"
++	"path"
++	"regexp"
++	"testing"
++	"time"
++
++	"github.com/mariomac/guara/pkg/test"
++	"github.com/stretchr/testify/assert"
++	"github.com/stretchr/testify/require"
++
++	"github.com/grafana/beyla/test/integration/components/docker"
++	"github.com/grafana/beyla/test/integration/components/prom"
++)
++
++func TestNetwork_Deduplication(t *testing.T) {
++	compose, err := docker.ComposeSuite("docker-compose-netolly.yml", path.Join(pathOutput, "test-suite-netolly-dedupe.log"))
++	compose.Env = append(compose.Env, "BEYLA_NETWORK_DEDUPER=first_come", "BEYLA_EXECUTABLE_NAME=")
++	require.NoError(t, err)
++	require.NoError(t, compose.Up())
++
++	// When there flow deduplication, results must neither include "iface" nor "direction" fields.
++	for _, f := range getNetFlows(t) {
++		require.NotContains(t, f.Metric, "iface")
++		require.NotContains(t, f.Metric, "direction")
++	}
++
++	require.NoError(t, compose.Close())
++}
++
++func TestNetwork_NoDeduplication(t *testing.T) {
++	compose, err := docker.ComposeSuite("docker-compose-netolly.yml", path.Join(pathOutput, "test-suite-netolly-nodedupe.log"))
++	compose.Env = append(compose.Env, "BEYLA_NETWORK_DEDUPER=none", "BEYLA_EXECUTABLE_NAME=")
++	require.NoError(t, err)
++	require.NoError(t, compose.Up())
++
++	// When there is no flow deduplication, results must include "iface" and "direction" fields.
++	validDirections := regexp.MustCompile("^(ingress|egress)$")
++	for _, f := range getNetFlows(t) {
++		require.Contains(t, f.Metric, "iface")
++		require.Contains(t, f.Metric, "direction")
++		assert.NotEmpty(t, f.Metric["iface"])
++		assert.Regexp(t, validDirections, f.Metric["direction"])
++	}
++
++	require.NoError(t, compose.Close())
++}
++
++func getNetFlows(t *testing.T) []prom.Result {
++	var results []prom.Result
++	pq := prom.Client{HostPort: prometheusHostPort}
++	test.Eventually(t, 4*testTimeout, func(t require.TestingT) {
++		// first, verify that the test service endpoint is healthy
++		req, err := http.NewRequest("GET", instrumentedServiceStdURL, nil)
++		require.NoError(t, err)
++		r, err := testHTTPClient.Do(req)
++		require.NoError(t, err)
++		require.Equal(t, http.StatusOK, r.StatusCode)
++
++		// now, verify that the network metric has been reported.
++		results, err = pq.Query(`network_flow_bytes_total`)
++		require.NoError(t, err)
++		require.NotEmpty(t, results)
++	}, test.Interval(time.Second))
++	return results
++}

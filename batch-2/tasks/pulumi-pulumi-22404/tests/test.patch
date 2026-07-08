@@ -1,0 +1,558 @@
+diff --git a/pkg/engine/lifecycletest/refresh_test.go b/pkg/engine/lifecycletest/refresh_test.go
+index a4de3528f4..55ef8e502f 100644
+--- a/pkg/engine/lifecycletest/refresh_test.go
++++ b/pkg/engine/lifecycletest/refresh_test.go
+@@ -3481,3 +3481,170 @@ func TestRefreshV2ExcludesChildWithExcludedParent(t *testing.T) {
+ 		RunStep(p.GetProject(), p.GetTarget(t, snap), opts, false, p.BackendClient, nil, "1")
+ 	require.NoError(t, err)
+ }
++
++// Test that --exclude correctly skips resources during a RefreshV2 operation.
++// This is a regression test for https://github.com/pulumi/pulumi/issues/22403
++// where the exclude logic in GenerateRefreshes was inverted, causing excluded
++// resources to be refreshed and non-excluded resources to be skipped.
++func TestRefreshV2ExcludeTarget(t *testing.T) {
++	t.Parallel()
++
++	p := &lt.TestPlan{}
++	project := p.GetProject()
++
++	loaders := []*deploytest.ProviderLoader{
++		deploytest.NewProviderLoader("pkgA", semver.MustParse("1.0.0"), func() (plugin.Provider, error) {
++			return &deploytest.Provider{
++				ReadF: func(_ context.Context, req plugin.ReadRequest) (plugin.ReadResponse, error) {
++					return plugin.ReadResponse{
++						ReadResult: plugin.ReadResult{
++							ID: req.ID,
++							Outputs: resource.PropertyMap{
++								"refreshed": resource.NewProperty(true),
++							},
++						},
++						Status: resource.StatusOK,
++					}, nil
++				},
++			}, nil
++		}),
++	}
++
++	program := deploytest.NewLanguageRuntimeF(func(_ plugin.RunInfo, monitor *deploytest.ResourceMonitor) error {
++		_, err := monitor.RegisterResource("pkgA:m:typA", "resA", true)
++		require.NoError(t, err)
++
++		_, err = monitor.RegisterResource("pkgA:m:typA", "resB", true)
++		require.NoError(t, err)
++
++		_, err = monitor.RegisterResource("pkgA:m:typA", "resC", true)
++		require.NoError(t, err)
++
++		return nil
++	})
++
++	hostF := deploytest.NewPluginHostF(nil, nil, program, loaders...)
++	opts := lt.TestUpdateOptions{T: t, HostF: hostF}
++
++	// First, create all resources with a normal update.
++	snap, err := lt.TestOp(Update).RunStep(project, p.GetTarget(t, nil), opts, false, p.BackendClient, nil, "0")
++	require.NoError(t, err)
++	require.Len(t, snap.Resources, 4) // default provider + 3 resources
++
++	// Now run RefreshV2 excluding resB.
++	var resBURN resource.URN
++	for _, r := range snap.Resources {
++		if r.URN.Name() == "resB" {
++			resBURN = r.URN
++			break
++		}
++	}
++	require.NotEmpty(t, resBURN, "resB should exist in snapshot")
++
++	opts = lt.TestUpdateOptions{T: t, HostF: hostF}
++	opts.Excludes = deploy.NewUrnTargetsFromUrns([]resource.URN{resBURN})
++
++	snap, err = lt.TestOp(engine.RefreshV2).
++		RunStep(project, p.GetTarget(t, snap), opts, false, p.BackendClient, nil, "1")
++	require.NoError(t, err)
++	require.Len(t, snap.Resources, 4)
++
++	// resA and resC should have been refreshed (have the "refreshed" output).
++	// resB should NOT have been refreshed (excluded).
++	// Look up by name since ordering may change due to parallelism.
++	refreshed := resource.NewProperty(true)
++	for _, r := range snap.Resources {
++		switch r.URN.Name() {
++		case "resA":
++			assert.Equal(t, refreshed, r.Outputs["refreshed"], "resA should have been refreshed")
++		case "resB":
++			assert.NotContains(t, r.Outputs, resource.PropertyKey("refreshed"), "resB should NOT have been refreshed (excluded)")
++		case "resC":
++			assert.Equal(t, refreshed, r.Outputs["refreshed"], "resC should have been refreshed")
++		}
++	}
++}
++
++// Test that --target correctly limits resources during a RefreshV2 operation.
++// Only targeted resources should be refreshed; others should remain unchanged.
++func TestRefreshV2IncludeTarget(t *testing.T) {
++	t.Parallel()
++
++	p := &lt.TestPlan{}
++	project := p.GetProject()
++
++	loaders := []*deploytest.ProviderLoader{
++		deploytest.NewProviderLoader("pkgA", semver.MustParse("1.0.0"), func() (plugin.Provider, error) {
++			return &deploytest.Provider{
++				ReadF: func(_ context.Context, req plugin.ReadRequest) (plugin.ReadResponse, error) {
++					return plugin.ReadResponse{
++						ReadResult: plugin.ReadResult{
++							ID: req.ID,
++							Outputs: resource.PropertyMap{
++								"refreshed": resource.NewProperty(true),
++							},
++						},
++						Status: resource.StatusOK,
++					}, nil
++				},
++			}, nil
++		}),
++	}
++
++	program := deploytest.NewLanguageRuntimeF(func(_ plugin.RunInfo, monitor *deploytest.ResourceMonitor) error {
++		_, err := monitor.RegisterResource("pkgA:m:typA", "resA", true)
++		require.NoError(t, err)
++
++		_, err = monitor.RegisterResource("pkgA:m:typA", "resB", true)
++		require.NoError(t, err)
++
++		_, err = monitor.RegisterResource("pkgA:m:typA", "resC", true)
++		require.NoError(t, err)
++
++		return nil
++	})
++
++	hostF := deploytest.NewPluginHostF(nil, nil, program, loaders...)
++	opts := lt.TestUpdateOptions{T: t, HostF: hostF}
++
++	// First, create all resources with a normal update.
++	snap, err := lt.TestOp(Update).RunStep(project, p.GetTarget(t, nil), opts, false, p.BackendClient, nil, "0")
++	require.NoError(t, err)
++	require.Len(t, snap.Resources, 4) // default provider + 3 resources
++
++	// Now run RefreshV2 targeting only resB.
++	var resBURN resource.URN
++	for _, r := range snap.Resources {
++		if r.URN.Name() == "resB" {
++			resBURN = r.URN
++			break
++		}
++	}
++	require.NotEmpty(t, resBURN, "resB should exist in snapshot")
++
++	opts = lt.TestUpdateOptions{T: t, HostF: hostF}
++	opts.Targets = deploy.NewUrnTargetsFromUrns([]resource.URN{resBURN})
++
++	snap, err = lt.TestOp(engine.RefreshV2).
++		RunStep(project, p.GetTarget(t, snap), opts, false, p.BackendClient, nil, "1")
++	require.NoError(t, err)
++	require.Len(t, snap.Resources, 4)
++
++	// resB should have been refreshed (targeted).
++	// resA and resC should NOT have been refreshed (not targeted).
++	// Look up by name since ordering may change due to parallelism.
++	refreshed := resource.NewProperty(true)
++	for _, r := range snap.Resources {
++		switch r.URN.Name() {
++		case "resA":
++			assert.NotContains(t, r.Outputs,
++				resource.PropertyKey("refreshed"), "resA should NOT have been refreshed (not targeted)")
++		case "resB":
++			assert.Equal(t, refreshed,
++				r.Outputs["refreshed"], "resB should have been refreshed")
++		case "resC":
++			assert.NotContains(t, r.Outputs,
++				resource.PropertyKey("refreshed"), "resC should NOT have been refreshed (not targeted)")
++		}
++	}
++}
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/diff.stdout.txt
+new file mode 100644
+index 0000000000..df02ef93ba
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/diff.stdout.txt
+@@ -0,0 +1,10 @@
++<{%fg 2%}>+ pkgA:m:typA: (create)
++<{%fg 2%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resA]
++<{%reset%}><{%reset%}><{%fg 2%}>+ pkgA:m:typA: (create)
++<{%fg 2%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resB]
++<{%reset%}><{%reset%}><{%fg 2%}>+ pkgA:m:typA: (create)
++<{%fg 2%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resC]
++<{%reset%}><{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/eventstream.json b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/eventstream.json
+new file mode 100644
+index 0000000000..03cac79728
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/eventstream.json
+@@ -0,0 +1,9 @@
++{"sequence":0,"timestamp":0,"preludeEvent":{"config":{}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"1","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"3","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"1","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"4","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"1","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"5","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"summaryEvent":{"maybeCorrupt":false,"durationSeconds":1,"resourceChanges":{"create":3},"PolicyPacks":{},"isPreview":false}}
++{"sequence":0,"timestamp":0,"cancelEvent":{}}
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/progress.stdout.txt
+new file mode 100644
+index 0000000000..d24916fb00
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/progress.stdout.txt
+@@ -0,0 +1,15 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> pkgA:m:typA resA <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> pkgA:m:typA resA <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> pkgA:m:typA resB <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> pkgA:m:typA resB <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> pkgA:m:typA resC <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> pkgA:m:typA resC <{%fg 2%}>created<{%reset%}> 
++ <{%reset%}>  <{%reset%}> pulumi:pulumi:Stack project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-diff.stdout.txt
+new file mode 100644
+index 0000000000..188aebbedd
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-diff.stdout.txt
+@@ -0,0 +1,7 @@
++<{%fg 2%}>+ urn:pulumi:test::test::pkgA:m:typA::resA: (create)
++<{%reset%}><{%fg 2%}>+ urn:pulumi:test::test::pkgA:m:typA::resB: (create)
++<{%reset%}><{%fg 2%}>+ urn:pulumi:test::test::pkgA:m:typA::resC: (create)
++<{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-progress.stdout.txt
+new file mode 100644
+index 0000000000..e9179c7d00
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/0/urns-progress.stdout.txt
+@@ -0,0 +1,15 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resA <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resA <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resB <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resB <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resC <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resC <{%fg 2%}>created<{%reset%}> 
++ <{%reset%}>  <{%reset%}> urn:pulumi:stack::project::pulumi:pulumi:Stack::project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/diff.stdout.txt
+new file mode 100644
+index 0000000000..8d2b95efa7
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/diff.stdout.txt
+@@ -0,0 +1,14 @@
++<{%reset%}>  pkgA:m:typA: (same)
++<{%reset%}>    [id=3]
++<{%reset%}><{%reset%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resA]
++<{%reset%}><{%reset%}>    --outputs:--<{%reset%}>
++<{%fg 2%}>  + refreshed: <{%reset%}><{%fg 2%}>true<{%reset%}><{%fg 2%}>
++<{%reset%}><{%reset%}>  pkgA:m:typA: (same)
++<{%reset%}>    [id=4]
++<{%reset%}><{%reset%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resC]
++<{%reset%}><{%reset%}>    --outputs:--<{%reset%}>
++<{%fg 2%}>  + refreshed: <{%reset%}><{%fg 2%}>true<{%reset%}><{%fg 2%}>
++<{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    2 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/eventstream.json b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/eventstream.json
+new file mode 100644
+index 0000000000..09f94b9493
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/eventstream.json
+@@ -0,0 +1,7 @@
++{"sequence":0,"timestamp":0,"preludeEvent":{"config":{}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"refresh","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","type":"pkgA:m:typA","old":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"3","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"2","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"detailedDiff":null,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"same","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","type":"pkgA:m:typA","old":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"3","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"3","parent":"","inputs":{},"outputs":{"refreshed":true},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"detailedDiff":null,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"refresh","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","type":"pkgA:m:typA","old":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"4","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"2","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"detailedDiff":null,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"same","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","type":"pkgA:m:typA","old":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"4","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"4","parent":"","inputs":{},"outputs":{"refreshed":true},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"detailedDiff":null,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"}}}
++{"sequence":0,"timestamp":0,"summaryEvent":{"maybeCorrupt":false,"durationSeconds":1,"resourceChanges":{"same":2},"PolicyPacks":{},"isPreview":false}}
++{"sequence":0,"timestamp":0,"cancelEvent":{}}
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/progress.stdout.txt
+new file mode 100644
+index 0000000000..8c3cae2b72
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/progress.stdout.txt
+@@ -0,0 +1,13 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 3%}>~ <{%reset%}> pkgA:m:typA resA <{%bold%}><{%fg 3%}>refreshing<{%reset%}> 
++ <{%reset%}>  <{%reset%}> pkgA:m:typA resA <{%reset%}><{%reset%}> 
++ <{%bold%}><{%fg 3%}>~ <{%reset%}> pkgA:m:typA resC <{%bold%}><{%fg 3%}>refreshing<{%reset%}> 
++ <{%reset%}>  <{%reset%}> pkgA:m:typA resC <{%reset%}><{%reset%}> 
++ <{%reset%}>  <{%reset%}> pulumi:pulumi:Stack project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    2 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-diff.stdout.txt
+new file mode 100644
+index 0000000000..4c25317f8a
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-diff.stdout.txt
+@@ -0,0 +1,12 @@
++<{%reset%}>  urn:pulumi:test::test::pkgA:m:typA::resA: (same)
++<{%reset%}>    [id=3]
++<{%reset%}><{%reset%}>    --outputs:--<{%reset%}>
++<{%fg 2%}>  + refreshed: <{%reset%}><{%fg 2%}>true<{%reset%}><{%fg 2%}>
++<{%reset%}><{%reset%}>  urn:pulumi:test::test::pkgA:m:typA::resC: (same)
++<{%reset%}>    [id=4]
++<{%reset%}><{%reset%}>    --outputs:--<{%reset%}>
++<{%fg 2%}>  + refreshed: <{%reset%}><{%fg 2%}>true<{%reset%}><{%fg 2%}>
++<{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    2 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-progress.stdout.txt
+new file mode 100644
+index 0000000000..41be2f32a9
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2ExcludeTarget/1/urns-progress.stdout.txt
+@@ -0,0 +1,13 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 3%}>~ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resA <{%bold%}><{%fg 3%}>refreshing<{%reset%}> 
++ <{%reset%}>  <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resA <{%reset%}><{%reset%}> 
++ <{%bold%}><{%fg 3%}>~ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resC <{%bold%}><{%fg 3%}>refreshing<{%reset%}> 
++ <{%reset%}>  <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resC <{%reset%}><{%reset%}> 
++ <{%reset%}>  <{%reset%}> urn:pulumi:stack::project::pulumi:pulumi:Stack::project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    2 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/diff.stdout.txt
+new file mode 100644
+index 0000000000..df02ef93ba
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/diff.stdout.txt
+@@ -0,0 +1,10 @@
++<{%fg 2%}>+ pkgA:m:typA: (create)
++<{%fg 2%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resA]
++<{%reset%}><{%reset%}><{%fg 2%}>+ pkgA:m:typA: (create)
++<{%fg 2%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resB]
++<{%reset%}><{%reset%}><{%fg 2%}>+ pkgA:m:typA: (create)
++<{%fg 2%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resC]
++<{%reset%}><{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/eventstream.json b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/eventstream.json
+new file mode 100644
+index 0000000000..03cac79728
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/eventstream.json
+@@ -0,0 +1,9 @@
++{"sequence":0,"timestamp":0,"preludeEvent":{"config":{}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"1","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resA","custom":true,"id":"3","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"1","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"4","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"1","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"create","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","type":"pkgA:m:typA","old":null,"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resC","custom":true,"id":"5","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"},"detailedDiff":null,"logical":true,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::2"}}}
++{"sequence":0,"timestamp":0,"summaryEvent":{"maybeCorrupt":false,"durationSeconds":1,"resourceChanges":{"create":3},"PolicyPacks":{},"isPreview":false}}
++{"sequence":0,"timestamp":0,"cancelEvent":{}}
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/progress.stdout.txt
+new file mode 100644
+index 0000000000..d24916fb00
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/progress.stdout.txt
+@@ -0,0 +1,15 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> pkgA:m:typA resA <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> pkgA:m:typA resA <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> pkgA:m:typA resB <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> pkgA:m:typA resB <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> pkgA:m:typA resC <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> pkgA:m:typA resC <{%fg 2%}>created<{%reset%}> 
++ <{%reset%}>  <{%reset%}> pulumi:pulumi:Stack project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-diff.stdout.txt
+new file mode 100644
+index 0000000000..188aebbedd
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-diff.stdout.txt
+@@ -0,0 +1,7 @@
++<{%fg 2%}>+ urn:pulumi:test::test::pkgA:m:typA::resA: (create)
++<{%reset%}><{%fg 2%}>+ urn:pulumi:test::test::pkgA:m:typA::resB: (create)
++<{%reset%}><{%fg 2%}>+ urn:pulumi:test::test::pkgA:m:typA::resC: (create)
++<{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-progress.stdout.txt
+new file mode 100644
+index 0000000000..e9179c7d00
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/0/urns-progress.stdout.txt
+@@ -0,0 +1,15 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resA <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resA <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resB <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resB <{%fg 2%}>created<{%reset%}> 
++ <{%bold%}><{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resC <{%bold%}><{%fg 2%}>creating<{%reset%}> 
++ <{%fg 2%}>+ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resC <{%fg 2%}>created<{%reset%}> 
++ <{%reset%}>  <{%reset%}> urn:pulumi:stack::project::pulumi:pulumi:Stack::project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    <{%fg 2%}>+ 3 created<{%reset%}>
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/diff.stdout.txt
+new file mode 100644
+index 0000000000..9b84dbacd0
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/diff.stdout.txt
+@@ -0,0 +1,9 @@
++<{%reset%}>  pkgA:m:typA: (same)
++<{%reset%}>    [id=3]
++<{%reset%}><{%reset%}>    [urn=urn:pulumi:test::test::pkgA:m:typA::resB]
++<{%reset%}><{%reset%}>    --outputs:--<{%reset%}>
++<{%fg 2%}>  + refreshed: <{%reset%}><{%fg 2%}>true<{%reset%}><{%fg 2%}>
++<{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    1 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/eventstream.json b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/eventstream.json
+new file mode 100644
+index 0000000000..700e070744
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/eventstream.json
+@@ -0,0 +1,5 @@
++{"sequence":0,"timestamp":0,"preludeEvent":{"config":{}}}
++{"sequence":0,"timestamp":0,"resourcePreEvent":{"metadata":{"op":"refresh","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","type":"pkgA:m:typA","old":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"3","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"2","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"detailedDiff":null,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"}}}
++{"sequence":0,"timestamp":0,"resOutputsEvent":{"metadata":{"op":"same","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","type":"pkgA:m:typA","old":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"3","parent":"","inputs":{},"outputs":{},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"new":{"type":"pkgA:m:typA","urn":"urn:pulumi:test::test::pkgA:m:typA::resB","custom":true,"id":"3","parent":"","inputs":{},"outputs":{"refreshed":true},"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"},"detailedDiff":null,"provider":"urn:pulumi:test::test::pulumi:providers:pkgA::default::1"}}}
++{"sequence":0,"timestamp":0,"summaryEvent":{"maybeCorrupt":false,"durationSeconds":1,"resourceChanges":{"same":1},"PolicyPacks":{},"isPreview":false}}
++{"sequence":0,"timestamp":0,"cancelEvent":{}}
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/progress.stdout.txt
+new file mode 100644
+index 0000000000..165c7b9acf
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/progress.stdout.txt
+@@ -0,0 +1,11 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 3%}>~ <{%reset%}> pkgA:m:typA resB <{%bold%}><{%fg 3%}>refreshing<{%reset%}> 
++ <{%reset%}>  <{%reset%}> pkgA:m:typA resB <{%reset%}><{%reset%}> 
++ <{%reset%}>  <{%reset%}> pulumi:pulumi:Stack project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    1 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-diff.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-diff.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-diff.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-diff.stdout.txt
+new file mode 100644
+index 0000000000..42346cb1bb
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-diff.stdout.txt
+@@ -0,0 +1,8 @@
++<{%reset%}>  urn:pulumi:test::test::pkgA:m:typA::resB: (same)
++<{%reset%}>    [id=3]
++<{%reset%}><{%reset%}>    --outputs:--<{%reset%}>
++<{%fg 2%}>  + refreshed: <{%reset%}><{%fg 2%}>true<{%reset%}><{%fg 2%}>
++<{%reset%}><{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    1 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-progress.stderr.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-progress.stderr.txt
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-progress.stdout.txt b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-progress.stdout.txt
+new file mode 100644
+index 0000000000..5f134ca06b
+--- /dev/null
++++ b/pkg/engine/lifecycletest/testdata/output/TestRefreshV2IncludeTarget/1/urns-progress.stdout.txt
+@@ -0,0 +1,11 @@
++<{%fg 13%}><{%bold%}>View Live: <{%underline%}><{%fg 12%}>http://example.com<{%reset%}>
++
++
++ <{%bold%}><{%fg 3%}>~ <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resB <{%bold%}><{%fg 3%}>refreshing<{%reset%}> 
++ <{%reset%}>  <{%reset%}> urn:pulumi:test::test::pkgA:m:typA::resB <{%reset%}><{%reset%}> 
++ <{%reset%}>  <{%reset%}> urn:pulumi:stack::project::pulumi:pulumi:Stack::project-stack <{%reset%}><{%reset%}> 
++<{%fg 13%}><{%bold%}>Resources:<{%reset%}>
++    1 unchanged
++
++<{%fg 13%}><{%bold%}>Duration:<{%reset%}> 1s
++

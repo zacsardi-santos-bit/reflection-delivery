@@ -1,0 +1,12 @@
+diff --git a/jobs/config_test.py b/jobs/config_test.py
+index 90da931a57..cbd0447a97 100755
+--- a/jobs/config_test.py
++++ b/jobs/config_test.py
+@@ -795,6 +795,7 @@ class JobTest(unittest.TestCase):
+             'ci-cri-containerd-node-e2e': 'cri-containerd-node-e2e-*',
+             'ci-cri-containerd-node-e2e-serial': 'cri-containerd-node-e2e-*',
+             'ci-cri-containerd-node-e2e-flaky': 'cri-containerd-node-e2e-*',
++            'ci-cri-containerd-node-e2e-benchmark': 'cri-containerd-node-e2e-*',
+             # ci-cri-containerd-e2e-gce-alpha-api intentionally share projects with
+             # ci-kubernetes-e2e-gce-alpha-api.
+             'ci-kubernetes-e2e-gce-alpha-api': 'k8s-e2e-gce-alpha-api-access',

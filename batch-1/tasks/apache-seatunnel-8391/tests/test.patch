@@ -1,0 +1,475 @@
+diff --git a/seatunnel-connectors-v2/connector-kafka/src/test/java/org/apache/seatunnel/connectors/seatunnel/kafka/source/KafkaSourceConfigTest.java b/seatunnel-connectors-v2/connector-kafka/src/test/java/org/apache/seatunnel/connectors/seatunnel/kafka/source/KafkaSourceConfigTest.java
+new file mode 100644
+index 000000000..d7daef4c5
+--- /dev/null
++++ b/seatunnel-connectors-v2/connector-kafka/src/test/java/org/apache/seatunnel/connectors/seatunnel/kafka/source/KafkaSourceConfigTest.java
+@@ -0,0 +1,74 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *    http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.seatunnel.connectors.seatunnel.kafka.source;
++
++import org.apache.seatunnel.api.configuration.ReadonlyConfig;
++import org.apache.seatunnel.api.serialization.DeserializationSchema;
++import org.apache.seatunnel.api.table.catalog.TablePath;
++import org.apache.seatunnel.api.table.type.SeaTunnelRow;
++import org.apache.seatunnel.format.json.debezium.DebeziumJsonDeserializationSchemaDispatcher;
++
++import org.junit.jupiter.api.Assertions;
++import org.junit.jupiter.api.Test;
++
++import java.util.HashMap;
++import java.util.Map;
++
++import static org.apache.seatunnel.api.table.catalog.schema.TableSchemaOptions.TableIdentifierOptions.DATABASE_NAME;
++import static org.apache.seatunnel.api.table.catalog.schema.TableSchemaOptions.TableIdentifierOptions.SCHEMA_NAME;
++import static org.apache.seatunnel.api.table.catalog.schema.TableSchemaOptions.TableIdentifierOptions.TABLE_NAME;
++import static org.apache.seatunnel.connectors.seatunnel.kafka.config.Config.DEBEZIUM_RECORD_TABLE_FILTER;
++
++public class KafkaSourceConfigTest {
++
++    @Test
++    void testDebeziumJsonDeserializationSchemaDispatcher() {
++        Map<String, Object> schemaFields = new HashMap<>();
++        schemaFields.put("id", "int");
++        schemaFields.put("name", "string");
++        schemaFields.put("description", "string");
++        schemaFields.put("weight", "string");
++
++        Map<String, Object> schema = new HashMap<>();
++        schema.put("fields", schemaFields);
++
++        Map<String, Object> debeziumRecordTableFilter = new HashMap<>();
++        debeziumRecordTableFilter.put(DATABASE_NAME.key(), "test");
++        debeziumRecordTableFilter.put(SCHEMA_NAME.key(), "test");
++        debeziumRecordTableFilter.put(TABLE_NAME.key(), "test");
++
++        Map<String, Object> configMap = new HashMap<>();
++        configMap.put("bootstrap.servers", "localhost:9092");
++        configMap.put("group.id", "test");
++        configMap.put("topic", "test");
++        configMap.put("schema", schema);
++        configMap.put("format", "debezium_json");
++        configMap.put(DEBEZIUM_RECORD_TABLE_FILTER.key(), debeziumRecordTableFilter);
++
++        KafkaSourceConfig sourceConfig = new KafkaSourceConfig(ReadonlyConfig.fromMap(configMap));
++
++        DeserializationSchema<SeaTunnelRow> deserializationSchema =
++                sourceConfig.getMapMetadata().get(TablePath.of("test")).getDeserializationSchema();
++        Assertions.assertTrue(
++                deserializationSchema instanceof DebeziumJsonDeserializationSchemaDispatcher);
++        Assertions.assertNotNull(
++                ((DebeziumJsonDeserializationSchemaDispatcher) deserializationSchema)
++                        .getTableDeserializationMap()
++                        .get(TablePath.of("test.test.test")));
++    }
++}
+diff --git a/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroConverterTest.java b/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroConverterTest.java
+index fb45a0b53..60f728133 100644
+--- a/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroConverterTest.java
++++ b/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroConverterTest.java
+@@ -66,13 +66,16 @@ class AvroConverterTest {
+         subSeaTunnelRow.setField(12, bigDecimal);
+         subSeaTunnelRow.setField(13, localDateTime);
+ 
++        Map<String, Short> mapData = new HashMap<>();
++        mapData.put("k1", Short.valueOf("1"));
++        mapData.put("k2", Short.valueOf("2"));
+         SeaTunnelRow seaTunnelRow = new SeaTunnelRow(15);
+-        seaTunnelRow.setField(0, map);
++        seaTunnelRow.setField(0, mapData);
+         seaTunnelRow.setField(1, strArray);
+         seaTunnelRow.setField(2, "strVal");
+         seaTunnelRow.setField(3, true);
+-        seaTunnelRow.setField(4, 1);
+-        seaTunnelRow.setField(5, 2);
++        seaTunnelRow.setField(4, new Byte("1"));
++        seaTunnelRow.setField(5, Short.valueOf("2"));
+         seaTunnelRow.setField(6, 3);
+         seaTunnelRow.setField(7, Long.MAX_VALUE - 1);
+         seaTunnelRow.setField(8, 33.333F);
+@@ -138,12 +141,12 @@ class AvroConverterTest {
+             "c_row"
+         };
+         SeaTunnelDataType<?>[] fieldTypes = {
+-            new MapType<>(BasicType.STRING_TYPE, BasicType.STRING_TYPE),
++            new MapType<>(BasicType.STRING_TYPE, BasicType.SHORT_TYPE),
+             ArrayType.STRING_ARRAY_TYPE,
+             BasicType.STRING_TYPE,
+             BasicType.BOOLEAN_TYPE,
+-            BasicType.INT_TYPE,
+-            BasicType.INT_TYPE,
++            BasicType.BYTE_TYPE,
++            BasicType.SHORT_TYPE,
+             BasicType.INT_TYPE,
+             BasicType.LONG_TYPE,
+             BasicType.FLOAT_TYPE,
+diff --git a/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroSerializationSchemaTest.java b/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroSerializationSchemaTest.java
+index 52ba7d76e..18ca6d06e 100644
+--- a/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroSerializationSchemaTest.java
++++ b/seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroSerializationSchemaTest.java
+@@ -48,8 +48,8 @@ class AvroSerializationSchemaTest {
+     private SeaTunnelRow buildSeaTunnelRow() {
+         SeaTunnelRow subSeaTunnelRow = new SeaTunnelRow(14);
+         Map<String, String> map = new HashMap<>();
+-        map.put("k1", "v1");
+-        map.put("k2", "v2");
++        map.put("k1", "1");
++        map.put("k2", "2");
+         String[] strArray = new String[] {"l1", "l2"};
+         byte byteVal = 100;
+         subSeaTunnelRow.setField(0, map);
+@@ -67,13 +67,16 @@ class AvroSerializationSchemaTest {
+         subSeaTunnelRow.setField(12, bigDecimal);
+         subSeaTunnelRow.setField(13, localDateTime);
+ 
++        Map<String, Short> mapData = new HashMap<>();
++        mapData.put("k1", Short.valueOf("1"));
++        mapData.put("k2", Short.valueOf("2"));
+         SeaTunnelRow seaTunnelRow = new SeaTunnelRow(15);
+-        seaTunnelRow.setField(0, map);
++        seaTunnelRow.setField(0, mapData);
+         seaTunnelRow.setField(1, strArray);
+         seaTunnelRow.setField(2, "strVal");
+         seaTunnelRow.setField(3, true);
+-        seaTunnelRow.setField(4, 1);
+-        seaTunnelRow.setField(5, 2);
++        seaTunnelRow.setField(4, new Byte("1"));
++        seaTunnelRow.setField(5, Short.valueOf("2"));
+         seaTunnelRow.setField(6, 3);
+         seaTunnelRow.setField(7, Long.MAX_VALUE - 1);
+         seaTunnelRow.setField(8, 33.333F);
+@@ -138,12 +141,12 @@ class AvroSerializationSchemaTest {
+             "c_row"
+         };
+         SeaTunnelDataType<?>[] fieldTypes = {
+-            new MapType<>(BasicType.STRING_TYPE, BasicType.STRING_TYPE),
++            new MapType<>(BasicType.STRING_TYPE, BasicType.SHORT_TYPE),
+             ArrayType.STRING_ARRAY_TYPE,
+             BasicType.STRING_TYPE,
+             BasicType.BOOLEAN_TYPE,
+-            BasicType.INT_TYPE,
+-            BasicType.INT_TYPE,
++            BasicType.BYTE_TYPE,
++            BasicType.SHORT_TYPE,
+             BasicType.INT_TYPE,
+             BasicType.LONG_TYPE,
+             BasicType.FLOAT_TYPE,
+diff --git a/seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonDeserializationSchemaDispatcherTest.java b/seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonDeserializationSchemaDispatcherTest.java
+new file mode 100644
+index 000000000..0889ec7ed
+--- /dev/null
++++ b/seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonDeserializationSchemaDispatcherTest.java
+@@ -0,0 +1,116 @@
++/*
++ * Licensed to the Apache Software Foundation (ASF) under one or more
++ * contributor license agreements.  See the NOTICE file distributed with
++ * this work for additional information regarding copyright ownership.
++ * The ASF licenses this file to You under the Apache License, Version 2.0
++ * (the "License"); you may not use this file except in compliance with
++ * the License.  You may obtain a copy of the License at
++ *
++ *    http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.apache.seatunnel.format.json.debezium;
++
++import org.apache.seatunnel.api.table.catalog.CatalogTable;
++import org.apache.seatunnel.api.table.catalog.TablePath;
++
++import org.junit.jupiter.api.Test;
++
++import java.io.IOException;
++import java.nio.charset.StandardCharsets;
++import java.util.Arrays;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++import java.util.stream.Collectors;
++
++import static org.junit.jupiter.api.Assertions.assertEquals;
++import static org.junit.jupiter.api.Assertions.assertTrue;
++
++public class DebeziumJsonDeserializationSchemaDispatcherTest {
++
++    @Test
++    void testDispatcher() throws IOException {
++        List<String> actual =
++                getRowsByTablePath(
++                        TablePath.of("inventory.products"),
++                        DebeziumJsonSerDeSchemaTest.catalogTables,
++                        "debezium-data.txt");
++        List<String> expected =
++                Arrays.asList(
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[101, scooter, Small 2-wheel scooter, 3.14]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[102, car battery, 12V car battery, 8.1]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[103, 12-pack drill bits, 12-pack of drill bits with sizes ranging from #40 to #3, 0.8]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[104, hammer, 12oz carpenter's hammer, 0.75]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[105, hammer, 14oz carpenter's hammer, 0.875]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[106, hammer, 16oz carpenter's hammer, 1.0]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[107, rocks, box of assorted rocks, 5.3]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[108, jacket, water resistent black wind breaker, 0.1]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[109, spare tire, 24 inch spare tire, 22.2]}",
++                        "SeaTunnelRow{tableId=..test, kind=-U, fields=[106, hammer, 16oz carpenter's hammer, 1.0]}",
++                        "SeaTunnelRow{tableId=..test, kind=+U, fields=[106, hammer, 18oz carpenter hammer, 1.0]}",
++                        "SeaTunnelRow{tableId=..test, kind=-U, fields=[107, rocks, box of assorted rocks, 5.3]}",
++                        "SeaTunnelRow{tableId=..test, kind=+U, fields=[107, rocks, box of assorted rocks, 5.1]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[110, jacket, water resistent white wind breaker, 0.2]}",
++                        "SeaTunnelRow{tableId=..test, kind=+I, fields=[111, scooter, Big 2-wheel scooter , 5.18]}",
++                        "SeaTunnelRow{tableId=..test, kind=-U, fields=[110, jacket, water resistent white wind breaker, 0.2]}",
++                        "SeaTunnelRow{tableId=..test, kind=+U, fields=[110, jacket, new water resistent white wind breaker, 0.5]}",
++                        "SeaTunnelRow{tableId=..test, kind=-U, fields=[111, scooter, Big 2-wheel scooter , 5.18]}",
++                        "SeaTunnelRow{tableId=..test, kind=+U, fields=[111, scooter, Big 2-wheel scooter , 5.17]}",
++                        "SeaTunnelRow{tableId=..test, kind=-D, fields=[111, scooter, Big 2-wheel scooter , 5.17]}");
++        assertEquals(expected, actual);
++    }
++
++    @Test
++    void testDispatcherFilterAllRow() throws IOException {
++        List<String> actual =
++                getRowsByTablePath(
++                        TablePath.of("inventory.notExistTable"),
++                        DebeziumJsonSerDeSchemaTest.catalogTables,
++                        "debezium-data.txt");
++        assertTrue(actual.isEmpty());
++    }
++
++    @Test
++    void testDispatcherWithDBIsNullWithOracle() throws IOException {
++        List<String> actual =
++                getRowsByTablePath(
++                        TablePath.of("ORCL", "QA_SOURCE", "ALL_TYPES1"),
++                        DebeziumJsonSerDeSchemaTest.oracleTable,
++                        "debezium-oracle.txt");
++        List<String> actualWithOutDB =
++                getRowsByTablePath(
++                        TablePath.of(null, "QA_SOURCE", "ALL_TYPES1"),
++                        DebeziumJsonSerDeSchemaTest.oracleTable,
++                        "debezium-oracle.txt");
++        assertEquals(actual, actualWithOutDB);
++        assertEquals(1, actual.size());
++    }
++
++    private List<String> getRowsByTablePath(
++            TablePath tablePath, CatalogTable catalogTable, String dataFile) throws IOException {
++        Map<TablePath, DebeziumJsonDeserializationSchema> tableDeserializationMap = new HashMap<>();
++        tableDeserializationMap.put(
++                tablePath, new DebeziumJsonDeserializationSchema(catalogTable, false));
++        DebeziumJsonDeserializationSchemaDispatcher dispatcher =
++                new DebeziumJsonDeserializationSchemaDispatcher(
++                        tableDeserializationMap, false, false);
++
++        List<String> lines = DebeziumJsonSerDeSchemaTest.readLines(dataFile);
++
++        DebeziumJsonSerDeSchemaTest.SimpleCollector collector =
++                new DebeziumJsonSerDeSchemaTest.SimpleCollector();
++
++        for (String line : lines) {
++            dispatcher.deserialize(line.getBytes(StandardCharsets.UTF_8), collector);
++        }
++
++        return collector.getList().stream().map(Object::toString).collect(Collectors.toList());
++    }
++}
+diff --git a/seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonSerDeSchemaTest.java b/seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonSerDeSchemaTest.java
+index b7082f5e1..51996b815 100644
+--- a/seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonSerDeSchemaTest.java
++++ b/seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonSerDeSchemaTest.java
+@@ -32,6 +32,8 @@ import org.apache.seatunnel.common.exception.SeaTunnelRuntimeException;
+ import org.junit.jupiter.api.Assertions;
+ import org.junit.jupiter.api.Test;
+ 
++import lombok.Getter;
++
+ import java.io.File;
+ import java.io.IOException;
+ import java.math.BigDecimal;
+@@ -65,9 +67,34 @@ public class DebeziumJsonSerDeSchemaTest {
+             new SeaTunnelRowType(
+                     new String[] {"id", "name", "description", "weight"},
+                     new SeaTunnelDataType[] {INT_TYPE, STRING_TYPE, STRING_TYPE, FLOAT_TYPE});
+-    private static final CatalogTable catalogTables =
++    public static final CatalogTable catalogTables =
+             CatalogTableUtil.getCatalogTable("", "", "", "test", SEATUNNEL_ROW_TYPE);
+ 
++    public static final CatalogTable oracleTable =
++            CatalogTableUtil.getCatalogTable(
++                    "defaule",
++                    new SeaTunnelRowType(
++                            new String[] {
++                                "F1", "F2", "F7", "F9", "F11", "F20", "F21", "F27", "F28", "F29",
++                                "F30", "F31", "F32", "F33",
++                            },
++                            new SeaTunnelDataType[] {
++                                INT_TYPE,
++                                new DecimalType(38, 18),
++                                new DecimalType(38, 18),
++                                new DecimalType(38, 18),
++                                STRING_TYPE,
++                                STRING_TYPE,
++                                STRING_TYPE,
++                                LOCAL_DATE_TIME_TYPE,
++                                LOCAL_DATE_TIME_TYPE,
++                                LOCAL_DATE_TIME_TYPE,
++                                LOCAL_DATE_TIME_TYPE,
++                                LOCAL_DATE_TIME_TYPE,
++                                LOCAL_DATE_TIME_TYPE,
++                                LOCAL_DATE_TIME_TYPE,
++                            }));
++
+     @Test
+     void testNullRowMessages() throws Exception {
+         DebeziumJsonDeserializationSchema deserializationSchema =
+@@ -76,7 +103,7 @@ public class DebeziumJsonSerDeSchemaTest {
+ 
+         deserializationSchema.deserialize(null, collector);
+         deserializationSchema.deserialize(new byte[0], collector);
+-        assertEquals(0, collector.list.size());
++        assertEquals(0, collector.getList().size());
+     }
+ 
+     @Test
+@@ -303,7 +330,7 @@ public class DebeziumJsonSerDeSchemaTest {
+             deserializationSchema.deserialize(line.getBytes(StandardCharsets.UTF_8), collector);
+         }
+ 
+-        SeaTunnelRow row = collector.list.get(0);
++        SeaTunnelRow row = collector.getList().get(0);
+         Assertions.assertEquals(1, row.getField(0));
+         Assertions.assertEquals(true, row.getField(1));
+         Assertions.assertEquals(Byte.parseByte("1"), row.getField(2));
+@@ -401,7 +428,7 @@ public class DebeziumJsonSerDeSchemaTest {
+             deserializationSchema.deserialize(line.getBytes(StandardCharsets.UTF_8), collector);
+         }
+ 
+-        SeaTunnelRow row = collector.list.get(0);
++        SeaTunnelRow row = collector.getList().get(0);
+         Assertions.assertEquals(1, row.getField(0));
+         Assertions.assertEquals(true, row.getField(1));
+         Assertions.assertEquals(1, row.getField(2));
+@@ -436,37 +463,14 @@ public class DebeziumJsonSerDeSchemaTest {
+     public void testDeserializationForOracle() throws Exception {
+         List<String> lines = readLines("debezium-oracle.txt");
+ 
+-        SeaTunnelRowType rowType =
+-                new SeaTunnelRowType(
+-                        new String[] {
+-                            "F1", "F2", "F7", "F9", "F11", "F20", "F21", "F27", "F28", "F29", "F30",
+-                            "F31", "F32", "F33",
+-                        },
+-                        new SeaTunnelDataType[] {
+-                            INT_TYPE,
+-                            new DecimalType(38, 18),
+-                            new DecimalType(38, 18),
+-                            new DecimalType(38, 18),
+-                            STRING_TYPE,
+-                            STRING_TYPE,
+-                            STRING_TYPE,
+-                            LOCAL_DATE_TIME_TYPE,
+-                            LOCAL_DATE_TIME_TYPE,
+-                            LOCAL_DATE_TIME_TYPE,
+-                            LOCAL_DATE_TIME_TYPE,
+-                            LOCAL_DATE_TIME_TYPE,
+-                            LOCAL_DATE_TIME_TYPE,
+-                            LOCAL_DATE_TIME_TYPE,
+-                        });
+         DebeziumJsonDeserializationSchema deserializationSchema =
+-                new DebeziumJsonDeserializationSchema(
+-                        CatalogTableUtil.getCatalogTable("defaule", rowType), false, false);
++                new DebeziumJsonDeserializationSchema(oracleTable, false, false);
+         SimpleCollector collector = new SimpleCollector();
+         for (String line : lines) {
+             deserializationSchema.deserialize(line.getBytes(StandardCharsets.UTF_8), collector);
+         }
+ 
+-        SeaTunnelRow row = collector.list.get(0);
++        SeaTunnelRow row = collector.getList().get(0);
+         Assertions.assertEquals(1, row.getField(0));
+         Assertions.assertEquals(new BigDecimal("1"), row.getField(1));
+         Assertions.assertEquals(new BigDecimal("1"), row.getField(2));
+@@ -507,7 +511,8 @@ public class DebeziumJsonSerDeSchemaTest {
+                 new SeaTunnelRowType(
+                         new String[] {
+                             "id", "f1", "f5", "f25", "f44", "f45", "f46", "f47", "f48", "f49",
+-                            "f50", "f51", "f52", "f53", "f54", "f55", "f56", "f57",
++                            "f50", "f51", "f52", "f53", "f54", "f55", "f56", "f57", "f38",
++                                    "not_exist_column"
+                         },
+                         new SeaTunnelDataType[] {
+                             INT_TYPE,
+@@ -528,6 +533,8 @@ public class DebeziumJsonSerDeSchemaTest {
+                             LOCAL_DATE_TIME_TYPE,
+                             LOCAL_DATE_TIME_TYPE,
+                             LOCAL_DATE_TIME_TYPE,
++                            INT_TYPE,
++                            INT_TYPE
+                         });
+         DebeziumJsonDeserializationSchema deserializationSchema =
+                 new DebeziumJsonDeserializationSchema(
+@@ -537,7 +544,7 @@ public class DebeziumJsonSerDeSchemaTest {
+             deserializationSchema.deserialize(line.getBytes(StandardCharsets.UTF_8), collector);
+         }
+ 
+-        SeaTunnelRow row = collector.list.get(0);
++        SeaTunnelRow row = collector.getList().get(0);
+         Assertions.assertEquals(1, row.getField(0));
+         Assertions.assertEquals(true, row.getField(1));
+         Assertions.assertEquals(1, row.getField(2));
+@@ -557,6 +564,8 @@ public class DebeziumJsonSerDeSchemaTest {
+         Assertions.assertEquals("2024-12-17T18:00:56", row.getField(15).toString());
+         Assertions.assertEquals("2024-12-17T18:00:57", row.getField(16).toString());
+         Assertions.assertEquals("2024-12-17T18:00:58.786", row.getField(17).toString());
++        Assertions.assertNull(row.getField(18));
++        Assertions.assertNull(row.getField(19));
+     }
+ 
+     private void testSerializationDeserialization(String resourceFile, boolean schemaInclude)
+@@ -594,7 +603,7 @@ public class DebeziumJsonSerDeSchemaTest {
+                         "SeaTunnelRow{tableId=..test, kind=+U, fields=[111, scooter, Big 2-wheel scooter , 5.17]}",
+                         "SeaTunnelRow{tableId=..test, kind=-D, fields=[111, scooter, Big 2-wheel scooter , 5.17]}");
+         List<String> actual =
+-                collector.list.stream().map(Object::toString).collect(Collectors.toList());
++                collector.getList().stream().map(Object::toString).collect(Collectors.toList());
+         assertEquals(expected, actual);
+ 
+         DebeziumJsonSerializationSchema serializationSchema =
+@@ -633,16 +642,16 @@ public class DebeziumJsonSerDeSchemaTest {
+     // Utilities
+     // --------------------------------------------------------------------------------------------
+ 
+-    private static List<String> readLines(String resource) throws IOException {
++    public static List<String> readLines(String resource) throws IOException {
+         final URL url = DebeziumJsonSerDeSchemaTest.class.getClassLoader().getResource(resource);
+         Assertions.assertNotNull(url);
+         Path path = new File(url.getFile()).toPath();
+         return Files.readAllLines(path);
+     }
+ 
+-    private static class SimpleCollector implements Collector<SeaTunnelRow> {
++    public static class SimpleCollector implements Collector<SeaTunnelRow> {
+ 
+-        private List<SeaTunnelRow> list = new ArrayList<>();
++        @Getter private final List<SeaTunnelRow> list = new ArrayList<>();
+ 
+         @Override
+         public void collect(SeaTunnelRow record) {

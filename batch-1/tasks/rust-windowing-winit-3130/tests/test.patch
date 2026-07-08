@@ -1,0 +1,31 @@
+diff --git a/src/event.rs b/src/event.rs
+index 53a65654..b7c3f8a0 100644
+--- a/src/event.rs
++++ b/src/event.rs
+@@ -1342,3 +1342,26 @@
+         .clone();
+     }
+ }
++
++#[cfg(test)]
++mod gesture_tests {
++    use crate::event;
++
++    #[test]
++    fn test_pinch_gesture_variant_exists() {
++        let did = unsafe { event::DeviceId::dummy() };
++        let _pinch = event::WindowEvent::PinchGesture {
++            device_id: did,
++            delta: 1.0_f64,
++            phase: event::TouchPhase::Started,
++        };
++        let _doubletap = event::WindowEvent::DoubleTapGesture {
++            device_id: did,
++        };
++        let _rotation = event::WindowEvent::RotationGesture {
++            device_id: did,
++            delta: 1.0_f32,
++            phase: event::TouchPhase::Started,
++        };
++    }
++}

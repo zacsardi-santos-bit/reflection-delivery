@@ -1,0 +1,18 @@
+diff --git a/src/reject.rs b/src/reject.rs
+--- a/src/reject.rs
++++ b/src/reject.rs
+@@ -946,3 +946,14 @@
+         );
+     }
++
++    #[derive(Debug, PartialEq)]
++    struct TestCustom;
++
++    impl Reject for TestCustom {}
++
++    #[test]
++    fn test_new_reject_api() {
++        let rej = custom(TestCustom);
++        assert!(rej.find::<TestCustom>().is_some());
++    }
+ }

@@ -1,0 +1,15 @@
+diff --git a/src/eth/primitives/mod.rs b/src/eth/primitives/mod.rs
+--- a/src/eth/primitives/mod.rs
++++ b/src/eth/primitives/mod.rs
+@@ -184,4 +184,11 @@
+     gen_test_serde!(TransactionInput);
+     gen_test_serde!(TransactionMined);
+     gen_test_serde!(Wei);
++
++    #[test]
++    fn test_index_to_i32() {
++        let idx = Index::new(42);
++        let i: i32 = idx.into();
++        assert_eq!(i, 42);
++    }
+ }

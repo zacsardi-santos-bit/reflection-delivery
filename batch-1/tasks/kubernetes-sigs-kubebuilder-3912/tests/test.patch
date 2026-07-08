@@ -1,0 +1,16 @@
+diff --git a/pkg/plugins/golang/v4/scaffolds/version_test.go b/pkg/plugins/golang/v4/scaffolds/version_test.go
+new file mode 100644
+index 000000000..e69de29b
+--- /dev/null
++++ b/pkg/plugins/golang/v4/scaffolds/version_test.go
+@@ -0,0 +1,10 @@
++package scaffolds
++
++import "testing"
++
++func TestControllerRuntimeVersion(t *testing.T) {
++	expected := "v0.18.2"
++	if ControllerRuntimeVersion != expected {
++		t.Errorf("ControllerRuntimeVersion = %s; want %s", ControllerRuntimeVersion, expected)
++	}
++}

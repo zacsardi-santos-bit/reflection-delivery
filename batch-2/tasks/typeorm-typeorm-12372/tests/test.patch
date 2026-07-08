@@ -1,0 +1,440 @@
+diff --git a/packages/codemod/test/cli/run-transforms.test.ts b/packages/codemod/test/cli/run-transforms.test.ts
+new file mode 100644
+index 000000000..36796c135
+--- /dev/null
++++ b/packages/codemod/test/cli/run-transforms.test.ts
+@@ -0,0 +1,40 @@
++import { expect } from "chai"
++import {
++    DEFAULT_IGNORE_PATTERNS,
++    buildIgnorePatterns,
++} from "../../src/cli/run-transforms"
++
++describe("run-transforms", () => {
++    describe("DEFAULT_IGNORE_PATTERNS", () => {
++        it("excludes ambient type declaration files by default", () => {
++            expect(DEFAULT_IGNORE_PATTERNS).to.include("**/*.d.ts")
++        })
++    })
++
++    describe("buildIgnorePatterns", () => {
++        it("returns the defaults when no user patterns are supplied", () => {
++            expect(buildIgnorePatterns()).to.deep.equal(DEFAULT_IGNORE_PATTERNS)
++        })
++
++        it("returns the defaults when user patterns are undefined", () => {
++            expect(buildIgnorePatterns(undefined)).to.deep.equal(
++                DEFAULT_IGNORE_PATTERNS,
++            )
++        })
++
++        it("merges user patterns after the defaults so defaults are preserved", () => {
++            const result = buildIgnorePatterns(["**/generated*", "**/e2e/**"])
++            expect(result).to.deep.equal([
++                ...DEFAULT_IGNORE_PATTERNS,
++                "**/generated*",
++                "**/e2e/**",
++            ])
++        })
++
++        it("does not mutate the defaults when user patterns are provided", () => {
++            const before = [...DEFAULT_IGNORE_PATTERNS]
++            buildIgnorePatterns(["**/foo"])
++            expect(DEFAULT_IGNORE_PATTERNS).to.deep.equal(before)
++        })
++    })
++})
+diff --git a/packages/codemod/test/transforms/ast-helpers.test.ts b/packages/codemod/test/transforms/ast-helpers.test.ts
+index 4ed8e7ea2..01eea7aea 100644
+--- a/packages/codemod/test/transforms/ast-helpers.test.ts
++++ b/packages/codemod/test/transforms/ast-helpers.test.ts
+@@ -1,6 +1,7 @@
+ import { expect } from "chai"
+ import jscodeshift, { type ASTNode } from "jscodeshift"
+ import {
++    fileImportsFrom,
+     getStringValue,
+     setStringValue,
+ } from "../../src/transforms/ast-helpers"
+@@ -44,4 +45,55 @@ describe("ast-helpers", () => {
+             expect(() => setStringValue(literal, "test")).to.not.throw()
+         })
+     })
++
++    describe("fileImportsFrom", () => {
++        it("matches ESM import from the exact module", () => {
++            const root = j('import { DataSource } from "typeorm"')
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.true
++        })
++
++        it("matches ESM import from a sub-path", () => {
++            const root = j(
++                'import type { SapConnectionOptions } from "typeorm/driver/sap/SapConnectionOptions"',
++            )
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.true
++        })
++
++        it("matches ESM side-effect import", () => {
++            const root = j('import "typeorm"')
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.true
++        })
++
++        it("matches CommonJS `require(...)`", () => {
++            const root = j('const { DataSource } = require("typeorm")')
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.true
++        })
++
++        it("matches CommonJS `require(...)` from a sub-path", () => {
++            const root = j(
++                'const { SapConnectionOptions } = require("typeorm/driver/sap/SapConnectionOptions")',
++            )
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.true
++        })
++
++        it("matches TypeScript `import ... = require(...)`", () => {
++            const root = j('import typeorm = require("typeorm")')
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.true
++        })
++
++        it("does not match a module whose name shares a prefix", () => {
++            const root = j('import { foo } from "typeorm-extension"')
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.false
++        })
++
++        it("does not match files with no import", () => {
++            const root = j('const x = "typeorm"')
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.false
++        })
++
++        it("does not match require calls for other modules", () => {
++            const root = j('const fs = require("node:fs")')
++            expect(fileImportsFrom(root, j, "typeorm")).to.be.false
++        })
++    })
+ })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.input.ts b/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.input.ts
+index b5e6222b4..e98f4d6f6 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.input.ts
+@@ -1 +1,3 @@
++import { Column } from "typeorm"
++
+ const column = Column("decimal", { precision: 10, scale: 2, unsigned: true })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.output.ts b/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.output.ts
+index df2ff1535..842cccc48 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/column-unsigned-numeric/column-unsigned-numeric.output.ts
+@@ -1,3 +1,5 @@
++import { Column } from "typeorm"
++
+ const column = Column("decimal", {
+     precision: 10,
+     scale: 2,
+diff --git a/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.input.ts b/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.input.ts
+index 60192b399..7ebdfd663 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.input.ts
+@@ -1,3 +1,5 @@
++import { DataSource } from "typeorm"
++
+ const dataSource = new DataSource({
+     type: "mysql",
+     connectorPackage: "mysql2",
+diff --git a/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.output.ts b/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.output.ts
+index dbf1051b4..62edb0d31 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/datasource-mysql-connector/datasource-mysql-connector.output.ts
+@@ -1,3 +1,5 @@
++import { DataSource } from "typeorm"
++
+ const dataSource = new DataSource({
+     type: "mysql",
+     host: "localhost",
+diff --git a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.input.ts b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.input.ts
+index 93c9e95ea..439071021 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.input.ts
+@@ -1,6 +1,23 @@
++import { DataSource } from "typeorm"
++
+ const dataSource = new DataSource({
+     type: "better-sqlite3",
+     database: "db.sqlite",
+     busyTimeout: 2000,
+     flags: ["OPEN_URI"],
+ })
++
++// Also runs on ormconfig-style plain exports that do not import from "typeorm"
++export default {
++    type: "sqlite",
++    database: "db.sqlite",
++    busyTimeout: 500,
++    flags: ["OPEN_URI"],
++}
++
++// Unrelated config with matching key names must be left untouched
++const commanderOptions = {
++    type: "command",
++    busyTimeout: 1000,
++    flags: ["--verbose"],
++}
+diff --git a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.output.ts b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.output.ts
+index 02e34f3d0..eb39410b1 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-options/datasource-sqlite-options.output.ts
+@@ -1,5 +1,21 @@
++import { DataSource } from "typeorm"
++
+ const dataSource = new DataSource({
+     type: "better-sqlite3",
+     database: "db.sqlite",
+     timeout: 2000,
+ })
++
++// Also runs on ormconfig-style plain exports that do not import from "typeorm"
++export default {
++    type: "sqlite",
++    database: "db.sqlite",
++    timeout: 500,
++}
++
++// Unrelated config with matching key names must be left untouched
++const commanderOptions = {
++    type: "command",
++    busyTimeout: 1000,
++    flags: ["--verbose"],
++}
+diff --git a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.input.ts b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.input.ts
+index 5009ed8eb..b36ce9596 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.input.ts
+@@ -1,4 +1,18 @@
++import { DataSource } from "typeorm"
++
+ const dataSource = new DataSource({
+     type: "sqlite",
+     database: "db.sqlite",
+ })
++
++// Also runs on ormconfig-style plain exports that do not import from "typeorm"
++export default {
++    type: "sqlite",
++    database: "db.sqlite",
++}
++
++// Unrelated object without a `database` sibling must be left untouched
++const loggerConfig = {
++    type: "sqlite",
++    level: "info",
++}
+diff --git a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.output.ts b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.output.ts
+index a16324615..32f21bf3b 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/datasource-sqlite-type/datasource-sqlite-type.output.ts
+@@ -1,4 +1,18 @@
++import { DataSource } from "typeorm"
++
+ const dataSource = new DataSource({
+     type: "better-sqlite3",
+     database: "db.sqlite",
+ })
++
++// Also runs on ormconfig-style plain exports that do not import from "typeorm"
++export default {
++    type: "better-sqlite3",
++    database: "db.sqlite",
++}
++
++// Unrelated object without a `database` sibling must be left untouched
++const loggerConfig = {
++    type: "sqlite",
++    level: "info",
++}
+diff --git a/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.input.ts b/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.input.ts
+index 60ced5c07..66f52037f 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.input.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ const users = await repository.find({
+     relations: ["profile", "posts", "posts.comments"],
+ })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.output.ts b/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.output.ts
+index c4ce17168..c536cc783 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/find-options-string-relations/find-options-string-relations.output.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ const users = await repository.find({
+     relations: {
+         profile: true,
+diff --git a/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.input.ts b/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.input.ts
+index 390fc793c..423b18f3c 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.input.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ const users = await repository.find({
+     select: ["id", "name", "email"],
+ })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.output.ts b/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.output.ts
+index 69174a2cd..d52a1a029 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/find-options-string-select/find-options-string-select.output.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ const users = await repository.find({
+     select: {
+         id: true,
+diff --git a/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.input.ts b/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.input.ts
+index 08464b3a5..e70daa204 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.input.ts
+@@ -1 +1,3 @@
++import "typeorm"
++
+ const stats = await mongoRepository.stats()
+diff --git a/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.output.ts b/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.output.ts
+index 90c80dc08..d8acd817e 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/mongodb-stats/mongodb-stats.output.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ const stats =
+     await // TODO(typeorm-v1): `stats()` was removed — use the MongoDB driver directly
+     mongoRepository.stats()
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.input.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.input.ts
+index 29eb9feea..bae18353a 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.input.ts
+@@ -1 +1,3 @@
++import "typeorm"
++
+ queryBuilder.setNativeParameters({ key: "value" })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.output.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.output.ts
+index 69324700e..c3c1a1fa4 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-native-parameters/query-builder-native-parameters.output.ts
+@@ -1 +1,3 @@
++import "typeorm"
++
+ queryBuilder.setParameters({ key: "value" })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.input.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.input.ts
+index 77ebebee8..5b8056236 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.input.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ await queryBuilder
+     .insert()
+     .into(Post)
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.output.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.output.ts
+index 6c493c18d..43321c450 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-on-conflict/query-builder-on-conflict.output.ts
+@@ -1 +1,3 @@
++import "typeorm"
++
+ await queryBuilder.insert().into(Post).values(post).orIgnore().execute()
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.input.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.input.ts
+index 09c0850a6..33f0d5ec0 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.input.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ await queryBuilder
+     .insert()
+     .into(Post)
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.output.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.output.ts
+index a04b66515..757904314 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-or-update/query-builder-or-update.output.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ await queryBuilder
+     .insert()
+     .into(Post)
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.input.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.input.ts
+index 250d5bcb3..6702ec361 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.input.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ const users = await dataSource
+     .getRepository(User)
+     .createQueryBuilder("user")
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.output.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.output.ts
+index 8456f7852..92a13c010 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-print-sql/query-builder-print-sql.output.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ // TODO(typeorm-v1): `printSql()` was removed — use `getSql()` or `getQueryAndParameters()` to inspect SQL
+ const users = await dataSource
+     .getRepository(User)
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.input.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.input.ts
+index b5c66785a..95dfe58a3 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.input.ts
+@@ -1,3 +1,5 @@
++import { SelectQueryBuilder } from "typeorm"
++
+ class MyQueryBuilder extends SelectQueryBuilder<any> {
+     replacePropertyNames(query: string): string {
+         return query
+diff --git a/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.output.ts b/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.output.ts
+index 05c62ebfc..3ecf5abcf 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/query-builder-replace-property-names/query-builder-replace-property-names.output.ts
+@@ -1,3 +1,5 @@
++import { SelectQueryBuilder } from "typeorm"
++
+ class MyQueryBuilder extends SelectQueryBuilder<any> {
+     // TODO(typeorm-v1): `replacePropertyNames` was removed — property name replacement is now handled internally
+     replacePropertyNames(query: string): string {
+diff --git a/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.input.ts b/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.input.ts
+index e004820bd..bb14bcb88 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.input.ts
+@@ -1 +1,3 @@
++import "typeorm"
++
+ const hasUsers = await userRepository.exist({ where: { isActive: true } })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.output.ts b/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.output.ts
+index 90d64e072..dc3e039b5 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/repository-exist/repository-exist.output.ts
+@@ -1 +1,3 @@
++import "typeorm"
++
+ const hasUsers = await userRepository.exists({ where: { isActive: true } })
+diff --git a/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.input.ts b/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.input.ts
+index a8b390da0..8a12ec458 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.input.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.input.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ // Repository form
+ const user = await repository.findOneById(1)
+ 
+diff --git a/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.output.ts b/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.output.ts
+index 3f7005301..79fd21ebf 100644
+--- a/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.output.ts
++++ b/packages/codemod/test/transforms/v1/fixtures/repository-find-one-by-id/repository-find-one-by-id.output.ts
+@@ -1,3 +1,5 @@
++import "typeorm"
++
+ // Repository form
+ const user = await repository.findOneBy({
+     id: 1,

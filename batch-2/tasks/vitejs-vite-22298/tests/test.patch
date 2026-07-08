@@ -1,0 +1,19 @@
+diff --git a/playground/glob-import/__tests__/glob-import.spec.ts b/playground/glob-import/__tests__/glob-import.spec.ts
+index d54d8364f..e2cf1f709 100644
+--- a/playground/glob-import/__tests__/glob-import.spec.ts
++++ b/playground/glob-import/__tests__/glob-import.spec.ts
+@@ -367,3 +367,14 @@ test('import.meta.glob and dynamic import vars transformations should be visible
+       JSON.stringify({ globTransformed: true, dynamicImportTransformed: true }),
+     )
+ })
++
++test('absolute base with files outside of root', async () => {
++  await expect
++    .poll(async () =>
++      JSON.parse(await page.textContent('.absolute-base-outside-root')),
++    )
++    .toStrictEqual({
++      '../external/x.js': 'hello from x',
++      '../external/y.js': 'hello from y',
++    })
++})

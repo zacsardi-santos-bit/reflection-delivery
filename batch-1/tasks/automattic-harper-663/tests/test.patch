@@ -1,0 +1,24 @@
+diff --git a/harper-core/src/linting/phrase_corrections.rs b/harper-core/src/linting/phrase_corrections.rs
+--- a/harper-core/src/linting/phrase_corrections.rs
++++ b/harper-core/src/linting/phrase_corrections.rs
+@@ -96,8 +96,8 @@ mod tests {
+     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+
+     use super::{
+-        BadRap, BatedBreath, ChangeTack, EnMasse, HungerPang, LetAlone, LoAndBehold, OfCourse,
+-        SneakingSuspicion, SpecialAttention, SupposedTo, ThanOthers, TurnItOff,
++        BadRap, BatedBreath, ChangeTack, EnMasse, HungerPang, LetAlone, LoAndBehold, MutePoint,
++        OfCourse, SneakingSuspicion, SpecialAttention, SupposedTo, ThanOthers, TurnItOff,
+     };
+
+     #[test]
+@@ -214,4 +214,9 @@ mod tests {
+             0,
+         );
+     }
++
++    #[test]
++    fn mute_point_corrects() {
++        assert_suggestion_result("mute point", MutePoint::default(), "moot point");
++    }
+ }

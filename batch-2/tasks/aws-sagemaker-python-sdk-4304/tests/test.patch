@@ -1,0 +1,1137 @@
+diff --git a/tests/integ/kms_utils.py b/tests/integ/kms_utils.py
+index 1df74186..1a80ac78 100644
+--- a/tests/integ/kms_utils.py
++++ b/tests/integ/kms_utils.py
+@@ -64,7 +64,7 @@ def _create_kms_key(
+ ):
+     if role_arn:
+         principal = PRINCIPAL_TEMPLATE.format(
+-            partition=utils._aws_partition(region),
++            partition=utils.aws_partition(region),
+             account_id=account_id,
+             role_arn=role_arn,
+             sagemaker_role=sagemaker_role,
+@@ -95,7 +95,7 @@ def _add_role_to_policy(
+ 
+     if role_arn not in principal or sagemaker_role not in principal:
+         principal = PRINCIPAL_TEMPLATE.format(
+-            partition=utils._aws_partition(region),
++            partition=utils.aws_partition(region),
+             account_id=account_id,
+             role_arn=role_arn,
+             sagemaker_role=sagemaker_role,
+@@ -198,7 +198,7 @@ def bucket_with_encryption(sagemaker_session, sagemaker_role):
+     s3_client.put_bucket_policy(
+         Bucket=bucket_name,
+         Policy=KMS_BUCKET_POLICY.format(
+-            partition=utils._aws_partition(region), bucket_name=bucket_name
++            partition=utils.aws_partition(region), bucket_name=bucket_name
+         ),
+     )
+ 
+diff --git a/tests/integ/sagemaker/jumpstart/conftest.py b/tests/integ/sagemaker/jumpstart/conftest.py
+index 29299812..c7554f3e 100644
+--- a/tests/integ/sagemaker/jumpstart/conftest.py
++++ b/tests/integ/sagemaker/jumpstart/conftest.py
+@@ -16,6 +16,7 @@ import os
+ import boto3
+ import pytest
+ from botocore.config import Config
++from sagemaker.session import Session
+ from tests.integ.sagemaker.jumpstart.constants import (
+     ENV_VAR_JUMPSTART_SDK_TEST_SUITE_ID,
+     JUMPSTART_TAG,
+@@ -42,12 +43,15 @@ def _teardown():
+ 
+     test_suite_id = os.environ[ENV_VAR_JUMPSTART_SDK_TEST_SUITE_ID]
+ 
+-    sagemaker_client = boto3.client(
++    boto3_session = boto3.Session(region_name=JUMPSTART_DEFAULT_REGION_NAME)
++
++    sagemaker_client = boto3_session.client(
+         "sagemaker",
+         config=Config(retries={"max_attempts": 10, "mode": "standard"}),
+-        region_name=JUMPSTART_DEFAULT_REGION_NAME,
+     )
+ 
++    sagemaker_session = Session(boto_session=boto3_session, sagemaker_client=sagemaker_client)
++
+     search_endpoints_result = sagemaker_client.search(
+         Resource="Endpoint",
+         SearchExpression={
+@@ -65,12 +69,32 @@ def _teardown():
+         endpoint_info["Endpoint"]["EndpointConfigName"]
+         for endpoint_info in search_endpoints_result["Results"]
+     ]
+-    model_names = [
+-        sagemaker_client.describe_endpoint_config(EndpointConfigName=endpoint_config_name)[
+-            "ProductionVariants"
+-        ][0]["ModelName"]
+-        for endpoint_config_name in endpoint_config_names
+-    ]
++    model_names = list(
++        filter(
++            lambda elt: elt is not None,
++            [
++                sagemaker_client.describe_endpoint_config(EndpointConfigName=endpoint_config_name)[
++                    "ProductionVariants"
++                ][0].get("ModelName")
++                for endpoint_config_name in endpoint_config_names
++            ],
++        )
++    )
++
++    inference_component_names = []
++    for endpoint_name in endpoint_names:
++        for (
++            inference_component_name
++        ) in sagemaker_session.list_and_paginate_inference_component_names_associated_with_endpoint(
++            endpoint_name=endpoint_name
++        ):
++            inference_component_names.append(inference_component_name)
++
++    # delete inference components for test-suite-tagged endpoints
++    for inference_component_name in inference_component_names:
++        sagemaker_session.delete_inference_component(
++            inference_component_name=inference_component_name, wait=True
++        )
+ 
+     # delete test-suite-tagged endpoints
+     for endpoint_name in endpoint_names:
+diff --git a/tests/integ/sagemaker/jumpstart/model/test_jumpstart_model.py b/tests/integ/sagemaker/jumpstart/model/test_jumpstart_model.py
+index d55c4c97..24050807 100644
+--- a/tests/integ/sagemaker/jumpstart/model/test_jumpstart_model.py
++++ b/tests/integ/sagemaker/jumpstart/model/test_jumpstart_model.py
+@@ -16,6 +16,8 @@ import time
+ from unittest import mock
+ 
+ import pytest
++from sagemaker.enums import EndpointType
++from sagemaker.predictor import retrieve_default
+ 
+ import tests.integ
+ 
+@@ -60,10 +62,16 @@ def test_non_prepacked_jumpstart_model(setup):
+     )
+ 
+     # uses ml.m5.4xlarge instance
+-    predictor = model.deploy(
++    model.deploy(
+         tags=[{"Key": JUMPSTART_TAG, "Value": os.environ[ENV_VAR_JUMPSTART_SDK_TEST_SUITE_ID]}],
+     )
+ 
++    predictor = retrieve_default(
++        endpoint_name=model.endpoint_name,
++        sagemaker_session=get_sm_session(),
++        tolerate_vulnerable_model=True,
++    )
++
+     download_inference_assets()
+     ground_truth_label, features = get_tabular_data(InferenceTabularDataname.MULTICLASS)
+ 
+@@ -178,6 +186,40 @@ def test_jumpstart_gated_model(setup):
+     assert response is not None
+ 
+ 
++def test_jumpstart_gated_model_inference_component_enabled(setup):
++
++    model_id = "meta-textgeneration-llama-2-7b"
++
++    model = JumpStartModel(
++        model_id=model_id,
++        model_version="3.*",  # version >=3.0.0 stores artifacts in jumpstart-private-cache-* buckets
++        role=get_sm_session().get_caller_identity_arn(),
++        sagemaker_session=get_sm_session(),
++    )
++
++    # uses ml.g5.2xlarge instance
++    model.deploy(
++        tags=[{"Key": JUMPSTART_TAG, "Value": os.environ[ENV_VAR_JUMPSTART_SDK_TEST_SUITE_ID]}],
++        accept_eula=True,
++        endpoint_type=EndpointType.INFERENCE_COMPONENT_BASED,
++    )
++
++    predictor = retrieve_default(
++        endpoint_name=model.endpoint_name,
++        sagemaker_session=get_sm_session(),
++        tolerate_vulnerable_model=True,
++    )
++
++    payload = {
++        "inputs": "some-payload",
++        "parameters": {"max_new_tokens": 256, "top_p": 0.9, "temperature": 0.6},
++    }
++
++    response = predictor.predict(payload)
++
++    assert response is not None
++
++
+ @mock.patch("sagemaker.jumpstart.cache.JUMPSTART_LOGGER.warning")
+ def test_instatiating_model(mock_warning_logger, setup):
+ 
+diff --git a/tests/integ/test_marketplace.py b/tests/integ/test_marketplace.py
+index 927c0b24..f22319e5 100644
+--- a/tests/integ/test_marketplace.py
++++ b/tests/integ/test_marketplace.py
+@@ -27,7 +27,7 @@ from tests.integ.utils import create_repository
+ from sagemaker import AlgorithmEstimator, ModelPackage, Model
+ from sagemaker.serializers import CSVSerializer
+ from sagemaker.tuner import IntegerParameter, HyperparameterTuner
+-from sagemaker.utils import sagemaker_timestamp, _aws_partition, unique_name_from_base
++from sagemaker.utils import sagemaker_timestamp, aws_partition, unique_name_from_base
+ from tests.integ import DATA_DIR
+ from tests.integ.timeout import timeout, timeout_and_delete_endpoint_by_name
+ from tests.integ.marketplace_utils import REGION_ACCOUNT_MAP
+@@ -76,7 +76,7 @@ def test_marketplace_estimator(sagemaker_session, cpu_instance_type):
+         region = sagemaker_session.boto_region_name
+         account = REGION_ACCOUNT_MAP[region]
+         algorithm_arn = ALGORITHM_ARN.format(
+-            partition=_aws_partition(region), region=region, account=account
++            partition=aws_partition(region), region=region, account=account
+         )
+ 
+         algo = AlgorithmEstimator(
+@@ -118,7 +118,7 @@ def test_marketplace_attach(sagemaker_session, cpu_instance_type):
+         region = sagemaker_session.boto_region_name
+         account = REGION_ACCOUNT_MAP[region]
+         algorithm_arn = ALGORITHM_ARN.format(
+-            partition=_aws_partition(region), region=region, account=account
++            partition=aws_partition(region), region=region, account=account
+         )
+ 
+         mktplace = AlgorithmEstimator(
+@@ -170,7 +170,7 @@ def test_marketplace_model(sagemaker_session, cpu_instance_type):
+     region = sagemaker_session.boto_region_name
+     account = REGION_ACCOUNT_MAP[region]
+     model_package_arn = MODEL_PACKAGE_ARN.format(
+-        partition=_aws_partition(region), region=region, account=account
++        partition=aws_partition(region), region=region, account=account
+     )
+ 
+     def predict_wrapper(endpoint, session):
+@@ -337,7 +337,7 @@ def test_marketplace_tuning_job(sagemaker_session, cpu_instance_type):
+     region = sagemaker_session.boto_region_name
+     account = REGION_ACCOUNT_MAP[region]
+     algorithm_arn = ALGORITHM_ARN.format(
+-        partition=_aws_partition(region), region=region, account=account
++        partition=aws_partition(region), region=region, account=account
+     )
+ 
+     mktplace = AlgorithmEstimator(
+@@ -380,7 +380,7 @@ def test_marketplace_transform_job(sagemaker_session, cpu_instance_type):
+     region = sagemaker_session.boto_region_name
+     account = REGION_ACCOUNT_MAP[region]
+     algorithm_arn = ALGORITHM_ARN.format(
+-        partition=_aws_partition(region), region=region, account=account
++        partition=aws_partition(region), region=region, account=account
+     )
+ 
+     algo = AlgorithmEstimator(
+@@ -428,7 +428,7 @@ def test_marketplace_transform_job_from_model_package(sagemaker_session, cpu_ins
+     region = sagemaker_session.boto_region_name
+     account = REGION_ACCOUNT_MAP[region]
+     model_package_arn = MODEL_PACKAGE_ARN.format(
+-        partition=_aws_partition(region), region=region, account=account
++        partition=aws_partition(region), region=region, account=account
+     )
+ 
+     model = ModelPackage(
+diff --git a/tests/unit/sagemaker/jumpstart/estimator/test_estimator.py b/tests/unit/sagemaker/jumpstart/estimator/test_estimator.py
+index 29eff404..4dc35b65 100644
+--- a/tests/unit/sagemaker/jumpstart/estimator/test_estimator.py
++++ b/tests/unit/sagemaker/jumpstart/estimator/test_estimator.py
+@@ -987,6 +987,82 @@ class EstimatorTest(unittest.TestCase):
+             [{"Key": "blah", "Value": "blahagain"}] + js_tags,
+         )
+ 
++    @mock.patch("sagemaker.jumpstart.estimator.JumpStartEstimator._attach")
++    @mock.patch("sagemaker.jumpstart.estimator.get_model_id_version_from_training_job")
++    @mock.patch("sagemaker.jumpstart.estimator.is_valid_model_id")
++    @mock.patch("sagemaker.jumpstart.accessors.JumpStartModelsAccessor.get_model_specs")
++    @mock.patch("sagemaker.jumpstart.factory.estimator.JUMPSTART_DEFAULT_REGION_NAME", region)
++    def test_jumpstart_estimator_attach_no_model_id_happy_case(
++        self,
++        mock_get_model_specs: mock.Mock,
++        mock_is_valid_model_id: mock.Mock,
++        get_model_id_version_from_training_job: mock.Mock,
++        mock_attach: mock.Mock,
++    ):
++
++        mock_is_valid_model_id.return_value = True
++
++        get_model_id_version_from_training_job.return_value = (
++            "js-trainable-model-prepacked",
++            "1.0.0",
++        )
++
++        mock_get_model_specs.side_effect = get_special_model_spec
++
++        mock_session = mock.MagicMock(sagemaker_config={}, boto_region_name="us-west-2")
++
++        JumpStartEstimator.attach(
++            training_job_name="some-training-job-name", sagemaker_session=mock_session
++        )
++
++        get_model_id_version_from_training_job.assert_called_once_with(
++            training_job_name="some-training-job-name",
++            sagemaker_session=mock_session,
++        )
++
++        mock_attach.assert_called_once_with(
++            training_job_name="some-training-job-name",
++            sagemaker_session=mock_session,
++            model_channel_name="model",
++            additional_kwargs={
++                "model_id": "js-trainable-model-prepacked",
++                "model_version": "1.0.0",
++            },
++        )
++
++    @mock.patch("sagemaker.jumpstart.estimator.JumpStartEstimator._attach")
++    @mock.patch("sagemaker.jumpstart.estimator.get_model_id_version_from_training_job")
++    @mock.patch("sagemaker.jumpstart.estimator.is_valid_model_id")
++    @mock.patch("sagemaker.jumpstart.accessors.JumpStartModelsAccessor.get_model_specs")
++    @mock.patch("sagemaker.jumpstart.factory.estimator.JUMPSTART_DEFAULT_REGION_NAME", region)
++    def test_jumpstart_estimator_attach_no_model_id_sad_case(
++        self,
++        mock_get_model_specs: mock.Mock,
++        mock_is_valid_model_id: mock.Mock,
++        get_model_id_version_from_training_job: mock.Mock,
++        mock_attach: mock.Mock,
++    ):
++
++        mock_is_valid_model_id.return_value = True
++
++        get_model_id_version_from_training_job.side_effect = ValueError()
++
++        mock_get_model_specs.side_effect = get_special_model_spec
++
++        mock_session = mock.MagicMock(sagemaker_config={}, boto_region_name="us-west-2")
++
++        with pytest.raises(ValueError):
++            JumpStartEstimator.attach(
++                training_job_name="some-training-job-name", sagemaker_session=mock_session
++            )
++
++        get_model_id_version_from_training_job.assert_called_once_with(
++            training_job_name="some-training-job-name",
++            sagemaker_session=mock_session,
++        )
++
++        mock_attach.assert_not_called()
++
+     def test_jumpstart_estimator_kwargs_match_parent_class(self):
+ 
+         """If you add arguments to <Estimator constructor>, this test will fail.
+diff --git a/tests/unit/sagemaker/jumpstart/test_predictor.py b/tests/unit/sagemaker/jumpstart/test_predictor.py
+index 4c2cd5b1..7ab9cdd1 100644
+--- a/tests/unit/sagemaker/jumpstart/test_predictor.py
++++ b/tests/unit/sagemaker/jumpstart/test_predictor.py
+@@ -2,8 +2,11 @@ from __future__ import absolute_import
+ import base64
+ from unittest import mock
+ 
+-from unittest.mock import patch
++from unittest.mock import Mock, patch
++
++import pytest
+ from sagemaker.deserializers import JSONDeserializer
++from sagemaker.jumpstart.constants import DEFAULT_JUMPSTART_SAGEMAKER_SESSION
+ from sagemaker.jumpstart.enums import MIMEType
+ 
+ from sagemaker import predictor
+@@ -17,10 +20,13 @@ from tests.unit.sagemaker.jumpstart.utils import (
+ )
+ 
+ 
++@patch("sagemaker.predictor.get_model_id_version_from_endpoint")
+ @patch("sagemaker.jumpstart.utils.verify_model_region_and_return_specs")
+ @patch("sagemaker.jumpstart.accessors.JumpStartModelsAccessor.get_model_specs")
+ def test_jumpstart_predictor_support(
+-    patched_get_model_specs, patched_verify_model_region_and_return_specs
++    patched_get_model_specs,
++    patched_verify_model_region_and_return_specs,
++    patched_get_jumpstart_model_id_version_from_endpoint,
+ ):
+ 
+     patched_verify_model_region_and_return_specs.side_effect = verify_model_region_and_return_specs
+@@ -29,10 +35,18 @@ def test_jumpstart_predictor_support(
+     # version not needed for JumpStart predictor
+     model_id, model_version = "predictor-specs-model", "*"
+ 
++    patched_get_jumpstart_model_id_version_from_endpoint.return_value = (
++        model_id,
++        model_version,
++        None,
++    )
++
+     js_predictor = predictor.retrieve_default(
+         endpoint_name="blah", model_id=model_id, model_version=model_version
+     )
+ 
++    patched_get_jumpstart_model_id_version_from_endpoint.assert_not_called()
++
+     assert js_predictor.content_type == MIMEType.X_TEXT
+     assert isinstance(js_predictor.serializer, IdentitySerializer)
+ 
+@@ -40,6 +54,76 @@ def test_jumpstart_predictor_support(
+     assert js_predictor.accept == MIMEType.JSON
+ 
+ 
++@patch("sagemaker.predictor.Predictor")
++@patch("sagemaker.predictor.get_default_predictor")
++@patch("sagemaker.predictor.get_model_id_version_from_endpoint")
++@patch("sagemaker.jumpstart.utils.verify_model_region_and_return_specs")
++@patch("sagemaker.jumpstart.accessors.JumpStartModelsAccessor.get_model_specs")
++def test_jumpstart_predictor_support_no_model_id_supplied_happy_case(
++    patched_get_model_specs,
++    patched_verify_model_region_and_return_specs,
++    patched_get_jumpstart_model_id_version_from_endpoint,
++    patched_get_default_predictor,
++    patched_predictor,
++):
++
++    patched_verify_model_region_and_return_specs.side_effect = verify_model_region_and_return_specs
++    patched_get_model_specs.side_effect = get_special_model_spec
++
++    patched_get_jumpstart_model_id_version_from_endpoint.return_value = (
++        "predictor-specs-model",
++        "1.2.3",
++        None,
++    )
++
++    mock_session = Mock()
++
++    predictor.retrieve_default(endpoint_name="blah", sagemaker_session=mock_session)
++
++    patched_get_jumpstart_model_id_version_from_endpoint.assert_called_once_with(
++        "blah", None, mock_session
++    )
++
++    patched_get_default_predictor.assert_called_once_with(
++        predictor=patched_predictor.return_value,
++        model_id="predictor-specs-model",
++        model_version="1.2.3",
++        region=None,
++        tolerate_deprecated_model=False,
++        tolerate_vulnerable_model=False,
++        sagemaker_session=mock_session,
++    )
++
++
++@patch("sagemaker.predictor.get_default_predictor")
++@patch("sagemaker.predictor.get_model_id_version_from_endpoint")
++@patch("sagemaker.jumpstart.utils.verify_model_region_and_return_specs")
++@patch("sagemaker.jumpstart.accessors.JumpStartModelsAccessor.get_model_specs")
++def test_jumpstart_predictor_support_no_model_id_supplied_sad_case(
++    patched_get_model_specs,
++    patched_verify_model_region_and_return_specs,
++    patched_get_jumpstart_model_id_version_from_endpoint,
++    patched_get_default_predictor,
++):
++
++    patched_verify_model_region_and_return_specs.side_effect = verify_model_region_and_return_specs
++    patched_get_model_specs.side_effect = get_special_model_spec
++
++    # no JS tags attached to endpoint
++    patched_get_jumpstart_model_id_version_from_endpoint.return_value = (None, None, None)
++
++    with pytest.raises(ValueError):
++        predictor.retrieve_default(
++            endpoint_name="blah",
++        )
++
++    patched_get_jumpstart_model_id_version_from_endpoint.assert_called_once_with(
++        "blah", None, DEFAULT_JUMPSTART_SAGEMAKER_SESSION
++    )
++    patched_get_default_predictor.assert_not_called()
++
++
++@patch("sagemaker.predictor.get_model_id_version_from_endpoint")
+ @patch("sagemaker.jumpstart.payload_utils.JumpStartS3PayloadAccessor.get_object_cached")
+ @patch("sagemaker.jumpstart.model.is_valid_model_id")
+ @patch("sagemaker.jumpstart.utils.verify_model_region_and_return_specs")
+@@ -49,6 +133,7 @@ def test_jumpstart_serializable_payload_with_predictor(
+     patched_verify_model_region_and_return_specs,
+     patched_is_valid_model_id,
+     patched_get_object_cached,
++    patched_get_model_id_version_from_endpoint,
+ ):
+ 
+     patched_get_object_cached.return_value = base64.b64decode("encodedimage")
+@@ -58,6 +143,7 @@ def test_jumpstart_serializable_payload_with_predictor(
+     patched_get_model_specs.side_effect = get_special_model_spec
+ 
+     model_id, model_version = "default_payloads", "*"
++    patched_get_model_id_version_from_endpoint.return_value = model_id, model_version, None
+ 
+     js_predictor = predictor.retrieve_default(
+         endpoint_name="blah", model_id=model_id, model_version=model_version
+diff --git a/tests/unit/sagemaker/jumpstart/test_session_utils.py b/tests/unit/sagemaker/jumpstart/test_session_utils.py
+new file mode 100644
+index 00000000..76ad50f3
+--- /dev/null
++++ b/tests/unit/sagemaker/jumpstart/test_session_utils.py
+@@ -0,0 +1,302 @@
++from __future__ import absolute_import
++from unittest.mock import Mock, patch
++
++import pytest
++
++from sagemaker.jumpstart.session_utils import (
++    _get_model_id_version_from_inference_component_endpoint_with_inference_component_name,
++    _get_model_id_version_from_inference_component_endpoint_without_inference_component_name,
++    _get_model_id_version_from_model_based_endpoint,
++    get_model_id_version_from_endpoint,
++    get_model_id_version_from_training_job,
++)
++
++
++@patch("sagemaker.jumpstart.session_utils.get_jumpstart_model_id_version_from_resource_arn")
++def test_get_model_id_version_from_training_job_happy_case(
++    mock_get_jumpstart_model_id_version_from_resource_arn,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.boto_region_name = "us-west-2"
++    mock_sm_session.account_id = Mock(return_value="123456789012")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.return_value = (
++        "model_id",
++        "model_version",
++    )
++
++    retval = get_model_id_version_from_training_job("bLaH", sagemaker_session=mock_sm_session)
++
++    assert retval == ("model_id", "model_version")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.assert_called_once_with(
++        "arn:aws:sagemaker:us-west-2:123456789012:training-job/bLaH", mock_sm_session
++    )
++
++
++@patch("sagemaker.jumpstart.session_utils.get_jumpstart_model_id_version_from_resource_arn")
++def test_get_model_id_version_from_training_job_no_model_id_inferred(
++    mock_get_jumpstart_model_id_version_from_resource_arn,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.boto_region_name = "us-west-2"
++    mock_sm_session.account_id = Mock(return_value="123456789012")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.return_value = (
++        None,
++        None,
++    )
++
++    with pytest.raises(ValueError):
++        get_model_id_version_from_training_job("blah", sagemaker_session=mock_sm_session)
++
++
++@patch("sagemaker.jumpstart.session_utils.get_jumpstart_model_id_version_from_resource_arn")
++def test_get_model_id_version_from_model_based_endpoint_happy_case(
++    mock_get_jumpstart_model_id_version_from_resource_arn,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.boto_region_name = "us-west-2"
++    mock_sm_session.account_id = Mock(return_value="123456789012")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.return_value = (
++        "model_id",
++        "model_version",
++    )
++
++    retval = _get_model_id_version_from_model_based_endpoint(
++        "bLaH", inference_component_name=None, sagemaker_session=mock_sm_session
++    )
++
++    assert retval == ("model_id", "model_version")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.assert_called_once_with(
++        "arn:aws:sagemaker:us-west-2:123456789012:endpoint/blah", mock_sm_session
++    )
++
++
++@patch("sagemaker.jumpstart.session_utils.get_jumpstart_model_id_version_from_resource_arn")
++def test_get_model_id_version_from_model_based_endpoint_inference_component_supplied(
++    mock_get_jumpstart_model_id_version_from_resource_arn,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.boto_region_name = "us-west-2"
++    mock_sm_session.account_id = Mock(return_value="123456789012")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.return_value = (
++        "model_id",
++        "model_version",
++    )
++
++    with pytest.raises(ValueError):
++        _get_model_id_version_from_model_based_endpoint(
++            "blah", inference_component_name="some-name", sagemaker_session=mock_sm_session
++        )
++
++
++@patch("sagemaker.jumpstart.session_utils.get_jumpstart_model_id_version_from_resource_arn")
++def test_get_model_id_version_from_model_based_endpoint_no_model_id_inferred(
++    mock_get_jumpstart_model_id_version_from_resource_arn,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.boto_region_name = "us-west-2"
++    mock_sm_session.account_id = Mock(return_value="123456789012")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.return_value = (
++        None,
++        None,
++    )
++
++    with pytest.raises(ValueError):
++        _get_model_id_version_from_model_based_endpoint(
++            "blah", inference_component_name="some-name", sagemaker_session=mock_sm_session
++        )
++
++
++@patch("sagemaker.jumpstart.session_utils.get_jumpstart_model_id_version_from_resource_arn")
++def test_get_model_id_version_from_inference_component_endpoint_with_inference_component_name_happy_case(
++    mock_get_jumpstart_model_id_version_from_resource_arn,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.boto_region_name = "us-west-2"
++    mock_sm_session.account_id = Mock(return_value="123456789012")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.return_value = (
++        "model_id",
++        "model_version",
++    )
++
++    retval = _get_model_id_version_from_inference_component_endpoint_with_inference_component_name(
++        "bLaH", sagemaker_session=mock_sm_session
++    )
++
++    assert retval == ("model_id", "model_version")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.assert_called_once_with(
++        "arn:aws:sagemaker:us-west-2:123456789012:inference-component/bLaH", mock_sm_session
++    )
++
++
++@patch("sagemaker.jumpstart.session_utils.get_jumpstart_model_id_version_from_resource_arn")
++def test_get_model_id_version_from_inference_component_endpoint_with_inference_component_name_no_model_id_inferred(
++    mock_get_jumpstart_model_id_version_from_resource_arn,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.boto_region_name = "us-west-2"
++    mock_sm_session.account_id = Mock(return_value="123456789012")
++
++    mock_get_jumpstart_model_id_version_from_resource_arn.return_value = (
++        None,
++        None,
++    )
++
++    with pytest.raises(ValueError):
++        _get_model_id_version_from_inference_component_endpoint_with_inference_component_name(
++            "blah", sagemaker_session=mock_sm_session
++        )
++
++
++@patch(
++    "sagemaker.jumpstart.session_utils._get_model_id_version_from_inference_"
++    "component_endpoint_with_inference_component_name"
++)
++def test_get_model_id_version_from_inference_component_endpoint_without_inference_component_name_happy_case(
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name,
++):
++    mock_sm_session = Mock()
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name.return_value = (
++        "model_id",
++        "model_version",
++    )
++    mock_sm_session.list_and_paginate_inference_component_names_associated_with_endpoint = Mock(
++        return_value=["icname"]
++    )
++
++    retval = (
++        _get_model_id_version_from_inference_component_endpoint_without_inference_component_name(
++            "blahblah", mock_sm_session
++        )
++    )
++
++    assert retval == ("model_id", "model_version", "icname")
++    mock_sm_session.list_and_paginate_inference_component_names_associated_with_endpoint.assert_called_once_with(
++        endpoint_name="blahblah"
++    )
++
++
++@patch(
++    "sagemaker.jumpstart.session_utils._get_model_id_version_from_inference_"
++    "component_endpoint_with_inference_component_name"
++)
++def test_get_model_id_version_from_inference_component_endpoint_without_ic_name_no_ic_for_endpoint(
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name,
++):
++    mock_sm_session = Mock()
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name.return_value = (
++        "model_id",
++        "model_version",
++    )
++    mock_sm_session.list_and_paginate_inference_component_names_associated_with_endpoint = Mock(
++        return_value=[]
++    )
++    with pytest.raises(ValueError):
++        _get_model_id_version_from_inference_component_endpoint_without_inference_component_name(
++            "blahblah", mock_sm_session
++        )
++
++    mock_sm_session.list_and_paginate_inference_component_names_associated_with_endpoint.assert_called_once_with(
++        endpoint_name="blahblah"
++    )
++
++
++@patch(
++    "sagemaker.jumpstart.session_utils._get_model_id"
++    "_version_from_inference_component_endpoint_with_inference_component_name"
++)
++def test_get_model_id_version_from_ic_endpoint_without_inference_component_name_multiple_ics_for_endpoint(
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name,
++):
++    mock_sm_session = Mock()
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name.return_value = (
++        "model_id",
++        "model_version",
++    )
++
++    mock_sm_session.list_and_paginate_inference_component_names_associated_with_endpoint = Mock(
++        return_value=["icname1", "icname2"]
++    )
++
++    with pytest.raises(ValueError):
++        _get_model_id_version_from_inference_component_endpoint_without_inference_component_name(
++            "blahblah", mock_sm_session
++        )
++
++    mock_sm_session.list_and_paginate_inference_component_names_associated_with_endpoint.assert_called_once_with(
++        endpoint_name="blahblah"
++    )
++
++
++@patch("sagemaker.jumpstart.session_utils._get_model_id_version_from_model_based_endpoint")
++def test_get_model_id_version_from_endpoint_non_inference_component_endpoint(
++    mock_get_model_id_version_from_model_based_endpoint,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.is_inference_component_based_endpoint.return_value = False
++    mock_get_model_id_version_from_model_based_endpoint.return_value = (
++        "model_id",
++        "model_version",
++    )
++
++    retval = get_model_id_version_from_endpoint("blah", sagemaker_session=mock_sm_session)
++
++    assert retval == ("model_id", "model_version", None)
++    mock_get_model_id_version_from_model_based_endpoint.assert_called_once_with(
++        "blah", None, mock_sm_session
++    )
++    mock_sm_session.is_inference_component_based_endpoint.assert_called_once_with("blah")
++
++
++@patch(
++    "sagemaker.jumpstart.session_utils._get_model_id_version_from_inference_"
++    "component_endpoint_with_inference_component_name"
++)
++def test_get_model_id_version_from_endpoint_inference_component_endpoint_with_inference_component_name(
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.is_inference_component_based_endpoint.return_value = True
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name.return_value = (
++        "model_id",
++        "model_version",
++    )
++
++    retval = get_model_id_version_from_endpoint(
++        "blah", inference_component_name="icname", sagemaker_session=mock_sm_session
++    )
++
++    assert retval == ("model_id", "model_version", "icname")
++    mock_get_model_id_version_from_inference_component_endpoint_with_inference_component_name.assert_called_once_with(
++        "icname", mock_sm_session
++    )
++    mock_sm_session.is_inference_component_based_endpoint.assert_not_called()
++
++
++@patch(
++    "sagemaker.jumpstart.session_utils._get_model_id_version_from_inference_component_"
++    "endpoint_without_inference_component_name"
++)
++def test_get_model_id_version_from_endpoint_inference_component_endpoint_without_inference_component_name(
++    mock_get_model_id_version_from_inference_component_endpoint_without_inference_component_name,
++):
++    mock_sm_session = Mock()
++    mock_sm_session.is_inference_component_based_endpoint.return_value = True
++    mock_get_model_id_version_from_inference_component_endpoint_without_inference_component_name.return_value = (
++        "model_id",
++        "model_version",
++        "inferred-icname",
++    )
++
++    retval = get_model_id_version_from_endpoint("blah", sagemaker_session=mock_sm_session)
++
++    assert retval == ("model_id", "model_version", "inferred-icname")
++    mock_get_model_id_version_from_inference_component_endpoint_without_inference_component_name.assert_called_once()
+diff --git a/tests/unit/sagemaker/jumpstart/test_utils.py b/tests/unit/sagemaker/jumpstart/test_utils.py
+index 2a4b1fc3..556b99bc 100644
+--- a/tests/unit/sagemaker/jumpstart/test_utils.py
++++ b/tests/unit/sagemaker/jumpstart/test_utils.py
+@@ -22,6 +22,8 @@ from sagemaker.jumpstart.constants import (
+     ENV_VARIABLE_DISABLE_JUMPSTART_LOGGING,
+     ENV_VARIABLE_JUMPSTART_CONTENT_BUCKET_OVERRIDE,
+     ENV_VARIABLE_JUMPSTART_GATED_CONTENT_BUCKET_OVERRIDE,
++    EXTRA_MODEL_ID_TAGS,
++    EXTRA_MODEL_VERSION_TAGS,
+     JUMPSTART_DEFAULT_REGION_NAME,
+     JUMPSTART_GATED_AND_PUBLIC_BUCKET_NAME_SET,
+     JUMPSTART_LOGGER,
+@@ -1278,6 +1280,134 @@ class TestIsValidModelId(TestCase):
+             )
+ 
+ 
++class TestGetModelIdVersionFromResourceArn(TestCase):
++    def test_no_model_id_no_version_found(self):
++        mock_list_tags = Mock()
++        mock_sagemaker_session = Mock()
++        mock_sagemaker_session.list_tags = mock_list_tags
++        mock_list_tags.return_value = [{"Key": "blah", "Value": "blah1"}]
++
++        self.assertEquals(
++            utils.get_jumpstart_model_id_version_from_resource_arn(
++                "some-arn", mock_sagemaker_session
++            ),
++            (None, None),
++        )
++        mock_list_tags.assert_called_once_with("some-arn")
++
++    def test_model_id_no_version_found(self):
++        mock_list_tags = Mock()
++        mock_sagemaker_session = Mock()
++        mock_sagemaker_session.list_tags = mock_list_tags
++        mock_list_tags.return_value = [
++            {"Key": "blah", "Value": "blah1"},
++            {"Key": JumpStartTag.MODEL_ID, "Value": "model_id"},
++        ]
++
++        self.assertEquals(
++            utils.get_jumpstart_model_id_version_from_resource_arn(
++                "some-arn", mock_sagemaker_session
++            ),
++            ("model_id", None),
++        )
++        mock_list_tags.assert_called_once_with("some-arn")
++
++    def test_no_model_id_version_found(self):
++        mock_list_tags = Mock()
++        mock_sagemaker_session = Mock()
++        mock_sagemaker_session.list_tags = mock_list_tags
++        mock_list_tags.return_value = [
++            {"Key": "blah", "Value": "blah1"},
++            {"Key": JumpStartTag.MODEL_VERSION, "Value": "model_version"},
++        ]
++
++        self.assertEquals(
++            utils.get_jumpstart_model_id_version_from_resource_arn(
++                "some-arn", mock_sagemaker_session
++            ),
++            (None, "model_version"),
++        )
++        mock_list_tags.assert_called_once_with("some-arn")
++
++    def test_model_id_version_found(self):
++        mock_list_tags = Mock()
++        mock_sagemaker_session = Mock()
++        mock_sagemaker_session.list_tags = mock_list_tags
++        mock_list_tags.return_value = [
++            {"Key": "blah", "Value": "blah1"},
++            {"Key": JumpStartTag.MODEL_ID, "Value": "model_id"},
++            {"Key": JumpStartTag.MODEL_VERSION, "Value": "model_version"},
++        ]
++
++        self.assertEquals(
++            utils.get_jumpstart_model_id_version_from_resource_arn(
++                "some-arn", mock_sagemaker_session
++            ),
++            ("model_id", "model_version"),
++        )
++        mock_list_tags.assert_called_once_with("some-arn")
++
++    def test_multiple_model_id_versions_found(self):
++        mock_list_tags = Mock()
++        mock_sagemaker_session = Mock()
++        mock_sagemaker_session.list_tags = mock_list_tags
++        mock_list_tags.return_value = [
++            {"Key": "blah", "Value": "blah1"},
++            {"Key": JumpStartTag.MODEL_ID, "Value": "model_id_1"},
++            {"Key": JumpStartTag.MODEL_VERSION, "Value": "model_version_1"},
++            {"Key": JumpStartTag.MODEL_ID, "Value": "model_id_2"},
++            {"Key": JumpStartTag.MODEL_VERSION, "Value": "model_version_2"},
++        ]
++
++        self.assertEquals(
++            utils.get_jumpstart_model_id_version_from_resource_arn(
++                "some-arn", mock_sagemaker_session
++            ),
++            (None, None),
++        )
++        mock_list_tags.assert_called_once_with("some-arn")
++
++    def test_multiple_model_id_versions_found_aliases_consistent(self):
++        mock_list_tags = Mock()
++        mock_sagemaker_session = Mock()
++        mock_sagemaker_session.list_tags = mock_list_tags
++        mock_list_tags.return_value = [
++            {"Key": "blah", "Value": "blah1"},
++            {"Key": JumpStartTag.MODEL_ID, "Value": "model_id_1"},
++            {"Key": JumpStartTag.MODEL_VERSION, "Value": "model_version_1"},
++            {"Key": random.choice(EXTRA_MODEL_ID_TAGS), "Value": "model_id_1"},
++            {"Key": random.choice(EXTRA_MODEL_VERSION_TAGS), "Value": "model_version_1"},
++        ]
++
++        self.assertEquals(
++            utils.get_jumpstart_model_id_version_from_resource_arn(
++                "some-arn", mock_sagemaker_session
++            ),
++            ("model_id_1", "model_version_1"),
++        )
++        mock_list_tags.assert_called_once_with("some-arn")
++
++    def test_multiple_model_id_versions_found_aliases_inconsistent(self):
++        mock_list_tags = Mock()
++        mock_sagemaker_session = Mock()
++        mock_sagemaker_session.list_tags = mock_list_tags
++        mock_list_tags.return_value = [
++            {"Key": "blah", "Value": "blah1"},
++            {"Key": JumpStartTag.MODEL_ID, "Value": "model_id_1"},
++            {"Key": JumpStartTag.MODEL_VERSION, "Value": "model_version_1"},
++            {"Key": random.choice(EXTRA_MODEL_ID_TAGS), "Value": "model_id_2"},
++            {"Key": random.choice(EXTRA_MODEL_VERSION_TAGS), "Value": "model_version_2"},
++        ]
++
++        self.assertEquals(
++            utils.get_jumpstart_model_id_version_from_resource_arn(
++                "some-arn", mock_sagemaker_session
++            ),
++            (None, None),
++        )
++        mock_list_tags.assert_called_once_with("some-arn")
++
++
+ class TestJumpStartLogger(TestCase):
+     @patch.dict("os.environ", {})
+     @patch("logging.StreamHandler.emit")
+diff --git a/tests/unit/test_session.py b/tests/unit/test_session.py
+index 93828d88..43768031 100644
+--- a/tests/unit/test_session.py
++++ b/tests/unit/test_session.py
+@@ -6134,6 +6134,128 @@ def test_upload_data_default_bucket_and_prefix_combinations(
+     assert actual == expected
+ 
+ 
++def test_is_inference_component_based_endpoint_affirmative(sagemaker_session):
++
++    describe_endpoint_response = {"EndpointConfigName": "some-endpoint-config"}
++    describe_endpoint_config_response = {
++        "ExecutionRoleArn": "some-role-arn",
++        "ProductionVariants": [{"VariantName": "AllTraffic"}],
++    }
++
++    sagemaker_session.sagemaker_client.describe_endpoint = Mock(
++        return_value=describe_endpoint_response
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config = Mock(
++        return_value=describe_endpoint_config_response
++    )
++
++    assert sagemaker_session.is_inference_component_based_endpoint("endpoint-name")
++    sagemaker_session.sagemaker_client.describe_endpoint.assert_called_once_with(
++        EndpointName="endpoint-name"
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config.assert_called_once_with(
++        EndpointConfigName="some-endpoint-config"
++    )
++
++
++def test_is_inference_component_based_endpoint_negative_no_role(sagemaker_session):
++
++    describe_endpoint_response = {"EndpointConfigName": "some-endpoint-config"}
++    describe_endpoint_config_response = {
++        "ProductionVariants": [{"VariantName": "AllTraffic"}],
++    }
++
++    sagemaker_session.sagemaker_client.describe_endpoint = Mock(
++        return_value=describe_endpoint_response
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config = Mock(
++        return_value=describe_endpoint_config_response
++    )
++
++    assert not sagemaker_session.is_inference_component_based_endpoint("endpoint-name")
++    sagemaker_session.sagemaker_client.describe_endpoint.assert_called_once_with(
++        EndpointName="endpoint-name"
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config.assert_called_once_with(
++        EndpointConfigName="some-endpoint-config"
++    )
++
++
++def test_is_inference_component_based_endpoint_positive_multiple_variants(sagemaker_session):
++
++    describe_endpoint_response = {"EndpointConfigName": "some-endpoint-config"}
++    describe_endpoint_config_response = {
++        "ExecutionRoleArn": "some-role-arn",
++        "ProductionVariants": [{"VariantName": "AllTraffic1"}, {"VariantName": "AllTraffic2"}],
++    }
++
++    sagemaker_session.sagemaker_client.describe_endpoint = Mock(
++        return_value=describe_endpoint_response
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config = Mock(
++        return_value=describe_endpoint_config_response
++    )
++
++    assert sagemaker_session.is_inference_component_based_endpoint("endpoint-name")
++    sagemaker_session.sagemaker_client.describe_endpoint.assert_called_once_with(
++        EndpointName="endpoint-name"
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config.assert_called_once_with(
++        EndpointConfigName="some-endpoint-config"
++    )
++
++
++def test_is_inference_component_based_endpoint_negative_no_variants(sagemaker_session):
++
++    describe_endpoint_response = {"EndpointConfigName": "some-endpoint-config"}
++    describe_endpoint_config_response = {
++        "ExecutionRoleArn": "some-role-arn",
++        "ProductionVariants": [],
++    }
++
++    sagemaker_session.sagemaker_client.describe_endpoint = Mock(
++        return_value=describe_endpoint_response
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config = Mock(
++        return_value=describe_endpoint_config_response
++    )
++
++    assert not sagemaker_session.is_inference_component_based_endpoint("endpoint-name")
++    sagemaker_session.sagemaker_client.describe_endpoint.assert_called_once_with(
++        EndpointName="endpoint-name"
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config.assert_called_once_with(
++        EndpointConfigName="some-endpoint-config"
++    )
++
++
++def test_is_inference_component_based_endpoint_negative_model_name_present(sagemaker_session):
++
++    describe_endpoint_response = {"EndpointConfigName": "some-endpoint-config"}
++    describe_endpoint_config_response = {
++        "ExecutionRoleArn": "some-role-arn",
++        "ProductionVariants": [
++            {"VariantName": "AllTraffic", "ModelName": "blah"},
++            {"VariantName": "AllTraffic1"},
++        ],
++    }
++
++    sagemaker_session.sagemaker_client.describe_endpoint = Mock(
++        return_value=describe_endpoint_response
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config = Mock(
++        return_value=describe_endpoint_config_response
++    )
++
++    assert not sagemaker_session.is_inference_component_based_endpoint("endpoint-name")
++    sagemaker_session.sagemaker_client.describe_endpoint.assert_called_once_with(
++        EndpointName="endpoint-name"
++    )
++    sagemaker_session.sagemaker_client.describe_endpoint_config.assert_called_once_with(
++        EndpointConfigName="some-endpoint-config"
++    )
++
++
+ def test_create_inference_component(sagemaker_session):
+     tags = [{"Key": "TagtestKey", "Value": "TagtestValue"}]
+     sagemaker_session.sagemaker_client.describe_inference_component = Mock(
+@@ -6192,6 +6314,56 @@ def test_describe_inference_component(sagemaker_session):
+     )
+ 
+ 
++def test_list_and_paginate_inference_component_names_associated_with_endpoint(sagemaker_session):
++    endpoint_name = "test-endpoint"
++
++    sagemaker_session.list_inference_components = Mock()
++    sagemaker_session.list_inference_components.side_effect = [
++        {
++            "InferenceComponents": [
++                {
++                    "CreationTime": 1234,
++                    "EndpointArn": "endpointarn1",
++                    "EndpointName": "endpointname1",
++                    "InferenceComponentArn": "icarn1",
++                    "InferenceComponentName": "icname1",
++                    "InferenceComponentStatus": "icstatus1",
++                    "LastModifiedTime": 5678,
++                    "VariantName": "blah1",
++                }
++            ],
++            "NextToken": "1234",
++        },
++        {
++            "InferenceComponents": [
++                {
++                    "CreationTime": 12345,
++                    "EndpointArn": "endpointarn2",
++                    "EndpointName": "endpointname2",
++                    "InferenceComponentArn": "icarn2",
++                    "InferenceComponentName": "icname2",
++                    "InferenceComponentStatus": "icstatus2",
++                    "LastModifiedTime": 56789,
++                    "VariantName": "blah2",
++                }
++            ]
++        },
++    ]
++    assert [
++        "icname1",
++        "icname2",
++    ] == sagemaker_session.list_and_paginate_inference_component_names_associated_with_endpoint(
++        endpoint_name
++    )
++
++    sagemaker_session.list_inference_components.assert_has_calls(
++        [
++            call(endpoint_name_equals="test-endpoint", next_token=None),
++            call(endpoint_name_equals="test-endpoint", next_token="1234"),
++        ]
++    )
++
++
+ def test_list_inference_components(sagemaker_session):
+     endpoint_name = "test-endpoint"
+     variant_name = "test-variant-name"
+diff --git a/tests/unit/test_utils.py b/tests/unit/test_utils.py
+index 30332741..d7337524 100644
+--- a/tests/unit/test_utils.py
++++ b/tests/unit/test_utils.py
+@@ -1101,11 +1101,11 @@ def test_sts_regional_endpoint():
+ 
+ 
+ def test_partition_by_region():
+-    assert sagemaker.utils._aws_partition("us-west-2") == "aws"
+-    assert sagemaker.utils._aws_partition("cn-north-1") == "aws-cn"
+-    assert sagemaker.utils._aws_partition("us-gov-east-1") == "aws-us-gov"
+-    assert sagemaker.utils._aws_partition("us-iso-east-1") == "aws-iso"
+-    assert sagemaker.utils._aws_partition("us-isob-east-1") == "aws-iso-b"
++    assert sagemaker.utils.aws_partition("us-west-2") == "aws"
++    assert sagemaker.utils.aws_partition("cn-north-1") == "aws-cn"
++    assert sagemaker.utils.aws_partition("us-gov-east-1") == "aws-us-gov"
++    assert sagemaker.utils.aws_partition("us-iso-east-1") == "aws-iso"
++    assert sagemaker.utils.aws_partition("us-isob-east-1") == "aws-iso-b"
+ 
+ 
+ def test_pop_out_unused_kwarg():

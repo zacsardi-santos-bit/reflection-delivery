@@ -1,0 +1,24 @@
+diff --git a/compiler-core/src/parse/tests.rs b/compiler-core/src/parse/tests.rs
+index 08eceff93..7d93b72bf 100644
+--- a/compiler-core/src/parse/tests.rs
++++ b/compiler-core/src/parse/tests.rs
+@@ -2090,3 +2090,19 @@ const local_const = other.Record(..other.base, field: value)
+ "#
+     );
+ }
++
++// https://github.com/gleam-lang/gleam/issues/5391
++#[test]
++fn byte_order_mark() {
++    assert_parse!("\u{feff}todo");
++}
++
++// https://github.com/gleam-lang/gleam/issues/5391
++#[test]
++fn byte_order_mark_module() {
++    assert_parse_module!(
++        "\u{feff}
++const local_const = other.Record(..other.base, field: value)
++"
++    );
++}

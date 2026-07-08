@@ -1,0 +1,384 @@
+diff --git a/libs/core/src/lib/log-packed.spec.ts b/libs/core/src/lib/log-packed.spec.ts
+index 6ada4a1d..cdc2490b 100644
+--- a/libs/core/src/lib/log-packed.spec.ts
++++ b/libs/core/src/lib/log-packed.spec.ts
+@@ -4,7 +4,7 @@ import { loggingOutput } from "@lerna/test-helpers";
+ import { logPacked } from "./log-packed";
+ 
+ // windows sucks
+-jest.mock("has-unicode", () => () => false);
++jest.mock("./npmlog/gauge/has-unicode", () => ({ hasUnicode: () => false }));
+ 
+ // remove quotes around top-level strings
+ expect.addSnapshotSerializer({
+diff --git a/libs/core/src/lib/npmlog/gauge/tests/color-support.spec.ts b/libs/core/src/lib/npmlog/gauge/tests/color-support.spec.ts
+new file mode 100644
+index 00000000..c80677c8
+--- /dev/null
++++ b/libs/core/src/lib/npmlog/gauge/tests/color-support.spec.ts
+@@ -0,0 +1,170 @@
++import os from "os";
++import { colorSupport, type ColorSupportResult } from "../color-support";
++
++describe("colorSupport", () => {
++  const originalEnv = process.env;
++  const originalStdout = process.stdout;
++  let platformSpy: jest.SpyInstance;
++
++  const hasNone: ColorSupportResult = { level: 0, hasBasic: false, has256: false, has16m: false };
++  const hasBasic: ColorSupportResult = { level: 1, hasBasic: true, has256: false, has16m: false };
++  const has256: ColorSupportResult = { level: 2, hasBasic: true, has256: true, has16m: false };
++  const has16m: ColorSupportResult = { level: 3, hasBasic: true, has256: true, has16m: true };
++
++  beforeEach(() => {
++    process.env = { ...originalEnv };
++    platformSpy = jest.spyOn(os, "platform");
++    platformSpy.mockReturnValue("linux");
++  });
++
++  afterEach(() => {
++    process.env = originalEnv;
++    platformSpy.mockRestore();
++  });
++
++  it("returns no color for non-TTY stream", () => {
++    expect(colorSupport({ isTTY: false })).toEqual(hasNone);
++  });
++
++  it("returns no color for TERM=dumb without COLORTERM", () => {
++    process.env.TERM = "dumb";
++    delete process.env.COLORTERM;
++    expect(colorSupport({ isTTY: true })).toEqual(hasNone);
++  });
++
++  it("returns basic for win32", () => {
++    platformSpy.mockReturnValue("win32");
++    delete process.env.TERM;
++    expect(colorSupport({ isTTY: true })).toEqual(hasBasic);
++  });
++
++  it("returns 256 for TMUX", () => {
++    process.env.TMUX = "some junk";
++    delete process.env.TERM;
++    delete process.env.CI;
++    delete process.env.TEAMCITY_VERSION;
++    delete process.env.TERM_PROGRAM;
++    expect(colorSupport({ isTTY: true })).toEqual(has256);
++  });
++
++  describe("TERM_PROGRAM", () => {
++    beforeEach(() => {
++      delete process.env.TMUX;
++      delete process.env.CI;
++      delete process.env.TEAMCITY_VERSION;
++      delete process.env.TERM;
++    });
++
++    it("iTerm.app old version returns 256", () => {
++      process.env.TERM_PROGRAM = "iTerm.app";
++      process.env.TERM_PROGRAM_VERSION = "2.0.0";
++      expect(colorSupport({ isTTY: true })).toEqual(has256);
++    });
++
++    it("iTerm.app v3+ returns 16m", () => {
++      process.env.TERM_PROGRAM = "iTerm.app";
++      process.env.TERM_PROGRAM_VERSION = "3.0.4";
++      expect(colorSupport({ isTTY: true })).toEqual(has16m);
++    });
++
++    it("Hyper returns 16m", () => {
++      process.env.TERM_PROGRAM = "Hyper";
++      expect(colorSupport({ isTTY: true })).toEqual(has16m);
++    });
++
++    it("HyperTerm returns 16m", () => {
++      process.env.TERM_PROGRAM = "HyperTerm";
++      expect(colorSupport({ isTTY: true })).toEqual(has16m);
++    });
++
++    it("MacTerm returns 16m", () => {
++      process.env.TERM_PROGRAM = "MacTerm";
++      expect(colorSupport({ isTTY: true })).toEqual(has16m);
++    });
++
++    it("Apple_Terminal returns 256", () => {
++      process.env.TERM_PROGRAM = "Apple_Terminal";
++      expect(colorSupport({ isTTY: true })).toEqual(has256);
++    });
++  });
++
++  describe("CI environments", () => {
++    beforeEach(() => {
++      delete process.env.TMUX;
++      delete process.env.TERM_PROGRAM;
++      delete process.env.TERM;
++    });
++
++    it("CI without TRAVIS returns no color", () => {
++      process.env.CI = "1";
++      delete process.env.TRAVIS;
++      expect(colorSupport({ isTTY: true })).toEqual(hasNone);
++    });
++
++    it("TRAVIS returns 256", () => {
++      process.env.CI = "1";
++      process.env.TRAVIS = "1";
++      expect(colorSupport({ isTTY: true })).toEqual(has256);
++    });
++
++    it("TEAMCITY_VERSION returns no color", () => {
++      process.env.TEAMCITY_VERSION = "1";
++      expect(colorSupport({ isTTY: true })).toEqual(hasNone);
++    });
++  });
++
++  describe("TERM patterns", () => {
++    beforeEach(() => {
++      delete process.env.TMUX;
++      delete process.env.CI;
++      delete process.env.TEAMCITY_VERSION;
++      delete process.env.TERM_PROGRAM;
++      delete process.env.COLORTERM;
++    });
++
++    it("xterm-256color returns 256", () => {
++      process.env.TERM = "xterm-256color";
++      expect(colorSupport({ isTTY: true })).toEqual(has256);
++    });
++
++    it("screen returns basic", () => {
++      process.env.TERM = "screen";
++      expect(colorSupport({ isTTY: true })).toEqual(hasBasic);
++    });
++
++    it("xterm returns basic", () => {
++      process.env.TERM = "xterm-something";
++      expect(colorSupport({ isTTY: true })).toEqual(hasBasic);
++    });
++
++    it("vt100 returns basic", () => {
++      process.env.TERM = "vt100";
++      expect(colorSupport({ isTTY: true })).toEqual(hasBasic);
++    });
++
++    it("linux returns basic", () => {
++      process.env.TERM = "linux";
++      expect(colorSupport({ isTTY: true })).toEqual(hasBasic);
++    });
++  });
++
++  it("COLORTERM makes it basic at least", () => {
++    delete process.env.TMUX;
++    delete process.env.CI;
++    delete process.env.TEAMCITY_VERSION;
++    delete process.env.TERM_PROGRAM;
++    process.env.TERM = "definitely-not-a-known-term";
++    process.env.COLORTERM = "yeah whatever";
++    expect(colorSupport({ isTTY: true })).toEqual(hasBasic);
++  });
++
++  it("returns no color when nothing matches", () => {
++    delete process.env.TMUX;
++    delete process.env.CI;
++    delete process.env.TEAMCITY_VERSION;
++    delete process.env.TERM_PROGRAM;
++    delete process.env.COLORTERM;
++    process.env.TERM = "definitely-not-a-known-term";
++    expect(colorSupport({ isTTY: true })).toEqual(hasNone);
++  });
++});
+diff --git a/libs/core/src/lib/npmlog/gauge/tests/console-control-strings.spec.ts b/libs/core/src/lib/npmlog/gauge/tests/console-control-strings.spec.ts
+new file mode 100644
+index 00000000..1864b5bb
+--- /dev/null
++++ b/libs/core/src/lib/npmlog/gauge/tests/console-control-strings.spec.ts
+@@ -0,0 +1,86 @@
++import * as consoleControl from "../console-control-strings";
++
++describe("console-control-strings", () => {
++  describe("cursor movement with optional count", () => {
++    const movements: Record<string, string> = {
++      up: "A",
++      down: "B",
++      forward: "C",
++      back: "D",
++      nextLine: "E",
++      previousLine: "F",
++    };
++
++    for (const [name, code] of Object.entries(movements)) {
++      it(`${name}() without argument`, () => {
++        expect((consoleControl as any)[name]()).toBe(`\x1b[${code}`);
++      });
++      it(`${name}(10) with count`, () => {
++        expect((consoleControl as any)[name](10)).toBe(`\x1b[10${code}`);
++      });
++    }
++  });
++
++  describe("no-argument commands", () => {
++    const commands: Record<string, string> = {
++      eraseData: "J",
++      eraseLine: "K",
++      hideCursor: "?25l",
++      showCursor: "?25h",
++    };
++
++    for (const [name, code] of Object.entries(commands)) {
++      it(`${name}()`, () => {
++        expect((consoleControl as any)[name]()).toBe(`\x1b[${code}`);
++      });
++    }
++  });
++
++  describe("horizontalAbsolute", () => {
++    it("positions to column 10", () => {
++      expect(consoleControl.horizontalAbsolute(10)).toBe("\x1b[10G");
++    });
++
++    it("positions to column 0", () => {
++      expect(consoleControl.horizontalAbsolute(0)).toBe("\x1b[0G");
++    });
++
++    it("throws when called without argument", () => {
++      expect(() => (consoleControl as any).horizontalAbsolute()).toThrow();
++    });
++  });
++
++  describe("color", () => {
++    it("sets multiple styles", () => {
++      expect(consoleControl.color("bold", "white", "bgBlue")).toBe("\x1b[1;37;44m");
++    });
++
++    it("throws on invalid color name", () => {
++      expect(() => consoleControl.color("bold", "invalid", "blue")).toThrow(
++        "Unknown color or style name: invalid"
++      );
++    });
++
++    it("resets color", () => {
++      expect(consoleControl.color("reset")).toBe("\x1b[0m");
++    });
++  });
++
++  describe("goto", () => {
++    it("positions cursor absolutely", () => {
++      expect(consoleControl.goto(10, 3)).toBe("\x1b[3;10H");
++    });
++  });
++
++  describe("gotoSOL", () => {
++    it("returns carriage return", () => {
++      expect(consoleControl.gotoSOL()).toBe("\r");
++    });
++  });
++
++  describe("beep", () => {
++    it("returns BEL character", () => {
++      expect(consoleControl.beep()).toBe("\x07");
++    });
++  });
++});
+diff --git a/libs/core/src/lib/npmlog/gauge/tests/has-unicode.spec.ts b/libs/core/src/lib/npmlog/gauge/tests/has-unicode.spec.ts
+new file mode 100644
+index 00000000..4d509b29
+--- /dev/null
++++ b/libs/core/src/lib/npmlog/gauge/tests/has-unicode.spec.ts
+@@ -0,0 +1,84 @@
++import os from "os";
++import { hasUnicode } from "../has-unicode";
++
++describe("hasUnicode", () => {
++  const originalEnv = process.env;
++  let osTypeSpy: jest.SpyInstance;
++
++  beforeEach(() => {
++    process.env = { ...originalEnv };
++    osTypeSpy = jest.spyOn(os, "type");
++  });
++
++  afterEach(() => {
++    process.env = originalEnv;
++    osTypeSpy.mockRestore();
++  });
++
++  it("returns false on Windows", () => {
++    osTypeSpy.mockReturnValue("Windows_NT");
++    expect(hasUnicode()).toBe(false);
++  });
++
++  describe("Unix environments", () => {
++    beforeEach(() => {
++      osTypeSpy.mockReturnValue("Linux");
++    });
++
++    it("returns true for UTF-8 LANG", () => {
++      delete process.env.LC_ALL;
++      delete process.env.LC_CTYPE;
++      process.env.LANG = "en_US.UTF-8";
++      expect(hasUnicode()).toBe(true);
++    });
++
++    it("returns true for UTF-8 LC_ALL", () => {
++      process.env.LC_ALL = "en_US.UTF-8";
++      delete process.env.LC_CTYPE;
++      delete process.env.LANG;
++      expect(hasUnicode()).toBe(true);
++    });
++
++    it("returns false with no locale setting", () => {
++      delete process.env.LC_ALL;
++      delete process.env.LC_CTYPE;
++      delete process.env.LANG;
++      expect(hasUnicode()).toBe(false);
++    });
++
++    it("returns true for UTF-8 LC_CTYPE", () => {
++      delete process.env.LC_ALL;
++      process.env.LC_CTYPE = "en_US.UTF-8";
++      delete process.env.LANG;
++      expect(hasUnicode()).toBe(true);
++    });
++
++    it("returns true for bare UTF-8 LC_CTYPE", () => {
++      delete process.env.LC_ALL;
++      process.env.LC_CTYPE = "UTF-8";
++      delete process.env.LANG;
++      expect(hasUnicode()).toBe(true);
++    });
++
++    it("LC_ALL overrides other vars", () => {
++      process.env.LC_ALL = "C";
++      process.env.LC_CTYPE = "en_US.UTF-8";
++      process.env.LANG = "en_US.UTF-8";
++      expect(hasUnicode()).toBe(false);
++    });
++
++    it("LC_CTYPE overrides LANG", () => {
++      delete process.env.LC_ALL;
++      process.env.LC_CTYPE = "en_US";
++      process.env.LANG = "en_US.UTF-8";
++      expect(hasUnicode()).toBe(false);
++    });
++
++    it("returns true for utf8 (lowercase, no hyphen)", () => {
++      delete process.env.LC_ALL;
++      delete process.env.LC_CTYPE;
++      process.env.LANG = "de_DE.utf8";
++      expect(hasUnicode()).toBe(true);
++    });
++  });
++});
+diff --git a/libs/core/src/lib/npmlog/gauge/tests/plumbing.spec.ts b/libs/core/src/lib/npmlog/gauge/tests/plumbing.spec.ts
+index 30e0cc4d..e52f53f0 100644
+--- a/libs/core/src/lib/npmlog/gauge/tests/plumbing.spec.ts
++++ b/libs/core/src/lib/npmlog/gauge/tests/plumbing.spec.ts
+@@ -8,7 +8,7 @@ jest.mock("../render-template", () => (width: string, template: any, values: { x
+   } // pull in from parent object for stringify
+   return "w:" + width + ", t:" + JSON.stringify(template) + ", v:" + JSON.stringify(values);
+ });
+-jest.mock("console-control-strings", () => ({
++jest.mock("../console-control-strings", () => ({
+   eraseLine: () => "ERASE",
+   gotoSOL: () => "CR",
+   color: (to: string) => "COLOR:" + to,

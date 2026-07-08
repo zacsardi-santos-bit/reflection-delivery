@@ -1,0 +1,32 @@
+diff --git a/components/match_template/src/lib.rs b/components/match_template/src/lib.rs
+--- a/components/match_template/src/lib.rs
++++ b/components/match_template/src/lib.rs
+@@ -131,4 +131,28 @@ mod tests {
+     use super::*;
+ 
++    #[test]
++    fn test_wildcard_arm() {
++        let input = r#"
++            TT = [Foo, Bar],
++            match v {
++                VectorValue::TT => EvalType::TT,
++                _ => unreachable!(),
++            }
++        "#;
++
++        let expect_output = r#"
++            match v {
++                VectorValue::Foo => EvalType::Foo,
++                VectorValue::Bar => EvalType::Bar,
++                _ => unreachable!(),
++            }
++        "#;
++        let expect_output_stream: TokenStream = expect_output.parse().unwrap();
++
++        let mt: MatchTemplate = syn::parse_str(input).unwrap();
++        let output = mt.expand();
++        assert_eq!(output.to_string(), expect_output_stream.to_string());
++    }
++
+     #[test]
+     fn test_basic() {

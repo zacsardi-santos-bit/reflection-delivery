@@ -1,0 +1,34 @@
+diff --git a/d2compiler/compile_test.go b/d2compiler/compile_test.go
+index a9b1c8c1e..604da09f6 100644
+--- a/d2compiler/compile_test.go
++++ b/d2compiler/compile_test.go
+@@ -3885,7 +3885,7 @@ a: null
+ 				},
+ 			},
+ 			{
+-				name: "edge",
++				name: "basic-edge",
+ 				run: func(t *testing.T) {
+ 					g, _ := assertCompile(t, `
+ a -> b
+@@ -3895,6 +3895,20 @@ a -> b
+ 					assert.Equal(t, 0, len(g.Edges))
+ 				},
+ 			},
++			{
++				name: "nested-edge",
++				run: func(t *testing.T) {
++					g, _ := assertCompile(t, `
++a.b.c -> a.d.e
++a.b.c -> a.d.e
++
++a.(b.c -> d.e)[0]: null
++(a.b.c -> a.d.e)[1]: null
++`, "")
++					assert.Equal(t, 5, len(g.Objects))
++					assert.Equal(t, 0, len(g.Edges))
++				},
++			},
+ 			{
+ 				name: "attribute",
+ 				run: func(t *testing.T) {

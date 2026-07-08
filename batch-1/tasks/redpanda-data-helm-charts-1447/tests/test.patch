@@ -1,0 +1,13 @@
+diff --git a/charts/connectors/chart_test.go b/charts/connectors/chart_test.go
+index d56e956e..4544e45c 100644
+--- a/charts/connectors/chart_test.go
++++ b/charts/connectors/chart_test.go
+@@ -142,3 +142,8 @@ func TestGenerateCases(t *testing.T) {
+ 
+ 	require.NoError(t, os.WriteFile("testdata/template-cases-generated.txtar", archive, 0o644))
+ }
++
++// TestServiceConfig verifies that the ServiceConfig type exists.
++func TestServiceConfig(t *testing.T) {
++	var _ ServiceConfig
++}

@@ -1,0 +1,497 @@
+diff --git a/airflow/www/static/js/login/index.test.tsx b/airflow/www/static/js/login/index.test.tsx
+new file mode 100644
+index 0000000000..9d8b0988db
+--- /dev/null
++++ b/airflow/www/static/js/login/index.test.tsx
+@@ -0,0 +1,42 @@
++/*!
++ * Licensed to the Apache Software Foundation (ASF) under one
++ * or more contributor license agreements.  See the NOTICE file
++ * distributed with this work for additional information
++ * regarding copyright ownership.  The ASF licenses this file
++ * to you under the Apache License, Version 2.0 (the
++ * "License"); you may not use this file except in compliance
++ * with the License.  You may obtain a copy of the License at
++ *
++ *   http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing,
++ * software distributed under the License is distributed on an
++ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ * KIND, either express or implied.  See the License for the
++ * specific language governing permissions and limitations
++ * under the License.
++ */
++
++/* global describe  */
++
++import React from "react";
++
++import { render } from "@testing-library/react";
++
++import { Wrapper } from "src/utils/testUtils";
++import Login from ".";
++
++describe("Login page", () => {
++  test("Components renders properly", () => {
++    const { getAllByText } = render(<Login />, {
++      wrapper: Wrapper,
++    });
++
++    expect(getAllByText("Sign in")).toHaveLength(2);
++    expect(getAllByText("Enter your login and password below:")).toHaveLength(
++      1
++    );
++    expect(getAllByText("Username")).toHaveLength(1);
++    expect(getAllByText("Password")).toHaveLength(1);
++  });
++});
+diff --git a/tests/auth/managers/simple/__init__.py b/tests/auth/managers/simple/__init__.py
+new file mode 100644
+index 0000000000..13a83393a9
+--- /dev/null
++++ b/tests/auth/managers/simple/__init__.py
+@@ -0,0 +1,16 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
+diff --git a/tests/auth/managers/simple/test_simple_auth_manager.py b/tests/auth/managers/simple/test_simple_auth_manager.py
+new file mode 100644
+index 0000000000..3191069860
+--- /dev/null
++++ b/tests/auth/managers/simple/test_simple_auth_manager.py
+@@ -0,0 +1,274 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++import json
++from unittest.mock import Mock, patch
++
++import pytest
++from flask import Flask, session
++
++from airflow.auth.managers.models.resource_details import AccessView
++from airflow.auth.managers.simple.simple_auth_manager import SimpleAuthManager
++from airflow.auth.managers.simple.user import SimpleAuthManagerUser
++from airflow.auth.managers.simple.views.auth import SimpleAuthManagerAuthenticationViews
++from airflow.www.extensions.init_appbuilder import init_appbuilder
++
++
++@pytest.fixture
++def auth_manager():
++    return SimpleAuthManager(None)
++
++
++@pytest.fixture
++def auth_manager_with_appbuilder():
++    flask_app = Flask(__name__)
++    appbuilder = init_appbuilder(flask_app)
++    return SimpleAuthManager(appbuilder)
++
++
++@pytest.fixture
++def test_user():
++    return SimpleAuthManagerUser(username="test", role="test")
++
++
++class TestSimpleAuthManager:
++    @pytest.mark.db_test
++    def test_init_with_no_user(self, auth_manager_with_appbuilder):
++        auth_manager_with_appbuilder.init()
++        with open(SimpleAuthManager.GENERATED_PASSWORDS_FILE) as file:
++            passwords_str = file.read().strip()
++            user_passwords_from_file = json.loads(passwords_str)
++
++            assert user_passwords_from_file == {}
++
++    @pytest.mark.db_test
++    def test_init_with_users(self, auth_manager_with_appbuilder):
++        auth_manager_with_appbuilder.appbuilder.app.config["SIMPLE_AUTH_MANAGER_USERS"] = [
++            {
++                "username": "test",
++                "role": "admin",
++            }
++        ]
++        auth_manager_with_appbuilder.init()
++        with open(SimpleAuthManager.GENERATED_PASSWORDS_FILE) as file:
++            passwords_str = file.read().strip()
++            user_passwords_from_file = json.loads(passwords_str)
++
++            assert len(user_passwords_from_file) == 1
++
++    @pytest.mark.db_test
++    def test_is_logged_in(self, auth_manager, app, test_user):
++        with app.test_request_context():
++            session["user"] = test_user
++            result = auth_manager.is_logged_in()
++        assert result
++
++    @pytest.mark.db_test
++    def test_is_logged_in_return_false_when_no_user_in_session(self, auth_manager, app, test_user):
++        with app.test_request_context():
++            result = auth_manager.is_logged_in()
++
++        assert result is False
++
++    @patch("airflow.auth.managers.simple.simple_auth_manager.url_for")
++    def test_get_url_login(self, mock_url_for, auth_manager):
++        auth_manager.get_url_login()
++        mock_url_for.assert_called_once_with("SimpleAuthManagerAuthenticationViews.login")
++
++    @patch("airflow.auth.managers.simple.simple_auth_manager.url_for")
++    def test_get_url_logout(self, mock_url_for, auth_manager):
++        auth_manager.get_url_logout()
++        mock_url_for.assert_called_once_with("SimpleAuthManagerAuthenticationViews.logout")
++
++    @pytest.mark.db_test
++    @patch.object(SimpleAuthManager, "is_logged_in")
++    def test_get_user(self, mock_is_logged_in, auth_manager, app, test_user):
++        mock_is_logged_in.return_value = True
++
++        with app.test_request_context():
++            session["user"] = test_user
++            result = auth_manager.get_user()
++
++        assert result == test_user
++
++    @patch.object(SimpleAuthManager, "is_logged_in")
++    def test_get_user_return_none_when_not_logged_in(self, mock_is_logged_in, auth_manager):
++        mock_is_logged_in.return_value = False
++        result = auth_manager.get_user()
++
++        assert result is None
++
++    @pytest.mark.db_test
++    @patch.object(SimpleAuthManager, "is_logged_in")
++    @pytest.mark.parametrize(
++        "api",
++        [
++            "is_authorized_configuration",
++            "is_authorized_connection",
++            "is_authorized_dag",
++            "is_authorized_dataset",
++            "is_authorized_pool",
++            "is_authorized_variable",
++        ],
++    )
++    @pytest.mark.parametrize(
++        "is_logged_in, role, method, result",
++        [
++            (True, "ADMIN", "GET", True),
++            (True, "ADMIN", "DELETE", True),
++            (True, "VIEWER", "POST", False),
++            (True, "VIEWER", "PUT", False),
++            (True, "VIEWER", "DELETE", False),
++            (False, "ADMIN", "GET", False),
++        ],
++    )
++    def test_is_authorized_methods(
++        self, mock_is_logged_in, auth_manager, app, api, is_logged_in, role, method, result
++    ):
++        mock_is_logged_in.return_value = is_logged_in
++
++        with app.test_request_context():
++            session["user"] = SimpleAuthManagerUser(username="test", role=role)
++            assert getattr(auth_manager, api)(method=method) is result
++
++    @pytest.mark.db_test
++    @patch.object(SimpleAuthManager, "is_logged_in")
++    @pytest.mark.parametrize(
++        "api, kwargs",
++        [
++            ("is_authorized_view", {"access_view": AccessView.CLUSTER_ACTIVITY}),
++            (
++                "is_authorized_custom_view",
++                {
++                    "method": "GET",
++                    "resource_name": "test",
++                },
++            ),
++        ],
++    )
++    @pytest.mark.parametrize(
++        "is_logged_in, role, result",
++        [
++            (True, "ADMIN", True),
++            (True, "VIEWER", True),
++            (True, "USER", True),
++            (True, "OP", True),
++            (False, "ADMIN", False),
++        ],
++    )
++    def test_is_authorized_view_methods(
++        self, mock_is_logged_in, auth_manager, app, api, kwargs, is_logged_in, role, result
++    ):
++        mock_is_logged_in.return_value = is_logged_in
++
++        with app.test_request_context():
++            session["user"] = SimpleAuthManagerUser(username="test", role=role)
++            assert getattr(auth_manager, api)(**kwargs) is result
++
++    @pytest.mark.db_test
++    @patch.object(SimpleAuthManager, "is_logged_in")
++    @pytest.mark.parametrize(
++        "api",
++        [
++            "is_authorized_configuration",
++            "is_authorized_connection",
++            "is_authorized_dataset",
++            "is_authorized_pool",
++            "is_authorized_variable",
++        ],
++    )
++    @pytest.mark.parametrize(
++        "role, method, result",
++        [
++            ("ADMIN", "GET", True),
++            ("OP", "DELETE", True),
++            ("USER", "DELETE", False),
++            ("VIEWER", "PUT", False),
++        ],
++    )
++    def test_is_authorized_methods_op_role_required(
++        self, mock_is_logged_in, auth_manager, app, api, role, method, result
++    ):
++        mock_is_logged_in.return_value = True
++
++        with app.test_request_context():
++            session["user"] = SimpleAuthManagerUser(username="test", role=role)
++            assert getattr(auth_manager, api)(method=method) is result
++
++    @pytest.mark.db_test
++    @patch.object(SimpleAuthManager, "is_logged_in")
++    @pytest.mark.parametrize(
++        "api",
++        ["is_authorized_dag"],
++    )
++    @pytest.mark.parametrize(
++        "role, method, result",
++        [
++            ("ADMIN", "GET", True),
++            ("OP", "DELETE", True),
++            ("USER", "GET", True),
++            ("USER", "DELETE", True),
++            ("VIEWER", "PUT", False),
++        ],
++    )
++    def test_is_authorized_methods_user_role_required(
++        self, mock_is_logged_in, auth_manager, app, api, role, method, result
++    ):
++        mock_is_logged_in.return_value = True
++
++        with app.test_request_context():
++            session["user"] = SimpleAuthManagerUser(username="test", role=role)
++            assert getattr(auth_manager, api)(method=method) is result
++
++    @pytest.mark.db_test
++    @patch.object(SimpleAuthManager, "is_logged_in")
++    @pytest.mark.parametrize(
++        "api",
++        ["is_authorized_dag", "is_authorized_dataset", "is_authorized_pool"],
++    )
++    @pytest.mark.parametrize(
++        "role, method, result",
++        [
++            ("ADMIN", "GET", True),
++            ("VIEWER", "GET", True),
++            ("OP", "GET", True),
++            ("USER", "GET", True),
++            ("VIEWER", "POST", False),
++        ],
++    )
++    def test_is_authorized_methods_viewer_role_required_for_get(
++        self, mock_is_logged_in, auth_manager, app, api, role, method, result
++    ):
++        mock_is_logged_in.return_value = True
++
++        with app.test_request_context():
++            session["user"] = SimpleAuthManagerUser(username="test", role=role)
++            assert getattr(auth_manager, api)(method=method) is result
++
++    @pytest.mark.db_test
++    @patch(
++        "airflow.providers.amazon.aws.auth_manager.views.auth.conf.get_mandatory_value", return_value="test"
++    )
++    def test_register_views(self, _, auth_manager_with_appbuilder):
++        auth_manager_with_appbuilder.appbuilder.add_view_no_menu = Mock()
++        auth_manager_with_appbuilder.register_views()
++        auth_manager_with_appbuilder.appbuilder.add_view_no_menu.assert_called_once()
++        assert isinstance(
++            auth_manager_with_appbuilder.appbuilder.add_view_no_menu.call_args.args[0],
++            SimpleAuthManagerAuthenticationViews,
++        )
+diff --git a/tests/auth/managers/simple/test_user.py b/tests/auth/managers/simple/test_user.py
+new file mode 100644
+index 0000000000..bdc649811b
+--- /dev/null
++++ b/tests/auth/managers/simple/test_user.py
+@@ -0,0 +1,37 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++import pytest
++
++from airflow.auth.managers.simple.user import SimpleAuthManagerUser
++
++
++@pytest.fixture
++def user():
++    return SimpleAuthManagerUser(username="test", role="admin")
++
++
++class TestSimpleAuthManagerUser:
++    def test_get_id(self, user):
++        assert user.get_id() == "test"
++
++    def test_get_name(self, user):
++        assert user.get_name() == "test"
++
++    def test_get_role(self, user):
++        assert user.get_role() == "admin"
+diff --git a/tests/auth/managers/simple/views/__init__.py b/tests/auth/managers/simple/views/__init__.py
+new file mode 100644
+index 0000000000..13a83393a9
+--- /dev/null
++++ b/tests/auth/managers/simple/views/__init__.py
+@@ -0,0 +1,16 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
+diff --git a/tests/auth/managers/simple/views/test_auth.py b/tests/auth/managers/simple/views/test_auth.py
+new file mode 100644
+index 0000000000..197ed0e615
+--- /dev/null
++++ b/tests/auth/managers/simple/views/test_auth.py
+@@ -0,0 +1,76 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++import json
++
++import pytest
++from flask import session, url_for
++
++from airflow.auth.managers.simple.simple_auth_manager import SimpleAuthManager
++from airflow.www import app as application
++from tests.test_utils.config import conf_vars
++
++
++@pytest.fixture
++def simple_app():
++    with conf_vars(
++        {
++            (
++                "core",
++                "auth_manager",
++            ): "airflow.auth.managers.simple.simple_auth_manager.SimpleAuthManager",
++        }
++    ):
++        with open(SimpleAuthManager.GENERATED_PASSWORDS_FILE, "w") as file:
++            user = {"test": "test"}
++            file.write(json.dumps(user))
++
++        return application.create_app(
++            testing=True,
++            config={
++                "SIMPLE_AUTH_MANAGER_USERS": [
++                    {
++                        "username": "test",
++                        "role": "admin",
++                    }
++                ]
++            },
++        )
++
++
++@pytest.mark.db_test
++class TestSimpleAuthManagerAuthenticationViews:
++    def test_logout_redirects_to_login_and_clear_user(self, simple_app):
++        with simple_app.test_client() as client:
++            response = client.get("/logout")
++            assert response.status_code == 302
++            assert response.location == "/login"
++            assert session.get("user") is None
++
++    @pytest.mark.parametrize(
++        "username, password, is_successful",
++        [("test", "test", True), ("test", "test2", False), ("", "", False)],
++    )
++    def test_login_submit(self, simple_app, username, password, is_successful):
++        with simple_app.test_client() as client:
++            response = client.post("/login_submit", data={"username": username, "password": password})
++            assert response.status_code == 302
++            if is_successful:
++                assert response.location == url_for("Airflow.index")
++            else:
++                assert response.location == url_for("SimpleAuthManagerAuthenticationViews.login", error=["1"])

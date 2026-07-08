@@ -1,0 +1,18 @@
+diff --git a/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC115.py b/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC115.py
+index 6ec5d0133e..2711daf74f 100644
+--- a/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC115.py
++++ b/crates/ruff_linter/resources/test/fixtures/flake8_async/ASYNC115.py
+@@ -177,3 +177,12 @@ async def func():
+     0 # comment
+     )
+     )
++
++
++async def func():
++    # https://github.com/astral-sh/ruff/issues/21693
++    # The autofix for anyio should use `import anyio.lowlevel` instead of
++    # `from anyio import lowlevel`, since `anyio.lowlevel` is a submodule.
++    from anyio import sleep as anyio_sleep
++
++    await anyio_sleep(0)  # ASYNC115
+\ No newline at end of file

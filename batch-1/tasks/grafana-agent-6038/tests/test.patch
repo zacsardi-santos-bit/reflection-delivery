@@ -1,0 +1,23 @@
+diff --git a/converter/internal/prometheusconvert/component/http_test.go b/converter/internal/prometheusconvert/component/http_test.go
+new file mode 100644
+index 000000000..abcdef123
+--- /dev/null
++++ b/converter/internal/prometheusconvert/component/http_test.go
+@@ -0,0 +1,17 @@
++package component
++
++import (
++	"testing"
++
++	"github.com/stretchr/testify/require"
++	prom_http "github.com/prometheus/prometheus/discovery/http"
++)
++
++func TestValidateDiscoveryHttp(t *testing.T) {
++	sdConfig := &prom_http.SDConfig{
++		URL: "http://example.com",
++	}
++
++	diags := ValidateDiscoveryHttp(sdConfig)
++	require.Len(t, diags, 0)
++}

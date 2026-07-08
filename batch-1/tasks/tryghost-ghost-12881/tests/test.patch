@@ -1,0 +1,416 @@
+diff --git a/test/regression/models/model_member_stripe_customer_spec.js b/test/regression/models/model_member_stripe_customer_spec.js
+index 41e0b4dc82..6887b25e4b 100644
+--- a/test/regression/models/model_member_stripe_customer_spec.js
++++ b/test/regression/models/model_member_stripe_customer_spec.js
+@@ -2,7 +2,10 @@ const should = require('should');
+ const BaseModel = require('../../../core/server/models/base');
+ const {Member} = require('../../../core/server/models/member');
+ const {MemberStripeCustomer} = require('../../../core/server/models/member-stripe-customer');
++const {Product} = require('../../../core/server/models/product');
+ const {StripeCustomerSubscription} = require('../../../core/server/models/stripe-customer-subscription');
++const {StripePrice} = require('../../../core/server/models/stripe-price');
++const {StripeProduct} = require('../../../core/server/models/stripe-product');
+ 
+ const testUtils = require('../../utils');
+ 
+@@ -20,12 +23,34 @@ describe('MemberStripeCustomer Model', function run() {
+                 email: 'test@test.test'
+             });
+ 
++            const product = await Product.add({
++                name: 'Ghost Product',
++                slug: 'ghost-product'
++            }, context);
++
++            await StripeProduct.add({
++                product_id: product.get('id'),
++                stripe_product_id: 'fake_product_id'
++            }, context);
++
++            await StripePrice.add({
++                stripe_price_id: 'fake_plan_id',
++                stripe_product_id: 'fake_product_id',
++                amount: 5000,
++                interval: 'monthly',
++                currency: 'USD',
++                active: 1,
++                nickname: 'Monthly',
++                type: 'recurring'
++            }, context);
++
+             await MemberStripeCustomer.add({
+                 member_id: member.get('id'),
+                 customer_id: 'fake_customer_id',
+                 subscriptions: [{
+                     subscription_id: 'fake_subscription_id1',
+                     plan_id: 'fake_plan_id',
++                    stripe_price_id: 'fake_plan_id',
+                     plan_amount: 1337,
+                     plan_nickname: 'e-LEET',
+                     plan_interval: 'year',
+@@ -47,6 +72,7 @@ describe('MemberStripeCustomer Model', function run() {
+                 customer_id: 'fake_customer_id',
+                 subscription_id: 'fake_subscription_id2',
+                 plan_id: 'fake_plan_id',
++                stripe_price_id: 'fake_plan_id',
+                 plan_amount: 1337,
+                 plan_nickname: 'e-LEET',
+                 plan_interval: 'year',
+@@ -119,10 +145,32 @@ describe('MemberStripeCustomer Model', function run() {
+ 
+             should.exist(customer, 'Customer should have been created');
+ 
++            const product = await Product.add({
++                name: 'Ghost Product',
++                slug: 'ghost-product'
++            }, context);
++
++            await StripeProduct.add({
++                product_id: product.get('id'),
++                stripe_product_id: 'fake_product_id'
++            }, context);
++
++            await StripePrice.add({
++                stripe_price_id: 'fake_plan_id',
++                stripe_product_id: 'fake_product_id',
++                amount: 5000,
++                interval: 'monthly',
++                active: 1,
++                nickname: 'Monthly',
++                currency: 'USD',
++                type: 'recurring'
++            }, context);
++
+             await StripeCustomerSubscription.add({
+                 customer_id: 'fake_customer_id',
+                 subscription_id: 'fake_subscription_id',
+                 plan_id: 'fake_plan_id',
++                stripe_price_id: 'fake_plan_id',
+                 plan_amount: 1337,
+                 plan_nickname: 'e-LEET',
+                 plan_interval: 'year',
+diff --git a/test/regression/models/model_members_spec.js b/test/regression/models/model_members_spec.js
+index 7d900d7da4..58b6344a36 100644
+--- a/test/regression/models/model_members_spec.js
++++ b/test/regression/models/model_members_spec.js
+@@ -7,6 +7,8 @@ const {MemberStripeCustomer} = require('../../../core/server/models/member-strip
+ const {StripeCustomerSubscription} = require('../../../core/server/models/stripe-customer-subscription');
+ 
+ const testUtils = require('../../utils');
++const {StripeProduct} = require('../../../core/server/models/stripe-product');
++const {StripePrice} = require('../../../core/server/models/stripe-price');
+ 
+ describe('Member Model', function run() {
+     before(testUtils.teardownDb);
+@@ -26,6 +28,27 @@ describe('Member Model', function run() {
+ 
+             should.exist(member, 'Member should have been created');
+ 
++            const product = await Product.add({
++                name: 'Ghost Product',
++                slug: 'ghost-product'
++            }, context);
++
++            await StripeProduct.add({
++                product_id: product.get('id'),
++                stripe_product_id: 'fake_product_id'
++            }, context);
++
++            await StripePrice.add({
++                stripe_price_id: 'fake_plan_id',
++                stripe_product_id: 'fake_product_id',
++                amount: 5000,
++                interval: 'monthly',
++                active: 1,
++                nickname: 'Monthly',
++                currency: 'USD',
++                type: 'recurring'
++            }, context);
++
+             await MemberStripeCustomer.add({
+                 member_id: member.get('id'),
+                 customer_id: 'fake_customer_id1'
+@@ -40,6 +63,7 @@ describe('Member Model', function run() {
+                 customer_id: 'fake_customer_id1',
+                 subscription_id: 'fake_subscription_id1',
+                 plan_id: 'fake_plan_id',
++                stripe_price_id: 'fake_plan_id',
+                 plan_amount: 1337,
+                 plan_nickname: 'e-LEET',
+                 plan_interval: 'year',
+@@ -54,6 +78,7 @@ describe('Member Model', function run() {
+                 customer_id: 'fake_customer_id2',
+                 subscription_id: 'fake_subscription_id2',
+                 plan_id: 'fake_plan_id',
++                stripe_price_id: 'fake_plan_id',
+                 plan_amount: 1337,
+                 plan_nickname: 'e-LEET',
+                 plan_interval: 'year',
+@@ -161,10 +186,32 @@ describe('Member Model', function run() {
+ 
+             should.exist(customer, 'Customer should have been created');
+ 
++            const product = await Product.add({
++                name: 'Ghost Product',
++                slug: 'ghost-product'
++            }, context);
++
++            await StripeProduct.add({
++                product_id: product.get('id'),
++                stripe_product_id: 'fake_product_id'
++            }, context);
++
++            await StripePrice.add({
++                stripe_price_id: 'fake_plan_id',
++                stripe_product_id: 'fake_product_id',
++                amount: 5000,
++                interval: 'monthly',
++                active: 1,
++                nickname: 'Monthly',
++                currency: 'USD',
++                type: 'recurring'
++            }, context);
++
+             await StripeCustomerSubscription.add({
+                 customer_id: 'fake_customer_id',
+                 subscription_id: 'fake_subscription_id',
+                 plan_id: 'fake_plan_id',
++                stripe_price_id: 'fake_plan_id',
+                 plan_amount: 1337,
+                 plan_nickname: 'e-LEET',
+                 plan_interval: 'year',
+diff --git a/test/regression/models/model_stripe_customer_subscription_spec.js b/test/regression/models/model_stripe_customer_subscription_spec.js
+index cf562085f9..3b9ee4d9e1 100644
+--- a/test/regression/models/model_stripe_customer_subscription_spec.js
++++ b/test/regression/models/model_stripe_customer_subscription_spec.js
+@@ -1,7 +1,10 @@
+ const should = require('should');
+ const {Member} = require('../../../core/server/models/member');
+ const {MemberStripeCustomer} = require('../../../core/server/models/member-stripe-customer');
++const {Product} = require('../../../core/server/models/product');
+ const {StripeCustomerSubscription} = require('../../../core/server/models/stripe-customer-subscription');
++const {StripePrice} = require('../../../core/server/models/stripe-price');
++const {StripeProduct} = require('../../../core/server/models/stripe-product');
+ 
+ const testUtils = require('../../utils');
+ 
+@@ -21,10 +24,32 @@ describe('StripeCustomerSubscription Model', function run() {
+                 customer_id: 'fake_customer_id'
+             }, context);
+ 
++            const product = await Product.add({
++                name: 'Ghost Product',
++                slug: 'ghost-product'
++            }, context);
++
++            await StripeProduct.add({
++                product_id: product.get('id'),
++                stripe_product_id: 'fake_product_id'
++            }, context);
++
++            await StripePrice.add({
++                stripe_price_id: 'fake_plan_id',
++                stripe_product_id: 'fake_product_id',
++                amount: 5000,
++                interval: 'monthly',
++                active: 1,
++                nickname: 'Monthly',
++                currency: 'USD',
++                type: 'recurring'
++            }, context);
++
+             await StripeCustomerSubscription.add({
+                 customer_id: 'fake_customer_id',
+                 subscription_id: 'fake_subscription_id',
+                 plan_id: 'fake_plan_id',
++                stripe_price_id: 'fake_plan_id',
+                 plan_amount: 1337,
+                 plan_nickname: 'e-LEET',
+                 plan_interval: 'year',
+diff --git a/test/unit/data/schema/integrity_spec.js b/test/unit/data/schema/integrity_spec.js
+index 527c17d1b1..2f4f5f6562 100644
+--- a/test/unit/data/schema/integrity_spec.js
++++ b/test/unit/data/schema/integrity_spec.js
+@@ -32,7 +32,7 @@ const defaultSettings = require('../../../../core/server/data/schema/default-set
+  */
+ describe('DB version integrity', function () {
+     // Only these variables should need updating
+-    const currentSchemaHash = 'b94aa62d6e50eb42280837605e3f4a66';
++    const currentSchemaHash = 'c31e5e88461bbc015a9e50561d07f6f7';
+     const currentFixturesHash = '3dc9747eadecec34958dfba14c5332db';
+     const currentSettingsHash = 'b943cc3956eee3dd042f8394b2701d21';
+     const currentRoutesHash = '3d180d52c663d173a6be791ef411ed01';
+diff --git a/test/utils/fixture-utils.js b/test/utils/fixture-utils.js
+index e58dcb861a..1eaa40ccc8 100644
+--- a/test/utils/fixture-utils.js
++++ b/test/utils/fixture-utils.js
+@@ -477,6 +477,18 @@ const fixtures = {
+             return Promise.each(_.cloneDeep(DataGenerator.forKnex.members_stripe_customers), function (customer) {
+                 return models.MemberStripeCustomer.add(customer, context.internal);
+             });
++        }).then(function () {
++            return Promise.each(_.cloneDeep(DataGenerator.forKnex.products), function (product) {
++                return models.Product.add(product, context.internal);
++            });
++        }).then(function () {
++            return Promise.each(_.cloneDeep(DataGenerator.forKnex.stripe_products), function (stripeProduct) {
++                return models.StripeProduct.add(stripeProduct, context.internal);
++            });
++        }).then(function () {
++            return Promise.each(_.cloneDeep(DataGenerator.forKnex.stripe_prices), function (stripePrice) {
++                return models.StripePrice.add(stripePrice, context.internal);
++            });
+         }).then(function () {
+             return Promise.each(_.cloneDeep(DataGenerator.forKnex.stripe_customer_subscriptions), function (subscription) {
+                 return models.StripeCustomerSubscription.add(subscription, context.internal);
+diff --git a/test/utils/fixtures/data-generator.js b/test/utils/fixtures/data-generator.js
+index 2c74b7f094..a3119979c4 100644
+--- a/test/utils/fixtures/data-generator.js
++++ b/test/utils/fixtures/data-generator.js
+@@ -344,6 +344,14 @@ DataGenerator.Content = {
+         }
+     ],
+ 
++    products: [
++        {
++            id: ObjectId.generate(),
++            name: 'Ghost Product',
++            slug: 'ghost-product'
++        }
++    ],
++
+     labels: [
+         {
+             id: ObjectId.generate(),
+@@ -386,6 +394,7 @@ DataGenerator.Content = {
+             customer_id: 'cus_HR3tBmNhx4QsZY',
+             subscription_id: 'sub_HR3tLNgGAHsa7b',
+             plan_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730bb8',
++            stripe_price_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730bb8',
+             status: 'active',
+             cancel_at_period_end: false,
+             current_period_end: '2020-07-09 19:01:20',
+@@ -401,6 +410,7 @@ DataGenerator.Content = {
+             customer_id: 'cus_HR3tBmNhx4QsZZ',
+             subscription_id: 'sub_HR3tLNgGAHsa7c',
+             plan_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730bb9',
++            stripe_price_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730bb9',
+             status: 'trialing',
+             cancel_at_period_end: true,
+             current_period_end: '2025-07-09 19:01:20',
+@@ -416,6 +426,7 @@ DataGenerator.Content = {
+             customer_id: 'cus_HR3tBmNhx4QsZ0',
+             subscription_id: 'sub_HR3tLNgGAHsa7d',
+             plan_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730ba0',
++            stripe_price_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730ba0',
+             status: 'active',
+             cancel_at_period_end: true,
+             current_period_end: '2025-07-09 19:01:20',
+@@ -427,7 +438,48 @@ DataGenerator.Content = {
+             plan_currency: 'usd'
+         }
+     ],
+-
++    stripe_prices: [
++        {
++            id: ObjectId.generate(),
++            stripe_price_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730bb8',
++            stripe_product_id: '109c85c734fb9992e7bc30a26af66c22f5c94d8dc62e0a33cb797be902c06b2d',
++            active: 1,
++            nickname: 'Monthly',
++            currency: 'USD',
++            amount: 500,
++            type: 'recurring',
++            interval: 'month'
++        },
++        {
++            id: ObjectId.generate(),
++            stripe_price_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730bb9',
++            stripe_product_id: '109c85c734fb9992e7bc30a26af66c22f5c94d8dc62e0a33cb797be902c06b2d',
++            active: 1,
++            nickname: 'Yearly',
++            currency: 'USD',
++            amount: 1500,
++            type: 'recurring',
++            interval: 'year'
++        },
++        {
++            id: ObjectId.generate(),
++            stripe_price_id: '173e16a1fffa7d232b398e4a9b08d266a456ae8f3d23e5f11cc608ced6730ba0',
++            stripe_product_id: '109c85c734fb9992e7bc30a26af66c22f5c94d8dc62e0a33cb797be902c06b2d',
++            active: 1,
++            nickname: 'Yearly',
++            currency: 'USD',
++            amount: 2400,
++            type: 'recurring',
++            interval: 'year'
++        }
++    ],
++    stripe_products: [
++        {
++            id: ObjectId.generate(),
++            product_id: '',
++            stripe_product_id: '109c85c734fb9992e7bc30a26af66c22f5c94d8dc62e0a33cb797be902c06b2d'
++        }
++    ],
+     webhooks: [
+         {
+             id: ObjectId.generate(),
+@@ -790,6 +842,14 @@ DataGenerator.forKnex = (function () {
+         };
+     }
+ 
++    function createStripeProduct(product_id, stripe_product_id) {
++        return {
++            id: ObjectId.generate(),
++            product_id,
++            stripe_product_id
++        };
++    }
++
+     function createSetting(overrides) {
+         const newObj = _.cloneDeep(overrides);
+ 
+@@ -1120,12 +1180,29 @@ DataGenerator.forKnex = (function () {
+         )
+     ];
+ 
++    const products = [
++        createBasic(DataGenerator.Content.products[0])
++    ];
++
+     const members_stripe_customers = [
+         createBasic(DataGenerator.Content.members_stripe_customers[0]),
+         createBasic(DataGenerator.Content.members_stripe_customers[1]),
+         createBasic(DataGenerator.Content.members_stripe_customers[2])
+     ];
+ 
++    const stripe_products = [
++        createStripeProduct(
++            DataGenerator.Content.products[0].id,
++            DataGenerator.Content.stripe_products[0].stripe_product_id
++        )
++    ];
++
++    const stripe_prices = [
++        createBasic(DataGenerator.Content.stripe_prices[0]),
++        createBasic(DataGenerator.Content.stripe_prices[1]),
++        createBasic(DataGenerator.Content.stripe_prices[2])
++    ];
++
+     const stripe_customer_subscriptions = [
+         createBasic(DataGenerator.Content.members_stripe_customers_subscriptions[0]),
+         createBasic(DataGenerator.Content.members_stripe_customers_subscriptions[1]),
+@@ -1178,9 +1255,12 @@ DataGenerator.forKnex = (function () {
+         email_recipients,
+         labels,
+         members,
++        products,
+         members_labels,
+         members_stripe_customers,
+         stripe_customer_subscriptions,
++        stripe_prices,
++        stripe_products,
+         snippets
+     };
+ }());

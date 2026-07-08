@@ -1,0 +1,24 @@
+diff --git a/codex-rs/memories/mcp/src/lib.rs b/codex-rs/memories/mcp/src/lib.rs
+index 6e7b2c5..abc1234 100644
+--- a/codex-rs/memories/mcp/src/lib.rs
++++ b/codex-rs/memories/mcp/src/lib.rs
+@@ -12,3 +12,6 @@
+ pub use local::LocalMemoriesBackend;
+ pub use server::MemoriesMcpServer;
+ pub use server::run_stdio_server;
++
++#[cfg(test)]
++mod notfound_compile_test;
+diff --git a/codex-rs/memories/mcp/src/notfound_compile_test.rs b/codex-rs/memories/mcp/src/notfound_compile_test.rs
+new file mode 100644
+index 0000000..0000000
+--- /dev/null
++++ b/codex-rs/memories/mcp/src/notfound_compile_test.rs
+@@ -0,0 +1,7 @@
++use crate::backend::MemoriesBackendError;
++
++#[test]
++fn notfound_variant_exists() {
++    let err = MemoriesBackendError::NotFound { path: "test".to_string() };
++    assert!(matches!(err, MemoriesBackendError::NotFound { .. }));
++}

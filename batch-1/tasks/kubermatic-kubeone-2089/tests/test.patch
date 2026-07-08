@@ -1,0 +1,69 @@
+diff --git a/pkg/scripts/os_test.go b/pkg/scripts/os_test.go
+index ef6514b5..32714e83 100644
+--- a/pkg/scripts/os_test.go
++++ b/pkg/scripts/os_test.go
+@@ -48,6 +48,12 @@ func withNutanixCloudProvider(cls *kubeoneapi.KubeOneCluster) {
+ 	}
+ }
+ 
++func withCiliumCNI(cls *kubeoneapi.KubeOneCluster) {
++	cls.ClusterNetwork.CNI = &kubeoneapi.CNI{
++		Cilium: &kubeoneapi.CiliumSpec{},
++	}
++}
++
+ func withProxy(proxy string) genClusterOpts {
+ 	return func(cls *kubeoneapi.KubeOneCluster) {
+ 		cls.Proxy.HTTPS = proxy
+@@ -162,6 +168,12 @@ func TestKubeadmDebian(t *testing.T) {
+ 				cluster: genCluster(withNutanixCloudProvider),
+ 			},
+ 		},
++		{
++			name: "cilium cluster",
++			args: args{
++				cluster: genCluster(withCiliumCNI),
++			},
++		},
+ 	}
+ 
+ 	for _, tt := range tests {
+@@ -291,6 +303,12 @@ func TestKubeadmCentOS(t *testing.T) {
+ 				cluster: genCluster(withNutanixCloudProvider),
+ 			},
+ 		},
++		{
++			name: "cilium cluster",
++			args: args{
++				cluster: genCluster(withCiliumCNI),
++			},
++		},
+ 	}
+ 
+ 	for _, tt := range tests {
+@@ -392,6 +410,12 @@ func TestKubeadmAmazonLinux(t *testing.T) {
+ 				cluster: genCluster(withContainerd, withInsecureRegistry("127.0.0.1:5000")),
+ 			},
+ 		},
++		{
++			name: "with cilium",
++			args: args{
++				cluster: genCluster(withCiliumCNI),
++			},
++		},
+ 	}
+ 
+ 	for _, tt := range tests {
+@@ -466,6 +490,12 @@ func TestKubeadmFlatcar(t *testing.T) {
+ 				),
+ 			},
+ 		},
++		{
++			name: "with cilium",
++			args: args{
++				cluster: genCluster(withCiliumCNI),
++			},
++		},
+ 	}
+ 
+ 	for _, tt := range tests {

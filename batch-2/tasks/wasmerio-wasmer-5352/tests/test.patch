@@ -1,0 +1,16 @@
+diff --git a/lib/config/src/app/job.rs b/lib/config/src/app/job.rs
+index 27253af..8e9a0bb 100644
+--- a/lib/config/src/app/job.rs
++++ b/lib/config/src/app/job.rs
+@@ -278,4 +278,11 @@ action:
+         );
+         assert_eq!(job, serde_yaml::from_str(serialized).unwrap());
+     }
++
++    #[test]
++    pub fn test_cron_expression_describe() {
++        let expr = "@hourly".parse::<CronExpression>().unwrap();
++        let desc = expr.cron.describe(saffron::parse::English::default()).to_string();
++        assert_eq!(desc, "Every hour");
++    }
+ }

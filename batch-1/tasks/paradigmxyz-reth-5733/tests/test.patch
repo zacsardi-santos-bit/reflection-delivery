@@ -1,0 +1,15 @@
+diff --git a/crates/primitives/src/snapshot/segment.rs b/crates/primitives/src/snapshot/segment.rs
+--- a/crates/primitives/src/snapshot/segment.rs
++++ b/crates/primitives/src/snapshot/segment.rs
+@@ -201,6 +201,11 @@ mod tests {
+ mod tests {
+     use super::*;
+
++    #[test]
++    fn test_new_filename_api() {
++        let _ = SnapshotSegment::Headers.filename(&(2_u64..=30_u64));
++    }
++
+     #[test]
+     fn test_filename() {
+         let test_vectors = [

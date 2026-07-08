@@ -1,0 +1,22 @@
+diff --git a/crates/cairo-lang-starknet/src/casm_contract_class_test.rs b/crates/cairo-lang-starknet/src/casm_contract_class_test.rs
+index b9543cbb6..b9c34e388 100644
+--- a/crates/cairo-lang-starknet/src/casm_contract_class_test.rs
++++ b/crates/cairo-lang-starknet/src/casm_contract_class_test.rs
+@@ -59,3 +59,17 @@ fn test_casm_contract_from_contract_class_from_contracts_crate(example_contract_
+         serde_json::to_string_pretty(&casm_contract).unwrap() + "\n",
+     );
+ }
++
++#[test]
++fn test_casm_contract_has_bytecode_segment_lengths() {
++    let contract_class = get_test_contract(
++        "cairo_level_tests::contracts::minimal_contract::minimal_contract",
++    );
++    let add_pythonic_hints = true;
++    let casm_contract =
++        CasmContractClass::from_contract_class(contract_class, add_pythonic_hints).unwrap();
++    assert!(
++        casm_contract.bytecode_segment_lengths.is_some(),
++        "Expected bytecode_segment_lengths to be present for sierra >= 1.5"
++    );
++}

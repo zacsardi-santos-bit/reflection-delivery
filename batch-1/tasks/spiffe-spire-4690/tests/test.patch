@@ -1,0 +1,1679 @@
+diff --git a/pkg/common/telemetry/server/datastore/wrapper_test.go b/pkg/common/telemetry/server/datastore/wrapper_test.go
+index 1f814d1b5..d085ee34d 100644
+--- a/pkg/common/telemetry/server/datastore/wrapper_test.go
++++ b/pkg/common/telemetry/server/datastore/wrapper_test.go
+@@ -218,6 +218,22 @@ func TestWithMetrics(t *testing.T) {
+ 			key:        "datastore.registration_entry.update",
+ 			methodName: "UpdateRegistrationEntry",
+ 		},
++		{
++			key:        "datastore.ca_journal.set",
++			methodName: "SetCAJournal",
++		},
++		{
++			key:        "datastore.ca_journal.fetch",
++			methodName: "FetchCAJournal",
++		},
++		{
++			key:        "datastore.ca_journal.prune",
++			methodName: "PruneCAJournals",
++		},
++		{
++			key:        "datastore.ca_journal.list",
++			methodName: "ListCAJournalsForTesting",
++		},
+ 	} {
+ 		tt := tt
+ 		methodType, ok := wt.MethodByName(tt.methodName)
+@@ -477,3 +493,19 @@ func (ds *fakeDataStore) UpdateRegistrationEntry(context.Context, *common.Regist
+ func (ds *fakeDataStore) UpdateFederationRelationship(context.Context, *datastore.FederationRelationship, *types.FederationRelationshipMask) (*datastore.FederationRelationship, error) {
+ 	return &datastore.FederationRelationship{}, ds.err
+ }
++
++func (ds *fakeDataStore) SetCAJournal(context.Context, *datastore.CAJournal) (*datastore.CAJournal, error) {
++	return &datastore.CAJournal{}, ds.err
++}
++
++func (ds *fakeDataStore) FetchCAJournal(context.Context, string) (*datastore.CAJournal, error) {
++	return &datastore.CAJournal{}, ds.err
++}
++
++func (ds *fakeDataStore) ListCAJournalsForTesting(context.Context) ([]*datastore.CAJournal, error) {
++	return []*datastore.CAJournal{}, ds.err
++}
++
++func (ds *fakeDataStore) PruneCAJournals(context.Context, int64) error {
++	return ds.err
++}
+diff --git a/pkg/server/api/localauthority/v1/service_test.go b/pkg/server/api/localauthority/v1/service_test.go
+index f91a8f9e9..e63113018 100644
+--- a/pkg/server/api/localauthority/v1/service_test.go
++++ b/pkg/server/api/localauthority/v1/service_test.go
+@@ -1865,7 +1865,7 @@ func (m *fakeCAManager) PrepareJWTKey(context.Context) error {
+ 	return m.prepareJWTKeyErr
+ }
+ 
+-func (m *fakeCAManager) RotateJWTKey() {
++func (m *fakeCAManager) RotateJWTKey(context.Context) {
+ 	m.rotateJWTKeyCalled = true
+ }
+ 
+@@ -1881,7 +1881,7 @@ func (m *fakeCAManager) PrepareX509CA(context.Context) error {
+ 	return m.prepareX509CAErr
+ }
+ 
+-func (m *fakeCAManager) RotateX509CA() {
++func (m *fakeCAManager) RotateX509CA(context.Context) {
+ 	m.rotateX509CACalled = true
+ }
+ 
+diff --git a/pkg/server/ca/manager/journal_test.go b/pkg/server/ca/manager/journal_test.go
+index 8bf273ab9..adeccfc69 100644
+--- a/pkg/server/ca/manager/journal_test.go
++++ b/pkg/server/ca/manager/journal_test.go
+@@ -1,90 +1,196 @@
+ package manager
+ 
+ import (
++	"context"
+ 	"crypto/x509"
++	"crypto/x509/pkix"
+ 	"encoding/pem"
++	"errors"
+ 	"os"
+ 	"path/filepath"
+ 	"testing"
+ 	"time"
+ 
+-	"github.com/spiffe/spire/pkg/common/pemutil"
++	"github.com/andres-erbsen/clock"
++	"github.com/sirupsen/logrus/hooks/test"
+ 	"github.com/spiffe/spire/pkg/server/ca"
++	"github.com/spiffe/spire/pkg/server/credtemplate"
++	"github.com/spiffe/spire/pkg/server/plugin/keymanager"
+ 	"github.com/spiffe/spire/proto/private/server/journal"
++	"github.com/spiffe/spire/test/fakes/fakedatastore"
++	"github.com/spiffe/spire/test/fakes/fakeservercatalog"
++	"github.com/spiffe/spire/test/fakes/fakeserverkeymanager"
+ 	"github.com/spiffe/spire/test/spiretest"
++	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+-	"github.com/stretchr/testify/suite"
+-	"google.golang.org/protobuf/proto"
+ )
+ 
+ var (
+-	testSigner, _ = pemutil.ParseSigner([]byte(`-----BEGIN PRIVATE KEY-----
+-MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgt/OIyb8Ossz/5bNk
+-XtnzFe1T2d0D9quX9Loi1O55b8yhRANCAATDe/2d6z+P095I3dIkocKr4b3zAy+1
+-qQDuoXqa8i3YOPk5fLib4ORzqD9NJFcrKjI+LLtipQe9yu/eY1K0yhBa
+------END PRIVATE KEY-----
+-`))
++	ctx = context.Background()
+ 
+ 	testChain = []*x509.Certificate{
+ 		{Raw: []byte("A")},
+ 		{Raw: []byte("B")},
+ 		{Raw: []byte("C")},
+ 	}
++
++	km        keymanager.KeyManager
++	kmKeys    = map[string]keymanager.Key{}
++	rootCerts = map[string]*x509.Certificate{}
+ )
+ 
+-func TestJournal(t *testing.T) {
+-	suite.Run(t, new(JournalSuite))
+-}
++func setupJournalTest(t *testing.T) *journalTest {
++	log, _ := test.NewNullLogger()
+ 
+-type JournalSuite struct {
+-	spiretest.Suite
+-	dir string
+-}
++	clk := clock.New()
++	credBuilder, err := credtemplate.NewBuilder(credtemplate.Config{
++		TrustDomain:   testTrustDomain,
++		X509CASubject: pkix.Name{CommonName: "SPIRE"},
++		Clock:         clk,
++		X509CATTL:     testCATTL,
++	})
++	require.NoError(t, err)
++
++	ds := fakedatastore.New(t)
++	cat := fakeservercatalog.New()
++	cat.SetDataStore(ds)
++
++	if km == nil {
++		km := fakeserverkeymanager.New(t)
++		cat.SetKeyManager(km)
++
++		kmKeys["X509-CA-A"], rootCerts["X509-Root-A"], err = createSelfSigned(ctx, credBuilder, km, "X509-CA-A")
++		require.NoError(t, err)
++
++		kmKeys["X509-CA-B"], rootCerts["X509-Root-B"], err = createSelfSigned(ctx, credBuilder, km, "x509-CA-B")
++		require.NoError(t, err)
++
++		kmKeys["X509-CA-C"], rootCerts["X509-Root-C"], err = createSelfSigned(ctx, credBuilder, km, "x509-CA-C")
++		require.NoError(t, err)
+ 
+-func (s *JournalSuite) SetupTest() {
+-	s.dir = s.TempDir()
++		kmKeys["JWT-Signer-A"], err = km.GenerateKey(ctx, "JWT-Signer-A", keymanager.ECP256)
++		require.NoError(t, err)
++
++		kmKeys["JWT-Signer-B"], err = km.GenerateKey(ctx, "JWT-Signer-B", keymanager.ECP256)
++		require.NoError(t, err)
++
++		kmKeys["JWT-Signer-C"], err = km.GenerateKey(ctx, "JWT-Signer-C", keymanager.ECP256)
++		require.NoError(t, err)
++	}
++
++	return &journalTest{
++		ds: ds,
++		jc: &journalConfig{
++			cat:      cat,
++			log:      log,
++			filePath: filepath.Join(t.TempDir(), "journal.pem"),
++		},
++	}
+ }
+ 
+-func (s *JournalSuite) TestNew() {
+-	journal, err := LoadJournal(s.journalPath())
+-	s.NoError(err)
+-	if s.NotNil(journal) {
++func TestNew(t *testing.T) {
++	test := setupJournalTest(t)
++	j, err := LoadJournal(ctx, test.jc)
++	require.NoError(t, err)
++	if assert.NotNil(t, j) {
+ 		// Verify entries is empty
+-		s.AssertProtoEqual(&JournalEntries{}, journal.Entries())
++		spiretest.RequireProtoEqual(t, &journal.Entries{}, j.getEntries())
+ 	}
++	caJournals, err := test.ds.ListCAJournalsForTesting(ctx)
++	require.NoError(t, err)
++	require.Empty(t, caJournals)
+ }
+ 
+-func (s *JournalSuite) TestPersistence() {
+-	now := s.now()
++func TestJournalPersistence(t *testing.T) {
++	test := setupJournalTest(t)
++	now := test.now()
+ 
+-	journal := s.loadJournal()
++	j := test.loadJournal(t)
+ 
+-	err := journal.AppendX509CA("A", now, &ca.X509CA{
+-		Signer:        testSigner,
+-		Certificate:   testChain[0],
++	err := j.AppendX509CA(ctx, "A", now, &ca.X509CA{
++		Signer:        kmKeys["X509-CA-A"],
++		Certificate:   rootCerts["X509-Root-A"],
+ 		UpstreamChain: testChain,
+ 	})
+-	s.Require().NoError(err)
++	require.NoError(t, err)
+ 
+-	err = journal.AppendJWTKey("B", now, &ca.JWTKey{
+-		Signer:   testSigner,
+-		Kid:      "KID",
++	err = j.AppendJWTKey(ctx, "B", now, &ca.JWTKey{
++		Signer:   kmKeys["JWT-Signer-B"],
++		Kid:      "kid1",
+ 		NotAfter: now.Add(time.Hour),
+ 	})
+-	s.Require().NoError(err)
++	require.NoError(t, err)
++
++	require.NoError(t, j.UpdateX509CAStatus(ctx, now, journal.Status_ACTIVE))
++
++	// Check that the CA journal was properly stored in the datastore.
++	journalDS := test.loadJournalFromDS(t)
++	require.NotNil(t, journalDS)
++	spiretest.RequireProtoEqual(t, j.getEntries(), journalDS.getEntries())
++
++	// TODO: the following checks assume that the CA journal is stored both in
++	// datastore and on disk. Revisit this in v1.10.
++	journalDisk := test.loadJournalFromDisk(t)
++	require.NotNil(t, journalDisk)
++	spiretest.RequireProtoEqual(t, j.getEntries(), journalDisk.getEntries())
++
++	// Test for the case when SPIRE starts with a CA journal on disk and does
++	// not yet have a CA journal stored in the datastore. Reset the datastore so
++	// we only have the CA journal on disk.
++	test.ds = fakedatastore.New(t)
++	test.jc.cat.(*fakeservercatalog.Catalog).SetDataStore(test.ds)
++
++	// Load the journal again. It should still get the CA journal stored on
++	// disk.
++	j = test.loadJournal(t)
++	journalDisk = test.loadJournalFromDisk(t)
++	require.NotNil(t, journalDisk)
++	spiretest.RequireProtoEqual(t, j.getEntries(), journalDisk.getEntries())
++
++	// Append a new X.509 CA, which will make the CA journal to be stored
++	// on disk and in the datastore.
++	now = now.Add(time.Minute)
++	err = j.AppendX509CA(ctx, "C", now, &ca.X509CA{
++		Signer:        kmKeys["X509-CA-C"],
++		Certificate:   rootCerts["X509-Root-C"],
++		UpstreamChain: testChain,
++	})
++	require.NoError(t, err)
++	require.NoError(t, j.UpdateX509CAStatus(ctx, now, journal.Status_ACTIVE))
++
++	journalDS = test.loadJournalFromDS(t)
++	require.NotNil(t, journalDS)
++	spiretest.RequireProtoEqual(t, j.getEntries(), journalDS.getEntries())
++	journalDisk = test.loadJournalFromDisk(t)
++	require.NotNil(t, journalDisk)
++	spiretest.RequireProtoEqual(t, j.getEntries(), journalDisk.getEntries())
++
++	// Simulate a datastore error
++	dsError := errors.New("ds error")
++	test.ds.SetNextError(dsError)
++	err = j.AppendX509CA(ctx, "C", now, &ca.X509CA{
++		Signer:        kmKeys["X509-CA-C"],
++		Certificate:   rootCerts["X509-Root-C"],
++		UpstreamChain: testChain,
++	})
++	require.Error(t, err)
++	require.EqualError(t, err, "could not save CA journal in the datastore: ds error")
+ 
+-	s.requireProtoEqual(journal.Entries(), s.loadJournal().Entries())
++	// CA journal on disk should have been saved successfully
++	journalDisk = test.loadJournalFromDisk(t)
++	require.NotNil(t, journalDisk)
++	spiretest.RequireProtoEqual(t, j.getEntries(), journalDisk.getEntries())
+ }
+ 
+-func (s *JournalSuite) TestAppendSetPreparedStatus() {
+-	t := s.T()
+-	now := s.now()
++func TestAppendSetPreparedStatus(t *testing.T) {
++	test := setupJournalTest(t)
++	now := test.now()
+ 
+-	testJournal := s.loadJournal()
++	testJournal := test.loadJournal(t)
+ 
+-	err := testJournal.AppendX509CA("A", now, &ca.X509CA{
+-		Signer:        testSigner,
+-		Certificate:   testChain[0],
++	err := testJournal.AppendX509CA(ctx, "A", now, &ca.X509CA{
++		Signer:        kmKeys["X509-CA-A"],
++		Certificate:   rootCerts["X509-Root-A"],
+ 		UpstreamChain: testChain,
+ 	})
+ 	require.NoError(t, err)
+@@ -94,8 +200,8 @@ func (s *JournalSuite) TestAppendSetPreparedStatus() {
+ 	require.Equal(t, "A", lastX509CA.SlotId)
+ 	require.Equal(t, journal.Status_PREPARED, lastX509CA.Status)
+ 
+-	err = testJournal.AppendJWTKey("B", now, &ca.JWTKey{
+-		Signer:   testSigner,
++	err = testJournal.AppendJWTKey(ctx, "B", now, &ca.JWTKey{
++		Signer:   kmKeys["X509-CA-B"],
+ 		Kid:      "KID",
+ 		NotAfter: now.Add(time.Hour),
+ 	})
+@@ -107,49 +213,51 @@ func (s *JournalSuite) TestAppendSetPreparedStatus() {
+ 	require.Equal(t, journal.Status_PREPARED, lastJWTKey.Status)
+ }
+ 
+-func (s *JournalSuite) TestX509CAOverflow() {
+-	now := s.now()
++func TestX509CAOverflow(t *testing.T) {
++	test := setupJournalTest(t)
++	now := test.now()
+ 
+-	journal := s.loadJournal()
++	journal := test.loadJournal(t)
+ 
+ 	for i := 0; i < (journalCap + 1); i++ {
+ 		now = now.Add(time.Minute)
+-		err := journal.AppendX509CA("A", now, &ca.X509CA{
+-			Signer:      testSigner,
+-			Certificate: testChain[0],
++		err := journal.AppendX509CA(ctx, "A", now, &ca.X509CA{
++			Signer:      kmKeys["X509-CA-A"],
++			Certificate: rootCerts["X509-Root-A"],
+ 		})
+-		s.Require().NoError(err)
++		require.NoError(t, err)
+ 	}
+ 
+-	entries := journal.Entries()
+-	s.Require().Len(entries.X509CAs, journalCap, "X509CA entries exceeds cap")
++	entries := journal.getEntries()
++	require.Len(t, entries.X509CAs, journalCap, "X509CA entries exceeds cap")
+ 	lastEntry := entries.X509CAs[len(entries.X509CAs)-1]
+-	s.Require().Equal(now, time.Unix(lastEntry.IssuedAt, 0).UTC())
++	require.Equal(t, now, time.Unix(lastEntry.IssuedAt, 0).UTC())
+ }
+ 
+-func (s *JournalSuite) TestUpdateX509CAStatus() {
+-	t := s.T()
+-	firstIssuedAt := s.now()
++func TestUpdateX509CAStatus(t *testing.T) {
++	test := setupJournalTest(t)
++
++	firstIssuedAt := test.now()
+ 	secondIssuedAt := firstIssuedAt.Add(time.Minute)
+ 	thirdIssuedAt := secondIssuedAt.Add(time.Minute)
+ 
+-	testJournal := s.loadJournal()
++	testJournal := test.loadJournal(t)
+ 
+-	err := testJournal.AppendX509CA("A", firstIssuedAt, &ca.X509CA{
+-		Signer:      testSigner,
+-		Certificate: testChain[0],
++	err := testJournal.AppendX509CA(ctx, "A", firstIssuedAt, &ca.X509CA{
++		Signer:      kmKeys["X509-CA-A"],
++		Certificate: rootCerts["X509-Root-A"],
+ 	})
+ 	require.NoError(t, err)
+ 
+-	err = testJournal.AppendX509CA("B", secondIssuedAt, &ca.X509CA{
+-		Signer:      testSigner,
+-		Certificate: testChain[0],
++	err = testJournal.AppendX509CA(ctx, "B", secondIssuedAt, &ca.X509CA{
++		Signer:      kmKeys["X509-CA-B"],
++		Certificate: rootCerts["X509-Root-B"],
+ 	})
+ 	require.NoError(t, err)
+ 
+-	err = testJournal.AppendX509CA("C", thirdIssuedAt, &ca.X509CA{
+-		Signer:      testSigner,
+-		Certificate: testChain[0],
++	err = testJournal.AppendX509CA(ctx, "C", thirdIssuedAt, &ca.X509CA{
++		Signer:      kmKeys["X509-CA-C"],
++		Certificate: rootCerts["X509-Root-C"],
+ 	})
+ 	require.NoError(t, err)
+ 
+@@ -159,10 +267,10 @@ func (s *JournalSuite) TestUpdateX509CAStatus() {
+ 		require.Equal(t, journal.Status_PREPARED, ca.Status)
+ 	}
+ 
+-	err = testJournal.UpdateX509CAStatus(secondIssuedAt, journal.Status_ACTIVE)
++	err = testJournal.UpdateX509CAStatus(ctx, secondIssuedAt, journal.Status_ACTIVE)
+ 	require.NoError(t, err)
+ 
+-	for _, ca := range testJournal.Entries().X509CAs {
++	for _, ca := range testJournal.getEntries().X509CAs {
+ 		expectedStatus := journal.Status_PREPARED
+ 		if ca.SlotId == "B" {
+ 			expectedStatus = journal.Status_ACTIVE
+@@ -171,47 +279,48 @@ func (s *JournalSuite) TestUpdateX509CAStatus() {
+ 		require.Equal(t, expectedStatus, ca.Status)
+ 	}
+ 
+-	unusedTime := s.now().Add(time.Hour)
+-	err = testJournal.UpdateX509CAStatus(unusedTime, journal.Status_OLD)
++	unusedTime := test.now().Add(time.Hour)
++	err = testJournal.UpdateX509CAStatus(ctx, unusedTime, journal.Status_OLD)
+ 	require.ErrorContains(t, err, "no journal entry found issued at:")
+ }
+ 
+-func (s *JournalSuite) TestUpdateJWTKeyStatus() {
+-	t := s.T()
+-	firstIssuedAt := s.now()
++func TestUpdateJWTKeyStatus(t *testing.T) {
++	test := setupJournalTest(t)
++
++	firstIssuedAt := test.now()
+ 	secondIssuedAt := firstIssuedAt.Add(time.Minute)
+ 	thirdIssuedAt := secondIssuedAt.Add(time.Minute)
+ 
+-	testJournal := s.loadJournal()
++	testJournal := test.loadJournal(t)
+ 
+-	err := testJournal.AppendJWTKey("A", firstIssuedAt, &ca.JWTKey{
+-		Signer: testSigner,
++	err := testJournal.AppendJWTKey(ctx, "A", firstIssuedAt, &ca.JWTKey{
++		Signer: kmKeys["JWT-Signer-A"],
+ 		Kid:    "kid1",
+ 	})
+ 	require.NoError(t, err)
+ 
+-	err = testJournal.AppendJWTKey("B", secondIssuedAt, &ca.JWTKey{
+-		Signer: testSigner,
++	err = testJournal.AppendJWTKey(ctx, "B", secondIssuedAt, &ca.JWTKey{
++		Signer: kmKeys["JWT-Signer-B"],
+ 		Kid:    "kid2",
+ 	})
+ 	require.NoError(t, err)
+ 
+-	err = testJournal.AppendJWTKey("C", thirdIssuedAt, &ca.JWTKey{
+-		Signer: testSigner,
++	err = testJournal.AppendJWTKey(ctx, "C", thirdIssuedAt, &ca.JWTKey{
++		Signer: kmKeys["JWT-Signer-C"],
+ 		Kid:    "kid3",
+ 	})
+ 	require.NoError(t, err)
+ 
+-	keys := testJournal.Entries().JwtKeys
++	keys := testJournal.getEntries().JwtKeys
+ 	require.Len(t, keys, 3)
+ 	for _, key := range keys {
+ 		require.Equal(t, journal.Status_PREPARED, key.Status)
+ 	}
+ 
+-	err = testJournal.UpdateJWTKeyStatus(secondIssuedAt, journal.Status_ACTIVE)
++	err = testJournal.UpdateJWTKeyStatus(ctx, secondIssuedAt, journal.Status_ACTIVE)
+ 	require.NoError(t, err)
+ 
+-	for _, key := range testJournal.Entries().JwtKeys {
++	for _, key := range testJournal.getEntries().JwtKeys {
+ 		expectedStatus := journal.Status_PREPARED
+ 		if key.SlotId == "B" {
+ 			expectedStatus = journal.Status_ACTIVE
+@@ -220,86 +329,97 @@ func (s *JournalSuite) TestUpdateJWTKeyStatus() {
+ 		require.Equal(t, expectedStatus, key.Status)
+ 	}
+ 
+-	unusedTime := s.now().Add(time.Hour)
+-	err = testJournal.UpdateJWTKeyStatus(unusedTime, journal.Status_OLD)
++	unusedTime := test.now().Add(time.Hour)
++	err = testJournal.UpdateJWTKeyStatus(ctx, unusedTime, journal.Status_OLD)
+ 	require.ErrorContains(t, err, "no journal entry found issued at:")
+ }
+ 
+-func (s *JournalSuite) TestJWTKeyOverflow() {
+-	now := s.now()
++func TestJWTKeyOverflow(t *testing.T) {
++	test := setupJournalTest(t)
++
++	now := test.now()
+ 
+-	journal := s.loadJournal()
++	journal := test.loadJournal(t)
+ 
+ 	for i := 0; i < (journalCap + 1); i++ {
+ 		now = now.Add(time.Minute)
+-		err := journal.AppendJWTKey("B", now, &ca.JWTKey{
+-			Signer:   testSigner,
++		err := journal.AppendJWTKey(ctx, "B", now, &ca.JWTKey{
++			Signer:   kmKeys["JWT-Signer-B"],
+ 			Kid:      "KID",
+ 			NotAfter: now.Add(time.Hour),
+ 		})
+-		s.Require().NoError(err)
++		require.NoError(t, err)
+ 	}
+ 
+-	entries := journal.Entries()
+-	s.Require().Len(entries.JwtKeys, journalCap, "JWT key entries exceeds cap")
++	entries := journal.getEntries()
++	require.Len(t, entries.JwtKeys, journalCap, "JWT key entries exceeds cap")
+ 	lastEntry := entries.JwtKeys[len(entries.JwtKeys)-1]
+-	s.Require().Equal(now, time.Unix(lastEntry.IssuedAt, 0).UTC())
++	require.Equal(t, now, time.Unix(lastEntry.IssuedAt, 0).UTC())
+ }
+ 
+-func (s *JournalSuite) TestBadPEM() {
+-	s.writeString(s.journalPath(), "NOT PEM")
+-	_, err := LoadJournal(s.journalPath())
+-	s.EqualError(err, "invalid PEM block")
++func TestBadPEM(t *testing.T) {
++	test := setupJournalTest(t)
++
++	test.writeString(t, test.jc.filePath, "NOT PEM")
++	_, err := LoadJournal(ctx, test.jc)
++	require.EqualError(t, err, "failed to load journal from disk: invalid PEM block")
+ }
+ 
+-func (s *JournalSuite) TestUnexpectedPEMType() {
+-	s.writeBytes(s.journalPath(), pem.EncodeToMemory(&pem.Block{
++func TestUnexpectedPEMType(t *testing.T) {
++	test := setupJournalTest(t)
++
++	test.writeBytes(t, test.jc.filePath, pem.EncodeToMemory(&pem.Block{
+ 		Type:  "WHATEVER",
+ 		Bytes: []byte("FOO"),
+ 	}))
+-	_, err := LoadJournal(s.journalPath())
+-	s.EqualError(err, `invalid PEM block type "WHATEVER"`)
++	_, err := LoadJournal(ctx, test.jc)
++	require.EqualError(t, err, `failed to load journal from disk: invalid PEM block type "WHATEVER"`)
+ }
+ 
+-func (s *JournalSuite) TestBadProto() {
+-	s.writeBytes(s.journalPath(), pem.EncodeToMemory(&pem.Block{
++func TestBadProto(t *testing.T) {
++	test := setupJournalTest(t)
++
++	test.writeBytes(t, test.jc.filePath, pem.EncodeToMemory(&pem.Block{
+ 		Type:  journalPEMType,
+ 		Bytes: []byte("FOO"),
+ 	}))
+-	_, err := LoadJournal(s.journalPath())
+-	s.Require().Error(err)
+-	s.Contains(err.Error(), `unable to unmarshal entries: `)
++	_, err := LoadJournal(ctx, test.jc)
++	require.Error(t, err)
++	require.Contains(t, err.Error(), `unable to unmarshal entries: `)
+ }
+ 
+-func (s *JournalSuite) loadJournal() *Journal {
+-	journal, err := LoadJournal(s.journalPath())
+-	s.Require().NoError(err)
++func (j *journalTest) loadJournal(t *testing.T) *Journal {
++	journal, err := LoadJournal(ctx, j.jc)
++	require.NoError(t, err)
+ 	return journal
+ }
+ 
+-func (s *JournalSuite) journalPath() string {
+-	return s.pathTo("journal.pem")
++func (j *journalTest) loadJournalFromDisk(t *testing.T) *Journal {
++	journal, err := loadJournalFromDisk(j.jc)
++	require.NoError(t, err)
++	return journal
+ }
+ 
+-func (s *JournalSuite) pathTo(relativePath string) string {
+-	return filepath.Join(s.dir, relativePath)
++func (j *journalTest) loadJournalFromDS(t *testing.T) *Journal {
++	journal, err := loadJournalFromDS(ctx, j.jc)
++	require.NoError(t, err)
++	return journal
+ }
+ 
+-func (s *JournalSuite) writeString(path, data string) {
+-	s.writeBytes(path, []byte(data))
++func (j *journalTest) writeString(t *testing.T, path, data string) {
++	j.writeBytes(t, path, []byte(data))
+ }
+ 
+-func (s *JournalSuite) writeBytes(path string, data []byte) {
+-	s.Require().NoError(os.WriteFile(path, data, 0600))
++func (j *journalTest) writeBytes(t *testing.T, path string, data []byte) {
++	require.NoError(t, os.WriteFile(path, data, 0600))
+ }
+ 
+-func (s *JournalSuite) now() time.Time {
++func (j *journalTest) now() time.Time {
+ 	// return truncated UTC time for cleaner failure messages
+ 	return time.Now().UTC().Truncate(time.Second)
+ }
+ 
+-func (s *JournalSuite) requireProtoEqual(expected, actual proto.Message) {
+-	if !proto.Equal(expected, actual) {
+-		s.Require().Equal(expected, actual)
+-	}
++type journalTest struct {
++	jc *journalConfig
++	ds *fakedatastore.DataStore
+ }
+diff --git a/pkg/server/ca/manager/manager_test.go b/pkg/server/ca/manager/manager_test.go
+index 917f1497c..8c464eba2 100644
+--- a/pkg/server/ca/manager/manager_test.go
++++ b/pkg/server/ca/manager/manager_test.go
+@@ -23,6 +23,7 @@ import (
+ 	"github.com/spiffe/spire/pkg/server/ca"
+ 	"github.com/spiffe/spire/pkg/server/credtemplate"
+ 	"github.com/spiffe/spire/pkg/server/credvalidator"
++	"github.com/spiffe/spire/pkg/server/datastore"
+ 	"github.com/spiffe/spire/pkg/server/plugin/keymanager"
+ 	"github.com/spiffe/spire/pkg/server/plugin/notifier"
+ 	"github.com/spiffe/spire/pkg/server/plugin/upstreamauthority"
+@@ -39,6 +40,7 @@ import (
+ 	"github.com/stretchr/testify/assert"
+ 	"github.com/stretchr/testify/require"
+ 	"google.golang.org/grpc/codes"
++	"google.golang.org/protobuf/proto"
+ )
+ 
+ const (
+@@ -60,7 +62,7 @@ func TestGetCurrentJWTKeySlot(t *testing.T) {
+ 	t.Run("no authority created", func(t *testing.T) {
+ 		currentSlot := test.m.GetCurrentJWTKeySlot()
+ 
+-		slot := currentSlot.(*JwtKeySlot)
++		slot := currentSlot.(*jwtKeySlot)
+ 
+ 		require.True(t, slot.IsEmpty())
+ 		require.Empty(t, slot.issuedAt)
+@@ -75,7 +77,7 @@ func TestGetCurrentJWTKeySlot(t *testing.T) {
+ 		require.NoError(t, test.m.PrepareJWTKey(ctx))
+ 
+ 		currentSlot := test.m.GetCurrentJWTKeySlot()
+-		slot := currentSlot.(*JwtKeySlot)
++		slot := currentSlot.(*jwtKeySlot)
+ 		require.NotNil(t, slot.jwtKey)
+ 		require.NotEmpty(t, slot.authorityID)
+ 		require.Equal(t, expectIssuedAt, slot.issuedAt)
+@@ -91,7 +93,7 @@ func TestGetNextJWTKeySlot(t *testing.T) {
+ 
+ 	t.Run("no next created", func(t *testing.T) {
+ 		nextSlot := test.m.GetNextJWTKeySlot()
+-		slot := nextSlot.(*JwtKeySlot)
++		slot := nextSlot.(*jwtKeySlot)
+ 
+ 		require.Nil(t, slot.jwtKey)
+ 		require.Empty(t, slot.issuedAt)
+@@ -106,7 +108,7 @@ func TestGetNextJWTKeySlot(t *testing.T) {
+ 		require.NoError(t, test.m.PrepareJWTKey(ctx))
+ 
+ 		nextSlot := test.m.GetNextJWTKeySlot()
+-		slot := nextSlot.(*JwtKeySlot)
++		slot := nextSlot.(*jwtKeySlot)
+ 		require.NotNil(t, slot.jwtKey)
+ 		require.NotEmpty(t, slot.authorityID)
+ 		require.Equal(t, expectIssuedAt, slot.issuedAt)
+@@ -123,7 +125,7 @@ func TestGetCurrentX509CASlot(t *testing.T) {
+ 	t.Run("no authority created", func(t *testing.T) {
+ 		currentSlot := test.m.GetCurrentX509CASlot()
+ 
+-		slot := currentSlot.(*X509CASlot)
++		slot := currentSlot.(*x509CASlot)
+ 		require.Nil(t, slot.x509CA)
+ 		require.Empty(t, slot.authorityID)
+ 		require.Empty(t, slot.issuedAt)
+@@ -138,7 +140,7 @@ func TestGetCurrentX509CASlot(t *testing.T) {
+ 		require.NoError(t, test.m.PrepareX509CA(ctx))
+ 
+ 		currentSlot := test.m.GetCurrentX509CASlot()
+-		slot := currentSlot.(*X509CASlot)
++		slot := currentSlot.(*x509CASlot)
+ 		require.NotNil(t, slot.x509CA)
+ 		require.NotEmpty(t, slot.authorityID)
+ 		require.NotNil(t, slot.publicKey)
+@@ -155,7 +157,7 @@ func TestGetNextX509CASlot(t *testing.T) {
+ 
+ 	t.Run("no next created", func(t *testing.T) {
+ 		nextSlot := test.m.GetNextX509CASlot()
+-		slot := nextSlot.(*X509CASlot)
++		slot := nextSlot.(*x509CASlot)
+ 
+ 		require.Nil(t, slot.x509CA)
+ 		require.Empty(t, slot.authorityID)
+@@ -171,7 +173,7 @@ func TestGetNextX509CASlot(t *testing.T) {
+ 		require.NoError(t, test.m.PrepareX509CA(ctx))
+ 
+ 		nextSlot := test.m.GetNextX509CASlot()
+-		slot := nextSlot.(*X509CASlot)
++		slot := nextSlot.(*x509CASlot)
+ 		require.NotNil(t, slot.x509CA)
+ 		require.NotEmpty(t, slot.authorityID)
+ 		require.NotNil(t, slot.publicKey)
+@@ -192,9 +194,9 @@ func TestPersistence(t *testing.T) {
+ 
+ 	// Prepare authority and activate authority
+ 	require.NoError(t, test.m.PrepareJWTKey(ctx))
+-	test.m.ActivateJWTKey()
++	test.m.ActivateJWTKey(ctx)
+ 	require.NoError(t, test.m.PrepareX509CA(ctx))
+-	test.m.ActivateX509CA()
++	test.m.ActivateX509CA(ctx)
+ 
+ 	firstX509CA, firstJWTKey := test.currentX509CA(), test.currentJWTKey()
+ 
+@@ -418,7 +420,7 @@ func TestX509CARotation(t *testing.T) {
+ 
+ 	// Rotate "next" should become "current" and
+ 	// "next" should be reset.
+-	test.m.RotateX509CA()
++	test.m.RotateX509CA(ctx)
+ 	test.requireX509CAEqual(t, second, test.currentX509CA())
+ 	require.Equal(t, journal.Status_ACTIVE, test.currentX509CAStatus())
+ 	assert.Nil(t, test.nextX509CA())
+@@ -440,7 +442,7 @@ func TestX509CARotation(t *testing.T) {
+ 
+ 	// Rotate again, "next" should become "current" and
+ 	// "next" should be reset.
+-	test.m.RotateX509CA()
++	test.m.RotateX509CA(ctx)
+ 	test.requireX509CAEqual(t, third, test.currentX509CA())
+ 	require.Equal(t, journal.Status_ACTIVE, test.currentX509CAStatus())
+ 	assert.Nil(t, test.nextX509CA())
+@@ -458,7 +460,7 @@ func TestX509CARotationMetric(t *testing.T) {
+ 
+ 	// reset the metrics rotate CA to activate mark
+ 	test.metrics.Reset()
+-	test.m.RotateX509CA()
++	test.m.RotateX509CA(ctx)
+ 
+ 	// create expected metrics with ttl from certificate
+ 	expected := fakemetrics.New()
+@@ -507,7 +509,7 @@ func TestJWTKeyRotation(t *testing.T) {
+ 
+ 	// rotate, "next" should become "current" and
+ 	// "next" should be reset.
+-	test.m.RotateJWTKey()
++	test.m.RotateJWTKey(ctx)
+ 	test.requireJWTKeyEqual(t, second, test.currentJWTKey())
+ 	require.Equal(t, journal.Status_ACTIVE, test.currentJWTKeyStatus())
+ 	assert.Nil(t, test.nextJWTKey())
+@@ -529,7 +531,7 @@ func TestJWTKeyRotation(t *testing.T) {
+ 
+ 	// rotate again. "next" should become "current" and
+ 	// "next" should be reset.
+-	test.m.RotateJWTKey()
++	test.m.RotateJWTKey(ctx)
+ 	test.requireJWTKeyEqual(t, third, test.currentJWTKey())
+ 	require.Equal(t, journal.Status_ACTIVE, test.currentJWTKeyStatus())
+ 	assert.Nil(t, test.nextJWTKey())
+@@ -578,7 +580,7 @@ func TestPruneBundle(t *testing.T) {
+ 
+ 	// advance beyond the safety threshold of the first, prune, and assert that
+ 	// the first has been pruned
+-	test.addTimeAndPrune(safetyThreshold)
++	test.addTimeAndPrune(safetyThresholdBundle)
+ 	test.requireBundleRootCAs(ctx, t, secondX509CA.Certificate)
+ 	test.requireBundleJWTKeys(ctx, t, secondJWTKey)
+ 
+@@ -587,12 +589,138 @@ func TestPruneBundle(t *testing.T) {
+ 
+ 	// advance beyond the second expiration time, prune, and assert nothing
+ 	// changes because we can't prune out the whole bundle.
+-	test.clock.Set(secondExpiresTime.Add(time.Minute + safetyThreshold))
++	test.clock.Set(secondExpiresTime.Add(time.Minute + safetyThresholdBundle))
+ 	require.EqualError(t, test.m.PruneBundle(context.Background()), "unable to prune bundle: rpc error: code = Unknown desc = prune failed: would prune all certificates")
+ 	test.requireBundleRootCAs(ctx, t, secondX509CA.Certificate)
+ 	test.requireBundleJWTKeys(ctx, t, secondJWTKey)
+ }
+ 
++func TestPruneCAJournals(t *testing.T) {
++	test := setupTest(t)
++	test.initSelfSignedManager()
++
++	type testJournal struct {
++		Journal
++		shouldBePruned bool
++	}
++
++	timeNow := test.clock.Now()
++	now := timeNow.Unix()
++	tomorrow := timeNow.Add(time.Hour * 24).Unix()
++	beforeThreshold := timeNow.Add(-safetyThresholdCAJournals).Add(-time.Minute).Unix()
++
++	jc := &journalConfig{
++		cat: test.cat,
++		log: test.log,
++	}
++	testCases := []struct {
++		name         string
++		entries      *journal.Entries
++		testJournals []*testJournal
++	}{
++		{
++			name: "no journals with CAs expired before the threshold - no journals to be pruned",
++			testJournals: []*testJournal{
++				{
++					Journal: Journal{
++						config: jc,
++						entries: &journal.Entries{
++							X509CAs: []*journal.X509CAEntry{{NotAfter: now}, {NotAfter: tomorrow}},
++							JwtKeys: []*journal.JWTKeyEntry{{NotAfter: now}, {NotAfter: tomorrow}},
++						},
++					},
++				},
++				{
++					Journal: Journal{
++						config: jc,
++						entries: &journal.Entries{
++							X509CAs: []*journal.X509CAEntry{{NotAfter: now}, {NotAfter: tomorrow}},
++							JwtKeys: []*journal.JWTKeyEntry{{NotAfter: now}, {NotAfter: tomorrow}},
++						},
++					},
++				},
++			},
++		},
++		{
++			name: "some journals with CAs expired before the threshold, but not all - no journals to be pruned",
++			testJournals: []*testJournal{
++				{
++					Journal: Journal{
++						config: jc,
++						entries: &journal.Entries{
++							X509CAs: []*journal.X509CAEntry{{NotAfter: tomorrow}, {NotAfter: beforeThreshold}},
++							JwtKeys: []*journal.JWTKeyEntry{{NotAfter: beforeThreshold}, {NotAfter: tomorrow}},
++						},
++					},
++				},
++				{
++					Journal: Journal{
++						config: jc,
++						entries: &journal.Entries{
++							X509CAs: []*journal.X509CAEntry{{NotAfter: tomorrow}, {NotAfter: beforeThreshold}},
++							JwtKeys: []*journal.JWTKeyEntry{{NotAfter: beforeThreshold}, {NotAfter: tomorrow}},
++						},
++					},
++				},
++			},
++		},
++		{
++			name: "all CAs expired before the threshold in a journal - one journal to be pruned",
++			testJournals: []*testJournal{
++				{
++					shouldBePruned: true,
++					Journal: Journal{
++						config: jc,
++						entries: &journal.Entries{
++							X509CAs: []*journal.X509CAEntry{{NotAfter: beforeThreshold}, {NotAfter: beforeThreshold}},
++							JwtKeys: []*journal.JWTKeyEntry{{NotAfter: beforeThreshold}, {NotAfter: beforeThreshold}},
++						},
++					},
++				},
++				{
++					Journal: Journal{
++						config: jc,
++						entries: &journal.Entries{
++							X509CAs: []*journal.X509CAEntry{{NotAfter: tomorrow}, {NotAfter: beforeThreshold}},
++							JwtKeys: []*journal.JWTKeyEntry{{NotAfter: beforeThreshold}, {NotAfter: tomorrow}},
++						},
++					},
++				},
++			},
++		},
++	}
++
++	var expectedCAJournals []*datastore.CAJournal
++	for _, testCase := range testCases {
++		testCase := testCase
++		expectedCAJournals = []*datastore.CAJournal{}
++		t.Run(testCase.name, func(t *testing.T) {
++			// Have a fresh data store in each test case
++			test.ds = fakedatastore.New(t)
++			test.m.c.Catalog.(*fakeservercatalog.Catalog).SetDataStore(test.ds)
++
++			for _, j := range testCase.testJournals {
++				entriesBytes, err := proto.Marshal(j.entries)
++				require.NoError(t, err)
++				caJournal, err := test.ds.SetCAJournal(ctx, &datastore.CAJournal{
++					ActiveX509AuthorityID: "",
++					Data:                  entriesBytes,
++				})
++				require.NoError(t, err)
++
++				if !j.shouldBePruned {
++					expectedCAJournals = append(expectedCAJournals, caJournal)
++				}
++			}
++
++			require.NoError(t, test.m.PruneCAJournals(ctx))
++			caJournals, err := test.ds.ListCAJournalsForTesting(ctx)
++			require.NoError(t, err)
++			require.ElementsMatch(t, expectedCAJournals, caJournals)
++		})
++	}
++}
++
+ func TestRunNotifiesBundleLoaded(t *testing.T) {
+ 	test := setupTest(t)
+ 	test.initAndActivateSelfSignedManager(context.Background())
+@@ -805,9 +933,9 @@ func TestAlternateKeyTypes(t *testing.T) {
+ 
+ 			// Prepare and activate a bundle
+ 			require.NoError(t, test.m.PrepareJWTKey(ctx))
+-			test.m.ActivateJWTKey()
++			test.m.ActivateJWTKey(ctx)
+ 			require.NoError(t, test.m.PrepareX509CA(ctx))
+-			test.m.activateX509CA()
++			test.m.activateX509CA(ctx)
+ 
+ 			testCase.checkX509CA(t, test.currentX509CA().Signer)
+ 			testCase.checkJWTKey(t, test.currentJWTKey().Signer)
+@@ -889,9 +1017,9 @@ func (m *managerTest) initAndActivateSelfSignedManager(ctx context.Context) {
+ 	require.NoError(m.t, err)
+ 
+ 	require.NoError(m.t, manager.PrepareJWTKey(ctx))
+-	manager.ActivateJWTKey()
++	manager.ActivateJWTKey(ctx)
+ 	require.NoError(m.t, manager.PrepareX509CA(ctx))
+-	manager.ActivateX509CA()
++	manager.ActivateX509CA(ctx)
+ 
+ 	m.m = manager
+ }
+@@ -914,9 +1042,9 @@ func (m *managerTest) initAndActivateUpstreamSignedManager(ctx context.Context,
+ 	m.initUpstreamSignedManager(upstreamAuthority)
+ 
+ 	require.NoError(m.t, m.m.PrepareJWTKey(ctx))
+-	m.m.ActivateJWTKey()
++	m.m.ActivateJWTKey(ctx)
+ 	require.NoError(m.t, m.m.PrepareX509CA(ctx))
+-	m.m.ActivateX509CA()
++	m.m.ActivateX509CA(ctx)
+ }
+ 
+ func (m *managerTest) selfSignedConfig() Config {
+@@ -1088,7 +1216,13 @@ func (m *managerTest) addTimeAndPrune(d time.Duration) {
+ }
+ 
+ func (m *managerTest) wipeJournal(t *testing.T) {
++	// TODO: journal saved on this will no longer be supported in v1.10. Remove
++	// this.
+ 	require.NoError(t, os.Remove(filepath.Join(m.m.c.Dir, "journal.pem")))
++
++	// Have a clean datastore.
++	m.ds = fakedatastore.New(t)
++	m.cat.SetDataStore(m.ds)
+ }
+ 
+ func (m *managerTest) waitForBundleUpdatedNotification(ctx context.Context, ch <-chan *common.Bundle) {
+diff --git a/pkg/server/ca/manager/slot_test.go b/pkg/server/ca/manager/slot_test.go
+index 1c273792a..0a77dcd83 100644
+--- a/pkg/server/ca/manager/slot_test.go
++++ b/pkg/server/ca/manager/slot_test.go
+@@ -30,7 +30,7 @@ func TestX509CASlotShouldPrepareNext(t *testing.T) {
+ 	clock := clock.NewMock()
+ 	now := clock.Now()
+ 
+-	slot := &X509CASlot{
++	slot := &x509CASlot{
+ 		id:       "A",
+ 		issuedAt: clock.Now(),
+ 		x509CA:   nil,
+@@ -60,7 +60,7 @@ func TestX509CASlotShouldActivateNext(t *testing.T) {
+ 	clock := clock.NewMock()
+ 	now := clock.Now()
+ 
+-	slot := &X509CASlot{
++	slot := &x509CASlot{
+ 		id:       "A",
+ 		issuedAt: now,
+ 		x509CA:   nil,
+@@ -90,7 +90,7 @@ func TestJWTKeySlotShouldPrepareNext(t *testing.T) {
+ 	clock := clock.NewMock()
+ 	now := clock.Now()
+ 
+-	slot := &JwtKeySlot{
++	slot := &jwtKeySlot{
+ 		id:       "A",
+ 		issuedAt: now,
+ 		jwtKey:   nil,
+@@ -116,7 +116,7 @@ func TestJWTKeySlotShouldPrepareNext(t *testing.T) {
+ func TestJWTKeySlotShouldActivateNext(t *testing.T) {
+ 	now := time.Now()
+ 
+-	slot := &JwtKeySlot{
++	slot := &jwtKeySlot{
+ 		id:       "A",
+ 		issuedAt: now,
+ 		jwtKey:   nil,
+@@ -199,7 +199,7 @@ func TestJournalLoad(t *testing.T) {
+ 
+ 	for _, tt := range []struct {
+ 		name        string
+-		entries     *JournalEntries
++		entries     *journal.Entries
+ 		expectSlots map[SlotPosition]Slot
+ 		expectError string
+ 		expectLogs  []spiretest.LogEntry
+@@ -208,10 +208,10 @@ func TestJournalLoad(t *testing.T) {
+ 			name:    "Journal has no entries",
+ 			entries: &journal.Entries{},
+ 			expectSlots: map[SlotPosition]Slot{
+-				CurrentX509CASlot: &X509CASlot{id: "A"},
+-				NextX509CASlot:    &X509CASlot{id: "B"},
+-				CurrentJWTKeySlot: &JwtKeySlot{id: "A"},
+-				NextJWTKeySlot:    &JwtKeySlot{id: "B"},
++				CurrentX509CASlot: &x509CASlot{id: "A"},
++				NextX509CASlot:    &x509CASlot{id: "B"},
++				CurrentJWTKeySlot: &jwtKeySlot{id: "A"},
++				NextJWTKeySlot:    &jwtKeySlot{id: "B"},
+ 			},
+ 			expectLogs: []spiretest.LogEntry{
+ 				{
+@@ -226,7 +226,7 @@ func TestJournalLoad(t *testing.T) {
+ 		},
+ 		{
+ 			name: "stored file has a single entry",
+-			entries: &JournalEntries{
++			entries: &journal.Entries{
+ 				X509CAs: []*journal.X509CAEntry{
+ 					{
+ 						SlotId:      "B",
+@@ -245,7 +245,7 @@ func TestJournalLoad(t *testing.T) {
+ 				},
+ 			},
+ 			expectSlots: map[SlotPosition]Slot{
+-				CurrentX509CASlot: &X509CASlot{
++				CurrentX509CASlot: &x509CASlot{
+ 					id:       "B",
+ 					issuedAt: secondIssuedAt,
+ 					status:   journal.Status_UNKNOWN,
+@@ -257,8 +257,8 @@ func TestJournalLoad(t *testing.T) {
+ 					publicKey:   x509KeyB.Public(),
+ 					notAfter:    x509RootB.NotAfter,
+ 				},
+-				NextX509CASlot: &X509CASlot{id: "A"},
+-				CurrentJWTKeySlot: &JwtKeySlot{
++				NextX509CASlot: &x509CASlot{id: "A"},
++				CurrentJWTKeySlot: &jwtKeySlot{
+ 					id:       "B",
+ 					issuedAt: secondIssuedAt,
+ 					status:   journal.Status_UNKNOWN,
+@@ -270,7 +270,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "",
+ 					notAfter:    notAfter,
+ 				},
+-				NextJWTKeySlot: &JwtKeySlot{id: "A"},
++				NextJWTKeySlot: &jwtKeySlot{id: "A"},
+ 			},
+ 			expectLogs: []spiretest.LogEntry{
+ 				{
+@@ -285,7 +285,7 @@ func TestJournalLoad(t *testing.T) {
+ 		},
+ 		{
+ 			name: "Stored entries has unknown status",
+-			entries: &JournalEntries{
++			entries: &journal.Entries{
+ 				X509CAs: []*journal.X509CAEntry{
+ 					{
+ 						SlotId:      "A",
+@@ -334,7 +334,7 @@ func TestJournalLoad(t *testing.T) {
+ 				},
+ 			},
+ 			expectSlots: map[SlotPosition]Slot{
+-				CurrentX509CASlot: &X509CASlot{
++				CurrentX509CASlot: &x509CASlot{
+ 					id:       "B",
+ 					issuedAt: secondIssuedAt,
+ 					status:   journal.Status_UNKNOWN,
+@@ -346,7 +346,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "2",
+ 					notAfter:    x509RootB.NotAfter,
+ 				},
+-				NextX509CASlot: &X509CASlot{
++				NextX509CASlot: &x509CASlot{
+ 					id:       "A",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_UNKNOWN,
+@@ -358,7 +358,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "1",
+ 					notAfter:    x509RootA.NotAfter,
+ 				},
+-				CurrentJWTKeySlot: &JwtKeySlot{
++				CurrentJWTKeySlot: &jwtKeySlot{
+ 					id:       "B",
+ 					issuedAt: secondIssuedAt,
+ 					status:   journal.Status_UNKNOWN,
+@@ -370,7 +370,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "b",
+ 					notAfter:    notAfter,
+ 				},
+-				NextJWTKeySlot: &JwtKeySlot{
++				NextJWTKeySlot: &jwtKeySlot{
+ 					id:       "A",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_UNKNOWN,
+@@ -396,7 +396,7 @@ func TestJournalLoad(t *testing.T) {
+ 		},
+ 		{
+ 			name: "Stored entry has a single Prepared entry",
+-			entries: &JournalEntries{
++			entries: &journal.Entries{
+ 				X509CAs: []*journal.X509CAEntry{
+ 					{
+ 						SlotId:      "A",
+@@ -419,7 +419,7 @@ func TestJournalLoad(t *testing.T) {
+ 				},
+ 			},
+ 			expectSlots: map[SlotPosition]Slot{
+-				CurrentX509CASlot: &X509CASlot{
++				CurrentX509CASlot: &x509CASlot{
+ 					id:       "A",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_PREPARED,
+@@ -431,10 +431,10 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "1",
+ 					notAfter:    x509RootA.NotAfter,
+ 				},
+-				NextX509CASlot: &X509CASlot{
++				NextX509CASlot: &x509CASlot{
+ 					id: "B",
+ 				},
+-				CurrentJWTKeySlot: &JwtKeySlot{
++				CurrentJWTKeySlot: &jwtKeySlot{
+ 					id:       "A",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_PREPARED,
+@@ -446,7 +446,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "a",
+ 					notAfter:    notAfter,
+ 				},
+-				NextJWTKeySlot: &JwtKeySlot{
++				NextJWTKeySlot: &jwtKeySlot{
+ 					id: "B",
+ 				},
+ 			},
+@@ -463,7 +463,7 @@ func TestJournalLoad(t *testing.T) {
+ 		},
+ 		{
+ 			name: "Stored entries has old and active",
+-			entries: &JournalEntries{
++			entries: &journal.Entries{
+ 				X509CAs: []*journal.X509CAEntry{
+ 					{
+ 						SlotId:      "A",
+@@ -518,7 +518,7 @@ func TestJournalLoad(t *testing.T) {
+ 				},
+ 			},
+ 			expectSlots: map[SlotPosition]Slot{
+-				CurrentX509CASlot: &X509CASlot{
++				CurrentX509CASlot: &x509CASlot{
+ 					id:       "A",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_ACTIVE,
+@@ -530,7 +530,7 @@ func TestJournalLoad(t *testing.T) {
+ 					publicKey:   x509KeyA.Public(),
+ 					notAfter:    x509RootA.NotAfter,
+ 				},
+-				NextX509CASlot: &X509CASlot{
++				NextX509CASlot: &x509CASlot{
+ 					id:       "B",
+ 					issuedAt: secondIssuedAt,
+ 					status:   journal.Status_OLD,
+@@ -542,7 +542,7 @@ func TestJournalLoad(t *testing.T) {
+ 					publicKey:   x509KeyB.Public(),
+ 					notAfter:    x509RootB.NotAfter,
+ 				},
+-				CurrentJWTKeySlot: &JwtKeySlot{
++				CurrentJWTKeySlot: &jwtKeySlot{
+ 					id:       "A",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_ACTIVE,
+@@ -554,7 +554,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "a",
+ 					notAfter:    notAfter,
+ 				},
+-				NextJWTKeySlot: &JwtKeySlot{
++				NextJWTKeySlot: &jwtKeySlot{
+ 					id:       "B",
+ 					issuedAt: secondIssuedAt,
+ 					status:   journal.Status_OLD,
+@@ -580,7 +580,7 @@ func TestJournalLoad(t *testing.T) {
+ 		},
+ 		{
+ 			name: "There are another entries before Active entry",
+-			entries: &JournalEntries{
++			entries: &journal.Entries{
+ 				X509CAs: []*journal.X509CAEntry{
+ 					// This can happens when force rotation is executed
+ 					{
+@@ -637,7 +637,7 @@ func TestJournalLoad(t *testing.T) {
+ 				},
+ 			},
+ 			expectSlots: map[SlotPosition]Slot{
+-				CurrentX509CASlot: &X509CASlot{
++				CurrentX509CASlot: &x509CASlot{
+ 					id:       "A",
+ 					issuedAt: firstIssuedAt,
+ 					status:   journal.Status_ACTIVE,
+@@ -649,7 +649,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "3",
+ 					notAfter:    x509RootA.NotAfter,
+ 				},
+-				NextX509CASlot: &X509CASlot{
++				NextX509CASlot: &x509CASlot{
+ 					id:       "B",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_PREPARED,
+@@ -661,7 +661,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "1",
+ 					notAfter:    x509RootB.NotAfter,
+ 				},
+-				CurrentJWTKeySlot: &JwtKeySlot{
++				CurrentJWTKeySlot: &jwtKeySlot{
+ 					id:       "A",
+ 					issuedAt: firstIssuedAt,
+ 					status:   journal.Status_ACTIVE,
+@@ -673,7 +673,7 @@ func TestJournalLoad(t *testing.T) {
+ 					authorityID: "c",
+ 					notAfter:    notAfter,
+ 				},
+-				NextJWTKeySlot: &JwtKeySlot{
++				NextJWTKeySlot: &jwtKeySlot{
+ 					id:       "B",
+ 					issuedAt: thirdIssuedAt,
+ 					status:   journal.Status_PREPARED,
+@@ -774,7 +774,14 @@ func TestJournalLoad(t *testing.T) {
+ 	} {
+ 		t.Run(tt.name, func(t *testing.T) {
+ 			loghook.Reset()
+-			err = saveJournalEntries(journalFile, tt.entries)
++			journal := new(Journal)
++			journal.config = &journalConfig{
++				cat:      cat,
++				filePath: journalFile,
++				log:      log,
++			}
++			journal.setEntries(tt.entries)
++			err = journal.save(ctx)
+ 			require.NoError(t, err)
+ 
+ 			loader := &SlotLoader{
+@@ -784,8 +791,8 @@ func TestJournalLoad(t *testing.T) {
+ 				Catalog:     cat,
+ 			}
+ 
+-			loadedJournal, slots, err := loader.Load(context.Background())
+-			spiretest.AssertLogs(t, loghook.AllEntries(), tt.expectLogs)
++			loadedJournal, slots, err := loader.load(ctx)
++			spiretest.AssertLastLogs(t, loghook.AllEntries(), tt.expectLogs)
+ 			if tt.expectError != "" {
+ 				spiretest.AssertErrorPrefix(t, err, tt.expectError)
+ 				assert.Nil(t, loadedJournal)
+diff --git a/pkg/server/ca/rotator/rotator_test.go b/pkg/server/ca/rotator/rotator_test.go
+index 61df55c18..b8fb1bb6d 100644
+--- a/pkg/server/ca/rotator/rotator_test.go
++++ b/pkg/server/ca/rotator/rotator_test.go
+@@ -185,12 +185,6 @@ func TestRunJWTKeyRotation(t *testing.T) {
+ 	defer cancel()
+ 	test := setupTest()
+ 
+-	now := test.clock.Now()
+-	test.fakeCAManager.currentJWTKeySlot = createSlot("jwt-a", now, true)
+-	test.fakeCAManager.currentX509CASlot = createSlot("x509-a", now, true)
+-	test.fakeCAManager.nextJWTKeySlot = createSlot("jwt-b", now, false)
+-	test.fakeCAManager.nextX509CASlot = createSlot("x509-b", now, false)
+-
+ 	go func() {
+ 		err := test.rotator.Run(ctx)
+ 		assert.NoError(t, err)
+@@ -243,12 +237,6 @@ func TestRunX509CARotation(t *testing.T) {
+ 	defer cancel()
+ 	test := setupTest()
+ 
+-	now := test.clock.Now()
+-	test.fakeCAManager.currentJWTKeySlot = createSlot("jwt-a", now, true)
+-	test.fakeCAManager.currentX509CASlot = createSlot("x509-a", now, true)
+-	test.fakeCAManager.nextJWTKeySlot = createSlot("jwt-b", now, false)
+-	test.fakeCAManager.nextX509CASlot = createSlot("x509-b", now, false)
+-
+ 	go func() {
+ 		err := test.rotator.Run(ctx)
+ 		assert.NoError(t, err)
+@@ -296,24 +284,18 @@ func TestRunX509CARotation(t *testing.T) {
+ 	require.True(t, test.fakeCAManager.nextX509CASlot.IsEmpty())
+ }
+ 
+-func TestPrune(t *testing.T) {
++func TestPruneBundle(t *testing.T) {
+ 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+ 	defer cancel()
+ 	test := setupTest()
+ 
+-	now := test.clock.Now()
+-	test.fakeCAManager.currentJWTKeySlot = createSlot("jwt-a", now, true)
+-	test.fakeCAManager.currentX509CASlot = createSlot("x509-a", now, true)
+-	test.fakeCAManager.nextJWTKeySlot = createSlot("jwt-b", now, false)
+-	test.fakeCAManager.nextX509CASlot = createSlot("x509-b", now, false)
+-
+ 	go func() {
+ 		err := test.rotator.Run(ctx)
+ 		assert.NoError(t, err)
+ 	}()
+ 
+ 	test.clock.Add(time.Minute + time.Second)
+-	require.False(t, test.fakeCAManager.pruneWasCalled)
++	require.False(t, test.fakeCAManager.pruneBundleWasCalled)
+ 
+ 	currentJWTKey := test.fakeCAManager.GetCurrentJWTKeySlot()
+ 	require.Equal(t, "jwt-a", currentJWTKey.KmKeyID())
+@@ -331,11 +313,31 @@ func TestPrune(t *testing.T) {
+ 	require.Equal(t, "x509-b", nextX509CA.KmKeyID())
+ 	require.True(t, nextX509CA.IsEmpty())
+ 
+-	// Prune was called successfully
+-	test.clock.Add(pruneInterval)
+-	test.fakeCAManager.waitPruneCalled(ctx, t)
++	// Prune bundle was called successfully
++	test.clock.Add(pruneBundleInterval)
++	test.fakeCAManager.waitPruneBundleCalled(ctx, t)
++
++	require.True(t, test.fakeCAManager.pruneBundleWasCalled)
++}
++
++func TestPruneCAJournals(t *testing.T) {
++	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
++	defer cancel()
++	test := setupTest()
++
++	go func() {
++		err := test.rotator.Run(ctx)
++		assert.NoError(t, err)
++	}()
++
++	test.clock.Add(time.Minute + time.Second)
++	require.False(t, test.fakeCAManager.pruneCAJournalsWasCalled)
++
++	// Prune CA journals was called successfully
++	test.clock.Add(pruneCAJournalsInterval)
++	test.fakeCAManager.waitPruneCAJournalsCalled(ctx, t)
+ 
+-	require.True(t, test.fakeCAManager.pruneWasCalled)
++	require.True(t, test.fakeCAManager.pruneCAJournalsWasCalled)
+ }
+ 
+ type rotationTest struct {
+@@ -353,12 +355,19 @@ func setupTest() *rotationTest {
+ 	fManager := &fakeCAManager{
+ 		clk: clock,
+ 
+-		x509CACh: make(chan struct{}, 1),
+-		jwtKeyCh: make(chan struct{}, 1),
+-		pruneCh:  make(chan struct{}, 1),
++		x509CACh:          make(chan struct{}, 1),
++		jwtKeyCh:          make(chan struct{}, 1),
++		pruneBundleCh:     make(chan struct{}, 1),
++		pruneCAJournalsCh: make(chan struct{}, 1),
+ 	}
+ 	fakeHealthChecker := fakehealthchecker.New()
+ 
++	now := clock.Now()
++	fManager.currentJWTKeySlot = createSlot("jwt-a", now, true)
++	fManager.currentX509CASlot = createSlot("x509-a", now, true)
++	fManager.nextJWTKeySlot = createSlot("jwt-b", now, false)
++	fManager.nextX509CASlot = createSlot("x509-b", now, false)
++
+ 	rotator := NewRotator(Config{
+ 		Manager:       fManager,
+ 		Log:           log,
+@@ -391,8 +400,10 @@ type fakeCAManager struct {
+ 	x509CACh chan struct{}
+ 	jwtKeyCh chan struct{}
+ 
+-	pruneWasCalled bool
+-	pruneCh        chan struct{}
++	pruneBundleWasCalled     bool
++	pruneBundleCh            chan struct{}
++	pruneCAJournalsCh        chan struct{}
++	pruneCAJournalsWasCalled bool
+ }
+ 
+ func (f *fakeCAManager) NotifyBundleLoaded(context.Context) error {
+@@ -434,13 +445,13 @@ func (f *fakeCAManager) PrepareX509CA(context.Context) error {
+ 	return nil
+ }
+ 
+-func (f *fakeCAManager) ActivateX509CA() {
++func (f *fakeCAManager) ActivateX509CA(context.Context) {
+ 	f.cleanX509CACh()
+ 	f.currentX509CASlot.isActive = true
+ 	f.x509CACh <- struct{}{}
+ }
+ 
+-func (f *fakeCAManager) RotateX509CA() {
++func (f *fakeCAManager) RotateX509CA(context.Context) {
+ 	f.cleanX509CACh()
+ 	currentID := f.currentX509CASlot.keyID
+ 
+@@ -478,13 +489,13 @@ func (f *fakeCAManager) PrepareJWTKey(context.Context) error {
+ 	return nil
+ }
+ 
+-func (f *fakeCAManager) ActivateJWTKey() {
++func (f *fakeCAManager) ActivateJWTKey(context.Context) {
+ 	f.cleanJWTKeyCh()
+ 	f.currentJWTKeySlot.isActive = true
+ 	f.jwtKeyCh <- struct{}{}
+ }
+ 
+-func (f *fakeCAManager) RotateJWTKey() {
++func (f *fakeCAManager) RotateJWTKey(context.Context) {
+ 	f.cleanJWTKeyCh()
+ 	currentID := f.currentJWTKeySlot.keyID
+ 
+@@ -497,9 +508,18 @@ func (f *fakeCAManager) RotateJWTKey() {
+ 
+ func (f *fakeCAManager) PruneBundle(context.Context) error {
+ 	defer func() {
+-		f.pruneCh <- struct{}{}
++		f.pruneBundleCh <- struct{}{}
+ 	}()
+-	f.pruneWasCalled = true
++	f.pruneBundleWasCalled = true
++
++	return nil
++}
++
++func (f *fakeCAManager) PruneCAJournals(context.Context) error {
++	defer func() {
++		f.pruneCAJournalsCh <- struct{}{}
++	}()
++	f.pruneCAJournalsWasCalled = true
+ 
+ 	return nil
+ }
+@@ -534,11 +554,19 @@ func (f *fakeCAManager) waitJWTKeyUpdate(ctx context.Context, t *testing.T) {
+ 	}
+ }
+ 
+-func (f *fakeCAManager) waitPruneCalled(ctx context.Context, t *testing.T) {
++func (f *fakeCAManager) waitPruneBundleCalled(ctx context.Context, t *testing.T) {
++	select {
++	case <-ctx.Done():
++		assert.Fail(t, "context finished")
++	case <-f.pruneBundleCh:
++	}
++}
++
++func (f *fakeCAManager) waitPruneCAJournalsCalled(ctx context.Context, t *testing.T) {
+ 	select {
+ 	case <-ctx.Done():
+ 		assert.Fail(t, "context finished")
+-	case <-f.pruneCh:
++	case <-f.pruneCAJournalsCh:
+ 	}
+ }
+ 
+diff --git a/pkg/server/datastore/sqlstore/sqlstore_test.go b/pkg/server/datastore/sqlstore/sqlstore_test.go
+index e8dd8120b..1b26d614d 100644
+--- a/pkg/server/datastore/sqlstore/sqlstore_test.go
++++ b/pkg/server/datastore/sqlstore/sqlstore_test.go
+@@ -28,6 +28,7 @@ import (
+ 	"github.com/spiffe/spire/pkg/common/telemetry"
+ 	"github.com/spiffe/spire/pkg/common/util"
+ 	"github.com/spiffe/spire/pkg/server/datastore"
++	"github.com/spiffe/spire/proto/private/server/journal"
+ 	"github.com/spiffe/spire/proto/spire/common"
+ 	"github.com/spiffe/spire/test/clock"
+ 	"github.com/spiffe/spire/test/spiretest"
+@@ -4876,6 +4877,145 @@ func (s *PluginSuite) TestBindVar() {
+ 	s.Require().Equal("SELECT whatever FROM foo WHERE x = $1 AND y = $2", bound)
+ }
+ 
++func (s *PluginSuite) TestSetCAJournal() {
++	testCases := []struct {
++		name      string
++		code      codes.Code
++		msg       string
++		caJournal *datastore.CAJournal
++	}{
++		{
++			name: "creating a new CA journal succeeds",
++			caJournal: &datastore.CAJournal{
++				Data:                  []byte("test data"),
++				ActiveX509AuthorityID: "x509-authority-id",
++			},
++		},
++		{
++			name: "nil CA journal",
++			code: codes.InvalidArgument,
++			msg:  "ca journal is required",
++		},
++		{
++			name: "try to update a non existing CA journal",
++			code: codes.NotFound,
++			msg:  "datastore-sql: record not found",
++			caJournal: &datastore.CAJournal{
++				ID:                    999,
++				Data:                  []byte("test data"),
++				ActiveX509AuthorityID: "x509-authority-id",
++			},
++		},
++	}
++
++	for _, tt := range testCases {
++		s.T().Run(tt.name, func(t *testing.T) {
++			caJournal, err := s.ds.SetCAJournal(ctx, tt.caJournal)
++			spiretest.RequireGRPCStatus(t, err, tt.code, tt.msg)
++			if tt.code != codes.OK {
++				require.Nil(t, caJournal)
++				return
++			}
++
++			assertCAJournal(t, tt.caJournal, caJournal)
++		})
++	}
++}
++
++func (s *PluginSuite) TestFetchCAJournal() {
++	testCases := []struct {
++		name                  string
++		activeX509AuthorityID string
++		code                  codes.Code
++		msg                   string
++		caJournal             *datastore.CAJournal
++	}{
++		{
++			name:                  "fetching an existent CA journal",
++			activeX509AuthorityID: "x509-authority-id",
++			caJournal: func() *datastore.CAJournal {
++				caJournal, err := s.ds.SetCAJournal(ctx, &datastore.CAJournal{
++					ActiveX509AuthorityID: "x509-authority-id",
++					Data:                  []byte("test data"),
++				})
++				s.Require().NoError(err)
++				return caJournal
++			}(),
++		},
++		{
++			name:                  "non-existent X509 authority ID returns nil",
++			activeX509AuthorityID: "non-existent-x509-authority-id",
++		},
++		{
++			name: "fetching without specifying an active authority ID fails",
++			code: codes.InvalidArgument,
++			msg:  "active X509 authority ID is required",
++		},
++	}
++
++	for _, tt := range testCases {
++		s.T().Run(tt.name, func(t *testing.T) {
++			caJournal, err := s.ds.FetchCAJournal(ctx, tt.activeX509AuthorityID)
++			spiretest.RequireGRPCStatus(t, err, tt.code, tt.msg)
++			if tt.code != codes.OK {
++				require.Nil(t, caJournal)
++				return
++			}
++
++			assert.Equal(t, tt.caJournal, caJournal)
++		})
++	}
++}
++
++func (s *PluginSuite) TestPruneCAJournal() {
++	now := time.Now()
++	t := now.Add(time.Hour)
++	entries := &journal.Entries{
++		X509CAs: []*journal.X509CAEntry{
++			{
++				NotAfter: t.Add(-time.Hour * 6).Unix(),
++			},
++		},
++		JwtKeys: []*journal.JWTKeyEntry{
++			{
++				NotAfter: t.Add(time.Hour * 6).Unix(),
++			},
++		},
++	}
++
++	entriesBytes, err := proto.Marshal(entries)
++	s.Require().NoError(err)
++
++	// Store CA journal in datastore
++	caJournal, err := s.ds.SetCAJournal(ctx, &datastore.CAJournal{
++		ActiveX509AuthorityID: "x509-authority-1",
++		Data:                  entriesBytes,
++	})
++	s.Require().NoError(err)
++
++	// Run a PruneCAJournals operation specifying a time that is before the
++	// expiration of all the authorities. The CA journal should not be pruned.
++	s.Require().NoError(s.ds.PruneCAJournals(ctx, t.Add(-time.Hour*12).Unix()))
++	caj, err := s.ds.FetchCAJournal(ctx, "x509-authority-1")
++	s.Require().NoError(err)
++	s.Require().Equal(caJournal, caj)
++
++	// Run a PruneCAJournals operation specifying a time that is before the
++	// expiration of one of the authorities, but not all the authorities.
++	// The CA journal should not be pruned.
++	s.Require().NoError(s.ds.PruneCAJournals(ctx, t.Unix()))
++	caj, err = s.ds.FetchCAJournal(ctx, "x509-authority-1")
++	s.Require().NoError(err)
++	s.Require().Equal(caJournal, caj)
++
++	// Run a PruneCAJournals operation specifying a time that is after the
++	// expiration of all the authorities. The CA journal should be pruned.
++	s.Require().NoError(s.ds.PruneCAJournals(ctx, t.Add(time.Hour*12).Unix()))
++	caj, err = s.ds.FetchCAJournal(ctx, "x509-authority-1")
++	s.Require().NoError(err)
++	s.Require().Nil(caj)
++}
++
+ func (s *PluginSuite) getTestDataFromJSONFile(filePath string, jsonValue any) {
+ 	entriesJSON, err := os.ReadFile(filePath)
+ 	s.Require().NoError(err)
+@@ -5185,3 +5325,12 @@ func assertFederationRelationship(t *testing.T, exp, actual *datastore.Federatio
+ 	assert.Equal(t, exp.TrustDomain, actual.TrustDomain)
+ 	spiretest.AssertProtoEqual(t, exp.TrustDomainBundle, actual.TrustDomainBundle)
+ }
++
++func assertCAJournal(t *testing.T, exp, actual *datastore.CAJournal) {
++	if exp == nil {
++		assert.Nil(t, actual)
++		return
++	}
++	assert.Equal(t, exp.ActiveX509AuthorityID, actual.ActiveX509AuthorityID)
++	assert.Equal(t, exp.Data, actual.Data)
++}
+diff --git a/test/fakes/fakedatastore/fakedatastore.go b/test/fakes/fakedatastore/fakedatastore.go
+index bcb68be7c..ee88729ce 100644
+--- a/test/fakes/fakedatastore/fakedatastore.go
++++ b/test/fakes/fakedatastore/fakedatastore.go
+@@ -383,6 +383,34 @@ func (s *DataStore) UpdateFederationRelationship(ctx context.Context, fr *datast
+ 	return s.ds.UpdateFederationRelationship(ctx, fr, mask)
+ }
+ 
++func (s *DataStore) FetchCAJournal(ctx context.Context, activeX509AuthorityID string) (*datastore.CAJournal, error) {
++	if err := s.getNextError(); err != nil {
++		return nil, err
++	}
++	return s.ds.FetchCAJournal(ctx, activeX509AuthorityID)
++}
++
++func (s *DataStore) ListCAJournalsForTesting(ctx context.Context) ([]*datastore.CAJournal, error) {
++	if err := s.getNextError(); err != nil {
++		return nil, err
++	}
++	return s.ds.ListCAJournalsForTesting(ctx)
++}
++
++func (s *DataStore) SetCAJournal(ctx context.Context, caJournal *datastore.CAJournal) (*datastore.CAJournal, error) {
++	if err := s.getNextError(); err != nil {
++		return nil, err
++	}
++	return s.ds.SetCAJournal(ctx, caJournal)
++}
++
++func (s *DataStore) PruneCAJournals(ctx context.Context, allCAsExpireBefore int64) error {
++	if err := s.getNextError(); err != nil {
++		return err
++	}
++	return s.ds.PruneCAJournals(ctx, allCAsExpireBefore)
++}
++
+ func (s *DataStore) SetNextError(err error) {
+ 	s.errs = []error{err}
+ }

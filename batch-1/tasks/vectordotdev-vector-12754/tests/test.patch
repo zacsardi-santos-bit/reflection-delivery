@@ -1,0 +1,16 @@
+diff --git a/lib/codecs/src/encoding/format/raw_message.rs b/lib/codecs/src/encoding/format/raw_message.rs
+--- a/lib/codecs/src/encoding/format/raw_message.rs
++++ b/lib/codecs/src/encoding/format/raw_message.rs
+@@ -73,6 +73,12 @@
+     use bytes::{Bytes, BytesMut};
+ 
+     use super::*;
++
++    #[test]
++    fn text_serializer_exists() {
++        let _: crate::encoding::format::text::TextSerializerConfig =
++            crate::encoding::format::text::TextSerializerConfig::new();
++    }
+ 
+     #[test]
+     fn serialize_bytes() {

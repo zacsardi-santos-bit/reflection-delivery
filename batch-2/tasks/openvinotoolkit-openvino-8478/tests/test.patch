@@ -1,0 +1,341 @@
+diff --git a/model-optimizer/unit_tests/extensions/ops/gatherelements_test.py b/model-optimizer/unit_tests/extensions/ops/gatherelements_test.py
+index 2d668de0df..708a35126b 100644
+--- a/model-optimizer/unit_tests/extensions/ops/gatherelements_test.py
++++ b/model-optimizer/unit_tests/extensions/ops/gatherelements_test.py
+@@ -7,11 +7,13 @@ import numpy as np
+ from generator import generator, generate
+ 
+ from extensions.ops.gatherelements import GatherElements
+-from mo.front.common.partial_infer.utils import int64_array
++from mo.front.common.partial_infer.utils import int64_array, strict_compare_tensors, dynamic_dimension
+ from mo.graph.graph import Node
++from mo.utils.error import Error
+ from unit_tests.utils.graph import build_graph, regular_op_with_empty_data, result, connect, \
+-    valued_const_with_data
++    valued_const_with_data, shaped_parameter
+ 
++dyn = dynamic_dimension
+ 
+ @generator
+ class GatherElementsInferTest(unittest.TestCase):
+@@ -50,32 +52,31 @@ class GatherElementsInferTest(unittest.TestCase):
+           [3, 3]]),
+ 
+         ([  # 3D case
+-          [[1, 2],
+-           [3, 4]],
+-          [[5, 6],
+-           [7, 8]],
+-          [[9, 10],
+-           [11, 12]]
+-        ],
++             [[1, 2],
++              [3, 4]],
++             [[5, 6],
++              [7, 8]],
++             [[9, 10],
++              [11, 12]]
++         ],
+          [
+-          [[1, 0],
+-           [0, 1]],
+-          [[1, 1],
+-           [1, 0]],
+-          [[0, 0],
+-           [1, 1]]
++             [[1, 0],
++              [0, 1]],
++             [[1, 1],
++              [1, 0]],
++             [[0, 0],
++              [1, 1]]
+          ],
+          -1,  # axis
+          [
+-          [[2, 1],
+-           [3, 4]],
+-          [[6, 6],
+-           [8, 7]],
+-          [[9, 9],
+-           [12, 12]]
++             [[2, 1],
++              [3, 4]],
++             [[6, 6],
++              [8, 7]],
++             [[9, 9],
++              [12, 12]]
+          ]),
+     ])
+-
+     def test_gatherelements_value_infer(self, data, indices, axis, ref_res):
+         nodes = {
+             **valued_const_with_data('data', int64_array(data)),
+@@ -100,3 +101,77 @@ class GatherElementsInferTest(unittest.TestCase):
+         res_output_value = gather_el_node.out_node().value
+         if res_output_value is not None:
+             self.assertTrue(np.array_equal(int64_array(ref_res), res_output_value))
++
++    def check_shape_infer(self, data_shape, indices_shape, axis, ref):
++        nodes = {
++            **shaped_parameter('data', data_shape),
++            **shaped_parameter('indices', indices_shape),
++            **regular_op_with_empty_data('gather_elements', {'op': 'GatherElements', 'axis': axis}),
++            **result()
++        }
++
++        graph = build_graph(nodes_attrs=nodes, edges=[
++            *connect('data', '0:gather_elements'),
++            *connect('indices', '1:gather_elements'),
++            *connect('gather_elements', 'output')
++        ], nodes_with_edges_only=True)
++        graph.stage = 'middle'
++
++        gather_el_node = Node(graph, 'gather_elements')
++        GatherElements.infer(gather_el_node)
++
++        res_output_shape = gather_el_node.out_node().shape
++        self.assertTrue(strict_compare_tensors(res_output_shape, ref))
++
++    def test_shape_infer_1(self):
++        self.check_shape_infer(data_shape=[3], indices_shape=[100], ref=[100], axis=0)
++
++    def test_shape_infer_2(self):
++        self.check_shape_infer(data_shape=[100, 4], indices_shape=[4, 4], ref=[4, 4], axis=0)
++
++    def test_shape_infer_3(self):
++        self.check_shape_infer(data_shape=[3, 4], indices_shape=[3, 100], ref=[3, 100], axis=1)
++
++    def test_shape_infer_4(self):
++        self.check_shape_infer(data_shape=[1, 3, 256], indices_shape=[256, 3, 256], ref=[256, 3, 256], axis=0)
++
++    def test_shape_infer_5(self):
++        self.check_shape_infer(data_shape=[1, 3, 256], indices_shape=[1, 1024, 256], ref=[1, 1024, 256], axis=1)
++
++    def test_shape_infer_6(self):
++        self.check_shape_infer(data_shape=[1, 3, 256], indices_shape=[1, 3, 1024], ref=[1, 3, 1024], axis=2)
++
++    def test_shape_infer_7(self):
++        self.check_shape_infer(data_shape=[1, 25, 64, 256], indices_shape=[1, 25, 64, 2], ref=[1, 25, 64, 2], axis=-1)
++
++    # dynamic dimensions
++    def test_shape_infer_8(self):
++        self.check_shape_infer(data_shape=[dyn, 4], indices_shape=[3, 100], ref=[3, 100], axis=1)
++
++    def test_shape_infer_9(self):
++        self.check_shape_infer(data_shape=[100, 4], indices_shape=[dyn, 100], ref=[100, 100], axis=1)
++
++    def test_shape_infer_10(self):
++        self.check_shape_infer(data_shape=[1, 3, 256], indices_shape=[dyn, 3, 256], ref=[dyn, 3, 256], axis=0)
++
++    def test_shape_infer_11(self):
++        self.check_shape_infer(data_shape=[dyn, dyn, dyn], indices_shape=[dyn, dyn, dyn], ref=[dyn, dyn, dyn], axis=0)
++
++    def test_shape_infer_12(self):
++        self.check_shape_infer(data_shape=[1, 3, 256], indices_shape=[dyn, 1024, dyn], ref=[1, 1024, 256], axis=1)
++
++    def test_shape_infer_13(self):
++        self.check_shape_infer(data_shape=[1, 3, 256], indices_shape=[dyn, dyn, 1024], ref=[1, 3, 1024], axis=2)
++
++    # negative tests
++    def test_negative_shape_infer_ranks_differ(self):
++        self.assertRaises(AssertionError, self.check_shape_infer,
++                          data_shape=[1, 3, 64], indices_shape=[1, 3], ref=[1, 3, 1024], axis=2)
++
++    def test_negative_shape_infer_axis_out_of_bound(self):
++        self.assertRaises(AssertionError, self.check_shape_infer,
++                          data_shape=[1, 4, 64], indices_shape=[1, 3, 64], ref=[1, 3, 1024], axis=20)
++
++    def test_negative_shape_infer_inconsistent_shapes(self):
++        self.assertRaises(Error, self.check_shape_infer,
++                          data_shape=[1, 4, 64], indices_shape=[1, 3, 64], ref=[1, 3, 1024], axis=2)
+diff --git a/model-optimizer/unit_tests/extensions/ops/sparse_reshape_test.py b/model-optimizer/unit_tests/extensions/ops/sparse_reshape_test.py
+index 7f16d84239..58d8d32d68 100644
+--- a/model-optimizer/unit_tests/extensions/ops/sparse_reshape_test.py
++++ b/model-optimizer/unit_tests/extensions/ops/sparse_reshape_test.py
+@@ -6,45 +6,141 @@ import unittest
+ import numpy as np
+ 
+ from extensions.ops.sparse_reshape import SparseReshape
+-from mo.front.common.partial_infer.utils import int64_array
++from mo.front.common.partial_infer.utils import shape_array, dynamic_dimension, strict_compare_tensors
+ from mo.graph.graph import Node
+-from unit_tests.utils.graph import build_graph
++from mo.middle.passes.infer import partial_infer
++from mo.utils.error import Error
++from unit_tests.utils.graph import valued_const_with_data, result, regular_op_with_empty_data, connect, \
++    shaped_parameter, build_graph, empty_data
+ 
+-nodes_attributes = {'input_indices': {'shape': None, 'value': None, 'kind': 'data'},
+-                    'input_shape': {'shape': None, 'value': None, 'kind': 'data'},
+-                    'new_shape': {'shape': None, 'value': None, 'kind': 'data'},
+-                    'sparse_reshape_node': {'op': 'SparseReshape', 'kind': 'op'},
+-                    'output_indices': {'shape': None, 'value': None, 'kind': 'data'},
+-                    'output_shape': {'shape': None, 'value': None, 'kind': 'data'}}
++dyn = dynamic_dimension
+ 
+-# graph 1
+-edges1 = [('input_indices', 'sparse_reshape_node', {'in': 0}),
+-          ('input_shape', 'sparse_reshape_node', {'in': 1}),
+-          ('new_shape', 'sparse_reshape_node', {'in': 2}),
+-          ('sparse_reshape_node', 'output_indices', {'out': 0}),
+-          ('sparse_reshape_node', 'output_shape', {'out': 1})]
+ 
+-inputs1 = {'input_indices': {'shape': int64_array([5, 2]), 'value': None},
+-           'input_shape': {'shape': int64_array([2]), 'value': int64_array([4, 5])},
+-           'new_shape': {'shape': int64_array([3]), 'value': int64_array([5, -1, 2])}}
++class TestSparseReshape(unittest.TestCase):
+ 
++    def build_and_test_shape_inference(self, input_indices_sparse_shape, input_actual_shape, new_shape, ref_out_shape,
++                                       input_indices=None, ref_out_indices=None):
++        # sparse tensor is stored in COO format
++        nodes = {
++            **shaped_parameter('input_indices', shape_array(input_indices_sparse_shape), {'value': input_indices}),
++            **valued_const_with_data('input_shape', shape_array(input_actual_shape)),
++            **valued_const_with_data('new_shape', shape_array(new_shape)),
++            **regular_op_with_empty_data('sparse_reshape_node', {'op': 'SparseReshape',
++                                                                 'special_zero': True,
++                                                                 'infer': SparseReshape.infer}),
++            **empty_data('sparse_reshape_node_d:out_port_1'),
+ 
+-class TestSparseReshape(unittest.TestCase):
+-    def test_partial_infer1(self):
+-        graph = build_graph(nodes_attributes, edges1, inputs1)
+-        sparse_reshape_node = Node(graph, 'sparse_reshape_node')
+-        SparseReshape.infer(sparse_reshape_node)
++            **result('output_indices'),
++            **result('output_shape'),
++        }
++
++        edges = [
++            *connect('input_indices', '0:sparse_reshape_node'),
++            *connect('input_shape', '1:sparse_reshape_node'),
++            *connect('new_shape', '2:sparse_reshape_node'),
++            *connect('sparse_reshape_node:0', 'output_indices'),
++            ('sparse_reshape_node', 'sparse_reshape_node_d:out_port_1', {'out': 1}),
++            ('sparse_reshape_node_d:out_port_1', 'output_shape', {'in': 0}),
++        ]
++
++        graph = build_graph(nodes, edges, update_attributes={'input_indices_d': {'value': input_indices}})
++        graph.stage = 'middle'
++        partial_infer(graph)
++
++        node = Node(graph, 'sparse_reshape_node')
++        output_indices = node.out_port(0).data.get_value()
++        actual_output_shape = node.out_port(1).data.get_value()
++        self.assertTrue(strict_compare_tensors(actual_output_shape, ref_out_shape))
++        self.assertTrue(strict_compare_tensors(output_indices, ref_out_indices))
++
++    def test_sparse_shape_1(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[4, 5],
++                                            new_shape=[5, -1, 2],
++                                            ref_out_shape=[5, 2, 2])
++
++    def test_sparse_shape_2(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[dyn, 5, 6],
++                                            new_shape=[5, -1],
++                                            ref_out_shape=[5, dyn])
++
++    def test_sparse_shape_3(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[5, 3, 8],
++                                            new_shape=[4, dyn],
++                                            ref_out_shape=[4, 30])
++
++    def test_sparse_shape_4(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[1, 30],
++                                            new_shape=[1, dyn],
++                                            ref_out_shape=[1, 30])
++
++    def test_sparse_shape_5(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[1, 30],
++                                            new_shape=[3, dyn, dyn],
++                                            ref_out_shape=[3, dyn, dyn])
++
++    def test_sparse_shape_6(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[1, 30],
++                                            new_shape=[dyn, 3, dyn],
++                                            ref_out_shape=[dyn, 3, dyn])
++
++    def test_sparse_shape_7(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[dyn, 30],
++                                            new_shape=[dyn, dyn, 33],
++                                            ref_out_shape=[dyn, dyn, 33])
++
++    def test_sparse_shape_8(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[dyn, 30],
++                                            new_shape=[dyn, 3, -1],
++                                            ref_out_shape=[dyn, 3, dyn])
+ 
+-        # prepare reference results
+-        ref_output_indices_shape = np.array([5, 3], dtype=np.int32)
+-        ref_output_shape_value = np.array([5, 2, 2], dtype=np.int32)
++    def test_sparse_shape_9(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=[11, 2],
++                                            input_actual_shape=[dyn, 30],
++                                            new_shape=[1, dyn],
++                                            ref_out_shape=[1, dyn])
+ 
+-        # get the result
+-        res_output_indices_shape = graph.node['output_indices']['shape']
+-        res_output_shape_value = graph.node['output_shape']['value']
++    def test_sparse_shape_10(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        sparse_shape = [11, 2]
++        input_indices_value = np.arange(0, np.prod(sparse_shape)).reshape(sparse_shape)
++        self.build_and_test_shape_inference(input_indices_sparse_shape=sparse_shape,
++                                            input_actual_shape=[1, 30],
++                                            new_shape=[1, dyn],
++                                            ref_out_shape=[1, 30],
++                                            input_indices=input_indices_value,
++                                            ref_out_indices=input_indices_value)
+ 
+-        self.assertTrue(np.array_equal(ref_output_indices_shape, res_output_indices_shape),
+-                        'shapes do not match expected: {} and given: {}'.format(ref_output_indices_shape, res_output_indices_shape))
+-        self.assertTrue(np.array_equal(ref_output_shape_value, res_output_shape_value),
+-                        'values do not match expected: {} and given: {}'.format(ref_output_shape_value, res_output_shape_value))
++    def test_sparse_shape_11(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        sparse_shape = [11, 2]
++        self.build_and_test_shape_inference(input_indices_sparse_shape=sparse_shape,
++                                            input_actual_shape=[1, 30],
++                                            new_shape=[1, 15, 2],
++                                            ref_out_shape=[1, 15, 2])
+ 
++    # negative test with uncompatible shapes
++    def test_sparse_shape_12(self):
++        # ref_output_indices_shape = np.array([11, 3], dtype=np.int32)
++        sparse_shape = [11, 2]
++        with self.assertRaisesRegex(Error, 'Stopped shape/value propagation'):
++            self.build_and_test_shape_inference(input_indices_sparse_shape=sparse_shape,
++                                                input_actual_shape=[1, 30],
++                                                new_shape=[1, 64, 2],
++                                                ref_out_shape=[1, 15, 2])
+diff --git a/model-optimizer/unit_tests/utils/graph.py b/model-optimizer/unit_tests/utils/graph.py
+index eb678ce055..f563794a39 100644
+--- a/model-optimizer/unit_tests/utils/graph.py
++++ b/model-optimizer/unit_tests/utils/graph.py
+@@ -7,7 +7,7 @@ from copy import deepcopy
+ import networkx as nx
+ 
+ from extensions.ops.parameter import Parameter
+-from mo.front.common.partial_infer.utils import int64_array, shape_array
++from mo.front.common.partial_infer.utils import shape_array, int64_array
+ from mo.graph.graph import Node, Graph
+ from mo.middle.pattern_match import all_edges_in_nodes
+ from mo.ops.const import Const

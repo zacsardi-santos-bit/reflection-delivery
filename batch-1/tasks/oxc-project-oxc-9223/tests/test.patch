@@ -1,0 +1,13 @@
+diff --git a/apps/oxlint/tests/cli_options_test.rs b/apps/oxlint/tests/cli_options_test.rs
+new file mode 100644
+index 0000000..973fe9c
+--- /dev/null
++++ b/apps/oxlint/tests/cli_options_test.rs
+@@ -0,0 +1,7 @@
++use oxlint::cli::lint_command;
++
++#[test]
++fn test_inline_config_options_exist() {
++    let options = lint_command().run_inner(&["."]).unwrap();
++    let _ = options.inline_config_options;
++}

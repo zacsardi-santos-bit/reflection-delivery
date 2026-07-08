@@ -1,0 +1,27 @@
+diff --git a/tests/permissions_test.rs b/tests/permissions_test.rs
+new file mode 100644
+index 0000000..0000000
+--- /dev/null
++++ b/tests/permissions_test.rs
+@@ -0,0 +1,21 @@
++use lopdf::encryption::Permissions;
++
++#[test]
++fn test_printable_permission_bit() {
++    assert_eq!(Permissions::PRINTABLE.bits(), 4);
++}
++
++#[test]
++fn test_modifiable_permission_bit() {
++    assert_eq!(Permissions::MODIFIABLE.bits(), 8);
++}
++
++#[test]
++fn test_copyable_permission_bit() {
++    assert_eq!(Permissions::COPYABLE.bits(), 16);
++}
++
++#[test]
++fn test_fillable_permission_bit() {
++    assert_eq!(Permissions::FILLABLE.bits(), 256);
++}

@@ -1,0 +1,12 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index ac2d7ee8..77f94512 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -2,6 +2,7 @@
+ 
+ All notable changes to this project will be documented in this file.
+ 
++
+ ## [0.3.0] - 2025-06-04
+ ### Merged PRs
+ - Test: add testing in util library (#432) (François Garillot)

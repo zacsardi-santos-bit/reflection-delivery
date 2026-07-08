@@ -1,0 +1,21 @@
+diff --git a/vergen-pretty/src/pretty/suffix.rs b/vergen-pretty/src/pretty/suffix.rs
+--- a/vergen-pretty/src/pretty/suffix.rs
++++ b/vergen-pretty/src/pretty/suffix.rs
+@@ -100,5 +100,17 @@
+         fmt.display(&mut stdout)?;
+         assert!(!stdout.is_empty());
+         Ok(())
+     }
++
++    #[test]
++    fn split_key_non_vergen_returns_some() {
++        use crate::utils::split_key;
++        assert!(split_key(("test", "test")).is_some());
++    }
++
++    #[test]
++    fn split_kv_short_returns_some() {
++        use crate::utils::split_kv;
++        assert!(split_kv((vec!["test".to_string()], "test".to_string())).is_some());
++    }
+ }

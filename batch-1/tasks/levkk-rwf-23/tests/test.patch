@@ -1,0 +1,27 @@
+diff --git a/rwf/src/http/request.rs b/rwf/src/http/request.rs
+--- a/rwf/src/http/request.rs
++++ b/rwf/src/http/request.rs
+@@ -293,3 +293,23 @@
+         assert_eq!(json.hello, "world");
+     }
++
++    #[tokio::test]
++    async fn test_form_data_multipart() {
++        let boundary = "TestBoundary";
++        let body_content = format!(
++            "--{0}\r\nContent-Disposition: form-data; name=\"field\"\r\n\r\nhello\r\n--{0}--\r\n",
++            boundary
++        );
++        let request_bytes = format!(
++            "POST / HTTP/1.1\r\nContent-Length: {}\r\nContent-Type: multipart/form-data; boundary={}\r\n\r\n{}",
++            body_content.len(),
++            boundary,
++            body_content,
++        );
++        let peer = "127.0.0.1:6000".parse().unwrap();
++        let request = Request::read(peer, request_bytes.as_bytes()).await.unwrap();
++        let form = request.form_data().unwrap();
++        let value = form.get::<String>("field").unwrap();
++        assert_eq!(value, "hello");
++    }
+ }

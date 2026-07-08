@@ -1,0 +1,486 @@
+diff --git a/multicluster/cmd/multicluster-controller/controller_test.go b/multicluster/cmd/multicluster-controller/controller_test.go
+index 811132bb6..c59dafb53 100644
+--- a/multicluster/cmd/multicluster-controller/controller_test.go
++++ b/multicluster/cmd/multicluster-controller/controller_test.go
+@@ -70,7 +70,7 @@ func TestGetCAConfig(t *testing.T) {
+ 				MutationWebhookSelector:   getWebhookLabel(false, ""),
+ 				ValidatingWebhookSelector: getWebhookLabel(false, ""),
+ 				CertReadyTimeout:          2 * time.Minute,
+-				MaxRotateDuration:         time.Hour * (24 * 365),
++				MinValidDuration:          time.Hour * (24 * 90),
+ 			},
+ 		},
+ 		{
+@@ -86,7 +86,7 @@ func TestGetCAConfig(t *testing.T) {
+ 				MutationWebhookSelector:   getWebhookLabel(true, "testNS"),
+ 				ValidatingWebhookSelector: getWebhookLabel(true, "testNS"),
+ 				CertReadyTimeout:          2 * time.Minute,
+-				MaxRotateDuration:         time.Hour * (24 * 365),
++				MinValidDuration:          time.Hour * (24 * 90),
+ 			},
+ 		},
+ 	}
+diff --git a/pkg/apiserver/certificate/cacert_controller_test.go b/pkg/apiserver/certificate/cacert_controller_test.go
+index 6c3f12a3e..99fd37409 100644
+--- a/pkg/apiserver/certificate/cacert_controller_test.go
++++ b/pkg/apiserver/certificate/cacert_controller_test.go
+@@ -109,7 +109,7 @@ func TestSyncConfigMap(t *testing.T) {
+ 			}
+ 			aggregatorClientset := fakeaggregatorclientset.NewSimpleClientset()
+ 			apiExtensionClient := fakeapiextensionclientset.NewSimpleClientset()
+-			caContentProvider, _ := generateSelfSignedCertificate(secureServing, caConfig)
++			caContentProvider, _ := newSelfSignedCertProvider(clientset, secureServing, caConfig)
+ 			tt.prepareReactor(clientset)
+ 
+ 			controller := newCACertController(caContentProvider, clientset, aggregatorClientset, apiExtensionClient, caConfig)
+@@ -194,7 +194,7 @@ func TestSyncAPIServices(t *testing.T) {
+ 			clientset := fakeclientset.NewSimpleClientset()
+ 			aggregatorClientset := fakeaggregatorclientset.NewSimpleClientset()
+ 			apiExtensionClient := fakeapiextensionclientset.NewSimpleClientset()
+-			caContentProvider, _ := generateSelfSignedCertificate(secureServing, caConfig)
++			caContentProvider, _ := newSelfSignedCertProvider(clientset, secureServing, caConfig)
+ 
+ 			if tt.existingAPIService != nil {
+ 				aggregatorClientset = fakeaggregatorclientset.NewSimpleClientset(tt.existingAPIService)
+@@ -283,7 +283,7 @@ func TestSyncValidatingWebhooks(t *testing.T) {
+ 			clientset := fakeclientset.NewSimpleClientset()
+ 			aggregatorClientset := fakeaggregatorclientset.NewSimpleClientset()
+ 			apiExtensionClient := fakeapiextensionclientset.NewSimpleClientset()
+-			caContentProvider, _ := generateSelfSignedCertificate(secureServing, caConfig)
++			caContentProvider, _ := newSelfSignedCertProvider(clientset, secureServing, caConfig)
+ 
+ 			if tt.existingWebhook != nil {
+ 				clientset = fakeclientset.NewSimpleClientset(tt.existingWebhook)
+@@ -404,14 +404,14 @@ func TestSyncMutatingWebhooks(t *testing.T) {
+ 		t.Run(tt.name, func(t *testing.T) {
+ 			aggregatorClientset := fakeaggregatorclientset.NewSimpleClientset()
+ 			apiExtensionClient := fakeapiextensionclientset.NewSimpleClientset()
+-			caContentProvider, _ := generateSelfSignedCertificate(secureServing, caConfig)
++
+ 			var objects []runtime.Object
+ 			for _, webhook := range tt.existingWebhooks {
+ 				objects = append(objects, webhook)
+ 			}
+ 			clientset := fakeclientset.NewSimpleClientset(objects...)
+ 			tt.prepareReactor(clientset)
+-
++			caContentProvider, _ := newSelfSignedCertProvider(clientset, secureServing, caConfig)
+ 			controller := newCACertController(caContentProvider, clientset, aggregatorClientset, apiExtensionClient, caConfig)
+ 			caBundle := []byte("abc")
+ 			err = controller.syncMutatingWebhooks(caBundle)
+@@ -518,7 +518,7 @@ func TestSyncConversionWebhooks(t *testing.T) {
+ 			clientset := fakeclientset.NewSimpleClientset()
+ 			aggregatorClientset := fakeaggregatorclientset.NewSimpleClientset()
+ 			apiExtensionClient := fakeapiextensionclientset.NewSimpleClientset()
+-			caContentProvider, _ := generateSelfSignedCertificate(secureServing, caConfig)
++			caContentProvider, _ := newSelfSignedCertProvider(clientset, secureServing, caConfig)
+ 
+ 			if tt.existingCRD != nil {
+ 				apiExtensionClient = fakeapiextensionclientset.NewSimpleClientset(tt.existingCRD)
+diff --git a/pkg/apiserver/certificate/certificate_test.go b/pkg/apiserver/certificate/certificate_test.go
+index 406122e22..26d6c3b70 100644
+--- a/pkg/apiserver/certificate/certificate_test.go
++++ b/pkg/apiserver/certificate/certificate_test.go
+@@ -16,8 +16,10 @@ package certificate
+ 
+ import (
+ 	"bytes"
++	"context"
+ 	"os"
+ 	"path"
++	"path/filepath"
+ 	"testing"
+ 	"time"
+ 
+@@ -154,6 +156,8 @@ func TestApplyServerCert(t *testing.T) {
+ 	}
+ 	for _, tt := range tests {
+ 		t.Run(tt.name, func(t *testing.T) {
++			ctx, cancel := context.WithCancel(context.Background())
++			defer cancel()
+ 			caConfig := &CAConfig{
+ 				ServiceName: AntreaServiceName,
+ 				PairName:    "antrea-controller",
+@@ -182,14 +186,13 @@ func TestApplyServerCert(t *testing.T) {
+ 			}
+ 
+ 			if tt.testRotate {
+-				caConfig.MaxRotateDuration = 2 * time.Second
++				caConfig.MinValidDuration = time.Hour * 24 * 366
+ 			}
+ 
+ 			clientset := fakeclientset.NewSimpleClientset()
+ 			aggregatorClientset := fakeaggregatorclientset.NewSimpleClientset()
+ 			apiExtensionClient := fakeapiextensionclientset.NewSimpleClientset()
+ 			got, err := ApplyServerCert(tt.selfSignedCert, clientset, aggregatorClientset, apiExtensionClient, secureServing, caConfig)
+-
+ 			if err != nil || tt.wantErr {
+ 				if (err != nil) != tt.wantErr {
+ 					t.Errorf("ApplyServerCert() error = %v, wantErr %v", err, tt.wantErr)
+@@ -199,6 +202,7 @@ func TestApplyServerCert(t *testing.T) {
+ 
+ 			if tt.selfSignedCert && tt.testRotate {
+ 				oldCertKeyContent := got.getCertificate()
++				go got.Run(ctx, 1)
+ 				err := wait.Poll(time.Second, 8*time.Second, func() (bool, error) {
+ 					newCertKeyContent := got.getCertificate()
+ 					equal := bytes.Equal(oldCertKeyContent, newCertKeyContent)
+@@ -209,12 +213,12 @@ func TestApplyServerCert(t *testing.T) {
+ 			}
+ 
+ 			if tt.wantCertKey {
+-				assert.Equal(t, genericoptions.CertKey{CertFile: caConfig.CertDir + "/tls.crt", KeyFile: caConfig.CertDir + "/tls.key"}, secureServing.ServerCert.CertKey, "CertKey doesn't match")
++				assert.Equal(t, genericoptions.CertKey{CertFile: filepath.Join(caConfig.CertDir, "tls.crt"), KeyFile: filepath.Join(caConfig.CertDir, "tls.key")}, secureServing.ServerCert.CertKey, "CertKey doesn't match")
+ 			}
+ 			if tt.wantGeneratedCert {
+-				assert.Equal(t, genericoptions.CertKey{CertFile: caConfig.SelfSignedCertDir + "/antrea-controller.crt", KeyFile: caConfig.SelfSignedCertDir + "/antrea-controller.key"}, secureServing.ServerCert.CertKey, "SelfSigned certs not generated")
++				assert.Equal(t, genericoptions.CertKey{CertFile: filepath.Join(caConfig.SelfSignedCertDir, "antrea-controller.crt"), KeyFile: filepath.Join(caConfig.SelfSignedCertDir, "antrea-controller.key")}, secureServing.ServerCert.CertKey, "SelfSigned certs not generated")
+ 			} else {
+-				assert.NotEqual(t, genericoptions.CertKey{CertFile: caConfig.SelfSignedCertDir + "/antrea-controller.crt", KeyFile: caConfig.SelfSignedCertDir + "/antrea-controller.key"}, secureServing.ServerCert.CertKey, "SelfSigned certs generated erroneously")
++				assert.NotEqual(t, genericoptions.CertKey{CertFile: filepath.Join(caConfig.SelfSignedCertDir, "antrea-controller.crt"), KeyFile: filepath.Join(caConfig.SelfSignedCertDir, "antrea-controller.key")}, secureServing.ServerCert.CertKey, "SelfSigned certs generated erroneously")
+ 			}
+ 			if tt.wantCACert != nil {
+ 				assert.Equal(t, tt.wantCACert, got.caContentProvider.CurrentCABundleContent(), "CA cert doesn't match")
+diff --git a/pkg/apiserver/certificate/selfsignedcert_provider_test.go b/pkg/apiserver/certificate/selfsignedcert_provider_test.go
+new file mode 100644
+index 000000000..2123f3ab3
+--- /dev/null
++++ b/pkg/apiserver/certificate/selfsignedcert_provider_test.go
+@@ -0,0 +1,295 @@
++// Copyright 2024 Antrea Authors
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
++package certificate
++
++import (
++	"context"
++	"net"
++	"os"
++	"testing"
++	"time"
++
++	"github.com/stretchr/testify/assert"
++	"github.com/stretchr/testify/require"
++	corev1 "k8s.io/api/core/v1"
++	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
++	"k8s.io/apimachinery/pkg/runtime"
++	genericoptions "k8s.io/apiserver/pkg/server/options"
++	fakeclientset "k8s.io/client-go/kubernetes/fake"
++	certutil "k8s.io/client-go/util/cert"
++	clocktesting "k8s.io/utils/clock/testing"
++
++	"antrea.io/antrea/pkg/util/env"
++)
++
++const (
++	testServiceName     = "svc-foo"
++	testPairName        = "foo"
++	testSecretName      = "secret-foo"
++	testSecretNamespace = "ns-foo"
++)
++
++var (
++	// self-signed certs valid for one year.
++	testOneYearCert, testOneYearKey, _   = certutil.GenerateSelfSignedCertKeyWithFixtures("localhost", loopbackAddresses, nil, "")
++	testOneYearCert2, testOneYearKey2, _ = certutil.GenerateSelfSignedCertKeyWithFixtures("localhost", loopbackAddresses, nil, "")
++	testOneYearCert3, testOneYearKey3, _ = certutil.GenerateSelfSignedCertKeyWithFixtures("localhost", loopbackAddresses, nil, "")
++)
++
++func newTestSelfSignedCertProvider(t *testing.T, client *fakeclientset.Clientset, tlsSecretName string, minValidDuration time.Duration, options ...providerOption) *selfSignedCertProvider {
++	secureServing := genericoptions.NewSecureServingOptions().WithLoopback()
++	caConfig := &CAConfig{
++		TLSSecretName:     tlsSecretName,
++		SelfSignedCertDir: t.TempDir(),
++		MinValidDuration:  minValidDuration,
++		ServiceName:       testServiceName,
++		PairName:          testPairName,
++	}
++	p, err := newSelfSignedCertProvider(client, secureServing, caConfig, options...)
++	require.NoError(t, err)
++	return p
++}
++
++func TestSelfSignedCertProviderShouldRotateCertificate(t *testing.T) {
++	tests := []struct {
++		name             string
++		certBytes        []byte
++		minValidDuration time.Duration
++		shouldRotate     bool
++	}{
++		{
++			name:             "empty cert should rotate",
++			minValidDuration: time.Hour,
++			shouldRotate:     true,
++		},
++		{
++			name:             "invalid cert should rotate",
++			minValidDuration: time.Hour,
++			certBytes:        []byte("invalid cert"),
++			shouldRotate:     true,
++		},
++		{
++			name:             "minValidDuration greater than maxAge",
++			minValidDuration: time.Hour * 24 * 366,
++			certBytes:        testOneYearCert,
++			shouldRotate:     true,
++		},
++		{
++			name:             "maxAge greater than minValidDuration",
++			minValidDuration: time.Hour * 24 * 300,
++			certBytes:        testOneYearCert,
++			shouldRotate:     false,
++		},
++	}
++	for _, tt := range tests {
++		t.Run(tt.name, func(t *testing.T) {
++			p := newTestSelfSignedCertProvider(t, fakeclientset.NewSimpleClientset(), "", tt.minValidDuration)
++			assert.Equal(t, tt.shouldRotate, p.shouldRotateCertificate(tt.certBytes))
++		})
++	}
++}
++
++func TestSelfSignedCertProviderRotate(t *testing.T) {
++	t.Setenv(env.PodNamespaceEnvKey, testSecretNamespace)
++	ctx, cancel := context.WithCancel(context.Background())
++	defer cancel()
++	client := fakeclientset.NewSimpleClientset()
++	fakeClock := clocktesting.NewFakeClock(time.Now())
++	p := newTestSelfSignedCertProvider(t, client, testSecretName, time.Hour*24*90, withClock(fakeClock))
++	certInFile, err := os.ReadFile(p.secureServing.ServerCert.CertKey.CertFile)
++	require.NoError(t, err)
++	keyInFile, _ := os.ReadFile(p.secureServing.ServerCert.CertKey.KeyFile)
++	require.NoError(t, err)
++	gotSecret, err := client.CoreV1().Secrets(testSecretNamespace).Get(ctx, testSecretName, metav1.GetOptions{})
++	require.NoError(t, err)
++	assert.Equal(t, &corev1.Secret{
++		ObjectMeta: metav1.ObjectMeta{Namespace: testSecretNamespace, Name: testSecretName},
++		Type:       corev1.SecretTypeTLS,
++		Data: map[string][]byte{
++			corev1.TLSCertKey:       certInFile,
++			corev1.TLSPrivateKeyKey: keyInFile,
++		},
++	}, gotSecret, "Secret doesn't match")
++
++	go p.Run(ctx, 1)
++
++	// Update the Secret, it should update the serving one.
++	gotSecret.Data[corev1.TLSCertKey] = testOneYearCert
++	gotSecret.Data[corev1.TLSPrivateKeyKey] = testOneYearKey
++	client.CoreV1().Secrets(gotSecret.Namespace).Update(ctx, gotSecret, metav1.UpdateOptions{})
++	assert.EventuallyWithT(t, func(c *assert.CollectT) {
++		assert.Equal(c, testOneYearCert, p.CurrentCABundleContent())
++		certInFile, _ := os.ReadFile(p.secureServing.ServerCert.CertKey.CertFile)
++		keyInFile, _ := os.ReadFile(p.secureServing.ServerCert.CertKey.KeyFile)
++		assert.Equal(c, testOneYearCert, certInFile)
++		assert.Equal(c, testOneYearKey, keyInFile)
++	}, 2*time.Second, 50*time.Millisecond)
++
++	// Trigger a resync, nothing should change.
++	p.enqueue()
++	time.Sleep(50 * time.Millisecond)
++	assert.Equal(t, testOneYearCert, p.CurrentCABundleContent())
++	certInFile, _ = os.ReadFile(p.secureServing.ServerCert.CertKey.CertFile)
++	keyInFile, _ = os.ReadFile(p.secureServing.ServerCert.CertKey.KeyFile)
++	assert.Equal(t, testOneYearCert, certInFile)
++	assert.Equal(t, testOneYearKey, keyInFile)
++
++	// Step 280 days, the cert should be rotated.
++	fakeClock.Step(time.Hour * 24 * 280)
++	p.enqueue()
++	assert.EventuallyWithT(t, func(c *assert.CollectT) {
++		assert.NotEqual(c, testOneYearCert, p.CurrentCABundleContent())
++		certInFile, _ := os.ReadFile(p.secureServing.ServerCert.CertKey.CertFile)
++		keyInFile, _ := os.ReadFile(p.secureServing.ServerCert.CertKey.KeyFile)
++		assert.NotEqual(c, testOneYearCert, certInFile)
++		assert.NotEqual(c, testOneYearKey, keyInFile)
++		gotSecret, err := client.CoreV1().Secrets(testSecretNamespace).Get(ctx, testSecretName, metav1.GetOptions{})
++		require.NoError(c, err)
++		assert.NotEqual(c, map[string][]byte{
++			corev1.TLSCertKey:       testOneYearCert,
++			corev1.TLSPrivateKeyKey: testOneYearKey,
++		}, gotSecret.Data, "Secret should not match")
++	}, 2*time.Second, 50*time.Millisecond)
++}
++
++func TestSelfSignedCertProviderRun(t *testing.T) {
++	t.Setenv(env.PodNamespaceEnvKey, testSecretNamespace)
++	testSecret := &corev1.Secret{
++		ObjectMeta: metav1.ObjectMeta{Namespace: testSecretNamespace, Name: testSecretName},
++		Type:       corev1.SecretTypeTLS,
++		Data: map[string][]byte{
++			corev1.TLSCertKey:       testOneYearCert,
++			corev1.TLSPrivateKeyKey: testOneYearKey,
++		},
++	}
++	testSecret2 := &corev1.Secret{
++		ObjectMeta: metav1.ObjectMeta{Namespace: testSecretNamespace, Name: testSecretName},
++		Type:       corev1.SecretTypeTLS,
++		Data: map[string][]byte{
++			corev1.TLSCertKey:       testOneYearCert2,
++			corev1.TLSPrivateKeyKey: testOneYearKey2,
++		},
++	}
++	testSecret3 := &corev1.Secret{
++		ObjectMeta: metav1.ObjectMeta{Namespace: testSecretNamespace, Name: testSecretName},
++		Type:       corev1.SecretTypeTLS,
++		Data: map[string][]byte{
++			corev1.TLSCertKey:       testOneYearCert3,
++			corev1.TLSPrivateKeyKey: testOneYearKey3,
++		},
++	}
++
++	tests := []struct {
++		name             string
++		tlsSecretName    string
++		existingSecret   *corev1.Secret
++		updatedSecret    *corev1.Secret
++		expectedSecret   *corev1.Secret
++		expectedCert     []byte
++		expectedKey      []byte
++		minValidDuration time.Duration
++		shouldRotate     bool
++	}{
++		{
++			name:             "should use TLS from secret",
++			tlsSecretName:    testSecretName,
++			existingSecret:   testSecret,
++			expectedSecret:   testSecret,
++			minValidDuration: time.Hour * 24 * 90,
++			expectedCert:     testOneYearCert,
++			expectedKey:      testOneYearKey,
++		},
++		{
++			name:             "should rotate TLS and update secret",
++			tlsSecretName:    testSecretName,
++			existingSecret:   testSecret,
++			expectedSecret:   testSecret2,
++			minValidDuration: time.Hour * 24 * 370,
++			expectedCert:     testOneYearCert2,
++			expectedKey:      testOneYearKey2,
++		},
++		{
++			name:             "should generate TLS and update secret when secret is empty",
++			tlsSecretName:    testSecretName,
++			expectedSecret:   testSecret2,
++			minValidDuration: time.Hour * 24 * 90,
++			expectedCert:     testOneYearCert2,
++			expectedKey:      testOneYearKey2,
++		},
++		{
++			name:          "should generate TLS and update secret when secret is invalid",
++			tlsSecretName: testSecretName,
++			existingSecret: &corev1.Secret{
++				ObjectMeta: metav1.ObjectMeta{Namespace: testSecretNamespace, Name: testSecretName},
++				Type:       corev1.SecretTypeTLS,
++				Data: map[string][]byte{
++					corev1.TLSCertKey:       []byte("invalid-cert"),
++					corev1.TLSPrivateKeyKey: []byte("invalid-key"),
++				},
++			},
++			expectedSecret:   testSecret2,
++			minValidDuration: time.Hour * 24 * 90,
++			expectedCert:     testOneYearCert2,
++			expectedKey:      testOneYearKey2,
++		},
++		{
++			name:             "should use updated secret after it's updated",
++			tlsSecretName:    testSecretName,
++			existingSecret:   testSecret,
++			updatedSecret:    testSecret3,
++			minValidDuration: time.Hour * 24 * 90,
++			expectedSecret:   testSecret3,
++			expectedCert:     testOneYearCert3,
++			expectedKey:      testOneYearKey3,
++		},
++		{
++			name:             "should generate TLS",
++			minValidDuration: time.Hour * 24 * 90,
++			expectedCert:     testOneYearCert2,
++			expectedKey:      testOneYearKey2,
++		},
++	}
++	for _, tt := range tests {
++		t.Run(tt.name, func(t *testing.T) {
++			ctx, cancel := context.WithCancel(context.Background())
++			defer cancel()
++			var objs []runtime.Object
++			if tt.existingSecret != nil {
++				objs = append(objs, tt.existingSecret)
++			}
++			client := fakeclientset.NewSimpleClientset(objs...)
++			// mock the generateSelfSignedCertKey fuction
++			generateSelfSignedCertKey := func(_ string, _ []net.IP, _ []string) ([]byte, []byte, error) {
++				return testOneYearCert2, testOneYearKey2, nil
++			}
++			p := newTestSelfSignedCertProvider(t, client, tt.tlsSecretName, tt.minValidDuration, withGenerateSelfSignedCertKeyFn(generateSelfSignedCertKey))
++			go p.Run(ctx, 1)
++			if tt.updatedSecret != nil {
++				client.CoreV1().Secrets(tt.updatedSecret.Namespace).Update(ctx, tt.updatedSecret, metav1.UpdateOptions{})
++			}
++			assert.EventuallyWithT(t, func(c *assert.CollectT) {
++				if tt.expectedSecret != nil {
++					gotSecret, _ := client.CoreV1().Secrets(tt.expectedSecret.Namespace).Get(ctx, tt.expectedSecret.Name, metav1.GetOptions{})
++					assert.Equal(c, tt.expectedSecret, gotSecret, "Secret doesn't match")
++				}
++				assert.Equal(c, tt.expectedCert, p.CurrentCABundleContent(), "CA bundle doesn't match")
++				certInFile, _ := os.ReadFile(p.secureServing.ServerCert.CertKey.CertFile)
++				keyInFile, _ := os.ReadFile(p.secureServing.ServerCert.CertKey.KeyFile)
++				assert.Equal(c, tt.expectedCert, certInFile)
++				assert.Equal(c, tt.expectedKey, keyInFile)
++			}, 2*time.Second, 50*time.Millisecond)
++		})
++	}
++}
+diff --git a/test/e2e/security_test.go b/test/e2e/security_test.go
+index 74ab196fe..9401e5e49 100644
+--- a/test/e2e/security_test.go
++++ b/test/e2e/security_test.go
+@@ -68,6 +68,11 @@ func testUserProvidedCert(t *testing.T, data *TestData) {
+ 	if err := data.mutateAntreaConfigMap(cc, nil, false, false); err != nil {
+ 		t.Fatalf("Failed to update ConfigMap: %v", err)
+ 	}
++	t.Cleanup(func() {
++		data.mutateAntreaConfigMap(func(config *controllerconfig.ControllerConfig) {
++			config.SelfSignedCert = nil
++		}, nil, true, false)
++	})
+ 
+ 	genCertKeyAndUpdateSecret := func() ([]byte, []byte) {
+ 		certPem, keyPem, _ := certutil.GenerateSelfSignedCertKey("antrea", nil, certificate.GetAntreaServerNames(certificate.AntreaServiceName))
+@@ -111,6 +116,9 @@ func testUserProvidedCert(t *testing.T, data *TestData) {
+ 	// Create/update the secret and restart antrea-controller, then verify apiserver and its clients are using the
+ 	// provided certificate.
+ 	certPem, _ := genCertKeyAndUpdateSecret()
++	t.Cleanup(func() {
++		data.clientset.CoreV1().Secrets(tlsSecretNamespace).Delete(context.TODO(), tlsSecretName, metav1.DeleteOptions{})
++	})
+ 	testCert(t, data, string(certPem), true)
+ 
+ 	// Update the secret and do not restart antrea-controller, then verify apiserver and its clients are using the
+@@ -121,7 +129,14 @@ func testUserProvidedCert(t *testing.T, data *TestData) {
+ 
+ // testSelfSignedCert tests the selfSignedCert=true case.
+ func testSelfSignedCert(t *testing.T, data *TestData) {
+-	testCert(t, data, "", true)
++	secretBeforeRestart, err := data.clientset.CoreV1().Secrets(tlsSecretNamespace).Get(context.TODO(), tlsSecretName, metav1.GetOptions{})
++	require.NoError(t, err)
++
++	testCert(t, data, string(secretBeforeRestart.Data[certificate.TLSCertFile]), true)
++
++	secretAfterRestart, err := data.clientset.CoreV1().Secrets(tlsSecretNamespace).Get(context.TODO(), tlsSecretName, metav1.GetOptions{})
++	require.NoError(t, err)
++	require.Equal(t, secretBeforeRestart, secretAfterRestart)
+ }
+ 
+ // testCert optionally restarts antrea-controller, then checks:

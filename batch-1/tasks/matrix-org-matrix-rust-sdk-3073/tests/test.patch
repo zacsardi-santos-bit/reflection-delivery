@@ -1,0 +1,22 @@
+diff --git a/crates/matrix-sdk-store-encryption/src/lib.rs b/crates/matrix-sdk-store-encryption/src/lib.rs
+--- a/crates/matrix-sdk-store-encryption/src/lib.rs
++++ b/crates/matrix-sdk-store-encryption/src/lib.rs
+@@ -723,8 +723,18 @@ mod tests {
+     #[test]
+     fn generating() {
+         StoreCipher::new().unwrap();
+     }
+ 
++    #[test]
++    fn encrypt_decrypt_base64_roundtrip() -> Result<(), Error> {
++        let value = serde_json::json!({"key": "value"});
++        let store_cipher = StoreCipher::new()?;
++        let encrypted = store_cipher.encrypt_value_base64_typed(&value)?;
++        let decrypted: serde_json::Value = store_cipher.decrypt_value_base64_typed(encrypted)?;
++        assert_eq!(value, decrypted);
++        Ok(())
++    }
++
+     #[test]
+     fn exporting_store_cipher() -> Result<(), Error> {
+         let passphrase = "it's a secret to everybody";

@@ -1,0 +1,40 @@
+diff --git a/internal/provider/resource_subaccount_environment_instance_test.go b/internal/provider/resource_subaccount_environment_instance_test.go
+index d06be26..e1701bc 100644
+--- a/internal/provider/resource_subaccount_environment_instance_test.go
++++ b/internal/provider/resource_subaccount_environment_instance_test.go
+@@ -7,6 +7,7 @@ import (
+ 	"testing"
+ 
+ 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
++	"github.com/hashicorp/terraform-plugin-testing/terraform"
+ )
+ 
+ type cfUsers struct {
+@@ -47,6 +48,12 @@ func TestResourceSubaccountEnvironmentInstance(t *testing.T) {
+ 						resource.TestCheckResourceAttrWith("btp_subaccount_environment_instance.uut", "parameters", containsCheckFunc(`"id":"john.doe@int.test"`)),
+ 					),
+ 				},
++				{
++					ResourceName:      "btp_subaccount_environment_instance.uut",
++					ImportStateIdFunc: getEnvironmentInstanceIdForImport("btp_subaccount_environment_instance.uut"),
++					ImportState:       true,
++					ImportStateVerify: true,
++				},
+ 			},
+ 		})
+ 	})
+@@ -152,3 +159,14 @@ resource "btp_subaccount_environment_instance" "%s"{
+ 	parameters       = %q
+ }`, resourceName, subaccountId, name, planName, landscapeLabel, string(jsonCfParameters))
+ }
++
++func getEnvironmentInstanceIdForImport(resourceName string) resource.ImportStateIdFunc {
++	return func(state *terraform.State) (string, error) {
++		rs, ok := state.RootModule().Resources[resourceName]
++		if !ok {
++			return "", fmt.Errorf("not found: %s", resourceName)
++		}
++
++		return fmt.Sprintf("%s,%s", "ef23ace8-6ade-4d78-9c1f-8df729548bbf", rs.Primary.ID), nil
++	}
++}

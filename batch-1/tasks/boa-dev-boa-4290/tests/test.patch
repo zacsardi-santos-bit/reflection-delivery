@@ -1,0 +1,23 @@
+diff --git a/core/engine/src/tests/mod.rs b/core/engine/src/tests/mod.rs
+index b01ab5e3..f299eda6 100644
+--- a/core/engine/src/tests/mod.rs
++++ b/core/engine/src/tests/mod.rs
+@@ -506,3 +506,18 @@ fn null_bool_in_object_pattern() {
+         TestAction::assert_eq("c", 100),
+     ]);
+ }
++
++#[cfg(feature = "intl_bundled")]
++#[test]
++fn plural_rules_notation() {
++    run_test_actions([TestAction::assert_eq(
++        "new Intl.PluralRules('en').resolvedOptions().notation",
++        js_str!("standard"),
++    )]);
++}
++
++#[cfg(feature = "intl_bundled")]
++#[test]
++fn locale_variants() {
++    run_test_actions([TestAction::assert("'variants' in Intl.Locale.prototype")]);
++}

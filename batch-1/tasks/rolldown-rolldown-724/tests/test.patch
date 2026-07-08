@@ -1,0 +1,1029 @@
+diff --git a/crates/rolldown/tests/common/case.rs b/crates/rolldown/tests/common/case.rs
+index 5fd1bfd2f..6e9299c82 100644
+--- a/crates/rolldown/tests/common/case.rs
++++ b/crates/rolldown/tests/common/case.rs
+@@ -4,6 +4,7 @@ use super::fixture::Fixture;
+ use rolldown::RolldownOutput;
+ use rolldown_common::Output;
+ use rolldown_error::BuildError;
++use rolldown_sourcemap::SourcemapVisualizer;
+ 
+ pub struct Case {
+   fixture: Fixture,
+@@ -68,7 +69,7 @@ impl Case {
+     assets.sort_by_key(|c| c.file_name().to_string());
+     let artifacts = assets
+       .iter()
+-      .filter(|asset| !asset.file_name().contains("$runtime$"))
++      .filter(|asset| !asset.file_name().contains("$runtime$") && matches!(asset, Output::Chunk(_)))
+       .flat_map(|asset| {
+         [
+           Cow::Owned(format!("## {}\n", asset.file_name())),
+@@ -82,14 +83,18 @@ impl Case {
+     self.snapshot.push_str(&artifacts);
+ 
+     if self.fixture.test_config().snapshot_output_stats {
+-      self.render_stats_to_snapshot(assets);
++      self.render_stats_to_snapshot(&assets);
++    }
++
++    if self.fixture.test_config().sourcemap {
++      self.render_sourcemap_visualizer_to_snapshot(&assets);
+     }
+   }
+ 
+-  fn render_stats_to_snapshot(&mut self, assets: Vec<Output>) {
++  fn render_stats_to_snapshot(&mut self, assets: &[Output]) {
+     self.snapshot.push_str("\n\n## Output Stats\n\n");
+     let stats = assets
+-      .into_iter()
++      .iter()
+       .flat_map(|asset| match asset {
+         Output::Chunk(chunk) => {
+           vec![Cow::Owned(format!(
+@@ -123,6 +128,23 @@ impl Case {
+     self.snapshot.push_str(&rendered);
+   }
+ 
++  fn render_sourcemap_visualizer_to_snapshot(&mut self, assets: &[Output]) {
++    self.snapshot.push_str("\n\n# Sourcemap Visualizer\n\n");
++    let visualizer_result = assets
++      .iter()
++      .filter(|asset| !asset.file_name().contains("$runtime$"))
++      .filter_map(|asset| match asset {
++        Output::Chunk(chunk) => chunk
++          .map
++          .as_ref()
++          .map(|sourcemap| SourcemapVisualizer::new(&chunk.code, sourcemap).into_visualizer_text()),
++        Output::Asset(_) => None,
++      })
++      .collect::<Vec<_>>()
++      .join("\n");
++    self.snapshot.push_str(&visualizer_result);
++  }
++
+   fn make_snapshot(&self) {
+     // Configure insta to use the fixture path as the snapshot path
+     let fixture_folder = self.fixture.dir_path();
+diff --git a/crates/rolldown/tests/common/fixture.rs b/crates/rolldown/tests/common/fixture.rs
+index 31c741964..0a0eab625 100644
+--- a/crates/rolldown/tests/common/fixture.rs
++++ b/crates/rolldown/tests/common/fixture.rs
+@@ -4,7 +4,7 @@ use std::{
+   process::Command,
+ };
+ 
+-use rolldown::{Bundler, External, InputOptions, OutputOptions, RolldownOutput};
++use rolldown::{Bundler, External, InputOptions, OutputOptions, RolldownOutput, SourceMapType};
+ use rolldown_error::BuildError;
+ use rolldown_testing::TestConfig;
+ 
+@@ -127,6 +127,7 @@ impl Fixture {
+       OutputOptions {
+         entry_file_names: "[name].mjs".to_string().into(),
+         chunk_file_names: "[name].mjs".to_string().into(),
++        sourcemap: test_config.sourcemap.then_some(SourceMapType::File),
+         ..Default::default()
+       },
+     );
+diff --git a/crates/rolldown/tests/fixtures/basic/artifacts.snap b/crates/rolldown/tests/fixtures/basic/artifacts.snap
+index 4f97678b3..bbb7a7ff2 100644
+--- a/crates/rolldown/tests/fixtures/basic/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/basic/artifacts.snap
+@@ -14,4 +14,22 @@ const a = 'shared.js';
+ // main.js
+ const a$1 = 'index.js';
+ console.log(a$1, a);
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- shared.js
++(0:0-0:6) "const " --> (2:0-2:6) "\nconst"
++(0:6-0:10) "a = " --> (2:6-2:10) " a ="
++(0:10-2:13) "'shared.js'\n\nexport { a }" --> (2:10-5:0) " 'shared.js';\n\n// main.js"
++- main.js
++(1:0-1:6) "\nconst" --> (5:0-5:6) "\nconst"
++(1:6-1:10) " a =" --> (5:6-5:12) " a$1 ="
++(1:10-2:0) " 'index.js'" --> (5:12-6:0) " 'index.js';"
++(2:0-2:8) "\nconsole" --> (6:0-6:8) "\nconsole"
++(2:8-2:12) ".log" --> (6:8-6:12) ".log"
++(2:12-2:15) "(a," --> (6:12-6:17) "(a$1,"
++(2:15-2:18) " a2" --> (6:17-6:19) " a"
++(2:18-3:1) ")\n" --> (6:19-8:34) ");\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/basic/test.config.json b/crates/rolldown/tests/fixtures/basic/test.config.json
+index 9e26dfeeb..b1d378a7f 100644
+--- a/crates/rolldown/tests/fixtures/basic/test.config.json
++++ b/crates/rolldown/tests/fixtures/basic/test.config.json
+@@ -1 +1,3 @@
+-{}
+\ No newline at end of file
++{
++    "sourcemap": true
++}
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/basic_scoped/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/basic_scoped/artifacts.snap
+index 12967c953..a09b32d69 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/basic_scoped/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/basic_scoped/artifacts.snap
+@@ -19,4 +19,39 @@ function foo(a$1$1) {
+ 	return [a$1$1, a$1, a];
+ }
+ assert.deepEqual(foo('foo'), ['foo', 'main.js', 'a.js']);
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- a.js
++(0:0-0:6) "const " --> (3:0-3:6) "\nconst"
++(0:6-0:10) "a = " --> (3:6-3:10) " a ="
++(0:10-3:1) "'a.js'\n\nexport { a }\n" --> (3:10-6:0) " 'a.js';\n\n// main.js"
++- main.js
++(2:0-2:6) "\nconst" --> (6:0-6:6) "\nconst"
++(2:6-2:10) " a =" --> (6:6-6:12) " a$1 ="
++(2:10-5:0) " 'main.js'\n\n" --> (6:12-7:0) " 'main.js';"
++(5:0-5:9) "\nfunction" --> (7:0-7:9) "\nfunction"
++(5:9-5:13) " foo" --> (7:9-7:13) " foo"
++(5:13-5:18) "(a$1)" --> (7:13-7:20) "(a$1$1)"
++(5:18-6:2) " {\n " --> (7:20-8:0) " {"
++(6:2-6:9) " return" --> (8:0-8:8) "\n\treturn"
++(6:9-6:10) " " --> (8:8-8:9) " "
++(6:10-6:15) "[a$1," --> (8:9-8:16) "[a$1$1,"
++(6:15-6:18) " a," --> (8:16-8:21) " a$1,"
++(6:18-6:22) " aJs" --> (8:21-8:23) " a"
++(6:22-7:1) "]\n" --> (8:23-9:0) "];"
++(7:1-9:0) "}\n" --> (9:0-10:0) "\n}"
++(9:0-9:7) "\nassert" --> (10:0-10:7) "\nassert"
++(9:7-9:17) ".deepEqual" --> (10:7-10:17) ".deepEqual"
++(9:17-9:21) "(foo" --> (10:17-10:21) "(foo"
++(9:21-9:27) "('foo'" --> (10:21-10:27) "('foo'"
++(9:27-9:29) ")," --> (10:27-10:29) "),"
++(9:29-9:30) " " --> (10:29-10:30) " "
++(9:30-9:37) "['foo'," --> (10:30-10:37) "['foo',"
++(9:37-9:48) " 'main.js'," --> (10:37-10:48) " 'main.js',"
++(9:48-9:55) " 'a.js'" --> (10:48-10:55) " 'a.js'"
++(9:55-9:56) "]" --> (10:55-10:56) "]"
++(9:56-10:1) ")\n" --> (10:56-12:34) ");\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/basic_scoped/test.config.json b/crates/rolldown/tests/fixtures/deconflict/basic_scoped/test.config.json
+index 229e6f23e..c6d9fb070 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/basic_scoped/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/basic_scoped/test.config.json
+@@ -3,5 +3,6 @@
+         "external": [
+             "assert"
+         ]
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/artifacts.snap
+index 0df38709a..b9787863e 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/artifacts.snap
+@@ -34,4 +34,143 @@ assert.deepStrictEqual(ret.names, ['a2', 'b2', 'c2', 'd2', 'e2']);
+ assert.deepStrictEqual(ret.params, ['a$1', 'b$1', 'c$1', 'd$1', 'e$1']);
+ 
+ export { a$1 as a, b$1 as b, c$1 as c, d$1 as d, e$1 as e };
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- names.js
++(0:7-0:13) "const " --> (3:0-3:6) "\nconst"
++(0:13-0:14) "[" --> (3:6-3:7) " "
++(0:14-0:17) "a, " --> (3:7-3:9) "[a"
++(0:17-0:20) "b, " --> (3:9-3:11) ",b"
++(0:20-0:23) "c, " --> (3:11-3:13) ",c"
++(0:23-0:26) "d, " --> (3:13-3:15) ",d"
++(0:26-0:28) "e]" --> (3:15-3:17) ",e"
++(0:28-0:31) " = " --> (3:17-3:20) "] ="
++(0:31-0:32) "[" --> (3:20-3:21) " "
++(0:32-0:38) "'a2', " --> (3:21-3:27) "['a2',"
++(0:38-0:44) "'b2', " --> (3:27-3:33) " 'b2',"
++(0:44-0:50) "'c2', " --> (3:33-3:39) " 'c2',"
++(0:50-0:56) "'d2', " --> (3:39-3:45) " 'd2',"
++(0:56-0:61) "'e2']" --> (3:45-3:50) " 'e2'"
++(0:61-1:1) "\n" --> (3:50-6:0) "];\n\n// main.js"
++- main.js
++(9:7-9:13) " const" --> (6:0-6:6) "\nconst"
++(9:13-9:14) " " --> (6:6-6:7) " "
++(9:14-9:17) "[a," --> (6:7-6:11) "[a$1"
++(9:17-9:20) " b," --> (6:11-6:15) ",b$1"
++(9:20-9:23) " c," --> (6:15-6:19) ",c$1"
++(9:23-9:26) " d," --> (6:19-6:23) ",d$1"
++(9:26-9:28) " e" --> (6:23-6:27) ",e$1"
++(9:28-9:31) "] =" --> (6:27-6:30) "] ="
++(9:31-9:32) " " --> (6:30-6:31) " "
++(9:32-9:37) "['a'," --> (6:31-6:36) "['a',"
++(9:37-9:42) " 'b'," --> (6:36-6:41) " 'b',"
++(9:42-9:47) " 'c'," --> (6:41-6:46) " 'c',"
++(9:47-9:52) " 'd'," --> (6:46-6:51) " 'd',"
++(9:52-9:56) " 'e'" --> (6:51-6:55) " 'e'"
++(9:56-11:0) "]\n" --> (6:55-7:0) "];"
++(11:0-11:9) "\nfunction" --> (7:0-7:9) "\nfunction"
++(11:9-11:13) " foo" --> (7:9-7:13) " foo"
++(11:13-11:18) "(a$1," --> (7:13-7:20) "(a$1$1,"
++(11:18-11:20) " {" --> (7:20-7:21) " "
++(11:20-11:25) " b$1 " --> (7:21-7:31) "{b$1:b$1$1"
++(11:25-11:27) "}," --> (7:31-7:33) "},"
++(11:27-11:29) " {" --> (7:33-7:34) " "
++(11:29-11:35) " c$1 =" --> (7:34-7:44) "{c$1:c$1$1"
++(11:35-11:42) " 'c$1' " --> (7:44-7:50) "='c$1'"
++(11:42-11:44) "}," --> (7:50-7:52) "},"
++(11:44-11:46) " {" --> (7:52-7:53) " "
++(11:46-11:51) " d$1 " --> (7:53-7:63) "{d$1:d$1$1"
++(11:51-11:54) "} =" --> (7:63-7:64) "}"
++(11:54-11:56) " {" --> (7:64-8:1) "={\n"
++(11:56-11:61) " d$1:" --> (8:1-8:5) "\td$1"
++(11:61-11:68) " 'd$1' " --> (8:5-9:1) ":'d$1'\n"
++(11:68-11:70) "}," --> (9:1-9:3) "},"
++(11:70-11:72) " {" --> (9:3-9:4) " "
++(11:72-11:78) " e$1 =" --> (9:4-9:14) "{e$1:e$1$1"
++(11:78-11:82) " '' " --> (9:14-9:17) "=''"
++(11:82-11:85) "} =" --> (9:17-9:18) "}"
++(11:85-11:87) " {" --> (9:18-10:1) "={\n"
++(11:87-11:92) " e$1:" --> (10:1-10:5) "\te$1"
++(11:92-11:99) " 'e$1' " --> (10:5-11:1) ":'e$1'\n"
++(11:99-11:101) "})" --> (11:1-11:3) "})"
++(11:101-12:2) " {\n " --> (11:3-12:0) " {"
++(12:2-12:9) " return" --> (12:0-12:8) "\n\treturn"
++(12:9-13:4) " {\n   " --> (12:8-13:2) " {\n\t"
++(13:4-13:10) " main:" --> (13:2-13:7) "\tmain"
++(13:10-13:11) " " --> (13:7-13:8) ":"
++(13:11-13:14) "[a," --> (13:8-13:13) "[a$1,"
++(13:14-13:17) " b," --> (13:13-13:18) " b$1,"
++(13:17-13:20) " c," --> (13:18-13:23) " c$1,"
++(13:20-13:23) " d," --> (13:23-13:28) " d$1,"
++(13:23-13:25) " e" --> (13:28-13:32) " e$1"
++(13:25-14:4) "],\n   " --> (13:32-14:2) "],\n\t"
++(14:4-14:11) " names:" --> (14:2-14:8) "\tnames"
++(14:11-14:12) " " --> (14:8-14:9) ":"
++(14:12-14:16) "[a2," --> (14:9-14:12) "[a,"
++(14:16-14:20) " b2," --> (14:12-14:15) " b,"
++(14:20-14:24) " c2," --> (14:15-14:18) " c,"
++(14:24-14:28) " d2," --> (14:18-14:21) " d,"
++(14:28-14:31) " e2" --> (14:21-14:23) " e"
++(14:31-15:4) "],\n   " --> (14:23-15:2) "],\n\t"
++(15:4-15:12) " params:" --> (15:2-15:9) "\tparams"
++(15:12-15:13) " " --> (15:9-15:10) ":"
++(15:13-15:18) "[a$1," --> (15:10-15:17) "[a$1$1,"
++(15:18-15:23) " b$1," --> (15:17-15:24) " b$1$1,"
++(15:23-15:28) " c$1," --> (15:24-15:31) " c$1$1,"
++(15:28-15:33) " d$1," --> (15:31-15:38) " d$1$1,"
++(15:33-15:37) " e$1" --> (15:38-15:44) " e$1$1"
++(15:37-16:3) "],\n  " --> (15:44-16:2) "]\n\t"
++(16:3-17:1) "}\n" --> (16:2-17:0) "};"
++(17:1-19:0) "}\n" --> (17:0-18:0) "\n}"
++(19:0-19:6) "\nconst" --> (18:0-18:6) "\nconst"
++(19:6-19:12) " ret =" --> (18:6-18:12) " ret ="
++(19:12-19:16) " foo" --> (18:12-18:16) " foo"
++(19:16-19:23) "('a$1'," --> (18:16-18:23) "('a$1',"
++(19:23-19:25) " {" --> (18:23-19:1) " {\n"
++(19:25-19:30) " b$1:" --> (19:1-19:5) "\tb$1"
++(19:30-19:37) " 'b$1' " --> (19:5-20:1) ":'b$1'\n"
++(19:37-19:39) "}," --> (20:1-20:3) "},"
++(19:39-19:41) " {" --> (20:3-20:5) " {"
++(19:41-19:43) "}," --> (20:5-20:7) "},"
++(19:43-19:54) " undefined," --> (20:7-20:18) " undefined,"
++(19:54-19:64) " undefined" --> (20:18-20:28) " undefined"
++(19:64-20:0) ")" --> (20:28-21:0) ");"
++(20:0-20:7) "\nassert" --> (21:0-21:7) "\nassert"
++(20:7-20:23) ".deepStrictEqual" --> (21:7-21:23) ".deepStrictEqual"
++(20:23-20:27) "(ret" --> (21:23-21:27) "(ret"
++(20:27-20:33) ".main," --> (21:27-21:33) ".main,"
++(20:33-20:34) " " --> (21:33-21:34) " "
++(20:34-20:39) "['a'," --> (21:34-21:39) "['a',"
++(20:39-20:44) " 'b'," --> (21:39-21:44) " 'b',"
++(20:44-20:49) " 'c'," --> (21:44-21:49) " 'c',"
++(20:49-20:54) " 'd'," --> (21:49-21:54) " 'd',"
++(20:54-20:58) " 'e'" --> (21:54-21:58) " 'e'"
++(20:58-20:59) "]" --> (21:58-21:59) "]"
++(20:59-21:0) ")" --> (21:59-22:0) ");"
++(21:0-21:7) "\nassert" --> (22:0-22:7) "\nassert"
++(21:7-21:23) ".deepStrictEqual" --> (22:7-22:23) ".deepStrictEqual"
++(21:23-21:27) "(ret" --> (22:23-22:27) "(ret"
++(21:27-21:34) ".names," --> (22:27-22:34) ".names,"
++(21:34-21:35) " " --> (22:34-22:35) " "
++(21:35-21:41) "['a2'," --> (22:35-22:41) "['a2',"
++(21:41-21:47) " 'b2'," --> (22:41-22:47) " 'b2',"
++(21:47-21:53) " 'c2'," --> (22:47-22:53) " 'c2',"
++(21:53-21:59) " 'd2'," --> (22:53-22:59) " 'd2',"
++(21:59-21:64) " 'e2'" --> (22:59-22:64) " 'e2'"
++(21:64-21:65) "]" --> (22:64-22:65) "]"
++(21:65-22:0) ")" --> (22:65-23:0) ");"
++(22:0-22:7) "\nassert" --> (23:0-23:7) "\nassert"
++(22:7-22:23) ".deepStrictEqual" --> (23:7-23:23) ".deepStrictEqual"
++(22:23-22:27) "(ret" --> (23:23-23:27) "(ret"
++(22:27-22:35) ".params," --> (23:27-23:35) ".params,"
++(22:35-22:36) " " --> (23:35-23:36) " "
++(22:36-22:43) "['a$1'," --> (23:36-23:43) "['a$1',"
++(22:43-22:50) " 'b$1'," --> (23:43-23:50) " 'b$1',"
++(22:50-22:57) " 'c$1'," --> (23:50-23:57) " 'c$1',"
++(22:57-22:64) " 'd$1'," --> (23:57-23:64) " 'd$1',"
++(22:64-22:70) " 'e$1'" --> (23:64-23:70) " 'e$1'"
++(22:70-22:71) "]" --> (23:70-23:71) "]"
++(22:71-23:1) ")\n" --> (23:71-26:34) ");\n\nexport { a$1 as a, b$1 as b, c$1 as c, d$1 as d, e$1 as e };\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/test.config.json b/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/test.config.json
+index 229e6f23e..c6d9fb070 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/test.config.json
+@@ -3,5 +3,6 @@
+         "external": [
+             "assert"
+         ]
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/artifacts.snap
+index defea3885..8a17551bb 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/artifacts.snap
+@@ -51,4 +51,146 @@ assert.equal(e$1, 'e1');
+ assert.equal(e, 'e2');
+ 
+ export { a$1 as a, a as a2, b$1 as b, b as b2, c$1 as c, c as c2, d$1 as d, d as d2, e$1 as e, e as e2 };
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- names.js
++(0:7-0:13) "const " --> (3:0-3:6) "\nconst"
++(0:13-0:14) "[" --> (3:6-3:7) " "
++(0:14-0:16) "a]" --> (3:7-3:9) "[a"
++(0:16-0:19) " = " --> (3:9-3:12) "] ="
++(0:19-0:20) "[" --> (3:12-3:13) " "
++(0:20-0:25) "'a2']" --> (3:13-3:18) "['a2'"
++(0:25-1:7) "\nexport" --> (3:18-4:0) "];"
++(1:7-1:13) " const" --> (4:0-4:6) "\nconst"
++(1:13-1:15) " {" --> (4:6-4:7) " "
++(1:15-1:18) " b " --> (4:7-4:9) "{b"
++(1:18-1:21) "} =" --> (4:9-4:12) "} ="
++(1:21-1:23) " {" --> (4:12-5:1) " {\n"
++(1:23-1:26) " b:" --> (5:1-5:3) "\tb"
++(1:26-1:32) " 'b2' " --> (5:3-6:1) ":'b2'\n"
++(1:32-2:7) "}\nexport" --> (6:1-7:0) "};"
++(2:7-2:13) " const" --> (7:0-7:6) "\nconst"
++(2:13-2:15) " {" --> (7:6-7:7) " "
++(2:15-2:18) " b:" --> (7:7-7:9) "{b"
++(2:18-2:21) " c " --> (7:9-7:11) ":c"
++(2:21-2:24) "} =" --> (7:11-7:14) "} ="
++(2:24-2:26) " {" --> (7:14-8:1) " {\n"
++(2:26-2:29) " b:" --> (8:1-8:3) "\tb"
++(2:29-2:35) " 'c2' " --> (8:3-9:1) ":'c2'\n"
++(2:35-3:7) "}\nexport" --> (9:1-10:0) "};"
++(3:7-3:13) " const" --> (10:0-10:6) "\nconst"
++(3:13-3:15) " {" --> (10:6-10:7) " "
++(3:15-3:19) " d =" --> (10:7-10:9) "{d"
++(3:19-3:23) " '' " --> (10:9-10:12) "=''"
++(3:23-3:26) "} =" --> (10:12-10:15) "} ="
++(3:26-3:28) " {" --> (10:15-11:1) " {\n"
++(3:28-3:31) " d:" --> (11:1-11:3) "\td"
++(3:31-3:37) " 'd2' " --> (11:3-12:1) ":'d2'\n"
++(3:37-4:7) "}\nexport" --> (12:1-13:0) "};"
++(4:7-4:13) " const" --> (13:0-13:6) "\nconst"
++(4:13-4:15) " {" --> (13:6-13:7) " "
++(4:15-4:18) " d:" --> (13:7-13:9) "{d"
++(4:18-4:22) " e =" --> (13:9-13:11) ":e"
++(4:22-4:26) " '' " --> (13:11-13:14) "=''"
++(4:26-4:29) "} =" --> (13:14-13:17) "} ="
++(4:29-4:31) " {" --> (13:17-14:1) " {\n"
++(4:31-4:34) " d:" --> (14:1-14:3) "\td"
++(4:34-4:40) " 'e2' " --> (14:3-15:1) ":'e2'\n"
++(4:40-6:1) "}\n\n" --> (15:1-18:0) "};\n\n// main.js"
++- main.js
++(2:7-2:13) " const" --> (18:0-18:6) "\nconst"
++(2:13-2:14) " " --> (18:6-18:7) " "
++(2:14-2:16) "[a" --> (18:7-18:11) "[a$1"
++(2:16-2:19) "] =" --> (18:11-18:14) "] ="
++(2:19-2:20) " " --> (18:14-18:15) " "
++(2:20-2:25) "['a1'" --> (18:15-18:20) "['a1'"
++(2:25-3:7) "]\nexport" --> (18:20-19:0) "];"
++(3:7-3:13) " const" --> (19:0-19:6) "\nconst"
++(3:13-3:15) " {" --> (19:6-19:7) " "
++(3:15-3:18) " b " --> (19:7-19:13) "{b:b$1"
++(3:18-3:21) "} =" --> (19:13-19:16) "} ="
++(3:21-3:23) " {" --> (19:16-20:1) " {\n"
++(3:23-3:26) " b:" --> (20:1-20:3) "\tb"
++(3:26-3:32) " 'b1' " --> (20:3-21:1) ":'b1'\n"
++(3:32-4:7) "}\nexport" --> (21:1-22:0) "};"
++(4:7-4:13) " const" --> (22:0-22:6) "\nconst"
++(4:13-4:15) " {" --> (22:6-22:7) " "
++(4:15-4:18) " b:" --> (22:7-22:9) "{b"
++(4:18-4:21) " c " --> (22:9-22:13) ":c$1"
++(4:21-4:24) "} =" --> (22:13-22:16) "} ="
++(4:24-4:26) " {" --> (22:16-23:1) " {\n"
++(4:26-4:29) " b:" --> (23:1-23:3) "\tb"
++(4:29-4:35) " 'c1' " --> (23:3-24:1) ":'c1'\n"
++(4:35-5:7) "}\nexport" --> (24:1-25:0) "};"
++(5:7-5:13) " const" --> (25:0-25:6) "\nconst"
++(5:13-5:15) " {" --> (25:6-25:7) " "
++(5:15-5:19) " d =" --> (25:7-25:13) "{d:d$1"
++(5:19-5:23) " '' " --> (25:13-25:16) "=''"
++(5:23-5:26) "} =" --> (25:16-25:19) "} ="
++(5:26-5:28) " {" --> (25:19-26:1) " {\n"
++(5:28-5:31) " d:" --> (26:1-26:3) "\td"
++(5:31-5:37) " 'd1' " --> (26:3-27:1) ":'d1'\n"
++(5:37-6:7) "}\nexport" --> (27:1-28:0) "};"
++(6:7-6:13) " const" --> (28:0-28:6) "\nconst"
++(6:13-6:15) " {" --> (28:6-28:7) " "
++(6:15-6:18) " d:" --> (28:7-28:9) "{d"
++(6:18-6:22) " e =" --> (28:9-28:13) ":e$1"
++(6:22-6:26) " '' " --> (28:13-28:16) "=''"
++(6:26-6:29) "} =" --> (28:16-28:19) "} ="
++(6:29-6:31) " {" --> (28:19-29:1) " {\n"
++(6:31-6:34) " d:" --> (29:1-29:3) "\td"
++(6:34-6:40) " 'e1' " --> (29:3-30:1) ":'e1'\n"
++(6:40-9:0) "}\nexport { a2, b2, c2, d2, e2 }\n" --> (30:1-31:0) "};"
++(9:0-9:7) "\nassert" --> (31:0-31:7) "\nassert"
++(9:7-9:13) ".equal" --> (31:7-31:13) ".equal"
++(9:13-9:16) "(a," --> (31:13-31:18) "(a$1,"
++(9:16-9:21) " 'a1'" --> (31:18-31:23) " 'a1'"
++(9:21-10:0) ")" --> (31:23-32:0) ");"
++(10:0-10:7) "\nassert" --> (32:0-32:7) "\nassert"
++(10:7-10:13) ".equal" --> (32:7-32:13) ".equal"
++(10:13-10:17) "(a2," --> (32:13-32:16) "(a,"
++(10:17-10:22) " 'a2'" --> (32:16-32:21) " 'a2'"
++(10:22-11:0) ")" --> (32:21-33:0) ");"
++(11:0-11:7) "\nassert" --> (33:0-33:7) "\nassert"
++(11:7-11:13) ".equal" --> (33:7-33:13) ".equal"
++(11:13-11:16) "(b," --> (33:13-33:18) "(b$1,"
++(11:16-11:21) " 'b1'" --> (33:18-33:23) " 'b1'"
++(11:21-12:0) ")" --> (33:23-34:0) ");"
++(12:0-12:7) "\nassert" --> (34:0-34:7) "\nassert"
++(12:7-12:13) ".equal" --> (34:7-34:13) ".equal"
++(12:13-12:17) "(b2," --> (34:13-34:16) "(b,"
++(12:17-12:22) " 'b2'" --> (34:16-34:21) " 'b2'"
++(12:22-13:0) ")" --> (34:21-35:0) ");"
++(13:0-13:7) "\nassert" --> (35:0-35:7) "\nassert"
++(13:7-13:13) ".equal" --> (35:7-35:13) ".equal"
++(13:13-13:16) "(c," --> (35:13-35:18) "(c$1,"
++(13:16-13:21) " 'c1'" --> (35:18-35:23) " 'c1'"
++(13:21-14:0) ")" --> (35:23-36:0) ");"
++(14:0-14:7) "\nassert" --> (36:0-36:7) "\nassert"
++(14:7-14:13) ".equal" --> (36:7-36:13) ".equal"
++(14:13-14:17) "(c2," --> (36:13-36:16) "(c,"
++(14:17-14:22) " 'c2'" --> (36:16-36:21) " 'c2'"
++(14:22-15:0) ")" --> (36:21-37:0) ");"
++(15:0-15:7) "\nassert" --> (37:0-37:7) "\nassert"
++(15:7-15:13) ".equal" --> (37:7-37:13) ".equal"
++(15:13-15:16) "(d," --> (37:13-37:18) "(d$1,"
++(15:16-15:21) " 'd1'" --> (37:18-37:23) " 'd1'"
++(15:21-16:0) ")" --> (37:23-38:0) ");"
++(16:0-16:7) "\nassert" --> (38:0-38:7) "\nassert"
++(16:7-16:13) ".equal" --> (38:7-38:13) ".equal"
++(16:13-16:17) "(d2," --> (38:13-38:16) "(d,"
++(16:17-16:22) " 'd2'" --> (38:16-38:21) " 'd2'"
++(16:22-17:0) ")" --> (38:21-39:0) ");"
++(17:0-17:7) "\nassert" --> (39:0-39:7) "\nassert"
++(17:7-17:13) ".equal" --> (39:7-39:13) ".equal"
++(17:13-17:16) "(e," --> (39:13-39:18) "(e$1,"
++(17:16-17:21) " 'e1'" --> (39:18-39:23) " 'e1'"
++(17:21-18:0) ")" --> (39:23-40:0) ");"
++(18:0-18:7) "\nassert" --> (40:0-40:7) "\nassert"
++(18:7-18:13) ".equal" --> (40:7-40:13) ".equal"
++(18:13-18:17) "(e2," --> (40:13-40:16) "(e,"
++(18:17-18:22) " 'e2'" --> (40:16-40:21) " 'e2'"
++(18:22-20:1) ")\n\n" --> (40:21-43:34) ");\n\nexport { a$1 as a, a as a2, b$1 as b, b as b2, c$1 as c, c as c2, d$1 as d, d as d2, e$1 as e, e as e2 };\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/test.config.json b/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/test.config.json
+index 229e6f23e..c6d9fb070 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/test.config.json
+@@ -3,5 +3,6 @@
+         "external": [
+             "assert"
+         ]
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/artifacts.snap
+index afafe64f5..3aa5bfcc5 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/artifacts.snap
+@@ -31,4 +31,70 @@ assert.strictEqual(baz$1, 'baz');
+ assert.strictEqual(baz, 'baz2');
+ 
+ export { baz$1 as baz, baz as baz2 };
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- names.js
++(0:7-0:13) "const " --> (3:0-3:6) "\nconst"
++(0:13-0:15) "{ " --> (3:6-3:7) " "
++(0:15-0:20) "foo: " --> (3:7-3:11) "{foo"
++(0:20-0:22) "{ " --> (3:11-3:12) ":"
++(0:22-0:27) "bar: " --> (3:12-3:16) "{bar"
++(0:27-0:29) "{ " --> (3:16-3:17) ":"
++(0:29-0:35) "baz = " --> (3:17-3:21) "{baz"
++(0:35-0:39) "'' }" --> (3:21-3:24) "=''"
++(0:39-0:42) " = " --> (3:24-3:25) "}"
++(0:42-0:44) "{}" --> (3:25-3:27) "={"
++(0:44-0:46) " }" --> (3:27-3:28) "}"
++(0:46-0:49) " = " --> (3:28-3:29) "}"
++(0:49-0:51) "{}" --> (3:29-3:31) "={"
++(0:51-0:53) " }" --> (3:31-3:32) "}"
++(0:53-0:56) " = " --> (3:32-3:35) "} ="
++(0:56-0:58) "{ " --> (3:35-4:1) " {\n"
++(0:58-0:63) "foo: " --> (4:1-4:5) "\tfoo"
++(0:63-0:65) "{ " --> (4:5-5:2) ":{\n\t"
++(0:65-0:70) "bar: " --> (5:2-5:6) "\tbar"
++(0:70-0:72) "{ " --> (5:6-6:3) ":{\n\t\t"
++(0:72-0:77) "baz: " --> (6:3-6:7) "\tbaz"
++(0:77-0:85) "'baz2' }" --> (6:7-7:3) ":'baz2'\n\t\t"
++(0:85-0:87) " }" --> (7:3-8:2) "}\n\t"
++(0:87-0:89) " }" --> (8:2-9:1) "}\n"
++(0:89-2:1) "\n\n" --> (9:1-12:0) "};\n\n// main.js"
++- main.js
++(2:7-2:13) " const" --> (12:0-12:6) "\nconst"
++(2:13-2:15) " {" --> (12:6-12:7) " "
++(2:15-2:20) " foo:" --> (12:7-12:11) "{foo"
++(2:20-2:22) " {" --> (12:11-12:12) ":"
++(2:22-2:27) " bar:" --> (12:12-12:16) "{bar"
++(2:27-2:29) " {" --> (12:16-12:17) ":"
++(2:29-2:35) " baz =" --> (12:17-12:27) "{baz:baz$1"
++(2:35-2:39) " '' " --> (12:27-12:30) "=''"
++(2:39-2:42) "} =" --> (12:30-12:31) "}"
++(2:42-2:44) " {" --> (12:31-12:33) "={"
++(2:44-2:46) "} " --> (12:33-12:34) "}"
++(2:46-2:49) "} =" --> (12:34-12:35) "}"
++(2:49-2:51) " {" --> (12:35-12:37) "={"
++(2:51-2:53) "} " --> (12:37-12:38) "}"
++(2:53-2:56) "} =" --> (12:38-12:41) "} ="
++(2:56-2:58) " {" --> (12:41-13:1) " {\n"
++(2:58-2:63) " foo:" --> (13:1-13:5) "\tfoo"
++(2:63-2:65) " {" --> (13:5-14:2) ":{\n\t"
++(2:65-2:70) " bar:" --> (14:2-14:6) "\tbar"
++(2:70-2:72) " {" --> (14:6-15:3) ":{\n\t\t"
++(2:72-2:77) " baz:" --> (15:3-15:7) "\tbaz"
++(2:77-2:84) " 'baz' " --> (15:7-16:3) ":'baz'\n\t\t"
++(2:84-2:86) "} " --> (16:3-17:2) "}\n\t"
++(2:86-2:88) "} " --> (17:2-18:1) "}\n"
++(2:88-3:0) "}" --> (18:1-19:0) "};"
++(3:0-3:7) "\nassert" --> (19:0-19:7) "\nassert"
++(3:7-3:19) ".strictEqual" --> (19:7-19:19) ".strictEqual"
++(3:19-3:24) "(baz," --> (19:19-19:26) "(baz$1,"
++(3:24-3:30) " 'baz'" --> (19:26-19:32) " 'baz'"
++(3:30-4:0) ")" --> (19:32-20:0) ");"
++(4:0-4:7) "\nassert" --> (20:0-20:7) "\nassert"
++(4:7-4:19) ".strictEqual" --> (20:7-20:19) ".strictEqual"
++(4:19-4:25) "(baz2," --> (20:19-20:24) "(baz,"
++(4:25-4:32) " 'baz2'" --> (20:24-20:31) " 'baz2'"
++(4:32-7:1) ")\n\nexport { baz, baz2 }\n" --> (20:31-23:34) ");\n\nexport { baz$1 as baz, baz as baz2 };\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/test.config.json b/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/test.config.json
+index 229e6f23e..c6d9fb070 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/test.config.json
+@@ -3,5 +3,6 @@
+         "external": [
+             "assert"
+         ]
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/default_function/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/default_function/artifacts.snap
+index ddd12bc2e..74cc67f56 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/default_function/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/default_function/artifacts.snap
+@@ -25,4 +25,42 @@ var bar_default = {
+ const a = 2;
+ const {foo} = bar_default;
+ assert.strictEqual(typeof foo, 'function');
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- foo.js
++(0:0-0:6) "const " --> (3:0-3:6) "\nconst"
++(0:6-0:10) "a = " --> (3:6-3:12) " a$1 ="
++(0:10-2:15) "1;\n\nexport default" --> (3:12-4:0) " 1;"
++(2:15-2:24) " function" --> (4:0-4:9) "\nfunction"
++(2:24-2:28) " foo" --> (4:9-4:15) " foo$1"
++(2:28-2:33) "(a$1)" --> (4:15-4:22) "(a$1$1)"
++(2:33-3:4) " {\n   " --> (4:22-5:0) " {"
++(3:4-3:12) " console" --> (5:0-5:9) "\n\tconsole"
++(3:12-3:16) ".log" --> (5:9-5:13) ".log"
++(3:16-3:21) "(a$1," --> (5:13-5:20) "(a$1$1,"
++(3:21-3:23) " a" --> (5:20-5:24) " a$1"
++(3:23-4:1) ")\n" --> (5:24-6:0) ");"
++(4:1-4:2) "}" --> (6:0-9:0) "\n}\n\n// bar.js"
++- bar.js
++(0:0-2:15) "import foo from './foo'\n\nexport default" --> (9:0-9:18) "\nvar bar_default ="
++(2:15-2:17) " {" --> (9:18-10:1) " {\n"
++(2:17-2:22) " foo " --> (10:1-11:1) "\tfoo:foo$1\n"
++(2:22-2:23) "}" --> (11:1-14:0) "};\n\n// main.js"
++- main.js
++(3:0-3:6) "\nconst" --> (14:0-14:6) "\nconst"
++(3:6-3:10) " a =" --> (14:6-14:10) " a ="
++(3:10-5:0) " 2; // make foo `a` conflict\n" --> (14:10-15:0) " 2;"
++(5:0-5:6) "\nconst" --> (15:0-15:6) "\nconst"
++(5:6-5:8) " {" --> (15:6-15:7) " "
++(5:8-5:13) " foo " --> (15:7-15:11) "{foo"
++(5:13-5:16) "} =" --> (15:11-15:14) "} ="
++(5:16-7:0) " bar\n" --> (15:14-16:0) " bar_default;"
++(7:0-7:7) "\nassert" --> (16:0-16:7) "\nassert"
++(7:7-7:26) ".strictEqual(typeof" --> (16:7-16:26) ".strictEqual(typeof"
++(7:26-7:31) " foo," --> (16:26-16:31) " foo,"
++(7:31-7:42) " 'function'" --> (16:31-16:42) " 'function'"
++(7:42-7:43) ")" --> (16:42-18:34) ");\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/default_function/test.config.json b/crates/rolldown/tests/fixtures/deconflict/default_function/test.config.json
+index 7e20017b9..712eee262 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/default_function/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/default_function/test.config.json
+@@ -4,5 +4,6 @@
+             "assert"
+         ],
+         "treeshake": false
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/issue_364/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/issue_364/artifacts.snap
+index e46471d23..0e92456b3 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/issue_364/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/issue_364/artifacts.snap
+@@ -19,4 +19,35 @@ const a$1$1 = 'a$1';
+ assert.equal(a, 'shared.js');
+ assert.equal(a$1, 'a');
+ assert.equal(a$1$1, 'a$1');
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- shared.js
++(0:0-0:6) "const " --> (3:0-3:6) "\nconst"
++(0:6-0:10) "a = " --> (3:6-3:10) " a ="
++(0:10-2:13) "'shared.js'\n\nexport { a }" --> (3:10-6:0) " 'shared.js';\n\n// main.js"
++- main.js
++(2:0-2:6) "\nconst" --> (6:0-6:6) "\nconst"
++(2:6-2:10) " a =" --> (6:6-6:12) " a$1 ="
++(2:10-3:0) " 'a'" --> (6:12-7:0) " 'a';"
++(3:0-3:6) "\nconst" --> (7:0-7:6) "\nconst"
++(3:6-3:12) " a$1 =" --> (7:6-7:14) " a$1$1 ="
++(3:12-5:0) " 'a$1'\n" --> (7:14-8:0) " 'a$1';"
++(5:0-5:7) "\nassert" --> (8:0-8:7) "\nassert"
++(5:7-5:13) ".equal" --> (8:7-8:13) ".equal"
++(5:13-5:17) "(a2," --> (8:13-8:16) "(a,"
++(5:17-5:29) " 'shared.js'" --> (8:16-8:28) " 'shared.js'"
++(5:29-6:0) ")" --> (8:28-9:0) ");"
++(6:0-6:7) "\nassert" --> (9:0-9:7) "\nassert"
++(6:7-6:13) ".equal" --> (9:7-9:13) ".equal"
++(6:13-6:16) "(a," --> (9:13-9:18) "(a$1,"
++(6:16-6:20) " 'a'" --> (9:18-9:22) " 'a'"
++(6:20-7:0) ")" --> (9:22-10:0) ");"
++(7:0-7:7) "\nassert" --> (10:0-10:7) "\nassert"
++(7:7-7:13) ".equal" --> (10:7-10:13) ".equal"
++(7:13-7:18) "(a$1," --> (10:13-10:20) "(a$1$1,"
++(7:18-7:24) " 'a$1'" --> (10:20-10:26) " 'a$1'"
++(7:24-8:1) ")\n" --> (10:26-12:34) ");\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/issue_364/test.config.json b/crates/rolldown/tests/fixtures/deconflict/issue_364/test.config.json
+index e2b37cb84..d0b601e7c 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/issue_364/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/issue_364/test.config.json
+@@ -3,5 +3,6 @@
+     "external": [
+       "node:assert"
+     ]
+-  }
++  },
++  "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/reserved_names/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/reserved_names/artifacts.snap
+index 5859b2a40..9f96c9f3e 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/reserved_names/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/reserved_names/artifacts.snap
+@@ -1,6 +1,5 @@
+ ---
+ source: crates/rolldown/tests/common/case.rs
+-assertion_line: 135
+ expression: content
+ input_file: crates/rolldown/tests/fixtures/deconflict/reserved_names
+ ---
+diff --git a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/artifacts.snap
+index effe2a246..50258d3ce 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/artifacts.snap
+@@ -35,4 +35,40 @@ const a = 2;
+ const {foo} = bar_default;
+ assert.strictEqual(typeof foo, 'function');
+ init_foo(),__toCommonJS(foo_ns);
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- foo.js
++(2:15-2:24) " function" --> (4:0-4:9) "\nfunction"
++(2:24-2:28) " foo" --> (4:9-4:15) " foo$1"
++(2:28-2:33) "(a$1)" --> (4:15-4:22) "(a$1$1)"
++(2:33-3:4) " {\n   " --> (4:22-5:0) " {"
++(3:4-3:12) " console" --> (5:0-5:9) "\n\tconsole"
++(3:12-3:16) ".log" --> (5:9-5:13) ".log"
++(3:16-3:21) "(a$1," --> (5:13-5:20) "(a$1$1,"
++(3:21-3:23) " a" --> (5:20-5:24) " a$1"
++(3:23-4:1) ")\n" --> (5:24-6:0) ");"
++(4:1-4:2) "}" --> (6:0-17:0) "\n}\nvar foo_ns, a$1;\nvar init_foo = __esmMin(() => {\n\tfoo_ns = {};\n\t__export(foo_ns, {\n\t\tdefault:() => foo$1\n\t});\n\ta$1 = 1;\n});\n\n// bar.js"
++- bar.js
++(0:0-2:15) "import foo from './foo'\n\nexport default" --> (17:0-18:18) "\ninit_foo();\nvar bar_default ="
++(2:15-2:17) " {" --> (18:18-19:1) " {\n"
++(2:17-2:22) " foo " --> (19:1-20:1) "\tfoo:foo$1\n"
++(2:22-2:23) "}" --> (20:1-23:0) "};\n\n// main.js"
++- main.js
++(3:0-3:6) "\nconst" --> (23:0-23:6) "\nconst"
++(3:6-3:10) " a =" --> (23:6-23:10) " a ="
++(3:10-5:0) " 2; // make foo `a` conflict\n" --> (23:10-24:0) " 2;"
++(5:0-5:6) "\nconst" --> (24:0-24:6) "\nconst"
++(5:6-5:8) " {" --> (24:6-24:7) " "
++(5:8-5:13) " foo " --> (24:7-24:11) "{foo"
++(5:13-5:16) "} =" --> (24:11-24:14) "} ="
++(5:16-7:0) " bar\n" --> (24:14-25:0) " bar_default;"
++(7:0-7:7) "\nassert" --> (25:0-25:7) "\nassert"
++(7:7-7:26) ".strictEqual(typeof" --> (25:7-25:26) ".strictEqual(typeof"
++(7:26-7:31) " foo," --> (25:26-25:31) " foo,"
++(7:31-7:42) " 'function'" --> (25:31-25:42) " 'function'"
++(7:42-9:0) ")\n" --> (25:42-26:0) ");"
++(9:0-9:17) "\nrequire('./foo')" --> (26:0-28:34) "\ninit_foo(),__toCommonJS(foo_ns);\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/test.config.json b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/test.config.json
+index 7e20017b9..712eee262 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/test.config.json
+@@ -4,5 +4,6 @@
+             "assert"
+         ],
+         "treeshake": false
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/artifacts.snap b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/artifacts.snap
+index c463a851c..8374b1dd4 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/artifacts.snap
+@@ -35,4 +35,40 @@ const a = 2;
+ const {foo} = bar_default;
+ assert.strictEqual(typeof foo, 'function');
+ init_foo(),__toCommonJS(foo_ns);
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- foo.js
++(2:7-2:16) " function" --> (4:0-4:9) "\nfunction"
++(2:16-2:20) " foo" --> (4:9-4:15) " foo$1"
++(2:20-2:25) "(a$1)" --> (4:15-4:22) "(a$1$1)"
++(2:25-3:4) " {\n   " --> (4:22-5:0) " {"
++(3:4-3:12) " console" --> (5:0-5:9) "\n\tconsole"
++(3:12-3:16) ".log" --> (5:9-5:13) ".log"
++(3:16-3:21) "(a$1," --> (5:13-5:20) "(a$1$1,"
++(3:21-3:23) " a" --> (5:20-5:24) " a$1"
++(3:23-4:1) ")\n" --> (5:24-6:0) ");"
++(4:1-4:2) "}" --> (6:0-17:0) "\n}\nvar foo_ns, a$1;\nvar init_foo = __esmMin(() => {\n\tfoo_ns = {};\n\t__export(foo_ns, {\n\t\tfoo:() => foo$1\n\t});\n\ta$1 = 1;\n});\n\n// bar.js"
++- bar.js
++(0:0-2:15) "import { foo } from './foo'\n\nexport default" --> (17:0-18:18) "\ninit_foo();\nvar bar_default ="
++(2:15-2:17) " {" --> (18:18-19:1) " {\n"
++(2:17-2:22) " foo " --> (19:1-20:1) "\tfoo:foo$1\n"
++(2:22-2:23) "}" --> (20:1-23:0) "};\n\n// main.js"
++- main.js
++(3:0-3:6) "\nconst" --> (23:0-23:6) "\nconst"
++(3:6-3:10) " a =" --> (23:6-23:10) " a ="
++(3:10-5:0) " 2; // make foo `a` conflict\n" --> (23:10-24:0) " 2;"
++(5:0-5:6) "\nconst" --> (24:0-24:6) "\nconst"
++(5:6-5:8) " {" --> (24:6-24:7) " "
++(5:8-5:13) " foo " --> (24:7-24:11) "{foo"
++(5:13-5:16) "} =" --> (24:11-24:14) "} ="
++(5:16-7:0) " bar\n" --> (24:14-25:0) " bar_default;"
++(7:0-7:7) "\nassert" --> (25:0-25:7) "\nassert"
++(7:7-7:26) ".strictEqual(typeof" --> (25:7-25:26) ".strictEqual(typeof"
++(7:26-7:31) " foo," --> (25:26-25:31) " foo,"
++(7:31-7:42) " 'function'" --> (25:31-25:42) " 'function'"
++(7:42-9:0) ")\n" --> (25:42-26:0) ");"
++(9:0-9:17) "\nrequire('./foo')" --> (26:0-28:34) "\ninit_foo(),__toCommonJS(foo_ns);\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/test.config.json b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/test.config.json
+index 7e20017b9..712eee262 100644
+--- a/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/test.config.json
++++ b/crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/test.config.json
+@@ -4,5 +4,6 @@
+             "assert"
+         ],
+         "treeshake": false
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/mix-cjs-esm/artifacts.snap b/crates/rolldown/tests/fixtures/mix-cjs-esm/artifacts.snap
+index a5cbc1f6d..9673e17f9 100644
+--- a/crates/rolldown/tests/fixtures/mix-cjs-esm/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/mix-cjs-esm/artifacts.snap
+@@ -38,4 +38,33 @@ console.log(import_cjs.a);
+ 
+ // main.js
+ var import_esm_import_cjs_export = __toESM(require_esm_import_cjs_export());
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- esm-export-cjs-export.js
++(0:0-0:7) "module." --> (3:0-3:7) "\nmodule"
++(0:7-0:17) "exports = " --> (3:7-3:17) ".exports ="
++(0:17-1:24) "1;\nexport const value = 1;" --> (3:17-6:0) " 1;\n\n// foo.js"
++- foo.js
++(0:0-0:0) "" --> (6:0-10:0) "\nvar require_foo = __commonJSMin((exports, module) => {\n});\n\n// esm-export-cjs-require.js"
++- esm-export-cjs-require.js
++(0:0-1:24) "require('./foo')\nexport const value = 1;" --> (10:0-13:0) "\nrequire_foo();\n\n// esm-import-cjs-export.js"
++- esm-import-cjs-export.js
++(0:0-1:0) "import './foo'" --> (13:0-15:0) "\nvar require_esm_import_cjs_export = __commonJSMin((exports, module) => {\n\tvar import_foo = __toESM(require_foo());"
++(1:0-1:7) "\nmodule" --> (15:0-15:8) "\n\tmodule"
++(1:7-1:17) ".exports =" --> (15:8-15:18) ".exports ="
++(1:17-1:19) " 1" --> (15:18-19:0) " 1;\n});\n\n// cjs.js"
++- cjs.js
++(0:0-0:7) "module." --> (19:0-20:8) "\nvar require_cjs = __commonJSMin((exports, module) => {\n\tmodule"
++(0:7-0:17) "exports = " --> (20:8-20:18) ".exports ="
++(0:17-0:19) "1;" --> (20:18-24:0) " 1;\n});\n\n// esm-import-cjs-require.js"
++- esm-import-cjs-require.js
++(0:0-1:0) "import { a } from './cjs'" --> (24:0-25:0) "\nvar import_cjs = __toESM(require_cjs());"
++(1:0-2:0) "\nrequire('./foo')" --> (25:0-26:0) "\nrequire_foo();"
++(2:0-2:8) "\nconsole" --> (26:0-26:8) "\nconsole"
++(2:8-2:14) ".log(a" --> (26:8-26:25) ".log(import_cjs.a"
++(2:14-2:15) ")" --> (26:25-29:0) ");\n\n// main.js"
++(0:0-3:34) "import \"./esm-export-cjs-export\"\nimport \"./esm-export-cjs-require\"\nimport \"./esm-import-cjs-export\"\nimport \"./esm-import-cjs-require\"" --> (29:0-31:34) "\nvar import_esm_import_cjs_export = __toESM(require_esm_import_cjs_export());\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/mix-cjs-esm/test.config.json b/crates/rolldown/tests/fixtures/mix-cjs-esm/test.config.json
+index 9e26dfeeb..b1d378a7f 100644
+--- a/crates/rolldown/tests/fixtures/mix-cjs-esm/test.config.json
++++ b/crates/rolldown/tests/fixtures/mix-cjs-esm/test.config.json
+@@ -1 +1,3 @@
+-{}
+\ No newline at end of file
++{
++    "sourcemap": true
++}
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/object_shorthand_property/artifacts.snap b/crates/rolldown/tests/fixtures/object_shorthand_property/artifacts.snap
+index 99e481e73..a80b471b4 100644
+--- a/crates/rolldown/tests/fixtures/object_shorthand_property/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/object_shorthand_property/artifacts.snap
+@@ -18,4 +18,24 @@ const value = {
+ 	foo:foo_default
+ };
+ assert.strictEqual(value.foo, 'foo');
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- foo.js
++(0:0-0:15) "export default " --> (3:0-3:18) "\nvar foo_default ="
++(0:15-0:20) "'foo'" --> (3:18-6:0) " 'foo';\n\n// main.js"
++- main.js
++(3:0-3:6) "\nconst" --> (6:0-6:6) "\nconst"
++(3:6-3:14) " value =" --> (6:6-6:14) " value ="
++(3:14-3:16) " {" --> (6:14-7:1) " {\n"
++(3:16-3:21) " foo " --> (7:1-8:1) "\tfoo:foo_default\n"
++(3:21-5:0) "}\n" --> (8:1-9:0) "};"
++(5:0-5:7) "\nassert" --> (9:0-9:7) "\nassert"
++(5:7-5:19) ".strictEqual" --> (9:7-9:19) ".strictEqual"
++(5:19-5:25) "(value" --> (9:19-9:25) "(value"
++(5:25-5:30) ".foo," --> (9:25-9:30) ".foo,"
++(5:30-5:36) " 'foo'" --> (9:30-9:36) " 'foo'"
++(5:36-5:37) ")" --> (9:36-11:34) ");\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/object_shorthand_property/test.config.json b/crates/rolldown/tests/fixtures/object_shorthand_property/test.config.json
+index 229e6f23e..c6d9fb070 100644
+--- a/crates/rolldown/tests/fixtures/object_shorthand_property/test.config.json
++++ b/crates/rolldown/tests/fixtures/object_shorthand_property/test.config.json
+@@ -3,5 +3,6 @@
+         "external": [
+             "assert"
+         ]
+-    }
++    },
++    "sourcemap": true
+ }
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/require/require_cjs/artifacts.snap b/crates/rolldown/tests/fixtures/require/require_cjs/artifacts.snap
+index ec26e74ea..4982d36ce 100644
+--- a/crates/rolldown/tests/fixtures/require/require_cjs/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/require/require_cjs/artifacts.snap
+@@ -18,4 +18,18 @@ var require_cjs = __commonJSMin((exports, module) => {
+ // main.js
+ require_cjs();
+ var cjs = require_cjs();
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- cjs.js
++(0:0-0:7) "module." --> (3:0-4:8) "\nvar require_cjs = __commonJSMin((exports, module) => {\n\tmodule"
++(0:7-0:17) "exports = " --> (4:8-4:18) ".exports ="
++(0:17-0:19) "{}" --> (4:18-4:20) " {"
++(0:19-1:1) "\n" --> (4:20-8:0) "};\n});\n\n// main.js"
++- main.js
++(0:0-1:0) "require('./cjs.js');" --> (8:0-9:0) "\nrequire_cjs();"
++(1:0-1:4) "\nvar" --> (9:0-9:4) "\nvar"
++(1:4-2:1) " cjs = require('./cjs.js');\n" --> (9:4-11:34) " cjs = require_cjs();\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/require/require_cjs/test.config.json b/crates/rolldown/tests/fixtures/require/require_cjs/test.config.json
+index 9e26dfeeb..b1d378a7f 100644
+--- a/crates/rolldown/tests/fixtures/require/require_cjs/test.config.json
++++ b/crates/rolldown/tests/fixtures/require/require_cjs/test.config.json
+@@ -1 +1,3 @@
+-{}
+\ No newline at end of file
++{
++    "sourcemap": true
++}
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/require/require_esm/artifacts.snap b/crates/rolldown/tests/fixtures/require/require_esm/artifacts.snap
+index 0b988d235..6fe3b790c 100644
+--- a/crates/rolldown/tests/fixtures/require/require_esm/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/require/require_esm/artifacts.snap
+@@ -19,4 +19,15 @@ var init_esm = __esmMin(() => {
+ // main.js
+ init_esm(),__toCommonJS(esm_ns);
+ var esm = (init_esm(),__toCommonJS(esm_ns));
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- esm.js
++(0:0-1:1) "export { }\n" --> (3:0-9:0) "\nvar esm_ns;\nvar init_esm = __esmMin(() => {\n\tesm_ns = {};\n});\n\n// main.js"
++- main.js
++(0:0-1:0) "require('./esm.js');" --> (9:0-10:0) "\ninit_esm(),__toCommonJS(esm_ns);"
++(1:0-1:4) "\nvar" --> (10:0-10:4) "\nvar"
++(1:4-2:1) " esm = require('./esm.js');\n" --> (10:4-12:34) " esm = (init_esm(),__toCommonJS(esm_ns));\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/require/require_esm/test.config.json b/crates/rolldown/tests/fixtures/require/require_esm/test.config.json
+index 9e26dfeeb..b1d378a7f 100644
+--- a/crates/rolldown/tests/fixtures/require/require_esm/test.config.json
++++ b/crates/rolldown/tests/fixtures/require/require_esm/test.config.json
+@@ -1 +1,3 @@
+-{}
+\ No newline at end of file
++{
++    "sourcemap": true
++}
+\ No newline at end of file
+diff --git a/crates/rolldown/tests/fixtures/wrapped_esm/artifacts.snap b/crates/rolldown/tests/fixtures/wrapped_esm/artifacts.snap
+index d9d578c4b..f32b3b70a 100644
+--- a/crates/rolldown/tests/fixtures/wrapped_esm/artifacts.snap
++++ b/crates/rolldown/tests/fixtures/wrapped_esm/artifacts.snap
+@@ -33,4 +33,21 @@ var init_foo = __esmMin(() => {
+ 
+ // main.js
+ init_foo(),__toCommonJS(foo_ns);
++
++//# sourceMappingURL=main.mjs.map
+ ```
++
++# Sourcemap Visualizer
++
++- foo.js
++(1:7-1:16) " function" --> (3:0-3:9) "\nfunction"
++(1:16-1:22) " foo()" --> (3:9-3:15) " foo()"
++(1:22-1:25) " { " --> (3:15-4:0) " {"
++(1:25-2:7) "}\nexport" --> (4:0-17:1) "\n}\nvar foo_ns, a, b, c, bar, baz;\nvar init_foo = __esmMin(() => {\n\tfoo_ns = {};\n\t__export(foo_ns, {\n\t\ta:() => a,\n\t\tb:() => b,\n\t\tbar:() => bar,\n\t\tc:() => c,\n\t\tdefault:() => baz,\n\t\tfoo:() => foo\n\t});\n\t[b] = [],[c=1] = [];\n"
++(2:7-2:17) " class bar" --> (17:1-17:13) "\tbar = class"
++(2:17-2:20) " { " --> (17:13-18:1) " {\n"
++(2:20-3:15) "}\nexport default" --> (18:1-19:1) "\t};\n"
++(3:15-3:25) " class baz" --> (19:1-19:13) "\tbaz = class"
++(3:25-3:28) " { " --> (19:13-20:1) " {\n"
++(3:28-7:1) "}\n\n\nexport { }\n" --> (20:1-24:0) "\t};\n});\n\n// main.js"
++(0:0-1:1) "require('./foo')\n" --> (24:0-26:34) "\ninit_foo(),__toCommonJS(foo_ns);\n\n//# sourceMappingURL=main.mjs.map"
+diff --git a/crates/rolldown/tests/fixtures/wrapped_esm/test.config.json b/crates/rolldown/tests/fixtures/wrapped_esm/test.config.json
+index 9e26dfeeb..b1d378a7f 100644
+--- a/crates/rolldown/tests/fixtures/wrapped_esm/test.config.json
++++ b/crates/rolldown/tests/fixtures/wrapped_esm/test.config.json
+@@ -1 +1,3 @@
+-{}
+\ No newline at end of file
++{
++    "sourcemap": true
++}
+\ No newline at end of file

@@ -1,0 +1,40 @@
+diff --git a/codex-rs/memories/mcp/src/local_tests.rs b/codex-rs/memories/mcp/src/local_tests.rs
+--- a/codex-rs/memories/mcp/src/local_tests.rs
++++ b/codex-rs/memories/mcp/src/local_tests.rs
+@@ -531,3 +531,36 @@
+
+     assert!(matches!(err, MemoriesBackendError::InvalidPath { .. }));
+ }
++
++#[tokio::test]
++async fn search_supports_context_and_case() {
++    let tempdir = TempDir::new().expect("tempdir");
++    tokio::fs::write(
++        tempdir.path().join("MEMORY.md"),
++        "alpha\nneedle\nomega\n",
++    )
++    .await
++    .expect("write memory file");
++
++    let response = backend(&tempdir)
++        .search(SearchMemoriesRequest {
++            query: "needle".to_string(),
++            path: None,
++            cursor: None,
++            context_lines: 1,
++            case_sensitive: true,
++            max_results: DEFAULT_SEARCH_MAX_RESULTS,
++        })
++        .await
++        .expect("search with context");
++
++    assert_eq!(
++        response.matches,
++        vec![MemorySearchMatch {
++            path: "MEMORY.md".to_string(),
++            line_number: 2,
++            start_line_number: 1,
++            content: "alpha\nneedle\nomega".to_string(),
++        }]
++    );
++}

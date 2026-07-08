@@ -1,0 +1,15 @@
+diff --git a/tests/test_factorial.rs b/tests/test_factorial.rs
+new file mode 100644
+--- /dev/null
++++ b/tests/test_factorial.rs
+@@ -0,0 +1,10 @@
++use the_algorithms_rust::math::factorial_bigmath;
++use num_bigint::BigUint;
++use std::str::FromStr;
++
++#[test]
++fn test_factorial_bigmath_basic() {
++    assert_eq!(factorial_bigmath(10), BigUint::from_str("3628800").unwrap());
++    assert_eq!(factorial_bigmath(0), BigUint::from_str("1").unwrap());
++    assert_eq!(factorial_bigmath(1), BigUint::from_str("1").unwrap());
++}

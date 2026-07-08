@@ -1,0 +1,14 @@
+diff --git a/cpuid/src/transformer/intel.rs b/cpuid/src/transformer/intel.rs
+--- a/cpuid/src/transformer/intel.rs
++++ b/cpuid/src/transformer/intel.rs
+@@ -329,3 +329,10 @@
+         );
+     }
++
++    #[test]
++    fn test_vm_spec_new() {
++        let vm_spec = VmSpec::new(0, 1, false).expect("Error creating vm_spec");
++        drop(vm_spec);
++    }
++
+ }

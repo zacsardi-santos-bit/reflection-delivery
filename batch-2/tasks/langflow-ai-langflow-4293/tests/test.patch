@@ -1,0 +1,391 @@
+diff --git a/src/backend/tests/blockbuster.py b/src/backend/tests/blockbuster.py
+new file mode 100644
+index 0000000000..1b4ddfa36f
+--- /dev/null
++++ b/src/backend/tests/blockbuster.py
+@@ -0,0 +1,140 @@
++import asyncio
++import inspect
++import io
++import os
++import socket
++import ssl
++import sys
++import time
++from importlib.abc import FileLoader
++
++import forbiddenfruit
++
++
++class BlockingError(Exception): ...
++
++
++def _blocking_error(func):
++    if inspect.isbuiltin(func):
++        msg = f"Blocking call to {func.__qualname__} ({func.__self__})"
++    elif inspect.ismethoddescriptor(func):
++        msg = f"Blocking call to {func}"
++    else:
++        msg = f"Blocking call to {func.__module__}.{func.__qualname__}"
++    return BlockingError(msg)
++
++
++def _wrap_blocking(func):
++    def wrapper(*args, **kwargs):
++        try:
++            asyncio.get_running_loop()
++        except RuntimeError:
++            return func(*args, **kwargs)
++        raise _blocking_error(func)
++
++    return wrapper
++
++
++def _wrap_time_blocking(func):
++    def wrapper(*args, **kwargs):
++        try:
++            asyncio.get_running_loop()
++        except RuntimeError:
++            return func(*args, **kwargs)
++        for frame_info in inspect.stack():
++            if frame_info.filename.endswith("pydev/pydevd.py") and frame_info.function == "_do_wait_suspend":
++                return func(*args, **kwargs)
++
++        raise _blocking_error(func)
++
++    return wrapper
++
++
++def _wrap_os_blocking(func):
++    def os_op(fd, *args, **kwargs):
++        try:
++            asyncio.get_running_loop()
++        except RuntimeError:
++            return func(fd, *args, **kwargs)
++        if os.get_blocking(fd):
++            raise _blocking_error(func)
++        return func(fd, *args, **kwargs)
++
++    return os_op
++
++
++def _wrap_socket_blocking(func):
++    def socket_op(self, *args, **kwargs):
++        try:
++            asyncio.get_running_loop()
++        except RuntimeError:
++            return func(self, *args, **kwargs)
++        if self.getblocking():
++            raise _blocking_error(func)
++        return func(self, *args, **kwargs)
++
++    return socket_op
++
++
++def _wrap_file_read_blocking(func):
++    def file_op(self, *args, **kwargs):
++        try:
++            asyncio.get_running_loop()
++        except RuntimeError:
++            return func(self, *args, **kwargs)
++        for frame_info in inspect.stack():
++            if isinstance(frame_info.frame.f_locals.get("self"), FileLoader):
++                return func(self, *args, **kwargs)
++            if frame_info.filename.endswith("_pytest/assertion/rewrite.py") and frame_info.function in [
++                "_rewrite_test",
++                "_read_pyc",
++            ]:
++                return func(self, *args, **kwargs)
++        raise _blocking_error(func)
++
++    return file_op
++
++
++def _wrap_file_write_blocking(func):
++    def file_op(self, *args, **kwargs):
++        try:
++            asyncio.get_running_loop()
++        except RuntimeError:
++            return func(self, *args, **kwargs)
++        for frame_info in inspect.stack():
++            if frame_info.filename.endswith("_pytest/assertion/rewrite.py") and frame_info.function == "_write_pyc":
++                return func(self, *args, **kwargs)
++        if self not in [sys.stdout, sys.stderr]:
++            raise _blocking_error(func)
++        return func(self, *args, **kwargs)
++
++    return file_op
++
++
++def init():
++    time.sleep = _wrap_time_blocking(time.sleep)
++
++    os.read = _wrap_os_blocking(os.read)
++    os.write = _wrap_os_blocking(os.write)
++
++    socket.socket.send = _wrap_socket_blocking(socket.socket.send)
++    socket.socket.sendall = _wrap_socket_blocking(socket.socket.sendall)
++    socket.socket.sendto = _wrap_socket_blocking(socket.socket.sendto)
++    socket.socket.recv = _wrap_socket_blocking(socket.socket.recv)
++    socket.socket.recv_into = _wrap_socket_blocking(socket.socket.recv_into)
++    socket.socket.recvfrom = _wrap_socket_blocking(socket.socket.recvfrom)
++    socket.socket.recvfrom_into = _wrap_socket_blocking(socket.socket.recvfrom_into)
++    socket.socket.recvmsg = _wrap_socket_blocking(socket.socket.recvmsg)
++    socket.socket.recvmsg_into = _wrap_socket_blocking(socket.socket.recvmsg_into)
++
++    ssl.SSLSocket.write = _wrap_socket_blocking(ssl.SSLSocket.write)
++    ssl.SSLSocket.send = _wrap_socket_blocking(ssl.SSLSocket.send)
++    ssl.SSLSocket.read = _wrap_socket_blocking(ssl.SSLSocket.read)
++    ssl.SSLSocket.recv = _wrap_socket_blocking(ssl.SSLSocket.recv)
++
++    forbiddenfruit.curse(io.BufferedReader, "read", _wrap_file_read_blocking(io.BufferedReader.read))
++    forbiddenfruit.curse(io.BufferedWriter, "write", _wrap_file_write_blocking(io.BufferedWriter.write))
++    forbiddenfruit.curse(io.BufferedRandom, "read", _wrap_blocking(io.BufferedRandom.read))
++    forbiddenfruit.curse(io.BufferedRandom, "write", _wrap_file_write_blocking(io.BufferedRandom.write))
++    forbiddenfruit.curse(io.TextIOWrapper, "read", _wrap_file_read_blocking(io.TextIOWrapper.read))
++    forbiddenfruit.curse(io.TextIOWrapper, "write", _wrap_file_write_blocking(io.TextIOWrapper.write))
+diff --git a/src/backend/tests/conftest.py b/src/backend/tests/conftest.py
+index 0bc016036f..d5cdd8b9bf 100644
+--- a/src/backend/tests/conftest.py
++++ b/src/backend/tests/conftest.py
+@@ -1,3 +1,4 @@
++import asyncio
+ import json
+ import shutil
+ 
+@@ -32,6 +33,7 @@ from sqlmodel import Session, SQLModel, create_engine, select
+ from sqlmodel.pool import StaticPool
+ from typer.testing import CliRunner
+ 
++from tests import blockbuster
+ from tests.api_keys import get_openai_api_key
+ 
+ if TYPE_CHECKING:
+@@ -39,6 +41,7 @@ if TYPE_CHECKING:
+ 
+ 
+ load_dotenv()
++blockbuster.init()
+ 
+ 
+ def pytest_configure(config):
+@@ -286,23 +289,28 @@ async def client_fixture(
+     if "noclient" in request.keywords:
+         yield
+     else:
+-        db_dir = tempfile.mkdtemp()
+-        db_path = Path(db_dir) / "test.db"
+-        monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
+-        monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
+-        if "load_flows" in request.keywords:
+-            shutil.copyfile(
+-                pytest.BASIC_EXAMPLE_PATH, Path(load_flows_dir) / "c54f9130-f2fa-4a3e-b22a-3856d946351b.json"
+-            )
+-            monkeypatch.setenv("LANGFLOW_LOAD_FLOWS_PATH", load_flows_dir)
+-            monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "true")
+ 
+-        from langflow.main import create_app
+-
+-        app = create_app()
+-        db_service = get_db_service()
+-        db_service.database_url = f"sqlite:///{db_path}"
+-        db_service.reload_engine()
++        def init_app():
++            db_dir = tempfile.mkdtemp()
++            db_path = Path(db_dir) / "test.db"
++            monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
++            monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
++            if "load_flows" in request.keywords:
++                shutil.copyfile(
++                    pytest.BASIC_EXAMPLE_PATH, Path(load_flows_dir) / "c54f9130-f2fa-4a3e-b22a-3856d946351b.json"
++                )
++                monkeypatch.setenv("LANGFLOW_LOAD_FLOWS_PATH", load_flows_dir)
++                monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "true")
++
++            from langflow.main import create_app
++
++            app = create_app()
++            db_service = get_db_service()
++            db_service.database_url = f"sqlite:///{db_path}"
++            db_service.reload_engine()
++            return app, db_path
++
++        app, db_path = await asyncio.to_thread(init_app)
+         # app.dependency_overrides[get_session] = get_session_override
+         async with (
+             LifespanManager(app, startup_timeout=None, shutdown_timeout=None) as manager,
+diff --git a/src/backend/tests/unit/graph/graph/test_base.py b/src/backend/tests/unit/graph/graph/test_base.py
+index b85b069ac0..4e56e42119 100644
+--- a/src/backend/tests/unit/graph/graph/test_base.py
++++ b/src/backend/tests/unit/graph/graph/test_base.py
+@@ -1,3 +1,4 @@
++import asyncio
+ import logging
+ from collections import deque
+ 
+@@ -13,7 +14,7 @@ from langflow.graph.graph.constants import Finish
+ async def test_graph_not_prepared():
+     chat_input = ChatInput()
+     chat_output = ChatOutput()
+-    graph = Graph()
++    graph = await asyncio.to_thread(Graph)
+     graph.add_component(chat_input)
+     graph.add_component(chat_output)
+     with pytest.raises(ValueError, match="Graph not prepared"):
+@@ -23,7 +24,7 @@ async def test_graph_not_prepared():
+ async def test_graph(caplog: pytest.LogCaptureFixture):
+     chat_input = ChatInput()
+     chat_output = ChatOutput()
+-    graph = Graph()
++    graph = await asyncio.to_thread(Graph)
+     graph.add_component(chat_input)
+     graph.add_component(chat_output)
+     caplog.clear()
+@@ -35,7 +36,7 @@ async def test_graph(caplog: pytest.LogCaptureFixture):
+ async def test_graph_with_edge():
+     chat_input = ChatInput()
+     chat_output = ChatOutput()
+-    graph = Graph()
++    graph = await asyncio.to_thread(Graph)
+     input_id = graph.add_component(chat_input)
+     output_id = graph.add_component(chat_output)
+     graph.add_component_edge(input_id, (chat_input.outputs[0].name, chat_input.inputs[0].name), output_id)
+@@ -56,7 +57,7 @@ async def test_graph_functional():
+     chat_input = ChatInput(_id="chat_input")
+     chat_output = ChatOutput(input_value="test", _id="chat_output")
+     chat_output.set(sender_name=chat_input.message_response)
+-    graph = Graph(chat_input, chat_output)
++    graph = await asyncio.to_thread(Graph, chat_input, chat_output)
+     assert graph._run_queue == deque(["chat_input"])
+     await graph.astep()
+     assert graph._run_queue == deque(["chat_output"])
+@@ -71,7 +72,7 @@ async def test_graph_functional_async_start():
+     chat_input = ChatInput(_id="chat_input")
+     chat_output = ChatOutput(input_value="test", _id="chat_output")
+     chat_output.set(sender_name=chat_input.message_response)
+-    graph = Graph(chat_input, chat_output)
++    graph = await asyncio.to_thread(Graph, chat_input, chat_output)
+     # Now iterate through the graph
+     # and check that the graph is running
+     # correctly
+diff --git a/src/backend/tests/unit/test_database.py b/src/backend/tests/unit/test_database.py
+index 848b46e508..77b1959043 100644
+--- a/src/backend/tests/unit/test_database.py
++++ b/src/backend/tests/unit/test_database.py
+@@ -1,3 +1,4 @@
++import asyncio
+ import json
+ from typing import NamedTuple
+ from uuid import UUID, uuid4
+@@ -604,7 +605,7 @@ async def test_delete_nonexistent_flow(client: AsyncClient, logged_in_headers):
+ @pytest.mark.usefixtures("active_user")
+ async def test_read_only_starter_projects(client: AsyncClient, logged_in_headers):
+     response = await client.get("api/v1/flows/basic_examples/", headers=logged_in_headers)
+-    starter_projects = load_starter_projects()
++    starter_projects = await asyncio.to_thread(load_starter_projects)
+     assert response.status_code == 200
+     assert len(response.json()) == len(starter_projects)
+ 
+diff --git a/src/backend/tests/unit/test_files.py b/src/backend/tests/unit/test_files.py
+index 84eb745116..464b5b3504 100644
+--- a/src/backend/tests/unit/test_files.py
++++ b/src/backend/tests/unit/test_files.py
+@@ -1,3 +1,4 @@
++import asyncio
+ import re
+ import shutil
+ import tempfile
+@@ -37,20 +38,25 @@ async def files_client_fixture(
+     if "noclient" in request.keywords:
+         yield
+     else:
+-        db_dir = tempfile.mkdtemp()
+-        db_path = Path(db_dir) / "test.db"
+-        monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
+-        monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
+-        if "load_flows" in request.keywords:
+-            shutil.copyfile(
+-                pytest.BASIC_EXAMPLE_PATH, Path(load_flows_dir) / "c54f9130-f2fa-4a3e-b22a-3856d946351b.json"
+-            )
+-            monkeypatch.setenv("LANGFLOW_LOAD_FLOWS_PATH", load_flows_dir)
+-            monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "true")
+-
+-        from langflow.main import create_app
+-
+-        app = create_app()
++
++        def init_app():
++            db_dir = tempfile.mkdtemp()
++            db_path = Path(db_dir) / "test.db"
++            monkeypatch.setenv("LANGFLOW_DATABASE_URL", f"sqlite:///{db_path}")
++            monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "false")
++            if "load_flows" in request.keywords:
++                shutil.copyfile(
++                    pytest.BASIC_EXAMPLE_PATH, Path(load_flows_dir) / "c54f9130-f2fa-4a3e-b22a-3856d946351b.json"
++                )
++                monkeypatch.setenv("LANGFLOW_LOAD_FLOWS_PATH", load_flows_dir)
++                monkeypatch.setenv("LANGFLOW_AUTO_LOGIN", "true")
++
++            from langflow.main import create_app
++
++            app = create_app()
++            return app, db_path
++
++        app, db_path = await asyncio.to_thread(init_app)
+ 
+         app.dependency_overrides[get_storage_service] = lambda: mock_storage_service
+         async with (
+diff --git a/src/backend/tests/unit/test_initial_setup.py b/src/backend/tests/unit/test_initial_setup.py
+index 231b29d17a..348102551d 100644
+--- a/src/backend/tests/unit/test_initial_setup.py
++++ b/src/backend/tests/unit/test_initial_setup.py
+@@ -1,8 +1,11 @@
++import asyncio
+ from datetime import datetime
+ from pathlib import Path
+ 
+ import pytest
+-from langflow.custom.directory_reader.utils import build_custom_component_list_from_path
++from langflow.custom.directory_reader.utils import (
++    abuild_custom_component_list_from_path,
++)
+ from langflow.initial_setup.setup import (
+     STARTER_FOLDER_NAME,
+     get_project_data,
+@@ -51,7 +54,7 @@ def test_get_project_data():
+ async def test_create_or_update_starter_projects():
+     with session_scope() as session:
+         # Get the number of projects returned by load_starter_projects
+-        num_projects = len(load_starter_projects())
++        num_projects = len(await asyncio.to_thread(load_starter_projects))
+ 
+         # Get the number of projects in the database
+         folder = session.exec(select(Folder).where(Folder.name == STARTER_FOLDER_NAME)).first()
+@@ -128,7 +131,7 @@ def add_edge(source, target, from_output, to_input):
+ 
+ async def test_refresh_starter_projects():
+     data_path = str(Path(__file__).parent.parent.parent.absolute() / "base" / "langflow" / "components")
+-    components = build_custom_component_list_from_path(data_path)
++    components = await abuild_custom_component_list_from_path(data_path)
+ 
+     chat_input = find_component_by_name(components, "ChatInput")
+     chat_output = find_component_by_name(components, "ChatOutput")
+diff --git a/src/backend/tests/unit/test_process.py b/src/backend/tests/unit/test_process.py
+index 65680cd38c..37930d9c2f 100644
+--- a/src/backend/tests/unit/test_process.py
++++ b/src/backend/tests/unit/test_process.py
+@@ -1,3 +1,5 @@
++import asyncio
++
+ from langflow.processing.process import process_tweaks
+ from langflow.services.deps import get_session_service
+ 
+@@ -263,7 +265,7 @@ def test_tweak_not_in_template():
+ 
+ async def test_load_langchain_object_with_cached_session(basic_graph_data):
+     # Provide a non-existent session_id
+-    session_service = get_session_service()
++    session_service = await asyncio.to_thread(get_session_service)
+     session_id1 = "non-existent-session-id"
+     graph1, artifacts1 = await session_service.load_session(session_id1, basic_graph_data)
+     # Use the new session_id to get the langchain_object again

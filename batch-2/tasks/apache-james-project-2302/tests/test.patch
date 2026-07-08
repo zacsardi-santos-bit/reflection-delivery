@@ -1,0 +1,1847 @@
+diff --git a/backends-common/rabbitmq/src/test/java/org/apache/james/backends/rabbitmq/RabbitMQServerVersionTest.java b/backends-common/rabbitmq/src/test/java/org/apache/james/backends/rabbitmq/RabbitMQServerVersionTest.java
+index fe27f9cee2..36eaeb9ddf 100644
+--- a/backends-common/rabbitmq/src/test/java/org/apache/james/backends/rabbitmq/RabbitMQServerVersionTest.java
++++ b/backends-common/rabbitmq/src/test/java/org/apache/james/backends/rabbitmq/RabbitMQServerVersionTest.java
+@@ -23,21 +23,13 @@ import static org.assertj.core.api.Assertions.assertThat;
+ 
+ import java.util.stream.Stream;
+ 
+-import org.junit.jupiter.api.Test;
+ import org.junit.jupiter.params.ParameterizedTest;
+ import org.junit.jupiter.params.provider.Arguments;
+ import org.junit.jupiter.params.provider.MethodSource;
+ 
+ import com.fasterxml.jackson.core.Version;
+ 
+-import nl.jqno.equalsverifier.EqualsVerifier;
+-
+ class RabbitMQServerVersionTest {
+-    @Test
+-    void shouldMatchBeanContract() {
+-        EqualsVerifier.forClass(RabbitMQServerVersion.class)
+-            .verify();
+-    }
+ 
+     @ParameterizedTest
+     @MethodSource("versionsToParse")
+diff --git a/mailbox/event/json/src/test/java/org/apache/james/event/json/dtos/MessageMetaDataTest.java b/mailbox/event/json/src/test/java/org/apache/james/event/json/dtos/MessageMetaDataTest.java
+index d351ac6169..8c53d61091 100644
+--- a/mailbox/event/json/src/test/java/org/apache/james/event/json/dtos/MessageMetaDataTest.java
++++ b/mailbox/event/json/src/test/java/org/apache/james/event/json/dtos/MessageMetaDataTest.java
+@@ -23,6 +23,7 @@ import static org.apache.james.event.json.SerializerFixture.DTO_JSON_SERIALIZE;
+ import static org.assertj.core.api.Assertions.assertThat;
+ import static org.assertj.core.api.Assertions.assertThatThrownBy;
+ 
++import java.time.DateTimeException;
+ import java.time.Instant;
+ import java.util.NoSuchElementException;
+ 
+@@ -256,7 +257,7 @@ class MessageMetaDataTest {
+                     "        \"messageId\": \"42\"" +
+                     "}"))
+                     .get())
+-                .isInstanceOf(NoSuchElementException.class);
++                .isInstanceOf(DateTimeException.class);
+         }
+ 
+         @Test
+diff --git a/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQDisabledTasksTest.java b/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQDisabledTasksTest.java
+index e8c814b5ae..8e69dca87a 100644
+--- a/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQDisabledTasksTest.java
++++ b/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQDisabledTasksTest.java
+@@ -19,7 +19,6 @@
+ 
+ package org.apache.james;
+ 
+-import static io.restassured.config.ParamConfig.UpdateStrategy.REPLACE;
+ import static org.hamcrest.Matchers.is;
+ 
+ import org.apache.james.modules.AwsS3BlobStoreExtension;
+@@ -60,7 +59,7 @@ class RabbitMQDisabledTasksTest {
+         RestAssured.defaultParser = Parser.JSON;
+         webAdminApi = WebAdminUtils.spec(server.getProbe(WebAdminGuiceProbe.class).getWebAdminPort())
+             .config(WebAdminUtils.defaultConfig()
+-                .paramConfig(new ParamConfig(REPLACE, REPLACE, REPLACE)));
++                .paramConfig(new ParamConfig().replaceAllParameters()));
+     }
+ 
+     @Test
+diff --git a/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQJamesServerReprocessingTest.java b/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQJamesServerReprocessingTest.java
+index 63c142e678..8dcaf6c96a 100644
+--- a/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQJamesServerReprocessingTest.java
++++ b/server/apps/distributed-app/src/test/java/org/apache/james/RabbitMQJamesServerReprocessingTest.java
+@@ -19,7 +19,6 @@
+ 
+ package org.apache.james;
+ 
+-import static io.restassured.config.ParamConfig.UpdateStrategy.REPLACE;
+ import static org.assertj.core.api.Assertions.assertThat;
+ import static org.awaitility.Durations.ONE_MINUTE;
+ 
+@@ -64,7 +63,7 @@ class RabbitMQJamesServerReprocessingTest {
+         RestAssured.defaultParser = Parser.JSON;
+         webAdminApi = WebAdminUtils.spec(server.getProbe(WebAdminGuiceProbe.class).getWebAdminPort())
+             .config(WebAdminUtils.defaultConfig()
+-                .paramConfig(new ParamConfig(REPLACE, REPLACE, REPLACE)));
++                .paramConfig(new ParamConfig().replaceAllParameters()));
+     }
+ 
+     @Test
+diff --git a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/HTTPConfigurationServerTest.java b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/HTTPConfigurationServerTest.java
+index 52da104998..58e7302e88 100644
+--- a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/HTTPConfigurationServerTest.java
++++ b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/HTTPConfigurationServerTest.java
+@@ -44,7 +44,6 @@ import io.restassured.RestAssured;
+ import io.restassured.builder.RequestSpecBuilder;
+ import io.restassured.http.ContentType;
+ import net.javacrumbs.jsonunit.core.Option;
+-import net.javacrumbs.jsonunit.core.internal.Options;
+ 
+ class HTTPConfigurationServerTest {
+     private HTTPConfigurationServer.RunningStage server;
+@@ -100,7 +99,7 @@ class HTTPConfigurationServerTest {
+                     .asString();
+ 
+             assertThatJson(response)
+-                .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER))
++                .withOptions(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER)
+                 .isEqualTo(JSON_BEHAVIORS);
+         }
+ 
+@@ -194,7 +193,7 @@ class HTTPConfigurationServerTest {
+                     .asString();
+ 
+             assertThatJson(response)
+-                .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER))
++                .withOptions(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER)
+                 .isEqualTo(JSON_MAIL);
+         }
+ 
+@@ -211,7 +210,7 @@ class HTTPConfigurationServerTest {
+                     .asString();
+ 
+             assertThatJson(response)
+-                .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER))
++                .withOptions(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER)
+                 .isEqualTo("[{" +
+                     "    \"from\": \"bob@james.org\"," +
+                     "    \"mailParameters\": [{" +
+diff --git a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MailsTest.java b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MailsTest.java
+index 0011706266..e936f8551e 100644
+--- a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MailsTest.java
++++ b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MailsTest.java
+@@ -34,7 +34,6 @@ import org.junit.jupiter.api.Test;
+ import com.google.common.collect.ImmutableList;
+ 
+ import net.javacrumbs.jsonunit.core.Option;
+-import net.javacrumbs.jsonunit.core.internal.Options;
+ import nl.jqno.equalsverifier.EqualsVerifier;
+ 
+ class MailsTest {
+@@ -154,7 +153,7 @@ class MailsTest {
+         String json = OBJECT_MAPPER.writeValueAsString(mails);
+ 
+         assertThatJson(json)
+-            .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER))
++            .withOptions(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER)
+             .isEqualTo(JSON_MAILS_LIST);
+     }
+ 
+@@ -171,7 +170,7 @@ class MailsTest {
+         String json = OBJECT_MAPPER.writeValueAsString(mailsWithParams);
+ 
+         assertThatJson(json)
+-            .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER))
++            .withOptions(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER)
+             .isEqualTo(MAILS_WITH_PARAMETERS);
+     }
+ }
+diff --git a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSMTPBehaviorTest.java b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSMTPBehaviorTest.java
+index 44df764482..39551dacd3 100644
+--- a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSMTPBehaviorTest.java
++++ b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSMTPBehaviorTest.java
+@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Nested;
+ import org.junit.jupiter.api.Test;
+ 
+ import net.javacrumbs.jsonunit.core.Option;
+-import net.javacrumbs.jsonunit.core.internal.Options;
+ import nl.jqno.equalsverifier.EqualsVerifier;
+ 
+ class MockSMTPBehaviorTest {
+@@ -115,7 +114,7 @@ class MockSMTPBehaviorTest {
+             String json = OBJECT_MAPPER.writeValueAsString(BEHAVIOR_ALL_FIELDS);
+ 
+             assertThatJson(json)
+-                .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT))
++                .withOptions(Option.TREATING_NULL_AS_ABSENT)
+                 .isEqualTo(JSON_BEHAVIOR_ALL_FIELDS);
+         }
+ 
+@@ -132,7 +131,7 @@ class MockSMTPBehaviorTest {
+             String json = OBJECT_MAPPER.writeValueAsString(BEHAVIOR_COMPULSORY_FIELDS);
+ 
+             assertThatJson(json)
+-                .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT))
++                .withOptions(Option.TREATING_NULL_AS_ABSENT)
+                 .isEqualTo(JSON_BEHAVIOR_COMPULSORY_FIELDS);
+         }
+     }
+diff --git a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSmtpBehaviorsTest.java b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSmtpBehaviorsTest.java
+index f09e03c459..ecf65afb28 100644
+--- a/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSmtpBehaviorsTest.java
++++ b/server/mailet/mock-smtp-server/src/test/java/org/apache/james/mock/smtp/server/model/MockSmtpBehaviorsTest.java
+@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
+ import org.junit.jupiter.api.Test;
+ 
+ import net.javacrumbs.jsonunit.core.Option;
+-import net.javacrumbs.jsonunit.core.internal.Options;
+ import nl.jqno.equalsverifier.EqualsVerifier;
+ 
+ class MockSmtpBehaviorsTest {
+@@ -51,7 +50,7 @@ class MockSmtpBehaviorsTest {
+         String json = OBJECT_MAPPER.writeValueAsString(BEHAVIORS);
+ 
+         assertThatJson(json)
+-            .withOptions(new Options(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER))
++            .withOptions(Option.TREATING_NULL_AS_ABSENT, Option.IGNORING_ARRAY_ORDER)
+             .isEqualTo(JSON_BEHAVIORS);
+     }
+ }
+\ No newline at end of file
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/BackReferenceContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/BackReferenceContract.scala
+index c2ccd7eaf9..0ed0a4d621 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/BackReferenceContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/BackReferenceContract.scala
+@@ -24,7 +24,6 @@ import io.netty.handler.codec.http.HttpHeaderNames.ACCEPT
+ import io.restassured.RestAssured._
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.core.ResponseObject.SESSION_STATE
+@@ -92,7 +91,7 @@ trait BackReferenceContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].state", "methodResponses[1][1].state")
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -175,7 +174,7 @@ trait BackReferenceContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].state")
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -248,7 +247,7 @@ trait BackReferenceContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].state")
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -321,7 +320,7 @@ trait BackReferenceContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].state")
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -394,7 +393,7 @@ trait BackReferenceContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].state")
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -503,7 +502,7 @@ trait BackReferenceContract {
+       .asString()
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .whenIgnoringPaths("methodResponses[2][1].state")
+       .isEqualTo(
+       s"""{
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegateGetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegateGetMethodContract.scala
+index 5518aef9e3..75df91b4e8 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegateGetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegateGetMethodContract.scala
+@@ -24,7 +24,6 @@ import io.restassured.RestAssured.{`given`, requestSpecification}
+ import io.restassured.http.ContentType.JSON
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.core.ResponseObject.SESSION_STATE
+@@ -123,7 +122,7 @@ trait DelegateGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |    "sessionState": "${SESSION_STATE.value}",
+@@ -403,7 +402,7 @@ trait DelegateGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |  "sessionState": "${SESSION_STATE.value}",
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegatedAccountGetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegatedAccountGetMethodContract.scala
+index 3c5b855a86..dbce110212 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegatedAccountGetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/DelegatedAccountGetMethodContract.scala
+@@ -24,7 +24,6 @@ import io.restassured.RestAssured.{`given`, requestSpecification}
+ import io.restassured.http.ContentType.JSON
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.core.ResponseObject.SESSION_STATE
+@@ -123,7 +122,7 @@ trait DelegatedAccountGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |    "sessionState": "${SESSION_STATE.value}",
+@@ -401,7 +400,7 @@ trait DelegatedAccountGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |  "sessionState": "${SESSION_STATE.value}",
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailChangesMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailChangesMethodContract.scala
+index efbdb1ffdd..df8f204541 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailChangesMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailChangesMethodContract.scala
+@@ -30,7 +30,6 @@ import io.restassured.http.ContentType.JSON
+ import jakarta.mail.Flags
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.JmapGuiceProbe
+@@ -116,7 +115,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -179,7 +178,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -439,7 +438,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -502,7 +501,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -578,7 +577,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -643,7 +642,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -709,7 +708,7 @@ trait EmailChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -777,7 +776,7 @@ trait EmailChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -844,7 +843,7 @@ trait EmailChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -912,7 +911,7 @@ trait EmailChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -976,7 +975,7 @@ trait EmailChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -1042,7 +1041,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1108,7 +1107,7 @@ trait EmailChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1154,7 +1153,7 @@ trait EmailChangesMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1292,7 +1291,7 @@ trait EmailChangesMethodContract {
+       .asString
+ 
+     assertThatJson(response2)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |    "sessionState": "${SESSION_STATE.value}",
+@@ -1382,7 +1381,7 @@ trait EmailChangesMethodContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].newState")
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |  "sessionState": "${SESSION_STATE.value}",
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailGetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailGetMethodContract.scala
+index 78813d3c6a..e2625c020c 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailGetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailGetMethodContract.scala
+@@ -32,7 +32,6 @@ import jakarta.mail.Flags
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.JmapGuiceProbe
+@@ -2304,7 +2303,7 @@ trait EmailGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .whenIgnoringPaths("methodResponses[0][1].state")
+       .isEqualTo(
+       s"""{
+@@ -8004,7 +8003,7 @@ trait EmailGetMethodContract {
+       .asString()
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .inPath("methodResponses[0][1]")
+       .isEqualTo(
+         s"""{
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailQueryMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailQueryMethodContract.scala
+index 3bec025475..f8575c3f42 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailQueryMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailQueryMethodContract.scala
+@@ -34,7 +34,6 @@ import io.restassured.http.ContentType.JSON
+ import jakarta.mail.Flags
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.core.ResponseObject.SESSION_STATE
+@@ -2492,7 +2491,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(
+         s"""["${messageId2.serialize}", "${messageId1.serialize}"]""".stripMargin)
+@@ -3888,7 +3887,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(
+           s"""[
+@@ -3945,7 +3944,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(
+           s"""[
+@@ -4157,7 +4156,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId2.serialize}", "${messageId1.serialize}"]""")
+     }
+@@ -5604,7 +5603,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId7.serialize}", "${messageId6.serialize}", "${messageId4.serialize}", "${messageId1.serialize}"]""")
+     }
+@@ -5670,7 +5669,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId2.serialize}", "${messageId3.serialize}"]""")
+     }
+@@ -5754,7 +5753,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId7.serialize}", "${messageId6.serialize}", "${messageId4.serialize}", "${messageId1.serialize}"]""")
+     }
+@@ -5820,7 +5819,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId2.serialize}", "${messageId3.serialize}"]""")
+     }
+@@ -5905,7 +5904,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId7.serialize}", "${messageId6.serialize}", "${messageId4.serialize}", "${messageId1.serialize}"]""")
+     }
+@@ -5971,7 +5970,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId2.serialize}", "${messageId3.serialize}"]""")
+     }
+@@ -6056,7 +6055,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId7.serialize}", "${messageId6.serialize}", "${messageId4.serialize}", "${messageId1.serialize}"]""")
+     }
+@@ -6122,7 +6121,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId2.serialize}", "${messageId3.serialize}"]""")
+     }
+@@ -6181,7 +6180,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId1.serialize}"]""")
+     }
+@@ -6246,7 +6245,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId1.serialize}", "${messageId4.serialize}"]""")
+     }
+@@ -6427,7 +6426,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(
+           s"""[
+@@ -6819,7 +6818,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId3.serialize}", "${messageId2.serialize}", "${messageId1.serialize}"]""")
+     }
+@@ -6884,7 +6883,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId4.serialize}"]""")
+     }
+@@ -7047,7 +7046,7 @@ trait EmailQueryMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .inPath("$.methodResponses[0][1].ids")
+       .isEqualTo(s"""["${messageId1.serialize}","${messageId2.serialize}"]""")
+   }
+@@ -7189,7 +7188,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId.serialize}"]""")
+     }
+@@ -7476,7 +7475,7 @@ trait EmailQueryMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .inPath("$.methodResponses[0][1].ids")
+         .isEqualTo(s"""["${messageId2.serialize}", "${messageId3.serialize}"]""")
+     }
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailSetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailSetMethodContract.scala
+index b0b1698071..c3a896894d 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailSetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/EmailSetMethodContract.scala
+@@ -32,7 +32,6 @@ import io.restassured.http.ContentType.JSON
+ import jakarta.mail.Flags
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.{SC_CREATED, SC_OK}
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.core.quota.QuotaCountLimit
+@@ -7155,7 +7154,7 @@ trait EmailSetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .whenIgnoringPaths("methodResponses[1][1].oldState",
+         "methodResponses[1][1].newState")
+       .inPath("methodResponses[1][1]")
+@@ -7224,7 +7223,7 @@ trait EmailSetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .whenIgnoringPaths("methodResponses[1][1].oldState", "methodResponses[1][1].newState")
+       .inPath("methodResponses[1][1]")
+       .isEqualTo(
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentityGetContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentityGetContract.scala
+index 0b667622c4..d07aefe318 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentityGetContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentityGetContract.scala
+@@ -29,7 +29,6 @@ import io.restassured.http.ContentType.JSON
+ import jakarta.inject.Inject
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.core.{MailAddress, Username}
+@@ -201,7 +200,7 @@ trait IdentityGetContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .inPath("methodResponses[0][1]")
+       .isEqualTo(
+       s"""{
+@@ -304,7 +303,7 @@ trait IdentityGetContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .inPath("methodResponses[0][1]")
+       .isEqualTo(
+       s"""{
+@@ -376,7 +375,7 @@ trait IdentityGetContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .inPath("methodResponses[0][1]")
+       .isEqualTo(
+       s"""{
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentitySetContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentitySetContract.scala
+index 9dceb93306..1bc4b5c627 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentitySetContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/IdentitySetContract.scala
+@@ -27,7 +27,6 @@ import io.restassured.RestAssured.{`given`, requestSpecification}
+ import io.restassured.http.ContentType.JSON
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.core.MailAddress
+@@ -1435,7 +1434,7 @@ trait IdentitySetContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |    "sessionState": "${SESSION_STATE.value}",
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxChangesMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxChangesMethodContract.scala
+index c62d2dc154..bf8ddd116d 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxChangesMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxChangesMethodContract.scala
+@@ -29,7 +29,6 @@ import io.restassured.http.ContentType.JSON
+ import jakarta.mail.Flags
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.JmapGuiceProbe
+@@ -120,7 +119,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -182,7 +181,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -270,7 +269,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -358,7 +357,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -424,7 +423,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -495,7 +494,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -570,7 +569,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |  "sessionState": "${SESSION_STATE.value}",
+@@ -641,7 +640,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |  "sessionState": "${SESSION_STATE.value}",
+@@ -714,7 +713,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -780,7 +779,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -855,7 +854,7 @@ trait MailboxChangesMethodContract {
+ 
+           assertThatJson(response)
+             .whenIgnoringPaths("methodResponses[0][1].newState")
+-            .withOptions(new Options(IGNORING_ARRAY_ORDER))
++            .withOptions(IGNORING_ARRAY_ORDER)
+             .isEqualTo(
+               s"""{
+                  |    "sessionState": "${SESSION_STATE.value}",
+@@ -929,7 +928,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -1004,7 +1003,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -1068,7 +1067,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -1116,7 +1115,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(responseAndre)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1179,7 +1178,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -1227,7 +1226,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(responseAndre)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1297,7 +1296,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -1363,7 +1362,7 @@ trait MailboxChangesMethodContract {
+ 
+         assertThatJson(response)
+           .whenIgnoringPaths("methodResponses[0][1].newState")
+-          .withOptions(new Options(IGNORING_ARRAY_ORDER))
++          .withOptions(IGNORING_ARRAY_ORDER)
+           .isEqualTo(
+             s"""{
+                |    "sessionState": "${SESSION_STATE.value}",
+@@ -1426,7 +1425,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1494,7 +1493,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1565,7 +1564,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1637,7 +1636,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1718,7 +1717,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1794,7 +1793,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1871,7 +1870,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1963,7 +1962,7 @@ trait MailboxChangesMethodContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].newState")
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |  "sessionState": "${SESSION_STATE.value}",
+@@ -2006,7 +2005,7 @@ trait MailboxChangesMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -2133,7 +2132,7 @@ trait MailboxChangesMethodContract {
+       .asString
+ 
+     assertThatJson(response2)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |    "sessionState": "${SESSION_STATE.value}",
+@@ -2204,7 +2203,7 @@ trait MailboxChangesMethodContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].newState")
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |    "sessionState": "${SESSION_STATE.value}",
+@@ -2275,7 +2274,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -2354,7 +2353,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState", "methodResponses[1][1].state")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -2451,7 +2450,7 @@ trait MailboxChangesMethodContract {
+ 
+       assertThatJson(response)
+         .whenIgnoringPaths("methodResponses[0][1].newState", "methodResponses[1][1].state")
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxGetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxGetMethodContract.scala
+index 9ccdbc0b57..41d1c10bee 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxGetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxGetMethodContract.scala
+@@ -28,7 +28,6 @@ import io.restassured.http.ContentType.JSON
+ import jakarta.mail.Flags
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.core.quota.{QuotaCountLimit, QuotaSizeLimit}
+@@ -1608,7 +1607,7 @@ trait MailboxGetMethodContract {
+ 
+     // No changes as Mailbox/get state property is the latest one
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .whenIgnoringPaths("methodResponses[1][1].oldState", "methodResponses[1][1].newState")
+       .inPath("methodResponses[1][1]")
+       .isEqualTo(
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxSetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxSetMethodContract.scala
+index 533fb0f828..5e9a9c3455 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxSetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/MailboxSetMethodContract.scala
+@@ -29,7 +29,6 @@ import io.restassured.RestAssured._
+ import io.restassured.http.ContentType.JSON
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.jmap.core.ResponseObject.SESSION_STATE
+@@ -2357,7 +2356,7 @@ trait MailboxSetMethodContract {
+ 
+     assertThatJson(response)
+       .whenIgnoringPaths("methodResponses[0][1].state")
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -6411,7 +6410,7 @@ trait MailboxSetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .inPath("methodResponses[0][1].list")
+       .isArray
+       .contains(
+@@ -6449,7 +6448,7 @@ trait MailboxSetMethodContract {
+       .asString
+ 
+     assertThatJson(responseSpecific)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .inPath("methodResponses[0][1].list")
+       .isArray
+       .contains(
+@@ -7958,7 +7957,7 @@ trait MailboxSetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .whenIgnoringPaths("methodResponses[1][1].oldState", "methodResponses[1][1].newState")
+       .inPath("methodResponses[1][1]")
+       .isEqualTo(
+@@ -8019,7 +8018,7 @@ trait MailboxSetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(Option.IGNORING_ARRAY_ORDER))
++      .withOptions(Option.IGNORING_ARRAY_ORDER)
+       .whenIgnoringPaths("methodResponses[1][1].oldState", "methodResponses[1][1].newState")
+       .inPath("methodResponses[1][1]")
+       .isEqualTo(
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/PushSubscriptionSetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/PushSubscriptionSetMethodContract.scala
+index 2c025052d6..705ff2ea70 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/PushSubscriptionSetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/PushSubscriptionSetMethodContract.scala
+@@ -24,6 +24,8 @@ import java.security.KeyPair
+ import java.security.interfaces.ECPublicKey
+ import java.time.ZonedDateTime
+ import java.time.format.DateTimeFormatter
++import java.util.concurrent.TimeUnit
++import java.util.function.Consumer
+ import java.util.{Base64, UUID}
+ 
+ import com.google.common.collect.ImmutableSet
+@@ -50,15 +52,13 @@ import org.apache.james.jmap.rfc8621.contract.PushSubscriptionSetMethodContract.
+ import org.apache.james.utils.{DataProbeImpl, GuiceProbe, UpdatableTickingClock}
+ import org.assertj.core.api.Assertions.assertThat
+ import org.assertj.core.api.SoftAssertions
++import org.awaitility.Awaitility
+ import org.junit.jupiter.api.{BeforeEach, Test}
+ import org.mockserver.integration.ClientAndServer
+ import org.mockserver.model.HttpRequest.request
+ import org.mockserver.model.HttpResponse.response
+-import org.mockserver.model.JsonBody.json
+-import org.mockserver.model.Not.not
+ import org.mockserver.model.NottableString.string
+ import org.mockserver.model.{HttpRequest, HttpResponse}
+-import org.mockserver.verify.VerificationTimes
+ import reactor.core.scala.publisher.SMono
+ 
+ import scala.jdk.CollectionConverters._
+@@ -90,6 +90,9 @@ class PushSubscriptionProbeModule extends AbstractModule {
+ }
+ 
+ trait PushSubscriptionSetMethodContract {
++  private lazy val awaitAtMostTenSeconds = Awaitility.`with`
++    .await.atMost(10, TimeUnit.SECONDS)
++
+   @BeforeEach
+   def setUp(server: GuiceJamesServer, pushServer: ClientAndServer): Unit = {
+     server.getProbe(classOf[DataProbeImpl])
+@@ -2300,14 +2303,18 @@ trait PushSubscriptionSetMethodContract {
+       .jsonPath()
+       .get("methodResponses[0][1].created.4f29.id")
+ 
+-    pushServer.verify(HttpRequest.request()
+-      .withPath("/subscribe")
+-      .withBody(json(s"""{
+-                        |    "@type": "PushVerification",
+-                        |    "pushSubscriptionId": "$pushSubscriptionId",
+-                        |    "verificationCode": "$${json-unit.any-string}"
+-                        |}""".stripMargin)),
+-      VerificationTimes.atLeast(1))
++    awaitAtMostTenSeconds.untilAsserted { () =>
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isEqualTo(
++          s"""{
++             |    "@type": "PushVerification",
++             |    "pushSubscriptionId": "$pushSubscriptionId",
++             |    "verificationCode": "$${json-unit.any-string}"
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath("/subscribe")).toSeq.asJava)
++        .anySatisfy(bodyAssert)
++    }
+   }
+ 
+   @Test
+@@ -2564,15 +2571,19 @@ trait PushSubscriptionSetMethodContract {
+     .`then`
+       .statusCode(SC_OK)
+ 
+-    pushServer.verify(HttpRequest.request()
+-      .withPath("/subscribe")
+-      .withBody(not(json(
+-        s"""{
+-           |    "@type": "PushVerification",
+-           |    "pushSubscriptionId": "$${json-unit.any-string}",
+-           |    "verificationCode": "$${json-unit.any-string}"
+-           |}""".stripMargin))),
+-      VerificationTimes.atLeast(1))
++    awaitAtMostTenSeconds.untilAsserted { () =>
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isNotEqualTo(
++          s"""{
++             |    "@type": "PushVerification",
++             |    "pushSubscriptionId": "$${json-unit.any-string}",
++             |    "verificationCode": "$${json-unit.any-string}"
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath("/subscribe")).toSeq.asJava)
++        .hasSizeGreaterThanOrEqualTo(1)
++        .allSatisfy(bodyAssert)
++    }
+   }
+ 
+   @Test
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/QuotaGetMethodContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/QuotaGetMethodContract.scala
+index d4f80c22a5..90cc7a112d 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/QuotaGetMethodContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/QuotaGetMethodContract.scala
+@@ -28,7 +28,6 @@ import io.restassured.RestAssured.{`given`, requestSpecification}
+ import io.restassured.http.ContentType.JSON
+ import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import net.javacrumbs.jsonunit.core.Option.IGNORING_ARRAY_ORDER
+-import net.javacrumbs.jsonunit.core.internal.Options
+ import org.apache.http.HttpStatus.SC_OK
+ import org.apache.james.GuiceJamesServer
+ import org.apache.james.core.quota.{QuotaCountLimit, QuotaSizeLimit}
+@@ -139,7 +138,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -215,7 +214,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -327,7 +326,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+         s"""{
+            |    "sessionState": "${SESSION_STATE.value}",
+@@ -526,7 +525,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -1019,7 +1018,7 @@ trait QuotaGetMethodContract {
+         .asString
+ 
+       assertThatJson(response)
+-        .withOptions(new Options(IGNORING_ARRAY_ORDER))
++        .withOptions(IGNORING_ARRAY_ORDER)
+         .isEqualTo(
+           s"""{
+              |    "sessionState": "${SESSION_STATE.value}",
+@@ -1174,7 +1173,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -1328,7 +1327,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -1394,7 +1393,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+@@ -1461,7 +1460,7 @@ trait QuotaGetMethodContract {
+       .asString
+ 
+     assertThatJson(response)
+-      .withOptions(new Options(IGNORING_ARRAY_ORDER))
++      .withOptions(IGNORING_ARRAY_ORDER)
+       .isEqualTo(
+       s"""{
+          |    "sessionState": "${SESSION_STATE.value}",
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebPushContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebPushContract.scala
+index 599150875e..ce99b1f0a3 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebPushContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebPushContract.scala
+@@ -26,6 +26,7 @@ import java.time.temporal.ChronoUnit
+ import java.util.Base64
+ import java.util.concurrent.TimeUnit
+ import java.util.concurrent.atomic.AtomicReference
++import java.util.function.Consumer
+ 
+ import com.google.crypto.tink.apps.webpush.WebPushHybridDecrypt
+ import com.google.crypto.tink.subtle.EllipticCurves
+@@ -48,6 +49,7 @@ import org.apache.james.mime4j.dom.Message
+ import org.apache.james.modules.MailboxProbeImpl
+ import org.apache.james.modules.protocols.SmtpGuiceProbe
+ import org.apache.james.utils.{DataProbeImpl, SMTPMessageSender, SpoolerProbe, UpdatableTickingClock}
++import org.assertj.core.api.Assertions.assertThat
+ import org.awaitility.Awaitility
+ import org.awaitility.Durations.ONE_HUNDRED_MILLISECONDS
+ import org.awaitility.core.ConditionFactory
+@@ -62,6 +64,8 @@ import org.mockserver.model.{HttpRequest, HttpResponse}
+ import org.mockserver.verify.VerificationTimes
+ import play.api.libs.json.{JsObject, JsString, Json}
+ 
++import scala.jdk.CollectionConverters._
++
+ trait WebPushContract {
+   private lazy val awaitAtMostTenSeconds: ConditionFactory = Awaitility.`with`
+     .pollInterval(ONE_HUNDRED_MILLISECONDS)
+@@ -184,15 +188,17 @@ trait WebPushContract {
+     val pushSubscriptionId: String = createPushSubscription(pushServer)
+     // THEN a validation code is sent
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isEqualTo(
+           s"""{
+              |    "@type": "PushVerification",
+              |    "pushSubscriptionId": "$pushSubscriptionId",
+              |    "verificationCode": "$${json-unit.any-string}"
+-             |}""".stripMargin)),
+-        VerificationTimes.atLeast(1))
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .hasSizeGreaterThanOrEqualTo(1)
++        .anySatisfy(bodyAssert)
+     }
+ 
+     // GIVEN bob retrieves the validation code from the mock server
+@@ -227,9 +233,8 @@ trait WebPushContract {
+ 
+     // THEN bob has a stateChange on the push gateway
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isEqualTo(
+           s"""{
+              |    "@type": "StateChange",
+              |    "changed": {
+@@ -237,8 +242,11 @@ trait WebPushContract {
+              |          "Mailbox": "$${json-unit.any-string}"
+              |        }
+              |    }
+-             |}""".stripMargin)),
+-        VerificationTimes.atLeast(1))
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .hasSizeGreaterThanOrEqualTo(1)
++        .anySatisfy(bodyAssert)
+     }
+   }
+ 
+@@ -251,9 +259,8 @@ trait WebPushContract {
+ 
+     // THEN bob has a EmailDelivery stateChange on the push gateway
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isEqualTo(
+           s"""{
+              |    "@type": "StateChange",
+              |    "changed": {
+@@ -261,8 +268,11 @@ trait WebPushContract {
+              |          "EmailDelivery": "$${json-unit.any-string}"
+              |        }
+              |    }
+-             |}""".stripMargin)),
+-        VerificationTimes.atLeast(1))
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .hasSizeGreaterThanOrEqualTo(1)
++        .anySatisfy(bodyAssert)
+     }
+   }
+ 
+@@ -300,9 +310,8 @@ trait WebPushContract {
+ 
+     // THEN bob should not have a EmailDelivery stateChange on the push gateway
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isNotEqualTo(
+           s"""{
+              |    "@type": "StateChange",
+              |    "changed": {
+@@ -310,8 +319,10 @@ trait WebPushContract {
+              |          "EmailDelivery": "$${json-unit.any-string}"
+              |        }
+              |    }
+-             |}""".stripMargin)),
+-        VerificationTimes.never())
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .allSatisfy(bodyAssert)
+     }
+   }
+ 
+@@ -349,9 +360,8 @@ trait WebPushContract {
+ 
+     // THEN bob should not have a EmailDelivery stateChange on the push gateway
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isNotEqualTo(
+           s"""{
+              |    "@type": "StateChange",
+              |    "changed": {
+@@ -359,8 +369,10 @@ trait WebPushContract {
+              |          "EmailDelivery": "$${json-unit.any-string}"
+              |        }
+              |    }
+-             |}""".stripMargin)),
+-        VerificationTimes.never())
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .allSatisfy(bodyAssert)
+     }
+   }
+ 
+@@ -373,15 +385,16 @@ trait WebPushContract {
+     val pushSubscriptionId: String = createPushSubscription(pushServer)
+     // THEN a validation code is sent
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isEqualTo(
+           s"""{
+              |    "@type": "PushVerification",
+              |    "pushSubscriptionId": "$pushSubscriptionId",
+              |    "verificationCode": "$${json-unit.any-string}"
+-             |}""".stripMargin)),
+-        VerificationTimes.atLeast(1))
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .anySatisfy(bodyAssert)
+     }
+ 
+     // GIVEN bob retrieves the validation code from the mock server
+@@ -420,9 +433,8 @@ trait WebPushContract {
+     // THEN bob has a stateChange on the push gateway
+     TimeUnit.MILLISECONDS.sleep(200)
+ 
+-    pushServer.verify(HttpRequest.request()
+-      .withPath(PUSH_URL_PATH)
+-      .withBody(json(
++    val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++      .isNotEqualTo(
+         s"""{
+            |    "@type": "StateChange",
+            |    "changed": {
+@@ -430,8 +442,10 @@ trait WebPushContract {
+            |          "Mailbox": "$${json-unit.any-string}"
+            |        }
+            |    }
+-           |}""".stripMargin)),
+-      VerificationTimes.exactly(0))
++           |}""".stripMargin)
++
++    assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++      .allSatisfy(bodyAssert)
+   }
+ 
+   @Test
+@@ -443,15 +457,16 @@ trait WebPushContract {
+     val pushSubscriptionId: String = createPushSubscription(pushServer)
+     // THEN a validation code is sent
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isEqualTo(
+           s"""{
+              |    "@type": "PushVerification",
+              |    "pushSubscriptionId": "$pushSubscriptionId",
+              |    "verificationCode": "$${json-unit.any-string}"
+-             |}""".stripMargin)),
+-        VerificationTimes.atLeast(1))
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .anySatisfy(bodyAssert)
+     }
+ 
+     // GIVEN bob retrieves the validation code from the mock server
+@@ -509,9 +524,8 @@ trait WebPushContract {
+     // THEN bob has no stateChange on the push gateway
+     TimeUnit.MILLISECONDS.sleep(200)
+ 
+-    pushServer.verify(HttpRequest.request()
+-      .withPath(PUSH_URL_PATH)
+-      .withBody(json(
++    val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++      .isNotEqualTo(
+         s"""{
+            |    "@type": "StateChange",
+            |    "changed": {
+@@ -519,8 +533,10 @@ trait WebPushContract {
+            |          "Mailbox": "$${json-unit.any-string}"
+            |        }
+            |    }
+-           |}""".stripMargin)),
+-      VerificationTimes.exactly(0))
++           |}""".stripMargin)
++
++    assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++      .allSatisfy(bodyAssert)
+   }
+ 
+   @Test
+@@ -537,9 +553,8 @@ trait WebPushContract {
+     // THEN bob has no stateChange on the push gateway
+     TimeUnit.MILLISECONDS.sleep(200)
+ 
+-    pushServer.verify(HttpRequest.request()
+-      .withPath(PUSH_URL_PATH)
+-      .withBody(json(
++    val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++      .isNotEqualTo(
+         s"""{
+            |    "@type": "StateChange",
+            |    "changed": {
+@@ -547,8 +562,10 @@ trait WebPushContract {
+            |          "Mailbox": "$${json-unit.any-string}"
+            |        }
+            |    }
+-           |}""".stripMargin)),
+-      VerificationTimes.exactly(0))
++           |}""".stripMargin)
++
++    assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++      .allSatisfy(bodyAssert)
+   }
+ 
+   @Test
+@@ -610,15 +627,17 @@ trait WebPushContract {
+ 
+     // THEN a validation code is sent
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(not(json(
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isNotEqualTo(
+           s"""{
+              |    "@type": "PushVerification",
+              |    "pushSubscriptionId": "$pushSubscriptionId",
+              |    "verificationCode": "$${json-unit.any-string}"
+-             |}""".stripMargin))),
+-        VerificationTimes.atLeast(1))
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .hasSizeGreaterThanOrEqualTo(1)
++        .allSatisfy(bodyAssert)
+     }
+ 
+     val hybridDecrypt: WebPushHybridDecrypt = new WebPushHybridDecrypt.Builder()
+@@ -712,15 +731,17 @@ trait WebPushContract {
+ 
+     // THEN a validation code is sent
+     awaitAtMostTenSeconds.untilAsserted { () =>
+-      pushServer.verify(HttpRequest.request()
+-        .withPath(PUSH_URL_PATH)
+-        .withBody(json(
++
++      val bodyAssert: Consumer[HttpRequest] = request => assertThatJson(request.getBodyAsString)
++        .isEqualTo(
+           s"""{
+              |    "@type": "PushVerification",
+              |    "pushSubscriptionId": "$pushSubscriptionId",
+              |    "verificationCode": "$${json-unit.any-string}"
+-             |}""".stripMargin)),
+-        VerificationTimes.atLeast(1))
++             |}""".stripMargin)
++
++      assertThat(pushServer.retrieveRecordedRequests(HttpRequest.request().withPath(PUSH_URL_PATH)).toSeq.asJava)
++        .anySatisfy(bodyAssert)
+     }
+ 
+     // GIVEN bob retrieves the validation code from the mock server
+diff --git a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebSocketContract.scala b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebSocketContract.scala
+index 3e105a6fa3..b82bce864b 100644
+--- a/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebSocketContract.scala
++++ b/server/protocols/jmap-rfc-8621-integration-tests/jmap-rfc-8621-integration-tests-common/src/main/scala/org/apache/james/jmap/rfc8621/contract/WebSocketContract.scala
+@@ -191,6 +191,7 @@ trait WebSocketContract {
+         .body
+ 
+     assertThatJson(response.toOption.get)
++      .whenIgnoringPaths("detail")
+       .isEqualTo("""{
+                    |  "status":400,
+                    |  "detail":"The request was successfully parsed as JSON but did not match the type signature of the Request object: List((,List(JsonValidationError(List(Unrecognized token 'The': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')\n at [Source: (String)\"The quick brown fox\"; line: 1, column: 4]),List()))))",
+@@ -198,6 +199,10 @@ trait WebSocketContract {
+                    |  "requestId":null,
+                    |  "@type":"RequestError"
+                    |}""".stripMargin)
++
++    assertThatJson(response.toOption.get)
++      .node("detail")
++      .isString.contains("The request was successfully parsed as JSON but did not match the type signature of the Request object")
+   }
+ 
+   @Test
+diff --git a/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/pushsubscription/PushSubscriptionSetCreateProcessorTest.scala b/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/pushsubscription/PushSubscriptionSetCreateProcessorTest.scala
+index fa2749ff4f..cda353b6df 100644
+--- a/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/pushsubscription/PushSubscriptionSetCreateProcessorTest.scala
++++ b/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/pushsubscription/PushSubscriptionSetCreateProcessorTest.scala
+@@ -26,18 +26,18 @@ import java.util.{Base64, UUID}
+ 
+ import com.google.crypto.tink.subtle.EllipticCurves
+ import com.google.crypto.tink.subtle.EllipticCurves.CurveType
++import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+ import org.apache.james.jmap.api.model.{PushSubscriptionId, PushSubscriptionKeys, PushSubscriptionServerURL, VerificationCode}
+ import org.apache.james.jmap.method.{PushSubscriptionSetCreateProcessor, PushVerification}
+ import org.apache.james.jmap.pushsubscription.PushSubscriptionSetCreateProcessorTest.PUSH_VERIFICATION_SAMPLE
++import org.assertj.core.api.Assertions.assertThat
+ import org.junit.jupiter.api.extension.ExtendWith
+ import org.junit.jupiter.api.{BeforeEach, Test}
+ import org.mockserver.integration.ClientAndServer
++import org.mockserver.model.HttpRequest
+ import org.mockserver.model.HttpRequest.request
+ import org.mockserver.model.HttpResponse.response
+-import org.mockserver.model.JsonBody.json
+-import org.mockserver.model.Not.not
+ import org.mockserver.model.NottableString.string
+-import org.mockserver.verify.VerificationTimes
+ 
+ object PushSubscriptionSetCreateProcessorTest {
+   val PUSH_VERIFICATION_SAMPLE: PushVerification = PushVerification(
+@@ -69,14 +69,20 @@ class PushSubscriptionSetCreateProcessorTest {
+   @Test
+   def pushVerificationShouldSuccess(pushServer: ClientAndServer): Unit = {
+     testee.pushVerificationToPushServer(pushServerUrl, PUSH_VERIFICATION_SAMPLE, None).block()
+-    pushServer.verify(request()
+-      .withPath("/subscribe")
+-      .withBody(json("""{
+-                       |    "@type": "PushVerification",
+-                       |    "pushSubscriptionId": "44111166-affc-4187-b974-0672e312b72e",
+-                       |    "verificationCode": "2b295d19-b37a-4865-b93e-bbb59f76ffc0"
+-                       |}""".stripMargin)),
+-      VerificationTimes.atLeast(1))
++
++    val requests: Seq[HttpRequest] = pushServer.retrieveRecordedRequests(
++      request()
++        .withMethod("POST")
++        .withPath("/subscribe")).toSeq
++
++    assertThat(requests.size).isEqualTo(1)
++    assertThatJson(requests.head.getBodyAsString)
++      .isEqualTo(
++        """{
++          |    "@type": "PushVerification",
++          |    "pushSubscriptionId": "44111166-affc-4187-b974-0672e312b72e",
++          |    "verificationCode": "2b295d19-b37a-4865-b93e-bbb59f76ffc0"
++          |}""".stripMargin)
+   }
+ 
+   @Test
+@@ -89,13 +95,19 @@ class PushSubscriptionSetCreateProcessorTest {
+     val auth: String = Base64.getUrlEncoder.encodeToString(authSecret)
+ 
+     testee.pushVerificationToPushServer(pushServerUrl, PUSH_VERIFICATION_SAMPLE, Some(PushSubscriptionKeys(p256dh, auth))).block()
+-    pushServer.verify(request()
+-      .withPath("/subscribe")
+-      .withBody(not(json("""{
+-                       |    "@type": "PushVerification",
+-                       |    "pushSubscriptionId": "44111166-affc-4187-b974-0672e312b72e",
+-                       |    "verificationCode": "2b295d19-b37a-4865-b93e-bbb59f76ffc0"
+-                       |}""".stripMargin))),
+-      VerificationTimes.atLeast(1))
++
++    val requests: Seq[HttpRequest] = pushServer.retrieveRecordedRequests(
++      request()
++        .withMethod("POST")
++        .withPath("/subscribe")).toSeq
++    assertThat(requests.size).isEqualTo(1)
++
++    assertThatJson(requests.head.getBodyAsString)
++      .isNotEqualTo(
++        """{
++          |    "@type": "PushVerification",
++          |    "pushSubscriptionId": "44111166-affc-4187-b974-0672e312b72e",
++          |    "verificationCode": "2b295d19-b37a-4865-b93e-bbb59f76ffc0"
++          |}""".stripMargin)
+   }
+ }
+diff --git a/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/routes/JMAPApiRoutesTest.scala b/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/routes/JMAPApiRoutesTest.scala
+index 31103af0ff..02034ebbb2 100644
+--- a/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/routes/JMAPApiRoutesTest.scala
++++ b/server/protocols/jmap-rfc-8621/src/test/scala/org/apache/james/jmap/routes/JMAPApiRoutesTest.scala
+@@ -48,6 +48,7 @@ import org.apache.james.mailbox.extension.PreDeletionHook
+ import org.apache.james.mailbox.inmemory.{InMemoryMailboxManager, MemoryMailboxManagerProvider}
+ import org.apache.james.metrics.tests.RecordingMetricFactory
+ import org.apache.james.user.memory.MemoryUsersRepository
++import org.hamcrest
+ import org.hamcrest.Matchers.equalTo
+ import org.mockito.ArgumentMatchers.any
+ import org.mockito.Mockito.{doReturn, mock, when}
+@@ -379,8 +380,7 @@ class JMAPApiRoutesTest extends AnyFlatSpec with BeforeAndAfter with Matchers {
+         .statusCode(HttpStatus.SC_BAD_REQUEST)
+         .body("status", equalTo(400))
+         .body("type", equalTo(RequestLevelErrorType.NOT_JSON.value))
+-        .body("detail", equalTo("The content type of the request was not application/json or the request did not parse as I-JSON: Unexpected character ('}' (code 125)): was expecting double-quote to start field name\n " +
+-          "at [Source: (reactor.netty.ByteBufMono$ReleasingInputStream); line: 6, column: 2]"))
++        .body("detail", hamcrest.Matchers.containsString("The content type of the request was not application/json or the request did not parse as I-JSON: Unexpected character ('}' (code 125)): was expecting double-quote to start field name\n "))
+   }
+ 
+   "RFC-8621 version, POST, with unknown capability" should "return 400 status" in {
+diff --git a/server/protocols/webadmin-integration-test/webadmin-integration-test-common/src/main/java/org/apache/james/webadmin/integration/vault/DeletedMessageVaultIntegrationTest.java b/server/protocols/webadmin-integration-test/webadmin-integration-test-common/src/main/java/org/apache/james/webadmin/integration/vault/DeletedMessageVaultIntegrationTest.java
+index df7613f3e1..abd5315a5d 100644
+--- a/server/protocols/webadmin-integration-test/webadmin-integration-test-common/src/main/java/org/apache/james/webadmin/integration/vault/DeletedMessageVaultIntegrationTest.java
++++ b/server/protocols/webadmin-integration-test/webadmin-integration-test-common/src/main/java/org/apache/james/webadmin/integration/vault/DeletedMessageVaultIntegrationTest.java
+@@ -21,7 +21,6 @@ package org.apache.james.webadmin.integration.vault;
+ 
+ import static io.restassured.RestAssured.given;
+ import static io.restassured.RestAssured.with;
+-import static io.restassured.config.ParamConfig.UpdateStrategy.REPLACE;
+ import static io.restassured.http.ContentType.JSON;
+ import static org.apache.james.jmap.JMAPTestingConstants.DOMAIN;
+ import static org.apache.james.jmap.JMAPTestingConstants.LOCALHOST_IP;
+@@ -177,7 +176,7 @@ public abstract class DeletedMessageVaultIntegrationTest {
+ 
+         webAdminApi = WebAdminUtils.spec(jmapServer.getProbe(WebAdminGuiceProbe.class).getWebAdminPort())
+             .config(WebAdminUtils.defaultConfig()
+-                .paramConfig(new ParamConfig(REPLACE, REPLACE, REPLACE)));
++                .paramConfig(new ParamConfig().replaceAllParameters()));
+ 
+     }

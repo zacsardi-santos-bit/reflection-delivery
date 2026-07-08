@@ -1,0 +1,7 @@
+diff --git a/.changes/test-placeholder.md b/.changes/test-placeholder.md
+new file mode 100644
+index 000000000..48cdce852
+--- /dev/null
++++ b/.changes/test-placeholder.md
+@@ -0,0 +1 @@
++placeholder

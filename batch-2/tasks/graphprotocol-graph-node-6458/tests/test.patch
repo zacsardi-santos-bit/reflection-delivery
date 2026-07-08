@@ -1,0 +1,264 @@
+diff --git a/store/test-store/tests/postgres/relational.rs b/store/test-store/tests/postgres/relational.rs
+index 4a0297094..57cac35cc 100644
+--- a/store/test-store/tests/postgres/relational.rs
++++ b/store/test-store/tests/postgres/relational.rs
+@@ -128,6 +128,11 @@ const THINGS_GQL: &str = r#"
+         order: Int,
+     }
+ 
++    type SkipDupMink @entity(immutable: true, skipDuplicates: true) {
++        id: ID!,
++        order: Int,
++    }
++
+     type User @entity {
+         id: ID!,
+         name: String!,
+@@ -228,6 +233,7 @@ lazy_static! {
+     static ref CAT_TYPE: EntityType = THINGS_SCHEMA.entity_type("Cat").unwrap();
+     static ref FERRET_TYPE: EntityType = THINGS_SCHEMA.entity_type("Ferret").unwrap();
+     static ref MINK_TYPE: EntityType = THINGS_SCHEMA.entity_type("Mink").unwrap();
++    static ref SKIP_DUP_MINK_TYPE: EntityType = THINGS_SCHEMA.entity_type("SkipDupMink").unwrap();
+     static ref CHAIR_TYPE: EntityType = THINGS_SCHEMA.entity_type("Chair").unwrap();
+     static ref NULLABLE_STRINGS_TYPE: EntityType =
+         THINGS_SCHEMA.entity_type("NullableStrings").unwrap();
+@@ -996,7 +1002,7 @@ async fn conflicting_entity() {
+             let fred = entity! { layout.input_schema => id: id.clone(), name: id.clone() };
+             let fred = Arc::new(fred);
+             let types: Vec<_> = types.into_iter().cloned().collect();
+-            let mut group = RowGroup::new(entity_type.clone(), false);
++            let mut group = RowGroup::new(entity_type.clone());
+             group
+                 .push(
+                     EntityModification::Insert {
+@@ -2126,3 +2132,59 @@ async fn check_filters() {
+     })
+     .await;
+ }
++
++fn store_layer_row_group_update(
++    entity_type: &EntityType,
++    block: BlockNumber,
++    data: impl IntoIterator<Item = (EntityKey, Entity)>,
++) -> RowGroup {
++    let mut group = RowGroup::new(entity_type.clone());
++    for (key, data) in data {
++        group
++            .push(EntityModification::overwrite(key, data, block), block)
++            .unwrap();
++    }
++    group
++}
++
++fn store_layer_row_group_delete(
++    entity_type: &EntityType,
++    block: BlockNumber,
++    data: impl IntoIterator<Item = EntityKey>,
++) -> RowGroup {
++    let mut group = RowGroup::new(entity_type.clone());
++    for key in data {
++        group
++            .push(EntityModification::remove(key, block), block)
++            .unwrap();
++    }
++    group
++}
++
++#[graph::test]
++async fn skip_duplicates_update_returns_ok() {
++    run_test(async |conn, layout| {
++        let entity = entity! { layout.input_schema =>
++            id: "sd1",
++            order: 1,
++            vid: 0i64
++        };
++        let key = SKIP_DUP_MINK_TYPE.key(entity.id());
++        let entities = vec![(key, entity)];
++        let group = store_layer_row_group_update(&SKIP_DUP_MINK_TYPE, 1, entities);
++        let result = layout.update(conn, &group, &MOCK_STOPWATCH).await;
++        assert_eq!(result.unwrap(), 0);
++    })
++    .await;
++}
++
++#[graph::test]
++async fn skip_duplicates_delete_returns_ok() {
++    run_test(async |conn, layout| {
++        let key = SKIP_DUP_MINK_TYPE.parse_key("sd1").unwrap();
++        let group = store_layer_row_group_delete(&SKIP_DUP_MINK_TYPE, 1, vec![key]);
++        let result = layout.delete(conn, &group, &MOCK_STOPWATCH).await;
++        assert_eq!(result.unwrap(), 0);
++    })
++    .await;
++}
+diff --git a/store/test-store/tests/postgres/relational_bytes.rs b/store/test-store/tests/postgres/relational_bytes.rs
+index 470d4e174..2c4ac5f27 100644
+--- a/store/test-store/tests/postgres/relational_bytes.rs
++++ b/store/test-store/tests/postgres/relational_bytes.rs
+@@ -85,7 +85,7 @@ pub fn row_group_update(
+     block: BlockNumber,
+     data: impl IntoIterator<Item = (EntityKey, Entity)>,
+ ) -> RowGroup {
+-    let mut group = RowGroup::new(entity_type.clone(), false);
++    let mut group = RowGroup::new(entity_type.clone());
+     for (key, data) in data {
+         group
+             .push(EntityModification::overwrite(key, data, block), block)
+@@ -99,7 +99,7 @@ pub fn row_group_insert(
+     block: BlockNumber,
+     data: impl IntoIterator<Item = (EntityKey, Entity)>,
+ ) -> RowGroup {
+-    let mut group = RowGroup::new(entity_type.clone(), false);
++    let mut group = RowGroup::new(entity_type.clone());
+     for (key, data) in data {
+         group
+             .push(EntityModification::insert(key, data, block), block)
+@@ -113,7 +113,7 @@ pub fn row_group_delete(
+     block: BlockNumber,
+     data: impl IntoIterator<Item = EntityKey>,
+ ) -> RowGroup {
+-    let mut group = RowGroup::new(entity_type.clone(), false);
++    let mut group = RowGroup::new(entity_type.clone());
+     for key in data {
+         group
+             .push(EntityModification::remove(key, block), block)
+diff --git a/tests/runner-tests/skip-duplicates/abis/Contract.abi b/tests/runner-tests/skip-duplicates/abis/Contract.abi
+new file mode 100644
+index 000000000..9d9f56b92
+--- /dev/null
++++ b/tests/runner-tests/skip-duplicates/abis/Contract.abi
+@@ -0,0 +1,15 @@
++[
++    {
++        "anonymous": false,
++        "inputs": [
++            {
++                "indexed": false,
++                "internalType": "string",
++                "name": "testCommand",
++                "type": "string"
++            }
++        ],
++        "name": "TestEvent",
++        "type": "event"
++    }
++]
+diff --git a/tests/runner-tests/skip-duplicates/package.json b/tests/runner-tests/skip-duplicates/package.json
+new file mode 100644
+index 000000000..da0ba3e3e
+--- /dev/null
++++ b/tests/runner-tests/skip-duplicates/package.json
+@@ -0,0 +1,13 @@
++{
++  "name": "skip-duplicates",
++  "version": "0.0.0",
++  "private": true,
++  "scripts": {
++    "codegen": "graph codegen --skip-migrations",
++    "deploy:test": "graph deploy test/skip-duplicates --version-label v0.0.1 --ipfs $IPFS_URI --node $GRAPH_NODE_ADMIN_URI"
++  },
++  "devDependencies": {
++    "@graphprotocol/graph-cli": "0.60.0",
++    "@graphprotocol/graph-ts": "0.31.0"
++  }
++}
+diff --git a/tests/runner-tests/skip-duplicates/schema.graphql b/tests/runner-tests/skip-duplicates/schema.graphql
+new file mode 100644
+index 000000000..94c5a2862
+--- /dev/null
++++ b/tests/runner-tests/skip-duplicates/schema.graphql
+@@ -0,0 +1,4 @@
++type Ping @entity(immutable: true, skipDuplicates: true) {
++  id: ID!
++  value: String!
++}
+diff --git a/tests/runner-tests/skip-duplicates/src/mapping.ts b/tests/runner-tests/skip-duplicates/src/mapping.ts
+new file mode 100644
+index 000000000..bf756595b
+--- /dev/null
++++ b/tests/runner-tests/skip-duplicates/src/mapping.ts
+@@ -0,0 +1,8 @@
++import { ethereum } from "@graphprotocol/graph-ts";
++import { Ping } from "../generated/schema";
++
++export function handleBlock(block: ethereum.Block): void {
++  let entity = new Ping("duplicate-entity");
++  entity.value = "ping";
++  entity.save();
++}
+diff --git a/tests/runner-tests/skip-duplicates/subgraph.yaml b/tests/runner-tests/skip-duplicates/subgraph.yaml
+new file mode 100644
+index 000000000..068301105
+--- /dev/null
++++ b/tests/runner-tests/skip-duplicates/subgraph.yaml
+@@ -0,0 +1,25 @@
++specVersion: 0.0.8
++schema:
++  file: ./schema.graphql
++dataSources:
++  - kind: ethereum/contract
++    name: Contract
++    network: test
++    source:
++      address: "0x0000000000000000000000000000000000000000"
++      abi: Contract
++    mapping:
++      kind: ethereum/events
++      apiVersion: 0.0.7
++      language: wasm/assemblyscript
++      entities:
++        - Ping
++      abis:
++        - name: Contract
++          file: ./abis/Contract.abi
++      blockHandlers:
++        - handler: handleBlock
++          filter:
++            kind: polling
++            every: 1
++      file: ./src/mapping.ts
+diff --git a/tests/tests/runner_tests.rs b/tests/tests/runner_tests.rs
+index 27ffe9422..a215d270a 100644
+--- a/tests/tests/runner_tests.rs
++++ b/tests/tests/runner_tests.rs
+@@ -1381,3 +1381,40 @@ async fn aggregation_current_bucket() {
+         })
+     );
+ }
++
++#[graph::test]
++async fn skip_duplicates() {
++    let RunnerTestRecipe { stores, test_info } =
++        RunnerTestRecipe::new("skip_duplicates", "skip-duplicates").await;
++
++    let blocks = {
++        let block_0 = genesis();
++        let mut block_1 = empty_block(block_0.ptr(), test_ptr(1));
++        push_test_polling_trigger(&mut block_1);
++        let mut block_2 = empty_block(block_1.ptr(), test_ptr(2));
++        push_test_polling_trigger(&mut block_2);
++        let mut block_3 = empty_block(block_2.ptr(), test_ptr(3));
++        push_test_polling_trigger(&mut block_3);
++        let mut block_4 = empty_block(block_3.ptr(), test_ptr(4));
++        push_test_polling_trigger(&mut block_4);
++        vec![block_0, block_1, block_2, block_3, block_4]
++    };
++
++    let stop_block = blocks.last().unwrap().block.ptr();
++    let chain = chain(&test_info.test_name, blocks, &stores, None).await;
++    let ctx = fixture::setup(&test_info, &stores, &chain, None, None).await;
++
++    ctx.start_and_sync_to(stop_block).await;
++
++    let query_res = ctx
++        .query(r#"{ ping(id: "duplicate-entity") { id, value } }"#)
++        .await
++        .unwrap();
++
++    assert_eq!(
++        query_res,
++        Some(object! {
++            ping: object! { id: "duplicate-entity", value: "ping" }
++        })
++    );
++}

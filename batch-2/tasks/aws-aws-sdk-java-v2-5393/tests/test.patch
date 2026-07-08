@@ -1,0 +1,343 @@
+diff --git a/test/v2-migration-tests/src/test/resources/maven/after/pom.xml b/test/v2-migration-tests/src/test/resources/maven/after/pom.xml
+index 828ef1ee968..75f99770581 100644
+--- a/test/v2-migration-tests/src/test/resources/maven/after/pom.xml
++++ b/test/v2-migration-tests/src/test/resources/maven/after/pom.xml
+@@ -42,6 +42,11 @@
+             <artifactId>sqs</artifactId>
+             <version>V2_VERSION</version>
+         </dependency>
++        <dependency>
++            <groupId>software.amazon.awssdk</groupId>
++            <artifactId>sqs</artifactId>
++            <version>V2_VERSION</version>
++        </dependency>
+         <dependency>
+             <groupId>software.amazon.awssdk</groupId>
+             <artifactId>apache-client</artifactId>
+diff --git a/test/v2-migration-tests/src/test/resources/maven/after/src/main/java/foo/bar/Enums.java b/test/v2-migration-tests/src/test/resources/maven/after/src/main/java/foo/bar/Enums.java
+new file mode 100644
+index 00000000000..decc9fe58da
+--- /dev/null
++++ b/test/v2-migration-tests/src/test/resources/maven/after/src/main/java/foo/bar/Enums.java
+@@ -0,0 +1,40 @@
++/*
++ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License").
++ * You may not use this file except in compliance with the License.
++ * A copy of the License is located at
++ *
++ *  http://aws.amazon.com/apache2.0
++ *
++ * or in the "license" file accompanying this file. This file is distributed
++ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
++ * express or implied. See the License for the specific language governing
++ * permissions and limitations under the License.
++ */
++
++package foo.bar;
++import software.amazon.awssdk.services.sqs.model.QueueAttributeName;
++import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
++import software.amazon.awssdk.services.sqs.model.MessageAttributeValue;
++import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
++import java.util.List;
++import java.util.Map;
++
++public class Enums {
++
++    public static void main(String... args) {
++        QueueAttributeName qan = QueueAttributeName.DELAY_SECONDS;
++        QueueAttributeName qan2 = QueueAttributeName.ALL;
++        System.out.println(qan);
++        System.out.println(qan2);
++
++        ReceiveMessageRequest v1Request = ReceiveMessageRequest.builder().build();
++        List<String> attributes = v1Request.attributeNamesAsStrings();
++        System.out.println(attributes);
++
++        SendMessageRequest v2Request = SendMessageRequest.builder().build();
++        Map<String, MessageAttributeValue> messageAttributes = v2Request.messageAttributes();
++        System.out.println(messageAttributes);
++    }
++}
+\ No newline at end of file
+diff --git a/test/v2-migration-tests/src/test/resources/maven/before/pom.xml b/test/v2-migration-tests/src/test/resources/maven/before/pom.xml
+index a49b48bc753..f79e5ec5241 100644
+--- a/test/v2-migration-tests/src/test/resources/maven/before/pom.xml
++++ b/test/v2-migration-tests/src/test/resources/maven/before/pom.xml
+@@ -37,6 +37,11 @@
+     </dependencyManagement>
+ 
+     <dependencies>
++        <dependency>
++            <groupId>software.amazon.awssdk</groupId>
++            <artifactId>sqs</artifactId>
++            <version>V2_VERSION</version>
++        </dependency>
+         <dependency>
+             <groupId>com.amazonaws</groupId>
+             <artifactId>aws-java-sdk-sqs</artifactId>
+diff --git a/test/v2-migration-tests/src/test/resources/maven/before/src/main/java/foo/bar/Enums.java b/test/v2-migration-tests/src/test/resources/maven/before/src/main/java/foo/bar/Enums.java
+new file mode 100644
+index 00000000000..867cc2ce195
+--- /dev/null
++++ b/test/v2-migration-tests/src/test/resources/maven/before/src/main/java/foo/bar/Enums.java
+@@ -0,0 +1,41 @@
++/*
++ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License").
++ * You may not use this file except in compliance with the License.
++ * A copy of the License is located at
++ *
++ *  http://aws.amazon.com/apache2.0
++ *
++ * or in the "license" file accompanying this file. This file is distributed
++ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
++ * express or implied. See the License for the specific language governing
++ * permissions and limitations under the License.
++ */
++
++package foo.bar;
++
++import com.amazonaws.services.sqs.model.QueueAttributeName;
++import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
++import software.amazon.awssdk.services.sqs.model.MessageAttributeValue;
++import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
++import java.util.List;
++import java.util.Map;
++
++public class Enums {
++
++    public static void main(String... args) {
++        QueueAttributeName qan = QueueAttributeName.DelaySeconds;
++        QueueAttributeName qan2 = QueueAttributeName.All;
++        System.out.println(qan);
++        System.out.println(qan2);
++
++        ReceiveMessageRequest v1Request = new ReceiveMessageRequest();
++        List<String> attributes = v1Request.getAttributeNames();
++        System.out.println(attributes);
++
++        SendMessageRequest v2Request = SendMessageRequest.builder().build();
++        Map<String, MessageAttributeValue> messageAttributes = v2Request.messageAttributes();
++        System.out.println(messageAttributes);
++    }
++}
+\ No newline at end of file
+diff --git a/test/v2-migration-tests/src/test/resources/run-test b/test/v2-migration-tests/src/test/resources/run-test
+index 18ba8ad749b..2663cd21095 100755
+--- a/test/v2-migration-tests/src/test/resources/run-test
++++ b/test/v2-migration-tests/src/test/resources/run-test
+@@ -14,6 +14,7 @@ BEFORE_DIR_MAVEN = os.path.join(RESOURCE_DIR, "maven/before")
+ AFTER_DIR_MAVEN = os.path.join(RESOURCE_DIR, "maven/after")
+ TARGET_DIR_MAVEN = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, "../../")))), "target/generated-test-sources/maven/project")
+ TARGET_AFTER_DIR_MAVEN = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, "../../")))), "target/generated-test-sources/maven/after")
++BEFORE_POM = os.path.join(TARGET_DIR_MAVEN, "pom.xml")
+ AFTER_POM = os.path.join(TARGET_AFTER_DIR_MAVEN, "pom.xml")
+ 
+ BEFORE_DIR_GRADLE = os.path.join(RESOURCE_DIR, "gradle/before")
+@@ -43,13 +44,16 @@ def run_maven_test(version):
+     copy_directory(BEFORE_DIR_MAVEN, TARGET_DIR_MAVEN)
+     copy_directory(AFTER_DIR_MAVEN, TARGET_AFTER_DIR_MAVEN)
+ 
++    before_pom_file = Path(BEFORE_POM)
++    write_version_to_pom(before_pom_file, version)
++
+     subprocess.run(["mvn", "org.openrewrite.maven:rewrite-maven-plugin:run",
+                     "-Drewrite.recipeArtifactCoordinates=software.amazon.awssdk:v2-migration:"+ version,
+                     "-Drewrite.activeRecipes=software.amazon.awssdk.v2migration.AwsSdkJavaV1ToV2"], cwd=TARGET_DIR_MAVEN, check=True)
+     shutil.rmtree(os.path.join(TARGET_DIR_MAVEN, "target"))
+ 
+-    pom_file = Path(AFTER_POM)
+-    pom_file.write_text(pom_file.read_text().replace('V2_VERSION', version))
++    after_pom_file = Path(AFTER_POM)
++    write_version_to_pom(after_pom_file, version)
+ 
+     is_same = compare_directory(filecmp.dircmp(TARGET_DIR_MAVEN, TARGET_AFTER_DIR_MAVEN))
+     if not is_same:
+@@ -57,6 +61,11 @@ def run_maven_test(version):
+     result = subprocess.run(["mvn", "package"], cwd=TARGET_DIR_MAVEN, capture_output=True, check=True)
+     print(result)
+ 
++
++def write_version_to_pom(pom_file, version):
++    pom_file.write_text(pom_file.read_text().replace('V2_VERSION', version))
++
++
+ def run_gradle_test(version):
+     if os.path.exists(TARGET_DIR_GRADLE) and os.path.isdir(TARGET_DIR_GRADLE):
+         shutil.rmtree(TARGET_DIR_GRADLE)
+diff --git a/v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumCasingToV2Test.java b/v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumCasingToV2Test.java
+new file mode 100644
+index 00000000000..348eca7632d
+--- /dev/null
++++ b/v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumCasingToV2Test.java
+@@ -0,0 +1,60 @@
++/*
++ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License").
++ * You may not use this file except in compliance with the License.
++ * A copy of the License is located at
++ *
++ *  http://aws.amazon.com/apache2.0
++ *
++ * or in the "license" file accompanying this file. This file is distributed
++ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
++ * express or implied. See the License for the specific language governing
++ * permissions and limitations under the License.
++ */
++
++package software.amazon.awssdk.v2migration;
++
++import static org.openrewrite.java.Assertions.java;
++import org.junit.jupiter.api.Test;
++import org.junit.jupiter.api.condition.EnabledOnJre;
++import org.junit.jupiter.api.condition.JRE;
++import org.openrewrite.java.Java8Parser;
++import org.openrewrite.test.RecipeSpec;
++import org.openrewrite.test.RewriteTest;
++
++public class EnumCasingToV2Test implements RewriteTest {
++
++    @Override
++    public void defaults(RecipeSpec spec) {
++        spec.recipes(new ChangeSdkType(),
++                     new EnumCasingToV2())
++            .parser(Java8Parser.builder().classpath("sqs"))
++            .expectedCyclesThatMakeChanges(2);
++    }
++
++    @Test
++    @EnabledOnJre({JRE.JAVA_8})
++    void shouldChangeEnumCasing() {
++        rewriteRun(
++            java(
++                "import com.amazonaws.services.sqs.model.QueueAttributeName;\n" +
++                "\n" +
++                "class Test {\n" +
++                "    static void method() {\n" +
++                "        QueueAttributeName qan = QueueAttributeName.DelaySeconds;\n" +
++                "        QueueAttributeName qan2 = QueueAttributeName.All;\n" +
++                "    }\n" +
++                "}\n",
++                "import software.amazon.awssdk.services.sqs.model.QueueAttributeName;\n" +
++                "\n" +
++                "class Test {\n" +
++                "    static void method() {\n" +
++                "        QueueAttributeName qan = QueueAttributeName.DELAY_SECONDS;\n" +
++                "        QueueAttributeName qan2 = QueueAttributeName.ALL;\n" +
++                "    }\n" +
++                "}\n"
++            )
++        );
++    }
++}
+diff --git a/v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumGettersToV2Test.java b/v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumGettersToV2Test.java
+new file mode 100644
+index 00000000000..67af492af54
+--- /dev/null
++++ b/v2-migration/src/test/java/software/amazon/awssdk/v2migration/EnumGettersToV2Test.java
+@@ -0,0 +1,101 @@
++/*
++ * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License").
++ * You may not use this file except in compliance with the License.
++ * A copy of the License is located at
++ *
++ *  http://aws.amazon.com/apache2.0
++ *
++ * or in the "license" file accompanying this file. This file is distributed
++ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
++ * express or implied. See the License for the specific language governing
++ * permissions and limitations under the License.
++ */
++
++package software.amazon.awssdk.v2migration;
++
++import static org.openrewrite.java.Assertions.java;
++
++import java.io.IOException;
++import java.io.InputStream;
++import java.net.URI;
++import java.util.Properties;
++import org.junit.jupiter.api.Test;
++import org.junit.jupiter.api.condition.EnabledOnJre;
++import org.junit.jupiter.api.condition.JRE;
++import org.openrewrite.config.Environment;
++import org.openrewrite.config.YamlResourceLoader;
++import org.openrewrite.java.Java8Parser;
++import org.openrewrite.test.RecipeSpec;
++import org.openrewrite.test.RewriteTest;
++
++public class EnumGettersToV2Test implements RewriteTest {
++
++    @Override
++    public void defaults(RecipeSpec spec) {
++        try (InputStream stream = getClass().getResourceAsStream("/META-INF/rewrite/change-enum-getters.yml")) {
++            spec.recipes(Environment.builder()
++                                    .load(new YamlResourceLoader(stream, URI.create("rewrite.yml"), new Properties()))
++                                    .build()
++                                    .activateRecipes("software.amazon.awssdk.v2migration.EnumGettersToV2"),
++                         new ChangeSdkType(),
++                         new NewClassToBuilder());
++        } catch (IOException e) {
++            throw new RuntimeException(e);
++        }
++
++        spec.parser(Java8Parser.builder().classpath("sns"))
++            .expectedCyclesThatMakeChanges(2);
++    }
++
++    @Test
++    @EnabledOnJre({JRE.JAVA_8})
++    void shouldChangeSingleItemEnumGetter() {
++        rewriteRun(
++            java(
++                "import com.amazonaws.services.sns.model.PhoneNumberInformation;\n" +
++                "\n" +
++                "class Test {\n" +
++                "    static void method() {\n" +
++                "        PhoneNumberInformation phoneNumberInformation = new PhoneNumberInformation();\n" +
++                "        String routeType = phoneNumberInformation.getRouteType();\n" +
++                "    }\n" +
++                "}\n",
++                "import software.amazon.awssdk.services.sns.model.PhoneNumberInformation;\n" +
++                "\n" +
++                "class Test {\n" +
++                "    static void method() {\n" +
++                "        PhoneNumberInformation phoneNumberInformation = PhoneNumberInformation.builder().build();\n" +
++                "        String routeType = phoneNumberInformation.routeTypeAsString();\n" +
++                "    }\n" +
++                "}\n"
++            )
++        );
++    }
++
++    @Test
++    @EnabledOnJre({JRE.JAVA_8})
++    void shouldChangeCollectionItemEnumGetter() {
++        rewriteRun(
++            java(
++                "import com.amazonaws.services.sns.model.PhoneNumberInformation;\n" +
++                "\n" +
++                "class Test {\n" +
++                "    static void method() {\n" +
++                "        PhoneNumberInformation phoneNumberInformation = new PhoneNumberInformation();\n" +
++                "        List<String> numberCapabilities = phoneNumberInformation.getNumberCapabilities();\n" +
++                "    }\n" +
++                "}\n",
++                "import software.amazon.awssdk.services.sns.model.PhoneNumberInformation;\n" +
++                "\n" +
++                "class Test {\n" +
++                "    static void method() {\n" +
++                "        PhoneNumberInformation phoneNumberInformation = PhoneNumberInformation.builder().build();\n" +
++                "        List<String> numberCapabilities = phoneNumberInformation.numberCapabilitiesAsStrings();\n" +
++                "    }\n" +
++                "}\n"
++            )
++        );
++    }
++}

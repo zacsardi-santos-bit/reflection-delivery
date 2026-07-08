@@ -1,15 +1,7 @@
-I'm working on a Card component in a React design system and need to make several improvements to its API.
+I'm cleaning up our Card component in the React design system and there's a bunch of API stuff that's been bugging me. Right now spacing for the card sub-pieces (the rows and the footer) has to be threaded down explicitly as a prop from the parent Card, which is easy to get wrong, so I want the parent Card to just share its spacing through an internal context and have CardRow and CardFooter read spacing from that context instead of taking it as a direct prop.
 
-The spacing for card sub-components (rows and footer) currently has to be passed down explicitly from the parent Card as a prop, which is error-prone. I'd like the parent Card to share its spacing setting automatically with sub-components through context, so that card rows and footer can consume spacing from context rather than receiving it as a direct prop.
+The interactive card pattern also needs a rework. Right now it's this awkward combo of an "interactive" flag plus a separate action callback, and I'd rather just have a standard click handler prop. When that handler's passed, render the card's inner content area as a native button element so keyboard accessibility comes for free from the browser. Oh and I also want a link destination prop that makes the card act like an interactive link, same pointer cursor and box shadow on hover and focus as the click handler gives you.
 
-The interactive card pattern also needs an overhaul. Right now there's a separate "interactive" flag and a custom action callback, but I want to replace this with a standard click handler prop. When that handler is provided, the inner content area of the card should render as a native button element so keyboard accessibility is handled by the browser. I'd also like to support a link destination prop that makes the card behave like an interactive link (pointer cursor, box shadow on hover and focus) the same way the click handler does.
+When there's a footer, the inner content area should only round its top corners, bottom stays square, but with no footer all four corners round like normal. Also the sub-components (CardColumn, CardFooter, CardRow) should start supporting data tagging attributes so we can target them in automated tests. And rename the card width prop to something shorter and simpler while we're at it.
 
-When a card has a footer, the inner content area should only have its top corners rounded (not the bottom ones). Without a footer, all four corners should be rounded.
-
-The card's sub-components — the column, row, and footer — should also start supporting data tagging attributes so they can be targeted in automated tests.
-
-I need to rename the card width prop for clarity (a shorter, simpler name).
-
-Finally, there should be a developer warning if someone passes a footer as a direct child of an interactive card (one with a click handler or link destination), as that's not a supported pattern.
-
-As part of the same change, the Polish locale module needs to be moved into an internal subdirectory.
+One more thing, throw a dev warning if someone passes a footer as a direct child of an interactive card (one that has a click handler or link destination), since that's not a supported combo. And as part of this same change move the Polish locale module into an internal subdirectory. All this makes the API line up better with normal HTML patterns, cuts down manual prop wiring, and improves test tagging.

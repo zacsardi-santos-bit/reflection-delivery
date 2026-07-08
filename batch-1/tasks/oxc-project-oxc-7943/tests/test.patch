@@ -1,0 +1,27 @@
+diff --git a/crates/oxc_linter/src/rules/eslint/no_restricted_imports.rs b/crates/oxc_linter/src/rules/eslint/no_restricted_imports.rs
+index a36e0081ac..b2f21251e5 100644
+--- a/crates/oxc_linter/src/rules/eslint/no_restricted_imports.rs
++++ b/crates/oxc_linter/src/rules/eslint/no_restricted_imports.rs
+@@ -1614,3 +1614,22 @@
+     Tester::new(NoRestrictedImports::NAME, NoRestrictedImports::CATEGORY, pass, fail)
+         .test_and_snapshot();
+ }
++
++#[test]
++fn test_no_restricted_imports_object_config() {
++    use crate::tester::Tester;
++
++    let fail = vec![
++        (
++            r#"import foo from "foo";"#,
++            Some(serde_json::json!([{
++                "name": "foo",
++                "message": "Please import from bar instead."
++            }])),
++        ),
++    ];
++    let pass = vec![];
++
++    Tester::new(NoRestrictedImports::NAME, NoRestrictedImports::CATEGORY, pass, fail)
++        .test();
++}

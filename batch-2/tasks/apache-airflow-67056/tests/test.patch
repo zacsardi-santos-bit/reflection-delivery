@@ -1,0 +1,711 @@
+diff --git a/airflow-core/tests/unit/always/test_providers_manager.py b/airflow-core/tests/unit/always/test_providers_manager.py
+index afa473e80a..25e3774d4f 100644
+--- a/airflow-core/tests/unit/always/test_providers_manager.py
++++ b/airflow-core/tests/unit/always/test_providers_manager.py
+@@ -37,6 +37,7 @@ from airflow.providers_manager import (
+     PluginInfo,
+     ProviderInfo,
+     ProvidersManager,
++    RemoteLoggingInfo,
+ )
+ 
+ from tests_common.test_utils.markers import skip_if_force_lowest_dependencies_marker
+@@ -47,6 +48,16 @@ if TYPE_CHECKING:
+     from airflow.cli.cli_config import CLICommand
+ 
+ 
++class FakeRemoteLogIO:
++    """Importable stub used by remote-logging discovery tests."""
++
++    processors: tuple = ()
++
++    @classmethod
++    def from_config(cls):
++        return cls()
++
++
+ def test_cleanup_providers_manager(cleanup_providers_manager):
+     """Check the cleanup provider manager functionality."""
+     provider_manager = ProvidersManager()
+@@ -163,6 +174,78 @@ class TestProviderManager:
+             ),
+         )
+ 
++    def test_providers_manager_register_remote_logging_by_scheme(self):
++        providers_manager = ProvidersManager()
++        providers_manager._provider_dict = LazyDictWithCache()
++        providers_manager._provider_dict["fake.remote.logging"] = ProviderInfo(
++            version="0.0.1",
++            data={
++                "remote-logging": [
++                    {
++                        "classpath": f"{__name__}.FakeRemoteLogIO",
++                        "scheme": "fake",
++                    }
++                ]
++            },
++        )
++        providers_manager._discover_remote_logging()
++        assert len(providers_manager._remote_logging_info_list) == 1
++        assert providers_manager._remote_logging_by_scheme["fake"] == RemoteLoggingInfo(
++            classpath=f"{__name__}.FakeRemoteLogIO",
++            scheme="fake",
++            package_name="fake.remote.logging",
++        )
++        assert "unknown" not in providers_manager._remote_logging_by_scheme
++
++    def test_providers_manager_register_remote_logging_duplicate_scheme_first_wins(self):
++        providers_manager = ProvidersManager()
++        providers_manager._provider_dict = LazyDictWithCache()
++        providers_manager._provider_dict["fake.remote.logging.first"] = ProviderInfo(
++            version="0.0.1",
++            data={
++                "remote-logging": [
++                    {
++                        "classpath": f"{__name__}.FakeRemoteLogIO",
++                        "scheme": "dup",
++                    }
++                ]
++            },
++        )
++        providers_manager._provider_dict["fake.remote.logging.second"] = ProviderInfo(
++            version="0.0.1",
++            data={
++                "remote-logging": [
++                    {
++                        "classpath": f"{__name__}.FakeRemoteLogIO",
++                        "scheme": "dup",
++                    }
++                ]
++            },
++        )
++        providers_manager._discover_remote_logging()
++        winner = providers_manager._remote_logging_by_scheme["dup"]
++        assert winner.package_name == "fake.remote.logging.first"
++        assert len(providers_manager._remote_logging_info_list) == 1
++        assert providers_manager._remote_logging_info_list[0].package_name == "fake.remote.logging.first"
++
++    def test_providers_manager_remote_logging_bad_class_filtered(self):
++        providers_manager = ProvidersManager()
++        providers_manager._provider_dict = LazyDictWithCache()
++        providers_manager._provider_dict["fake.remote.logging"] = ProviderInfo(
++            version="0.0.1",
++            data={
++                "remote-logging": [
++                    {
++                        "classpath": "fake.module.does.not.exist.FakeRemoteLogIO",
++                        "scheme": "bad",
++                    }
++                ]
++            },
++        )
++        providers_manager._discover_remote_logging()
++        assert "bad" not in providers_manager._remote_logging_by_scheme
++        assert providers_manager._remote_logging_info_list == []
++
+     def test_connection_form_widgets(self, yaml_ui_metadata_counts):
+         yaml_widgets, _ = yaml_ui_metadata_counts
+         provider_manager = ProvidersManager()
+diff --git a/airflow-core/tests/unit/logging/test_logging_config.py b/airflow-core/tests/unit/logging/test_logging_config.py
+new file mode 100644
+index 0000000000..04449a6741
+--- /dev/null
++++ b/airflow-core/tests/unit/logging/test_logging_config.py
+@@ -0,0 +1,210 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++import sys
++from types import SimpleNamespace
++from unittest import mock
++
++import pytest
++
++from airflow._shared.logging.factory import DEFAULT_LOGGING_CONFIG_PATH
++from airflow.logging_config import (
++    _ActiveLoggingConfig,
++    _get_logging_config,
++    _load_logging_config,
++    get_default_remote_conn_id,
++    get_remote_task_log,
++    load_logging_config,
++)
++
++
++@pytest.fixture(autouse=True)
++def _reset_active_logging_config(monkeypatch):
++    monkeypatch.setattr(_ActiveLoggingConfig, "logging_config_loaded", False, raising=False)
++    monkeypatch.setattr(_ActiveLoggingConfig, "remote_task_log", None, raising=False)
++    monkeypatch.setattr(_ActiveLoggingConfig, "default_remote_conn_id", None, raising=False)
++
++
++class TestGetLoggingConfig:
++    def test_returns_default_logging_dict(self):
++        from airflow.config_templates.airflow_local_settings import DEFAULT_LOGGING_CONFIG
++
++        config = _get_logging_config()
++        assert config == DEFAULT_LOGGING_CONFIG
++
++    def test_user_defined_dict_is_imported(self, monkeypatch):
++        fake_module = "fake_user_logging_module_for_test"
++        custom = {"version": 1, "marker": "user-defined"}
++        monkeypatch.setitem(sys.modules, fake_module, SimpleNamespace(LOGGING_CONFIG=custom))
++        with mock.patch("airflow.logging_config.conf") as mocked_conf:
++            mocked_conf.get.return_value = f"{fake_module}.LOGGING_CONFIG"
++            config = _get_logging_config()
++        assert config is custom
++
++    def test_empty_string_falls_back_to_default(self):
++        from airflow.config_templates.airflow_local_settings import DEFAULT_LOGGING_CONFIG
++
++        with mock.patch("airflow.logging_config.conf") as mocked_conf:
++            mocked_conf.get.return_value = ""
++            config = _get_logging_config()
++        assert config == DEFAULT_LOGGING_CONFIG
++
++    @pytest.mark.parametrize(
++        "logging_class_path",
++        [pytest.param("", id="empty-string"), pytest.param(None, id="none")],
++    )
++    def test_falsy_logging_class_path_falls_back_to_default(self, logging_class_path):
++        from airflow.config_templates.airflow_local_settings import DEFAULT_LOGGING_CONFIG
++
++        with mock.patch("airflow.logging_config.conf") as mocked_conf:
++            mocked_conf.get.return_value = logging_class_path
++            config = _get_logging_config()
++        assert config == DEFAULT_LOGGING_CONFIG
++
++    def test_raises_import_error_when_path_invalid(self):
++        with mock.patch("airflow.logging_config.conf") as mocked_conf:
++            mocked_conf.get.return_value = "nonexistent.module.LOGGING"
++            with pytest.raises(ImportError, match="Unable to load custom logging config"):
++                _get_logging_config()
++
++    def test_raises_import_error_when_value_not_dict(self, monkeypatch):
++        fake_module = "fake_user_logging_module_not_dict"
++        monkeypatch.setitem(sys.modules, fake_module, SimpleNamespace(LOGGING_CONFIG="not-a-dict"))
++        with mock.patch("airflow.logging_config.conf") as mocked_conf:
++            mocked_conf.get.return_value = f"{fake_module}.LOGGING_CONFIG"
++            with pytest.raises(ImportError, match="Logging Config should be of dict type"):
++                _get_logging_config()
++
++
++class TestLoadLoggingConfigPrivate:
++    def test_caches_resolved_remote_handler_and_conn_id(self):
++        sentinel_handler = object()
++        with (
++            mock.patch("airflow.logging_config.resolve_remote_task_log") as mock_resolve,
++            mock.patch("airflow.providers_manager.ProvidersManager") as mock_pm,
++        ):
++            mock_resolve.return_value = (sentinel_handler, "my_conn")
++            _load_logging_config()
++
++        assert _ActiveLoggingConfig.logging_config_loaded is True
++        assert _ActiveLoggingConfig.remote_task_log is sentinel_handler
++        assert _ActiveLoggingConfig.default_remote_conn_id == "my_conn"
++        # resolve_remote_task_log must be called with the core providers manager.
++        mock_resolve.assert_called_once()
++        assert mock_resolve.call_args.kwargs["providers_manager"] is mock_pm.return_value
++
++    def test_caches_none_when_resolver_returns_nothing(self):
++        with (
++            mock.patch("airflow.logging_config.resolve_remote_task_log") as mock_resolve,
++            mock.patch("airflow.providers_manager.ProvidersManager"),
++        ):
++            mock_resolve.return_value = (None, None)
++            _load_logging_config()
++
++        assert _ActiveLoggingConfig.logging_config_loaded is True
++        assert _ActiveLoggingConfig.remote_task_log is None
++        assert _ActiveLoggingConfig.default_remote_conn_id is None
++
++
++class TestLoadLoggingConfigDeprecated:
++    def test_emits_deprecation_warning_and_returns_tuple(self):
++        sentinel_handler = object()
++        with (
++            mock.patch("airflow.logging_config.resolve_remote_task_log") as mock_resolve,
++            mock.patch("airflow.providers_manager.ProvidersManager"),
++        ):
++            mock_resolve.return_value = (sentinel_handler, "my_conn")
++            with pytest.warns(DeprecationWarning, match="load_logging_config is deprecated"):
++                logging_config, logging_class_path = load_logging_config()
++
++        assert isinstance(logging_config, dict)
++        assert logging_class_path == DEFAULT_LOGGING_CONFIG_PATH
++        # The deprecated wrapper still primes the remote handler cache.
++        assert _ActiveLoggingConfig.remote_task_log is sentinel_handler
++
++    def test_returns_user_logging_class_path(self, monkeypatch):
++        fake_module = "fake_user_logging_module_deprecated"
++        custom = {"version": 1}
++        custom_path = f"{fake_module}.LOGGING_CONFIG"
++        monkeypatch.setitem(sys.modules, fake_module, SimpleNamespace(LOGGING_CONFIG=custom))
++
++        with (
++            mock.patch("airflow.logging_config.conf") as mocked_conf,
++            mock.patch("airflow.logging_config.resolve_remote_task_log") as mock_resolve,
++            mock.patch("airflow.providers_manager.ProvidersManager"),
++        ):
++            mocked_conf.get.return_value = custom_path
++            mock_resolve.return_value = (None, None)
++            with pytest.warns(DeprecationWarning, match="load_logging_config is deprecated"):
++                _, logging_class_path = load_logging_config()
++
++        assert logging_class_path == custom_path
++
++
++class TestGetRemoteTaskLog:
++    def test_returns_cached_value_without_reload(self):
++        sentinel = object()
++        _ActiveLoggingConfig.set(sentinel, None)
++        with mock.patch("airflow.logging_config._load_logging_config") as mock_load:
++            result = get_remote_task_log()
++        assert result is sentinel
++        mock_load.assert_not_called()
++
++    def test_triggers_load_when_not_loaded(self):
++        sentinel = object()
++
++        def _fake_load():
++            _ActiveLoggingConfig.set(sentinel, None)
++
++        with mock.patch("airflow.logging_config._load_logging_config", side_effect=_fake_load) as mock_load:
++            result = get_remote_task_log()
++        mock_load.assert_called_once()
++        assert result is sentinel
++
++
++class TestGetDefaultRemoteConnId:
++    def test_prefers_explicit_conf_value(self):
++        with (
++            mock.patch("airflow.logging_config.conf") as mocked_conf,
++            mock.patch("airflow.logging_config._load_logging_config") as mock_load,
++        ):
++            mocked_conf.get.return_value = "explicit_conn"
++            assert get_default_remote_conn_id() == "explicit_conn"
++        mock_load.assert_not_called()
++
++    def test_falls_back_to_cached_default(self):
++        def _fake_load():
++            _ActiveLoggingConfig.set(None, "cached_conn")
++
++        with (
++            mock.patch("airflow.logging_config.conf") as mocked_conf,
++            mock.patch("airflow.logging_config._load_logging_config", side_effect=_fake_load),
++        ):
++            mocked_conf.get.return_value = None
++            assert get_default_remote_conn_id() == "cached_conn"
++
++    def test_skips_reload_when_already_loaded(self):
++        _ActiveLoggingConfig.set(None, "cached_conn")
++        with (
++            mock.patch("airflow.logging_config.conf") as mocked_conf,
++            mock.patch("airflow.logging_config._load_logging_config") as mock_load,
++        ):
++            mocked_conf.get.return_value = None
++            assert get_default_remote_conn_id() == "cached_conn"
++        mock_load.assert_not_called()
+diff --git a/shared/logging/tests/logging/test_factory.py b/shared/logging/tests/logging/test_factory.py
+new file mode 100644
+index 0000000000..fa81d7fa1c
+--- /dev/null
++++ b/shared/logging/tests/logging/test_factory.py
+@@ -0,0 +1,289 @@
++#
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++from __future__ import annotations
++
++from types import SimpleNamespace
++from typing import Any
++
++import pytest
++
++from airflow_shared.logging.factory import (
++    DEFAULT_LOGGING_CONFIG_PATH,
++    _build_remote_task_log_from_provider,
++    resolve_remote_task_log,
++)
++
++
++class FakeProvidersManager:
++    """Stub manager satisfying the ProvidersManagerLike protocol."""
++
++    def __init__(self, by_scheme: dict[str, Any] | None = None) -> None:
++        self._by_scheme = by_scheme or {}
++
++    def remote_logging_handler_by_scheme(self, scheme: str):
++        return self._by_scheme.get(scheme)
++
++
++class ExplodingProvidersManager:
++    """Stub manager whose lookup must never be called by the test."""
++
++    def remote_logging_handler_by_scheme(self, scheme: str):  # pragma: no cover - sentinel
++        pytest.fail("lookup must not run")
++
++
++class FakeRemoteLogIO:
++    """Importable stub used as the registered handler class."""
++
++    last_called: bool = False
++
++    def __init__(self):
++        pass
++
++    @classmethod
++    def from_config(cls):
++        FakeRemoteLogIO.last_called = True
++        return cls()
++
++
++class FakeRemoteLogIONoFactory:
++    """Stub missing the from_config classmethod."""
++
++
++_LOOKUP: dict[str, Any] = {
++    "fakeremotelogio": FakeRemoteLogIO,
++    "fakeremotelogionofactory": FakeRemoteLogIONoFactory,
++}
++
++
++def _fake_import_string(path: str) -> Any:
++    # Tests pass simple names like "fakeremotelogio"; route them through a dict
++    # to avoid needing real importable modules.
++    return _LOOKUP[path.lower()]
++
++
++def _info(
++    *,
++    classpath: str = "fakeremotelogio",
++    scheme: str = "fake",
++    package_name: str = "fake-provider",
++) -> SimpleNamespace:
++    return SimpleNamespace(
++        classpath=classpath,
++        scheme=scheme,
++        package_name=package_name,
++    )
++
++
++@pytest.fixture(autouse=True)
++def _reset_fake():
++    FakeRemoteLogIO.last_called = False
++    yield
++    FakeRemoteLogIO.last_called = False
++
++
++def test_provider_dispatch_resolves_by_scheme():
++    info = _info(scheme="fake")
++    handler = _build_remote_task_log_from_provider(
++        remote_base_log_folder="fake://bucket/path",
++        providers_manager=FakeProvidersManager({"fake": info}),
++        import_string=_fake_import_string,
++    )
++    assert isinstance(handler, FakeRemoteLogIO)
++    assert FakeRemoteLogIO.last_called is True
++
++
++def test_provider_dispatch_returns_none_when_scheme_unknown():
++    handler = _build_remote_task_log_from_provider(
++        remote_base_log_folder="unknown://x",
++        providers_manager=FakeProvidersManager(),
++        import_string=_fake_import_string,
++    )
++    assert handler is None
++
++
++def test_provider_dispatch_returns_none_when_remote_base_unset():
++    handler = _build_remote_task_log_from_provider(
++        remote_base_log_folder=None,
++        providers_manager=ExplodingProvidersManager(),
++        import_string=_fake_import_string,
++    )
++    assert handler is None
++
++
++def test_provider_dispatch_returns_none_when_no_scheme_in_url():
++    handler = _build_remote_task_log_from_provider(
++        remote_base_log_folder="/local/path/no/scheme",
++        providers_manager=ExplodingProvidersManager(),
++        import_string=_fake_import_string,
++    )
++    assert handler is None
++
++
++def test_provider_dispatch_skips_handler_without_factory():
++    info = _info(classpath="fakeremotelogionofactory")
++    handler = _build_remote_task_log_from_provider(
++        remote_base_log_folder="fake://b",
++        providers_manager=FakeProvidersManager({"fake": info}),
++        import_string=_fake_import_string,
++    )
++    assert handler is None
++
++
++# ---------------------------------------------------------------------------
++# Tests for resolve_remote_task_log (three-tier precedence orchestrator)
++# ---------------------------------------------------------------------------
++
++_FAKE_LOGGING_DICT: dict[str, Any] = {"version": 1}
++
++
++class FakeConf:
++    """Minimal ConfLike stub keyed by ``(section, key)``."""
++
++    def __init__(self, values: dict[tuple[str, str], Any] | None = None) -> None:
++        self._values = values or {}
++
++    def get(self, section, key, **kwargs):
++        return self._values.get((section, key), kwargs.get("fallback"))
++
++    def getboolean(self, section, key, **kwargs):
++        value = self._values.get((section, key), kwargs.get("fallback"))
++        if isinstance(value, bool):
++            return value
++        if isinstance(value, str):
++            return value.lower() in ("1", "true", "yes", "on")
++        return bool(value)
++
++
++def test_resolve_user_defined_module_wins():
++    """If the user's logging_config_class module exposes REMOTE_TASK_LOG, it wins."""
++    user_path = "fake.user.module.DEFAULT_LOGGING_CONFIG"
++    sentinel_remote = object()
++
++    def fake_import_string(path: str):
++        if path == user_path:
++            return _FAKE_LOGGING_DICT
++        if path == "fake.user.module":
++            return SimpleNamespace(REMOTE_TASK_LOG=sentinel_remote, DEFAULT_REMOTE_CONN_ID="user_conn")
++        raise AssertionError(f"unexpected import: {path}")
++
++    import sys
++
++    sys.modules["fake.user.module"] = SimpleNamespace(
++        REMOTE_TASK_LOG=sentinel_remote, DEFAULT_REMOTE_CONN_ID="user_conn"
++    )
++    try:
++        handler, conn_id = resolve_remote_task_log(
++            conf=FakeConf({("logging", "logging_config_class"): user_path}),
++            providers_manager=ExplodingProvidersManager(),  # must not be consulted
++            import_string=fake_import_string,
++        )
++    finally:
++        sys.modules.pop("fake.user.module", None)
++
++    assert handler is sentinel_remote
++    assert conn_id == "user_conn"
++
++
++def test_resolve_falls_through_to_provider_dispatch():
++    """Default logging_class_path → user_defined is False → provider dispatch runs."""
++    info = _info(scheme="fake")
++    handler, conn_id = resolve_remote_task_log(
++        conf=FakeConf(
++            {
++                ("logging", "remote_base_log_folder"): "fake://bucket",
++                ("logging", "remote_logging"): True,
++            }
++        ),
++        providers_manager=FakeProvidersManager({"fake": info}),
++        import_string=_fake_import_string,
++    )
++    assert isinstance(handler, FakeRemoteLogIO)
++    assert conn_id is None
++
++
++def test_resolve_skips_provider_dispatch_when_remote_logging_disabled():
++    """``[logging] remote_logging = False`` must short-circuit provider dispatch."""
++    sentinel_remote = object()
++
++    def fake_import_string(path: str):
++        if path == DEFAULT_LOGGING_CONFIG_PATH:
++            return _FAKE_LOGGING_DICT
++        raise AssertionError(f"unexpected import: {path}")
++
++    import sys
++
++    parent_module = DEFAULT_LOGGING_CONFIG_PATH.rsplit(".", 1)[0]
++    saved = sys.modules.get(parent_module)
++    sys.modules[parent_module] = SimpleNamespace(REMOTE_TASK_LOG=sentinel_remote, DEFAULT_REMOTE_CONN_ID=None)
++    try:
++        # ExplodingProvidersManager fails the test if provider dispatch runs.
++        handler, conn_id = resolve_remote_task_log(
++            conf=FakeConf(
++                {
++                    ("logging", "remote_base_log_folder"): "fake://bucket",
++                    ("logging", "remote_logging"): False,
++                }
++            ),
++            providers_manager=ExplodingProvidersManager(),
++            import_string=fake_import_string,
++        )
++    finally:
++        if saved is not None:
++            sys.modules[parent_module] = saved
++        else:
++            sys.modules.pop(parent_module, None)
++
++    assert handler is sentinel_remote
++    assert conn_id is None
++
++
++def test_resolve_falls_back_to_legacy_attr_path_when_dispatch_returns_none():
++    """When provider dispatch yields nothing, the legacy module-attr path is consulted."""
++    sentinel_remote = object()
++
++    def fake_import_string(path: str):
++        if path == DEFAULT_LOGGING_CONFIG_PATH:
++            return _FAKE_LOGGING_DICT
++        raise AssertionError(f"unexpected import: {path}")
++
++    import sys
++
++    parent_module = DEFAULT_LOGGING_CONFIG_PATH.rsplit(".", 1)[0]
++    saved = sys.modules.get(parent_module)
++    sys.modules[parent_module] = SimpleNamespace(
++        REMOTE_TASK_LOG=sentinel_remote, DEFAULT_REMOTE_CONN_ID="legacy_conn"
++    )
++    try:
++        handler, conn_id = resolve_remote_task_log(
++            conf=FakeConf(
++                {
++                    ("logging", "remote_base_log_folder"): "unknown://b",
++                    ("logging", "remote_logging"): True,
++                }
++            ),
++            providers_manager=FakeProvidersManager(),  # empty registry
++            import_string=fake_import_string,
++        )
++    finally:
++        if saved is not None:
++            sys.modules[parent_module] = saved
++        else:
++            sys.modules.pop(parent_module, None)
++
++    assert handler is sentinel_remote
++    assert conn_id == "legacy_conn"
+diff --git a/task-sdk/tests/task_sdk/test_providers_manager_runtime.py b/task-sdk/tests/task_sdk/test_providers_manager_runtime.py
+index 1cae21d53c..1f22ff6e73 100644
+--- a/task-sdk/tests/task_sdk/test_providers_manager_runtime.py
++++ b/task-sdk/tests/task_sdk/test_providers_manager_runtime.py
+@@ -31,7 +31,7 @@ from airflow.sdk._shared.providers_discovery import (
+     LazyDictWithCache,
+     ProviderInfo,
+ )
+-from airflow.sdk.providers_manager_runtime import ProvidersManagerTaskRuntime
++from airflow.sdk.providers_manager_runtime import ProvidersManagerTaskRuntime, RemoteLoggingInfo
+ 
+ from tests_common.test_utils.markers import skip_if_force_lowest_dependencies_marker, skip_if_not_on_main
+ from tests_common.test_utils.paths import AIRFLOW_ROOT_PATH
+@@ -39,6 +39,16 @@ from tests_common.test_utils.paths import AIRFLOW_ROOT_PATH
+ PY313 = sys.version_info >= (3, 13)
+ 
+ 
++class FakeRemoteLogIO:
++    """Importable stub used by remote-logging discovery tests."""
++
++    processors: tuple = ()
++
++    @classmethod
++    def from_config(cls):
++        return cls()
++
++
+ def test_cleanup_providers_manager_runtime(cleanup_providers_manager):
+     """Check the cleanup provider manager functionality."""
+     provider_manager = ProvidersManagerTaskRuntime()
+@@ -277,3 +287,61 @@ class TestProvidersManagerRuntime:
+             assert conf.get("test_sdk_provider", "test_option") == "provider-default"
+         finally:
+             conf.invalidate_cache()
++
++    def test_register_remote_logging_by_scheme(self):
++        providers_manager = ProvidersManagerTaskRuntime()
++        providers_manager._provider_dict = LazyDictWithCache()
++        providers_manager._provider_dict["fake.remote.logging"] = ProviderInfo(
++            version="0.0.1",
++            data={
++                "remote-logging": [
++                    {
++                        "classpath": f"{__name__}.FakeRemoteLogIO",
++                        "scheme": "fake",
++                    }
++                ]
++            },
++        )
++        providers_manager._discover_remote_logging()
++        assert len(providers_manager._remote_logging_info_list) == 1
++        assert providers_manager._remote_logging_by_scheme["fake"] == RemoteLoggingInfo(
++            classpath=f"{__name__}.FakeRemoteLogIO",
++            scheme="fake",
++            package_name="fake.remote.logging",
++        )
++
++    def test_register_remote_logging_duplicate_scheme_first_wins(self):
++        providers_manager = ProvidersManagerTaskRuntime()
++        providers_manager._provider_dict = LazyDictWithCache()
++        providers_manager._provider_dict["fake.remote.logging.first"] = ProviderInfo(
++            version="0.0.1",
++            data={"remote-logging": [{"classpath": f"{__name__}.FakeRemoteLogIO", "scheme": "dup"}]},
++        )
++        providers_manager._provider_dict["fake.remote.logging.second"] = ProviderInfo(
++            version="0.0.1",
++            data={"remote-logging": [{"classpath": f"{__name__}.FakeRemoteLogIO", "scheme": "dup"}]},
++        )
++        providers_manager._discover_remote_logging()
++        assert providers_manager._remote_logging_by_scheme["dup"].package_name == (
++            "fake.remote.logging.first"
++        )
++        assert len(providers_manager._remote_logging_info_list) == 1
++        assert providers_manager._remote_logging_info_list[0].package_name == "fake.remote.logging.first"
++
++    def test_register_remote_logging_bad_class_filtered(self):
++        providers_manager = ProvidersManagerTaskRuntime()
++        providers_manager._provider_dict = LazyDictWithCache()
++        providers_manager._provider_dict["fake.remote.logging"] = ProviderInfo(
++            version="0.0.1",
++            data={
++                "remote-logging": [
++                    {
++                        "classpath": "fake.module.does.not.exist.FakeRemoteLogIO",
++                        "scheme": "bad",
++                    }
++                ]
++            },
++        )
++        providers_manager._discover_remote_logging()
++        assert "bad" not in providers_manager._remote_logging_by_scheme
++        assert providers_manager._remote_logging_info_list == []

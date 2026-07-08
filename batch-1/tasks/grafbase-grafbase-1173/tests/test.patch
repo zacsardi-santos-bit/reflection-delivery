@@ -1,0 +1,1060 @@
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/add_fields.graphql b/engine/crates/graphql-schema-diff/tests/diff/add_fields.graphql
+new file mode 100644
+index 000000000..2c3fd1bcd
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/add_fields.graphql
+@@ -0,0 +1,38 @@
++
++# An interface representing a generic Dr. Seuss character
++interface SeussCharacter {
++  id: ID!
++  name: String!
++}
++
++# A specific object implementing the SeussCharacter interface, representing the Cat in the Hat
++type CatInHat implements SeussCharacter {
++  id: ID!
++  name: String!
++  hatStripes: Int!
++}
++
++# An input object used when creating a new character in the world of Dr. Seuss
++input CreateSeussCharacterInput {
++  name: String!
++}
++
++# --- #
++
++interface SeussCharacter {
++  id: ID!
++  name: String!
++  whimsicalQuote: String!
++}
++
++type CatInHat implements SeussCharacter {
++  id: ID!
++  name: String!
++  whimsicalQuote: String!
++  hatStripes: Int!
++}
++
++input CreateSeussCharacterInput {
++  name: String!
++  favoriteRhyme: String!
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/add_fields.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/add_fields.snapshot.json
+new file mode 100644
+index 000000000..a8375fd47
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/add_fields.snapshot.json
+@@ -0,0 +1,30 @@
++{
++  "src → target": [
++    {
++      "kind": "AddField",
++      "path": "CatInHat.whimsicalQuote"
++    },
++    {
++      "kind": "AddField",
++      "path": "CreateSeussCharacterInput.favoriteRhyme"
++    },
++    {
++      "kind": "AddField",
++      "path": "SeussCharacter.whimsicalQuote"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "RemoveField",
++      "path": "CatInHat.whimsicalQuote"
++    },
++    {
++      "kind": "RemoveField",
++      "path": "CreateSeussCharacterInput.favoriteRhyme"
++    },
++    {
++      "kind": "RemoveField",
++      "path": "SeussCharacter.whimsicalQuote"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/add_one_object.graphql b/engine/crates/graphql-schema-diff/tests/diff/add_one_object.graphql
+new file mode 100644
+index 000000000..f5507307e
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/add_one_object.graphql
+@@ -0,0 +1,10 @@
++
++type Nothing
++
++# --- #
++
++type Nothing
++
++type Locust {
++  id: ID!
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/add_one_object.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/add_one_object.snapshot.json
+new file mode 100644
+index 000000000..46307f641
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/add_one_object.snapshot.json
+@@ -0,0 +1,18 @@
++{
++  "src → target": [
++    {
++      "kind": "AddObjectType",
++      "path": "Locust"
++    },
++    {
++      "kind": "AddField",
++      "path": "Locust.id"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "RemoveObjectType",
++      "path": "Locust"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/directive_basic.graphql b/engine/crates/graphql-schema-diff/tests/diff/directive_basic.graphql
+new file mode 100644
+index 000000000..3e7af491e
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/directive_basic.graphql
+@@ -0,0 +1,7 @@
++type Query
++
++directive @auth(requires: Role = ADMIN) on OBJECT | FIELD_DEFINITION
++
++# --- #
++
++type Query
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/directive_basic.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/directive_basic.snapshot.json
+new file mode 100644
+index 000000000..74c697ffa
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/directive_basic.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "RemoveDirectiveDefinition",
++      "path": "auth"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "AddDirectiveDefinition",
++      "path": "auth"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/enum_basic.graphql b/engine/crates/graphql-schema-diff/tests/diff/enum_basic.graphql
+new file mode 100644
+index 000000000..a7386aee3
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/enum_basic.graphql
+@@ -0,0 +1,23 @@
++type Query
++
++enum Color {
++  RED
++  GREEN
++  BLUE
++}
++
++enum People {
++  CAT
++  DOG
++}
++
++# --- #
++
++type Query
++
++enum Color {
++  RED
++  GREEN
++  BLUE
++  ALPHA
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/enum_basic.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/enum_basic.snapshot.json
+new file mode 100644
+index 000000000..1e7443940
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/enum_basic.snapshot.json
+@@ -0,0 +1,30 @@
++{
++  "src → target": [
++    {
++      "kind": "AddEnumValue",
++      "path": "Color.ALPHA"
++    },
++    {
++      "kind": "RemoveEnum",
++      "path": "People"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "RemoveEnumValue",
++      "path": "Color.ALPHA"
++    },
++    {
++      "kind": "AddEnum",
++      "path": "People"
++    },
++    {
++      "kind": "AddEnumValue",
++      "path": "People.CAT"
++    },
++    {
++      "kind": "AddEnumValue",
++      "path": "People.DOG"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_argument_default.graphql b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default.graphql
+new file mode 100644
+index 000000000..039cfc45f
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default.graphql
+@@ -0,0 +1,21 @@
++type Query {
++  doMop(useMop: Mop): Mop
++}
++
++enum Mop {
++  MOP_1
++  MOP_2
++}
++
++# --- #
++
++type Query {
++  doMop(useMop: Mop = MOP_2): Mop
++}
++
++enum Mop {
++  MOP_1
++  MOP_2
++}
++
++
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_argument_default.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default.snapshot.json
+new file mode 100644
+index 000000000..bc09144d9
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "AddFieldArgumentDefault",
++      "path": "Query.doMop.useMop"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "RemoveFieldArgumentDefault",
++      "path": "Query.doMop.useMop"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.graphql b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.graphql
+new file mode 100644
+index 000000000..f4e573f7c
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.graphql
+@@ -0,0 +1,20 @@
++type Query {
++  doMop(useMop: Mop = MOP_1): Mop
++}
++
++enum Mop {
++  MOP_1
++  MOP_2
++}
++
++# --- #
++
++type Query {
++  doMop(useMop: Mop = MOP_2): Mop
++}
++
++enum Mop {
++  MOP_1
++  MOP_2
++}
++
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.snapshot.json
+new file mode 100644
+index 000000000..c6509204b
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_argument_default_value.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "ChangeFieldArgumentDefault",
++      "path": "Query.doMop.useMop"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "ChangeFieldArgumentDefault",
++      "path": "Query.doMop.useMop"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.graphql b/engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.graphql
+new file mode 100644
+index 000000000..a0b9f2829
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.graphql
+@@ -0,0 +1,66 @@
++interface MapleProduct {
++  id: ID!
++  name: String!
++  origin: String!
++}
++
++type MapleSyrup implements MapleProduct {
++  id: ID!
++  name: String!
++  origin: String!
++  grade: String!
++  volume: Float!
++  pricePerLiter(details: PriceArgs, currency: String!): Float!
++}
++
++input PriceArgs {
++  quantity: Int!
++  packaging: String! # The type of packaging
++}
++
++
++enum MapleSyrupGrade {
++  GOLDEN_DELICATE
++  AMBER_RICH
++  DARK_ROBUST
++  VERY_DARK_STRONG
++}
++
++type Query {
++  getMapleSyrup(id: ID!): MapleSyrup
++}
++
++
++# --- #
++
++interface MapleProduct {
++  id: ID!
++  name: String!
++  origin: String!
++}
++
++type MapleSyrup implements MapleProduct {
++  id: ID!
++  name: String!
++  origin: String!
++  grade: String!
++  volume: Float!
++  pricePerLiter(details: PriceArgs): Float!
++}
++
++input PriceArgs {
++  quantity: Int!
++  packaging: String!
++  currency: String!
++}
++
++enum MapleSyrupGrade {
++  GOLDEN_DELICATE
++  AMBER_RICH
++  DARK_ROBUST
++  VERY_DARK_STRONG
++}
++
++type Query {
++  getMapleSyrup(id: ID!): MapleSyrup
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.snapshot.json
+new file mode 100644
+index 000000000..b32bce63d
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_arguments_basic.snapshot.json
+@@ -0,0 +1,22 @@
++{
++  "src → target": [
++    {
++      "kind": "RemoveFieldArgument",
++      "path": "MapleSyrup.pricePerLiter.currency"
++    },
++    {
++      "kind": "AddField",
++      "path": "PriceArgs.currency"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "AddFieldArgument",
++      "path": "MapleSyrup.pricePerLiter.currency"
++    },
++    {
++      "kind": "RemoveField",
++      "path": "PriceArgs.currency"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_type_change.graphql b/engine/crates/graphql-schema-diff/tests/diff/field_type_change.graphql
+new file mode 100644
+index 000000000..b41833cb4
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_type_change.graphql
+@@ -0,0 +1,21 @@
++type Mutation {
++  drop(coin: Coin): Boolean
++}
++
++enum Coin {
++  PENNY
++  QUARTER
++  DIME
++}
++
++# --- #
++
++type Mutation {
++  drop(coin: String): Coin
++}
++
++enum Coin {
++  PENNY
++  QUARTER
++  DIME
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/field_type_change.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/field_type_change.snapshot.json
+new file mode 100644
+index 000000000..3d953afbb
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/field_type_change.snapshot.json
+@@ -0,0 +1,22 @@
++{
++  "src → target": [
++    {
++      "kind": "ChangeFieldType",
++      "path": "Mutation.drop"
++    },
++    {
++      "kind": "ChangeFieldArgumentType",
++      "path": "Mutation.drop.coin"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "ChangeFieldType",
++      "path": "Mutation.drop"
++    },
++    {
++      "kind": "ChangeFieldArgumentType",
++      "path": "Mutation.drop.coin"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.graphql b/engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.graphql
+new file mode 100644
+index 000000000..be9b6b586
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.graphql
+@@ -0,0 +1,29 @@
++interface Candy {
++  calories: String!
++}
++
++interface Pastry {
++  doughType: String!
++}
++
++interface Cookie implements Pastry {
++  id: ID!
++  calories: String!
++  firmness: Float
++}
++
++# --- #
++
++interface Candy {
++  calories: String!
++}
++
++interface Pastry {
++  doughType: String!
++}
++
++interface Cookie implements Candy & Pastry {
++  id: ID!
++  calories: String!
++  firmness: Float
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.snapshot.json
+new file mode 100644
+index 000000000..cb0e0d065
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/interface_implements_interface.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "AddInterfaceImplementation",
++      "path": "Cookie.Candy"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "RemoveInterfaceImplementation",
++      "path": "Cookie.Candy"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.graphql b/engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.graphql
+new file mode 100644
+index 000000000..08e50cd8e
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.graphql
+@@ -0,0 +1,17 @@
++type A
++
++type B
++
++schema { query: Q, mutation: A }
++
++type Q
++
++# --- #
++
++type Q
++
++type A
++
++type B
++
++schema { mutation: B, query: Q }
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.snapshot.json
+new file mode 100644
+index 000000000..ef494ddbd
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/mutation_type_changed.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "ChangeMutationType",
++      "path": ""
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "ChangeMutationType",
++      "path": ""
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.graphql b/engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.graphql
+new file mode 100644
+index 000000000..f245375aa
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.graphql
+@@ -0,0 +1,13 @@
++type Color {
++    red: Int
++    green: Int
++    blue: Int
++}
++
++# --- #
++
++enum Color {
++    red
++    green
++    blue
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.snapshot.json
+new file mode 100644
+index 000000000..5881ab2dc
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/object_becomes_enum.snapshot.json
+@@ -0,0 +1,22 @@
++{
++  "src → target": [
++    {
++      "kind": "RemoveObjectType",
++      "path": "Color"
++    },
++    {
++      "kind": "AddEnum",
++      "path": "Color"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "AddObjectType",
++      "path": "Color"
++    },
++    {
++      "kind": "RemoveEnum",
++      "path": "Color"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/object_interface.graphql b/engine/crates/graphql-schema-diff/tests/diff/object_interface.graphql
+new file mode 100644
+index 000000000..b85f103fc
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/object_interface.graphql
+@@ -0,0 +1,22 @@
++interface Candy {
++  calories: String!
++}
++
++type Cookie {
++  id: ID!
++  calories: String!
++  firmness: Float
++}
++
++# --- #
++
++interface Candy {
++  calories: String!
++}
++
++type Cookie implements Candy {
++  id: ID!
++  calories: String!
++  firmness: Float
++}
++
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/object_interface.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/object_interface.snapshot.json
+new file mode 100644
+index 000000000..cb0e0d065
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/object_interface.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "AddInterfaceImplementation",
++      "path": "Cookie.Candy"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "RemoveInterfaceImplementation",
++      "path": "Cookie.Candy"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/query_type_changed.graphql b/engine/crates/graphql-schema-diff/tests/diff/query_type_changed.graphql
+new file mode 100644
+index 000000000..bce265e0b
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/query_type_changed.graphql
+@@ -0,0 +1,14 @@
++type A
++
++type B
++
++schema { query: A }
++
++# --- #
++
++type A
++
++type B
++
++# Different type!
++schema { query: B }
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/query_type_changed.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/query_type_changed.snapshot.json
+new file mode 100644
+index 000000000..fe1cdd3bf
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/query_type_changed.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "ChangeQueryType",
++      "path": ""
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "ChangeQueryType",
++      "path": ""
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.graphql b/engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.graphql
+new file mode 100644
+index 000000000..0c318cc4a
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.graphql
+@@ -0,0 +1,7 @@
++extend schema @tag
++
++type Query
++
++# --- #
++
++type Query
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.snapshot.json
+new file mode 100644
+index 000000000..f3cfe2939
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/schema_definition_basic.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "RemoveSchemaDefinition",
++      "path": ""
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "AddSchemaDefinition",
++      "path": ""
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.graphql b/engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.graphql
+new file mode 100644
+index 000000000..267a2c780
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.graphql
+@@ -0,0 +1,18 @@
++type A
++
++type B
++
++schema { query: Query, mutation: A, subscription: B }
++
++type Query
++
++# --- #
++
++type A
++
++type B
++
++type Query
++
++schema { query: Query, mutation: B, subscription: A }
++
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.snapshot.json
+new file mode 100644
+index 000000000..e4915db8b
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/subscription_type_changed.snapshot.json
+@@ -0,0 +1,22 @@
++{
++  "src → target": [
++    {
++      "kind": "ChangeMutationType",
++      "path": ""
++    },
++    {
++      "kind": "ChangeSubscriptionType",
++      "path": ""
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "ChangeMutationType",
++      "path": ""
++    },
++    {
++      "kind": "ChangeSubscriptionType",
++      "path": ""
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/union_basic.graphql b/engine/crates/graphql-schema-diff/tests/diff/union_basic.graphql
+new file mode 100644
+index 000000000..221fb23bd
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/union_basic.graphql
+@@ -0,0 +1,23 @@
++type Red
++
++type Green
++
++type Blue
++
++type Alpha
++
++union Color = Red | Green | Blue
++
++union Rgba = Red | Green | Alpha | Blue
++
++# --- #
++
++type Red
++
++type Green
++
++union Rgba = Red | Green | Alpha | Blue
++
++type Blue
++
++type Alpha
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/union_basic.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/union_basic.snapshot.json
+new file mode 100644
+index 000000000..ac79499fd
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/union_basic.snapshot.json
+@@ -0,0 +1,26 @@
++{
++  "src → target": [
++    {
++      "kind": "RemoveUnion",
++      "path": "Color"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "AddUnion",
++      "path": "Color"
++    },
++    {
++      "kind": "AddUnionMember",
++      "path": "Color.Blue"
++    },
++    {
++      "kind": "AddUnionMember",
++      "path": "Color.Green"
++    },
++    {
++      "kind": "AddUnionMember",
++      "path": "Color.Red"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/union_members.graphql b/engine/crates/graphql-schema-diff/tests/diff/union_members.graphql
+new file mode 100644
+index 000000000..55fbe5e92
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/union_members.graphql
+@@ -0,0 +1,105 @@
++# Define the FloralProduct union, which can be any of the product types listed
++union FloralProduct = Bouquet | LivePlant | FloralArrangement | SeedPacket
++
++# Define the Bouquet type for a collection of flowers
++type Bouquet {
++  id: ID!
++  name: String!
++  flowers: [String!]! # Names of flowers included
++  price: Float! # Price in local currency
++  occasion: String # Suggested occasion for the bouquet
++}
++
++# Define the LivePlant type for individual plants
++type LivePlant {
++  id: ID!
++  name: String!
++  species: String!
++  careDifficulty: String! # Easy, Medium, Hard
++  price: Float! # Price in local currency
++}
++
++# Define the FloralArrangement type for decorative purposes
++type FloralArrangement {
++  id: ID!
++  name: String!
++  flowers: [String!]! # Names of flowers included
++  containerType: String! # Type of container, e.g., vase, basket
++  price: Float! # Price in local currency
++  suitableFor: String # Suggested places, e.g., table, office
++}
++
++# Define the SeedPacket type for gardeners
++type SeedPacket {
++  id: ID!
++  name: String!
++  species: String!
++  seedCount: Int! # Number of seeds in the packet
++  price: Float! # Price in local currency
++  plantingSeason: String # Ideal planting season
++}
++
++# Input type for searching floral products
++input FloralProductSearchInput {
++  name: String
++  maxPrice: Float
++  occasion: String
++}
++
++# The root Query type
++type Query {
++  # Retrieve a specific floral product by its ID, which can be any type of product
++  getFloralProduct(id: ID!): FloralProduct
++
++  # Search for floral products based on criteria
++  searchFloralProducts(input: FloralProductSearchInput): [FloralProduct]
++}
++
++# --- #
++
++union FloralProduct = Bouquet | LivePlant | SeedPacket
++
++type Bouquet {
++  id: ID!
++  name: String!
++  flowers: [String!]! # Names of flowers included
++  price: Float! # Price in local currency
++  occasion: String # Suggested occasion for the bouquet
++}
++
++type LivePlant {
++  id: ID!
++  name: String!
++  species: String!
++  careDifficulty: String! # Easy, Medium, Hard
++  price: Float! # Price in local currency
++}
++
++type FloralArrangement {
++  id: ID!
++  name: String!
++  flowers: [String!]! # Names of flowers included
++  containerType: String! # Type of container, e.g., vase, basket
++  price: Float! # Price in local currency
++  suitableFor: String # Suggested places, e.g., table, office
++}
++
++type SeedPacket {
++  id: ID!
++  name: String!
++  species: String!
++  seedCount: Int! # Number of seeds in the packet
++  price: Float! # Price in local currency
++  plantingSeason: String # Ideal planting season
++}
++
++input FloralProductSearchInput {
++  name: String
++  maxPrice: Float
++  occasion: String
++}
++
++type Query {
++  getFloralProduct(id: ID!): FloralProduct
++  searchFloralProducts(input: FloralProductSearchInput): [FloralProduct]
++}
+diff --git a/engine/crates/graphql-schema-diff/tests/diff/union_members.snapshot.json b/engine/crates/graphql-schema-diff/tests/diff/union_members.snapshot.json
+new file mode 100644
+index 000000000..fc2499a52
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff/union_members.snapshot.json
+@@ -0,0 +1,14 @@
++{
++  "src → target": [
++    {
++      "kind": "RemoveUnionMember",
++      "path": "FloralProduct.FloralArrangement"
++    }
++  ],
++  "target → src": [
++    {
++      "kind": "AddUnionMember",
++      "path": "FloralProduct.FloralArrangement"
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/engine/crates/graphql-schema-diff/tests/diff_tests.rs b/engine/crates/graphql-schema-diff/tests/diff_tests.rs
+new file mode 100644
+index 000000000..291d241a3
+--- /dev/null
++++ b/engine/crates/graphql-schema-diff/tests/diff_tests.rs
+@@ -0,0 +1,61 @@
++#![allow(unused_crate_dependencies)]
++
++use std::{fs, path::Path, sync::OnceLock};
++
++fn update_expect() -> bool {
++    static UPDATE_EXPECT: OnceLock<bool> = OnceLock::new();
++    *UPDATE_EXPECT.get_or_init(|| std::env::var("UPDATE_EXPECT").is_ok())
++}
++
++fn run_test(case: &Path) -> datatest_stable::Result<()> {
++    let schemas = fs::read_to_string(case)?;
++    let mut schemas = schemas.split("# --- #");
++    let source = schemas.next().expect("Can't find first schema in test case.");
++    let target = schemas.next().expect("Can't find second schema in test case.");
++
++    let forward_diff = graphql_schema_diff::diff(source, target).unwrap();
++    let backward_diff = graphql_schema_diff::diff(target, source).unwrap();
++
++    let mut diff = serde_json::to_string_pretty(&serde_json::json!({
++        "src → target": forward_diff,
++        "target → src": backward_diff,
++    }))
++    .unwrap();
++
++    if cfg!(windows) {
++        diff = diff.replace("\r\n", "\n");
++    }
++
++    let snapshot_file_path = case.with_extension("snapshot.json");
++
++    if update_expect() {
++        fs::write(&snapshot_file_path, &diff).unwrap();
++        return Ok(());
++    }
++
++    let mut snapshot = fs::read_to_string(&snapshot_file_path).unwrap_or_default();
++
++    if cfg!(windows) {
++        snapshot = snapshot.replace("\r\n", "\n");
++    }
++
++    if snapshot != diff {
++        return Err(miette::miette!(
++            "{}\n\n\n=== Hint: run the tests again with UPDATE_EXPECT=1 to update the snapshot. ===",
++            similar::udiff::unified_diff(
++                similar::Algorithm::default(),
++                &snapshot,
++                &diff,
++                5,
++                Some(("Snapshot", "Actual"))
++            )
++        )
++        .into());
++    }
++
++    Ok(())
++}
++
++datatest_stable::harness! {
++    run_test, "./tests/diff", r"^.*\.graphql$",
++}

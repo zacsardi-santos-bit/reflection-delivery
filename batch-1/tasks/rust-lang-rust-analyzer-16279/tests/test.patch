@@ -1,0 +1,13 @@
+diff --git a/crates/ide/src/syntax_highlighting/tests.rs b/crates/ide/src/syntax_highlighting/tests.rs
+index afb6c555b4..864c6d1cad 100644
+--- a/crates/ide/src/syntax_highlighting/tests.rs
++++ b/crates/ide/src/syntax_highlighting/tests.rs
+@@ -103,7 +103,7 @@ macro without_args {
+ include!(concat!("foo/", "foo.rs"));
+ 
+ fn main() {
+-    format_args!("Hello, {}!", 92);
++    format_args!("Hello, {}!", (92,).0);
+     dont_color_me_braces!();
+     noop!(noop!(1));
+ }

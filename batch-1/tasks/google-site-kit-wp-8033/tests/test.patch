@@ -1,0 +1,391 @@
+diff --git a/assets/js/components/notifications/OfflineNotification.test.js b/assets/js/components/notifications/OfflineNotification.test.js
+new file mode 100644
+index 0000000000..16967f55d9
+--- /dev/null
++++ b/assets/js/components/notifications/OfflineNotification.test.js
+@@ -0,0 +1,91 @@
++/**
++ * OfflineNotification component tests.
++ *
++ * Site Kit by Google, Copyright 2024 Google LLC
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++/**
++ * Internal dependencies
++ */
++import {
++	render,
++	createTestRegistry,
++	act,
++} from '../../../../tests/js/test-utils';
++import { CORE_UI } from '../../googlesitekit/datastore/ui/constants';
++import OfflineNotification from './OfflineNotification';
++
++describe( 'OfflineNotification', () => {
++	let registry;
++
++	beforeEach( () => {
++		registry = createTestRegistry();
++	} );
++
++	it( 'should display the notification when offline', async () => {
++		registry.dispatch( CORE_UI ).setIsOnline( false );
++
++		const { getByText, waitForRegistry } = render(
++			<OfflineNotification />,
++			{
++				registry,
++			}
++		);
++
++		await waitForRegistry();
++
++		expect( getByText( /you are currently offline/i ) ).toBeInTheDocument();
++	} );
++
++	it( 'should not display the notification when online', async () => {
++		const { queryByText, waitForRegistry } = render(
++			<OfflineNotification />,
++			{
++				registry,
++			}
++		);
++
++		await waitForRegistry();
++
++		expect(
++			queryByText( /you are currently offline/i )
++		).not.toBeInTheDocument();
++	} );
++
++	it( 'should dismiss the notification when connection is back', async () => {
++		registry.dispatch( CORE_UI ).setIsOnline( false );
++
++		const { queryByText, waitForRegistry } = render(
++			<OfflineNotification />,
++			{
++				registry,
++			}
++		);
++
++		await waitForRegistry();
++
++		expect(
++			queryByText( /you are currently offline/i )
++		).toBeInTheDocument();
++
++		act( () => {
++			registry.dispatch( CORE_UI ).setIsOnline( true );
++		} );
++
++		expect(
++			queryByText( /you are currently offline/i )
++		).not.toBeInTheDocument();
++	} );
++} );
+diff --git a/assets/js/googlesitekit/datastore/ui/ui.test.js b/assets/js/googlesitekit/datastore/ui/ui.test.js
+index 516f32ff74..5c183012f1 100644
+--- a/assets/js/googlesitekit/datastore/ui/ui.test.js
++++ b/assets/js/googlesitekit/datastore/ui/ui.test.js
+@@ -34,7 +34,7 @@ describe( 'core/ui store', () => {
+ 			it( 'increments the value of core/ui useInViewResetCount', async () => {
+ 				const resetCount = registry
+ 					.select( CORE_UI )
+-					.getInViewResetHook();
++					.getInViewResetCount();
+ 
+ 				// The reset count starts at zero.
+ 				expect( resetCount ).toBe( 0 );
+@@ -43,12 +43,29 @@ describe( 'core/ui store', () => {
+ 
+ 				const updatedResetCount = registry
+ 					.select( CORE_UI )
+-					.getInViewResetHook();
++					.getInViewResetCount();
+ 
+ 				expect( updatedResetCount ).toBe( 1 );
+ 			} );
+ 		} );
+ 
++		describe( 'setIsOnline', () => {
++			it( 'sets the isOnline value', async () => {
++				const isOnline = registry.select( CORE_UI ).getIsOnline();
++
++				// isOnline has initial state set to true.
++				expect( isOnline ).toBe( true );
++
++				await registry.dispatch( CORE_UI ).setIsOnline( false );
++
++				const updatedIsOnline = registry
++					.select( CORE_UI )
++					.getIsOnline();
++
++				expect( updatedIsOnline ).toBe( false );
++			} );
++		} );
++
+ 		describe( 'setValues', () => {
+ 			it( 'requires the values param', () => {
+ 				expect( () => {
+@@ -253,11 +270,11 @@ describe( 'core/ui store', () => {
+ 			} );
+ 		} );
+ 
+-		describe( 'getInViewResetHook', () => {
++		describe( 'getInViewResetCount', () => {
+ 			it( 'returns a specific key in state', () => {
+ 				const resetCount = registry
+ 					.select( CORE_UI )
+-					.getInViewResetHook();
++					.getInViewResetCount();
+ 
+ 				// The reset count starts at zero.
+ 				expect( resetCount ).toBe( 0 );
+@@ -268,10 +285,27 @@ describe( 'core/ui store', () => {
+ 
+ 				const updatedResetCount = registry
+ 					.select( CORE_UI )
+-					.getInViewResetHook();
++					.getInViewResetCount();
+ 
+ 				expect( updatedResetCount ).toBe( 2 );
+ 			} );
+ 		} );
++
++		describe( 'getIsOnline', () => {
++			it( 'returns isOnline value from the state', () => {
++				const isOnline = registry.select( CORE_UI ).getIsOnline();
++
++				// isOnline has initial state set to true.
++				expect( isOnline ).toBe( true );
++
++				registry.dispatch( CORE_UI ).setValue( 'isOnline', false );
++
++				const updatedIsOnline = registry
++					.select( CORE_UI )
++					.getIsOnline();
++
++				expect( updatedIsOnline ).toBe( false );
++			} );
++		} );
+ 	} );
+ } );
+diff --git a/assets/js/hooks/useMonitorInternetConnection.test.js b/assets/js/hooks/useMonitorInternetConnection.test.js
+new file mode 100644
+index 0000000000..86d22491b8
+--- /dev/null
++++ b/assets/js/hooks/useMonitorInternetConnection.test.js
+@@ -0,0 +1,189 @@
++/**
++ * `useMonitorInternetConnection` hook tests.
++ *
++ * Site Kit by Google, Copyright 2024 Google LLC
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++/**
++ * Internal dependencies
++ */
++import {
++	actHook as act,
++	createTestRegistry,
++	renderHook,
++	waitForTimeouts,
++} from '../../../tests/js/test-utils';
++import { CORE_UI } from '../googlesitekit/datastore/ui/constants';
++import { useMonitorInternetConnection } from './useMonitorInternetConnection';
++
++describe( 'useMonitorInternetConnection', () => {
++	let registry;
++	let store;
++	let originalNavigatorOnline;
++
++	const mockOnlineStatus = ( status = true ) => {
++		Object.defineProperty( navigator, 'onLine', {
++			value: status,
++			writable: true,
++		} );
++	};
++
++	const healthCheckEndpoint = new RegExp(
++		'google-site-kit/v1/core/site/data/health-checks'
++	);
++
++	const healthCheckResponse = {
++		checks: {
++			googleAPI: {
++				pass: true,
++				errorMsg: '',
++			},
++			skService: {
++				pass: true,
++				errorMsg: '',
++			},
++		},
++	};
++
++	beforeEach( () => {
++		registry = createTestRegistry();
++
++		store = registry.stores[ CORE_UI ].store;
++	} );
++
++	afterEach( () => {
++		mockOnlineStatus();
++	} );
++
++	beforeAll( () => {
++		originalNavigatorOnline = Object.getOwnPropertyDescriptor(
++			navigator,
++			'onLine'
++		);
++	} );
++
++	afterAll( () => {
++		Object.defineProperty( navigator, 'onLine', originalNavigatorOnline );
++	} );
++
++	it( 'should set online status correctly', () => {
++		fetchMock.getOnce( healthCheckEndpoint, {
++			body: healthCheckResponse,
++		} );
++
++		renderHook( () => useMonitorInternetConnection(), { registry } );
++
++		expect( store.getState().isOnline ).toBe( true );
++	} );
++
++	it( 'should set offline status correctly', () => {
++		mockOnlineStatus( false );
++
++		renderHook( () => useMonitorInternetConnection(), { registry } );
++
++		expect( store.getState().isOnline ).toBe( false );
++	} );
++
++	it( 'should correctly change connection status when going offline then online', async () => {
++		fetchMock.get( healthCheckEndpoint, {
++			body: healthCheckResponse,
++		} );
++
++		renderHook( () => useMonitorInternetConnection(), {
++			registry,
++		} );
++
++		// Wait for fetch to complete.
++		await waitForTimeouts( 100 );
++
++		// Initial status should be online.
++		expect( store.getState().isOnline ).toBe( true );
++
++		// Simulate going offline.
++		await act( async () => {
++			mockOnlineStatus( false );
++			global.window.dispatchEvent( new Event( 'offline' ) );
++			// Wait for fetch to complete.
++			await waitForTimeouts( 100 );
++		} );
++
++		expect( store.getState().isOnline ).toBe( false );
++
++		// Simulate going back online.
++		await act( async () => {
++			mockOnlineStatus();
++			global.window.dispatchEvent( new Event( 'online' ) );
++			// Wait for fetch to complete.
++			await waitForTimeouts( 100 );
++		} );
++
++		expect( store.getState().isOnline ).toBe( true );
++		expect( fetchMock ).toHaveFetched( healthCheckEndpoint );
++	} );
++
++	it( 'should check online status in correct interval when online', () => {
++		jest.useFakeTimers();
++
++		fetchMock.get( healthCheckEndpoint, {
++			body: healthCheckResponse,
++		} );
++
++		renderHook( () => useMonitorInternetConnection(), { registry } );
++
++		expect( store.getState().isOnline ).toBe( true );
++
++		// The initial fetch will happen immediately.
++		expect( fetchMock ).toHaveFetchedTimes( 1 );
++
++		jest.advanceTimersByTime( 119999 );
++
++		expect( fetchMock ).toHaveFetchedTimes( 1 );
++
++		jest.advanceTimersByTime( 1 );
++
++		// The second fetch will happen after 120000ms.
++		expect( fetchMock ).toHaveFetchedTimes( 2 );
++	} );
++
++	it( 'should check online status in correct interval when offline', async () => {
++		jest.useFakeTimers();
++
++		fetchMock.get( healthCheckEndpoint, {
++			body: healthCheckResponse,
++		} );
++
++		mockOnlineStatus( false );
++
++		renderHook( () => useMonitorInternetConnection(), { registry } );
++
++		expect( store.getState().isOnline ).toBe( false );
++
++		// The interval should be 15000ms when offline.
++		jest.advanceTimersByTime( 14999 );
++
++		// Enable online status so we can verify the interval via the fetch.
++		mockOnlineStatus( true );
++
++		// No fetch should happen when offline until the interval is reached.
++		expect( fetchMock ).toHaveBeenCalledTimes( 0 );
++
++		await act( async () => {
++			jest.advanceTimersByTime( 1 );
++			await new Promise( ( resolve ) => resolve() );
++		} );
++
++		expect( fetchMock ).toHaveFetchedTimes( 1 );
++	} );
++} );
+diff --git a/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_0_small.png b/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_0_small.png
+new file mode 100644
+index 0000000000..4ade00231d
+Binary files /dev/null and b/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_0_small.png differ
+diff --git a/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_1_medium.png b/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_1_medium.png
+new file mode 100644
+index 0000000000..a7e0b08f4c
+Binary files /dev/null and b/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_1_medium.png differ
+diff --git a/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_2_large.png b/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_2_large.png
+new file mode 100644
+index 0000000000..ec79ce44c3
+Binary files /dev/null and b/tests/backstop/reference/google-site-kit_Global_OfflineNotification_0_document_2_large.png differ

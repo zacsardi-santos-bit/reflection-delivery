@@ -1,0 +1,8 @@
+diff --git a/crates/net/network/src/manager.rs b/crates/net/network/src/manager.rs
+--- a/crates/net/network/src/manager.rs
++++ b/crates/net/network/src/manager.rs
+@@ -974,3 +974,4 @@
+ pub enum DiscoveredEvent {
+     EventQueued { peer_id: PeerId, socket_addr: SocketAddr, fork_id: Option<ForkId> },
+ }
++// test

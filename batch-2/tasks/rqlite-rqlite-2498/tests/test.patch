@@ -1,0 +1,256 @@
+diff --git a/internal/rsum/crc_test.go b/internal/rsum/crc_test.go
+index d1d8fa47..4bfa4bd9 100644
+--- a/internal/rsum/crc_test.go
++++ b/internal/rsum/crc_test.go
+@@ -112,7 +112,7 @@ func Test_WriteCRC32SumFileRoundTrip(t *testing.T) {
+ 	path := filepath.Join(t.TempDir(), "checksum")
+ 	var sum uint32 = 0x1a2b3c4d
+ 
+-	if err := WriteCRC32SumFile(path, sum); err != nil {
++	if err := WriteCRC32SumFile(path, sum, Sync); err != nil {
+ 		t.Fatalf("WriteCRC32SumFile failed: %v", err)
+ 	}
+ 
+@@ -138,7 +138,7 @@ func Test_WriteCRC32SumFileRoundTrip(t *testing.T) {
+ func Test_WriteCRC32SumFileZero(t *testing.T) {
+ 	path := filepath.Join(t.TempDir(), "checksum")
+ 
+-	if err := WriteCRC32SumFile(path, 0); err != nil {
++	if err := WriteCRC32SumFile(path, 0, Sync); err != nil {
+ 		t.Fatalf("WriteCRC32SumFile failed: %v", err)
+ 	}
+ 
+@@ -170,6 +170,85 @@ func Test_ReadCRC32SumFileInvalid(t *testing.T) {
+ 	}
+ }
+ 
++func Test_CompareCRC32SumFileMatch(t *testing.T) {
++	dir := t.TempDir()
++	dataPath := filepath.Join(dir, "data.bin")
++	crcPath := filepath.Join(dir, "data.bin.crc32")
++
++	if err := os.WriteFile(dataPath, []byte("hello world"), 0644); err != nil {
++		t.Fatal(err)
++	}
++	sum, err := CRC32(dataPath)
++	if err != nil {
++		t.Fatal(err)
++	}
++	if err := WriteCRC32SumFile(crcPath, sum, Sync); err != nil {
++		t.Fatal(err)
++	}
++
++	ok, err := CompareCRC32SumFile(dataPath, crcPath)
++	if err != nil {
++		t.Fatalf("unexpected error: %v", err)
++	}
++	if !ok {
++		t.Fatal("expected checksums to match, got mismatch")
++	}
++}
++
++func Test_CompareCRC32SumFileMismatch(t *testing.T) {
++	dir := t.TempDir()
++	dataPath := filepath.Join(dir, "data.bin")
++	crcPath := filepath.Join(dir, "data.bin.crc32")
++
++	if err := os.WriteFile(dataPath, []byte("hello world"), 0644); err != nil {
++		t.Fatal(err)
++	}
++	// Write a wrong checksum.
++	if err := WriteCRC32SumFile(crcPath, 0xdeadbeef, Sync); err != nil {
++		t.Fatal(err)
++	}
++
++	ok, err := CompareCRC32SumFile(dataPath, crcPath)
++	if err != nil {
++		t.Fatalf("unexpected error: %v", err)
++	}
++	if ok {
++		t.Fatal("expected checksums to mismatch, got match")
++	}
++}
++
++func Test_CompareCRC32SumFileMissingCRC(t *testing.T) {
++	dir := t.TempDir()
++	dataPath := filepath.Join(dir, "data.bin")
++	crcPath := filepath.Join(dir, "data.bin.crc32")
++
++	if err := os.WriteFile(dataPath, []byte("hello world"), 0644); err != nil {
++		t.Fatal(err)
++	}
++
++	// CRC file does not exist.
++	_, err := CompareCRC32SumFile(dataPath, crcPath)
++	if err == nil {
++		t.Fatal("expected error for missing CRC file, got nil")
++	}
++}
++
++func Test_CompareCRC32SumFileMissingData(t *testing.T) {
++	dir := t.TempDir()
++	dataPath := filepath.Join(dir, "data.bin")
++	crcPath := filepath.Join(dir, "data.bin.crc32")
++
++	// Write a valid CRC file but no data file.
++	if err := WriteCRC32SumFile(crcPath, 0x12345678, Sync); err != nil {
++		t.Fatal(err)
++	}
++
++	_, err := CompareCRC32SumFile(dataPath, crcPath)
++	if err == nil {
++		t.Fatal("expected error for missing data file, got nil")
++	}
++}
++
+ // mustWriteTempFile writes the given bytes to a temporary file, and returns the
+ // path to the file. If there is an error, it panics. The file will be automatically
+ // deleted when the test ends.
+diff --git a/snapshot/sink_test.go b/snapshot/sink_test.go
+index 4e7727a1..9f2a9b91 100644
+--- a/snapshot/sink_test.go
++++ b/snapshot/sink_test.go
+@@ -11,6 +11,7 @@ import (
+ 
+ 	"github.com/rqlite/rqlite/v10/command/encoding"
+ 	"github.com/rqlite/rqlite/v10/db"
++	"github.com/rqlite/rqlite/v10/internal/rsum"
+ )
+ 
+ func Test_NewFullSink(t *testing.T) {
+@@ -195,6 +196,7 @@ func Test_IncrementalFileSink(t *testing.T) {
+ 		t.Fatalf("unexpected error creating WAL dir: %s", err.Error())
+ 	}
+ 	mustCopyFile(t, srcPath, filepath.Join(walDir, walName))
++	mustWriteCRC32File(t, filepath.Join(walDir, walName))
+ 
+ 	hdr, err := NewIncrementalFileSnapshotHeader(walDir)
+ 	if err != nil {
+@@ -251,6 +253,7 @@ func Test_IncrementalFileSink_TwoFiles(t *testing.T) {
+ 	}
+ 	for i, src := range srcPaths {
+ 		mustCopyFile(t, src, filepath.Join(walDir, walNames[i]))
++		mustWriteCRC32File(t, filepath.Join(walDir, walNames[i]))
+ 	}
+ 
+ 	hdr, err := NewIncrementalFileSnapshotHeader(walDir)
+@@ -303,6 +306,7 @@ func Test_IncrementalFileSink_ThreeFiles(t *testing.T) {
+ 	}
+ 	for i, src := range srcPaths {
+ 		mustCopyFile(t, src, filepath.Join(walDir, walNames[i]))
++		mustWriteCRC32File(t, filepath.Join(walDir, walNames[i]))
+ 	}
+ 
+ 	hdr, err := NewIncrementalFileSnapshotHeader(walDir)
+@@ -423,6 +427,111 @@ func Test_NoopSink_FullNeeded(t *testing.T) {
+ 	}
+ }
+ 
++func Test_IncrementalFileSink_MissingCRC(t *testing.T) {
++	srcPath := "testdata/db-and-wals/wal-01"
++	walName := "00000000000000000001.wal"
++
++	// Create a directory containing the WAL file but NO .crc32 file.
++	walDir := filepath.Join(t.TempDir(), "wal-dir")
++	if err := os.Mkdir(walDir, 0755); err != nil {
++		t.Fatalf("unexpected error creating WAL dir: %s", err.Error())
++	}
++	mustCopyFile(t, srcPath, filepath.Join(walDir, walName))
++
++	hdr, err := NewIncrementalFileSnapshotHeader(walDir)
++	if err != nil {
++		t.Fatalf("unexpected error creating header: %s", err.Error())
++	}
++	hdrBytes, err := marshalSnapshotHeader(hdr)
++	if err != nil {
++		t.Fatalf("unexpected error marshaling header: %s", err.Error())
++	}
++
++	var frameBuf bytes.Buffer
++	lenBuf := make([]byte, HeaderSizeLen)
++	binary.BigEndian.PutUint32(lenBuf, uint32(len(hdrBytes)))
++	frameBuf.Write(lenBuf)
++	frameBuf.Write(hdrBytes)
++
++	snapDir := t.TempDir()
++	meta := makeRaftMeta("test-incremental-file-missing-crc", 100, 1, 1)
++	sink := NewSink(snapDir, meta, nil)
++	if err := sink.Open(); err != nil {
++		t.Fatalf("unexpected error opening sink: %s", err.Error())
++	}
++
++	if _, err := sink.Write(frameBuf.Bytes()); err != nil {
++		t.Fatalf("unexpected error writing header to sink: %s", err.Error())
++	}
++
++	// Close should fail because the .crc32 file is missing.
++	if err := sink.Close(); err == nil {
++		t.Fatalf("expected error closing sink with missing CRC file, got nil")
++	}
++}
++
++func Test_IncrementalFileSink_BadCRC(t *testing.T) {
++	srcPath := "testdata/db-and-wals/wal-01"
++	walName := "00000000000000000001.wal"
++
++	// Create a directory containing the WAL file and a .crc32 file with the wrong value.
++	walDir := filepath.Join(t.TempDir(), "wal-dir")
++	if err := os.Mkdir(walDir, 0755); err != nil {
++		t.Fatalf("unexpected error creating WAL dir: %s", err.Error())
++	}
++	walPath := filepath.Join(walDir, walName)
++	mustCopyFile(t, srcPath, walPath)
++
++	// Write a bogus CRC32 value.
++	if err := rsum.WriteCRC32SumFile(walPath+crcSuffix, 0xdeadbeef, rsum.Sync); err != nil {
++		t.Fatalf("unexpected error writing bogus CRC file: %s", err.Error())
++	}
++
++	hdr, err := NewIncrementalFileSnapshotHeader(walDir)
++	if err != nil {
++		t.Fatalf("unexpected error creating header: %s", err.Error())
++	}
++	hdrBytes, err := marshalSnapshotHeader(hdr)
++	if err != nil {
++		t.Fatalf("unexpected error marshaling header: %s", err.Error())
++	}
++
++	var frameBuf bytes.Buffer
++	lenBuf := make([]byte, HeaderSizeLen)
++	binary.BigEndian.PutUint32(lenBuf, uint32(len(hdrBytes)))
++	frameBuf.Write(lenBuf)
++	frameBuf.Write(hdrBytes)
++
++	snapDir := t.TempDir()
++	meta := makeRaftMeta("test-incremental-file-bad-crc", 100, 1, 1)
++	sink := NewSink(snapDir, meta, nil)
++	if err := sink.Open(); err != nil {
++		t.Fatalf("unexpected error opening sink: %s", err.Error())
++	}
++
++	if _, err := sink.Write(frameBuf.Bytes()); err != nil {
++		t.Fatalf("unexpected error writing header to sink: %s", err.Error())
++	}
++
++	// Close should fail because the CRC32 checksum doesn't match.
++	if err := sink.Close(); err == nil {
++		t.Fatalf("expected error closing sink with bad CRC, got nil")
++	}
++}
++
++// mustWriteCRC32File computes the CRC32 checksum for the file at path and writes
++// the corresponding .crc32 file alongside it.
++func mustWriteCRC32File(t *testing.T, path string) {
++	t.Helper()
++	sum, err := rsum.CRC32(path)
++	if err != nil {
++		t.Fatalf("failed to compute CRC32 for %s: %v", path, err)
++	}
++	if err := rsum.WriteCRC32SumFile(path+crcSuffix, sum, rsum.Sync); err != nil {
++		t.Fatalf("failed to write CRC32 sum file for %s: %v", path, err)
++	}
++}
++
+ func asJSON(v any) string {
+ 	enc := encoding.Encoder{}
+ 	b, err := enc.JSONMarshal(v)

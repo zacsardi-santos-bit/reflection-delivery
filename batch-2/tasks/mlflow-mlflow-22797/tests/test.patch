@@ -1,0 +1,434 @@
+diff --git a/tests/entities/test_link.py b/tests/entities/test_link.py
+new file mode 100644
+index 000000000..81c2bee93
+--- /dev/null
++++ b/tests/entities/test_link.py
+@@ -0,0 +1,29 @@
++from mlflow.entities.link import Link
++
++TRACE_ID = "tr-abc123"
++SPAN_ID = "aabbccddeeff0011"
++
++
++def test_link_to_dict():
++    link = Link(trace_id=TRACE_ID, span_id=SPAN_ID, attributes={"type": "causality"})
++    assert link.to_dict() == {
++        "trace_id": TRACE_ID,
++        "span_id": SPAN_ID,
++        "attributes": {"type": "causality"},
++    }
++
++
++def test_link_from_dict():
++    data = {"trace_id": TRACE_ID, "span_id": SPAN_ID, "attributes": {"type": "test"}}
++    link = Link.from_dict(data)
++    assert link.trace_id == TRACE_ID
++    assert link.span_id == SPAN_ID
++    assert link.attributes == {"type": "test"}
++
++
++def test_link_from_dict_without_attributes():
++    data = {"trace_id": TRACE_ID, "span_id": SPAN_ID}
++    link = Link.from_dict(data)
++    assert link.trace_id == TRACE_ID
++    assert link.span_id == SPAN_ID
++    assert link.attributes is None
+diff --git a/tests/entities/test_span.py b/tests/entities/test_span.py
+index a289d8585..9b54e96b4 100644
+--- a/tests/entities/test_span.py
++++ b/tests/entities/test_span.py
+@@ -461,6 +461,14 @@ def test_span_from_otel_proto_conversion():
+     event_attr.key = "event_data"
+     _set_otel_proto_anyvalue(event_attr.value, "event_value")
+ 
++    # Add link
++    proto_link = otel_proto.links.add()
++    proto_link.trace_id = bytes.fromhex("aabbccddeeff00112233445566778899")
++    proto_link.span_id = bytes.fromhex("1122334455667788")
++    link_attr = proto_link.attributes.add()
++    link_attr.key = "rel"
++    _set_otel_proto_anyvalue(link_attr.value, "causal")
++
+     # Convert to MLflow span
+     mlflow_span = Span.from_otel_proto(otel_proto)
+ 
+@@ -488,6 +496,12 @@ def test_span_from_otel_proto_conversion():
+     assert mlflow_span.events[0].timestamp == 1500000000
+     assert mlflow_span.events[0].attributes["event_data"] == "event_value"
+ 
++    # Verify links use v3 format when no location_id
++    assert len(mlflow_span.links) == 1
++    assert mlflow_span.links[0].trace_id == "tr-aabbccddeeff00112233445566778899"
++    assert mlflow_span.links[0].span_id == "1122334455667788"
++    assert mlflow_span.links[0].attributes == {"rel": "causal"}
++
+ 
+ def test_span_from_otel_proto_with_location():
+     # Create OTel proto span
+@@ -508,6 +522,11 @@ def test_span_from_otel_proto_with_location():
+     attr1.key = "mlflow.spanType"
+     _set_otel_proto_anyvalue(attr1.value, "LLM")
+ 
++    # Add link
++    proto_link = otel_proto.links.add()
++    proto_link.trace_id = bytes.fromhex("aabbccddeeff00112233445566778899")
++    proto_link.span_id = bytes.fromhex("1122334455667788")
++
+     # Convert to MLflow span with location
+     location = "catalog.schema"
+     mlflow_span = Span.from_otel_proto(otel_proto, location_id=location)
+@@ -529,6 +548,9 @@ def test_span_from_otel_proto_with_location():
+     request_id = mlflow_span.get_attribute("mlflow.traceRequestId")
+     assert request_id == expected_trace_id
+ 
++    # Links are skipped for v4 UC traces
++    assert len(mlflow_span.links) == 0
++
+ 
+ def test_otel_roundtrip_conversion(sample_otel_span_for_conversion):
+     # Start with OTel span -> MLflow span
+@@ -794,3 +816,223 @@ def test_load_from_3_5_0_span_dict():
+         "tool_input": '"What is MLflow?"',
+         "log": "test",
+     }
++
++
++def test_live_span_add_link():
++    from mlflow.entities.link import Link
++
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        span = create_mlflow_span(otel_span, trace_id=trace_id)
++
++        link = Link(
++            trace_id="tr-abc123",
++            span_id="aabbccddeeff0011",
++            attributes={"relationship": "triggered_by"},
++        )
++        span.add_link(link)
++
++        assert len(span.links) == 1
++        assert span.links[0].trace_id == "tr-abc123"
++        assert span.links[0].span_id == "aabbccddeeff0011"
++        assert span.links[0].attributes == {"relationship": "triggered_by"}
++
++        # Verify the link was forwarded to the underlying OTel span
++        assert len(otel_span.links) == 1
++        assert otel_span.links[0].context.trace_id == 0xABC123
++        assert otel_span.links[0].context.span_id == 0xAABBCCDDEEFF0011
++
++
++def test_add_link_rejects_invalid_ids():
++    from mlflow.entities.link import Link
++
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        span = create_mlflow_span(otel_span, trace_id=trace_id)
++
++        with pytest.raises(MlflowException, match="Invalid link"):
++            span.add_link(Link(trace_id="tr-abc123", span_id="not-hex"))
++
++        with pytest.raises(MlflowException, match="Invalid link"):
++            span.add_link(Link(trace_id="bad-format", span_id="aabbccddeeff0011"))
++
++        with pytest.raises(MlflowException, match="Invalid link"):
++            span.add_link(Link(trace_id="tr-abc123", span_id="aabbccddeeff0011aabbccddeeff0011"))
++
++        assert len(span.links) == 0
++
++
++def test_span_seeds_links_from_otel_span():
++    trace_id = "tr-12345"
++    otel_link = trace_api.Link(
++        context=trace_api.SpanContext(
++            trace_id=0xAABBCCDDEEFF00112233445566778899,
++            span_id=0xAABBCCDDEEFF0011,
++            is_remote=False,
++            trace_flags=trace_api.TraceFlags(1),
++        ),
++        attributes={"type": "causal"},
++    )
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span", links=[otel_link]) as otel_span:
++        span = create_mlflow_span(otel_span, trace_id=trace_id)
++
++    immutable_span = span.to_immutable_span()
++    assert len(immutable_span.links) == 1
++    assert immutable_span.links[0].trace_id == "tr-aabbccddeeff00112233445566778899"
++    assert immutable_span.links[0].span_id == "aabbccddeeff0011"
++    assert immutable_span.links[0].attributes == {"type": "causal"}
++
++
++def test_span_to_dict_with_links():
++    from mlflow.entities.link import Link
++
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        live_span = create_mlflow_span(otel_span, trace_id=trace_id)
++        link = Link(trace_id="tr-abc123", span_id="aabbccddeeff0011", attributes={"type": "test"})
++        live_span.add_link(link)
++
++    immutable_span = live_span.to_immutable_span()
++    span_dict = immutable_span.to_dict()
++
++    assert "links" in span_dict
++    assert len(span_dict["links"]) == 1
++    assert span_dict["links"][0]["trace_id"] == "tr-abc123"
++    assert span_dict["links"][0]["span_id"] == "aabbccddeeff0011"
++    assert span_dict["links"][0]["attributes"] == {"type": "test"}
++
++
++def test_span_from_dict_with_links():
++    from mlflow.entities.link import Link
++
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        live_span = create_mlflow_span(otel_span, trace_id=trace_id)
++        link = Link(trace_id="tr-abc123", span_id="aabbccddeeff0011", attributes={"type": "test"})
++        live_span.add_link(link)
++
++    immutable_span = live_span.to_immutable_span()
++    span_dict = immutable_span.to_dict()
++
++    reconstructed_span = Span.from_dict(span_dict)
++    assert len(reconstructed_span.links) == 1
++    assert reconstructed_span.links[0].trace_id == "tr-abc123"
++    assert reconstructed_span.links[0].span_id == "aabbccddeeff0011"
++    assert reconstructed_span.links[0].attributes == {"type": "test"}
++
++
++def test_span_from_dict_without_links():
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        span = create_mlflow_span(otel_span, trace_id=trace_id)
++
++    immutable_span = span.to_immutable_span()
++    span_dict = immutable_span.to_dict()
++
++    assert span_dict["links"] == []
++
++    reconstructed_span = Span.from_dict(span_dict)
++    assert len(reconstructed_span.links) == 0
++
++
++def test_span_links_otel_proto_roundtrip():
++    otel_proto = OTelProtoSpan()
++    otel_proto.trace_id = bytes.fromhex("12345678901234567890123456789012")
++    otel_proto.span_id = bytes.fromhex("1234567890123456")
++    otel_proto.name = "test"
++
++    link_trace_bytes = bytes.fromhex("aabbccddeeff00112233445566778899")
++    link_span_bytes = bytes.fromhex("aabbccddeeff0011")
++    proto_link = otel_proto.links.add()
++    proto_link.trace_id = link_trace_bytes
++    proto_link.span_id = link_span_bytes
++    link_attr = proto_link.attributes.add()
++    link_attr.key = "type"
++    _set_otel_proto_anyvalue(link_attr.value, "causal")
++
++    mlflow_span = Span.from_otel_proto(otel_proto)
++    assert len(mlflow_span.links) == 1
++    assert mlflow_span.links[0].attributes == {"type": "causal"}
++
++    rt = mlflow_span.to_otel_proto()
++    assert rt.links[0].trace_id == link_trace_bytes
++    assert rt.links[0].span_id == link_span_bytes
++
++
++def test_span_skips_links_for_v4_traces():
++    otel_link = trace_api.Link(
++        context=trace_api.SpanContext(
++            trace_id=0xAABBCCDDEEFF00112233445566778899,
++            span_id=0xAABBCCDDEEFF0011,
++            is_remote=False,
++            trace_flags=trace_api.TraceFlags(1),
++        ),
++        attributes={"type": "causal"},
++    )
++    v4_trace_id = f"{TRACE_ID_V4_PREFIX}catalog.schema/12345678901234567890123456789012"
++    otel_span = OTelReadableSpan(
++        name="test_v4",
++        context=build_otel_context(0x12345678901234567890123456789012, 0x1234567890123456),
++        attributes={"mlflow.traceRequestId": json.dumps(v4_trace_id)},
++        links=[otel_link],
++        resource=OTelResource.get_empty(),
++    )
++
++    span = Span(otel_span)
++    assert span.trace_id == v4_trace_id
++    assert len(span.links) == 0
++
++
++def test_span_links_property_returns_deep_copy():
++    from mlflow.entities.link import Link
++
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        live_span = create_mlflow_span(otel_span, trace_id=trace_id)
++        live_span.add_link(
++            Link(trace_id="tr-abc", span_id="aabbccddeeff0011", attributes={"k": "v"})
++        )
++
++    immutable_span = live_span.to_immutable_span()
++    links = immutable_span.links
++    links[0].attributes["k"] = "mutated"
++
++    assert immutable_span.links[0].attributes["k"] == "v"
++
++
++def test_add_link_clones_on_insert():
++    from mlflow.entities.link import Link
++
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        live_span = create_mlflow_span(otel_span, trace_id=trace_id)
++        link = Link(trace_id="tr-abc", span_id="aabbccddeeff0011", attributes={"k": "v"})
++        live_span.add_link(link)
++        link.attributes["k"] = "mutated"
++
++    assert live_span.links[0].attributes["k"] == "v"
++
++
++def test_to_immutable_span_deep_copies_links():
++    from mlflow.entities.link import Link
++
++    trace_id = "tr-12345"
++    tracer = _get_tracer("test")
++    with tracer.start_as_current_span("test_span") as otel_span:
++        live_span = create_mlflow_span(otel_span, trace_id=trace_id)
++        live_span.add_link(
++            Link(trace_id="tr-abc", span_id="aabbccddeeff0011", attributes={"k": "v"})
++        )
++
++    immutable_span = live_span.to_immutable_span()
++    live_span._links[0].attributes["k"] = "mutated"
++
++    assert immutable_span.links[0].attributes["k"] == "v"
+diff --git a/tests/entities/test_trace.py b/tests/entities/test_trace.py
+index a804971a7..7f4e106d8 100644
+--- a/tests/entities/test_trace.py
++++ b/tests/entities/test_trace.py
+@@ -129,6 +129,7 @@ def test_json_deserialization(monkeypatch):
+                         "mlflow.spanInputs": '{"x": 2, "y": 5}',
+                         "mlflow.spanOutputs": "8",
+                     },
++                    "links": [],
+                 },
+                 {
+                     "name": "add_one_with_custom_name",
+@@ -152,6 +153,7 @@ def test_json_deserialization(monkeypatch):
+                         "datetime": json.dumps(str(datetime_now)),
+                         "metadata": '{"foo": "bar"}',
+                     },
++                    "links": [],
+                 },
+             ],
+         },
+diff --git a/tests/entities/test_trace_data.py b/tests/entities/test_trace_data.py
+index 5e9fc2a66..a5ad40d00 100644
+--- a/tests/entities/test_trace_data.py
++++ b/tests/entities/test_trace_data.py
+@@ -67,6 +67,7 @@ def test_json_deserialization():
+                         },
+                     }
+                 ],
++                "links": [],
+             },
+             {
+                 "name": "with_ok_event",
+@@ -90,6 +91,7 @@ def test_json_deserialization():
+                         "attributes": {"foo": "bar"},
+                     }
+                 ],
++                "links": [],
+             },
+             {
+                 "name": "always_fail_name",
+@@ -120,6 +122,7 @@ def test_json_deserialization():
+                         },
+                     }
+                 ],
++                "links": [],
+             },
+         ],
+     }
+diff --git a/tests/store/tracking/sqlalchemy_store/test_sqlalchemy_store.py b/tests/store/tracking/sqlalchemy_store/test_sqlalchemy_store.py
+index 2ce5c684c..141496e62 100644
+--- a/tests/store/tracking/sqlalchemy_store/test_sqlalchemy_store.py
++++ b/tests/store/tracking/sqlalchemy_store/test_sqlalchemy_store.py
+@@ -30,6 +30,7 @@ from mlflow.entities import (
+     Experiment,
+     ExperimentTag,
+     Feedback,
++    Link,
+     Metric,
+     Param,
+     RunStatus,
+@@ -193,6 +194,7 @@ def create_test_span(
+     span_type="LLM",
+     trace_num=12345,
+     attributes=None,
++    links=None,
+ ) -> Span:
+     """
+     Create an MLflow span for testing with minimal boilerplate.
+@@ -209,6 +211,7 @@ def create_test_span(
+         span_type: Span type (default: "LLM")
+         trace_num: Trace ID number for context (default: 12345)
+         attributes: Attributes dictionary
++        links: List of Link objects to attach to the span
+ 
+     Returns:
+         MLflow Span object ready for use in tests
+@@ -231,7 +234,10 @@ def create_test_span(
+         status=trace_api.Status(status, status_desc),
+         resource=_OTelResource.get_empty(),
+     )
+-    return create_mlflow_span(otel_span, trace_id, span_type)
++    span = create_mlflow_span(otel_span, trace_id, span_type)
++    if links:
++        span._links = list(links)
++    return span
+ 
+ 
+ # Keep the old function for backward compatibility but delegate to new one
+@@ -8261,6 +8267,32 @@ def test_log_spans_multiple_traces(store: SqlAlchemyStore):
+         assert span_row2.name == "span_trace2"
+ 
+ 
++def test_log_spans_persists_links(store: SqlAlchemyStore):
++    trace_id = "tr-links-test"
++    experiment_id = store.create_experiment("test_links_experiment")
++
++    span = create_test_span(
++        trace_id=trace_id,
++        links=[
++            Link(trace_id="tr-abc123", span_id="aabbccddeeff0011", attributes={"type": "causal"}),
++            Link(trace_id="tr-def456", span_id="1122334455667788"),
++        ],
++    )
++
++    store.log_spans(experiment_id, [span])
++
++    # Verify links survive the full round-trip via get_trace
++    trace = store.get_trace(trace_id)
++    retrieved_span = trace.data.spans[0]
++    assert len(retrieved_span.links) == 2
++    assert retrieved_span.links[0].trace_id == "tr-abc123"
++    assert retrieved_span.links[0].span_id == "aabbccddeeff0011"
++    assert retrieved_span.links[0].attributes == {"type": "causal"}
++    assert retrieved_span.links[1].trace_id == "tr-def456"
++    assert retrieved_span.links[1].span_id == "1122334455667788"
++    assert retrieved_span.links[1].attributes is None
++
++
+ @pytest.mark.asyncio
+ @pytest.mark.parametrize("is_async", [False, True])
+ async def test_log_spans_creates_trace_if_not_exists(store: SqlAlchemyStore, is_async: bool):

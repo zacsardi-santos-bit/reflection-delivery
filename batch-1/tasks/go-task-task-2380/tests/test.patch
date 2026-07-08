@@ -1,0 +1,313 @@
+diff --git a/internal/fsext/fs_test.go b/internal/fsext/fs_test.go
+index 1ad5624d..06f59eb8 100644
+--- a/internal/fsext/fs_test.go
++++ b/internal/fsext/fs_test.go
+@@ -71,35 +71,30 @@ func TestSearch(t *testing.T) {
+ 		dir                string
+ 		possibleFilenames  []string
+ 		expectedEntrypoint string
+-		expectedDir        string
+ 	}{
+ 		{
+ 			name:               "find foo.txt using relative entrypoint",
+ 			entrypoint:         "./testdata/foo.txt",
+ 			possibleFilenames:  []string{"foo.txt"},
+ 			expectedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
+-			expectedDir:        filepath.Join(wd, "testdata"),
+ 		},
+ 		{
+ 			name:               "find foo.txt using absolute entrypoint",
+ 			entrypoint:         filepath.Join(wd, "testdata", "foo.txt"),
+ 			possibleFilenames:  []string{"foo.txt"},
+ 			expectedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
+-			expectedDir:        filepath.Join(wd, "testdata"),
+ 		},
+ 		{
+ 			name:               "find foo.txt using relative dir",
+ 			dir:                "./testdata",
+ 			possibleFilenames:  []string{"foo.txt"},
+ 			expectedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
+-			expectedDir:        filepath.Join(wd, "testdata"),
+ 		},
+ 		{
+ 			name:               "find foo.txt using absolute dir",
+ 			dir:                filepath.Join(wd, "testdata"),
+ 			possibleFilenames:  []string{"foo.txt"},
+ 			expectedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
+-			expectedDir:        filepath.Join(wd, "testdata"),
+ 		},
+ 		{
+ 			name:               "find foo.txt using relative dir and relative entrypoint",
+@@ -107,7 +102,6 @@ func TestSearch(t *testing.T) {
+ 			dir:                "./testdata/some/other/dir",
+ 			possibleFilenames:  []string{"foo.txt"},
+ 			expectedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
+-			expectedDir:        filepath.Join(wd, "testdata", "some", "other", "dir"),
+ 		},
+ 		{
+ 			name:               "find fs.go using no entrypoint or dir",
+@@ -115,7 +109,6 @@ func TestSearch(t *testing.T) {
+ 			dir:                "",
+ 			possibleFilenames:  []string{"fs.go"},
+ 			expectedEntrypoint: filepath.Join(wd, "fs.go"),
+-			expectedDir:        wd,
+ 		},
+ 		{
+ 			name:               "find ../../Taskfile.yml using no entrypoint or dir by walking",
+@@ -123,30 +116,109 @@ func TestSearch(t *testing.T) {
+ 			dir:                "",
+ 			possibleFilenames:  []string{"Taskfile.yml"},
+ 			expectedEntrypoint: filepath.Join(wd, "..", "..", "Taskfile.yml"),
+-			expectedDir:        filepath.Join(wd, "..", ".."),
+ 		},
+ 		{
+ 			name:               "find foo.txt first if listed first in possible filenames",
+ 			entrypoint:         "./testdata",
+ 			possibleFilenames:  []string{"foo.txt", "bar.txt"},
+ 			expectedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
+-			expectedDir:        filepath.Join(wd, "testdata"),
+ 		},
+ 		{
+ 			name:               "find bar.txt first if listed first in possible filenames",
+ 			entrypoint:         "./testdata",
+ 			possibleFilenames:  []string{"bar.txt", "foo.txt"},
+ 			expectedEntrypoint: filepath.Join(wd, "testdata", "bar.txt"),
+-			expectedDir:        filepath.Join(wd, "testdata"),
+ 		},
+ 	}
+ 	for _, tt := range tests {
+ 		t.Run(tt.name, func(t *testing.T) {
+ 			t.Parallel()
+-			entrypoint, dir, err := Search(tt.entrypoint, tt.dir, tt.possibleFilenames)
++			entrypoint, err := Search(tt.entrypoint, tt.dir, tt.possibleFilenames)
+ 			require.NoError(t, err)
+ 			require.Equal(t, tt.expectedEntrypoint, entrypoint)
++			require.NoError(t, err)
++		})
++	}
++}
++
++func TestResolveDir(t *testing.T) {
++	t.Parallel()
++
++	wd, err := os.Getwd()
++	require.NoError(t, err)
++
++	tests := []struct {
++		name               string
++		entrypoint         string
++		resolvedEntrypoint string
++		dir                string
++		expectedDir        string
++	}{
++		{
++			name:               "find foo.txt using relative entrypoint",
++			entrypoint:         "./testdata/foo.txt",
++			resolvedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
++			expectedDir:        filepath.Join(wd, "testdata"),
++		},
++		{
++			name:               "find foo.txt using absolute entrypoint",
++			entrypoint:         filepath.Join(wd, "testdata", "foo.txt"),
++			resolvedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
++			expectedDir:        filepath.Join(wd, "testdata"),
++		},
++		{
++			name:               "find foo.txt using relative dir",
++			resolvedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
++			dir:                "./testdata",
++			expectedDir:        filepath.Join(wd, "testdata"),
++		},
++		{
++			name:               "find foo.txt using absolute dir",
++			resolvedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
++			dir:                filepath.Join(wd, "testdata"),
++			expectedDir:        filepath.Join(wd, "testdata"),
++		},
++		{
++			name:               "find foo.txt using relative dir and relative entrypoint",
++			entrypoint:         "./testdata/foo.txt",
++			resolvedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
++			dir:                "./testdata/some/other/dir",
++			expectedDir:        filepath.Join(wd, "testdata", "some", "other", "dir"),
++		},
++		{
++			name:               "find fs.go using no entrypoint or dir",
++			entrypoint:         "",
++			resolvedEntrypoint: filepath.Join(wd, "fs.go"),
++			dir:                "",
++			expectedDir:        wd,
++		},
++		{
++			name:               "find ../../Taskfile.yml using no entrypoint or dir by walking",
++			entrypoint:         "",
++			resolvedEntrypoint: filepath.Join(wd, "..", "..", "Taskfile.yml"),
++			dir:                "",
++			expectedDir:        filepath.Join(wd, "..", ".."),
++		},
++		{
++			name:               "find foo.txt first if listed first in possible filenames",
++			entrypoint:         "./testdata",
++			resolvedEntrypoint: filepath.Join(wd, "testdata", "foo.txt"),
++			expectedDir:        filepath.Join(wd, "testdata"),
++		},
++		{
++			name:               "find bar.txt first if listed first in possible filenames",
++			entrypoint:         "./testdata",
++			resolvedEntrypoint: filepath.Join(wd, "testdata", "bar.txt"),
++			expectedDir:        filepath.Join(wd, "testdata"),
++		},
++	}
++	for _, tt := range tests {
++		t.Run(tt.name, func(t *testing.T) {
++			t.Parallel()
++			dir, err := ResolveDir(tt.entrypoint, tt.resolvedEntrypoint, tt.dir)
++			require.NoError(t, err)
+ 			require.Equal(t, tt.expectedDir, dir)
++			require.NoError(t, err)
+ 		})
+ 	}
+ }
+diff --git a/taskrc/taskrc_test.go b/taskrc/taskrc_test.go
+new file mode 100644
+index 00000000..84261012
+--- /dev/null
++++ b/taskrc/taskrc_test.go
+@@ -0,0 +1,137 @@
++package taskrc
++
++import (
++	"os"
++	"path/filepath"
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++	"github.com/stretchr/testify/require"
++
++	"github.com/go-task/task/v3/taskrc/ast"
++)
++
++const (
++	xdgConfigYAML = `
++experiments:
++  FOO: 1
++  BAR: 1
++  BAZ: 1
++`
++
++	homeConfigYAML = `
++experiments:
++  FOO: 2
++  BAR: 2
++`
++
++	localConfigYAML = `
++experiments:
++  FOO: 3
++`
++)
++
++func setupDirs(t *testing.T) (string, string, string) {
++	t.Helper()
++
++	xdgConfigDir := t.TempDir()
++	xdgTaskConfigDir := filepath.Join(xdgConfigDir, "task")
++	require.NoError(t, os.Mkdir(xdgTaskConfigDir, 0o755))
++
++	homeDir := t.TempDir()
++
++	localDir := filepath.Join(homeDir, "local")
++	require.NoError(t, os.Mkdir(localDir, 0o755))
++
++	t.Setenv("XDG_CONFIG_HOME", xdgConfigDir)
++	t.Setenv("HOME", homeDir)
++
++	return xdgTaskConfigDir, homeDir, localDir
++}
++
++func writeFile(t *testing.T, dir, filename, content string) {
++	t.Helper()
++	err := os.WriteFile(filepath.Join(dir, filename), []byte(content), 0o644)
++	assert.NoError(t, err)
++}
++
++func TestGetConfig_NoConfigFiles(t *testing.T) { //nolint:paralleltest // cannot run in parallel
++	_, _, localDir := setupDirs(t)
++
++	cfg, err := GetConfig(localDir)
++	assert.NoError(t, err)
++	assert.Nil(t, cfg)
++}
++
++func TestGetConfig_OnlyXDG(t *testing.T) { //nolint:paralleltest // cannot run in parallel
++	xdgDir, _, localDir := setupDirs(t)
++
++	writeFile(t, xdgDir, ".taskrc.yml", xdgConfigYAML)
++
++	cfg, err := GetConfig(localDir)
++	assert.NoError(t, err)
++	assert.Equal(t, &ast.TaskRC{
++		Version: nil,
++		Experiments: map[string]int{
++			"FOO": 1,
++			"BAR": 1,
++			"BAZ": 1,
++		},
++	}, cfg)
++}
++
++func TestGetConfig_OnlyHome(t *testing.T) { //nolint:paralleltest // cannot run in parallel
++	_, homeDir, localDir := setupDirs(t)
++
++	writeFile(t, homeDir, ".taskrc.yml", homeConfigYAML)
++
++	cfg, err := GetConfig(localDir)
++	assert.NoError(t, err)
++	assert.Equal(t, &ast.TaskRC{
++		Version: nil,
++		Experiments: map[string]int{
++			"FOO": 2,
++			"BAR": 2,
++		},
++	}, cfg)
++}
++
++func TestGetConfig_OnlyLocal(t *testing.T) { //nolint:paralleltest // cannot run in parallel
++	_, _, localDir := setupDirs(t)
++
++	writeFile(t, localDir, ".taskrc.yml", localConfigYAML)
++
++	cfg, err := GetConfig(localDir)
++	assert.NoError(t, err)
++	assert.Equal(t, &ast.TaskRC{
++		Version: nil,
++		Experiments: map[string]int{
++			"FOO": 3,
++		},
++	}, cfg)
++}
++
++func TestGetConfig_All(t *testing.T) { //nolint:paralleltest // cannot run in parallel
++	xdgConfigDir, homeDir, localDir := setupDirs(t)
++
++	// Write local config
++	writeFile(t, localDir, ".taskrc.yml", localConfigYAML)
++
++	// Write home config
++	writeFile(t, homeDir, ".taskrc.yml", homeConfigYAML)
++
++	// Write XDG config
++	writeFile(t, xdgConfigDir, ".taskrc.yml", xdgConfigYAML)
++
++	cfg, err := GetConfig(localDir)
++	assert.NoError(t, err)
++	assert.NotNil(t, cfg)
++	assert.Equal(t, &ast.TaskRC{
++		Version: nil,
++		Experiments: map[string]int{
++			"FOO": 3,
++			"BAR": 2,
++			"BAZ": 1,
++		},
++	}, cfg)
++}

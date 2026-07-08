@@ -1,0 +1,12 @@
+diff --git a/codex-rs/core/tests/suite/permissions_messages.rs b/codex-rs/core/tests/suite/permissions_messages.rs
+index ceaf65aa61..d9c4d44116 100644
+--- a/codex-rs/core/tests/suite/permissions_messages.rs
++++ b/codex-rs/core/tests/suite/permissions_messages.rs
+@@ -493,6 +493,7 @@ async fn permissions_message_includes_writable_roots() -> Result<()> {
+         &Policy::empty(),
+         test.config.cwd.as_path(),
+         false,
++        false,
+     )
+     .into_text();
+     // Normalize line endings to handle Windows vs Unix differences

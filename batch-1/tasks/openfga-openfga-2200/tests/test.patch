@@ -1,0 +1,935 @@
+diff --git a/assets/tests/consolidated_1_1_tests.yaml b/assets/tests/consolidated_1_1_tests.yaml
+index 17b11929..581e6045 100644
+--- a/assets/tests/consolidated_1_1_tests.yaml
++++ b/assets/tests/consolidated_1_1_tests.yaml
+@@ -10240,4 +10240,149 @@ tests:
+               user: user:2
+               relation: can_read
+               object: job:1
+-            expectation: false
+\ No newline at end of file
++            expectation: false
++  - name: recursive_ttu_union_algebraic_operations
++    stages:
++      - model: |
++          model
++            schema 1.1
++          type user
++          type document
++            relations
++              define rel1: rel2 or rel1 from parent
++              define parent: [document]
++              define rel2: [user] and rel3
++              define rel3: rel4 but not rel5
++              define rel4: [user]
++              define rel5: [user]
++        tuples:
++          - user: user:maria
++            relation: rel2
++            object: document:x
++          - user: document:parent
++            relation: parent
++            object: document:x
++          - user: user:maria
++            relation: rel2
++            object: document:parent
++          - user: user:maria
++            relation: rel4
++            object: document:parent
++        checkAssertions:
++          - tuple:
++              user: user:maria
++              relation: rel1
++              object: document:x
++            expectation: true
++  - name: recursive_ttu_union_algebraic_operations_with_wildcard
++    stages:
++      - model: |
++          model
++            schema 1.1
++          type user
++          type document
++            relations
++              define rel1: rel2 or rel1 from parent
++              define parent: [document]
++              define rel2: [user] and rel3
++              define rel3: rel4 but not rel5
++              define rel4: [user:*]
++              define rel5: [user]
++        tuples:
++          - user: document:parent
++            relation: parent
++            object: document:x
++          - user: user:maria
++            relation: rel2
++            object: document:parent
++          - user: user:*
++            relation: rel4
++            object: document:parent
++        checkAssertions:
++          - tuple:
++              user: user:maria
++              relation: rel1
++              object: document:x
++            expectation: true
++  - name: recursive_ttu_union_two_algebraic_operations
++    stages:
++      - model: |
++          model
++            schema 1.1
++          type user
++          type document
++            relations
++              define rel1: rel2 or rel6 or rel1 from parent
++              define parent: [document]
++              define rel2: [user] and rel3
++              define rel3: rel4 but not rel5
++              define rel4: [user:*]
++              define rel5: [user]
++              define rel6: [user]
++        tuples:
++          - user: document:parent
++            relation: parent
++            object: document:x
++          - user: user:maria
++            relation: rel6
++            object: document:parent
++        checkAssertions:
++          - tuple:
++              user: user:maria
++              relation: rel1
++              object: document:x
++            expectation: true
++  - name: recursive_ttu_union_terminal_type
++    stages:
++      - model: |
++          model
++            schema 1.1
++          type user
++          type document
++            relations
++              define rel1: [user] or rel1 from parent
++              define parent: [document]
++        tuples:
++          - user: document:parent
++            relation: parent
++            object: document:x
++          - user: user:maria
++            relation: rel1
++            object: document:parent
++        checkAssertions:
++          - tuple:
++              user: user:maria
++              relation: rel1
++              object: document:x
++            expectation: true
++  - name: recursive_ttu_union_parenthesis_intersection
++    stages:
++      - model: |
++          model
++            schema 1.1
++          type user
++          type document
++            relations
++              define rel1: (rel2 and rel3) or rel1 from parent
++              define parent: [document]
++              define rel2: [user]
++              define rel3: [user]
++        tuples:
++          - user: document:parent
++            relation: parent
++            object: document:x
++          - user: user:maria
++            relation: rel2
++            object: document:parent
++          - user: user:maria
++            relation: rel2
++            object: document:x
++          - user: user:maria
++            relation: rel3
++            object: document:x
++        checkAssertions:
++          - tuple:
++              user: user:maria
++              relation: rel1
++              object: document:x
++            expectation: true
+\ No newline at end of file
+diff --git a/internal/graph/check_fast_path_test.go b/internal/graph/check_fast_path_test.go
+index ee217b3d..1299788a 100644
+--- a/internal/graph/check_fast_path_test.go
++++ b/internal/graph/check_fast_path_test.go
+@@ -2699,3 +2699,66 @@ func TestCheckTTUFastPathV2(t *testing.T) {
+ 		require.True(t, checkResult.GetAllowed())
+ 	})
+ }
++
++func TestRecursiveTTUFastPathUnionAlgebraicOperations(t *testing.T) {
++	t.Cleanup(func() {
++		goleak.VerifyNone(t)
++	})
++
++	t.Run("happy_case", func(t *testing.T) {
++		ctrl := gomock.NewController(t)
++		defer ctrl.Finish()
++
++		storeID := ulid.Make().String()
++
++		checker := NewLocalChecker()
++		t.Cleanup(checker.Close)
++
++		model := testutils.MustTransformDSLToProtoWithID(`
++			model
++				schema 1.1
++			type user
++			type document
++				relations
++					define viewer: [user] or viewer from parent
++					define parent: [document]`)
++
++		ts, err := typesystem.New(model)
++		require.NoError(t, err)
++
++		t.Run("check_against_specific_user_works", func(t *testing.T) {
++			mockDatastore := mocks.NewMockOpenFGADatastore(ctrl)
++			mockDatastore.EXPECT().ReadStartingWithUser(gomock.Any(), storeID, storage.ReadStartingWithUserFilter{
++				ObjectType: "document",
++				Relation:   "viewer",
++				UserFilter: []*openfgav1.ObjectRelation{{Object: "user:anne"}},
++				ObjectIDs:  nil,
++			}, storage.ReadStartingWithUserOptions{
++				Consistency: storage.ConsistencyOptions{
++					Preference: openfgav1.ConsistencyPreference_UNSPECIFIED,
++				},
++				WithResultsSortedAscending: true,
++			},
++			).Times(1).Return(storage.NewStaticTupleIterator([]*openfgav1.Tuple{
++				{Key: tuple.NewTupleKey("document:parent", "viewer", "user:anne")},
++			}), nil)
++
++			ctx := setRequestContext(context.Background(), ts, mockDatastore, []*openfgav1.TupleKey{nil})
++
++			iter := storage.NewStaticTupleKeyIterator([]*openfgav1.TupleKey{{
++				User:     "document:parent",
++				Relation: "parent",
++				Object:   "document:target",
++			}})
++
++			val, err := checker.recursiveTTUFastPathUnionAlgebraicOperations(ctx, &ResolveCheckRequest{
++				StoreID:              storeID,
++				AuthorizationModelID: ts.GetAuthorizationModelID(),
++				TupleKey:             tuple.NewTupleKey("document:target", "viewer", "user:anne"),
++			}, typesystem.TupleToUserset("parent", "viewer"), iter)
++			require.NoError(t, err)
++			require.NotNil(t, val)
++			require.True(t, val.GetAllowed())
++		})
++	})
++}
+diff --git a/internal/graph/object_providers_test.go b/internal/graph/object_providers_test.go
+new file mode 100644
+index 00000000..cf5fde89
+--- /dev/null
++++ b/internal/graph/object_providers_test.go
+@@ -0,0 +1,332 @@
++package graph
++
++import (
++	"context"
++	"fmt"
++	"testing"
++
++	"github.com/oklog/ulid/v2"
++	"github.com/stretchr/testify/require"
++	"go.uber.org/goleak"
++	"go.uber.org/mock/gomock"
++
++	openfgav1 "github.com/openfga/api/proto/openfga/v1"
++
++	"github.com/openfga/openfga/internal/mocks"
++	"github.com/openfga/openfga/pkg/storage"
++	"github.com/openfga/openfga/pkg/testutils"
++	"github.com/openfga/openfga/pkg/tuple"
++	"github.com/openfga/openfga/pkg/typesystem"
++)
++
++func TestSimpleRecursiveObjectProvider(t *testing.T) {
++	t.Cleanup(func() {
++		goleak.VerifyNone(t)
++	})
++
++	storeID := ulid.Make().String()
++
++	ctrl := gomock.NewController(t)
++	t.Cleanup(ctrl.Finish)
++
++	mockDatastore := mocks.NewMockRelationshipTupleReader(ctrl)
++
++	t.Run("New", func(t *testing.T) {
++		_, err := newSimpleRecursiveObjectProvider(nil, mockDatastore)
++		require.Error(t, err)
++	})
++
++	t.Run("on_supported_model", func(t *testing.T) {
++		model := testutils.MustTransformDSLToProtoWithID(`
++				model
++					schema 1.1
++				type user
++				type document
++					relations
++						define admin: [user] or admin from parent
++						define parent: [document]
++			`)
++
++		ts, err := typesystem.New(model)
++		require.NoError(t, err)
++
++		req, err := NewResolveCheckRequest(ResolveCheckRequestParams{
++			StoreID:              storeID,
++			AuthorizationModelID: ulid.Make().String(),
++			TupleKey: &openfgav1.TupleKey{
++				Object:   "document:abc",
++				Relation: "admin",
++				User:     "user:XYZ",
++			},
++		})
++		require.NoError(t, err)
++
++		t.Run("when_empty_req", func(t *testing.T) {
++			c, err := newSimpleRecursiveObjectProvider(ts, mockDatastore)
++			require.NoError(t, err)
++			t.Cleanup(c.End)
++
++			_, err = c.Begin(context.Background(), nil)
++			require.Error(t, err)
++		})
++
++		t.Run("when_empty_iterator", func(t *testing.T) {
++			mockDatastore.EXPECT().ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++				Times(1).Return(storage.NewStaticTupleIterator(nil), nil)
++
++			c, err := newSimpleRecursiveObjectProvider(ts, mockDatastore)
++			require.NoError(t, err)
++			t.Cleanup(c.End)
++
++			ctx := setRequestContext(context.Background(), ts, mockDatastore, nil)
++			channel, err := c.Begin(ctx, req)
++			require.NoError(t, err)
++
++			actualMessages := make([]usersetMessage, 0)
++			for msg := range channel {
++				actualMessages = append(actualMessages, msg)
++			}
++
++			require.Empty(t, actualMessages)
++		})
++
++		t.Run("when_iterator_returns_one_result", func(t *testing.T) {
++			mockDatastore.EXPECT().
++				ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++				Times(1).
++				Return(storage.NewStaticTupleIterator([]*openfgav1.Tuple{
++					{Key: tuple.NewTupleKey("document:1", "admin", "user:XYZ")},
++				}), nil)
++
++			c, err := newSimpleRecursiveObjectProvider(ts, mockDatastore)
++			require.NoError(t, err)
++			t.Cleanup(c.End)
++
++			ctx := setRequestContext(context.Background(), ts, mockDatastore, nil)
++			channel, err := c.Begin(ctx, req)
++			require.NoError(t, err)
++
++			actualMessages := make([]usersetMessage, 0)
++			for msg := range channel {
++				actualMessages = append(actualMessages, msg)
++			}
++
++			require.Len(t, actualMessages, 1)
++			require.Equal(t, "document:1", actualMessages[0].userset)
++		})
++
++		t.Run("when_iterator_errors", func(t *testing.T) {
++			mockDatastore.EXPECT().
++				ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++				Times(1).
++				Return(nil, fmt.Errorf("error"))
++
++			c, err := newSimpleRecursiveObjectProvider(ts, mockDatastore)
++			require.NoError(t, err)
++			t.Cleanup(c.End)
++
++			ctx := setRequestContext(context.Background(), ts, mockDatastore, nil)
++			channel, err := c.Begin(ctx, req)
++			require.Nil(t, channel)
++			require.Error(t, err)
++		})
++	})
++}
++
++func TestComplexRecursiveTTUObjectProvider(t *testing.T) {
++	t.Cleanup(func() {
++		goleak.VerifyNone(t)
++	})
++
++	storeID := ulid.Make().String()
++
++	ctrl := gomock.NewController(t)
++	t.Cleanup(ctrl.Finish)
++
++	mockDatastore := mocks.NewMockRelationshipTupleReader(ctrl)
++
++	t.Run("New", func(t *testing.T) {
++		_, err := newComplexTTURecursiveObjectProvider(nil, typesystem.This())
++		require.ErrorContains(t, err, "nil typesystem")
++
++		_, err = newComplexTTURecursiveObjectProvider(&typesystem.TypeSystem{}, nil)
++		require.Error(t, err, "nil rewrite")
++
++		_, err = newComplexTTURecursiveObjectProvider(&typesystem.TypeSystem{}, typesystem.This())
++		require.Error(t, err, "rewrite must be a tupletouserset")
++	})
++
++	t.Run("Begin_And_End", func(t *testing.T) {
++		t.Run("on_supported_model", func(t *testing.T) {
++			model := testutils.MustTransformDSLToProtoWithID(`
++				model
++					schema 1.1
++				type user
++				type document
++					relations
++						define admin: [user] or admin from parent
++						define parent: [document]
++			`)
++
++			ts, err := typesystem.New(model)
++			require.NoError(t, err)
++			rewrite := typesystem.TupleToUserset("parent", "admin")
++
++			req, err := NewResolveCheckRequest(ResolveCheckRequestParams{
++				StoreID:              storeID,
++				AuthorizationModelID: ulid.Make().String(),
++				TupleKey: &openfgav1.TupleKey{
++					Object:   "document:abc",
++					Relation: "admin",
++					User:     "user:XYZ",
++				},
++			})
++			require.NoError(t, err)
++
++			t.Run("when_empty_req", func(t *testing.T) {
++				c, err := newComplexTTURecursiveObjectProvider(ts, rewrite)
++				require.NoError(t, err)
++				t.Cleanup(c.End)
++
++				_, err = c.Begin(context.Background(), nil)
++				require.Error(t, err)
++			})
++
++			t.Run("when_invalid_req", func(t *testing.T) {
++				c, err := newComplexTTURecursiveObjectProvider(ts, rewrite)
++				require.NoError(t, err)
++				t.Cleanup(c.End)
++
++				invalidReq, err := NewResolveCheckRequest(ResolveCheckRequestParams{
++					StoreID:              storeID,
++					AuthorizationModelID: ulid.Make().String(),
++					TupleKey: &openfgav1.TupleKey{
++						Object:   "unknown:abc",
++						Relation: "admin",
++						User:     "user:XYZ",
++					},
++				})
++				require.NoError(t, err)
++
++				_, err = c.Begin(context.Background(), invalidReq)
++				require.Error(t, err)
++			})
++
++			t.Run("when_empty_iterator", func(t *testing.T) {
++				mockDatastore.EXPECT().ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++					Times(1).Return(storage.NewStaticTupleIterator(nil), nil)
++
++				c, err := newComplexTTURecursiveObjectProvider(ts, rewrite)
++				require.NoError(t, err)
++				t.Cleanup(c.End)
++
++				ctx := setRequestContext(context.Background(), ts, mockDatastore, nil)
++				channel, err := c.Begin(ctx, req)
++				require.NoError(t, err)
++
++				actualMessages := make([]usersetMessage, 0)
++				for msg := range channel {
++					actualMessages = append(actualMessages, msg)
++				}
++
++				require.Empty(t, actualMessages)
++			})
++
++			t.Run("when_iterator_returns_one_result", func(t *testing.T) {
++				mockDatastore.EXPECT().
++					ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++					Times(1).
++					Return(storage.NewStaticTupleIterator([]*openfgav1.Tuple{
++						{Key: tuple.NewTupleKey("document:1", "admin", "user:XYZ")},
++					}), nil)
++
++				c, err := newComplexTTURecursiveObjectProvider(ts, rewrite)
++				require.NoError(t, err)
++				t.Cleanup(c.End)
++
++				ctx := setRequestContext(context.Background(), ts, mockDatastore, nil)
++				channel, err := c.Begin(ctx, req)
++				require.NoError(t, err)
++
++				actualMessages := make([]usersetMessage, 0)
++				for msg := range channel {
++					actualMessages = append(actualMessages, msg)
++				}
++
++				require.Len(t, actualMessages, 1)
++				require.Equal(t, "document:1", actualMessages[0].userset)
++			})
++
++			t.Run("when_fastPathRewrite_errors", func(t *testing.T) {
++				mockDatastore.EXPECT().
++					ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++					Times(1).
++					Return(nil, fmt.Errorf("error"))
++
++				c, err := newComplexTTURecursiveObjectProvider(ts, rewrite)
++				require.NoError(t, err)
++				t.Cleanup(c.End)
++
++				ctx := setRequestContext(context.Background(), ts, mockDatastore, nil)
++				_, err = c.Begin(ctx, req)
++				require.Error(t, err)
++			})
++
++			t.Run("when_iterator_errors", func(t *testing.T) {
++				mockDatastore.EXPECT().
++					ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++					Times(1).
++					DoAndReturn(func(_ context.Context, _ string, _ storage.ReadStartingWithUserFilter, _ storage.ReadStartingWithUserOptions) (storage.TupleIterator, error) {
++						iterator := mocks.NewErrorTupleIterator([]*openfgav1.Tuple{
++							{Key: tuple.NewTupleKey("document:1", "admin", "user:XYZ")},
++						})
++						return iterator, nil
++					})
++
++				c, err := newComplexTTURecursiveObjectProvider(ts, rewrite)
++				require.NoError(t, err)
++				t.Cleanup(c.End)
++
++				ctx := setRequestContext(context.Background(), ts, mockDatastore, nil)
++				channel, err := c.Begin(ctx, req)
++				require.NoError(t, err)
++
++				actualMessages := make([]usersetMessage, 0, 1)
++				for res := range channel {
++					actualMessages = append(actualMessages, res)
++				}
++
++				fmt.Println(actualMessages)
++				require.Len(t, actualMessages, 1)
++				require.Empty(t, actualMessages[0].userset)
++				require.Error(t, actualMessages[0].err)
++			})
++
++			t.Run("when_context_cancelled", func(t *testing.T) {
++				mockDatastore.EXPECT().
++					ReadStartingWithUser(gomock.Any(), storeID, gomock.Any(), gomock.Any()).
++					MaxTimes(1).
++					Return(storage.NewStaticTupleIterator([]*openfgav1.Tuple{
++						{Key: tuple.NewTupleKey("document:1", "admin", "user:XYZ")},
++					}), nil)
++
++				c, err := newComplexTTURecursiveObjectProvider(ts, rewrite)
++				require.NoError(t, err)
++				t.Cleanup(c.End)
++
++				ctx, cancel := context.WithCancel(setRequestContext(context.Background(), ts, mockDatastore, nil))
++				cancel()
++				channel, err := c.Begin(ctx, req)
++				if err != nil {
++					require.ErrorIs(t, err, context.Canceled)
++				} else {
++					actualMessages := make([]usersetMessage, 0, 1)
++					for res := range channel {
++						actualMessages = append(actualMessages, res)
++					}
++					require.Empty(t, actualMessages)
++				}
++			})
++		})
++	})
++}
+diff --git a/pkg/typesystem/typesystem_test.go b/pkg/typesystem/typesystem_test.go
+index 3e2a03e8..42337d67 100644
+--- a/pkg/typesystem/typesystem_test.go
++++ b/pkg/typesystem/typesystem_test.go
+@@ -12,6 +12,7 @@ import (
+ 	parser "github.com/openfga/language/pkg/go/transformer"
+ 
+ 	"github.com/openfga/openfga/pkg/testutils"
++	"github.com/openfga/openfga/pkg/tuple"
+ )
+ 
+ type relationDetails struct {
+@@ -5314,6 +5315,343 @@ func TestTTUCanFastPathWeight2(t *testing.T) {
+ 	}
+ }
+ 
++func TestClassifyRelationWithRecursiveTTUAndAlgebraicOps(t *testing.T) {
++	tests := map[string]struct {
++		model      string
++		objectType string
++		relation   string
++		userType   string
++		expected   bool
++	}{
++		`recursive_ttu_or_computed_weight_one_1`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: rel2 or rel1 from parent 
++    define parent: [document]
++    define rel2: [user] and rel3
++    define rel3: rel4 but not rel5
++    define rel4: [user]
++    define rel5: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   true,
++		},
++		`recursive_ttu_or_computed_weight_one_2`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: [user] or rel2 or rel1 from parent 
++    define parent: [document]
++    define rel2: [user] and rel3
++    define rel3: rel4 but not rel5
++    define rel4: [user]
++    define rel5: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   true,
++		},
++		`recursive_ttu_or_computed_weight_one_3`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: rel2 or rel6 or rel1 from parent
++    define parent: [document]
++    define rel2: [user] and rel3
++    define rel3: rel4 but not rel5
++    define rel4: [user]
++    define rel5: [user]
++    define rel6: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   true,
++		},
++		`recursive_ttu_or_computed_weight_one_infinity`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: rel2 or rel1 from parent 
++    define noapplyrel: rel1 or noapplyrel from parent
++    define parent: [document]
++    define rel2: [user] and rel3
++    define rel3: rel4 but not rel5
++    define rel4: [user]
++    define rel5: [user]
++`,
++			objectType: "document",
++			relation:   "noapplyrel",
++			userType:   "user",
++			expected:   false,
++		},
++		`recursive_ttu_or_terminal_type`: {
++			model: `
++		model
++            schema 1.1
++          type user
++          type folder
++            relations
++              define parent: [folder]
++              define viewer: [user] or viewer from parent`,
++			objectType: "folder",
++			relation:   "viewer",
++			userType:   "user",
++			expected:   true,
++		},
++		`recursive_ttu_or_wildcard`: {
++			model: `
++		model
++            schema 1.1
++          type user
++          type folder
++            relations
++              define parent: [folder]
++              define viewer: [user, user:*] or viewer from parent`,
++			objectType: "folder",
++			relation:   "viewer",
++			userType:   "user",
++			expected:   true,
++		},
++		`complex_ttu_multiple_parent_types`: {
++			model: `
++model
++	schema 1.1
++type user
++type employee
++type team
++	relations
++		define parent: [team]
++		define member: [user]
++type group
++	relations
++		define parent: [group, team]
++		define member: [user] or member from parent
++`,
++			objectType: "group",
++			relation:   "member",
++			userType:   "user",
++			expected:   false,
++		},
++		`complex_ttu_directly_other_assigned_userset_1`: {
++			model: `
++model
++	schema 1.1
++type user
++type group
++	relations
++		define parent: [group]
++		define otherRelation: [user]
++		define member: [user, group#otherRelation] or member from parent
++`,
++			objectType: "group",
++			relation:   "member",
++			userType:   "user",
++			expected:   false,
++		},
++		`complex_ttu_directly_other_assigned_userset_2`: {
++			model: `
++model
++	schema 1.1
++type user
++type group
++	relations
++		define parent: [group]
++		define member: [user, group#member] or member from parent
++`,
++			objectType: "group",
++			relation:   "member",
++			userType:   "user",
++			expected:   false,
++		},
++		`complex_non_recursive_userset_from_directly_assignable`: {
++			model: `
++model
++	schema 1.1
++type user
++type group
++	relations
++		define parent: [group]
++		define owner: [user]
++		define member: [user] or owner from parent
++`,
++			objectType: "group",
++			relation:   "member",
++			userType:   "user",
++			expected:   false,
++		},
++		`complex_non_recursive_userset_from_computed`: {
++			model: `
++model
++	schema 1.1
++type user
++type group
++	relations
++		define parent: [group]
++		define owner: [user]
++		define other_owner: owner
++		define member: [user] or other_owner from parent
++`,
++			objectType: "group",
++			relation:   "member",
++			userType:   "user",
++			expected:   false,
++		},
++		`recursive_userset`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: [user, document#rel1]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   false,
++		},
++		`nested_wildcard`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: rel2 or rel1 from parent
++    define parent: [document]
++    define rel2: [user:*] and rel3
++    define rel3: rel4 but not rel5
++    define rel4: [user:*]
++    define rel5: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   true,
++		},
++		`two_ttus`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: (rel2 from parent) or rel1 from parent
++    define parent: [document]
++    define rel2: [user] and rel3
++    define rel3: rel4 but not rel5
++    define rel4: [user]
++    define rel5: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   false,
++		},
++		`ttu_or_intersection_1`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: (rel2 and rel3) or rel1 from parent
++    define parent: [document]
++    define rel2: [user]
++    define rel3: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   true,
++		},
++		`ttu_or_intersection_2`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: (rel2 and rel3) or (rel4 and rel5) or rel1 from parent
++    define parent: [document]
++    define rel2: [user]
++    define rel3: [user]
++    define rel4: [user]
++    define rel5: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   true,
++		},
++		`ttu_or_intersection_that_is_weight_2`: {
++			model: `
++model
++  schema 1.1
++type user
++type document
++  relations
++    define rel1: (rel2 and rel3) or rel1 from parent
++    define parent: [document]
++    define rel2: rel3 from parent
++    define rel3: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   false,
++		},
++		`multiple_parents_in_ttu`: {
++			model: `
++model
++  schema 1.1
++type user
++type group
++	relations
++		define rel1: [user]
++type document
++  relations
++    define rel1: rel2 or rel1 from parent 
++    define parent: [document, group]
++    define rel2: [user] and rel3
++    define rel3: rel4 but not rel5
++    define rel4: [user]
++    define rel5: [user]
++`,
++			objectType: "document",
++			relation:   "rel1",
++			userType:   "user",
++			expected:   false,
++		},
++	}
++	for testName, test := range tests {
++		t.Run(testName, func(t *testing.T) {
++			model := testutils.MustTransformDSLToProtoWithID(test.model)
++			typesys, err := NewAndValidate(context.Background(), model)
++			require.NoError(t, err)
++			res := typesys.IsRelationWithRecursiveTTUAndAlgebraicOperations(test.objectType, test.relation, test.userType)
++			require.Equal(t, test.expected, res)
++		})
++	}
++}
++
+ func TestConditions(t *testing.T) {
+ 	tests := []struct {
+ 		name          string
+@@ -6076,6 +6414,12 @@ type group
+ 			require.NoError(t, err)
+ 			result := typesys.RecursiveTTUCanFastPath(test.objectTypeRelation, test.userType)
+ 			require.Equal(t, test.expected, result)
++			if test.expected {
++				obj, rel := tuple.SplitObjectRelation(test.objectTypeRelation)
++				// every time RecursiveTTUCanFastPath returns true, IsRelationWithRecursiveTTUAndAlgebraicOperations must also
++				v2 := typesys.IsRelationWithRecursiveTTUAndAlgebraicOperations(obj, rel, test.userType)
++				require.True(t, v2)
++			}
+ 		})
+ 	}
+ }

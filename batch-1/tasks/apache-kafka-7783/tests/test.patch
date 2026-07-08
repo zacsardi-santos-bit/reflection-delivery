@@ -1,0 +1,443 @@
+diff --git a/connect/runtime/src/test/java/org/apache/kafka/connect/integration/ConnectWorkerIntegrationTest.java b/connect/runtime/src/test/java/org/apache/kafka/connect/integration/ConnectWorkerIntegrationTest.java
+index ca63a07e0a..8b89d6744a 100644
+--- a/connect/runtime/src/test/java/org/apache/kafka/connect/integration/ConnectWorkerIntegrationTest.java
++++ b/connect/runtime/src/test/java/org/apache/kafka/connect/integration/ConnectWorkerIntegrationTest.java
+@@ -17,6 +17,7 @@
+ package org.apache.kafka.connect.integration;
+ 
+ import org.apache.kafka.connect.runtime.AbstractStatus;
++import org.apache.kafka.connect.runtime.distributed.DistributedConfig;
+ import org.apache.kafka.connect.runtime.rest.entities.ConnectorStateInfo;
+ import org.apache.kafka.connect.storage.StringConverter;
+ import org.apache.kafka.connect.util.clusters.EmbeddedConnectCluster;
+@@ -30,6 +31,7 @@ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+ 
+ import java.io.IOException;
++import java.util.Collections;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Optional;
+@@ -38,9 +40,12 @@ import java.util.Set;
+ import java.util.concurrent.TimeUnit;
+ 
+ import static org.apache.kafka.connect.runtime.ConnectorConfig.CONNECTOR_CLASS_CONFIG;
++import static org.apache.kafka.connect.runtime.ConnectorConfig.CONNECTOR_CLIENT_PRODUCER_OVERRIDES_PREFIX;
+ import static org.apache.kafka.connect.runtime.ConnectorConfig.KEY_CONVERTER_CLASS_CONFIG;
+ import static org.apache.kafka.connect.runtime.ConnectorConfig.TASKS_MAX_CONFIG;
+ import static org.apache.kafka.connect.runtime.ConnectorConfig.VALUE_CONVERTER_CLASS_CONFIG;
++import static org.apache.kafka.connect.runtime.WorkerConfig.BOOTSTRAP_SERVERS_CONFIG;
++import static org.apache.kafka.connect.runtime.WorkerConfig.CONNECTOR_CLIENT_POLICY_CLASS_CONFIG;
+ import static org.apache.kafka.connect.runtime.WorkerConfig.OFFSET_COMMIT_INTERVAL_MS_CONFIG;
+ import static org.apache.kafka.test.TestUtils.waitForCondition;
+ import static org.junit.Assert.assertFalse;
+@@ -60,29 +65,27 @@ public class ConnectWorkerIntegrationTest {
+     private static final int NUM_WORKERS = 3;
+     private static final String CONNECTOR_NAME = "simple-source";
+ 
++    private EmbeddedConnectCluster.Builder connectBuilder;
+     private EmbeddedConnectCluster connect;
++    Map<String, String> workerProps = new HashMap<>();
++    Properties brokerProps = new Properties();
+ 
+     @Before
+     public void setup() throws IOException {
+         // setup Connect worker properties
+-        Map<String, String> exampleWorkerProps = new HashMap<>();
+-        exampleWorkerProps.put(OFFSET_COMMIT_INTERVAL_MS_CONFIG, String.valueOf(OFFSET_COMMIT_INTERVAL_MS));
++        workerProps.put(OFFSET_COMMIT_INTERVAL_MS_CONFIG, String.valueOf(OFFSET_COMMIT_INTERVAL_MS));
++        workerProps.put(CONNECTOR_CLIENT_POLICY_CLASS_CONFIG, "All");
+ 
+         // setup Kafka broker properties
+-        Properties exampleBrokerProps = new Properties();
+-        exampleBrokerProps.put("auto.create.topics.enable", String.valueOf(false));
++        brokerProps.put("auto.create.topics.enable", String.valueOf(false));
+ 
+         // build a Connect cluster backed by Kafka and Zk
+-        connect = new EmbeddedConnectCluster.Builder()
++        connectBuilder = new EmbeddedConnectCluster.Builder()
+                 .name("connect-cluster")
+                 .numWorkers(NUM_WORKERS)
+-                .workerProps(exampleWorkerProps)
+-                .brokerProps(exampleBrokerProps)
+-                .maskExitProcedures(true) // true is the default, setting here as example
+-                .build();
+-
+-        // start the clusters
+-        connect.start();
++                .workerProps(workerProps)
++                .brokerProps(brokerProps)
++                .maskExitProcedures(true); // true is the default, setting here as example
+     }
+ 
+     @After
+@@ -97,6 +100,10 @@ public class ConnectWorkerIntegrationTest {
+      */
+     @Test
+     public void testAddAndRemoveWorker() throws Exception {
++        connect = connectBuilder.build();
++        // start the clusters
++        connect.start();
++
+         int numTasks = 4;
+         // create test topic
+         connect.kafka().createTopic("test-topic", NUM_TOPIC_PARTITIONS);
+@@ -139,6 +146,103 @@ public class ConnectWorkerIntegrationTest {
+         assertFalse(workers.contains(extraWorker));
+     }
+ 
++    /**
++     * Verify that a failed task can be restarted successfully.
++     */
++    @Test
++    public void testRestartFailedTask() throws Exception {
++        connect = connectBuilder.build();
++        // start the clusters
++        connect.start();
++
++        int numTasks = 1;
++
++        // Properties for the source connector. The task should fail at startup due to the bad broker address.
++        Map<String, String> connectorProps = new HashMap<>();
++        connectorProps.put(CONNECTOR_CLASS_CONFIG, MonitorableSourceConnector.class.getName());
++        connectorProps.put(TASKS_MAX_CONFIG, String.valueOf(numTasks));
++        connectorProps.put(CONNECTOR_CLIENT_PRODUCER_OVERRIDES_PREFIX + BOOTSTRAP_SERVERS_CONFIG, "nobrokerrunningatthisaddress");
++
++        waitForCondition(() -> assertWorkersUp(NUM_WORKERS).orElse(false),
++                WORKER_SETUP_DURATION_MS, "Initial group of workers did not start in time.");
++
++        // Try to start the connector and its single task.
++        connect.configureConnector(CONNECTOR_NAME, connectorProps);
++
++        waitForCondition(() -> assertConnectorTasksFailed(CONNECTOR_NAME, numTasks).orElse(false),
++                CONNECTOR_SETUP_DURATION_MS, "Connector tasks did not fail in time");
++
++        // Reconfigure the connector without the bad broker address.
++        connectorProps.remove(CONNECTOR_CLIENT_PRODUCER_OVERRIDES_PREFIX + BOOTSTRAP_SERVERS_CONFIG);
++        connect.configureConnector(CONNECTOR_NAME, connectorProps);
++
++        // Restart the failed task
++        String taskRestartEndpoint = connect.endpointForResource(
++            String.format("connectors/%s/tasks/0/restart", CONNECTOR_NAME));
++        connect.executePost(taskRestartEndpoint, "", Collections.emptyMap());
++
++        // Ensure the task started successfully this time
++        waitForCondition(() -> assertConnectorAndTasksRunning(CONNECTOR_NAME, numTasks).orElse(false),
++            CONNECTOR_SETUP_DURATION_MS, "Connector tasks are not all in running state.");
++    }
++
++    /**
++     * Verify that a set of tasks restarts correctly after a broker goes offline and back online
++     */
++    @Test
++    public void testBrokerCoordinator() throws Exception {
++        workerProps.put(DistributedConfig.SCHEDULED_REBALANCE_MAX_DELAY_MS_CONFIG, String.valueOf(5000));
++        connect = connectBuilder.workerProps(workerProps).build();
++        // start the clusters
++        connect.start();
++        int numTasks = 4;
++        // create test topic
++        connect.kafka().createTopic("test-topic", NUM_TOPIC_PARTITIONS);
++
++        // setup up props for the sink connector
++        Map<String, String> props = new HashMap<>();
++        props.put(CONNECTOR_CLASS_CONFIG, MonitorableSourceConnector.class.getSimpleName());
++        props.put(TASKS_MAX_CONFIG, String.valueOf(numTasks));
++        props.put("topic", "test-topic");
++        props.put("throughput", String.valueOf(1));
++        props.put("messages.per.poll", String.valueOf(10));
++        props.put(KEY_CONVERTER_CLASS_CONFIG, StringConverter.class.getName());
++        props.put(VALUE_CONVERTER_CLASS_CONFIG, StringConverter.class.getName());
++
++        waitForCondition(() -> assertWorkersUp(NUM_WORKERS).orElse(false),
++                WORKER_SETUP_DURATION_MS, "Initial group of workers did not start in time.");
++
++        // start a source connector
++        connect.configureConnector(CONNECTOR_NAME, props);
++
++        waitForCondition(() -> assertConnectorAndTasksRunning(CONNECTOR_NAME, numTasks).orElse(false),
++                CONNECTOR_SETUP_DURATION_MS, "Connector tasks did not start in time.");
++
++        connect.kafka().stopOnlyKafka();
++
++        waitForCondition(() -> assertWorkersUp(NUM_WORKERS).orElse(false),
++                WORKER_SETUP_DURATION_MS, "Group of workers did not remain the same after broker shutdown");
++
++        // Allow for the workers to discover that the coordinator is unavailable, wait is
++        // heartbeat timeout * 2 + 4sec
++        Thread.sleep(TimeUnit.SECONDS.toMillis(10));
++
++        connect.kafka().startOnlyKafkaOnSamePorts();
++
++        // Allow for the kafka brokers to come back online
++        Thread.sleep(TimeUnit.SECONDS.toMillis(10));
++
++        waitForCondition(() -> assertWorkersUp(NUM_WORKERS).orElse(false),
++                WORKER_SETUP_DURATION_MS, "Group of workers did not remain the same within the "
++                        + "designated time.");
++
++        // Allow for the workers to rebalance and reach a steady state
++        Thread.sleep(TimeUnit.SECONDS.toMillis(10));
++
++        waitForCondition(() -> assertConnectorAndTasksRunning(CONNECTOR_NAME, numTasks).orElse(false),
++                CONNECTOR_SETUP_DURATION_MS, "Connector tasks did not start in time.");
++    }
++
+     /**
+      * Confirm that the requested number of workers is up and running.
+      *
+@@ -163,12 +267,36 @@ public class ConnectWorkerIntegrationTest {
+      * @return true if the connector and tasks are in RUNNING state; false otherwise
+      */
+     private Optional<Boolean> assertConnectorAndTasksRunning(String connectorName, int numTasks) {
++        return assertConnectorState(
++                connectorName,
++                AbstractStatus.State.RUNNING,
++                numTasks,
++                AbstractStatus.State.RUNNING);
++    }
++
++    /**
++     * Confirm that a connector is running, that it has a specific number of tasks, and that all of
++     * its tasks are in the FAILED state.
++     * @param connectorName the connector
++     * @param numTasks the expected number of tasks
++     * @return true if the connector is in RUNNING state and its tasks are in FAILED state; false otherwise
++     */
++    private Optional<Boolean> assertConnectorTasksFailed(String connectorName, int numTasks) {
++        return assertConnectorState(
++                connectorName,
++                AbstractStatus.State.RUNNING,
++                numTasks,
++                AbstractStatus.State.FAILED);
++    }
++
++    private Optional<Boolean> assertConnectorState(String connectorName, AbstractStatus.State connectorState,
++                                                   int numTasks, AbstractStatus.State tasksState) {
+         try {
+             ConnectorStateInfo info = connect.connectorStatus(connectorName);
+             boolean result = info != null
++                    && info.connector().state().equals(connectorState.toString())
+                     && info.tasks().size() == numTasks
+-                    && info.connector().state().equals(AbstractStatus.State.RUNNING.toString())
+-                    && info.tasks().stream().allMatch(s -> s.state().equals(AbstractStatus.State.RUNNING.toString()));
++                    && info.tasks().stream().allMatch(s -> s.state().equals(tasksState.toString()));
+             return Optional.of(result);
+         } catch (Exception e) {
+             log.error("Could not check connector state info.", e);
+diff --git a/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java b/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java
+index 7085a7f15d..b95665f8d8 100644
+--- a/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java
++++ b/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java
+@@ -159,6 +159,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+@@ -223,6 +225,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+@@ -303,6 +307,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+@@ -358,6 +364,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+@@ -427,6 +435,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+@@ -496,6 +506,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+@@ -552,6 +564,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+@@ -585,6 +599,8 @@ public class IncrementalCooperativeAssignorTest {
+ 
+         verify(coordinator, times(rebalanceNum)).configSnapshot();
+         verify(coordinator, times(rebalanceNum)).leaderState(any());
++        verify(coordinator, times(rebalanceNum)).generationId();
++        verify(coordinator, times(rebalanceNum)).memberId();
+     }
+ 
+     @Test
+diff --git a/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedConnectCluster.java b/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedConnectCluster.java
+index fc93ae0595..b3af06a3bd 100644
+--- a/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedConnectCluster.java
++++ b/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedConnectCluster.java
+@@ -374,6 +374,28 @@ public class EmbeddedConnectCluster {
+         return httpCon.getResponseCode();
+     }
+ 
++    public int executePost(String url, String body, Map<String, String> headers) throws IOException {
++        log.debug("Executing POST request to URL={}. Payload={}", url, body);
++        HttpURLConnection httpCon = (HttpURLConnection) new URL(url).openConnection();
++        httpCon.setDoOutput(true);
++        httpCon.setRequestProperty("Content-Type", "application/json");
++        headers.forEach(httpCon::setRequestProperty);
++        httpCon.setRequestMethod("POST");
++        try (OutputStreamWriter out = new OutputStreamWriter(httpCon.getOutputStream())) {
++            out.write(body);
++        }
++        if (httpCon.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
++            try (InputStream is = httpCon.getInputStream()) {
++                log.info("POST response for URL={} is {}", url, responseToString(is));
++            }
++        } else {
++            try (InputStream is = httpCon.getErrorStream()) {
++                log.info("POST error response for URL={} is {}", url, responseToString(is));
++            }
++        }
++        return httpCon.getResponseCode();
++    }
++
+     /**
+      * Execute a GET request on the given URL.
+      *
+diff --git a/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedKafkaCluster.java b/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedKafkaCluster.java
+index 44643950b4..4cff75020d 100644
+--- a/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedKafkaCluster.java
++++ b/connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedKafkaCluster.java
+@@ -81,6 +81,8 @@ public class EmbeddedKafkaCluster extends ExternalResource {
+     private final KafkaServer[] brokers;
+     private final Properties brokerConfig;
+     private final Time time = new MockTime();
++    private final int[] currentBrokerPorts;
++    private final String[] currentBrokerLogDirs;
+ 
+     private EmbeddedZookeeper zookeeper = null;
+     private ListenerName listenerName = new ListenerName("PLAINTEXT");
+@@ -89,6 +91,8 @@ public class EmbeddedKafkaCluster extends ExternalResource {
+     public EmbeddedKafkaCluster(final int numBrokers,
+                                 final Properties brokerConfig) {
+         brokers = new KafkaServer[numBrokers];
++        currentBrokerPorts = new int[numBrokers];
++        currentBrokerLogDirs = new String[numBrokers];
+         this.brokerConfig = brokerConfig;
+     }
+ 
+@@ -102,11 +106,20 @@ public class EmbeddedKafkaCluster extends ExternalResource {
+         stop();
+     }
+ 
++    public void startOnlyKafkaOnSamePorts() throws IOException {
++        start(currentBrokerPorts, currentBrokerLogDirs);
++    }
++
+     private void start() throws IOException {
++        // pick a random port
+         zookeeper = new EmbeddedZookeeper();
++        Arrays.fill(currentBrokerPorts, 0);
++        Arrays.fill(currentBrokerLogDirs, null);
++        start(currentBrokerPorts, currentBrokerLogDirs);
++    }
+ 
++    private void start(int[] brokerPorts, String[] logDirs) throws IOException {
+         brokerConfig.put(KafkaConfig$.MODULE$.ZkConnectProp(), zKConnectString());
+-        brokerConfig.put(KafkaConfig$.MODULE$.PortProp(), 0); // pick a random port
+ 
+         putIfAbsent(brokerConfig, KafkaConfig$.MODULE$.HostNameProp(), "localhost");
+         putIfAbsent(brokerConfig, KafkaConfig$.MODULE$.DeleteTopicEnableProp(), true);
+@@ -121,8 +134,11 @@ public class EmbeddedKafkaCluster extends ExternalResource {
+ 
+         for (int i = 0; i < brokers.length; i++) {
+             brokerConfig.put(KafkaConfig$.MODULE$.BrokerIdProp(), i);
+-            brokerConfig.put(KafkaConfig$.MODULE$.LogDirProp(), createLogDir());
++            currentBrokerLogDirs[i] = logDirs[i] == null ? createLogDir() : currentBrokerLogDirs[i];
++            brokerConfig.put(KafkaConfig$.MODULE$.LogDirProp(), currentBrokerLogDirs[i]);
++            brokerConfig.put(KafkaConfig$.MODULE$.PortProp(), brokerPorts[i]);
+             brokers[i] = TestUtils.createServer(new KafkaConfig(brokerConfig, true), time);
++            currentBrokerPorts[i] = brokers[i].boundPort(listenerName);
+         }
+ 
+         Map<String, Object> producerProps = new HashMap<>();
+@@ -132,8 +148,15 @@ public class EmbeddedKafkaCluster extends ExternalResource {
+         producer = new KafkaProducer<>(producerProps);
+     }
+ 
++    public void stopOnlyKafka() {
++        stop(false, false);
++    }
++
+     private void stop() {
++        stop(true, true);
++    }
+ 
++    private void stop(boolean deleteLogDirs, boolean stopZK) {
+         try {
+             producer.close();
+         } catch (Exception e) {
+@@ -151,19 +174,24 @@ public class EmbeddedKafkaCluster extends ExternalResource {
+             }
+         }
+ 
+-        for (KafkaServer broker : brokers) {
+-            try {
+-                log.info("Cleaning up kafka log dirs at {}", broker.config().logDirs());
+-                CoreUtils.delete(broker.config().logDirs());
+-            } catch (Throwable t) {
+-                String msg = String.format("Could not clean up log dirs for broker at %s", address(broker));
+-                log.error(msg, t);
+-                throw new RuntimeException(msg, t);
++        if (deleteLogDirs) {
++            for (KafkaServer broker : brokers) {
++                try {
++                    log.info("Cleaning up kafka log dirs at {}", broker.config().logDirs());
++                    CoreUtils.delete(broker.config().logDirs());
++                } catch (Throwable t) {
++                    String msg = String.format("Could not clean up log dirs for broker at %s",
++                            address(broker));
++                    log.error(msg, t);
++                    throw new RuntimeException(msg, t);
++                }
+             }
+         }
+ 
+         try {
+-            zookeeper.shutdown();
++            if (stopZK) {
++                zookeeper.shutdown();
++            }
+         } catch (Throwable t) {
+             String msg = String.format("Could not shutdown zookeeper at %s", zKConnectString());
+             log.error(msg, t);

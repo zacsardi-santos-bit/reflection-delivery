@@ -1,0 +1,144 @@
+diff --git a/compiler-core/src/type_/tests/errors.rs b/compiler-core/src/type_/tests/errors.rs
+index d65030863..c37e69181 100644
+--- a/compiler-core/src/type_/tests/errors.rs
++++ b/compiler-core/src/type_/tests/errors.rs
+@@ -3547,3 +3547,31 @@ pub fn go(wibble: Wibble) {
+ }"
+     );
+ }
++
++#[test]
++fn record_update_with_constructor_with_no_labelled_fields() {
++    assert_module_error!(
++        "
++pub type Wibble {
++  Wibble(Int, Bool)
++}
++
++pub fn go(wibble: Wibble) {
++    Wibble(..wibble, b: 1)
++}"
++    );
++}
++
++#[test]
++fn const_record_update_with_constructor_with_no_labelled_fields() {
++    assert_module_error!(
++        "
++pub type Wibble {
++  Wibble(Int, Bool)
++}
++
++pub const wibble = Wibble(1, True)
++pub const wobble = Wibble(..wobble)
++"
++    );
++}
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__const_record_update_with_constructor_with_no_labelled_fields.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__const_record_update_with_constructor_with_no_labelled_fields.snap
+new file mode 100644
+index 000000000..1d13d0131
+--- /dev/null
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__const_record_update_with_constructor_with_no_labelled_fields.snap
+@@ -0,0 +1,23 @@
++---
++source: compiler-core/src/type_/tests/errors.rs
++expression: "\npub type Wibble {\n  Wibble(Int, Bool)\n}\n\npub const wibble = Wibble(1, True)\npub const wobble = Wibble(..wobble)\n"
++---
++----- SOURCE CODE
++
++pub type Wibble {
++  Wibble(Int, Bool)
++}
++
++pub const wibble = Wibble(1, True)
++pub const wobble = Wibble(..wobble)
++
++
++----- ERROR
++error: Invalid record constructor
++  ┌─ /src/one/two.gleam:7:20
++  │
++7 │ pub const wobble = Wibble(..wobble)
++  │                    ^^^^^^ This constructor has no labelled fields
++
++Only constructors with at least one labelled field can be used with the
++update syntax.
+diff --git a/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__record_update_with_constructor_with_no_labelled_fields.snap b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__record_update_with_constructor_with_no_labelled_fields.snap
+new file mode 100644
+index 000000000..4ab7325c7
+--- /dev/null
++++ b/compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__errors__record_update_with_constructor_with_no_labelled_fields.snap
+@@ -0,0 +1,23 @@
++---
++source: compiler-core/src/type_/tests/errors.rs
++expression: "\npub type Wibble {\n  Wibble(Int, Bool)\n}\n\npub fn go(wibble: Wibble) {\n    Wibble(..wibble, b: 1)\n}"
++---
++----- SOURCE CODE
++
++pub type Wibble {
++  Wibble(Int, Bool)
++}
++
++pub fn go(wibble: Wibble) {
++    Wibble(..wibble, b: 1)
++}
++
++----- ERROR
++error: Invalid record constructor
++  ┌─ /src/one/two.gleam:7:5
++  │
++7 │     Wibble(..wibble, b: 1)
++  │     ^^^^^^ This constructor has no labelled fields
++
++Only constructors with at least one labelled field can be used with the
++update syntax.
+diff --git a/language-server/src/tests/snapshots/gleam_language_server__tests__completion__completions_for_labels_in_record_update.snap.new b/language-server/src/tests/snapshots/gleam_language_server__tests__completion__completions_for_labels_in_record_update.snap.new
+deleted file mode 100644
+index 987c0b65c..000000000
+--- a/language-server/src/tests/snapshots/gleam_language_server__tests__completion__completions_for_labels_in_record_update.snap.new
++++ /dev/null
+@@ -1,18 +0,0 @@
+----
+-source: language-server/src/tests/completion.rs
+-assertion_line: 2430
+-expression: "\npub type Wibble {\n  Wibble(wibble: Int, wobble: Int, woo: Int)\n}\n\npub fn main() {\n  Wibble(..todo, w)\n}\n\npub fn wibble() { todo }\n"
+-snapshot_kind: text
+----
+-pub type Wibble {
+-  Wibble(wibble: Int, wobble: Int, woo: Int)
+-}
+-
+-pub fn main() {
+-  Wibble(..todo, w|)
+-}
+-
+-pub fn wibble() { todo }
+-
+-
+------ Completion content -----
+diff --git a/language-server/src/tests/snapshots/gleam_language_server__tests__hover__hover_for_invalid_record_update_4.snap.new b/language-server/src/tests/snapshots/gleam_language_server__tests__hover__hover_for_invalid_record_update_4.snap.new
+deleted file mode 100644
+index 7ce7d3304..000000000
+--- a/language-server/src/tests/snapshots/gleam_language_server__tests__hover__hover_for_invalid_record_update_4.snap.new
++++ /dev/null
+@@ -1,20 +0,0 @@
+----
+-source: language-server/src/tests/hover.rs
+-assertion_line: 2134
+-expression: "\ntype Wibble {\n  Wibble(a: Int, b: Bool)\n}\n\npub fn go(wibble: Wibble) {\n    Wibble(..wibble, a: True, b: 1)\n}\n"
+-snapshot_kind: text
+----
+-type Wibble {
+-  Wibble(a: Int, b: Bool)
+-}
+-
+-pub fn go(wibble: Wibble) {
+-    Wibble(..wibble, a: True, b: 1)
+-                     ↑▔▔▔▔▔▔       
+-}
+-
+-
+------ Hover content (markdown) -----
+-```gleam
+-Bool
+-```

@@ -1,0 +1,300 @@
+diff --git a/tests/pytests/functional/modules/test_ssh_pki.py b/tests/pytests/functional/modules/test_ssh_pki.py
+index 5670fdbeb4..becc7d1163 100644
+--- a/tests/pytests/functional/modules/test_ssh_pki.py
++++ b/tests/pytests/functional/modules/test_ssh_pki.py
+@@ -665,12 +665,13 @@ def test_create_private_key_with_passphrase(ssh, algo):
+ 
+ def test_create_private_key_write_to_path(ssh, tmp_path):
+     tgt = tmp_path / "pk"
++    pub = tgt.with_suffix(".pub")
+     ssh.create_private_key(path=str(tgt))
+     assert tgt.exists()
++    assert pub.exists()
+     assert tgt.read_text().startswith("-----BEGIN OPENSSH PRIVATE KEY-----")
+     assert stat.S_IMODE(tgt.stat().st_mode) == 0o0600
+-    # ensure it can be loaded
+-    ssh.get_private_key_size(str(tgt))
++    assert ssh.get_public_key(str(tgt)) == pub.read_text()
+ 
+ 
+ def test_create_private_key_write_to_path_overwrite(ssh, tmp_path):
+diff --git a/tests/pytests/functional/states/test_ssh_pki.py b/tests/pytests/functional/states/test_ssh_pki.py
+index a1bf0c74ae..4278f5f204 100644
+--- a/tests/pytests/functional/states/test_ssh_pki.py
++++ b/tests/pytests/functional/states/test_ssh_pki.py
+@@ -1,3 +1,4 @@
++import shutil
+ from pathlib import Path
+ 
+ import pytest
+@@ -29,7 +30,22 @@ pytestmark = [
+ 
+ 
+ @pytest.fixture(scope="module")
+-def minion_config_overrides():
++def ca_dir(tmp_path_factory):
++    ca_dir = tmp_path_factory.mktemp("ca")
++    try:
++        yield ca_dir
++    finally:
++        shutil.rmtree(str(ca_dir), ignore_errors=True)
++
++
++@pytest.fixture(scope="module")
++def ca_key_file(ca_dir, ca_key):
++    with pytest.helpers.temp_file("ca.key", ca_key, ca_dir) as key:
++        yield key
++
++
++@pytest.fixture(scope="module")
++def minion_config_overrides(ca_key_file):
+     return {
+         "ssh_signing_policies": {
+             "testhostpolicy": {
+@@ -58,6 +74,9 @@ def minion_config_overrides():
+                 "cert_type": "host",
+                 "valid_principals": ["a", "b", "c"],
+             },
++            "test_fixed_signing_private_key": {
++                "signing_private_key": str(ca_key_file),
++            },
+         },
+     }
+ 
+@@ -67,7 +86,7 @@ def ssh(states):
+     yield states.ssh_pki
+ 
+ 
+-@pytest.fixture
++@pytest.fixture(scope="module")
+ def ca_key():
+     return """\
+ -----BEGIN OPENSSH PRIVATE KEY-----
+@@ -253,12 +272,12 @@ def ed25519_pubkey():
+ 
+ 
+ @pytest.fixture
+-def cert_args(tmp_path, ca_key):
++def cert_args(tmp_path, ca_key_file):
+     return {
+         "name": f"{tmp_path}/cert",
+         "cert_type": "user",
+         "all_principals": True,
+-        "signing_private_key": ca_key,
++        "signing_private_key": ca_key_file,
+         "key_id": "success",
+     }
+ 
+@@ -583,6 +602,24 @@ def test_certificate_managed_with_signing_policy_user(
+     assert cert.extensions == expected_extensions
+ 
+ 
++@pytest.mark.usefixtures("existing_cert")
++@pytest.mark.parametrize(
++    "existing_cert",
++    [{"signing_policy": "test_fixed_signing_private_key"}],
++    indirect=True,
++)
++def test_certificate_managed_existing_with_fixed_signing_key_in_signing_policy(
++    ssh, cert_args
++):
++    """
++    If the policy defines a fixed signing_private_key and a certificate
++    is managed locally (without ca_server), the state module should not crash
++    when checking for changes.
++    """
++    ret = ssh.certificate_managed(**cert_args)
++    _assert_not_changed(ret)
++
++
+ def test_certificate_managed_test_true(ssh, cert_args, rsa_privkey):
+     cert_args["private_key"] = rsa_privkey
+     cert_args["test"] = True
+@@ -1003,6 +1040,14 @@ def test_certificate_managed_file_managed_error(ssh, cert_args, rsa_privkey):
+     assert "Could not create file, see file.managed output" in ret.comment
+ 
+ 
++def test_certificate_managed_copypath(ssh, cert_args, rsa_privkey, ca_key, tmp_path):
++    cert_args["private_key"] = rsa_privkey
++    cert_args["copypath"] = str(tmp_path)
++    ret = ssh.certificate_managed(**cert_args)
++    cert = _assert_cert_basic(ret, cert_args["name"], rsa_privkey, ca_key)
++    assert (tmp_path / f"{cert.serial:x}.crt").exists()
++
++
+ @pytest.mark.parametrize("algo", ["rsa", "ec", "ed25519"])
+ @pytest.mark.parametrize(
+     "passphrase",
+diff --git a/tests/pytests/integration/ssh/ssh_pki/test_certificate_managed_wrapper_ssh.py b/tests/pytests/integration/ssh/ssh_pki/test_certificate_managed_wrapper_ssh.py
+index 5ce1abaeca..05f3ea5725 100644
+--- a/tests/pytests/integration/ssh/ssh_pki/test_certificate_managed_wrapper_ssh.py
++++ b/tests/pytests/integration/ssh/ssh_pki/test_certificate_managed_wrapper_ssh.py
+@@ -210,6 +210,49 @@ def test_certificate_managed_remote(ssh_salt_ssh_cli, cert_args, ca_key, rsa_pri
+     assert _belongs_to(cert, rsa_privkey)
+ 
+ 
++@pytest.fixture
++def cm_file_args(sshpki_salt_master):
++    state_contents = """
++    {{
++        salt["ssh_pki.certificate_managed_wrapper"](
++            pillar["args"]["name"],
++            ca_server=pillar["args"]["ca_server"],
++            signing_policy=pillar["args"]["signing_policy"],
++            backend=pillar["args"].get("backend"),
++            backend_args=pillar["args"].get("backend_args"),
++            private_key_managed=pillar["args"].get("private_key_managed"),
++            private_key=pillar["args"].get("private_key"),
++            private_key_passphrase=pillar["args"].get("private_key_passphrase"),
++            public_key=pillar["args"].get("public_key"),
++            certificate_managed=pillar["args"].get("certificate_managed"),
++            test=opts.get("test"),
++            mode="0400"
++        ) | yaml(false)
++    }}
++    """
++    with sshpki_salt_master.state_tree.base.temp_file(
++        "cert_file_args.sls", state_contents
++    ):
++        yield
++
++
++@pytest.mark.usefixtures("_check_bcrypt", "cm_file_args")
++def test_certificate_managed_remote_file_managed_kwargs(
++    ssh_salt_ssh_cli, cert_args, ca_key, rsa_privkey
++):
++    ret = ssh_salt_ssh_cli.run(
++        "state.apply", "cert_file_args", pillar={"args": cert_args}
++    )
++    assert ret.returncode == 0
++    cert = _get_cert(cert_args["name"])
++    assert cert.key_id == b"from_signing_policy"
++    assert _signed_by(cert, ca_key)
++    assert _belongs_to(cert, rsa_privkey)
++    ret = ssh_salt_ssh_cli.run("file.get_mode", cert_args["name"])
++    assert ret.returncode == 0
++    assert ret.data == "0400"
++
++
+ @pytest.mark.usefixtures("_check_bcrypt")
+ def test_certificate_managed_remote_with_privkey_managed(
+     ssh_salt_ssh_cli, cert_args, tmp_path, ca_key
+diff --git a/tests/pytests/unit/utils/test_sshpki.py b/tests/pytests/unit/utils/test_sshpki.py
+index 03f2f51bcf..a35d345782 100644
+--- a/tests/pytests/unit/utils/test_sshpki.py
++++ b/tests/pytests/unit/utils/test_sshpki.py
+@@ -1,7 +1,12 @@
++from datetime import datetime, timedelta
++
+ import pytest
+ 
++from tests.support.mock import patch
++
+ try:
+     import salt.utils.sshpki as ssh
++    from salt.utils.x509 import TIME_FMT
+ 
+     HAS_LIBS = True
+ except ImportError:
+@@ -13,6 +18,18 @@ pytestmark = [
+ ]
+ 
+ 
++class DateTimeMock(datetime):
++    @classmethod
++    def now(cls, tz=None):
++        return cls.strptime("2026-03-20 13:37:42", TIME_FMT)
++
++
++@pytest.fixture(autouse=True)
++def time_stopped():
++    with patch("salt.utils.sshpki.datetime", new=DateTimeMock) as mocked_dt:
++        yield mocked_dt.now()
++
++
+ @pytest.mark.parametrize(
+     "policy,kwargs,expected",
+     [
+@@ -168,11 +185,78 @@ pytestmark = [
+         ({"max_ttl": "1h", "ttl": "30m"}, {}, {"ttl": 1800}),
+         ({"max_ttl": "1h", "ttl": "30m"}, {"ttl": "2h"}, {"ttl": 3600}),
+         ({"max_ttl": "1h", "ttl": "30m"}, {"ttl": "1m"}, {"ttl": 60}),
++        (
++            {},
++            {"not_before": "2026-03-13 13:37:42", "not_after": "2027-03-20 13:37:41"},
++            {"not_before": "2026-03-13 13:37:42", "not_after": "2027-03-20 13:37:41"},
++        ),
++        (
++            {"ttl": "1h"},
++            {"not_before": "2026-03-13 13:37:42", "not_after": "2027-03-13 13:37:41"},
++            {
++                "not_before": "2026-03-13 13:37:42",
++                "not_after": "2026-03-13 14:37:42",
++                "ttl": 3600,
++            },
++        ),
++        (
++            {"max_ttl": "1h"},
++            {"not_before": "2026-03-13 13:37:42", "not_after": "2027-03-13 13:37:41"},
++            {
++                "not_before": "2026-03-13 13:37:42",
++                "not_after": "2026-03-13 14:37:42",
++                "ttl": 3600,
++            },
++        ),
++        (
++            {"ttl": "30m", "max_ttl": "1h"},
++            {"not_before": "2026-03-13 13:37:42", "not_after": "2027-03-13 13:37:41"},
++            {
++                "not_before": "2026-03-13 13:37:42",
++                "not_after": "2026-03-13 14:37:42",
++                "ttl": 3600,
++            },
++        ),
++        (
++            {"max_ttl": "1h"},
++            {"not_before": "2026-03-13 13:37:42", "not_after": "2026-03-13 14:22:00"},
++            {
++                "not_before": "2026-03-13 13:37:42",
++                "not_after": "2026-03-13 14:22:00",
++                "ttl": 2658,
++            },
++        ),
++        (
++            {"max_ttl": "1h"},
++            {"not_before": "2025-03-13 13:37:42"},
++            {
++                "not_before": "2025-03-13 13:37:42",
++                "not_after": "2025-03-13 14:37:42",
++                "ttl": 3600,
++            },
++        ),
++        (
++            {"max_ttl": "1h"},
++            {"not_after": "2027-03-20 13:37:42"},
++            {
++                "not_before": "2026-03-20 13:37:42",
++                "not_after": "2026-03-20 14:37:42",
++                "ttl": 3600,
++            },
++        ),
+     ],
+ )
+-def test_merge_signing_policy(policy, kwargs, expected):
+-    assert {
++def test_merge_signing_policy(policy, kwargs, expected, time_stopped):
++    res = {
+         k: v
+-        for k, v in ssh.merge_signing_policy(policy, kwargs).items()
++        for k, v in ssh.merge_signing_policy(policy, kwargs.copy()).items()
+         if v is not None
+-    } == expected
++    }
++    if "ttl" in policy or "max_ttl" in policy or "ttl" in kwargs:
++        expected["not_before"] = expected.get("not_before") or datetime.strftime(
++            time_stopped, TIME_FMT
++        )
++        expected["not_after"] = expected.get("not_after") or datetime.strftime(
++            time_stopped + timedelta(seconds=expected["ttl"]), TIME_FMT
++        )
++    assert res == expected

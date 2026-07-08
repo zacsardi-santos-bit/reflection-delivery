@@ -1,0 +1,1454 @@
+diff --git a/cockroachdb/tests/common.py b/cockroachdb/tests/common.py
+index f306bd25f2..e21980f85d 100644
+--- a/cockroachdb/tests/common.py
++++ b/cockroachdb/tests/common.py
+@@ -418,6 +418,15 @@ CHANGEFEED_METRICS = {
+     'jobs.changefeed.currently_paused',
+     'jobs.changefeed.protected_age_sec',
+     'jobs.changefeed.resume.retry.error.count',
++    'jobs.changefeed.currently_idle',
++    'jobs.changefeed.currently_running',
++    'jobs.changefeed.expired_pts_records.count',
++    'jobs.changefeed.fail_or_cancel_completed.count',
++    'jobs.changefeed.fail_or_cancel_failed.count',
++    'jobs.changefeed.fail_or_cancel_retry_error.count',
++    'jobs.changefeed.protected_record_count',
++    'jobs.changefeed.resume_completed.count',
++    'jobs.changefeed.resume_failed.count',
+ }
+ 
+ ADMISSION_METRICS = {
+@@ -675,6 +684,307 @@ DISTSENDER_METRICS = {
+     'distsender.rpc.writebatch.sent.count',
+ }
+ 
++JOBS_METRICS = {
++    "jobs.adopt_iterations.count",
++    "jobs.auto.create.stats.currently_paused",
++    "jobs.auto.create.stats.currently_running",
++    "jobs.auto.create.stats.resume_failed.count",
++    "jobs.auto_config_env_runner.currently_idle",
++    "jobs.auto_config_env_runner.currently_paused",
++    "jobs.auto_config_env_runner.currently_running",
++    "jobs.auto_config_env_runner.expired_pts_records.count",
++    "jobs.auto_config_env_runner.fail_or_cancel_completed.count",
++    "jobs.auto_config_env_runner.fail_or_cancel_failed.count",
++    "jobs.auto_config_env_runner.fail_or_cancel_retry_error.count",
++    "jobs.auto_config_env_runner.protected_age_sec",
++    "jobs.auto_config_env_runner.protected_record_count",
++    "jobs.auto_config_env_runner.resume_completed.count",
++    "jobs.auto_config_env_runner.resume_failed.count",
++    "jobs.auto_config_env_runner.resume_retry_error.count",
++    "jobs.auto_config_runner.currently_idle",
++    "jobs.auto_config_runner.currently_paused",
++    "jobs.auto_config_runner.currently_running",
++    "jobs.auto_config_runner.expired_pts_records.count",
++    "jobs.auto_config_runner.fail_or_cancel_completed.count",
++    "jobs.auto_config_runner.fail_or_cancel_failed.count",
++    "jobs.auto_config_runner.fail_or_cancel_retry_error.count",
++    "jobs.auto_config_runner.protected_age_sec",
++    "jobs.auto_config_runner.protected_record_count",
++    "jobs.auto_config_runner.resume_completed.count",
++    "jobs.auto_config_runner.resume_failed.count",
++    "jobs.auto_config_runner.resume_retry_error.count",
++    "jobs.auto_config_task.currently_idle",
++    "jobs.auto_config_task.currently_paused",
++    "jobs.auto_config_task.currently_running",
++    "jobs.auto_config_task.expired_pts_records.count",
++    "jobs.auto_config_task.fail_or_cancel_completed.count",
++    "jobs.auto_config_task.fail_or_cancel_failed.count",
++    "jobs.auto_config_task.fail_or_cancel_retry_error.count",
++    "jobs.auto_config_task.protected_age_sec",
++    "jobs.auto_config_task.protected_record_count",
++    "jobs.auto_config_task.resume_completed.count",
++    "jobs.auto_config_task.resume_failed.count",
++    "jobs.auto_config_task.resume_retry_error.count",
++    "jobs.auto_create_stats.currently_idle",
++    "jobs.auto_create_stats.expired_pts_records.count",
++    "jobs.auto_create_stats.fail_or_cancel_completed.count",
++    "jobs.auto_create_stats.fail_or_cancel_failed.count",
++    "jobs.auto_create_stats.fail_or_cancel_retry_error.count",
++    "jobs.auto_create_stats.protected_age_sec",
++    "jobs.auto_create_stats.protected_record_count",
++    "jobs.auto_create_stats.resume_completed.count",
++    "jobs.auto_create_stats.resume_retry_error.count",
++    "jobs.auto_schema_telemetry.currently_idle",
++    "jobs.auto_schema_telemetry.currently_paused",
++    "jobs.auto_schema_telemetry.currently_running",
++    "jobs.auto_schema_telemetry.expired_pts_records.count",
++    "jobs.auto_schema_telemetry.fail_or_cancel_completed.count",
++    "jobs.auto_schema_telemetry.fail_or_cancel_failed.count",
++    "jobs.auto_schema_telemetry.fail_or_cancel_retry_error.count",
++    "jobs.auto_schema_telemetry.protected_age_sec",
++    "jobs.auto_schema_telemetry.protected_record_count",
++    "jobs.auto_schema_telemetry.resume_completed.count",
++    "jobs.auto_schema_telemetry.resume_failed.count",
++    "jobs.auto_schema_telemetry.resume_retry_error.count",
++    "jobs.auto_span_config_reconciliation.currently_idle",
++    "jobs.auto_span_config_reconciliation.currently_paused",
++    "jobs.auto_span_config_reconciliation.currently_running",
++    "jobs.auto_span_config_reconciliation.expired_pts_records.count",
++    "jobs.auto_span_config_reconciliation.fail_or_cancel_completed.count",
++    "jobs.auto_span_config_reconciliation.fail_or_cancel_failed.count",
++    "jobs.auto_span_config_reconciliation.fail_or_cancel_retry_error.count",
++    "jobs.auto_span_config_reconciliation.protected_age_sec",
++    "jobs.auto_span_config_reconciliation.protected_record_count",
++    "jobs.auto_span_config_reconciliation.resume_completed.count",
++    "jobs.auto_span_config_reconciliation.resume_failed.count",
++    "jobs.auto_span_config_reconciliation.resume_retry_error.count",
++    "jobs.auto_sql_stats_compaction.currently_idle",
++    "jobs.auto_sql_stats_compaction.currently_paused",
++    "jobs.auto_sql_stats_compaction.currently_running",
++    "jobs.auto_sql_stats_compaction.expired_pts_records.count",
++    "jobs.auto_sql_stats_compaction.fail_or_cancel_completed.count",
++    "jobs.auto_sql_stats_compaction.fail_or_cancel_failed.count",
++    "jobs.auto_sql_stats_compaction.fail_or_cancel_retry_error.count",
++    "jobs.auto_sql_stats_compaction.protected_age_sec",
++    "jobs.auto_sql_stats_compaction.protected_record_count",
++    "jobs.auto_sql_stats_compaction.resume_completed.count",
++    "jobs.auto_sql_stats_compaction.resume_failed.count",
++    "jobs.auto_sql_stats_compaction.resume_retry_error.count",
++    "jobs.auto_update_sql_activity.currently_idle",
++    "jobs.auto_update_sql_activity.currently_paused",
++    "jobs.auto_update_sql_activity.currently_running",
++    "jobs.auto_update_sql_activity.expired_pts_records.count",
++    "jobs.auto_update_sql_activity.fail_or_cancel_completed.count",
++    "jobs.auto_update_sql_activity.fail_or_cancel_failed.count",
++    "jobs.auto_update_sql_activity.fail_or_cancel_retry_error.count",
++    "jobs.auto_update_sql_activity.protected_age_sec",
++    "jobs.auto_update_sql_activity.protected_record_count",
++    "jobs.auto_update_sql_activity.resume_completed.count",
++    "jobs.auto_update_sql_activity.resume_failed.count",
++    "jobs.auto_update_sql_activity.resume_retry_error.count",
++    "jobs.backup.currently_idle",
++    "jobs.backup.currently_paused",
++    "jobs.backup.currently_running",
++    "jobs.backup.expired_pts_records.count",
++    "jobs.backup.fail_or_cancel_completed.count",
++    "jobs.backup.fail_or_cancel_failed.count",
++    "jobs.backup.fail_or_cancel_retry_error.count",
++    "jobs.backup.protected_age_sec",
++    "jobs.backup.protected_record_count",
++    "jobs.backup.resume_completed.count",
++    "jobs.backup.resume_failed.count",
++    "jobs.backup.resume_retry_error.count",
++    "jobs.changefeed.currently_idle",
++    "jobs.changefeed.currently_paused",
++    "jobs.changefeed.currently_running",
++    "jobs.changefeed.expired_pts_records.count",
++    "jobs.changefeed.fail_or_cancel_completed.count",
++    "jobs.changefeed.fail_or_cancel_failed.count",
++    "jobs.changefeed.fail_or_cancel_retry_error.count",
++    "jobs.changefeed.protected_age_sec",
++    "jobs.changefeed.protected_record_count",
++    "jobs.changefeed.resume.retry.error.count",
++    "jobs.changefeed.resume_completed.count",
++    "jobs.changefeed.resume_failed.count",
++    "jobs.claimed_jobs.count",
++    "jobs.create.stats.currently_running",
++    "jobs.create_stats.currently_idle",
++    "jobs.create_stats.currently_paused",
++    "jobs.create_stats.expired_pts_records.count",
++    "jobs.create_stats.fail_or_cancel_completed.count",
++    "jobs.create_stats.fail_or_cancel_failed.count",
++    "jobs.create_stats.fail_or_cancel_retry_error.count",
++    "jobs.create_stats.protected_age_sec",
++    "jobs.create_stats.protected_record_count",
++    "jobs.create_stats.resume_completed.count",
++    "jobs.create_stats.resume_failed.count",
++    "jobs.create_stats.resume_retry_error.count",
++    "jobs.import.currently_idle",
++    "jobs.import.currently_paused",
++    "jobs.import.currently_running",
++    "jobs.import.expired_pts_records.count",
++    "jobs.import.fail_or_cancel_completed.count",
++    "jobs.import.fail_or_cancel_failed.count",
++    "jobs.import.fail_or_cancel_retry_error.count",
++    "jobs.import.protected_age_sec",
++    "jobs.import.protected_record_count",
++    "jobs.import.resume_completed.count",
++    "jobs.import.resume_failed.count",
++    "jobs.import.resume_retry_error.count",
++    "jobs.key_visualizer.currently_idle",
++    "jobs.key_visualizer.currently_paused",
++    "jobs.key_visualizer.currently_running",
++    "jobs.key_visualizer.expired_pts_records.count",
++    "jobs.key_visualizer.fail_or_cancel_completed.count",
++    "jobs.key_visualizer.fail_or_cancel_failed.count",
++    "jobs.key_visualizer.fail_or_cancel_retry_error.count",
++    "jobs.key_visualizer.protected_age_sec",
++    "jobs.key_visualizer.protected_record_count",
++    "jobs.key_visualizer.resume_completed.count",
++    "jobs.key_visualizer.resume_failed.count",
++    "jobs.key_visualizer.resume_retry_error.count",
++    "jobs.metrics.task_failed.count",
++    "jobs.migration.currently_idle",
++    "jobs.migration.currently_paused",
++    "jobs.migration.currently_running",
++    "jobs.migration.expired_pts_records.count",
++    "jobs.migration.fail_or_cancel_completed.count",
++    "jobs.migration.fail_or_cancel_failed.count",
++    "jobs.migration.fail_or_cancel_retry_error.count",
++    "jobs.migration.protected_age_sec",
++    "jobs.migration.protected_record_count",
++    "jobs.migration.resume_completed.count",
++    "jobs.migration.resume_failed.count",
++    "jobs.migration.resume_retry_error.count",
++    "jobs.mvcc_statistics_update.currently_idle",
++    "jobs.mvcc_statistics_update.currently_paused",
++    "jobs.mvcc_statistics_update.currently_running",
++    "jobs.mvcc_statistics_update.expired_pts_records.count",
++    "jobs.mvcc_statistics_update.fail_or_cancel_completed.count",
++    "jobs.mvcc_statistics_update.fail_or_cancel_failed.count",
++    "jobs.mvcc_statistics_update.fail_or_cancel_retry_error.count",
++    "jobs.mvcc_statistics_update.protected_age_sec",
++    "jobs.mvcc_statistics_update.protected_record_count",
++    "jobs.mvcc_statistics_update.resume_completed.count",
++    "jobs.mvcc_statistics_update.resume_failed.count",
++    "jobs.mvcc_statistics_update.resume_retry_error.count",
++    "jobs.new_schema_change.currently_idle",
++    "jobs.new_schema_change.currently_paused",
++    "jobs.new_schema_change.currently_running",
++    "jobs.new_schema_change.expired_pts_records.count",
++    "jobs.new_schema_change.fail_or_cancel_completed.count",
++    "jobs.new_schema_change.fail_or_cancel_failed.count",
++    "jobs.new_schema_change.fail_or_cancel_retry_error.count",
++    "jobs.new_schema_change.protected_age_sec",
++    "jobs.new_schema_change.protected_record_count",
++    "jobs.new_schema_change.resume_completed.count",
++    "jobs.new_schema_change.resume_failed.count",
++    "jobs.new_schema_change.resume_retry_error.count",
++    "jobs.poll_jobs_stats.currently_idle",
++    "jobs.poll_jobs_stats.currently_paused",
++    "jobs.poll_jobs_stats.currently_running",
++    "jobs.poll_jobs_stats.expired_pts_records.count",
++    "jobs.poll_jobs_stats.fail_or_cancel_completed.count",
++    "jobs.poll_jobs_stats.fail_or_cancel_failed.count",
++    "jobs.poll_jobs_stats.fail_or_cancel_retry_error.count",
++    "jobs.poll_jobs_stats.protected_age_sec",
++    "jobs.poll_jobs_stats.protected_record_count",
++    "jobs.poll_jobs_stats.resume_completed.count",
++    "jobs.poll_jobs_stats.resume_failed.count",
++    "jobs.poll_jobs_stats.resume_retry_error.count",
++    "jobs.replication_stream_ingestion.currently_idle",
++    "jobs.replication_stream_ingestion.currently_paused",
++    "jobs.replication_stream_ingestion.currently_running",
++    "jobs.replication_stream_ingestion.expired_pts_records.count",
++    "jobs.replication_stream_ingestion.fail_or_cancel_completed.count",
++    "jobs.replication_stream_ingestion.fail_or_cancel_failed.count",
++    "jobs.replication_stream_ingestion.fail_or_cancel_retry_error.count",
++    "jobs.replication_stream_ingestion.protected_age_sec",
++    "jobs.replication_stream_ingestion.protected_record_count",
++    "jobs.replication_stream_ingestion.resume_completed.count",
++    "jobs.replication_stream_ingestion.resume_failed.count",
++    "jobs.replication_stream_ingestion.resume_retry_error.count",
++    "jobs.replication_stream_producer.currently_idle",
++    "jobs.replication_stream_producer.currently_paused",
++    "jobs.replication_stream_producer.currently_running",
++    "jobs.replication_stream_producer.expired_pts_records.count",
++    "jobs.replication_stream_producer.fail_or_cancel_completed.count",
++    "jobs.replication_stream_producer.fail_or_cancel_failed.count",
++    "jobs.replication_stream_producer.fail_or_cancel_retry_error.count",
++    "jobs.replication_stream_producer.protected_age_sec",
++    "jobs.replication_stream_producer.protected_record_count",
++    "jobs.replication_stream_producer.resume_completed.count",
++    "jobs.replication_stream_producer.resume_failed.count",
++    "jobs.replication_stream_producer.resume_retry_error.count",
++    "jobs.restore.currently_idle",
++    "jobs.restore.currently_paused",
++    "jobs.restore.currently_running",
++    "jobs.restore.expired_pts_records.count",
++    "jobs.restore.fail_or_cancel_completed.count",
++    "jobs.restore.fail_or_cancel_failed.count",
++    "jobs.restore.fail_or_cancel_retry_error.count",
++    "jobs.restore.protected_age_sec",
++    "jobs.restore.protected_record_count",
++    "jobs.restore.resume_completed.count",
++    "jobs.restore.resume_failed.count",
++    "jobs.restore.resume_retry_error.count",
++    "jobs.resumed_claimed_jobs.count",
++    "jobs.row.level.ttl.currently_paused",
++    "jobs.row.level.ttl.currently_running",
++    "jobs.row.level.ttl.resume_completed.count",
++    "jobs.row.level.ttl.resume_failed.count",
++    "jobs.row.level.ttl.rows_deleted.count",
++    "jobs.row.level.ttl.rows_selected.count",
++    "jobs.row_level_ttl.currently_idle",
++    "jobs.row_level_ttl.expired_pts_records.count",
++    "jobs.row_level_ttl.fail_or_cancel_completed.count",
++    "jobs.row_level_ttl.fail_or_cancel_failed.count",
++    "jobs.row_level_ttl.fail_or_cancel_retry_error.count",
++    "jobs.row_level_ttl.num_active_spans",
++    "jobs.row_level_ttl.protected_age_sec",
++    "jobs.row_level_ttl.protected_record_count",
++    "jobs.row_level_ttl.resume_retry_error.count",
++    "jobs.row_level_ttl.total_expired_rows",
++    "jobs.row_level_ttl.total_rows",
++    "jobs.running_non_idle",
++    "jobs.schema_change.currently_idle",
++    "jobs.schema_change.currently_paused",
++    "jobs.schema_change.currently_running",
++    "jobs.schema_change.expired_pts_records.count",
++    "jobs.schema_change.fail_or_cancel_completed.count",
++    "jobs.schema_change.fail_or_cancel_failed.count",
++    "jobs.schema_change.fail_or_cancel_retry_error.count",
++    "jobs.schema_change.protected_age_sec",
++    "jobs.schema_change.protected_record_count",
++    "jobs.schema_change.resume_completed.count",
++    "jobs.schema_change.resume_failed.count",
++    "jobs.schema_change.resume_retry_error.count",
++    "jobs.schema_change_gc.currently_idle",
++    "jobs.schema_change_gc.currently_paused",
++    "jobs.schema_change_gc.currently_running",
++    "jobs.schema_change_gc.expired_pts_records.count",
++    "jobs.schema_change_gc.fail_or_cancel_completed.count",
++    "jobs.schema_change_gc.fail_or_cancel_failed.count",
++    "jobs.schema_change_gc.fail_or_cancel_retry_error.count",
++    "jobs.schema_change_gc.protected_age_sec",
++    "jobs.schema_change_gc.protected_record_count",
++    "jobs.schema_change_gc.resume_completed.count",
++    "jobs.schema_change_gc.resume_failed.count",
++    "jobs.schema_change_gc.resume_retry_error.count",
++    "jobs.typedesc_schema_change.currently_idle",
++    "jobs.typedesc_schema_change.currently_paused",
++    "jobs.typedesc_schema_change.currently_running",
++    "jobs.typedesc_schema_change.expired_pts_records.count",
++    "jobs.typedesc_schema_change.fail_or_cancel_completed.count",
++    "jobs.typedesc_schema_change.fail_or_cancel_failed.count",
++    "jobs.typedesc_schema_change.fail_or_cancel_retry_error.count",
++    "jobs.typedesc_schema_change.protected_age_sec",
++    "jobs.typedesc_schema_change.protected_record_count",
++    "jobs.typedesc_schema_change.resume_completed.count",
++    "jobs.typedesc_schema_change.resume_failed.count",
++    "jobs.typedesc_schema_change.resume_retry_error.count",
++}
++
+ 
+ def assert_metrics(aggregator):
+     metadata_metrics = get_metadata_metrics()
+diff --git a/cockroachdb/tests/fixtures/jobs_metrics.txt b/cockroachdb/tests/fixtures/jobs_metrics.txt
+new file mode 100644
+index 0000000000..d0de7b719d
+--- /dev/null
++++ b/cockroachdb/tests/fixtures/jobs_metrics.txt
+@@ -0,0 +1,1092 @@
++# HELP jobs_auto_update_sql_activity_resume_failed Number of auto_update_sql_activity jobs which failed with a non-retriable error
++# TYPE jobs_auto_update_sql_activity_resume_failed counter
++jobs_auto_update_sql_activity_resume_failed{node_id="1"} 0
++# HELP jobs_key_visualizer_fail_or_cancel_retry_error Number of key_visualizer jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_key_visualizer_fail_or_cancel_retry_error counter
++jobs_key_visualizer_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_changefeed_protected_age_sec The age of the oldest PTS record protected by changefeed jobs
++# TYPE jobs_changefeed_protected_age_sec gauge
++jobs_changefeed_protected_age_sec{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_resume_completed Number of auto_span_config_reconciliation jobs which successfully resumed to completion
++# TYPE jobs_auto_span_config_reconciliation_resume_completed counter
++jobs_auto_span_config_reconciliation_resume_completed{node_id="1"} 0
++# HELP jobs_changefeed_protected_record_count Number of protected timestamp records held by changefeed jobs
++# TYPE jobs_changefeed_protected_record_count gauge
++jobs_changefeed_protected_record_count{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_protected_age_sec The age of the oldest PTS record protected by auto_sql_stats_compaction jobs
++# TYPE jobs_auto_sql_stats_compaction_protected_age_sec gauge
++jobs_auto_sql_stats_compaction_protected_age_sec{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_protected_record_count Number of protected timestamp records held by auto_schema_telemetry jobs
++# TYPE jobs_auto_schema_telemetry_protected_record_count gauge
++jobs_auto_schema_telemetry_protected_record_count{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_resume_completed Number of typedesc_schema_change jobs which successfully resumed to completion
++# TYPE jobs_typedesc_schema_change_resume_completed counter
++jobs_typedesc_schema_change_resume_completed{node_id="1"} 0
++# HELP jobs_schema_change_resume_completed Number of schema_change jobs which successfully resumed to completion
++# TYPE jobs_schema_change_resume_completed counter
++jobs_schema_change_resume_completed{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_fail_or_cancel_retry_error Number of replication_stream_ingestion jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_replication_stream_ingestion_fail_or_cancel_retry_error counter
++jobs_replication_stream_ingestion_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_config_task_protected_record_count Number of protected timestamp records held by auto_config_task jobs
++# TYPE jobs_auto_config_task_protected_record_count gauge
++jobs_auto_config_task_protected_record_count{node_id="1"} 0
++# HELP jobs_schema_change_gc_resume_retry_error Number of schema_change_gc jobs which failed with a retriable error
++# TYPE jobs_schema_change_gc_resume_retry_error counter
++jobs_schema_change_gc_resume_retry_error{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_fail_or_cancel_failed Number of auto_config_env_runner jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_config_env_runner_fail_or_cancel_failed counter
++jobs_auto_config_env_runner_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_replication_stream_producer_protected_age_sec The age of the oldest PTS record protected by replication_stream_producer jobs
++# TYPE jobs_replication_stream_producer_protected_age_sec gauge
++jobs_replication_stream_producer_protected_age_sec{node_id="1"} 0
++# HELP jobs_backup_currently_running Number of backup jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_backup_currently_running gauge
++jobs_backup_currently_running{node_id="1"} 0
++# HELP jobs_new_schema_change_expired_pts_records Number of expired protected timestamp records owned by new_schema_change jobs
++# TYPE jobs_new_schema_change_expired_pts_records counter
++jobs_new_schema_change_expired_pts_records{node_id="1"} 0
++# HELP jobs_claimed_jobs number of jobs claimed in job-adopt iterations
++# TYPE jobs_claimed_jobs counter
++jobs_claimed_jobs{node_id="1"} 4
++# HELP jobs_changefeed_expired_pts_records Number of expired protected timestamp records owned by changefeed jobs
++# TYPE jobs_changefeed_expired_pts_records counter
++jobs_changefeed_expired_pts_records{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_protected_record_count Number of protected timestamp records held by auto_sql_stats_compaction jobs
++# TYPE jobs_auto_sql_stats_compaction_protected_record_count gauge
++jobs_auto_sql_stats_compaction_protected_record_count{node_id="1"} 0
++# HELP jobs_auto_create_stats_fail_or_cancel_retry_error Number of auto_create_stats jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_create_stats_fail_or_cancel_retry_error counter
++jobs_auto_create_stats_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_currently_paused Number of replication_stream_ingestion jobs currently considered Paused
++# TYPE jobs_replication_stream_ingestion_currently_paused gauge
++jobs_replication_stream_ingestion_currently_paused{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_resume_failed Number of auto_sql_stats_compaction jobs which failed with a non-retriable error
++# TYPE jobs_auto_sql_stats_compaction_resume_failed counter
++jobs_auto_sql_stats_compaction_resume_failed{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_protected_record_count Number of protected timestamp records held by typedesc_schema_change jobs
++# TYPE jobs_typedesc_schema_change_protected_record_count gauge
++jobs_typedesc_schema_change_protected_record_count{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_resume_retry_error Number of auto_config_env_runner jobs which failed with a retriable error
++# TYPE jobs_auto_config_env_runner_resume_retry_error counter
++jobs_auto_config_env_runner_resume_retry_error{node_id="1"} 0
++# HELP jobs_backup_protected_age_sec The age of the oldest PTS record protected by backup jobs
++# TYPE jobs_backup_protected_age_sec gauge
++jobs_backup_protected_age_sec{node_id="1"} 0
++# HELP jobs_row_level_ttl_currently_idle Number of row_level_ttl jobs currently considered Idle and can be freely shut down
++# TYPE jobs_row_level_ttl_currently_idle gauge
++jobs_row_level_ttl_currently_idle{node_id="1"} 0
++# HELP jobs_auto_create_stats_currently_idle Number of auto_create_stats jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_create_stats_currently_idle gauge
++jobs_auto_create_stats_currently_idle{node_id="1"} 0
++# HELP jobs_auto_config_runner_fail_or_cancel_retry_error Number of auto_config_runner jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_config_runner_fail_or_cancel_retry_error counter
++jobs_auto_config_runner_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_key_visualizer_resume_failed Number of key_visualizer jobs which failed with a non-retriable error
++# TYPE jobs_key_visualizer_resume_failed counter
++jobs_key_visualizer_resume_failed{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_fail_or_cancel_retry_error Number of auto_schema_telemetry jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_schema_telemetry_fail_or_cancel_retry_error counter
++jobs_auto_schema_telemetry_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_key_visualizer_protected_record_count Number of protected timestamp records held by key_visualizer jobs
++# TYPE jobs_key_visualizer_protected_record_count gauge
++jobs_key_visualizer_protected_record_count{node_id="1"} 0
++# HELP jobs_schema_change_protected_record_count Number of protected timestamp records held by schema_change jobs
++# TYPE jobs_schema_change_protected_record_count gauge
++jobs_schema_change_protected_record_count{node_id="1"} 0
++# HELP jobs_restore_currently_paused Number of restore jobs currently considered Paused
++# TYPE jobs_restore_currently_paused gauge
++jobs_restore_currently_paused{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_currently_running Number of poll_jobs_stats jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_poll_jobs_stats_currently_running gauge
++jobs_poll_jobs_stats_currently_running{node_id="1"} 1
++# HELP jobs_schema_change_gc_fail_or_cancel_retry_error Number of schema_change_gc jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_schema_change_gc_fail_or_cancel_retry_error counter
++jobs_schema_change_gc_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_resume_completed Number of auto_update_sql_activity jobs which successfully resumed to completion
++# TYPE jobs_auto_update_sql_activity_resume_completed counter
++jobs_auto_update_sql_activity_resume_completed{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_protected_age_sec The age of the oldest PTS record protected by mvcc_statistics_update jobs
++# TYPE jobs_mvcc_statistics_update_protected_age_sec gauge
++jobs_mvcc_statistics_update_protected_age_sec{node_id="1"} 0
++# HELP jobs_changefeed_currently_paused Number of changefeed jobs currently considered Paused
++# TYPE jobs_changefeed_currently_paused gauge
++jobs_changefeed_currently_paused{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_resume_completed Number of auto_schema_telemetry jobs which successfully resumed to completion
++# TYPE jobs_auto_schema_telemetry_resume_completed counter
++jobs_auto_schema_telemetry_resume_completed{node_id="1"} 0
++# HELP jobs_create_stats_currently_running Number of create_stats jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_create_stats_currently_running gauge
++jobs_create_stats_currently_running{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_currently_running Number of auto_span_config_reconciliation jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_span_config_reconciliation_currently_running gauge
++jobs_auto_span_config_reconciliation_currently_running{node_id="1"} 1
++# HELP jobs_key_visualizer_fail_or_cancel_completed Number of key_visualizer jobs which successfully completed their failure or cancelation process
++# TYPE jobs_key_visualizer_fail_or_cancel_completed counter
++jobs_key_visualizer_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_row_level_ttl_delete_duration Duration for delete requests during row level TTL.
++# TYPE jobs_row_level_ttl_delete_duration histogram
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="5e+08"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="5.572592853587432e+08"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="6.210758222370743e+08"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="6.922005377068515e+08"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="7.714703539349157e+08"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="8.598180362184556e+08"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="9.582831688033088e+08"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.0680243876372875e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.1903330140009282e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.326648249442152e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.4785741108131227e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.6478983046833196e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.8366132632234223e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.046939589088547e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.2813521851760063e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.5426093767255764e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.833785368441068e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="3.1583064185550647e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="3.5199911554958534e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="3.9230955115614314e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="4.372362802333632e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="4.873079541115184e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="5.431137645156319e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="6.053103765649553e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="6.746296557296375e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="7.518872796674253e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="8.37992336275598e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="9.339580208980864e+09"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.0409135585614676e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.1601174915283792e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.2929724885225649e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.4410418498852003e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.6060679028781363e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.789992503590971e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.9949798866972237e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.2234421319319225e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.478067546953807e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.7618523005723442e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="3.0781356785666904e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="3.4306393769506477e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="3.823511295046164e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="4.261374343677016e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="4.749380842807073e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="5.2932731487183495e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="5.899451224126824e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="6.575047946331352e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="7.328013039544164e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="8.167206619031862e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="9.102503447797786e+10"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.0144909132590578e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.1306689626513626e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.2601515562088194e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.4044623113132697e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.5652993278314426e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.7445551695997415e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="1.9443391341601053e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.167002072794196e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.415164052912417e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="2.691745188300199e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="3.0000000000000085e+11"} 0
++jobs_row_level_ttl_delete_duration_bucket{node_id="1",le="+Inf"} 0
++jobs_row_level_ttl_delete_duration_sum{node_id="1"} 0
++jobs_row_level_ttl_delete_duration_count{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_expired_pts_records Number of expired protected timestamp records owned by auto_span_config_reconciliation jobs
++# TYPE jobs_auto_span_config_reconciliation_expired_pts_records counter
++jobs_auto_span_config_reconciliation_expired_pts_records{node_id="1"} 0
++# HELP jobs_key_visualizer_fail_or_cancel_failed Number of key_visualizer jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_key_visualizer_fail_or_cancel_failed counter
++jobs_key_visualizer_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_protected_age_sec The age of the oldest PTS record protected by typedesc_schema_change jobs
++# TYPE jobs_typedesc_schema_change_protected_age_sec gauge
++jobs_typedesc_schema_change_protected_age_sec{node_id="1"} 0
++# HELP jobs_create_stats_resume_failed Number of create_stats jobs which failed with a non-retriable error
++# TYPE jobs_create_stats_resume_failed counter
++jobs_create_stats_resume_failed{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_currently_paused Number of typedesc_schema_change jobs currently considered Paused
++# TYPE jobs_typedesc_schema_change_currently_paused gauge
++jobs_typedesc_schema_change_currently_paused{node_id="1"} 0
++# HELP jobs_key_visualizer_expired_pts_records Number of expired protected timestamp records owned by key_visualizer jobs
++# TYPE jobs_key_visualizer_expired_pts_records counter
++jobs_key_visualizer_expired_pts_records{node_id="1"} 0
++# HELP jobs_auto_config_task_fail_or_cancel_retry_error Number of auto_config_task jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_config_task_fail_or_cancel_retry_error counter
++jobs_auto_config_task_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_config_task_resume_retry_error Number of auto_config_task jobs which failed with a retriable error
++# TYPE jobs_auto_config_task_resume_retry_error counter
++jobs_auto_config_task_resume_retry_error{node_id="1"} 0
++# HELP jobs_replication_stream_producer_protected_record_count Number of protected timestamp records held by replication_stream_producer jobs
++# TYPE jobs_replication_stream_producer_protected_record_count gauge
++jobs_replication_stream_producer_protected_record_count{node_id="1"} 0
++# HELP jobs_row_level_ttl_num_active_spans Number of active spans the TTL job is deleting from.
++# TYPE jobs_row_level_ttl_num_active_spans gauge
++jobs_row_level_ttl_num_active_spans{node_id="1"} 0
++# HELP jobs_adopt_iterations number of job-adopt iterations performed by the registry
++# TYPE jobs_adopt_iterations counter
++jobs_adopt_iterations{node_id="1"} 8
++# HELP jobs_mvcc_statistics_update_currently_paused Number of mvcc_statistics_update jobs currently considered Paused
++# TYPE jobs_mvcc_statistics_update_currently_paused gauge
++jobs_mvcc_statistics_update_currently_paused{node_id="1"} 0
++# HELP jobs_auto_config_runner_fail_or_cancel_completed Number of auto_config_runner jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_config_runner_fail_or_cancel_completed counter
++jobs_auto_config_runner_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_schema_change_fail_or_cancel_completed Number of schema_change jobs which successfully completed their failure or cancelation process
++# TYPE jobs_schema_change_fail_or_cancel_completed counter
++jobs_schema_change_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_protected_age_sec The age of the oldest PTS record protected by auto_span_config_reconciliation jobs
++# TYPE jobs_auto_span_config_reconciliation_protected_age_sec gauge
++jobs_auto_span_config_reconciliation_protected_age_sec{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_expired_pts_records Number of expired protected timestamp records owned by auto_schema_telemetry jobs
++# TYPE jobs_auto_schema_telemetry_expired_pts_records counter
++jobs_auto_schema_telemetry_expired_pts_records{node_id="1"} 0
++# HELP jobs_replication_stream_producer_currently_paused Number of replication_stream_producer jobs currently considered Paused
++# TYPE jobs_replication_stream_producer_currently_paused gauge
++jobs_replication_stream_producer_currently_paused{node_id="1"} 0
++# HELP jobs_replication_stream_producer_currently_idle Number of replication_stream_producer jobs currently considered Idle and can be freely shut down
++# TYPE jobs_replication_stream_producer_currently_idle gauge
++jobs_replication_stream_producer_currently_idle{node_id="1"} 0
++# HELP jobs_row_level_ttl_select_duration Duration for select requests during row level TTL.
++# TYPE jobs_row_level_ttl_select_duration histogram
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="5e+08"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="5.572592853587432e+08"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="6.210758222370743e+08"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="6.922005377068515e+08"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="7.714703539349157e+08"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="8.598180362184556e+08"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="9.582831688033088e+08"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.0680243876372875e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.1903330140009282e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.326648249442152e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.4785741108131227e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.6478983046833196e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.8366132632234223e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.046939589088547e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.2813521851760063e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.5426093767255764e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.833785368441068e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="3.1583064185550647e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="3.5199911554958534e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="3.9230955115614314e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="4.372362802333632e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="4.873079541115184e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="5.431137645156319e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="6.053103765649553e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="6.746296557296375e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="7.518872796674253e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="8.37992336275598e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="9.339580208980864e+09"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.0409135585614676e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.1601174915283792e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.2929724885225649e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.4410418498852003e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.6060679028781363e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.789992503590971e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.9949798866972237e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.2234421319319225e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.478067546953807e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.7618523005723442e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="3.0781356785666904e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="3.4306393769506477e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="3.823511295046164e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="4.261374343677016e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="4.749380842807073e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="5.2932731487183495e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="5.899451224126824e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="6.575047946331352e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="7.328013039544164e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="8.167206619031862e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="9.102503447797786e+10"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.0144909132590578e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.1306689626513626e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.2601515562088194e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.4044623113132697e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.5652993278314426e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.7445551695997415e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="1.9443391341601053e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.167002072794196e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.415164052912417e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="2.691745188300199e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="3.0000000000000085e+11"} 0
++jobs_row_level_ttl_select_duration_bucket{node_id="1",le="+Inf"} 0
++jobs_row_level_ttl_select_duration_sum{node_id="1"} 0
++jobs_row_level_ttl_select_duration_count{node_id="1"} 0
++# HELP jobs_new_schema_change_currently_idle Number of new_schema_change jobs currently considered Idle and can be freely shut down
++# TYPE jobs_new_schema_change_currently_idle gauge
++jobs_new_schema_change_currently_idle{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_currently_idle Number of poll_jobs_stats jobs currently considered Idle and can be freely shut down
++# TYPE jobs_poll_jobs_stats_currently_idle gauge
++jobs_poll_jobs_stats_currently_idle{node_id="1"} 1
++# HELP schedules_round_jobs_started The number of jobs started
++# TYPE schedules_round_jobs_started gauge
++schedules_round_jobs_started{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_currently_idle Number of auto_schema_telemetry jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_schema_telemetry_currently_idle gauge
++jobs_auto_schema_telemetry_currently_idle{node_id="1"} 0
++# HELP jobs_new_schema_change_currently_running Number of new_schema_change jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_new_schema_change_currently_running gauge
++jobs_new_schema_change_currently_running{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_fail_or_cancel_completed Number of auto_span_config_reconciliation jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_span_config_reconciliation_fail_or_cancel_completed counter
++jobs_auto_span_config_reconciliation_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_config_task_currently_idle Number of auto_config_task jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_config_task_currently_idle gauge
++jobs_auto_config_task_currently_idle{node_id="1"} 0
++# HELP jobs_schema_change_fail_or_cancel_retry_error Number of schema_change jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_schema_change_fail_or_cancel_retry_error counter
++jobs_schema_change_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_row_level_ttl_fail_or_cancel_retry_error Number of row_level_ttl jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_row_level_ttl_fail_or_cancel_retry_error counter
++jobs_row_level_ttl_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_new_schema_change_currently_paused Number of new_schema_change jobs currently considered Paused
++# TYPE jobs_new_schema_change_currently_paused gauge
++jobs_new_schema_change_currently_paused{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_fail_or_cancel_failed Number of auto_schema_telemetry jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_schema_telemetry_fail_or_cancel_failed counter
++jobs_auto_schema_telemetry_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_protected_record_count Number of protected timestamp records held by auto_update_sql_activity jobs
++# TYPE jobs_auto_update_sql_activity_protected_record_count gauge
++jobs_auto_update_sql_activity_protected_record_count{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_resume_failed Number of poll_jobs_stats jobs which failed with a non-retriable error
++# TYPE jobs_poll_jobs_stats_resume_failed counter
++jobs_poll_jobs_stats_resume_failed{node_id="1"} 0
++# HELP jobs_auto_config_runner_resume_failed Number of auto_config_runner jobs which failed with a non-retriable error
++# TYPE jobs_auto_config_runner_resume_failed counter
++jobs_auto_config_runner_resume_failed{node_id="1"} 0
++# HELP jobs_restore_currently_running Number of restore jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_restore_currently_running gauge
++jobs_restore_currently_running{node_id="1"} 0
++# HELP jobs_import_fail_or_cancel_completed Number of import jobs which successfully completed their failure or cancelation process
++# TYPE jobs_import_fail_or_cancel_completed counter
++jobs_import_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_config_runner_currently_idle Number of auto_config_runner jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_config_runner_currently_idle gauge
++jobs_auto_config_runner_currently_idle{node_id="1"} 1
++# HELP jobs_schema_change_currently_running Number of schema_change jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_schema_change_currently_running gauge
++jobs_schema_change_currently_running{node_id="1"} 0
++# HELP jobs_backup_resume_completed Number of backup jobs which successfully resumed to completion
++# TYPE jobs_backup_resume_completed counter
++jobs_backup_resume_completed{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_resume_completed Number of replication_stream_ingestion jobs which successfully resumed to completion
++# TYPE jobs_replication_stream_ingestion_resume_completed counter
++jobs_replication_stream_ingestion_resume_completed{node_id="1"} 0
++# HELP jobs_schema_change_resume_retry_error Number of schema_change jobs which failed with a retriable error
++# TYPE jobs_schema_change_resume_retry_error counter
++jobs_schema_change_resume_retry_error{node_id="1"} 0
++# HELP jobs_replication_stream_producer_fail_or_cancel_failed Number of replication_stream_producer jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_replication_stream_producer_fail_or_cancel_failed counter
++jobs_replication_stream_producer_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_expired_pts_records Number of expired protected timestamp records owned by poll_jobs_stats jobs
++# TYPE jobs_poll_jobs_stats_expired_pts_records counter
++jobs_poll_jobs_stats_expired_pts_records{node_id="1"} 0
++# HELP jobs_backup_resume_retry_error Number of backup jobs which failed with a retriable error
++# TYPE jobs_backup_resume_retry_error counter
++jobs_backup_resume_retry_error{node_id="1"} 0
++# HELP jobs_backup_fail_or_cancel_retry_error Number of backup jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_backup_fail_or_cancel_retry_error counter
++jobs_backup_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_new_schema_change_resume_failed Number of new_schema_change jobs which failed with a non-retriable error
++# TYPE jobs_new_schema_change_resume_failed counter
++jobs_new_schema_change_resume_failed{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_expired_pts_records Number of expired protected timestamp records owned by auto_sql_stats_compaction jobs
++# TYPE jobs_auto_sql_stats_compaction_expired_pts_records counter
++jobs_auto_sql_stats_compaction_expired_pts_records{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_resume_failed Number of replication_stream_ingestion jobs which failed with a non-retriable error
++# TYPE jobs_replication_stream_ingestion_resume_failed counter
++jobs_replication_stream_ingestion_resume_failed{node_id="1"} 0
++# HELP jobs_restore_expired_pts_records Number of expired protected timestamp records owned by restore jobs
++# TYPE jobs_restore_expired_pts_records counter
++jobs_restore_expired_pts_records{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_resume_retry_error Number of typedesc_schema_change jobs which failed with a retriable error
++# TYPE jobs_typedesc_schema_change_resume_retry_error counter
++jobs_typedesc_schema_change_resume_retry_error{node_id="1"} 0
++# HELP jobs_import_fail_or_cancel_failed Number of import jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_import_fail_or_cancel_failed counter
++jobs_import_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_currently_running Number of replication_stream_ingestion jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_replication_stream_ingestion_currently_running gauge
++jobs_replication_stream_ingestion_currently_running{node_id="1"} 0
++# HELP jobs_import_resume_retry_error Number of import jobs which failed with a retriable error
++# TYPE jobs_import_resume_retry_error counter
++jobs_import_resume_retry_error{node_id="1"} 0
++# HELP jobs_create_stats_fail_or_cancel_completed Number of create_stats jobs which successfully completed their failure or cancelation process
++# TYPE jobs_create_stats_fail_or_cancel_completed counter
++jobs_create_stats_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_currently_idle Number of auto_span_config_reconciliation jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_span_config_reconciliation_currently_idle gauge
++jobs_auto_span_config_reconciliation_currently_idle{node_id="1"} 1
++# HELP jobs_auto_update_sql_activity_currently_idle Number of auto_update_sql_activity jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_update_sql_activity_currently_idle gauge
++jobs_auto_update_sql_activity_currently_idle{node_id="1"} 1
++# HELP jobs_restore_fail_or_cancel_failed Number of restore jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_restore_fail_or_cancel_failed counter
++jobs_restore_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_fail_or_cancel_completed Number of typedesc_schema_change jobs which successfully completed their failure or cancelation process
++# TYPE jobs_typedesc_schema_change_fail_or_cancel_completed counter
++jobs_typedesc_schema_change_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_new_schema_change_protected_age_sec The age of the oldest PTS record protected by new_schema_change jobs
++# TYPE jobs_new_schema_change_protected_age_sec gauge
++jobs_new_schema_change_protected_age_sec{node_id="1"} 0
++# HELP jobs_restore_fail_or_cancel_retry_error Number of restore jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_restore_fail_or_cancel_retry_error counter
++jobs_restore_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_schema_change_gc_fail_or_cancel_failed Number of schema_change_gc jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_schema_change_gc_fail_or_cancel_failed counter
++jobs_schema_change_gc_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_replication_stream_producer_fail_or_cancel_completed Number of replication_stream_producer jobs which successfully completed their failure or cancelation process
++# TYPE jobs_replication_stream_producer_fail_or_cancel_completed counter
++jobs_replication_stream_producer_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_row_level_ttl_fail_or_cancel_failed Number of row_level_ttl jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_row_level_ttl_fail_or_cancel_failed counter
++jobs_row_level_ttl_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_row_level_ttl_fail_or_cancel_completed Number of row_level_ttl jobs which successfully completed their failure or cancelation process
++# TYPE jobs_row_level_ttl_fail_or_cancel_completed counter
++jobs_row_level_ttl_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_create_stats_fail_or_cancel_failed Number of auto_create_stats jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_create_stats_fail_or_cancel_failed counter
++jobs_auto_create_stats_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_auto_config_runner_fail_or_cancel_failed Number of auto_config_runner jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_config_runner_fail_or_cancel_failed counter
++jobs_auto_config_runner_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_migration_expired_pts_records Number of expired protected timestamp records owned by migration jobs
++# TYPE jobs_migration_expired_pts_records counter
++jobs_migration_expired_pts_records{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_expired_pts_records Number of expired protected timestamp records owned by replication_stream_ingestion jobs
++# TYPE jobs_replication_stream_ingestion_expired_pts_records counter
++jobs_replication_stream_ingestion_expired_pts_records{node_id="1"} 0
++# HELP jobs_metrics_task_failed Number of metrics sql activity updater tasks that failed
++# TYPE jobs_metrics_task_failed counter
++jobs_metrics_task_failed{node_id="1"} 0
++# HELP jobs_changefeed_currently_running Number of changefeed jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_changefeed_currently_running gauge
++jobs_changefeed_currently_running{node_id="1"} 0
++# HELP jobs_row_level_ttl_resume_failed Number of row_level_ttl jobs which failed with a non-retriable error
++# TYPE jobs_row_level_ttl_resume_failed counter
++jobs_row_level_ttl_resume_failed{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_protected_record_count Number of protected timestamp records held by poll_jobs_stats jobs
++# TYPE jobs_poll_jobs_stats_protected_record_count gauge
++jobs_poll_jobs_stats_protected_record_count{node_id="1"} 0
++# HELP jobs_replication_stream_producer_resume_failed Number of replication_stream_producer jobs which failed with a non-retriable error
++# TYPE jobs_replication_stream_producer_resume_failed counter
++jobs_replication_stream_producer_resume_failed{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_currently_paused Number of auto_update_sql_activity jobs currently considered Paused
++# TYPE jobs_auto_update_sql_activity_currently_paused gauge
++jobs_auto_update_sql_activity_currently_paused{node_id="1"} 0
++# HELP jobs_replication_stream_producer_expired_pts_records Number of expired protected timestamp records owned by replication_stream_producer jobs
++# TYPE jobs_replication_stream_producer_expired_pts_records counter
++jobs_replication_stream_producer_expired_pts_records{node_id="1"} 0
++# HELP jobs_auto_config_task_fail_or_cancel_completed Number of auto_config_task jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_config_task_fail_or_cancel_completed counter
++jobs_auto_config_task_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_new_schema_change_fail_or_cancel_retry_error Number of new_schema_change jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_new_schema_change_fail_or_cancel_retry_error counter
++jobs_new_schema_change_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_restore_resume_failed Number of restore jobs which failed with a non-retriable error
++# TYPE jobs_restore_resume_failed counter
++jobs_restore_resume_failed{node_id="1"} 0
++# HELP jobs_row_level_ttl_span_total_duration Duration for processing a span during row level TTL.
++# TYPE jobs_row_level_ttl_span_total_duration histogram
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="5e+08"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="5.81230667894489e+08"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="6.756581786021477e+08"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="7.854265088346007e+08"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="9.130279486239436e+08"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.0613596887700598e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.2337896015602179e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.434232708312242e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.667240069936893e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.93810211877975e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.252968777892157e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.6189890950393786e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.044473561836243e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.539082803466387e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="4.114046923185338e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="4.782420481824564e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="5.559378901606352e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="6.462563024118382e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="7.512479645637113e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="8.732967123954826e+09"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.0151736628313759e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.180100132152751e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.3718207759870365e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.5946886117169632e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.8537638537439724e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.154928805660542e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.5050214179583008e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.9119905436998066e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.3850764172341507e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.935020453725778e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="4.574309132995019e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="5.3174575050531136e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="6.18133875432517e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="7.185567305317015e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="8.352944168140427e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="9.709974635467274e+10"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.1287470085222385e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.3121247552945744e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.525294295761517e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.773095644522242e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.0611551314129446e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.3960131473305988e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.785272643813881e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.237771758064383e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.763784482859352e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="4.3752539375665094e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="5.086063536679551e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="5.912352212756127e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="6.872880850895408e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="7.989458254650365e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="9.287436314931141e+11"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.079628562470992e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.2550264608859636e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.4589197361720107e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.6959377853194194e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="1.9714621033374136e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.2917484701029585e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="2.664068987848232e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.096877194248047e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="3.600000000000008e+12"} 0
++jobs_row_level_ttl_span_total_duration_bucket{node_id="1",le="+Inf"} 0
++jobs_row_level_ttl_span_total_duration_sum{node_id="1"} 0
++jobs_row_level_ttl_span_total_duration_count{node_id="1"} 0
++# HELP jobs_row_level_ttl_currently_paused Number of row_level_ttl jobs currently considered Paused
++# TYPE jobs_row_level_ttl_currently_paused gauge
++jobs_row_level_ttl_currently_paused{node_id="1"} 0
++# HELP jobs_auto_create_stats_protected_age_sec The age of the oldest PTS record protected by auto_create_stats jobs
++# TYPE jobs_auto_create_stats_protected_age_sec gauge
++jobs_auto_create_stats_protected_age_sec{node_id="1"} 0
++# HELP jobs_resumed_claimed_jobs number of claimed-jobs resumed in job-adopt iterations
++# TYPE jobs_resumed_claimed_jobs counter
++jobs_resumed_claimed_jobs{node_id="1"} 19
++# HELP jobs_schema_change_gc_protected_age_sec The age of the oldest PTS record protected by schema_change_gc jobs
++# TYPE jobs_schema_change_gc_protected_age_sec gauge
++jobs_schema_change_gc_protected_age_sec{node_id="1"} 0
++# HELP jobs_migration_fail_or_cancel_completed Number of migration jobs which successfully completed their failure or cancelation process
++# TYPE jobs_migration_fail_or_cancel_completed counter
++jobs_migration_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_schema_change_gc_fail_or_cancel_completed Number of schema_change_gc jobs which successfully completed their failure or cancelation process
++# TYPE jobs_schema_change_gc_fail_or_cancel_completed counter
++jobs_schema_change_gc_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_key_visualizer_currently_idle Number of key_visualizer jobs currently considered Idle and can be freely shut down
++# TYPE jobs_key_visualizer_currently_idle gauge
++jobs_key_visualizer_currently_idle{node_id="1"} 0
++# HELP jobs_auto_config_task_protected_age_sec The age of the oldest PTS record protected by auto_config_task jobs
++# TYPE jobs_auto_config_task_protected_age_sec gauge
++jobs_auto_config_task_protected_age_sec{node_id="1"} 0
++# HELP jobs_auto_config_runner_resume_retry_error Number of auto_config_runner jobs which failed with a retriable error
++# TYPE jobs_auto_config_runner_resume_retry_error counter
++jobs_auto_config_runner_resume_retry_error{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_fail_or_cancel_completed Number of auto_schema_telemetry jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_schema_telemetry_fail_or_cancel_completed counter
++jobs_auto_schema_telemetry_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_fail_or_cancel_failed Number of auto_sql_stats_compaction jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_sql_stats_compaction_fail_or_cancel_failed counter
++jobs_auto_sql_stats_compaction_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_protected_age_sec The age of the oldest PTS record protected by auto_update_sql_activity jobs
++# TYPE jobs_auto_update_sql_activity_protected_age_sec gauge
++jobs_auto_update_sql_activity_protected_age_sec{node_id="1"} 0
++# HELP jobs_row_level_ttl_total_rows Approximate number of rows on the TTL table.
++# TYPE jobs_row_level_ttl_total_rows gauge
++jobs_row_level_ttl_total_rows{node_id="1"} 0
++# HELP jobs_schema_change_fail_or_cancel_failed Number of schema_change jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_schema_change_fail_or_cancel_failed counter
++jobs_schema_change_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_resume_completed Number of auto_sql_stats_compaction jobs which successfully resumed to completion
++# TYPE jobs_auto_sql_stats_compaction_resume_completed counter
++jobs_auto_sql_stats_compaction_resume_completed{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_protected_age_sec The age of the oldest PTS record protected by auto_config_env_runner jobs
++# TYPE jobs_auto_config_env_runner_protected_age_sec gauge
++jobs_auto_config_env_runner_protected_age_sec{node_id="1"} 0
++# HELP jobs_create_stats_expired_pts_records Number of expired protected timestamp records owned by create_stats jobs
++# TYPE jobs_create_stats_expired_pts_records counter
++jobs_create_stats_expired_pts_records{node_id="1"} 0
++# HELP jobs_new_schema_change_protected_record_count Number of protected timestamp records held by new_schema_change jobs
++# TYPE jobs_new_schema_change_protected_record_count gauge
++jobs_new_schema_change_protected_record_count{node_id="1"} 0
++# HELP jobs_key_visualizer_resume_retry_error Number of key_visualizer jobs which failed with a retriable error
++# TYPE jobs_key_visualizer_resume_retry_error counter
++jobs_key_visualizer_resume_retry_error{node_id="1"} 0
++# HELP jobs_schema_change_gc_resume_failed Number of schema_change_gc jobs which failed with a non-retriable error
++# TYPE jobs_schema_change_gc_resume_failed counter
++jobs_schema_change_gc_resume_failed{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_fail_or_cancel_retry_error Number of auto_config_env_runner jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_config_env_runner_fail_or_cancel_retry_error counter
++jobs_auto_config_env_runner_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_key_visualizer_currently_paused Number of key_visualizer jobs currently considered Paused
++# TYPE jobs_key_visualizer_currently_paused gauge
++jobs_key_visualizer_currently_paused{node_id="1"} 0
++# HELP jobs_backup_fail_or_cancel_failed Number of backup jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_backup_fail_or_cancel_failed counter
++jobs_backup_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_backup_resume_failed Number of backup jobs which failed with a non-retriable error
++# TYPE jobs_backup_resume_failed counter
++jobs_backup_resume_failed{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_fail_or_cancel_completed Number of poll_jobs_stats jobs which successfully completed their failure or cancelation process
++# TYPE jobs_poll_jobs_stats_fail_or_cancel_completed counter
++jobs_poll_jobs_stats_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_fail_or_cancel_retry_error Number of auto_span_config_reconciliation jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_span_config_reconciliation_fail_or_cancel_retry_error counter
++jobs_auto_span_config_reconciliation_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_config_task_resume_completed Number of auto_config_task jobs which successfully resumed to completion
++# TYPE jobs_auto_config_task_resume_completed counter
++jobs_auto_config_task_resume_completed{node_id="1"} 0
++# HELP jobs_migration_resume_retry_error Number of migration jobs which failed with a retriable error
++# TYPE jobs_migration_resume_retry_error counter
++jobs_migration_resume_retry_error{node_id="1"} 0
++# HELP jobs_auto_config_task_expired_pts_records Number of expired protected timestamp records owned by auto_config_task jobs
++# TYPE jobs_auto_config_task_expired_pts_records counter
++jobs_auto_config_task_expired_pts_records{node_id="1"} 0
++# HELP jobs_new_schema_change_fail_or_cancel_failed Number of new_schema_change jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_new_schema_change_fail_or_cancel_failed counter
++jobs_new_schema_change_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_schema_change_gc_expired_pts_records Number of expired protected timestamp records owned by schema_change_gc jobs
++# TYPE jobs_schema_change_gc_expired_pts_records counter
++jobs_schema_change_gc_expired_pts_records{node_id="1"} 0
++# HELP jobs_import_protected_record_count Number of protected timestamp records held by import jobs
++# TYPE jobs_import_protected_record_count gauge
++jobs_import_protected_record_count{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_expired_pts_records Number of expired protected timestamp records owned by mvcc_statistics_update jobs
++# TYPE jobs_mvcc_statistics_update_expired_pts_records counter
++jobs_mvcc_statistics_update_expired_pts_records{node_id="1"} 0
++# HELP jobs_restore_resume_completed Number of restore jobs which successfully resumed to completion
++# TYPE jobs_restore_resume_completed counter
++jobs_restore_resume_completed{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_fail_or_cancel_completed Number of auto_sql_stats_compaction jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_sql_stats_compaction_fail_or_cancel_completed counter
++jobs_auto_sql_stats_compaction_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_resume_completed Number of auto_config_env_runner jobs which successfully resumed to completion
++# TYPE jobs_auto_config_env_runner_resume_completed counter
++jobs_auto_config_env_runner_resume_completed{node_id="1"} 0
++# HELP jobs_auto_config_runner_expired_pts_records Number of expired protected timestamp records owned by auto_config_runner jobs
++# TYPE jobs_auto_config_runner_expired_pts_records counter
++jobs_auto_config_runner_expired_pts_records{node_id="1"} 0
++# HELP jobs_import_resume_completed Number of import jobs which successfully resumed to completion
++# TYPE jobs_import_resume_completed counter
++jobs_import_resume_completed{node_id="1"} 0
++# HELP jobs_row_level_ttl_protected_record_count Number of protected timestamp records held by row_level_ttl jobs
++# TYPE jobs_row_level_ttl_protected_record_count gauge
++jobs_row_level_ttl_protected_record_count{node_id="1"} 0
++# HELP jobs_create_stats_fail_or_cancel_retry_error Number of create_stats jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_create_stats_fail_or_cancel_retry_error counter
++jobs_create_stats_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_resume_failed Number of auto_config_env_runner jobs which failed with a non-retriable error
++# TYPE jobs_auto_config_env_runner_resume_failed counter
++jobs_auto_config_env_runner_resume_failed{node_id="1"} 0
++# HELP jobs_auto_create_stats_resume_failed Number of auto_create_stats jobs which failed with a non-retriable error
++# TYPE jobs_auto_create_stats_resume_failed counter
++jobs_auto_create_stats_resume_failed{node_id="1"} 0
++# HELP jobs_replication_stream_producer_resume_completed Number of replication_stream_producer jobs which successfully resumed to completion
++# TYPE jobs_replication_stream_producer_resume_completed counter
++jobs_replication_stream_producer_resume_completed{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_protected_record_count Number of protected timestamp records held by mvcc_statistics_update jobs
++# TYPE jobs_mvcc_statistics_update_protected_record_count gauge
++jobs_mvcc_statistics_update_protected_record_count{node_id="1"} 0
++# HELP jobs_replication_stream_producer_resume_retry_error Number of replication_stream_producer jobs which failed with a retriable error
++# TYPE jobs_replication_stream_producer_resume_retry_error counter
++jobs_replication_stream_producer_resume_retry_error{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_currently_running Number of mvcc_statistics_update jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_mvcc_statistics_update_currently_running gauge
++jobs_mvcc_statistics_update_currently_running{node_id="1"} 1
++# HELP jobs_migration_resume_failed Number of migration jobs which failed with a non-retriable error
++# TYPE jobs_migration_resume_failed counter
++jobs_migration_resume_failed{node_id="1"} 0
++# HELP jobs_migration_currently_running Number of migration jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_migration_currently_running gauge
++jobs_migration_currently_running{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_fail_or_cancel_retry_error Number of auto_sql_stats_compaction jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_sql_stats_compaction_fail_or_cancel_retry_error counter
++jobs_auto_sql_stats_compaction_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_key_visualizer_protected_age_sec The age of the oldest PTS record protected by key_visualizer jobs
++# TYPE jobs_key_visualizer_protected_age_sec gauge
++jobs_key_visualizer_protected_age_sec{node_id="1"} 0
++# HELP jobs_changefeed_fail_or_cancel_failed Number of changefeed jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_changefeed_fail_or_cancel_failed counter
++jobs_changefeed_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_schema_change_resume_failed Number of schema_change jobs which failed with a non-retriable error
++# TYPE jobs_schema_change_resume_failed counter
++jobs_schema_change_resume_failed{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_protected_record_count Number of protected timestamp records held by auto_config_env_runner jobs
++# TYPE jobs_auto_config_env_runner_protected_record_count gauge
++jobs_auto_config_env_runner_protected_record_count{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_currently_idle Number of typedesc_schema_change jobs currently considered Idle and can be freely shut down
++# TYPE jobs_typedesc_schema_change_currently_idle gauge
++jobs_typedesc_schema_change_currently_idle{node_id="1"} 0
++# HELP jobs_row_level_ttl_expired_pts_records Number of expired protected timestamp records owned by row_level_ttl jobs
++# TYPE jobs_row_level_ttl_expired_pts_records counter
++jobs_row_level_ttl_expired_pts_records{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_resume_retry_error Number of replication_stream_ingestion jobs which failed with a retriable error
++# TYPE jobs_replication_stream_ingestion_resume_retry_error counter
++jobs_replication_stream_ingestion_resume_retry_error{node_id="1"} 0
++# HELP jobs_restore_fail_or_cancel_completed Number of restore jobs which successfully completed their failure or cancelation process
++# TYPE jobs_restore_fail_or_cancel_completed counter
++jobs_restore_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_config_task_fail_or_cancel_failed Number of auto_config_task jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_config_task_fail_or_cancel_failed counter
++jobs_auto_config_task_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_restore_protected_record_count Number of protected timestamp records held by restore jobs
++# TYPE jobs_restore_protected_record_count gauge
++jobs_restore_protected_record_count{node_id="1"} 0
++# HELP jobs_create_stats_protected_record_count Number of protected timestamp records held by create_stats jobs
++# TYPE jobs_create_stats_protected_record_count gauge
++jobs_create_stats_protected_record_count{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_fail_or_cancel_retry_error Number of typedesc_schema_change jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_typedesc_schema_change_fail_or_cancel_retry_error counter
++jobs_typedesc_schema_change_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_expired_pts_records Number of expired protected timestamp records owned by auto_update_sql_activity jobs
++# TYPE jobs_auto_update_sql_activity_expired_pts_records counter
++jobs_auto_update_sql_activity_expired_pts_records{node_id="1"} 0
++# HELP jobs_auto_create_stats_currently_paused Number of auto_create_stats jobs currently considered Paused
++# TYPE jobs_auto_create_stats_currently_paused gauge
++jobs_auto_create_stats_currently_paused{node_id="1"} 0
++# HELP jobs_create_stats_currently_paused Number of create_stats jobs currently considered Paused
++# TYPE jobs_create_stats_currently_paused gauge
++jobs_create_stats_currently_paused{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_fail_or_cancel_completed Number of replication_stream_ingestion jobs which successfully completed their failure or cancelation process
++# TYPE jobs_replication_stream_ingestion_fail_or_cancel_completed counter
++jobs_replication_stream_ingestion_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_resume_retry_error Number of poll_jobs_stats jobs which failed with a retriable error
++# TYPE jobs_poll_jobs_stats_resume_retry_error counter
++jobs_poll_jobs_stats_resume_retry_error{node_id="1"} 0
++# HELP jobs_import_currently_running Number of import jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_import_currently_running gauge
++jobs_import_currently_running{node_id="1"} 0
++# HELP jobs_new_schema_change_fail_or_cancel_completed Number of new_schema_change jobs which successfully completed their failure or cancelation process
++# TYPE jobs_new_schema_change_fail_or_cancel_completed counter
++jobs_new_schema_change_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_currently_paused Number of auto_sql_stats_compaction jobs currently considered Paused
++# TYPE jobs_auto_sql_stats_compaction_currently_paused gauge
++jobs_auto_sql_stats_compaction_currently_paused{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_currently_paused Number of auto_schema_telemetry jobs currently considered Paused
++# TYPE jobs_auto_schema_telemetry_currently_paused gauge
++jobs_auto_schema_telemetry_currently_paused{node_id="1"} 0
++# HELP jobs_auto_config_runner_currently_running Number of auto_config_runner jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_config_runner_currently_running gauge
++jobs_auto_config_runner_currently_running{node_id="1"} 1
++# HELP jobs_backup_currently_paused Number of backup jobs currently considered Paused
++# TYPE jobs_backup_currently_paused gauge
++jobs_backup_currently_paused{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_fail_or_cancel_retry_error Number of mvcc_statistics_update jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_mvcc_statistics_update_fail_or_cancel_retry_error counter
++jobs_mvcc_statistics_update_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_fail_or_cancel_failed Number of auto_update_sql_activity jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_update_sql_activity_fail_or_cancel_failed counter
++jobs_auto_update_sql_activity_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_resume_retry_error Number of auto_sql_stats_compaction jobs which failed with a retriable error
++# TYPE jobs_auto_sql_stats_compaction_resume_retry_error counter
++jobs_auto_sql_stats_compaction_resume_retry_error{node_id="1"} 0
++# HELP jobs_schema_change_protected_age_sec The age of the oldest PTS record protected by schema_change jobs
++# TYPE jobs_schema_change_protected_age_sec gauge
++jobs_schema_change_protected_age_sec{node_id="1"} 0
++# HELP jobs_schema_change_currently_idle Number of schema_change jobs currently considered Idle and can be freely shut down
++# TYPE jobs_schema_change_currently_idle gauge
++jobs_schema_change_currently_idle{node_id="1"} 0
++# HELP jobs_auto_config_runner_currently_paused Number of auto_config_runner jobs currently considered Paused
++# TYPE jobs_auto_config_runner_currently_paused gauge
++jobs_auto_config_runner_currently_paused{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_protected_age_sec The age of the oldest PTS record protected by auto_schema_telemetry jobs
++# TYPE jobs_auto_schema_telemetry_protected_age_sec gauge
++jobs_auto_schema_telemetry_protected_age_sec{node_id="1"} 0
++# HELP jobs_create_stats_resume_retry_error Number of create_stats jobs which failed with a retriable error
++# TYPE jobs_create_stats_resume_retry_error counter
++jobs_create_stats_resume_retry_error{node_id="1"} 0
++# HELP jobs_import_resume_failed Number of import jobs which failed with a non-retriable error
++# TYPE jobs_import_resume_failed counter
++jobs_import_resume_failed{node_id="1"} 0
++# HELP jobs_row_level_ttl_currently_running Number of row_level_ttl jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_row_level_ttl_currently_running gauge
++jobs_row_level_ttl_currently_running{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_currently_running Number of auto_schema_telemetry jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_schema_telemetry_currently_running gauge
++jobs_auto_schema_telemetry_currently_running{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_resume_retry_error Number of auto_schema_telemetry jobs which failed with a retriable error
++# TYPE jobs_auto_schema_telemetry_resume_retry_error counter
++jobs_auto_schema_telemetry_resume_retry_error{node_id="1"} 0
++# HELP jobs_schema_change_gc_currently_paused Number of schema_change_gc jobs currently considered Paused
++# TYPE jobs_schema_change_gc_currently_paused gauge
++jobs_schema_change_gc_currently_paused{node_id="1"} 0
++# HELP jobs_migration_protected_record_count Number of protected timestamp records held by migration jobs
++# TYPE jobs_migration_protected_record_count gauge
++jobs_migration_protected_record_count{node_id="1"} 0
++# HELP jobs_migration_currently_paused Number of migration jobs currently considered Paused
++# TYPE jobs_migration_currently_paused gauge
++jobs_migration_currently_paused{node_id="1"} 0
++# HELP jobs_replication_stream_producer_currently_running Number of replication_stream_producer jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_replication_stream_producer_currently_running gauge
++jobs_replication_stream_producer_currently_running{node_id="1"} 0
++# HELP jobs_auto_create_stats_expired_pts_records Number of expired protected timestamp records owned by auto_create_stats jobs
++# TYPE jobs_auto_create_stats_expired_pts_records counter
++jobs_auto_create_stats_expired_pts_records{node_id="1"} 0
++# HELP jobs_running_non_idle number of running jobs that are not idle
++# TYPE jobs_running_non_idle gauge
++jobs_running_non_idle{node_id="1"} 1
++# HELP jobs_import_currently_idle Number of import jobs currently considered Idle and can be freely shut down
++# TYPE jobs_import_currently_idle gauge
++jobs_import_currently_idle{node_id="1"} 0
++# HELP jobs_import_expired_pts_records Number of expired protected timestamp records owned by import jobs
++# TYPE jobs_import_expired_pts_records counter
++jobs_import_expired_pts_records{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_fail_or_cancel_failed Number of auto_span_config_reconciliation jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_auto_span_config_reconciliation_fail_or_cancel_failed counter
++jobs_auto_span_config_reconciliation_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_protected_record_count Number of protected timestamp records held by auto_span_config_reconciliation jobs
++# TYPE jobs_auto_span_config_reconciliation_protected_record_count gauge
++jobs_auto_span_config_reconciliation_protected_record_count{node_id="1"} 0
++# HELP jobs_row_level_ttl_total_expired_rows Approximate number of rows that have expired the TTL on the TTL table.
++# TYPE jobs_row_level_ttl_total_expired_rows gauge
++jobs_row_level_ttl_total_expired_rows{node_id="1"} 0
++# HELP jobs_auto_create_stats_fail_or_cancel_completed Number of auto_create_stats jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_create_stats_fail_or_cancel_completed counter
++jobs_auto_create_stats_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_currently_paused Number of auto_config_env_runner jobs currently considered Paused
++# TYPE jobs_auto_config_env_runner_currently_paused gauge
++jobs_auto_config_env_runner_currently_paused{node_id="1"} 0
++# HELP jobs_schema_change_gc_currently_idle Number of schema_change_gc jobs currently considered Idle and can be freely shut down
++# TYPE jobs_schema_change_gc_currently_idle gauge
++jobs_schema_change_gc_currently_idle{node_id="1"} 0
++# HELP jobs_auto_create_stats_resume_completed Number of auto_create_stats jobs which successfully resumed to completion
++# TYPE jobs_auto_create_stats_resume_completed counter
++jobs_auto_create_stats_resume_completed{node_id="1"} 53
++# HELP jobs_schema_change_expired_pts_records Number of expired protected timestamp records owned by schema_change jobs
++# TYPE jobs_schema_change_expired_pts_records counter
++jobs_schema_change_expired_pts_records{node_id="1"} 0
++# HELP jobs_row_level_ttl_resume_retry_error Number of row_level_ttl jobs which failed with a retriable error
++# TYPE jobs_row_level_ttl_resume_retry_error counter
++jobs_row_level_ttl_resume_retry_error{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_fail_or_cancel_failed Number of typedesc_schema_change jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_typedesc_schema_change_fail_or_cancel_failed counter
++jobs_typedesc_schema_change_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_currently_running Number of typedesc_schema_change jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_typedesc_schema_change_currently_running gauge
++jobs_typedesc_schema_change_currently_running{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_currently_idle Number of auto_config_env_runner jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_config_env_runner_currently_idle gauge
++jobs_auto_config_env_runner_currently_idle{node_id="1"} 0
++# HELP jobs_new_schema_change_resume_retry_error Number of new_schema_change jobs which failed with a retriable error
++# TYPE jobs_new_schema_change_resume_retry_error counter
++jobs_new_schema_change_resume_retry_error{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_currently_idle Number of mvcc_statistics_update jobs currently considered Idle and can be freely shut down
++# TYPE jobs_mvcc_statistics_update_currently_idle gauge
++jobs_mvcc_statistics_update_currently_idle{node_id="1"} 1
++# HELP jobs_poll_jobs_stats_fail_or_cancel_failed Number of poll_jobs_stats jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_poll_jobs_stats_fail_or_cancel_failed counter
++jobs_poll_jobs_stats_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_auto_config_runner_protected_age_sec The age of the oldest PTS record protected by auto_config_runner jobs
++# TYPE jobs_auto_config_runner_protected_age_sec gauge
++jobs_auto_config_runner_protected_age_sec{node_id="1"} 0
++# HELP jobs_changefeed_fail_or_cancel_retry_error Number of changefeed jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_changefeed_fail_or_cancel_retry_error counter
++jobs_changefeed_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_resume_completed Number of poll_jobs_stats jobs which successfully resumed to completion
++# TYPE jobs_poll_jobs_stats_resume_completed counter
++jobs_poll_jobs_stats_resume_completed{node_id="1"} 0
++# HELP jobs_changefeed_currently_idle Number of changefeed jobs currently considered Idle and can be freely shut down
++# TYPE jobs_changefeed_currently_idle gauge
++jobs_changefeed_currently_idle{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_resume_failed Number of typedesc_schema_change jobs which failed with a non-retriable error
++# TYPE jobs_typedesc_schema_change_resume_failed counter
++jobs_typedesc_schema_change_resume_failed{node_id="1"} 0
++# HELP jobs_import_fail_or_cancel_retry_error Number of import jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_import_fail_or_cancel_retry_error counter
++jobs_import_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_changefeed_fail_or_cancel_completed Number of changefeed jobs which successfully completed their failure or cancelation process
++# TYPE jobs_changefeed_fail_or_cancel_completed counter
++jobs_changefeed_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_protected_record_count Number of protected timestamp records held by replication_stream_ingestion jobs
++# TYPE jobs_replication_stream_ingestion_protected_record_count gauge
++jobs_replication_stream_ingestion_protected_record_count{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_fail_or_cancel_retry_error Number of poll_jobs_stats jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_poll_jobs_stats_fail_or_cancel_retry_error counter
++jobs_poll_jobs_stats_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_fail_or_cancel_retry_error Number of auto_update_sql_activity jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_auto_update_sql_activity_fail_or_cancel_retry_error counter
++jobs_auto_update_sql_activity_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_resume_retry_error Number of mvcc_statistics_update jobs which failed with a retriable error
++# TYPE jobs_mvcc_statistics_update_resume_retry_error counter
++jobs_mvcc_statistics_update_resume_retry_error{node_id="1"} 0
++# HELP jobs_migration_resume_completed Number of migration jobs which successfully resumed to completion
++# TYPE jobs_migration_resume_completed counter
++jobs_migration_resume_completed{node_id="1"} 13
++# HELP jobs_mvcc_statistics_update_fail_or_cancel_failed Number of mvcc_statistics_update jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_mvcc_statistics_update_fail_or_cancel_failed counter
++jobs_mvcc_statistics_update_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_migration_protected_age_sec The age of the oldest PTS record protected by migration jobs
++# TYPE jobs_migration_protected_age_sec gauge
++jobs_migration_protected_age_sec{node_id="1"} 0
++# HELP jobs_auto_config_task_resume_failed Number of auto_config_task jobs which failed with a non-retriable error
++# TYPE jobs_auto_config_task_resume_failed counter
++jobs_auto_config_task_resume_failed{node_id="1"} 0
++# HELP jobs_row_level_ttl_rows_deleted Number of rows deleted by the row level TTL job.
++# TYPE jobs_row_level_ttl_rows_deleted counter
++jobs_row_level_ttl_rows_deleted{node_id="1"} 0
++# HELP jobs_auto_create_stats_resume_retry_error Number of auto_create_stats jobs which failed with a retriable error
++# TYPE jobs_auto_create_stats_resume_retry_error counter
++jobs_auto_create_stats_resume_retry_error{node_id="1"} 0
++# HELP jobs_replication_stream_producer_fail_or_cancel_retry_error Number of replication_stream_producer jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_replication_stream_producer_fail_or_cancel_retry_error counter
++jobs_replication_stream_producer_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_create_stats_fail_or_cancel_failed Number of create_stats jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_create_stats_fail_or_cancel_failed counter
++jobs_create_stats_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_resume_failed Number of mvcc_statistics_update jobs which failed with a non-retriable error
++# TYPE jobs_mvcc_statistics_update_resume_failed counter
++jobs_mvcc_statistics_update_resume_failed{node_id="1"} 0
++# HELP jobs_auto_create_stats_currently_running Number of auto_create_stats jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_create_stats_currently_running gauge
++jobs_auto_create_stats_currently_running{node_id="1"} 0
++# HELP jobs_schema_change_gc_currently_running Number of schema_change_gc jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_schema_change_gc_currently_running gauge
++jobs_schema_change_gc_currently_running{node_id="1"} 0
++# HELP jobs_backup_fail_or_cancel_completed Number of backup jobs which successfully completed their failure or cancelation process
++# TYPE jobs_backup_fail_or_cancel_completed counter
++jobs_backup_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_new_schema_change_resume_completed Number of new_schema_change jobs which successfully resumed to completion
++# TYPE jobs_new_schema_change_resume_completed counter
++jobs_new_schema_change_resume_completed{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_fail_or_cancel_completed Number of auto_update_sql_activity jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_update_sql_activity_fail_or_cancel_completed counter
++jobs_auto_update_sql_activity_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_resume_retry_error Number of auto_update_sql_activity jobs which failed with a retriable error
++# TYPE jobs_auto_update_sql_activity_resume_retry_error counter
++jobs_auto_update_sql_activity_resume_retry_error{node_id="1"} 0
++# HELP jobs_auto_create_stats_protected_record_count Number of protected timestamp records held by auto_create_stats jobs
++# TYPE jobs_auto_create_stats_protected_record_count gauge
++jobs_auto_create_stats_protected_record_count{node_id="1"} 0
++# HELP jobs_auto_config_runner_protected_record_count Number of protected timestamp records held by auto_config_runner jobs
++# TYPE jobs_auto_config_runner_protected_record_count gauge
++jobs_auto_config_runner_protected_record_count{node_id="1"} 0
++# HELP jobs_migration_currently_idle Number of migration jobs currently considered Idle and can be freely shut down
++# TYPE jobs_migration_currently_idle gauge
++jobs_migration_currently_idle{node_id="1"} 0
++# HELP jobs_typedesc_schema_change_expired_pts_records Number of expired protected timestamp records owned by typedesc_schema_change jobs
++# TYPE jobs_typedesc_schema_change_expired_pts_records counter
++jobs_typedesc_schema_change_expired_pts_records{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_currently_idle Number of replication_stream_ingestion jobs currently considered Idle and can be freely shut down
++# TYPE jobs_replication_stream_ingestion_currently_idle gauge
++jobs_replication_stream_ingestion_currently_idle{node_id="1"} 0
++# HELP jobs_key_visualizer_currently_running Number of key_visualizer jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_key_visualizer_currently_running gauge
++jobs_key_visualizer_currently_running{node_id="1"} 1
++# HELP jobs_changefeed_resume_failed Number of changefeed jobs which failed with a non-retriable error
++# TYPE jobs_changefeed_resume_failed counter
++jobs_changefeed_resume_failed{node_id="1"} 0
++# HELP jobs_key_visualizer_resume_completed Number of key_visualizer jobs which successfully resumed to completion
++# TYPE jobs_key_visualizer_resume_completed counter
++jobs_key_visualizer_resume_completed{node_id="1"} 0
++# HELP jobs_auto_config_task_currently_paused Number of auto_config_task jobs currently considered Paused
++# TYPE jobs_auto_config_task_currently_paused gauge
++jobs_auto_config_task_currently_paused{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_protected_age_sec The age of the oldest PTS record protected by replication_stream_ingestion jobs
++# TYPE jobs_replication_stream_ingestion_protected_age_sec gauge
++jobs_replication_stream_ingestion_protected_age_sec{node_id="1"} 0
++# HELP jobs_row_level_ttl_rows_selected Number of rows selected for deletion by the row level TTL job.
++# TYPE jobs_row_level_ttl_rows_selected counter
++jobs_row_level_ttl_rows_selected{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_protected_age_sec The age of the oldest PTS record protected by poll_jobs_stats jobs
++# TYPE jobs_poll_jobs_stats_protected_age_sec gauge
++jobs_poll_jobs_stats_protected_age_sec{node_id="1"} 0
++# HELP jobs_restore_resume_retry_error Number of restore jobs which failed with a retriable error
++# TYPE jobs_restore_resume_retry_error counter
++jobs_restore_resume_retry_error{node_id="1"} 0
++# HELP jobs_restore_currently_idle Number of restore jobs currently considered Idle and can be freely shut down
++# TYPE jobs_restore_currently_idle gauge
++jobs_restore_currently_idle{node_id="1"} 0
++# HELP jobs_migration_fail_or_cancel_failed Number of migration jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_migration_fail_or_cancel_failed counter
++jobs_migration_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_create_stats_currently_idle Number of create_stats jobs currently considered Idle and can be freely shut down
++# TYPE jobs_create_stats_currently_idle gauge
++jobs_create_stats_currently_idle{node_id="1"} 0
++# HELP jobs_changefeed_resume_completed Number of changefeed jobs which successfully resumed to completion
++# TYPE jobs_changefeed_resume_completed counter
++jobs_changefeed_resume_completed{node_id="1"} 0
++# HELP jobs_schema_change_gc_resume_completed Number of schema_change_gc jobs which successfully resumed to completion
++# TYPE jobs_schema_change_gc_resume_completed counter
++jobs_schema_change_gc_resume_completed{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_resume_completed Number of mvcc_statistics_update jobs which successfully resumed to completion
++# TYPE jobs_mvcc_statistics_update_resume_completed counter
++jobs_mvcc_statistics_update_resume_completed{node_id="1"} 0
++# HELP jobs_row_level_ttl_protected_age_sec The age of the oldest PTS record protected by row_level_ttl jobs
++# TYPE jobs_row_level_ttl_protected_age_sec gauge
++jobs_row_level_ttl_protected_age_sec{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_currently_idle Number of auto_sql_stats_compaction jobs currently considered Idle and can be freely shut down
++# TYPE jobs_auto_sql_stats_compaction_currently_idle gauge
++jobs_auto_sql_stats_compaction_currently_idle{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_resume_retry_error Number of auto_span_config_reconciliation jobs which failed with a retriable error
++# TYPE jobs_auto_span_config_reconciliation_resume_retry_error counter
++jobs_auto_span_config_reconciliation_resume_retry_error{node_id="1"} 0
++# HELP jobs_import_currently_paused Number of import jobs currently considered Paused
++# TYPE jobs_import_currently_paused gauge
++jobs_import_currently_paused{node_id="1"} 0
++# HELP jobs_auto_schema_telemetry_resume_failed Number of auto_schema_telemetry jobs which failed with a non-retriable error
++# TYPE jobs_auto_schema_telemetry_resume_failed counter
++jobs_auto_schema_telemetry_resume_failed{node_id="1"} 0
++# HELP jobs_auto_update_sql_activity_currently_running Number of auto_update_sql_activity jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_update_sql_activity_currently_running gauge
++jobs_auto_update_sql_activity_currently_running{node_id="1"} 1
++# HELP jobs_backup_protected_record_count Number of protected timestamp records held by backup jobs
++# TYPE jobs_backup_protected_record_count gauge
++jobs_backup_protected_record_count{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_currently_running Number of auto_config_env_runner jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_config_env_runner_currently_running gauge
++jobs_auto_config_env_runner_currently_running{node_id="1"} 0
++# HELP jobs_import_protected_age_sec The age of the oldest PTS record protected by import jobs
++# TYPE jobs_import_protected_age_sec gauge
++jobs_import_protected_age_sec{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_resume_failed Number of auto_span_config_reconciliation jobs which failed with a non-retriable error
++# TYPE jobs_auto_span_config_reconciliation_resume_failed counter
++jobs_auto_span_config_reconciliation_resume_failed{node_id="1"} 0
++# HELP jobs_backup_currently_idle Number of backup jobs currently considered Idle and can be freely shut down
++# TYPE jobs_backup_currently_idle gauge
++jobs_backup_currently_idle{node_id="1"} 0
++# HELP jobs_auto_span_config_reconciliation_currently_paused Number of auto_span_config_reconciliation jobs currently considered Paused
++# TYPE jobs_auto_span_config_reconciliation_currently_paused gauge
++jobs_auto_span_config_reconciliation_currently_paused{node_id="1"} 0
++# HELP jobs_auto_config_runner_resume_completed Number of auto_config_runner jobs which successfully resumed to completion
++# TYPE jobs_auto_config_runner_resume_completed counter
++jobs_auto_config_runner_resume_completed{node_id="1"} 0
++# HELP jobs_auto_config_task_currently_running Number of auto_config_task jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_config_task_currently_running gauge
++jobs_auto_config_task_currently_running{node_id="1"} 0
++# HELP jobs_mvcc_statistics_update_fail_or_cancel_completed Number of mvcc_statistics_update jobs which successfully completed their failure or cancelation process
++# TYPE jobs_mvcc_statistics_update_fail_or_cancel_completed counter
++jobs_mvcc_statistics_update_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_replication_stream_ingestion_fail_or_cancel_failed Number of replication_stream_ingestion jobs which failed with a non-retriable error on their failure or cancelation process
++# TYPE jobs_replication_stream_ingestion_fail_or_cancel_failed counter
++jobs_replication_stream_ingestion_fail_or_cancel_failed{node_id="1"} 0
++# HELP jobs_row_level_ttl_resume_completed Number of row_level_ttl jobs which successfully resumed to completion
++# TYPE jobs_row_level_ttl_resume_completed counter
++jobs_row_level_ttl_resume_completed{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_expired_pts_records Number of expired protected timestamp records owned by auto_config_env_runner jobs
++# TYPE jobs_auto_config_env_runner_expired_pts_records counter
++jobs_auto_config_env_runner_expired_pts_records{node_id="1"} 0
++# HELP jobs_auto_sql_stats_compaction_currently_running Number of auto_sql_stats_compaction jobs currently running in Resume or OnFailOrCancel state
++# TYPE jobs_auto_sql_stats_compaction_currently_running gauge
++jobs_auto_sql_stats_compaction_currently_running{node_id="1"} 0
++# HELP jobs_restore_protected_age_sec The age of the oldest PTS record protected by restore jobs
++# TYPE jobs_restore_protected_age_sec gauge
++jobs_restore_protected_age_sec{node_id="1"} 0
++# HELP jobs_schema_change_currently_paused Number of schema_change jobs currently considered Paused
++# TYPE jobs_schema_change_currently_paused gauge
++jobs_schema_change_currently_paused{node_id="1"} 0
++# HELP jobs_backup_expired_pts_records Number of expired protected timestamp records owned by backup jobs
++# TYPE jobs_backup_expired_pts_records counter
++jobs_backup_expired_pts_records{node_id="1"} 0
++# HELP jobs_auto_config_env_runner_fail_or_cancel_completed Number of auto_config_env_runner jobs which successfully completed their failure or cancelation process
++# TYPE jobs_auto_config_env_runner_fail_or_cancel_completed counter
++jobs_auto_config_env_runner_fail_or_cancel_completed{node_id="1"} 0
++# HELP jobs_create_stats_resume_completed Number of create_stats jobs which successfully resumed to completion
++# TYPE jobs_create_stats_resume_completed counter
++jobs_create_stats_resume_completed{node_id="1"} 0
++# HELP jobs_poll_jobs_stats_currently_paused Number of poll_jobs_stats jobs currently considered Paused
++# TYPE jobs_poll_jobs_stats_currently_paused gauge
++jobs_poll_jobs_stats_currently_paused{node_id="1"} 0
++# HELP jobs_migration_fail_or_cancel_retry_error Number of migration jobs which failed with a retriable error on their failure or cancelation process
++# TYPE jobs_migration_fail_or_cancel_retry_error counter
++jobs_migration_fail_or_cancel_retry_error{node_id="1"} 0
++# HELP jobs_schema_change_gc_protected_record_count Number of protected timestamp records held by schema_change_gc jobs
++# TYPE jobs_schema_change_gc_protected_record_count gauge
++jobs_schema_change_gc_protected_record_count{node_id="1"} 0
++# HELP jobs_create_stats_protected_age_sec The age of the oldest PTS record protected by create_stats jobs
++# TYPE jobs_create_stats_protected_age_sec gauge
++jobs_create_stats_protected_age_sec{node_id="1"} 0
++# HELP jobs_changefeed_resume_retry_error Number of changefeed jobs which failed with a retriable error
++# TYPE jobs_changefeed_resume_retry_error counter
++jobs_changefeed_resume_retry_error{node_id="1"} 0
+diff --git a/cockroachdb/tests/test_unit.py b/cockroachdb/tests/test_unit.py
+index 20761b4f13..8126d0ebaf 100644
+--- a/cockroachdb/tests/test_unit.py
++++ b/cockroachdb/tests/test_unit.py
+@@ -9,7 +9,14 @@ from datadog_checks.cockroachdb.metrics import METRIC_MAP, OMV2_METRIC_MAP
+ from datadog_checks.dev.testing import requires_py3
+ from datadog_checks.dev.utils import assert_service_checks, get_metadata_metrics
+ 
+-from .common import ADMISSION_METRICS, CHANGEFEED_METRICS, DISTSENDER_METRICS, assert_metrics, get_fixture_path
++from .common import (
++    ADMISSION_METRICS,
++    CHANGEFEED_METRICS,
++    DISTSENDER_METRICS,
++    JOBS_METRICS,
++    assert_metrics,
++    get_fixture_path,
++)
+ 
+ pytestmark = [requires_py3]
+ 
+@@ -47,6 +54,7 @@ def test_fixture_metrics(aggregator, instance, dd_run_check, mock_http_response,
+         pytest.param('changefeed_metrics.txt', CHANGEFEED_METRICS, id='changefeed'),
+         pytest.param('admission_metrics.txt', ADMISSION_METRICS, id='admission'),
+         pytest.param('distsender_metrics.txt', DISTSENDER_METRICS, id='distsender'),
++        pytest.param('jobs_metrics.txt', JOBS_METRICS, id='jobs'),
+     ],
+ )
+ def test_metrics(aggregator, instance, dd_run_check, mock_http_response, file, metrics):
