@@ -5,7 +5,7 @@ Harbor-format SWE-bench tasks, delivered in two batches. Every task is graded **
 ## Batches
 
 - **[batch-1/](batch-1/)** — 1500 tasks (prior delivery). See [batch-1/README.md](batch-1/README.md).
-- **[batch-2/](batch-2/)** — 1371 tasks. See [batch-2/README.md](batch-2/README.md).
+- **[batch-2/](batch-2/)** — 1357 tasks. See [batch-2/README.md](batch-2/README.md).
 
 Each batch's README has its language / category / subcategory (and, for batch-2, eval-pass) distributions.
 

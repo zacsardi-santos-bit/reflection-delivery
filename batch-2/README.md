@@ -1,6 +1,6 @@
 # batch-2 — Reflection SWE-Bench delivery (new)
 
-**Tasks:** 1371 passing (offline-graded via nop+oracle, ECR/GAR-imaged). Excludes 3 non-imaged + 10 QC reward-hack tasks from the 1,408 built.
+**Tasks:** 1357 passing (offline-graded via nop+oracle, ECR/GAR-imaged). Excludes 3 non-imaged + 10 QC reward-hack tasks from the 1,408 built, and 14 QC-clean tasks promoted into batch-1 (see batch-1 `ADDED:` tasks).
 
 ## Language distribution
 | language | tasks | % |

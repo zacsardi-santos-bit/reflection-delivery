@@ -1,9 +1,0 @@
-I'm building a feature where I need to figure out what route a given URL maps to, its full route name plus any dynamic segments and query params, and even the data that route would load, all without actually navigating there or touching what's currently on screen. Right now our router service in `@packages/ember-routing/lib/system/router.js` only knows how to navigate, and I need two new methods on it.
-
-First one's synchronous: I hand it a URL string and it gives me back structured route info (the full route name, the local/leaf name, parent-child relationship, the dynamic params, query params, and the param names too), or nothing at all if the URL doesn't match any known route. The second one's async: same URL string, but it actually loads the matched route's model and resolves with all that same route info plus the loaded model data attached.
-
-Big thing is neither of these can disturb anything. No transitions, no changing the active URL, no re-render. They're pure lookups.
-
-A couple edge cases I care about. If the app's got a custom root URL prefix configured and the URL I pass doesn't start with it, both methods should throw an informative error telling me the URL has to start with that rootURL prefix. If the URL just isn't recognized by the router at all, the sync one returns nothing (that's my no-match signal) and the async one should reject with a message that names the unrecognized URL so I can debug it. Oh and if loading the model for a matched route blows up, the async version should reject with whatever that underlying error was, don't swallow it.
-
-This unlocks stuff like breadcrumbs, prefetching, link validation, building navigation trees, basically any custom routing logic where I need to know what a URL resolves to (model data included) without going there.
