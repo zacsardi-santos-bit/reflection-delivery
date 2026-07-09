@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "apache/james-project"
-description = "I'm hitting a wall with shared mailbox rename and move on my mail server. When I've got a mailbox that's shared with me and I've actually been granted the rights to manage it, renaming or moving it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:apache-james-project-2646"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

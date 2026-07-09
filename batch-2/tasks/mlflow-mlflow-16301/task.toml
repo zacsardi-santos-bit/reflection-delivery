@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building out the MLflow TypeScript SDK and we've got a gap in the trace entity layer, there's literally no way right now to represent a trace's lifecycle state, where it lives, or the metadata ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:mlflow-mlflow-16301"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

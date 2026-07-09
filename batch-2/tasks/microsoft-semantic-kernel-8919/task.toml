@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm poking around the Semantic Kernel samples and there's a gap I keep hitting. We've got ChatCompletion examples for the different providers, and each Azure OpenAI one follows a nice consistent na..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:microsoft-semantic-kernel-8919"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "swc-project/swc"
-description = "I'm chasing down a nasty correctness bug in the decorator transform. When I put a decorator on a class that extends a base class, and that subclass touches parent class references inside its static..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:swc-project-swc-11781"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

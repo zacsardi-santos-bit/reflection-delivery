@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "prestodb/presto"
-description = "I'm working on Presto's file-based security access control and I need to add schema-level ownership rules. Right now when someone tries to create, drop, or rename a schema the system only checks wh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:prestodb-presto-15886"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -1,3 +1,0 @@
-patching file cockroachdb/changelog.d/17163.added
-patching file cockroachdb/datadog_checks/cockroachdb/metrics.py
-patching file cockroachdb/metadata.csv

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I've been going through the PaddlePaddle codebase and keep running into pointers that get used with zero null checks, so when one turns out to be null (caller passed it, a cast fell through, or a m..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:paddlepaddle-paddle-16774"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

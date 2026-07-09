@@ -1,6 +1,6 @@
 # batch-1 — Reflection SWE-Bench delivery (prior)
 
-**Tasks:** 1500 (prior delivery; Harbor format, offline nop+oracle validated).
+**Tasks:** 1500 (prior delivery; Harbor format, offline nop+oracle validated). 14 QC-failed tasks were removed and replaced by 14 QC-clean tasks promoted from batch-2 (prefixed `ADDED:`, carrying their `logs/` + `evals/`).
 
 ## Language distribution
 | language | tasks | % |

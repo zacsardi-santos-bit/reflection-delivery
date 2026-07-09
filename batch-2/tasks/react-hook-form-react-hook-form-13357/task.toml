@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "react-hook-form/react-hook-form"
-description = "I'm hitting a dirty state tracking bug in my form and I think it's an actual bug, not me holding it wrong. Here's the setup: I've got a form with default values that include an array of objects, an..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:react-hook-form-react-hook-form-13357"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

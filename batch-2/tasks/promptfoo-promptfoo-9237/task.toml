@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm working through our xAI provider integration and hit a few gaps I need cleaned up. First thing, the new Grok 4.3 family (both `grok-4.3` and `grok-4.3-latest`) isn't flagged as supporting reaso..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:promptfoo-promptfoo-9237"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

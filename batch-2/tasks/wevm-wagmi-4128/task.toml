@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "wevm/wagmi"
-description = "I'm working in this web3 frontend library and there's a gap around the standard wallet \"watch asset\" capability, you know the flow where a dapp asks the user's wallet to start tracking a token so i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:wevm-wagmi-4128"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

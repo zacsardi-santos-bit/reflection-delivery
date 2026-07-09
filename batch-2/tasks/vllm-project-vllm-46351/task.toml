@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm working on tool-call streaming in our LLM serving stack and hitting a real UX problem. When a model emits a tool call with a long string parameter (a summary, a report, whatever), we buffer the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:vllm-project-vllm-46351"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

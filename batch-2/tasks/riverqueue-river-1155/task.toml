@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "riverqueue/river"
-description = "I'm trying to run River behind a connection pooler (PgBouncer in transaction pooling mode) and it's blowing up. That mode forces a simple query protocol that has no support for extended binary enco..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:riverqueue-river-1155"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm adding tier-aware model handling to the CLI and right now it's kind of broken for non-premium users. If someone doesn't have premium access they can still end up with a premium auto-selected mo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:google-gemini-gemini-cli-22720"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

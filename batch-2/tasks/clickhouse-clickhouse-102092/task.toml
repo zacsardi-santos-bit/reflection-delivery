@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a validation gap in the string tokenizer that splits on a custom list of separator strings. Right now if I pass an empty separator list it correctly errors out, but if the list actually..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:clickhouse-clickhouse-102092"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

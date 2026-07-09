@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm digging into the API operations layer for our CLI that lists resources off a server, and I hit a pagination bug that's driving me nuts. When I call the list operation with a specific page size ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:apache-airflow-63048"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

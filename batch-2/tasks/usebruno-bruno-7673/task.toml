@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I'm adding a proper header list API to Bruno's scripting layer, both the request object (in pre-request scripts) and the response object (in test scripts). Right now scripts can only touch headers ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:usebruno-bruno-7673"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

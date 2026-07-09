@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm hitting a wall with cost tracking across all the different AI providers we talk to. Right now the provider config only lets me set one unified cost per token, and that single value gets applied..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:promptfoo-promptfoo-8254"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

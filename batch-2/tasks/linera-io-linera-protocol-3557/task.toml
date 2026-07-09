@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "linera-io/linera-protocol"
-description = "I'm wiring up our validator server so it can push profiling data to an external continuous profiling service, and right now there's just no way to point it at a backend because the config structs d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:linera-io-linera-protocol-3557"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

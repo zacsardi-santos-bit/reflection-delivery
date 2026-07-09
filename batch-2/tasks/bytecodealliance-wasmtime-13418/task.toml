@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm working with Wasmtime's async component model and I keep hitting a wall trying to pass streams and futures across component instance boundaries inside the same store. Right now if one component..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:bytecodealliance-wasmtime-13418"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

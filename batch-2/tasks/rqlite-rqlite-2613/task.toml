@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "rqlite/rqlite"
-description = "I'm digging into the database layer's checkpoint path and the way it reports results back to callers is too thin. Right now a checkpoint hands back just a byte count and an error, which tells me it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:rqlite-rqlite-2613"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

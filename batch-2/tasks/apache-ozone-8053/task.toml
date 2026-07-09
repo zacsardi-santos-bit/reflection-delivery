@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm working on snapshot garbage collection in our distributed object store and I keep hitting a race problem. When we process deleted keys or directory entries to figure out if they can be reclaime..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:apache-ozone-8053"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

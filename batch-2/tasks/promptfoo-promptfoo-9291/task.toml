@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm trying to make the exported HTML eval report actually usable, right now it's super bare and each result cell is just a flat string with no structure, no summary stats up top, and no way to sear..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:promptfoo-promptfoo-9291"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

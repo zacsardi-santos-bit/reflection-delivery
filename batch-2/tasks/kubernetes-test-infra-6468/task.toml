@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "kubernetes/test-infra"
-description = "I'm hitting a config health check failure on our CRI-containerd node e2e CI jobs. We've got the usual family living in the central job config, a regular variant plus serial and flaky ones, and a wh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:kubernetes-test-infra-6468"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

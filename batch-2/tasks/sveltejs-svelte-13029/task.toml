@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "sveltejs/svelte"
-description = "I'm upgrading testing deps in the Svelte repo and a bunch of tests broke after the bump. Two separate things going on and I need both fixed so the suite goes green with the new versions."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:sveltejs-svelte-13029"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

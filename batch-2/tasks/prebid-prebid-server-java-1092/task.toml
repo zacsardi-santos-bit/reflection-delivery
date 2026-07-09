@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "prebid/prebid-server-java"
-description = "I'm cleaning up how we handle impression-level first-party data during an auction in the prebid server and the current approach is bugging me. Right now the auction code has inline logic that strip..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:prebid-prebid-server-java-1092"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

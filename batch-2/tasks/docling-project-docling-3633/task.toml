@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm cleaning up the doc conversion pipeline and heading hierarchy is a mess right now. When we convert structured docs like PDFs, scanned reports, or legal texts that use numbered section headings,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:docling-project-docling-3633"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

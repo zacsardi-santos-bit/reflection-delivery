@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "web-infra-dev/rspack"
-description = "I'm bumping the bundler dep we use in test tooling and I need it pinned exactly, not left on a loose range. Right now the manifests specify a fuzzy version for the bundler as a dev dependency, but ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:web-infra-dev-rspack-8918"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "GitoxideLabs/gitoxide"
-description = "I'm poking at the refspec prefix logic in our git implementation and hit a real problem with how exact refs get turned into server-side prefixes when we talk to a remote. When I fetch a fully-quali..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:gitoxidelabs-gitoxide-2436"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "dependabot/dependabot-core"
-description = "I'm working on Dependabot's Maven support and I keep hitting a problem with plugins that follow Jenkins' continuous delivery release conventions, the ones that embed a git commit hash right in the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:dependabot-dependabot-core-13998"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

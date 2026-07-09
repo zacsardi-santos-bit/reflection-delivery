@@ -1,7 +1,0 @@
-I'm poking at kanidm (the identity management system) and hit two POSIX numeric ID problems that actually tie together, so I want to fix them as a pair.
-
-First thing, there's no way through the client library to remove a single attribute off a group. I need that so I can clear a group's auto-assigned numeric identifier (the gidnumber) and let it get regenerated, which comes up when I'm migrating to a new ID allocation scheme or resolving a conflict. So I want a method on the client that deletes a specific attribute from a group via the REST API, basically a group attribute purge that takes the group name and the attribute name and wipes that attribute's values.
-
-Second, the validation for manually specified numeric IDs is too strict. When I try to assign a user or group ID like 1000 it gets rejected, but on Linux the convention is that system-reserved IDs live below 1000 and regular user accounts start at 1000. So the threshold's wrong. Values of 1000 and above should be accepted as valid for manual assignment, and only values below 1000 should be rejected as system-reserved. Right now it's blocking legit configs in the standard user range.
-
-These need to work together, btw. After I purge a group's numeric identifier attribute, I should be able to turn around and assign a new value in the valid range (1000 or higher) without any error. So the fix isn't just the two pieces in isolation, it's that the purge plus a fresh manual assignment flows cleanly end to end.

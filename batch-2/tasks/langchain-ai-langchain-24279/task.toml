@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm building out our tool-calling layer and hit a gap around arguments that my app supplies at runtime, stuff like a user ID or session token that the model should never generate. Right now those a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:langchain-ai-langchain-24279"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

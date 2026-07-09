@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm cleaning up how the SQLite vector store connector works in Semantic Kernel and the connection handling is way more painful than it should be. Right now I have to create, open, and hand a live d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:microsoft-semantic-kernel-10972"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "NG-ZORRO/ng-zorro-antd"
-description = "I'm working on our Angular input wrapper component and I need to beef up its character counting. Right now it can show a basic count when the show-count toggle is on, but that's it, and I keep havi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:ng-zorro-ng-zorro-antd-9645"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

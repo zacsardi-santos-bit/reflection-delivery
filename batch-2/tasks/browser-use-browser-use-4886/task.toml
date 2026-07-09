@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "browser-use/browser-use"
-description = "I'm trying to fix token cost tracking for AI agents that route through OpenRouter as the model provider. Right now if a model gets accessed via OpenRouter and it's not in our local pricing database..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:browser-use-browser-use-4886"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

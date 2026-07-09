@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "cloudflare/workers-sdk"
-description = "I'm cleaning up the container listing command in our CLI and the non-interactive output is rough. Right now when you run the list command in a non-tty it dumps raw data that's basically unreadable ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:cloudflare-workers-sdk-12893"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

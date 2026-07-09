@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "medplum/medplum"
-description = "I'm hacking on the Medplum AWS deployment tooling and want to add support for the AWS-native malware protection for S3 (GuardDuty-style scanning) as a replacement for the third-party antivirus we c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:medplum-medplum-9153"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

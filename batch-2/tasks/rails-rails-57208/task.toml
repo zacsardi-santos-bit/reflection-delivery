@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "rails/rails"
-description = "I'm working with Active Job and there's just no built-in way to declare typed, persistent state on a job class right now. If I want a job to track a running counter or a flag across retries, or acr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:rails-rails-57208"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting a really confusing error in pandas when I try to read with memory-mapped mode turned on but I'm passing an in-memory buffer instead of a file on disk. Instead of something readable I ge..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:pandas-dev-pandas-65562"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

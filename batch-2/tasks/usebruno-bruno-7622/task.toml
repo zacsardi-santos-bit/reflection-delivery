@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I need to add proper Swagger 2.0 import support to Bruno. Right now we handle OpenAPI 3.x fine but when I feed it an older Swagger 2.0 spec the import either errors out or gives me a garbage collec..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:usebruno-bruno-7622"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

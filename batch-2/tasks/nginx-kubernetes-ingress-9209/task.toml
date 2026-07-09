@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "nginx/kubernetes-ingress"
-description = "I'm working on the NGINX Kubernetes Ingress Controller and I hit a real gap in how we track policy references from Ingress resources. Right now the policy reference checker always reports that Ingr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:nginx-kubernetes-ingress-9209"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

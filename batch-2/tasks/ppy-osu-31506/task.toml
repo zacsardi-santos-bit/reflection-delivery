@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "ppy/osu"
-description = "I'm hitting a nasty stutter with storyboards during gameplay and I think I know why. When I dim the background all the way up so the storyboard goes fully invisible, the engine stops sending it upd..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:ppy-osu-31506"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

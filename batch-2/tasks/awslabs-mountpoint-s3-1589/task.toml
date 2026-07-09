@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "awslabs/mountpoint-s3"
-description = "I'm cleaning up our filesystem integration tests, the ones that spin up a mock HTTP server to fake out S3 API responses so we can check that the filesystem layer handles and propagates errors corre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:awslabs-mountpoint-s3-1589"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "dolthub/dolt"
-description = "I'm chasing a really nasty data corruption bug in Dolt that only bites people who created tables on an older version and then upgraded. The newer version picked a different default storage encoding..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:dolthub-dolt-11132"
 os = "linux"
 cpus = 2
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000

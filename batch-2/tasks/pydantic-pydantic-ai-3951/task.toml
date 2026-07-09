@@ -4,13 +4,11 @@ source_type = "pr"
 
 [task]
 name = "pydantic/pydantic-ai"
-description = "I'm on the OpenAI Responses API model and the token pre-counting thing just isn't there. I set up usage limits with an input token ceiling plus the option to count tokens before each request, and n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:pydantic-pydantic-ai-3951"
 os = "linux"
 cpus = 1
 memory_mb = 4096
@@ -19,9 +17,9 @@ build_timeout_sec = 1800
 gpus = 0
 gpu_types = []
 workdir = "/workspace"
-network_mode = "no-network"
+network_mode = "network"
 allowed_hosts = []
-allow_internet = false
+allow_internet = true
 
 [agent]
 timeout_sec = 3000
