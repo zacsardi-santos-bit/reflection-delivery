@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a crash in ClickHouse when I query a partitioned table and my WHERE clause wraps a subquery membership check inside a bigger expression instead of using it directly. Like, instead of ju..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

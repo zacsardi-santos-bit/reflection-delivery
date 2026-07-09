@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting an annoying limitation in the completions API and I think it's just an arbitrary guard that needs to go. When I send a prompt as a list of token IDs and also set echo, the server flat-o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

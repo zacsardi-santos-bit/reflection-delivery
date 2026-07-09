@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "project-chip/connectedhomeip"
-description = "I'm hacking on the Matter/CHIP SDK's Java codegen pipeline and hit a portability wall. The generator spits out cluster code that relies on the modern Java cleanup API (the Cleaner-style thing that ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

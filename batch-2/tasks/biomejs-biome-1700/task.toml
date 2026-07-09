@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm running into a bug with path-based config overrides for JS globals in my linter and it's driving me nuts. So the setup is I've got a config where I declare some base globals at the top level, t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm working with the Microsoft Defender for Endpoint integration and there's a gap I keep hitting: I can pull software inventory, missing security updates, and vulnerabilities at the org level, but..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

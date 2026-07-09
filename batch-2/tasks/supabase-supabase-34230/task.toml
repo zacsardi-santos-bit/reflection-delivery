@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm trying to fix the test setup for the Logs Explorer page in our Supabase Studio app. A bunch of tests that check whether URL query params correctly populate the page's inputs are failing, specif..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

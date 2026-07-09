@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm working in the promptfoo codebase and want to start identifying our client on outgoing OpenAI requests. OpenAI has a mechanism where client apps can tag themselves in requests (helps with suppo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

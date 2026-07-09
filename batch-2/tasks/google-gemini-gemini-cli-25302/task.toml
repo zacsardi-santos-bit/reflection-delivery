@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building out a system that runs locally-defined subagents and I've hit a gap in the protocol layer, there's currently no way to run a local subagent and watch its progress (thinking steps, tool..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

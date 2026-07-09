@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm chasing a bug in the network driver operator around how we auto-create IP address pools at startup. Right now when we get a map of pool names to specs, the code parses and creates each one inli..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting a bunch of bugs in the streaming tool call parser for the MiniMax M2 model in vLLM, and they're all messing up inference output for anything that uses tool calls. First problem: when th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

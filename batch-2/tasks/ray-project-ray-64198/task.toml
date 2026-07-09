@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm cleaning up Ray Data's usage telemetry and there are two gaps in the workload payload I need closed. Right now the plan tree and the flat operator list in the recorded payload only carry anonym..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm working in the memories backend of the Codex Rust codebase and I need to add support for reading a memory file starting from a specific line instead of always dumping the whole thing from line ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

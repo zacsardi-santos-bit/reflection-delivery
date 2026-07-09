@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting a bug in the Cohere Command reasoning parsers in vLLM around how they figure out whether a model's thinking/reasoning phase has actually ended. The method that checks for reasoning comp..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

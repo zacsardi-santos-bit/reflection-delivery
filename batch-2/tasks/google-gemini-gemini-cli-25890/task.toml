@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm chasing down a bug in the home directory warning our CLI throws at startup, the one that's supposed to fire when someone launches the tool directly from their home dir since that can expose sen..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

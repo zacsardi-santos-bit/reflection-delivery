@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm working with the official Anthropic partner integration for LangChain and I want to add tool-calling and structured data extraction natively in the partner package. Right now there's no experim..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

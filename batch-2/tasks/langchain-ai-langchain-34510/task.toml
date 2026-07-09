@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm hardening the deserialization path for cloud AI model configs against SSRF, since right now if someone hands us a serialized payload for a cloud model that carries a custom endpoint or base URL..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-metadata/OpenMetadata"
-description = "I'm cleaning up the glossary term and tag detail pages in our data catalog frontend and the big problem is the glossary term detail page builds its whole tab config inline inside the main component..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

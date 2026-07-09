@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm hitting false positive lint warnings on our generator functions and it's getting noisy in CI. The rule I mean is the one that flags a generator that mixes a yield expression with a value-bearin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

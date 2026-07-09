@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm hitting a parsing bug when I try to wire up external function callbacks in my provider config on Windows. When I point at a Windows-style drive-letter path (like `C:` followed by the rest of th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm deep in the container Merkle tree code in Apache Ozone's data integrity system and hit a real gap. Right now when I build a container Merkle tree and add chunks to a block, the tree just record..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

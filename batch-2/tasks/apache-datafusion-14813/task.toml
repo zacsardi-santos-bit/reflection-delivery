@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/datafusion"
-description = "I'm digging into the physical query optimizer in our execution engine and the sort elimination logic around window aggregation nodes is making bad calls. When a plan has a window function and then ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

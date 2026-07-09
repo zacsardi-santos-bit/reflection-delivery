@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm cleaning up some duplicated gateway provider logic that's spread across two modules and it's getting annoying to maintain. Right now there's a gateway provider class plus a provider resolution ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

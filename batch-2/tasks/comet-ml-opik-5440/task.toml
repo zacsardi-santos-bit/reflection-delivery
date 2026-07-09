@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "comet-ml/opik"
-description = "I keep running into this annoying thing where we render text all over the app (error messages, log output, config values, random user-generated strings) and any URLs inside just show up as dead pla..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

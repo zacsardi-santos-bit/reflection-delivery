@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "comet-ml/opik"
-description = "I'm poking at the experiment evaluation UI and hit a confusing gap. When an eval run can't produce a pass/fail result, the status just comes back empty, totally blank, and users have no idea what's..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

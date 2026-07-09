@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm cleaning up the Android TV setup flow in Home Assistant and I want to fix a discoverability problem. Right now the ADB connection options, specifically the ADB server address, the ADB server po..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

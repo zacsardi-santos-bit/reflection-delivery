@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm working in a monorepo and my actual workspace folder is nested a few levels down inside a parent repo, and the AI assistant in VS Code just flat out ignores all the customization and instructio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

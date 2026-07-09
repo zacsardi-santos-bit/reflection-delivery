@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tursodatabase/turso"
-description = "I'm hitting a bug with the SQL statement splitter in the JavaScript bindings here, the thing that chops a SQL string into individual statements before we hand them to the database. Problem is trigg..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

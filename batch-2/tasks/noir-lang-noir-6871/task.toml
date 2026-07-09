@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "noir-lang/noir"
-description = "I'm mid-upgrade on the arithmetic libs that Noir's circuit VM leans on (ark-ff and friends), bumping them to their latest major versions across the workspace, and the core package plus its field el..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

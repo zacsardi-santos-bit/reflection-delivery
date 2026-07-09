@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm reworking the context memory in our agent so it stops throwing away everything on each compression cycle. Right now when we compress old conversation history it just spits out a prose blob that..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rocicorp/mono"
-description = "I'm building out batched key lookups in our incremental view maintenance query layer and hitting a wall. Right now a fetch request only supports a single equality constraint, so when a join operato..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

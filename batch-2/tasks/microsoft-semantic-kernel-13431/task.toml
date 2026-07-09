@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm working on Semantic Kernel and I keep hitting a gap around what happens when a kernel function returns an image as its result. Right now the framework doesn't handle this consistently across ba..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dotnet", "swe"]
 metadata = { vendor = "Mercor" }

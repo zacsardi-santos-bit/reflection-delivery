@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm building out case management for our security ops platform and there's a few gaps I need filled. First up, I want a script that searches cases by creation time range. Analysts should be able to..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm hitting a weird CSRF bug with the reactive HTTP extension in Quarkus and I could use your help. So CSRF validation works totally fine for my form-based POST endpoints, the token comes in as a f..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

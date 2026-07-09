@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm poking at the semantic kernel Python library and the import story for the data and exception stuff is driving me nuts. Right now to grab things like the vector search base classes, search resul..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

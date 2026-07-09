@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm building out the Cortex REST API integration pack and need a new script that pulls the tasks from a specific incident's playbook execution. The script we already have in this pack only filters ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

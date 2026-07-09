@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/transformers"
-description = "I'm training models with the transformers library inside a Kubeflow cluster and I want the training job to report progress back to the platform on its own without me wiring anything up. Right now K..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

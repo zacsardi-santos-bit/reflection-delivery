@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm hitting a gap in how we rebuild agent session history from stored events. When a completed coding session gets replayed, tool calls the agent actually ran (reading files, running commands, what..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

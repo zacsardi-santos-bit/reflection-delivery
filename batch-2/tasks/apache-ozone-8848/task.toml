@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "So I'm chasing down a storage leak in our Ozone object store around how block cleanup works during commit. The gist is clients pre-allocate more storage blocks than they actually use, and during co..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

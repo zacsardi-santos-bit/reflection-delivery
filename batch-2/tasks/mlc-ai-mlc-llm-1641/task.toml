@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlc-ai/mlc-llm"
-description = "I'm hitting a nasty import-time crash in the model compilation integration tests. The problem is our target config table builds hardware target objects for GPU devices right at module level, so the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "schemathesis/schemathesis"
-description = "I'm extending the error feedback system in our testing tool, the part that reads validation error responses from an API, pulls out field-level constraints, and feeds that back into test generation ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

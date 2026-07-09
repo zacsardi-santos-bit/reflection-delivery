@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm hitting a reproducibility wall with the random sample filter. Every time I run an eval it picks a different subset of my test cases, so I can't rerun the same selection, can't compare outputs b..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

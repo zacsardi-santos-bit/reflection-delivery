@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gatsbyjs/gatsby"
-description = "I'm hip-deep in the Gatsby Recipes system and two of the resource providers are giving me grief, the plugin one and the shadow file one, both living under the recipes resources area."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "browser-use/browser-use"
-description = "I'm trying to fix token cost tracking for AI agents that route through OpenRouter as the model provider. Right now if a model gets accessed via OpenRouter and it's not in our local pricing database..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

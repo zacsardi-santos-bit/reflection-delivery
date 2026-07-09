@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building out trace search in the MLflow tracking store and right now I can create and pull back individual traces just fine but there's no way to query across a bunch of them at once, which mea..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

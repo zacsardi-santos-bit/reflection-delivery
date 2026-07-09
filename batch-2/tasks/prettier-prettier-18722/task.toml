@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prettier/prettier"
-description = "I'm using prettier to format Angular HTML templates and I noticed arrow function expressions inside templates just don't get formatted at all. If I write an arrow function in a variable binding, in..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

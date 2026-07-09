@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I've been poking at Keras's dtype policy system in `@keras/src/dtype_policies` and hitting a bunch of API friction I want cleaned up."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

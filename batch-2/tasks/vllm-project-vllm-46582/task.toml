@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting a wall with the vLLM Rust server whenever a chat completion request carries a big body. If I send something around 2 MB, like a chunky template argument (long system prompt or a bunch o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

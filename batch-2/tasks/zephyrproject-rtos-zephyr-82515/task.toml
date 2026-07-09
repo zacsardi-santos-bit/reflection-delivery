@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "zephyrproject-rtos/zephyr"
-description = "I'm adding toolchain tracking to the Twister test runner and right now there's just no concept of which toolchain a given test instance was built with. It gets determined implicitly by the environm..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

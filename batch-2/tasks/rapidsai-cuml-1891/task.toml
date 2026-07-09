@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rapidsai/cuml"
-description = "I'm working on the distributed computing utilities in our multi-GPU ML library and I hit two gaps in the reduction helpers that I need sorted out."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

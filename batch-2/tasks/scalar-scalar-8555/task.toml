@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "scalar/scalar"
-description = "I'm poking at our API documentation viewer and hit a real gap: when an API description uses setext-style headings, the ones where you write the heading text and then underline it with a row of equa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

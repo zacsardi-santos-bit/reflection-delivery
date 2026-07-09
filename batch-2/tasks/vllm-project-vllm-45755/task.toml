@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm adding a new model family to our vLLM engine-based streaming parser infra and I could use a hand. Right now this family isn't wired into the token-aware engine parser path, so streaming outputs..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

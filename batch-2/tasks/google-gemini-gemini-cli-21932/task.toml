@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building out the vim-style editing mode in my CLI tool and there are a bunch of basic character-level commands that just aren't there yet, and it's driving me nuts because muscle memory keeps h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

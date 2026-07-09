@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm wiring up Storybook's dev server so it plays nice with AI coding assistants that auto-launch it in a preview mode. Right now when one of these assistants starts the dev server it hands the serv..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Netflix/dgs-framework"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["kotlin", "swe"]
 metadata = { vendor = "Mercor" }

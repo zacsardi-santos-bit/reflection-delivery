@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm tightening up input validation and error shapes across our server's API routes because right now a bunch of endpoints take query params and request bodies without checking them first, so bad in..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

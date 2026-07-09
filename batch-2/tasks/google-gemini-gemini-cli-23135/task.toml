@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm hitting a confusing thing with how context files get wrapped when they're loaded into memory. Right now when the memory discovery system pulls in a file, it wraps that file's content with a hea..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

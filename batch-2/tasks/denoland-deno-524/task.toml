@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "denoland/deno"
-description = "I'm hacking on the Deno runtime and there's no clean spot for parsing command-line flags right now, argument handling is scattered all over and there's no structured representation of the flags tha..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

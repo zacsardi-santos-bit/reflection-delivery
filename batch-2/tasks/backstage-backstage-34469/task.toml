@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm poking at the Backstage UI package and hit a real annoyance in the header navigation component. When my app is deployed under a sub-path, so the router's got a base path configured like \"/app\",..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

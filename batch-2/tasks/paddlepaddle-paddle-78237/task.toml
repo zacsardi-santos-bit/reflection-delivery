@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I keep hitting a crash when I run convolutions with a filter that has a zero-size kernel dimension. Instead of getting something readable, the bad filter goes straight through to the hardware backe..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

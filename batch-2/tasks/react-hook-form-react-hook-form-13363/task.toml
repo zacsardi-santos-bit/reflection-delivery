@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "react-hook-form/react-hook-form"
-description = "I'm hitting an annoying thing with our form library's dirty field tracking. When I diff current form values against the defaults to see what's actually been touched, I get back this cluttered blob ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

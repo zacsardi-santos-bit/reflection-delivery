@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "polarsource/polar"
-description = "We review org checkout setups and right now we only look at the success and return URLs as declared, we collect the URLs and their domains but never actually follow them to see where they land. Pro..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

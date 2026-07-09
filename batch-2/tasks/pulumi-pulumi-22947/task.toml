@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pulumi/pulumi"
-description = "I'm trying to add a knob to the deployment engine that skips the up-front plugin pre-installation phase. Right now when a deployment runs, the engine asks the language host for all required package..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

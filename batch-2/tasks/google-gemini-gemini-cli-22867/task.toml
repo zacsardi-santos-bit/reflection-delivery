@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building out a browser automation sub-agent and I need to bolt some safety controls onto the sensitive stuff. Right now the browser agent can fill forms, run scripts, and upload files totally s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

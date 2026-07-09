@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm working on the DNS proxy in cilium and I want to clean up how DNS message data flows through the pipeline. Right now the raw DNS protocol messages get passed all the way from the proxy core dow..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

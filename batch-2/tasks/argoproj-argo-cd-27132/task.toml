@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "argoproj/argo-cd"
-description = "I'm hitting a frustrating bug in the Argo CD application controller around cluster name lookups. When we resolve which server URL corresponds to a cluster name, say to count how many apps target a ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

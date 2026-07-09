@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm reworking the tracing destination management in MLflow and there's a cluster of related things I need to fix in one go. The main piece is the destination registry that tracks where traces get e..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

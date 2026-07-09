@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I've been staring at the Gleam compiler's error and warning output and the \"Hint\" sections are formatted inconsistently, which bugs me. In a bunch of messages the hint text shows up right after the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

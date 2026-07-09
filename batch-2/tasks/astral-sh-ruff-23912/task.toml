@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm hitting a nasty crash in the linter and I think it's in the type resolution path. If I write a function whose parameter has a type annotation that's a quoted string which itself wraps another q..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

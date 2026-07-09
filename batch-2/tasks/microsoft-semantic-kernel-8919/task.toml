@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm poking around the Semantic Kernel samples and there's a gap I keep hitting. We've got ChatCompletion examples for the different providers, and each Azure OpenAI one follows a nice consistent na..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm chasing down a bug in the ruff linter, specifically the auto-fix for the rule that strips out empty or trivial `finally` clauses from a try-finally block. When the fix unwraps a bare try-finall..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

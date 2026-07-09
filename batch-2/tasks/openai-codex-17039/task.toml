@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm working on the terminal UI for our AI coding assistant and the status command has this really annoying rendering bug I want to fix. Right now when you run status and it needs to go fetch fresh ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

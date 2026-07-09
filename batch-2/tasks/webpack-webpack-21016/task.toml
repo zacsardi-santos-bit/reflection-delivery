@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "webpack/webpack"
-description = "I'm adding HTML processing to webpack and I need a parser that turns a raw HTML string into a structured tree the rest of the toolchain can walk and rewrite, think discovering resource references i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

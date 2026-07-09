@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm building out Airflow provider components for Amazon SageMaker Unified Studio because there's nothing built-in for it yet, and my team runs notebooks there that we want to orchestrate straight f..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

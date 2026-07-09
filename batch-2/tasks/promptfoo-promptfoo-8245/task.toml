@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm running Codex agent evals that lean on skill files, and I keep hitting two things that make the results untrustworthy. First, when I pass custom env vars to the agent (say to set a custom home ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

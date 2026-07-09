@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm using the unused declarations lint rule and I want more control over how it hands out auto-fixes. Right now it treats unused imports and unused variables the same, it always emits a suggestion-..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

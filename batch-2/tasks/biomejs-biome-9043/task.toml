@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm hitting a parsing bug in Biome's CSS parser with Tailwind support turned on. When I write a utility class declaration where the utility name has a slash in it (Tailwind uses slash notation all ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

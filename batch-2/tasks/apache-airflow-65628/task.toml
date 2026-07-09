@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting two related bugs in the DAG run clear operation in Airflow, both in the clear endpoint that handles dry-run mode from the web UI and API."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

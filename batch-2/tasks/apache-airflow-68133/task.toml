@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm adding a configurable max byte size to the Airflow state store and it needs to work on both sides. On the server, the state store API endpoints for task state and for asset state should reject ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

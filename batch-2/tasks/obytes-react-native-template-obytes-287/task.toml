@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "obytes/react-native-template-obytes"
-description = "I'm working on a React Native app that uses utility-based styling (think Tailwind style class names) and supports dark mode, and I hit an annoying bug with our primary button. In light mode it look..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

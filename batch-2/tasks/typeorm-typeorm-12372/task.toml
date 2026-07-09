@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "typeorm/typeorm"
-description = "I'm working on our TypeORM codemod and hitting a bunch of false positives where transforms rewrite files that have nothing to do with TypeORM. Like if some project has a CLI options object or a log..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

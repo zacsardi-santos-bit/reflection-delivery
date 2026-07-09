@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm working on the Sure Petcare integration in Home Assistant and I want to expose a bit more of the pet position data that the API already hands back but that we're not surfacing today. When a pet..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

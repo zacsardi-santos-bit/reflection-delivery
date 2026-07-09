@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vercel/turborepo"
-description = "I've got a monorepo where one workspace package pulls in a dependency using the aliased package syntax, so it uses a local name but explicitly points at a specific npm registry package (the `npm:` ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

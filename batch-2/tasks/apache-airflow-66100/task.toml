@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm building out the docs publishing pipeline for provider releases and I need a script that figures out which providers should actually get their registry entries updated for a given wave. Right n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

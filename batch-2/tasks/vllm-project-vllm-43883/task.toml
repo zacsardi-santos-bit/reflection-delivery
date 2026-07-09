@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm working on the vllm Rust server and want to bring it up to parity with the Python server on request tracking, right now there's no way for clients or API gateways to get a per-request identifie..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

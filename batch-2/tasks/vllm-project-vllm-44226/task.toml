@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm poking at the render endpoints to see how my prompts tokenize before I actually fire them at the model, and I can get token IDs back fine but there's no way to know where each token lands in th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

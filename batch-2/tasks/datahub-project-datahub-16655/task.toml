@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "datahub-project/datahub"
-description = "I'm working on the DataHub metadata ingestion library and I want to teach the CLI to figure out what tool or environment is actually invoking it at runtime. Right now every outgoing API request loo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm running into a server crash in ClickHouse with the \"single value or null\" aggregate function (the singleValueOrNull one) when it's used over the semi-structured document column type, the JSON/O..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

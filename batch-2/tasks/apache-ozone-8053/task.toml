@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm working on snapshot garbage collection in our distributed object store and I keep hitting a race problem. When we process deleted keys or directory entries to figure out if they can be reclaime..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

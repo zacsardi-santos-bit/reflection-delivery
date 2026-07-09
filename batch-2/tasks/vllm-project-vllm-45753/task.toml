@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm adding CORS support to the Rust frontend of vLLM and right now there's basically nothing there, browser clients on a different origin just can't hit the API, and worse, passing CORS credential ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

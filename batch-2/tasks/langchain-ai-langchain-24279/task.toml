@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm building out our tool-calling layer and hit a gap around arguments that my app supplies at runtime, stuff like a user ID or session token that the model should never generate. Right now those a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

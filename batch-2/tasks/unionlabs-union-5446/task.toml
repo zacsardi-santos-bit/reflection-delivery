@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "unionlabs/union"
-description = "I'm building a liquid staking protocol on CosmWasm with a hub contract and a staker contract, and I've hit a gap in the unbonding lifecycle. When users unbond their liquid staking tokens the system..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

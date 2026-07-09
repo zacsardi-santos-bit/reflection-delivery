@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm running a distributed Airflow setup with remote log storage and I just noticed callback logs are getting lost. When callbacks run as subprocesses, their logs never make it to remote storage aft..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

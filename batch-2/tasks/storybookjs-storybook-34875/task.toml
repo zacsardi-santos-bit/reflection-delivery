@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm building out service infrastructure and hitting a wall because there's no global registry, services just get instantiated by handing their definitions straight to a factory function every time,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hacking on the vLLM IR operator framework and want to fix a cluster of related issues in one go. The big one is test reliability: right now all the IR operator tests share a single global regis..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

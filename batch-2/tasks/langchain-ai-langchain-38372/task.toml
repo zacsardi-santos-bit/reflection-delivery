@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm hitting a wall with multi-turn conversations when I run the model API in stateless mode, meaning responses aren't stored server-side between turns. My flow replays the whole conversation histor..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

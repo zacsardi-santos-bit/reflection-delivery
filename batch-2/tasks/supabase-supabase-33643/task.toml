@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm working with the pg-meta PostgreSQL metadata library and it already does table-level privilege stuff (list, grant, revoke) but there's just nothing at the column level, which is a real gap for ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

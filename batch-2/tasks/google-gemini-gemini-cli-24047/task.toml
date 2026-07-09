@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I've been chasing a handful of bugs in the sandboxed filesystem layer of our CLI and could use a hand landing all the fixes together. The nastiest one is a command injection on Windows: when a sand..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

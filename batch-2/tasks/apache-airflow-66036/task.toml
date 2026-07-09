@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm cleaning up how task logs render in the Airflow web UI and it's driving me a little nuts. When a task runs and spits out structured logs, the logging framework auto-injects the same task identi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

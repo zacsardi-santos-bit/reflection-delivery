@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sharkdp/fd"
-description = "I want to add a new search mode to the finder that does a true exact filename match. Right now the literal-string mode (the fixed-strings style flag that turns off regex interpretation) matches any..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

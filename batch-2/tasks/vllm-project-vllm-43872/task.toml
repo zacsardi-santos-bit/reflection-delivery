@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm adding Tencent's Hy3 model family to our tool-call parsing system and right now it just doesn't recognize those models at all, so when someone spins up a Tencent Hy3 model with tool-calling tur..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

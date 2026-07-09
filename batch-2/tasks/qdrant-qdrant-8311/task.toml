@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "qdrant/qdrant"
-description = "I'm adding a new gRPC-only service to Qdrant that lets authorized clients read raw files straight out of a collection's on-disk storage. Right now there's just no way through gRPC to check whether ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

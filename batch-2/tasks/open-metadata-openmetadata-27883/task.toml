@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-metadata/OpenMetadata"
-description = "I'm adding interactive edge behavior to our knowledge graph viz and right now edges are totally dead, hovering does nothing and clicking does nothing, which is annoying because edges carry the actu..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

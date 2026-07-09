@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting inconsistent skewness and kurtosis results depending on how I trigger the computation, and it's driving me nuts. If I take a constant series (all identical values, so variance is litera..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

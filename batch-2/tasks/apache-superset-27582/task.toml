@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/superset"
-description = "I'm trying to reuse dataset metric formulas inside custom SQL expressions in Superset and right now the only option is to copy-paste the metric's underlying SQL by hand, which is super fragile sinc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

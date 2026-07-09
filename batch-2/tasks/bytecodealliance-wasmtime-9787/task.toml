@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm hacking on the Winch baseline compiler backend for AArch64 in Wasmtime and hit two related problems around int/float stuff that I need sorted out."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

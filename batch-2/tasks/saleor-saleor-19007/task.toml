@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "saleor/saleor"
-description = "I'm hitting a dedup bug in our attribute filtering and it's messing up storefront filters. When I query attributes scoped to a specific product category or collection, the same attribute shows up m..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

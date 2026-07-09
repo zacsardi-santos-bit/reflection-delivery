@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Expensify/App"
-description = "We've got a mobile hybrid app where some users are administratively locked into the new app experience and shouldn't be able to go back to the old app, and right now that lock just isn't being enfo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

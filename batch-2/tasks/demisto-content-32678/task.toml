@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm building out the GCP Enrichment and Remediation content pack and I need a new automation script that figures out which firewall rules in a GCP environment might be letting in the traffic we're ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

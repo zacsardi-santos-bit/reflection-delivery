@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm hitting a gap in our Avro logical type conversion where anything nested doesn't get resolved. The utility that runs after reading an Avro file converts top-level logical type fields fine, so a ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

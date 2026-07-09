@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "aquasecurity/trivy"
-description = "I'm adding support for Python's new PEP 751 standardized lock file format to Trivy, we already handle pip, Pipenv, Poetry, and uv but this cross-tool lock spec is new and nothing scans it yet, so a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

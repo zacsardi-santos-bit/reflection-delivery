@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/uv"
-description = "I'm hitting a couple of annoying bugs when I combine upgrade flags in our dependency compilation tool, and I think they both come down to how we merge the global upgrade settings with the per-packa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

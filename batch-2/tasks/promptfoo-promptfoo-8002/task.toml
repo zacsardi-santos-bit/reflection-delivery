@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm building out our red team testing framework for insurance AI systems and the existing plugins are too narrow, so I need to expand a couple and add a new one. Right now the coverage discriminati..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

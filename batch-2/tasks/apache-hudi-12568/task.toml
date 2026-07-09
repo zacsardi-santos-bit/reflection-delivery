@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm deep in the rollback path for Merge-on-Read tables and hitting a bug with how log files get handled when several log files from the same file group need rolling back. The tricky part is the beh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

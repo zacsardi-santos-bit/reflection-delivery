@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm working on the Biome linter and want to add a new accessibility rule that checks ARIA attribute values in HTML and the component template flavors we support (Vue, Svelte, Astro). We already val..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

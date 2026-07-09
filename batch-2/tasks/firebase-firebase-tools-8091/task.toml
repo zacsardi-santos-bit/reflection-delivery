@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "firebase/firebase-tools"
-description = "I'm bumping the JSON schema validation library we use for firebase config validation up to a newer major version because I need it to play nice with newer TypeScript tooling, but the upgrade broke ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

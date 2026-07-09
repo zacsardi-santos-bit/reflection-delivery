@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I'm hitting two problems with the dynamic-to-static save path in this deep learning framework, the part where you save neural network layers as static computation graphs. First one: when I decorate..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

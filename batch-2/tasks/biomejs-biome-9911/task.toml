@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I've been moving a bunch of components off template literal string interpolation and onto plain JSX, and I keep leaving stray dollar signs behind before curly-brace expressions. In JSX you don't ne..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

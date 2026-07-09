@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I'm working on Bruno's API spec panel, the \"try it out\" thing that lets people fire requests straight from a Swagger/OpenAPI doc, and right now those requests go out from the frontend directly whic..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

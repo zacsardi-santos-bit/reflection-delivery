@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm poking at the Anthropic integration config flow in Home Assistant and hit a real gap around the extended reasoning setup. Right now folks can set the thinking budget higher than (or equal to) t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

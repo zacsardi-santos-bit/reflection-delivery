@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm chasing down a nasty autoscaling bug in Ray Serve where our scale-up and scale-down delays don't actually respect the wall-clock time operators configure. The way it works now, the delay logic ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

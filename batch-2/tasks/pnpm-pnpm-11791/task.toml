@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm wiring patch awareness into the dependency resolution phase of our package manager and right now the resolver totally ignores configured dependency patches when it builds the resolved dependenc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm looking at how Storybook's create-story-file feature builds new story files and there's a security-ish bug that's been bugging me. When it generates the TypeScript/JavaScript source it just dro..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

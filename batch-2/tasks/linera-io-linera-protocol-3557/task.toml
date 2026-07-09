@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "linera-io/linera-protocol"
-description = "I'm wiring up our validator server so it can push profiling data to an external continuous profiling service, and right now there's just no way to point it at a backend because the config structs d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

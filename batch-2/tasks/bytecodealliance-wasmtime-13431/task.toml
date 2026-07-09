@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "Digging into our WASI filesystem layer and I think we've got a real security hole. When a guest opens a file with the truncation flag set, the host just goes ahead and truncates without ever checki..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

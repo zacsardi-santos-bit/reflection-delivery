@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm cleaning up the MLflow GenAI scoring infrastructure and want to consolidate how scorer integrations talk to LLM backends. Right now every scorer framework we support (deepeval, phoenix, ragas, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

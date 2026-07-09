@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building out a guardrail system for the MLflow AI gateway and could use your help wiring it up. Right now the gateway just routes requests straight to the AI providers with zero inspection, and..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

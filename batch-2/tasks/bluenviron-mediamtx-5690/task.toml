@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bluenviron/mediamtx"
-description = "I'm trying to get better visibility into reader connections on my streaming server through the metrics endpoint. Right now all I can see is a total reader count per path, and it's stuck in the depr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

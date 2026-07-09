@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "opensearch-project/OpenSearch-Dashboards"
-description = "I'm building out a new \"navigation-next\" mode for OpenSearch Dashboards where sidebar links get grouped by use case (Observability, Analytics, Management, that kind of thing) instead of the flat un..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

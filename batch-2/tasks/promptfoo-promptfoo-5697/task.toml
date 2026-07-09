@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm adding an \"exists\" operator to the eval results metadata filtering and could use a hand wiring it end to end. Right now on the eval results side I can only filter metadata where a field equals ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

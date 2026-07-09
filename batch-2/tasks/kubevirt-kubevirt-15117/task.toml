@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubevirt/kubevirt"
-description = "I'm deep in the live VM migration subsystem and I keep hitting a cluster of related bugs that I want fixed together, they all touch the migration lifecycle so it makes sense to do them in one pass."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

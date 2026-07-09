@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bluenviron/mediamtx"
-description = "I've been digging into the always-available streaming config and hit three separate things that need cleaning up together. First problem: when I set up a path without listing any always-available t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

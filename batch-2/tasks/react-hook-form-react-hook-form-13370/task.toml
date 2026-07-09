@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "react-hook-form/react-hook-form"
-description = "I've got two dirty-field tracking bugs in my forms library and both are messing up how I show unsaved changes."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gfx-rs/wgpu"
-description = "I'm hitting a nasty crash in the WGSL front-end. If I feed the parser a shader with pathologically deep nesting, like thousands of levels of nested function calls chained together, or thousands of ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

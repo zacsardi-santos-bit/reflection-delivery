@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "NG-ZORRO/ng-zorro-antd"
-description = "I'm working on our Angular input wrapper component and I need to beef up its character counting. Right now it can show a basic count when the show-count toggle is on, but that's it, and I keep havi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

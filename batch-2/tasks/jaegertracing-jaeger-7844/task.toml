@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jaegertracing/jaeger"
-description = "I'm cleaning up the Cassandra storage backend in Jaeger and there's this annoying intermediate hop I want gone. Right now when we convert between OTel traces and Cassandra-stored spans, the code bo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

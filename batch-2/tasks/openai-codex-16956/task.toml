@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm chasing a bug in the security review piece of our Rust codebase, the bit that renders a transcript of recent conversation history so a human or automated reviewer can evaluate what happened. Th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

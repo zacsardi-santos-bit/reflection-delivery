@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ls1intum/Artemis"
-description = "I'm working on the AI tutor suggestion component in Artemis, the bit that shows tutors AI-generated replies to student questions in course discussion channels, and I've got a handful of gaps to clo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

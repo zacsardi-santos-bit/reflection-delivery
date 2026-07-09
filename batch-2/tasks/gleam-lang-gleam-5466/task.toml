@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I keep hitting this annoying thing where Gleam files saved on Windows won't parse. Some editors (notably on Windows) auto-insert an invisible Unicode Byte Order Mark right at the very start of the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

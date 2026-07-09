@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm poking at the analytics module that emits guardian review events, you know, the records our security review component writes when it approves or denies an AI-initiated action. Right now a coupl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

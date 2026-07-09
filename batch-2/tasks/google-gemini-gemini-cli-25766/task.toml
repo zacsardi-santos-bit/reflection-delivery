@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm poking at the plan mode stuff in our CLI and the file path handling is kind of a mess. Right now when the AI writes or edits a plan file it has to give the path relative to the workspace root, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

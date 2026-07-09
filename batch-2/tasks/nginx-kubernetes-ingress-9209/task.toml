@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nginx/kubernetes-ingress"
-description = "I'm working on the NGINX Kubernetes Ingress Controller and I hit a real gap in how we track policy references from Ingress resources. Right now the policy reference checker always reports that Ingr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

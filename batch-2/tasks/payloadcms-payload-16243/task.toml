@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "payloadcms/payload"
-description = "I'm hitting a wall trying to add a custom view to a collection in the admin panel, like a grid or map view that lives at its own sub-route under the collection. I've set up the view with both a pat..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

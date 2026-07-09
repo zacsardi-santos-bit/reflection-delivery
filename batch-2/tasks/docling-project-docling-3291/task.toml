@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm hitting a bug with the rapid OCR path in docling where the language option I set just doesn't do anything for model selection. I've got it configured for English but it still loads the Chinese ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

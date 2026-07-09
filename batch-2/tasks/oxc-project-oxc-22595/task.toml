@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm poking at the JS minifier and pure-flag annotations aren't landing right. Those are the markers we stick on a constructor call to say it has no side effects, and right now they get set in an ea..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

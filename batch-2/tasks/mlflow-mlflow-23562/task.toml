@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building out the MLflow TypeScript tracing SDK and hit a gap: right now traces only land in MLflow experiments, but for our Databricks agents in prod we really need to route trace data straight..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

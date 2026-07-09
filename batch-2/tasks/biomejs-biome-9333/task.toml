@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm hitting a panic in the HTML formatter whenever I try to format files that have an inline element sitting right before a self-closing void element. Think something like a code snippet element or..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

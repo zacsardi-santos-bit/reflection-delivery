@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm chasing a bug in the chat widget's message submission path where the permission profile gets silently dropped. When a session's set up with the older \"external sandbox\" sandbox policy variant p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

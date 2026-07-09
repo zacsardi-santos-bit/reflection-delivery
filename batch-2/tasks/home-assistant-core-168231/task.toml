@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm adding diagnostics support to the Duco ventilation integration for Home Assistant, since right now if someone's device is acting up there's no clean way to pull a report through the built-in HA..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

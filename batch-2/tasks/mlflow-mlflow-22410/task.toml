@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building MLflow tracing for a coding assistant and need code that turns our JSONL transcript files into proper traces. Each transcript records everything from a turn: the user message, model re..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

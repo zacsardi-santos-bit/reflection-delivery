@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I've got a Roborock Q10 S5+ that uses the newer push-based protocol and the Home Assistant Roborock integration just doesn't know what to do with it. The device shows up fine in my Roborock account..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

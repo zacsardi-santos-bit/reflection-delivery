@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm poking at our summarization middleware and hit a real problem with how it keeps trigger conditions in memory after init. It handles simple single-condition triggers fine (stuff like summarize a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

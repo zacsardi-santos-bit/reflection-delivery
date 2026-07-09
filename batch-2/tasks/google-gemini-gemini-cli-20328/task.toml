@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I've been poking around the search tools and there's this naming mismatch that keeps tripping me up. The parameter that excludes files from a search already has a nice descriptive name ending in `_..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

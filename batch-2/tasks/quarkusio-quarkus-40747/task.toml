@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm hitting a weird bug in the WebSocket server extension around how error handlers get invoked when a binary message handler throws a runtime exception. Right now when the framework delegates to a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

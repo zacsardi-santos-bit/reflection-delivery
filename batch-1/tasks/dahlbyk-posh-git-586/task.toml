@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dahlbyk/posh-git"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["powershell", "swe"]
 metadata = { vendor = "Mercor" }

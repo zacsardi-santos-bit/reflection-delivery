@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working on a CLI that ships two ways, as a plain Node.js script and as a self-contained standalone binary, and I hit a nasty bug in the relaunch path. When the app needs to re-invoke itself wit..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

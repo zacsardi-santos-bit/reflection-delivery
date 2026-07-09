@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/inlong"
-description = "I'm working on InLong Sort and hit a gap in our end-to-end test setup. We've started supporting a newer major version of the stream processing runtime (Flink), but all our existing e2e test modules..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

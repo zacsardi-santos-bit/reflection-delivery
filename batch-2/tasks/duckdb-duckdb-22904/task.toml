@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "duckdb/duckdb"
-description = "I'm poking at our CI test runner script and hit two things I want fixed. First one's small: when a test blows past the configured runtime threshold and we log that, right now the line looks identic..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

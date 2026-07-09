@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm knee-deep in container reconciliation for Apache Ozone and hit a stub I need to actually fill in. The method that's supposed to compare a datanode's local container checksum tree against a peer..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

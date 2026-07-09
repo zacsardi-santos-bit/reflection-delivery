@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm hitting a peer dependency resolution bug in pnpm around a diamond-shaped peer graph and it's producing a busted lockfile. Here's the setup: I've got a plugin that peer-depends on both a parser ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

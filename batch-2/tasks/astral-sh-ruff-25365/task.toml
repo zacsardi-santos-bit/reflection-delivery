@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm cleaning up some edge cases in our language server's request handling and hitting a few rough spots. The core issue is that requests can arrive for files the server doesn't actually have open, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

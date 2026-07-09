@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "helidon-io/helidon"
-description = "I'm poking at the OCI metrics CDI integration in Helidon (the bean over in `@integrations/oci/metrics/cdi/src/main/java/io/helidon/integrations/oci/metrics/cdi/OciMetricsCdiExtension.java` or where..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

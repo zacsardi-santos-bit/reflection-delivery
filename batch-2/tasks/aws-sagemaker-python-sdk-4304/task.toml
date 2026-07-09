@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "aws/sagemaker-python-sdk"
-description = "I've got a bunch of endpoints and training jobs that were spun up through JumpStart, and it's annoying that I still have to hand the SDK the model id and version every time I want a predictor or wa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

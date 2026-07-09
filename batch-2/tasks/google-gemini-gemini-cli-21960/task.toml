@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm chasing a few related retry and cancellation bugs in the streaming UI and they all feed into each other. The main thing is when I cancel an in-progress request, the UI sometimes keeps showing a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

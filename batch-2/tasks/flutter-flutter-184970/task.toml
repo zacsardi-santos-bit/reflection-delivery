@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm cleaning up the iOS physical-device debugging setup in the Flutter tools and I keep hitting the version-specific branching that decides which commands to send to the debugger session. Right now..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

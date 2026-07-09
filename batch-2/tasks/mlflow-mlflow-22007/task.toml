@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm hitting a wall with the MLflow judge evaluation system where everything good depends on that optional third-party routing library being installed. When it's missing my team is stuck with a tiny..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

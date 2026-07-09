@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rancher/rancher"
-description = "I'm working on the project-scoped secrets controller in Rancher and hit a labeling gap. Right now the project-scoped secrets we store in the management namespace only carry a label identifying whic..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

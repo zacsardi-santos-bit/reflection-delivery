@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm hitting a really annoying bug in promptfoo's assertion checking. When I write a \"contains\" assertion where the value has a comma in it, like I want to check that the output contains the phrase ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

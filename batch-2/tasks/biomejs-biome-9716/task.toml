@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm adding an HTML accessibility lint rule to biome that checks heading elements for meaningful, screen-reader-friendly content. We already have this check on the JSX side, but it doesn't touch pla..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

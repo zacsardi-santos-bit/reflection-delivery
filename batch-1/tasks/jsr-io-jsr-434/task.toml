@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jsr-io/jsr"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

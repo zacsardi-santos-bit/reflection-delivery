@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "awslabs/aws-c-common"
-description = "I'm cleaning up API inconsistencies in our C byte buffer library before it gets widely deployed, since inconsistent arg ordering causes bugs when callers accidentally swap same-typed args, and nami..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["c", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hitting a bunch of related bugs with metric tracking on multi-output models when I pass metrics as a dictionary, and I think they all live in the same metric-to-output mapping logic. Basically ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm building a new feed integration for Google Threat Intelligence so we can pull their curated threat indicator lists straight into our security platform instead of having analysts track this stuf..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

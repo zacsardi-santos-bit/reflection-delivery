@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/datafusion"
-description = "I'm working with DataFusion's SQL unparser and I keep hitting a wall generating SQL for BigQuery. The issue is column aliases with special characters in them, stuff like parentheses around function..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

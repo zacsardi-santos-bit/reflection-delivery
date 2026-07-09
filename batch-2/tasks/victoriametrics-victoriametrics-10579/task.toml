@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "VictoriaMetrics/VictoriaMetrics"
-description = "I'm poking at the Graphite tag support in VictoriaMetrics and hit something that feels wrong. The tag series registration endpoints, the ones that handle registering a single Graphite tag series an..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

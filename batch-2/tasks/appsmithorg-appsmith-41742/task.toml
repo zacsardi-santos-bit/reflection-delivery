@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "appsmithorg/appsmith"
-description = "I'm chasing down a nasty data corruption bug in our REST API connector. When someone uploads a binary file like a PDF and binds that file data to a query or template, the content gets silently mang..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

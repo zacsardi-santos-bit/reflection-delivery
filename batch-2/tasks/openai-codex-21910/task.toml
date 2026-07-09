@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm cleaning up the Python SDK and the way we handle permission escalations right now is kind of a mess. Every thread and turn operation makes you set two separate low-level params together, one be..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

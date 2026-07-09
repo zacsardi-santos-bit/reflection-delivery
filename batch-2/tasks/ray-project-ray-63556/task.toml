@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm poking at Ray Serve's controller health monitoring and hit two gaps I want closed. First one, the health metrics snapshot tracks how many control loops have completed but not when the last one ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

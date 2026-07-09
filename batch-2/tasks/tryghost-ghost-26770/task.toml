@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/Ghost"
-description = "I'm doing two small front-end changes in the Ghost codebase and want them handled together. First one's a copy fix in the member portal's Transistor podcast integration. Right now the action button..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

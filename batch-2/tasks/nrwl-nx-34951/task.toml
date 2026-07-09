@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I want to add shell tab completion to the nx CLI because right now you get total silence when you Tab after an nx command, even in a monorepo with 50+ projects, so you're stuck remembering every pr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

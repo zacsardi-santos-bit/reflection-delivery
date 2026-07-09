@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubevela/kubevela"
-description = "I'm hitting two separate issues with component definitions that carry custom health checks and status display templates, and I could use help fixing both."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

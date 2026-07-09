@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I've been digging into the Mistral provider and I'm worried about sensitive data leaking through caching and logging. Right now when it builds cache keys it seems to use raw request data, so the ac..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

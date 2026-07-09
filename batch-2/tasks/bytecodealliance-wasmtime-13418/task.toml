@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm working with Wasmtime's async component model and I keep hitting a wall trying to pass streams and futures across component instance boundaries inside the same store. Right now if one component..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

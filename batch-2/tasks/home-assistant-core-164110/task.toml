@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm poking at the Aladdin Connect garage door integration for Home Assistant and noticed it's missing diagnostics support, which is that standard HA feature that lets you dump the live state of an ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

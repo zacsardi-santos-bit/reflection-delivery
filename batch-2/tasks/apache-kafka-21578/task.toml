@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm digging into making our Kafka Streams RocksDB state stores survive crashes better. Right now if the app dies or shuts down uncleanly there's no way to tell from the store itself whether it clos..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hitting a annoying gap in Keras where a bunch of ops don't validate axis args during shape inference, so when I'm building a model symbolically and pass an out-of-range axis to something like s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

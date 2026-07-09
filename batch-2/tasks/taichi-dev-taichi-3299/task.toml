@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "taichi-dev/taichi"
-description = "I'm poking at the experimental AST refactorer in Taichi and hitting a bunch of gaps when I turn it on. First off, augmented assignment inside kernels is broken, so things like adding to a field in ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

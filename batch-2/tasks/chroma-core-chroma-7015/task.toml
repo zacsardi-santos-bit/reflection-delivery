@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "chroma-core/chroma"
-description = "I'm working on a system where async functions get attached to data collections and run in the background as data gets ingested, and I've hit a gap in the coordinator layer around safely finalizing ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

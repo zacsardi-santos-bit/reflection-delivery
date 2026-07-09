@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nix-rust/nix"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

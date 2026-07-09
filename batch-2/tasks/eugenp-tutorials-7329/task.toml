@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "eugenp/tutorials"
-description = "I'm on a Spring reactive project and I keep copy-pasting the same little filter logic every time I spin up a `WebClient`, so I want one central utility class with static factory methods that each h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

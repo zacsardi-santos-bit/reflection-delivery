@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm working in the Apache Pinot Maven build and I want to stop people from declaring dependency versions in the wrong place, right now nothing prevents a developer from pinning a version directly i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

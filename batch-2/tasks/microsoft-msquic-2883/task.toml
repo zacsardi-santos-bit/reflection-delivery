@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/msquic"
-description = "I'm hitting a confusing spot in the QUIC library around stream shutdown events. When a stream gets a shutdown-complete notification because the connection itself closed, the payload doesn't actuall..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

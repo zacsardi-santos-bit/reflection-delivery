@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm wiring a policy engine into the session layer so tool confirmation requests coming from subagents actually get handled instead of hanging forever unanswered. Right now when a subagent wants to ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

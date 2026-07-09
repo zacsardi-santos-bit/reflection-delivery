@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm hitting a bug in the async zero-sleep lint rule, the one that flags `trio.sleep(0)` style calls where the duration is zero and offers an autofix to swap them for the equivalent checkpoint call ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

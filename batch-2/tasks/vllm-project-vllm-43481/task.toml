@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm poking at the Rust chat layer in vllm and hit a gap in how we auto-route model names to tool-call parsers. Right now there's no entry for the InternLM2 family, so anybody loading an InternLM2 o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

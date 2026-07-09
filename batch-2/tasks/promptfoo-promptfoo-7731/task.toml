@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm hitting a wall with the post-test lifecycle hook in our extension system. The hook fires after each test case and I can see the result inside it just fine, but anything I return from the hook j..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

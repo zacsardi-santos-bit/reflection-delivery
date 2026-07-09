@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new CSS lint rule to the nursery group in our linter that flags selectors chaining too many class selectors together. The motivation is pretty simple, when you pile up a bunch of cl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

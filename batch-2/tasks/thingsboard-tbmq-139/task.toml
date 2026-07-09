@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "thingsboard/tbmq"
-description = "I'm working on our MQTT broker and I want to start tracking two things about each client session, the MQTT protocol version the client connected with (like MQTT 3.1.1 or MQTT 5) and the name of the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

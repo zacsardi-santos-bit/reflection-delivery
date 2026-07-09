@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "payloadcms/payload"
-description = "I'm hitting a nasty data-loss bug with collections that combine cloud storage (local file storage disabled) and draft versioning. When I save a draft that includes a new file upload, two bad things..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

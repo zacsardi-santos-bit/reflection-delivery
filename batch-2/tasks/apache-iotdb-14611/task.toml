@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/iotdb"
-description = "I'm hitting a gap in IoTDB's table data model when I load data files into my tables. The tree (hierarchical) model already does automatic type conversion on load, so if a file's column types don't ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

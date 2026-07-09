@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gatsbyjs/gatsby"
-description = "I'm poking at the Gatsby Recipes renderer and hitting two annoying gaps in the plan output it spits out. When the renderer builds up its list of planned changes, each plan item is missing the resou..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

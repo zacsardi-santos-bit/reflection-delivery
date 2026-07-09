@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm digging into the tool confirmation and policy system in our AI agent framework, the part that handles external tool integrations, and I hit two things I want fixed in the scheduler's policy mod..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

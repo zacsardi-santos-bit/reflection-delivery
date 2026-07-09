@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "beetbox/beets"
-description = "I'm refactoring beets autotagging so match result objects own their metadata-application logic instead of leaning on some standalone helper that callers have to invoke by hand, passing in the match..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm poking at Airflow's template field serialization and hit a confusing thing with the sentinel objects we use to mark template fields as either \"not yet set\" or \"set dynamically during execution...."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm hitting two group-by aggregation problems in Pinot and want both sorted out. First one's a straight-up crash: when I run a group-by query with a limit on the number of groups and that limit end..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

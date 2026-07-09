@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm adding a server-wide default result storage config to Prefect. Right now there's no way to set one shared storage location at the server level, every flow or deployment has to configure its own..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

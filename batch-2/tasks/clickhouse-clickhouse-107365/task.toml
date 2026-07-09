@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a bug with the sorting-prefix fill feature in ClickHouse. When I sort a query by a string column using a case-insensitive collation and layer range filling on a numeric column, strings ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

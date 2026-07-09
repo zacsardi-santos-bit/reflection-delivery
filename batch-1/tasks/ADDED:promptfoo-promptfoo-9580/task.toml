@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I set up promptfoo to talk to our on-prem deployment with a custom host URL, but a bunch of features just ignore it and hit the public cloud endpoint anyway. Guardrail checks, the email verificatio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

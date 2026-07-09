@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langgraph"
-description = "I'm working with the streaming API for graph runs and merged multi-channel output is coming out wrong. When I combine several output channels into one sequence, the events don't yield in the order ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

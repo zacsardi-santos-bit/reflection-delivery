@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I'm hitting a crash on the backward pass when I combine gradient checkpointing (recompute) with pipeline parallelism. The problem is my recomputed function captures some tensors from the surroundin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

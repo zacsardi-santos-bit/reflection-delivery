@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm cleaning up a bunch of synchronous file system calls in our Node.js app because sync I/O blocks the whole event loop while the disk operation runs, which kills throughput and responsiveness on ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

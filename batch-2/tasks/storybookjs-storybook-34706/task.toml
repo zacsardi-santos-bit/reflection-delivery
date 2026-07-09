@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm dealing with a Storybook feature where an AI agent generates stories, and there's an onboarding checklist that tracks whether the AI setup is complete. Right now the \"setup done\" check is way t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

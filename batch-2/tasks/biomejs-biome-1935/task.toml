@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'd like a new nursery lint rule that catches assertion calls sitting outside of proper test runner blocks. I keep seeing folks accidentally drop an assertion at the top level of a file, or tuck it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

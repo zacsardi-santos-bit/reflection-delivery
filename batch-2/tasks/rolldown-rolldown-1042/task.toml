@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rolldown/rolldown"
-description = "I'm doing some cleanup on the testing infra for our Rust bundler and want to reorganize how test config files get loaded. Right now the logic that reads a config file off disk lives as an associate..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

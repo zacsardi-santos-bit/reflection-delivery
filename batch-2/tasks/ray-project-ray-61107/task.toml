@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm digging into the operator graph in our streaming execution layer and there's a nasty design issue with how reverse (downstream) dependency edges get tracked and rewired during transforms. Right..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

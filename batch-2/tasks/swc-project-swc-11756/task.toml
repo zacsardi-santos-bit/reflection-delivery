@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "swc-project/swc"
-description = "I'm hitting a bug in the SWC HTML toolchain when it processes invalid but browser-recoverable markup. If a block-level element sits directly inside an inline container (think a `<p>` dropped straig..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

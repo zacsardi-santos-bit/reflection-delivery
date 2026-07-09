@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "graphprotocol/graph-node"
-description = "I'm hitting a wall with immutable entity types in graph-node. Right now if a subgraph writes the same immutable entity across two different blocks, the store throws an error, but a bunch of subgrap..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

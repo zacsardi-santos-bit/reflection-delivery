@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm working on the Backstage Kubernetes plugin and the detail drawers for resources are reformatting nested property names into human-readable title case, which is throwing people off. Like a rolli..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

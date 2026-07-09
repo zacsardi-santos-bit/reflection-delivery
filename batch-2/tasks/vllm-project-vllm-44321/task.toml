@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm working on the vllm Rust frontend server and I need to add API key auth because right now there's zero access control, anyone who can reach the box can hit the inference and model-listing endpo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

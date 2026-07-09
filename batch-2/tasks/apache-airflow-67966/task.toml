@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm poking at the CI pre-commit hook that validates breeze command config, the one over in `@scripts/ci/pre_commit/check_breeze_command_hash.py` (that module), and I keep hitting a stale-code probl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tailcallhq/tailcall"
-description = "I'm swapping the JWT library in our Rust auth code over to the SurrealDB-maintained fork of that same crate, mostly for ecosystem alignment so we don't hit weird compatibility issues when SurrealDB..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

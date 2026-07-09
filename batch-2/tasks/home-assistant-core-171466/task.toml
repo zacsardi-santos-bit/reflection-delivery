@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm putting together a supply-chain check for our CI that looks at PRs bumping or adding Python deps, since right now nothing verifies whether a new package was actually built and published through..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

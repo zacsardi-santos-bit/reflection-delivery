@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "saltstack/salt"
-description = "I'm hitting two gaps in Salt's SSH PKI module that I want to close out."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

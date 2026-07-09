@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm hacking on MLflow's evaluation and discovery pipeline, the part that fires off LLM calls internally as it runs. Right now those internal calls only know how to talk to direct external provider ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

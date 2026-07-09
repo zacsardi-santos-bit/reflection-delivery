@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm cleaning up how we surface the deferred tools list in the Copilot agent prompt and I keep hitting a staleness bug. Right now the actual inventory of available deferred tools is baked right into..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "swc-project/swc"
-description = "I'm running into two related TypeScript annotation issues, one in the parser and one in the fast type-stripping tool, and they're both biting me in binary expression contexts."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rails/rails"
-description = "I'm doing some work on Rails view rendering and I want renderable objects, you know the ones that implement a `render_in` method to draw themselves into a view context, to be able to take local var..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

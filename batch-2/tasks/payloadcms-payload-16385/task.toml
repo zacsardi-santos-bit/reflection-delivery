@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "payloadcms/payload"
-description = "I'm bootstrapping a new codemod package inside the Payload CMS monorepo, the kind of thing that'll eventually auto-migrate user codebases during major version bumps. Right now none of the foundatio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

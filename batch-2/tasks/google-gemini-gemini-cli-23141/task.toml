@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm refactoring our sandbox system and hitting a design wall. Right now security policies for sandboxed command execution, stuff like which file paths are accessible and whether network's allowed, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

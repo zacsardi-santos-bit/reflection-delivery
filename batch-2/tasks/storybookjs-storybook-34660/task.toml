@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm adding an automated codemod to the Storybook React Native generator that patches a project's Metro bundler config during Storybook init. Right now people have to hand-edit the Metro config afte..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

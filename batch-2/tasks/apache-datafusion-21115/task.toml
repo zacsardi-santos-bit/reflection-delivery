@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/datafusion"
-description = "I've got a table with a struct column that's dictionary-encoded, the kind of thing you get out of Parquet or Arrow IPC where repeated struct values get deduped and stored once with integer keys poi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

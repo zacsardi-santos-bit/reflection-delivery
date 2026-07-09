@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "medplum/medplum"
-description = "I'm hacking on the Medplum AWS deployment tooling and want to add support for the AWS-native malware protection for S3 (GuardDuty-style scanning) as a replacement for the third-party antivirus we c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

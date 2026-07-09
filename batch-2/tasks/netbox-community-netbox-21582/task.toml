@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "netbox-community/netbox"
-description = "I'm extending NetBox's IPAM module so ASNs can carry a functional role the same way prefixes and VLANs already do. Right now there's no way to categorize an ASN by role, which makes it painful to o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

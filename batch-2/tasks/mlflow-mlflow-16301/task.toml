@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building out the MLflow TypeScript SDK and we've got a gap in the trace entity layer, there's literally no way right now to represent a trace's lifecycle state, where it lives, or the metadata ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

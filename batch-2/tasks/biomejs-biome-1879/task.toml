@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm adding a new nursery lint rule to the Biome JavaScript linter and I could use a hand wiring it up. The idea is to catch files that are test files but also export stuff, because if a test file e..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

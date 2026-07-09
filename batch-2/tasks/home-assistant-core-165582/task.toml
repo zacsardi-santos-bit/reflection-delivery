@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm cleaning up validation in the energy config module and hit a real gap. Some integrations (think utility company stuff) feed us \"external\" statistics, meaning energy data that doesn't come from ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

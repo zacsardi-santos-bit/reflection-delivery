@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I'm hacking on the Gleam compiler and hit a gap in how we validate record update syntax. You know the spread thing where you write something like `SomeConstructor(..existing, field: newval)` to mak..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

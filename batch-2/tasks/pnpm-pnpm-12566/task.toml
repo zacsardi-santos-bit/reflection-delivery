@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm working on the pnpr registry proxy and there's a gap I need to close. We've got a local vulnerability database that's already wired into the dependency resolver, but the proxy's own packument a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

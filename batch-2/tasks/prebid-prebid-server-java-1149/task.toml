@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prebid/prebid-server-java"
-description = "We're bringing our Prebid Server bidder config in line with the OpenRTB 2.x protocol and right now per-bidder site, app, and user overrides live under a legacy \"first party data\" section, but the s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

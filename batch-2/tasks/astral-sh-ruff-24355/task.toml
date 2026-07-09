@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I've been digging into how our Python parser handles f-strings whose replacement fields (the interpolated expression parts between braces) span multiple lines, and there's a gap. When you've got a ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

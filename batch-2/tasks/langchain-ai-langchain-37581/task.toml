@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm updating our Fireworks AI chat model integration to work with the new 1.x Fireworks SDK, and the old 0.x code just breaks against it because the error hierarchy, import paths, and async method ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

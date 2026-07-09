@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ONEARMY/community-platform"
-description = "I'm modernizing how our app talks to the cloud auth service and I keep hitting failures because we're still using the old object-method style where we call sign-in and user-creation as methods on a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

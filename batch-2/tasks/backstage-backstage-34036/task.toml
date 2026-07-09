@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm hitting a nasty issue with the GitHub repository publishing scaffolder action in our Backstage plugin. Users in corporate environments keep reporting failures when the action tries to push the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

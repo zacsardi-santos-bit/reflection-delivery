@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm in the multi-agent orchestration framework and right now I've only got concurrent and sequential patterns, but I really need a group chat setup where several agents take turns talking to each o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

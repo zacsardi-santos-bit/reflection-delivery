@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tailwindlabs/tailwindcss"
-description = "I'm cleaning up how our test utilities format generated CSS for snapshot comparisons and it's bugging me. Right now the shared helpers trim the CSS string before returning it, so every snapshot sta..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

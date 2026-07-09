@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/Ghost"
-description = "I'm working on the gift subscription feature in our Ghost publication platform, where someone can buy a gift sub for another person who then gets a link with a unique token to activate it. The chec..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

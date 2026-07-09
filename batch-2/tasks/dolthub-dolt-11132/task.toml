@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dolthub/dolt"
-description = "I'm chasing a really nasty data corruption bug in Dolt that only bites people who created tables on an older version and then upgraded. The newer version picked a different default storage encoding..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

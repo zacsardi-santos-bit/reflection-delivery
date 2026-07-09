@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tensorflow/tensorflow"
-description = "I'm working with TensorFlow's linear spacing op (the linspace-style helper in the math operations module, `@tensorflow/python/ops/math_ops.py` or wherever `linspace`/`lin_space` lives) and I need i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

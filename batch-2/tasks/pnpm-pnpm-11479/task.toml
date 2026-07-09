@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm building out release tooling for a big pnpm monorepo and I need a new utility module that handles all the changeset bookkeeping we do during a release. Right now there's nothing tracking which ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

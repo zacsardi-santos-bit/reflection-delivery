@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting a nasty bug with multi-turn tool-call conversations when thinking/reasoning mode is on. After a tool response with thinking enabled, the chat template can leave the prompt ending right ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

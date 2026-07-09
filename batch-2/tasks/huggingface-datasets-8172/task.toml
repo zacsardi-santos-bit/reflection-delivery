@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/datasets"
-description = "I've got datasets where each row belongs to some natural group, think a document_id or category column, sometimes a speaker or an experimental run, and I want to batch rows so that all consecutive ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

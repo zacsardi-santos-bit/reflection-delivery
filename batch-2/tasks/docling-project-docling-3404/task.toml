@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm adding support for two new OCR model families to our doc conversion pipeline and both spit out their own formats that I need parsed into our standard document representation. First one gives st..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

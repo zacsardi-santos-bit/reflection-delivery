@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "streamlit/streamlit"
-description = "I'm doing a refactor on Streamlit's internal runtime, specifically how per-run mutable state is organized inside the script run context. Right now the context object has a bunch of related fields s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

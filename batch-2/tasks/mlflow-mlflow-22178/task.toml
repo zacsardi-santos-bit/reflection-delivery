@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm cleaning up the judge adapter framework and the telemetry situation for Databricks-backed models is a mess. Right now every adapter subclass reimplements the same telemetry recording logic when..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

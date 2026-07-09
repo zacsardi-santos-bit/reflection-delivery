@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "facebook/lexical"
-description = "I've got a nested editor setup, a parent editor with a child editor inside it, and command delegation is just broken. When I dispatch a command from the child, the parent editor's command handlers ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

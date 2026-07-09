@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vercel/vercel"
-description = "I'm hitting serialization crashes with the Vercel Workers Python SDK whenever my queue payload includes normal Python stuff like UUIDs, datetimes, or Decimals. The JSON serialization step just blow..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "delta-io/delta"
-description = "I'm building out the DSv2 streaming connector for Delta Lake and I need to lay the groundwork for Change Data Capture streaming. Right now the internal file-tracking structure the streaming reader ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

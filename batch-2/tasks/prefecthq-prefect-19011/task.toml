@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm adding text search to Prefect's events and logs because right now you can only filter by structured stuff like resource ID, time range, or log level, and there's no way to just type a keyword a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm trying to cut down database load from DAG authorization checks in Airflow. Right now every time we need to figure out which team owns a DAG, we hit the DB to resolve the DAG's bundle and then t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

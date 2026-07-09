@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm working on Storybook's TypeScript file loader and want to fix how it resolves import paths in `@code/core/src`. Right now the loader figures out whether a candidate file exists by calling a per..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

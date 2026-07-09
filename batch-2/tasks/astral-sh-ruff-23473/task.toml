@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm looking at our inefficient-dictionary-iteration lint rule and there's an annoying gap. Right now it only fires on traditional for-loops, so if I iterate over a dict's `.items()` and unpack both..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

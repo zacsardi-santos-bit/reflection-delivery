@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm cleaning up the Media Library section and it's kind of a mess on phones and narrow browser windows. First the layout stuff: the page header doesn't stack vertically on very narrow screens, it j..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

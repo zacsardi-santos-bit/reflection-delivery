@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ChainSafe/lodestar"
-description = "I'm stuck getting the beacon node's CLI tests to even compile again, they're all blowing up with compilation errors because a bunch of our networking deps got reorganized upstream. The main thing i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

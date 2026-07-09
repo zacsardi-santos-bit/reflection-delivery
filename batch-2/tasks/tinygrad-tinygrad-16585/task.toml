@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tinygrad/tinygrad"
-description = "I'm hitting a bug with in-place assignment on slices of realized tensors. When I take a sub-range of a tensor that's already been realized and assign new computed values back into that slice, the p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

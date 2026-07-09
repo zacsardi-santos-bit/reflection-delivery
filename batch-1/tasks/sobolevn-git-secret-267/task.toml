@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sobolevn/git-secret"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

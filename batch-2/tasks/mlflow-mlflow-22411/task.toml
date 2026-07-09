@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building an integration that records coding agent sessions from the Qwen coding agent as JSONL transcripts, and I want to feed those recordings into MLflow's tracing system so I can actually se..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

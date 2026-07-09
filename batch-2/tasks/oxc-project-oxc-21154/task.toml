@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm hitting some confusing behavior with the oxfmt formatter CLI around ignore rules. When I explicitly pass files to the tool and they all get excluded by my ignore configuration, the error I get ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

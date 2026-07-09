@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm working on the Backstage search backend plugin and want to wire up a new action in the backend actions registry so agents and other action-based integrations can actually query the search engin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

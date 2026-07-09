@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "GladysAssistant/Gladys"
-description = "I'm working on the Zigbee2mqtt integration in Gladys and I need to add a full reset capability. Right now there's no clean way to wipe the integration, so if a user's config gets corrupted or they ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

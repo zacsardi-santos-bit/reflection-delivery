@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm poking at the semantic kernel planning module and I keep hitting a gap: all the planners we've got are built for multi-step sequences, but sometimes I just want the kernel to pick the single mo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

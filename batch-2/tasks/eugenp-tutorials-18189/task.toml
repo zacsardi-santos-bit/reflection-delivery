@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "eugenp/tutorials"
-description = "I'm building out a currency converter and the whole module won't compile right now because there's a data transfer object class that just doesn't exist yet. I need a plain data holder to represent ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

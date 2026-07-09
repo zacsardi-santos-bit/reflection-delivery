@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm chasing a slot leak in the singleton thread router where replica slots get reserved and then never released if a request gets cancelled at just the wrong moment. Here's the setup: when a reques..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

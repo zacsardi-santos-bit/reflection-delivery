@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm poking at our tensor comparison diagnostic (the thing we use to debug numerical drift between model runs) and the stats it reports are leaving me blind in a couple spots. Right now each tensor'..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

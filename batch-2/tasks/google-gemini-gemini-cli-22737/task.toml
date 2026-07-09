@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up the plan mode feature in this CLI tool and it's got a couple of rough edges I want fixed. Right now when the model wants to finalize and exit plan mode, it has to hand over a full r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

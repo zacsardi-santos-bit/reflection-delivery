@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "FuelLabs/sway"
-description = "I'm poking at the CSE pass in Sway's IR optimizer and there's a whole class of redundant stuff it just walks right past. When you load the address of the same local var, or a global, or a configura..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

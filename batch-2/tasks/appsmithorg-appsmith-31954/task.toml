@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "appsmithorg/appsmith"
-description = "I'm building out two features in the Appsmith client that are stubbed but missing their guts, and I want to get them right."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

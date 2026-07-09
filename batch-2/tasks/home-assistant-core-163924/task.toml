@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm reworking setup for the Hue BLE lighting integration and I want to flip how devices get configured. Right now it only works through automatic Bluetooth discovery, so the scanner finds a compati..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

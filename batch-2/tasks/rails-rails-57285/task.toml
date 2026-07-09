@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rails/rails"
-description = "I'm working on the lifecycle of view reloaders in Rails and there's a gap that keeps biting me. Right now when a reloader gets created it registers a hook with the view path system, but there's no ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

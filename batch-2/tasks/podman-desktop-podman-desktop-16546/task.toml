@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "podman-desktop/podman-desktop"
-description = "I'm working on the Podman Desktop extension and I want to add a feature that syncs the host machine's trusted CA certs into running Podman VMs. On macOS and Windows Podman runs inside a VM, so any ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

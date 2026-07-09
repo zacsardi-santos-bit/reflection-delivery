@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm deep in the Kafka Streams group coordinator and hit a gap around tracking topology description state across restarts. Right now there's no record of whether a topology description plugin has ac..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

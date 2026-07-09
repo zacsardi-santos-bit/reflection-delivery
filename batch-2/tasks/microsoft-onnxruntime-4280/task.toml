@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/onnxruntime"
-description = "I'm building out the optimizer config layer for the ONNX Runtime training frontend and right now there's no clean, validated way to express optimizer hyperparameters before handing them to the trai..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

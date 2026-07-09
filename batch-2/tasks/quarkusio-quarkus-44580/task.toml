@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm hitting a weird serialization bug with the reflection-free JSON serializer optimization in my Quarkus REST app. You know how Quarkus can generate JSON serializers without runtime reflection by ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

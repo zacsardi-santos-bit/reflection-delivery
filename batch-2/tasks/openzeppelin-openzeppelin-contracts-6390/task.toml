@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "OpenZeppelin/openzeppelin-contracts"
-description = "I'm hitting a nasty gotcha with our ERC7579-compatible smart account and its hook module. The hook intercepts operations by running a pre-check before an action and a post-check after, which is fin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

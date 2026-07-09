@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm trying to clean up a nasty error experience in our shared oxc utilities. Right now if someone points a formatter or linter at a TypeScript config file while running a Node.js version that can't..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

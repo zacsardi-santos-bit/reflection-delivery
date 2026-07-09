@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Chia-Network/chia-blockchain"
-description = "I'm cleaning up the plotnft command-line stuff in the Chia codebase and the whole thing is a pain to test. The commands over in the pool NFT tooling (creating NFTs, showing status, joining and leav..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

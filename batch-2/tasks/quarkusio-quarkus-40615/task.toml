@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm poking around the Quarkus core runtime module and found a utility class that manages system properties in a resettable way, like it lets you set props and then roll them back, and it's sitting ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

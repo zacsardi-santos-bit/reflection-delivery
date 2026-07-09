@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm hacking on the GraphQL parser in Biome and it doesn't handle object type extension statements yet, which is a real problem because federated and composed schemas lean on these all the time to a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

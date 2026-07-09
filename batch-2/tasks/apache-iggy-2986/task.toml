@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/iggy"
-description = "I'm building out the Go client library here and I keep running into the same problem, every spot that touches wire-protocol messages re-implements its own byte-packing, so I want a shared binary co..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "aws/sagemaker-python-sdk"
-description = "I'm working on the JumpStart curated hub module in the SageMaker SDK and the way we handle hub content summary data is driving me nuts. Right now the AWS list API responses just get passed around a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

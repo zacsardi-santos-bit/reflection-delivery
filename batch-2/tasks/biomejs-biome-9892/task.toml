@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I've been going through the diagnostic output for a handful of our lint rules and a lot of them are pretty useless honestly. They tell you what not to do but never explain why the thing is bad or h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

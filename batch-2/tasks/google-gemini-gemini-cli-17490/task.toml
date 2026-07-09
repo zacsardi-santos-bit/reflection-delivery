@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up our CLI tool that enables and disables feature types across config scopes (per-user settings and per-workspace settings). Right now the agent toggling and skill toggling live in sep..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

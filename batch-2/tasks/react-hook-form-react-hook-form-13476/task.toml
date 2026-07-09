@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "react-hook-form/react-hook-form"
-description = "I'm hitting a nasty bug with field array validation and I think it's in how removal handles errors that live at two levels at once. Setup is: I've got a form with a field array whose custom validat..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

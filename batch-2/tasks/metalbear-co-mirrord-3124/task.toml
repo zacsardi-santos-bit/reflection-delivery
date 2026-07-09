@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "metalbear-co/mirrord"
-description = "I added some new end-to-end tests for TLS traffic stealing and they pull in a PEM cert encoding library through the workspace dependency mechanism, meaning they expect it declared at the workspace ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

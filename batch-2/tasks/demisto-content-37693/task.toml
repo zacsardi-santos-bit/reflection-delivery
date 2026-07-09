@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm hitting a dedup problem in the Azure AD Connect Health feed integration and could use a fix. When it fetches the list of network endpoints that agents need to connect to from Microsoft's docs p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

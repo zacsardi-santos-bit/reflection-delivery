@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dotnet/roslyn"
-description = "I'm hitting a really confusing gap with inline array structs in C#. When I define my own indexer, or a slice method, or a conversion operator on one of these types, the compiler just silently ignor..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

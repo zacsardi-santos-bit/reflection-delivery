@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "FuelLabs/sway"
-description = "I'm stuck getting the workspace to compile after I bumped two deps to their latest versions, and both of them shipped breaking API changes so the whole thing is red right now, nothing builds, no te..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm building out an auditing service for the Backstage backend framework because right now there's no built-in, standardized way for plugins to record audit events. Plugins that need to track secur..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

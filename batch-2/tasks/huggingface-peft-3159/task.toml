@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/peft"
-description = "I'm trying to cut down peak GPU memory when I do LoRA fine-tuning on big language models, and the thing that's killing me is that every adapted linear layer stashes its full input activations durin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

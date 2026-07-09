@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "So I've hit a nasty silent bug in datetime index intersection and I want your help fixing it. When I intersect two DatetimeIndex ranges that share the same frequency, there's a fast path optimizati..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

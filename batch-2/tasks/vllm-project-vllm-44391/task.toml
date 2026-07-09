@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm dealing with our chat completions server and the models we run sometimes emit internal reasoning (chain-of-thought) before the actual answer, and for a lot of our production traffic we just don..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

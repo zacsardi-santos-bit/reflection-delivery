@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm working on the Ozone S3 gateway and I've got two related cleanups that are breaking the unit tests right now, so I need both done together to get things compiling and green again."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

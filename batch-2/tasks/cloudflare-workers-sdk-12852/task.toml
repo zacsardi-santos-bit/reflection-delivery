@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cloudflare/workers-sdk"
-description = "I'm adding data catalog safety checks to our R2 CLI write commands and want your help wiring it up. Context: R2 buckets can have a data catalog feature turned on that tracks metadata about bucket c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

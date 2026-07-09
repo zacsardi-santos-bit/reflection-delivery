@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tursodatabase/libsql"
-description = "I'm wiring up a new gRPC-based admin shell service into the libsql-server crate and right now nothing compiles because there's no proto definition and no committed generated stubs for it. I need yo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

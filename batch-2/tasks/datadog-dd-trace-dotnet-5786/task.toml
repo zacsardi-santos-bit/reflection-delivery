@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "DataDog/dd-trace-dotnet"
-description = "I'm digging into our MySQL integration tests for the .NET tracing library and hit a gap: we only cover MySQL 8 anywhere in our test matrices, but MySQL 9 is out as a package now and it's not wired ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

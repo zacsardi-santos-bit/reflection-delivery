@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm working on the Unit 42 ATOMs threat intel feed integration and the fetch command keeps returning fewer indicators than the raw feed actually has. The data comes in nested, top-level reports poi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "spyder-ide/spyder"
-description = "I'm cleaning up Spyder's test infrastructure and hit a wall. We just pulled the shared plugin-test boilerplate (the mock main window, the plugin registration/teardown helpers, session-level setup) ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

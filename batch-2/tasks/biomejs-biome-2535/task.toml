@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new CSS lint rule to the biome CSS analyzer that catches unknown or invalid CSS units. CSS is super permissive, so if you typo a unit like \"pix\" instead of \"px\", or \"remm\" instead o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

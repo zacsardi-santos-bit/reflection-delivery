@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm fixing the Claude Code session replay in VS Code Copilot, the thing that renders past conversation history in the chat panel, and I've got two tangled issues."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

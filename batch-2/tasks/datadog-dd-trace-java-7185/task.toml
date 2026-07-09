@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "DataDog/dd-trace-java"
-description = "I'm adding OpenTelemetry compatibility to the Datadog Java agent because right now teams running services with both have to duplicate every shared setting in two formats, once for OTel and once for..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm poking at the V1 archived timeline in Apache Hudi (over in `@hudi-common/src/main/java/org/apache/hudi/common/table/timeline`) and I keep hitting a few gaps when I load historical commit data o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

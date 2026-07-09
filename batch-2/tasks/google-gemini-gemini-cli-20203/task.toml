@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working on this CLI tool with multiple approval modes, and one of them is a read-only planning mode where the AI can only plan out actions but not run them. The problem I keep hitting is when I..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

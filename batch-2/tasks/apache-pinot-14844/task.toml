@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm trying to lock down the Groovy transform function support in Apache Pinot because right now any Groovy script embedded in a SQL query can run shell commands, call system-level stuff, or import ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

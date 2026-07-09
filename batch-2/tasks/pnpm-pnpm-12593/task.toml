@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm working on an npm registry proxy that rewrites upstream tarball URLs to point back at itself so clients always pull through the proxy, and I've hit a real problem with how we generate those rew..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm adding a deprecation-notice format check to the Flutter analysis tooling because right now nothing stops folks from writing these annotations wrong, they skip the version info, forget to capita..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

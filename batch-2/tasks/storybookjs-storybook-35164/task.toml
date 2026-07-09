@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm digging into the AI integration layer in Storybook's CLI, the part that talks to a running Storybook instance over the tool protocol. When the client first connects it does an initialize handsh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up the tool permission flow in the CLI and it's kind of a mess right now. When a tool's about to run and we need the user to approve it, the permission dialog title is just this verbos..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

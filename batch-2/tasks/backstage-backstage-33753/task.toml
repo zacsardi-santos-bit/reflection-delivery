@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm working in the catalog backend plugin and want to stop recomputing the same thing over and over. Right now every location row (those entries pointing at catalog descriptor files) has a correspo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/accumulo"
-description = "So I'm poking at the error-recovery paths in Accumulo's metadata layer and I keep hitting a wall. When a conditional metadata write comes back ambiguous, meaning the mutation may or may not have be..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

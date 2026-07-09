@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marmelab/react-admin"
-description = "I'm building forms in a React Admin app and I keep hitting a wall with pre-population. The logic that reads navigation context (either the router's hidden state or a visible URL query param) to pre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

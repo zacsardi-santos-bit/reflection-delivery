@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rancher/rancher"
-description = "I'm cleaning up the handler that syncs the system-upgrade-controller status condition on control plane objects in Rancher and I've got two things bugging me. First, the way it figures out whether t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

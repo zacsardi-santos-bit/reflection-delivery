@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm hitting spurious validation errors in the tensor comparison debug utility I use for distributed model inference, and it's basically unusable in any mixed-parallelism setup. The problem is data ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

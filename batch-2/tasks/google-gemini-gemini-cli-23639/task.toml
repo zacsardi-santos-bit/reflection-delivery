@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up the remote agent config system and there's a naming wart I want gone. When you set up a remote agent that signs in interactively over OAuth (the browser-based flow with PKCE), the a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

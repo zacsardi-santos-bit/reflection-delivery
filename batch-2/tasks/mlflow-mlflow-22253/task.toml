@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I've been fine-tuning diffusion models with adapter techniques (think LoRA-style adapter weights) and I want to track and serve them through MLflow like I do everything else. Right now there's no n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

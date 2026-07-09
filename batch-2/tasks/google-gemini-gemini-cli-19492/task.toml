@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working on the folder trust dialog in our CLI and it's kind of useless right now. When you open a project folder for the first time we pop a dialog asking \"do you trust this folder?\" with some ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm looking at the lint rule that disallows Node.js built-in modules and the diagnostic message it prints is grammatically wrong. It uses a plural verb form, but the subject is a gerund phrase (a v..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

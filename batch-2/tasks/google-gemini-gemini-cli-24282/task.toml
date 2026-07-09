@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I want to promote plan mode out of the experimental corner and make it a real general setting. For context, plan mode is the thing that keeps the AI in read-only territory until I've reviewed and a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

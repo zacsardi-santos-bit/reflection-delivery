@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm working in Apache Pinot and I need a pluggable validation hook so external plugin code can register custom validators that fire automatically right before instance or table configs get committe..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

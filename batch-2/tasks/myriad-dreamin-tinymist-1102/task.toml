@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Myriad-Dreamin/tinymist"
-description = "I'm adding a WebAssembly build of tinymist so its core analysis can run in JS land, browsers and Node, not just as a native binary like today. I want a new core library crate that compiles to WebAs..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

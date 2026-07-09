@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/Ghost"
-description = "I'm building out the automations admin API in Ghost and hit a gap. Right now that endpoint only lets you browse and read automations, there's no way to flip one from active to inactive (or back) sh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm on the Backstage catalog backend and want to add some metrics visibility to the piece that reacts to source control events. Right now when the catalog processes repo events like a file getting ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

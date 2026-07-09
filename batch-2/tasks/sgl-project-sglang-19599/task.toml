@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm building out a tensor comparison tool for debugging model outputs across multiple forward passes and right now the multi-step behavior is annoying. When I compare tensors over several steps I g..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

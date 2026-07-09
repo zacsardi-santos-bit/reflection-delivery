@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "webpack/webpack"
-description = "I'm poking around webpack's internal HTML and CSS parsing helpers and the import story is kind of a mess. If I want to do anything with HTML parsing right now I've gotta pull from one module for th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

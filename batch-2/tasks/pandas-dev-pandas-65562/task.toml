@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting a really confusing error in pandas when I try to read with memory-mapped mode turned on but I'm passing an in-memory buffer instead of a file on disk. Instead of something readable I ge..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

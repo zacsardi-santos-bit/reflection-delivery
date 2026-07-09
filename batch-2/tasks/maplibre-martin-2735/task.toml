@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "maplibre/martin"
-description = "I'm working on the martin tile server dashboard and I want to add cache hit-rate stats to the analytics view. Right now it shows request throughput and latencies for tiles, fonts, sprites, and styl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

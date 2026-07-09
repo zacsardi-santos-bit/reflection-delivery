@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm building out our Next.js docs app and I need a protected API route that external content pipelines can hit to trigger cache revalidation for specific tags. Right now there's no secure way to pu..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

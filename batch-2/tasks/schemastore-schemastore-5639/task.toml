@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "SchemaStore/schemastore"
-description = "I want to add a JSON schema for yamlfmt config files to SchemaStore. Right now there's just nothing for it, so anyone using yamlfmt in their editor or CI gets no autocompletion, no inline validatio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

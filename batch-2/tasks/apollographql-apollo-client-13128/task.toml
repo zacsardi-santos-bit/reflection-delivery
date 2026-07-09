@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apollographql/apollo-client"
-description = "I'm hitting a hydration mismatch with Apollo Client in my server-rendered React app and it's driving me nuts. When I set up a `useQuery` (or `useSuspenseQuery`, whatever) with both `skip: true` and..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

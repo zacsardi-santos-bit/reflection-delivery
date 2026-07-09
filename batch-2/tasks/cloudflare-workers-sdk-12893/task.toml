@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cloudflare/workers-sdk"
-description = "I'm cleaning up the container listing command in our CLI and the non-interactive output is rough. Right now when you run the list command in a non-tty it dumps raw data that's basically unreadable ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

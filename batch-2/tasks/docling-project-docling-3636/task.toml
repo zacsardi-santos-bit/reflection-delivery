@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm hitting a gap in the JATS/NXML backend where footnote groups inside document sections just vanish during conversion. I'm running scientific journal articles through the doc conversion pipeline,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

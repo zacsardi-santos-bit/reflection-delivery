@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "awslabs/mcp"
-description = "I'm building out the AWS HealthOmics MCP server and it's missing anything for run caches, which is a real gap since run caches let genomics workflow runs stash and reuse expensive computation resul..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

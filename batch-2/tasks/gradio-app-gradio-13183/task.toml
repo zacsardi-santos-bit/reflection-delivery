@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gradio-app/gradio"
-description = "I'm hitting a couple of things with the Accordion component in Gradio that are annoying me. Main one is I can't control the open/closed state from Python at all, there's no way to read what state i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

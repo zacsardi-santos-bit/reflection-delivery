@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "unionai-oss/pandera"
-description = "I'm working on a data validation library and the lazy-mode error reporting is driving me nuts. Right now when validation fails in lazy mode all I get is a flat count summary like \"A total of N sche..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

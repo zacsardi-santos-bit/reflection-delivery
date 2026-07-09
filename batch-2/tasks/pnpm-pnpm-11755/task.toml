@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm porting a package manager to Rust and keep hitting deserialization failures when I fetch package metadata (packuments) from the npm registry. The issue is the `deprecated` field on a package ve..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

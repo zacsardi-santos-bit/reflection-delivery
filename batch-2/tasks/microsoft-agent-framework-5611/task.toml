@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/agent-framework"
-description = "I'm building an agent that needs to operate in distinct phases, like first planning and getting user approval, then flipping into a more autonomous execution phase, and right now our framework has ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

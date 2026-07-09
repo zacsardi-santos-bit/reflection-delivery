@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I hit a nasty correctness bug in the Gleam compiler around list patterns and clause guards. When I write a case expression that matches a list, captures the tail as a variable (the usual `[first, ...."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

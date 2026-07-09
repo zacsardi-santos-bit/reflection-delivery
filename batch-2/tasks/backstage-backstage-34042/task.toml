@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm building out a UI component library and I keep rewriting the same plumbing in every component, so I want a shared foundation where a component declares its props, styles, and behaviors in one c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm deep in the AI chat infra for our editor extension and hit a real annoyance with how mode switches interact with our conversation caching. We've got different assistant modes, like a full imple..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

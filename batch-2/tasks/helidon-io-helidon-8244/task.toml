@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "helidon-io/helidon"
-description = "I'm hitting a nasty context corruption bug in Helidon's OpenTelemetry tracing integration around baggage and span scope management. The scenario: I activate a span, then set baggage on it while tha..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

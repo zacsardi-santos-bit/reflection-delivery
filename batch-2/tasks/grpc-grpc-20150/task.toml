@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "grpc/grpc"
-description = "I'm hitting a wall with our gRPC-on-Bazel setup where the Python proto and gRPC library generation rules just don't understand proto libraries that remap their import paths using Bazel's built-in p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

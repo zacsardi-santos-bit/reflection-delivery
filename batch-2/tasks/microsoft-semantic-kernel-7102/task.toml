@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm building on the Azure OpenAI connector in Semantic Kernel and I hit a gap, there's no text-to-audio (text-to-speech) support. Chat completion, text embedding, and text-to-image are all wired up..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

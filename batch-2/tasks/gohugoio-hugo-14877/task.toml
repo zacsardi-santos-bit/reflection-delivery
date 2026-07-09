@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gohugoio/hugo"
-description = "I'm hitting a weird off-by-a-pixel thing with Hugo's content-aware image cropping. When I use smart anchor to crop to an exact size, the output sometimes comes back 1 or 2 pixels smaller than I ask..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

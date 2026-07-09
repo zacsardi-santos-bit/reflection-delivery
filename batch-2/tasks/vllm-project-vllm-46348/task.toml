@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting a dumb but annoying bug on the vLLM OpenAI-compatible server. When I POST to the chat completions endpoint or the plain completions endpoint and pass `allowed_token_ids` as an empty lis..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

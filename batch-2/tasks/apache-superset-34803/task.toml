@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/superset"
-description = "I'm cleaning up how Superset reacts when a dataset or metric ships a SQL template with busted syntax, like someone typing a natural language phrase inside a Jinja expression instead of real syntax...."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

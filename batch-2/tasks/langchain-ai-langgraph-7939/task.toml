@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langgraph"
-description = "I'm adding a feature to the LangGraph CLI so we can actually track which specific third-party packages (from a curated set we care about) are bundled at a given deployment revision, and at what ver..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

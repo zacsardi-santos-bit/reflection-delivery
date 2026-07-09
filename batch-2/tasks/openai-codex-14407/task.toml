@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I've been poking at our plugin API responses and something's bugging me about the policy fields. Right now both the authentication policy and the installation policy come back typed as optional, so..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

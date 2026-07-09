@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dolthub/dolt"
-description = "I'm hitting a data-loss thing in Dolt and want to fix it. When I check out a different branch, tables I've explicitly marked as ignored can get silently overwritten by the target branch's version. ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

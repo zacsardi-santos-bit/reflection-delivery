@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prisma/prisma"
-description = "I'm working on Prisma Studio and I want to kill our dependency on external CDNs for the front-end assets. Right now the HTML shell Studio serves has an import map full of third-party CDN URLs, so S..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

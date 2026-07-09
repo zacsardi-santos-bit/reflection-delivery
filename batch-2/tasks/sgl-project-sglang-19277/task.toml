@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm building some debugging tooling for distributed model inference and I keep hitting a wall where I've got a tensor sharded across a bunch of parallel workers and no way to stitch it back into th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

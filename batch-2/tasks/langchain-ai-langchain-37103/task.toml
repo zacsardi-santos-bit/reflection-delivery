@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm cleaning up how tools hand their schema to LLMs in LangChain core and the current setup bugs me. Every time you touch a tool's schema it gets rebuilt from scratch, and the derived bits (the inp..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

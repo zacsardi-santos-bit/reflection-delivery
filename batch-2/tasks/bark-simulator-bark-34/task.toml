@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bark-simulator/bark"
-description = "I'm building out a road simulation framework and hit a wall with lane types. Right now our lane objects don't carry any notion of what kind of road feature they are, so there's no way to tell a dri..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

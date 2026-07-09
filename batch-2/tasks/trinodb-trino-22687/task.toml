@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "trinodb/trino"
-description = "I'm pulling the Trino client's connection URI handling off Java's JDBC driver infrastructure and it's turning into a mess for anyone using the client outside a JDBC context. Right now when you pars..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

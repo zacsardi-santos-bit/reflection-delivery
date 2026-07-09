@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm cleaning up a bunch of error handling and filesystem robustness gaps in Flutter's build tooling, mostly in the dart:io error handling helpers and the SwiftPM integration, and I want them all ha..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

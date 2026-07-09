@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pulumi/pulumi"
-description = "I'm hitting a bug in how Pulumi serializes resource state into a snapshot (the checkpoint file). When an output value gets written out during serialization, it's always stored as a computed/unknown..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

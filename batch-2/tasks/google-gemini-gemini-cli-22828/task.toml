@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up how our CLI handles subagent activity and I hit two things that need fixing. First one's a security problem: sensitive stuff is leaking through the activity stream. When subagents r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

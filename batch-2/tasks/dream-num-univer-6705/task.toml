@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dream-num/univer"
-description = "I'm cleaning up the defined-name box in our spreadsheet UI. The name box is where a user types a cell reference or a named range to jump to it, and it also lets them create new named ranges. Proble..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

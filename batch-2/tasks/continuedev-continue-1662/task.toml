@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "continuedev/continue"
-description = "I'm building out a code intelligence tool and hitting two related gaps I need help closing."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

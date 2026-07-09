@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "saleor/saleor"
-description = "I'm hitting a dedup bug in our product attribute filtering. When I query attributes filtered by a specific category or collection, I get duplicate attributes back if those attributes are shared acr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

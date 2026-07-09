@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tinygrad/tinygrad"
-description = "So I keep hitting this weird inconsistency in tinygrad's constant-fill tensor factories and I want to fix the default behavior. Basically when I make a tensor full of a constant, like `Tensor.ones(..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I keep hitting a formatter bug in Gleam where comments I put inside type annotations get moved around or straight up deleted. Concretely, when I write a function that takes another function as a pa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm building out a tensor debugging and comparison tool for distributed model training, the kind where people annotate tensor dimensions with how they're sharded across parallel processes, like mar..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

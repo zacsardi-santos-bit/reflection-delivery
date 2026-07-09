@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to clean up the diagnostic messages on a few of our nursery lint rules because right now they feel abrupt, they jump straight to \"prefer X over Y\" without first telling the developer what th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

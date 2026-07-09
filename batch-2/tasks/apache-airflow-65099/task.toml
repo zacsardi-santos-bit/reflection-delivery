@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a dumb wall with the Airflow CLI. When I run the remote version check with the `--remote` flag to grab the server's version, it blows up with a credentials error if I'm not logged in. B..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

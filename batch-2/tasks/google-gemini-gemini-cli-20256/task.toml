@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "We've got two CLI commands for conversation sessions that don't talk to each other and it's confusing everyone. One opens an interactive browser for auto-saved chats, the other is a parent command ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

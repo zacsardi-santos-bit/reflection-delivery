@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm building out the Xthings Cloud integration for Home Assistant and right now it only knows about lighting devices, but Xthings also makes smart plugs and generic switch-type devices that ride th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

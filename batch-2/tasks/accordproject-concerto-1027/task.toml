@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "accordproject/concerto"
-description = "I'm working on the Concerto model linter and it's got a gap that's driving me nuts: it doesn't flag any naming problems at all. When I run it against a model, declaration names, property names, enu..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

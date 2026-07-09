@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/Ghost"
-description = "I'm adding gift purchase events into the member activity feed in Ghost and right now they're just invisible, when someone buys a gift subscription on behalf of another person that event doesn't sho..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

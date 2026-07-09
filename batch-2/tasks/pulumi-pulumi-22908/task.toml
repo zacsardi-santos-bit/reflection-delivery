@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pulumi/pulumi"
-description = "I'm trying to enrich the HTTP user-agent that the Pulumi CLI sends to the Pulumi Cloud backend. Right now it only carries the CLI version and OS, which means I can't correlate backend API traffic t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

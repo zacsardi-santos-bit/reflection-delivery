@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/Ghost"
-description = "I'm hitting a crash when I save a member that's got labels attached. If one of the labels in the payload is missing its name (say it only has an id and nothing else), the whole save blows up with a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

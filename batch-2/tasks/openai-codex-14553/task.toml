@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm adding a new session-level feature, a built-in permissions-requesting tool that agents can invoke, and I need the instruction-generation code to know when it's active. Right now the functions t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

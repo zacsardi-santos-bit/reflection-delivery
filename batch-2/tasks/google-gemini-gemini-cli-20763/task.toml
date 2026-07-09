@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm reworking how loop detection behaves in the agent runtime and the current one-strike policy is way too aggressive. Right now the moment any repetitive behavior gets flagged the session just ter..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

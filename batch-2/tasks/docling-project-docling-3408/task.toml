@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm cleaning up some rough edges in the CLI help output because a bunch of people run the tool with `--help` to figure out what's available and right now it makes the tool look sloppy. Three things..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

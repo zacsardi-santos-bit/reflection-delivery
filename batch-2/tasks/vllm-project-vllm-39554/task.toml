@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting an annoying inconsistency with config loading when I override the model type on a checkpoint. Here's the setup: I've got a checkpoint that was saved as one architecture type on disk, bu..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

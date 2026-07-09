@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prowler-cloud/prowler"
-description = "I'm cleaning up the findings section of our security dashboard and there's a cluster of related issues I want to knock out together. First up, we've got sort parameters for two different API famili..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

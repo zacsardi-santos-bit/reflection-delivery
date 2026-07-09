@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building a just-in-time context feature for our AI assistant and need help wiring it up. Right now project context (coding conventions, guidelines specific to a part of the codebase) only gets ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

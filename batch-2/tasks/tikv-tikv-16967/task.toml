@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tikv/tikv"
-description = "I'm poking at TiKV's config validation and hit a gap around the raft engine's batch compression threshold when async I/O is turned on. So the deal is async I/O gets enabled by setting a non-zero I/..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

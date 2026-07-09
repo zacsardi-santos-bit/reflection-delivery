@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/pg_graphql"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

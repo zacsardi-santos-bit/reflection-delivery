@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm chasing down a flaky integration test in the ClickHouse suite, the one that checks a node cleans up incomplete snapshot transfers to remote object storage after a restart. The way it works: it ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

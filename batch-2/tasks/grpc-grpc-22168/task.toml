@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "grpc/grpc"
-description = "I'm hitting a bug in gRPC's TLS security layer where a client with no pre-loaded key material and no credential reload config gets an error when fetching key materials. That's wrong for clients. Se..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

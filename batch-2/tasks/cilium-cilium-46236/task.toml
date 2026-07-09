@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm chasing a bug in the network driver that handles pod resource claims and static IP annotations. When a pod annotation specifies both an IPv4 and an IPv6 address for a network device, but the cl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

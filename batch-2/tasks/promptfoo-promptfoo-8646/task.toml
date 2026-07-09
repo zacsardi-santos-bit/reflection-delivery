@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm seeing our Azure Assistant provider leak sensitive stuff straight into cache keys and debug logs, which is bad. Right now when a call goes through, the cache key it builds ends up embedding the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

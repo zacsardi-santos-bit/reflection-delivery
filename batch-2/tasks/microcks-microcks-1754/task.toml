@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microcks/microcks"
-description = "I'm building out real-time trace streaming for Microcks and right now there's just no path for clients to get pushed new trace data. They collect distributed traces from services as requests flow t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

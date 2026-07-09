@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm poking at the About dialog in the Promptfoo web UI and hit a annoying bug, some of the links in it don't open in a new browser tab. So when a user clicks one of the docs or GitHub links they ge..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

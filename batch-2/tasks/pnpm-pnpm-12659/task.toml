@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm hitting a wall with our private npm registry around deprecating already-published versions. When a package manager sends the usual deprecation update, which is basically a metadata-only re-PUT ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

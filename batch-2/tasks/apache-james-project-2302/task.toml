@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/james-project"
-description = "I'm upgrading some test dependencies in Apache James and I've hit a compile wall. We use a JSON comparison library and it just went to a new major version that changed how you pass comparison optio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

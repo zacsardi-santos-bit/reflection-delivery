@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pulsar"
-description = "I'm hitting a reporting bug in Pulsar Functions stats and I want to sort out the whole picture around it. When I query stats for a function that hasn't processed any messages yet, the average proce..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

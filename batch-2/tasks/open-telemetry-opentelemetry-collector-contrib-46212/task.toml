@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-telemetry/opentelemetry-collector-contrib"
-description = "I'm working on the CloudTrail log unmarshaler in the AWS logs encoding extension, and right now it only does batch processing where you hand it an input stream, it reads everything, and gives you b..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

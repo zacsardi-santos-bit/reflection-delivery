@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tinygrad/tinygrad"
-description = "I'm poking at tinygrad's device management in `@tinygrad/device.py` and want to simplify how the default device gets picked. Right now it's derived from a context variable at runtime, which means I..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

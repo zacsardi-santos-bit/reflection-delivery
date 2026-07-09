@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "hyperf/hyperf"
-description = "I'm poking at the fluent attribute container in the Hyperf support package (`@src/support/src/Fluent.php` or wherever that class lives) and it's way less useful than it should be. Right now if I ca..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["php", "swe"]
 metadata = { vendor = "Mercor" }

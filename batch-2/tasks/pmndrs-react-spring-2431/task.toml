@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pmndrs/react-spring"
-description = "I've been running our animation library inside a project with React strict mode turned on, and I keep hitting weird animation behavior that only shows up in development. Strict mode intentionally s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

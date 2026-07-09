@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm extending the skill inbox in our CLI and hit a gap. Right now the inbox only surfaces newly extracted skills (whole new skill directories you can preview and install), but the memory extraction..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

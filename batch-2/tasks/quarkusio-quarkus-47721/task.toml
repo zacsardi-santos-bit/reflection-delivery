@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm hitting a Jackson serialization gap in a Quarkus reactive REST app and could use a fix. I've got a class where all the JSON property names, snake_case stuff like `access_token` and `expires_in`..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

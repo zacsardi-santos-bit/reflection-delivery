@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "SpecterOps/BloodHound"
-description = "I'm building out the extension management UI and right now it only lets people view active graph extensions, there's no way to actually remove one. I need to add delete controls to each row in the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

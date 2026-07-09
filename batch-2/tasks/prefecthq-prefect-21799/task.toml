@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm digging into Prefect's flow engine and I keep hitting a gap: there's no standardized way to run a flow from a command-line entrypoint, the kind of thing a worker does when it launches a flow ru..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

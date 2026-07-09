@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "lerna/lerna"
-description = "I'm trying to get us off a few tiny deprecated npm packages we still lean on for terminal stuff, three of them actually, one that detects whether the terminal supports Unicode, one that figures out..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

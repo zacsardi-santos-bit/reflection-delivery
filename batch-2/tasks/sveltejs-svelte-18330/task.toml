@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sveltejs/svelte"
-description = "I'm hitting what looks like a false positive in the Svelte compiler around the word \"type\" in template expressions. If I've got a variable literally named `type` and I use it in a normal expression..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

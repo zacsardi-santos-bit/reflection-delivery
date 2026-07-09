@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm trying to make remote task logging in Airflow less painful. Right now if you want logs going to some cloud storage provider you have to hand-write a custom logging config module and point Airfl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

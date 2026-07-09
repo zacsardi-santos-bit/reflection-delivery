@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/agent-framework"
-description = "I'm building AI agents that chew through complex, multi-step tasks, and I keep hitting the same wall: there's no built-in way for an agent to track its own work items across a session. I want it to..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

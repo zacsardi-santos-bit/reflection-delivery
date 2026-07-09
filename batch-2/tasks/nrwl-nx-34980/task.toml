@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm cleaning up error handling in the migration system and hitting a few gaps that make failures way harder to debug than they should be. First one: when we fetch migration configuration for a pack..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

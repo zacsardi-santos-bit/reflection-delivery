@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "MontFerret/ferret"
-description = "I'm hitting a bug in the formatter for our query language where it's not respecting the configured max line width once things get nested. The way it's supposed to work is that a candidate expressio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

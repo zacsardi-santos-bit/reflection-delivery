@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a frustrating gap with the standalone ClickHouse query utility (the LocalConnection path in clickhouse-local basically). I've got verbose logging turned on, and when a query fails I onl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

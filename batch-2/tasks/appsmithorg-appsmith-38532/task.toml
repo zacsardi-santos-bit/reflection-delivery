@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "appsmithorg/appsmith"
-description = "I'm cleaning up some inline name-editing logic in the Appsmith IDE and I want to pull it out of the component it's stuck in. Right now the whole flow (tracking the edited name, running validation, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "riverqueue/river"
-description = "I'm trying to run River behind a connection pooler (PgBouncer in transaction pooling mode) and it's blowing up. That mode forces a simple query protocol that has no support for extended binary enco..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

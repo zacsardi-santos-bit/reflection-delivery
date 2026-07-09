@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I've been poking around the realtime conversation APIs and the session identifier field is bugging me because it's just named something generic like session ID, and in our world there are a bunch o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

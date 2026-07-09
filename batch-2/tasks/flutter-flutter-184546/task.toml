@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm on a locally built Flutter engine and the error I get when the tooling can't find the engine build directory at my configured path is driving me nuts. It's vague and passive, doesn't clearly sa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

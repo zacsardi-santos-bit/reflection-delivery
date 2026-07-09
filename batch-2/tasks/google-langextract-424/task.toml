@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google/langextract"
-description = "I'm working in our document extraction library where OpenAI is one of the inference providers, and right now it only does real-time completions, which get expensive fast for high-volume document ru..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

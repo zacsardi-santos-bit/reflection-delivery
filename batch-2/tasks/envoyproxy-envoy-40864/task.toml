@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "envoyproxy/envoy"
-description = "I'm working on the Rust SDK for Envoy dynamic modules, the part where you write HTTP filter plugins, and I keep hitting this annoying bit of boilerplate. The trait you implement to build a filter c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

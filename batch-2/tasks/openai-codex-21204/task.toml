@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm working on the memory search backend and I want to add a third matching mode for proximity search. Right now I can either match any query (too broad, matches anywhere in the file) or require al..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

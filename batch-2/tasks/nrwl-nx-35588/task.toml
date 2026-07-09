@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "We're finally killing off two ancient deprecated options in our Jest integration and I need two migration scripts so existing workspaces upgrade cleanly instead of breaking silently, since neither ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm dealing with our sandbox security layer, the bit that decides which file paths are allowed vs forbidden when we run sandboxed commands, and I've got three things to untangle."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

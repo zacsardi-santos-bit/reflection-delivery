@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm building an agent that binds a ton of tools and I want to use the server-side tool search stuff that some providers offer, instead of shipping every tool's full schema on every single call (was..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm digging into our policy persistence code and hit a real safety hole with how permanent tool approvals get saved. Right now when someone grants \"always allow\" for a tool while in the standard in..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

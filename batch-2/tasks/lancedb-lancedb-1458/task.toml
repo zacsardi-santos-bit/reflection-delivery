@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "lancedb/lancedb"
-description = "I'm working on the lancedb Node.js library and I want to widen its Arrow compatibility. Right now we only really play nice with one narrow Arrow version, so anyone whose project pulls in an older o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

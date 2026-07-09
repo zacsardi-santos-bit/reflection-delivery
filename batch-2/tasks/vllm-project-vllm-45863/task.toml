@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm deep in the DeepSeek V4 sparse attention path on NVIDIA hardware and I keep hitting a perf gap that's bugging me. The function that builds the mixed sparse token index tables (over in the spars..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

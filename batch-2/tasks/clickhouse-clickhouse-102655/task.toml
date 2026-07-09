@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I keep hitting a crash in ClickHouse when I use the wildcard-with-exclusion syntax, you know `SELECT * EXCEPT (c) ...`, in a query where the excluded column name `c` is also reused as an alias for ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

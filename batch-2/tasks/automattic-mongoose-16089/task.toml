@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Automattic/mongoose"
-description = "I'm hitting a nasty TypeScript gap in Mongoose around populate plus plain-object conversion and I want to get the types right. Basically when I populate a ref field on a document and then call the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

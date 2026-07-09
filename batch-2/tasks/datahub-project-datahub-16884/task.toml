@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "datahub-project/datahub"
-description = "I'm digging into the Teradata ingestion connector in DataHub and it's painful on big environments, hundreds of databases, thousands of tables, so I need a few perf and correctness fixes."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm chasing down some IPv6 Neighbor Discovery bugs in the BPF datapath, the code that handles NS/NA in the network device path (Cilium style). Couple of correctness issues plus some test scaffoldin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["c", "swe"]
 metadata = { vendor = "Mercor" }

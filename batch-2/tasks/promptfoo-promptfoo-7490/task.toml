@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm running evals through the Vertex AI path in promptfoo's Google integration and cost is always coming back undefined, every single call, even for models that have published pricing. Makes it bas..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

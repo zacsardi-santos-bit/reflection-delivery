@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mui/material-ui"
-description = "I'm hitting a glitchy exit animation on our Slide transition component, the one over in `@packages/material-ui/src/Slide/Slide.js` that animates elements in and out. We support touch-drag gestures ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

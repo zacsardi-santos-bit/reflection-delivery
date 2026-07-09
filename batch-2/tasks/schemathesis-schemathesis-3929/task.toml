@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "schemathesis/schemathesis"
-description = "I'm running Schemathesis against a Go-based API and it just doesn't get the validation errors my service sends back. When my API rejects a request because a field's too short, has the wrong format,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm working on the SMLIGHT integration for Home Assistant and I want to add support for the built-in ambient LED strip that ships on the SMLIGHT Ultima devices. Right now we handle sensors, switche..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

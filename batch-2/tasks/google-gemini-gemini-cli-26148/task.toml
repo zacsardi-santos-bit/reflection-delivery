@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm hitting a rendering bug in the tool group message component (the CLI thing that draws the bordered box around a batch of tool calls). When the model fires off several tools and drops a topic-up..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

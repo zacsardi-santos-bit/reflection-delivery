@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm hitting a false positive from the unused-variables lint rule and it's driving me nuts. I've got a loop where I keep updating a variable each iteration by calling a method on the variable's own ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

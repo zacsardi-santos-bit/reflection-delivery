@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I hit a nasty correctness bug in ClickHouse's best-effort datetime parsing when the input string carries a timezone offset. When a value sits close to the boundary of the standard 32-bit date-time ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

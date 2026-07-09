@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "authelia/authelia"
-description = "I'm cleaning up Authelia's subpath deployment support (deploying under something like `https://example.com/auth` instead of root) and I've hit two bugs I want fixed."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

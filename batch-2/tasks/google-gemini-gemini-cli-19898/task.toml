@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm hitting a crash in the file discovery service when my config lists custom ignore file paths that are actually directories. I've got stuff like a dependency folder and a temp output folder in th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

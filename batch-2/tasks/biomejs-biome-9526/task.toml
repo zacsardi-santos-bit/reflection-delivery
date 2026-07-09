@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I've got a Svelte component that imports a utility function and uses it two different ways, once up in the script block where I pull its parameter types via a TS utility (think `Parameters<typeof f..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm chasing down a nasty file descriptor leak in our NIXL-backed cache storage layer, the thing we use for a high-priority cache system, and it's turning into a real problem for long-running servic..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

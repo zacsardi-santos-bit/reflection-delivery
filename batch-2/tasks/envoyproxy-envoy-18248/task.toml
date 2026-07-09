@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "envoyproxy/envoy"
-description = "I'm working on the Kafka mesh proxy filter and just found out message headers are getting silently dropped when produce requests get forwarded upstream. Clients can send messages with keys, values,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

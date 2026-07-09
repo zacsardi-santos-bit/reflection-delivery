@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I'm hacking on the Gleam compiler and I want to add a new warning for a JavaScript-specific gotcha in bit array pattern matching. Here's the deal: JS numbers can only safely represent integers up t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

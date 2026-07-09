@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm cleaning up how we handle email validation failures in the CLI because right now when someone exceeds their cloud inference limit or hasn't verified their email, we just call `process.exit()` s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

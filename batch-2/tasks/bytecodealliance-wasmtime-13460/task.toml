@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm chasing a perf gap in the Wasmtime WebAssembly runtime where every bulk memory copy or GC array copy goes through a libcall at runtime, even when the byte length is a tiny compile-time constant..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

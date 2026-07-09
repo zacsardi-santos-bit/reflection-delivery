@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working on the Gemini CLI and want to make its guts observable through normal AI monitoring tooling. Right now we run LLM calls, tool executions, sub-agent invocations, tool scheduling, user pr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

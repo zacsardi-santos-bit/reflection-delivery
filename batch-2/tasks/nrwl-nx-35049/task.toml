@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm deprecating that Tailwind glob-pattern helper in our Angular plugin, the function devs call in their Tailwind config files to auto-discover dependencies. Newer Tailwind versions don't need thos..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

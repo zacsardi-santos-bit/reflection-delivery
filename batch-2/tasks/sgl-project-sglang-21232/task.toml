@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm building out the expert load balancing (EPLB) piece of our distributed MoE inference stack and there are two algorithms missing that I need you to implement. First one's a balanced packing func..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

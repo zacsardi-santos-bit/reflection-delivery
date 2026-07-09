@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm messing with the Pulley bytecode interpreter and I need to shuffle around which instructions count as \"regular\" versus \"extended.\" Quick context: Pulley uses two tiers of instruction encoding, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

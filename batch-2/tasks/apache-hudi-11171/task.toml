@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm doing some package cleanup in our Hudi storage layer and want a hand moving a few classes into homes that actually reflect what they depend on. Right now there's an HBase-based HFile reader cla..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

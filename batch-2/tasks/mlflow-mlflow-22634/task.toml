@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm hitting two gaps with MLflow's third-party evaluation scorers, the wrappers we have around external eval libraries. First off they can't be serialized or deserialized at all, which means a conf..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

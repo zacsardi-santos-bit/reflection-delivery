@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm hacking on the ecobee integration in Home Assistant and I want to add a username plus password path to the config flow, right now the only way in is the PIN dance where you grab an API key and ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

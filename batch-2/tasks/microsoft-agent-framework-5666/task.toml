@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/agent-framework"
-description = "I'm building a hosting server for agents that pause on sensitive tool calls until a user approves them. The flow is: agent asks for approval, server emits an approval request item to the caller, an..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

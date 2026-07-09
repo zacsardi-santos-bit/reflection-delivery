@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm chasing a lockfile bug in our monorepo tooling. We've got projects that set their package manager requirement to a lenient policy, basically \"if the version doesn't match, ignore it and keep go..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

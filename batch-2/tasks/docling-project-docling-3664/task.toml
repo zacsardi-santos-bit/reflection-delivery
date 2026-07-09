@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm hitting a bug in the AsciiDoc backend of the document converter where tables with empty cells don't survive the trip to Markdown. If a table row has two consecutive empty cells, or a cell that'..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

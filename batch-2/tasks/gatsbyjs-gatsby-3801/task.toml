@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gatsbyjs/gatsby"
-description = "I'm using the Gatsby Less plugin over in `@packages/gatsby-plugin-less` to compile my Less stylesheets, and I've hit a wall: there's no way to override Less variables at build time. I'm theming a c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

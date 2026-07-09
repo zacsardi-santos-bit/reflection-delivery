@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langflow-ai/langflow"
-description = "I'm poking at Langflow and the database just keeps ballooning because vertex build records never get pruned. Every time a flow runs we insert fresh build records for each vertex node, but the old o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

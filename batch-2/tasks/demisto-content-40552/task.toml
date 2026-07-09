@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm cleaning up the GreyNoise integration and the API client init is driving me nuts. Right now we build the client by passing a long flat list of positional args, the API key, server URL, timeout,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

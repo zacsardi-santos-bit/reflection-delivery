@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm cleaning up the eval API on our server and there are a couple of gaps I keep bumping into. First, we don't have formal response schemas for two of the eval endpoints, and malformed responses co..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

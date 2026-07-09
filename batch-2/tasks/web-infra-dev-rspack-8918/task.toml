@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "web-infra-dev/rspack"
-description = "I'm bumping the bundler dep we use in test tooling and I need it pinned exactly, not left on a loose range. Right now the manifests specify a fuzzy version for the bundler as a dev dependency, but ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

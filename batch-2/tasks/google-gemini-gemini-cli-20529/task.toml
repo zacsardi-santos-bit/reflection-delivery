@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I've been poking at the CLI overflow behavior and noticed something annoying. When output is too long to fit the terminal, the truncation indicator tells you how many lines are hidden (\"first N lin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

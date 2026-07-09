@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prowler-cloud/prowler"
-description = "I'm extending our cloud security scanner to cover inline IAM policies, not just the managed ones we already handle. Right now we scan managed (customer-created) policies for privilege escalation ri..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

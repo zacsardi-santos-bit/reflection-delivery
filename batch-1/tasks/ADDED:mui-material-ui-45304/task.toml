@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mui/material-ui"
-description = "So I'm cleaning up the migration story from our old Grid to the new one in the UI library, and the annoying thing right now is that the new Grid just silently swallows props that got removed in the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

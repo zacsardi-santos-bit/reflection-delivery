@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "natalie-lang/natalie"
-description = "I'm hacking on Natalie (the Ruby impl written in Ruby/C++) and I hit a gap in the one-line rightward pattern matching syntax. If I write something like an array matched against several comma-separa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

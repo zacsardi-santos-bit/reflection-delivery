@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm hitting a nasty log flooding issue in our Ray-based LLM serving layer. When the backend inference engine crashes and goes unresponsive, every in-flight request fails with the same fatal error, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

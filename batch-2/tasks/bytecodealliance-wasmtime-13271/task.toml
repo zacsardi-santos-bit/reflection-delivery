@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm working on the Winch compiler's AArch64 backend in Wasmtime and I keep hitting a wall with the wide arithmetic proposal. Right now four wide arithmetic ops just aren't implemented for AArch64: ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

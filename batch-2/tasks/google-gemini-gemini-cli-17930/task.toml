@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm reworking the hooks display in our CLI and the current setup bugs me, when someone runs the hooks command (or its panel subcommand) it just pushes a static message item into the main UI message..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

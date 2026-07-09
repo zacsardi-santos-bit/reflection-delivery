@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm poking at the memory system in the Codex Rust codebase and hit a testing wall. There's a function that filters and serializes conversation history items before we use them to generate memory su..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

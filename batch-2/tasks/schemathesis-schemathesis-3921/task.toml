@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "schemathesis/schemathesis"
-description = "I'm adding support to Schemathesis for parsing structured validation error responses from ASP.NET Core, the Microsoft web framework. Right now the error feedback system understands formats from a h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

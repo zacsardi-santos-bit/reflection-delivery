@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm reworking our policy engine so it can actually express the difference between interactive and non-interactive (automated pipeline) sessions instead of hacking it globally. Right now non-interac..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

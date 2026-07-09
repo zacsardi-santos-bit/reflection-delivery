@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "deepchem/deepchem"
-description = "I'm adding uncertainty estimation to our neural net model framework and hitting two gaps I need you to close."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

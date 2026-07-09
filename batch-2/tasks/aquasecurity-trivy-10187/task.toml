@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "aquasecurity/trivy"
-description = "I'm working on the Maven dependency scanner and hit a real gap: it reads Maven settings files to discover repo configs but totally ignores proxy entries. In a lot of corporate and CI setups all out..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

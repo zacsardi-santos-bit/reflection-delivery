@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I want to clean up how our eval utility functions are organized because right now they're scattered across layers and it's making reuse painful. We've got helpers for converting eval tables to CSV ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

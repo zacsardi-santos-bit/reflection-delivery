@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm building an agent that uses PII middleware to protect sensitive info, and I've hit a real gap: when I consume the agent's output as a stream, raw personal data still leaks through in the live c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

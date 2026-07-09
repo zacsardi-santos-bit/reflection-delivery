@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm building a script from scratch to catch CI performance regressions in our GitHub Actions workflows and ping Slack when a job slows down a lot versus its historical baseline. Right now nobody no..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

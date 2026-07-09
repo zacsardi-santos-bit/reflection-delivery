@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "awslabs/mountpoint-s3"
-description = "I'm cleaning up our filesystem integration tests, the ones that spin up a mock HTTP server to fake out S3 API responses so we can check that the filesystem layer handles and propagates errors corre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

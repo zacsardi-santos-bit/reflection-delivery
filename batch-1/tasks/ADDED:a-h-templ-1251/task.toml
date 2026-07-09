@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "a-h/templ"
-description = "I'm working on the templ template compiler and I keep hitting a wall when I try to annotate attributes inside an HTML element's opening tag. Basically I want to drop a comment right there between a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

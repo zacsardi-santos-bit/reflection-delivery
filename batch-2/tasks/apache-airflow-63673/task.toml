@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting an encoding crash when reading pod logs asynchronously from Kubernetes. Whenever a container emits bytes that aren't valid UTF-8, like binary data, mixed or non-UTF-8 encodings, or trun..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm building on the Semantic Kernel framework and I want to use Azure Cosmos DB NoSQL as a vector store backend, but there's no built-in connector for it so I need one implemented that plugs into t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

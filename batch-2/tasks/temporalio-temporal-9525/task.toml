@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "temporalio/temporal"
-description = "I'm working on CHASM side-effect tasks on standby clusters in our multi-DC (active/standby) setup and hitting a real gap. Right now when a side-effect task that got replicated from active has been ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

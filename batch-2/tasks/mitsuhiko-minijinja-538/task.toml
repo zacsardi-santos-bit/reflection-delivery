@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mitsuhiko/minijinja"
-description = "I'm hitting a weird bug in the template engine where including a template that uses inheritance breaks when the include sits inside a loop. Setup is: I've got a base template with a block, a child ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "neondatabase/neon"
-description = "I'm doing some cleanup on the pageserver and I keep hitting a wall when trying to figure out who's holding layer manager locks during contention. Right now the read and write lock methods on the la..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

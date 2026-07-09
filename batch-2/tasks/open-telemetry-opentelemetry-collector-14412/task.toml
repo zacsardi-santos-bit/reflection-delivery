@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-telemetry/opentelemetry-collector"
-description = "I'm reworking how telemetry resource attributes get configured in the OpenTelemetry Collector and could use your help. Right now the resource section under telemetry only takes a flat map where val..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

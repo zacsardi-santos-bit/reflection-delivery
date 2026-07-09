@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm chasing a slow metrics leak on our Kafka brokers and could use a hand. When a broker stops being the leader for a topic partition, whether because the partition got deleted or leadership moved ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

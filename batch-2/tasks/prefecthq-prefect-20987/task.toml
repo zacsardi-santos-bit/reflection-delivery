@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm writing automation scripts around Prefect's CLI and I keep hitting a wall with the config view command and the profile listing command, they only spit out human-readable text so there's no clea..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

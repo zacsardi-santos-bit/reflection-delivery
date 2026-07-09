@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cadence-workflow/cadence"
-description = "I'm cleaning up our type mapper fuzz tests in the workflow engine and they're driving me nuts, every single test file for the schedule-related mapper types re-implements the exact same fuzzer setup..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

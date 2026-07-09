@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "hapifhir/hapi-fhir"
-description = "I'm dealing with a schema migration framework for a FHIR server and the online index handling on SQL Server is bugging me. Right now we detect the SQL Server edition up front and use that to decide..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

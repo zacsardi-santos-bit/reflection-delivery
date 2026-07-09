@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm seeing a real security gap in our backfill listing endpoint and I want to close it. Right now when I query the list of backfills, I get everything in the system back regardless of whether I'm a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

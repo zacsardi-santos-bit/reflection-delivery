@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "aws/aws-sdk-java-v2"
-description = "I'm hitting a wall with the AWS SDK V1-to-V2 migration tool. After it runs, the output still doesn't compile in two common enum cases and I'd like to fix both."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

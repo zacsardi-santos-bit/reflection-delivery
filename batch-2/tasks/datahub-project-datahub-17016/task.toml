@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "datahub-project/datahub"
-description = "I'm working on DataHub's metadata ingestion framework and I need to add a way to pull secrets from cloud-hosted secret managers at runtime. Right now there's nothing built in for this so people end..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

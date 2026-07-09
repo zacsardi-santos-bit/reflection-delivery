@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/james-project"
-description = "I'm hitting a wall with shared mailbox rename and move on my mail server. When I've got a mailbox that's shared with me and I've actually been granted the rights to manage it, renaming or moving it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I've got tool spec factories, the functions that tell the language model each tool's name, JSON schema, description, and parameters, all sitting off in a separate utilities crate while the actual h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

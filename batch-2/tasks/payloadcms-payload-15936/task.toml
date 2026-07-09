@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "payloadcms/payload"
-description = "I'm hitting a locale isolation bug in our multi-language content setup and it's eating people's translations. The scenario is a collection that has a localized tab, and inside that tab there's a gr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

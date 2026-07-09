@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "awslabs/mountpoint-s3"
-description = "I'm building out a cloud filesystem tool and hit two caching gaps I want you to close."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

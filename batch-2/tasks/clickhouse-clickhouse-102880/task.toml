@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I've got a table with a text index where the tokenizer stores each row's whole column value as one atomic token in the dictionary instead of splitting it into individual words. When I run wildcard ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm working on the Flutter macOS desktop tooling and hitting a mess with how the engine and app frameworks get embedded. Older macOS Flutter projects manually link and embed FlutterMacOS.framework ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

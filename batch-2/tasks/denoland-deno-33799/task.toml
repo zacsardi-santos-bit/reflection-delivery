@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "denoland/deno"
-description = "I'm hitting a wall with our monorepo overrides and I think it's a real gap. We pin shared dependency versions in a workspace catalog, and I want to be able to point at those catalog entries straigh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

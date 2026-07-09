@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/flink"
-description = "I'm deep in the file-merging checkpointing code in Flink and hit two things that really need to go together. First, some of the state handle classes that the file-merging checkpoint system relies o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

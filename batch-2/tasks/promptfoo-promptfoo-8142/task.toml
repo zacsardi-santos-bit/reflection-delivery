@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm adding argument-level checks to our trajectory-based agent evals and right now we can confirm which tools got called but we've got no way to see what arguments went into them, which is a real g..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

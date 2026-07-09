@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm building an LLM-powered schema comparison feature for the Apache Airflow common AI provider and could use your help wiring it up. The problem it solves: Airflow has no built-in way to detect sc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

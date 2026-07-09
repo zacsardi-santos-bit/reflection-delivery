@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sharkdp/fd"
-description = "I've been poking at the file search tool and hit an annoying inconsistency around patterns that contain path separators. If I accidentally stick a slash in the main search pattern, it does the righ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

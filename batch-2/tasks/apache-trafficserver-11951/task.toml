@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/trafficserver"
-description = "I'm chasing down a couple bugs in how we parse named access control filters in remap config files, over in the remap ACL handling code. First one is a crash: if someone defines a named filter twice..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

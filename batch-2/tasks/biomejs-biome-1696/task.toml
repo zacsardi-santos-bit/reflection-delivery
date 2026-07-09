@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm hitting a formatting bug in the biome JavaScript formatter around member chain expressions and empty lines. When I write a chain of property accesses and method calls and stick blank lines betw..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

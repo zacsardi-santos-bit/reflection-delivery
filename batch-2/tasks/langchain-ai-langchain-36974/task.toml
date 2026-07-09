@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm cleaning up our release workflow and the package-selection dropdown is driving me nuts. Right now every option is a full directory path with the whole prefix spelled out, which is verbose and e..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

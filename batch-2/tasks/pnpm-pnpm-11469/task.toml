@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm hitting some annoying formatting churn when my workspace manifest gets edited programmatically, like when a new catalog, overrides, or allowBuilds section gets added. The tool rewrites the file..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

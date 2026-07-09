@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm poking at the markdown formatter and hit a bug with hard line breaks. Quick refresher: in markdown you make a hard line break by ending a line with two or more trailing spaces, which forces a n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

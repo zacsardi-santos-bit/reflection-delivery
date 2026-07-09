@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm knee-deep in the integration test infra for our Rust file system project (the one that tests fs ops in both local and remote containerized environments) and I hit two things that need fixing."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

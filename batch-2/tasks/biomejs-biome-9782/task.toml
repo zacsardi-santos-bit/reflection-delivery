@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm hacking on my Markdown parser and blockquotes are dropping block-level structure. When I write a line of text then a line of dashes inside a blockquote, that should come out as a level-two sete..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

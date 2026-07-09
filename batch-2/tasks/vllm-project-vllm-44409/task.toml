@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm chasing a nasty memory-safety bug in the KV cache manager for hybrid attention models, the ones that split layers across multiple KV cache groups like a mix of full-attention and sliding-window..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

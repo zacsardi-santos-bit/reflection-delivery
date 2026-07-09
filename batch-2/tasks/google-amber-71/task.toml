@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google/amber"
-description = "So I'm cleaning up numeric type inconsistencies in our C++ graphics testing framework, and they're both causing compiler warnings (which fail the build since we treat warnings as errors) and some g..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

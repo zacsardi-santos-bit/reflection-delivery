@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bluenviron/mediamtx"
-description = "I'm hitting two related bugs with the RTSP static source reader in MediaMTX (the code that pulls streams from a remote RTSP server). First problem: when I set a source URL that uses HTTP tunneling ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

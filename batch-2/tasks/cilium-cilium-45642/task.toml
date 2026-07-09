@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm working on the load balancer writer in the Cilium networking stack and I hit a bug in how backend selection handles zone-preference routing when health checking is in play. When a service is se..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

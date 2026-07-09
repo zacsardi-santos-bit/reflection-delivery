@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "react-hook-form/react-hook-form"
-description = "I'm hitting a bug with dirty field tracking in my forms that use dynamic field lists, and it's messing with how I decide what to save. Say I've got a form with a \"name\" text input, an \"age\" number ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

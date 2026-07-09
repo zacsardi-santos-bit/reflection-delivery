@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm working with LangChain's self-query retrieval and hit a wall with TencentVectorDB, there's just no query translator for it yet. Pinecone and Chroma already have translators that turn LangChain'..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm poking at the issue tracking search and I keep wanting to know how many traces are tied to each issue when I run a search inside an experiment. Right now the search hands me back the issue deta..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

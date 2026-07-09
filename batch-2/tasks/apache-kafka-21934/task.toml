@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm digging into the Kafka Streams DSL internals and hit a design smell in how session window stores get materialized. Right now the time-ordered session store supplier carries a boolean flag to sa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

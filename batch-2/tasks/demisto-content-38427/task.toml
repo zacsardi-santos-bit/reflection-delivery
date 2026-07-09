@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm updating our Absolute security integration to talk to the provider's v3 API instead of v2, and it touches a bunch of stuff so bear with me. Right now everything hits v2 endpoints with the old r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm seeing a gap in how we build the compaction request when a session's conversation history gets too long and we auto-summarize it to free up context. The problem is the compaction request we sen..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dependabot/dependabot-core"
-description = "I'm working on Dependabot's Maven support and I keep hitting a problem with plugins that follow Jenkins' continuous delivery release conventions, the ones that embed a git commit hash right in the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm chasing down some deadline alert weirdness in our workflow scheduler. We've got a deadline alert model hanging off workflow definitions, and right now these alerts lean on the standard equality..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

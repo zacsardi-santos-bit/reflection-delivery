@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ls1intum/Artemis"
-description = "I'm adding an unsaved-changes warning to the lecture editing feature in our LMS because right now if an instructor tweaks a lecture's title, description, channel name, or time period and then click..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

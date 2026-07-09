@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "facebook/lexical"
-description = "I'm hitting an annoying bug in the rich text editor. When there's an empty paragraph sitting right before a heading and I press Backspace at the very start of that heading, the heading loses its fo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

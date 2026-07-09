@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm digging into the KV cache store component for long-context inference and I keep hitting the same waste: every time the sending thread picks up a new batch of tokens for a request, it re-process..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

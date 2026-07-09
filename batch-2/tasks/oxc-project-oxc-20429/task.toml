@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm getting a bunch of false positive warnings out of the variable shadowing lint rule and it's driving me nuts. When I turn on the option that also checks against built-in globals, it starts flagg..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

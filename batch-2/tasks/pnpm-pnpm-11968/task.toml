@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm hardening the integrity verification in our package manager and there's a real gap I keep hitting. Right now when the tarball we pull from the registry doesn't match the checksum recorded in th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

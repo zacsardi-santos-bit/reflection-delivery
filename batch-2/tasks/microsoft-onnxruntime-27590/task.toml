@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/onnxruntime"
-description = "I'm hitting a fusion gap when I optimize Qwen3 models with ONNX Runtime's transformer optimizer. Qwen3 computes rotary positional embeddings on the fly at runtime instead of reading a precomputed t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

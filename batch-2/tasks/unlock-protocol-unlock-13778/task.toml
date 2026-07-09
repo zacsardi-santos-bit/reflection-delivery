@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "unlock-protocol/unlock"
-description = "I'm bumping the hardhat plugin package over to a newer major of the Ethereum JS library and it's got some breaking changes I need to work through across all the plugin source, fixtures, and test co..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

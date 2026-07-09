@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm dealing with a broken Palo Alto Networks security advisories integration. It pulls vulnerability data from their API and turns each advisory into a threat intel indicator, and security teams re..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

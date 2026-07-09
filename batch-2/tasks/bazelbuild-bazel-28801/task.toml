@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bazelbuild/bazel"
-description = "I'm hitting a bug in Bazel's test infrastructure around how we figure out the OS of the platform that'll actually run a test when execution groups are in play. When a test rule defines a custom tes..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

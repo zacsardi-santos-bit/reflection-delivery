@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "So I'm cleaning up our onboarding telemetry in the CLI and I hit a gap. Right now when someone finishes onboarding we log that it succeeded plus their tier, but we've got no idea how long onboardin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

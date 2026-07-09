@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pulumi/pulumi"
-description = "I'm hitting a bug in the Pulumi Configuration Language runtime where the built-in string length function gives wrong answers for anything that isn't plain ASCII. When I run it on strings with emoji..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

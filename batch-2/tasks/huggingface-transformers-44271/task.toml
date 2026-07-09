@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/transformers"
-description = "I'm using the transformers library and I keep wanting a learning rate scheduler that reacts to actual training dynamics in both directions, not just backing off. Right now the only metric-aware opt..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm hitting a wall with the Gemini CLI when I try to pass the current Flash preview model through the model selection flag on the command line. The model's identifier has \"preview\" baked into the n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

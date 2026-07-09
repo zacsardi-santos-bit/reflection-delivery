@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm cleaning up the doc conversion pipeline and heading hierarchy is a mess right now. When we convert structured docs like PDFs, scanned reports, or legal texts that use numbered section headings,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

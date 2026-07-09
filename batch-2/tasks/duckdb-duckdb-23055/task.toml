@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "duckdb/duckdb"
-description = "I've been cleaning up our DuckDB test infrastructure and there are two things I want to fix together. First, running the suite today means passing two paths on the command line, where the Python he..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm cleaning up the guidance in our redteam setup skill docs and the strategy default we ship is bugging me. Right now the skill instructions tell people to kick off their initial security test gen..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

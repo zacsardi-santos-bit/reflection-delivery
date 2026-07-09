@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "denoland/deno"
-description = "So I keep hitting this really confusing thing when I fumble an import path in Deno. If I accidentally point a static import at a local directory instead of an actual file (like I forgot to add the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

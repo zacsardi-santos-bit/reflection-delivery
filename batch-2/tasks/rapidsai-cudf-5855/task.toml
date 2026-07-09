@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rapidsai/cudf"
-description = "I'm working with the Java bindings for cuDF's GPU memory manager over in the RMM initialization path and right now there's just no way to tell the pool \"hey, don't grow past X bytes.\" The current i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

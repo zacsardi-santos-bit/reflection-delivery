@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Kong/insomnia"
-description = "I'm working on the Konnect sync feature in Insomnia and there are two gaps I keep hitting. First, when we sync routes from a Kong gateway control plane, routes with pattern-based paths (regex expre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

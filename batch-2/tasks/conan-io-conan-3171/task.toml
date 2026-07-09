@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "conan-io/conan"
-description = "I'm hitting a really annoying wall with private deps in my package manager. So I've got a library that marks some of its internal deps as private, the whole point being that consumers of my lib sho..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

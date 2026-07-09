@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tinygrad/tinygrad"
-description = "I'm hitting crashes in the AMD GPU profiling timeline analysis on RDNA3 and RDNA4 hardware. When I run timeline validation on a profiled kernel it blows up with an error about a timeline row having..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

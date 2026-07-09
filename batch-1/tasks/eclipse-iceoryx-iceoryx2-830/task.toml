@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "eclipse-iceoryx/iceoryx2"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

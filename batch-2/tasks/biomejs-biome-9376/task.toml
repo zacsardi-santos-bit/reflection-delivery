@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new nursery lint rule to Biome that flags duplicate titles across test cases and test group blocks that live in the same scope. The motivation is real: when a file grows it's easy t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

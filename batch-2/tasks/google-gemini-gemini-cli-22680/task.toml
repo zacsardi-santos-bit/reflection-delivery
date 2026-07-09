@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm digging into our sandbox execution code and found a real security hole I want closed. Right now callers can hand in sanitization config that flat out disables env var redaction, so secrets, API..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

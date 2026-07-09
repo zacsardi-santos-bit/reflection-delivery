@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "noir-lang/noir"
-description = "I'm messing with the Noir toolchain, specifically how we control whether circuit execution prints stuff during test runs, and the current setup is way too blunt. Right now it's just a boolean, eith..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

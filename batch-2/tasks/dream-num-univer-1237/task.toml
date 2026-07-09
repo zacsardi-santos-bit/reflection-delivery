@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dream-num/univer"
-description = "I'm building out the formula engine for a spreadsheet and a bunch of standard built-ins just aren't there yet, so formulas people expect to work fail completely. I need to add ISBLANK, IF, IFERROR,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

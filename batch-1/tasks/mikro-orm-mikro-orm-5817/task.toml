@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mikro-orm/mikro-orm"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

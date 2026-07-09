@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm chasing a nasty pagination bug in the DAG Runs endpoint. We do cursor-based pagination and support sorting by aliased column names, where the user-facing sort field is different from the actual..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

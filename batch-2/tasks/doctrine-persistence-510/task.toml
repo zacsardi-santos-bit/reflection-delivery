@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "doctrine/persistence"
-description = "I'm cleaning up a few things in our PHP metadata mapping drivers and the persistence registry, three related fixes really. First the PHP mapping driver, right now it just includes a file and expect..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["php", "swe"]
 metadata = { vendor = "Mercor" }

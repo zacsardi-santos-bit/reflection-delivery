@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "babel/babel"
-description = "I'm hitting two problems in Babel's core transform pipeline that I want you to fix together. First one's about source maps. When Babel transforms code that already carries an input source map (supe..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

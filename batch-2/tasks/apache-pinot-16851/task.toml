@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm extending Pinot's audit logging so it can capture responses, not just incoming requests. Right now the audit filter over in the broker/controller audit code only logs details about the request ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

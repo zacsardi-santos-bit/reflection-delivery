@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "chakra-ui/panda"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prefix-dev/pixi"
-description = "I'm bumping the conda typing library deps (the whole family we use for package specs and package records) to their newer releases and now the project won't build. The new versions added an \"extras\"..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

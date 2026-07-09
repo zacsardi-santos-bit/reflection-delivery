@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm working on the AI gateway's endpoint usage modal and want to make it more useful. Right now it only shows static code snippets (cURL, Python) that people copy and run elsewhere, and there's no ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

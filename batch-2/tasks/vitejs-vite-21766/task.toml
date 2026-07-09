@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vitejs/vite"
-description = "I'm hitting a weird styling bug with Vite's dep optimizer during pre-bundling. I've got a CJS package that internally does a require on another package, and that second package's entry point (its m..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

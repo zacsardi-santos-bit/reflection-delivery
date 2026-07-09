@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gatsbyjs/gatsby"
-description = "I'm building a Gatsby plugin and I've got a schema describing what options it accepts, types, which ones are required, all that. I want to unit test that my schema actually rejects bad option value..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

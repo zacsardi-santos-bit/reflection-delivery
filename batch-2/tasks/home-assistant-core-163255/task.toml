@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm working on the Smarla baby rocker integration for Home Assistant (over in the `homeassistant/components/smarla` area) and I want to add firmware update support since right now there's just no w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

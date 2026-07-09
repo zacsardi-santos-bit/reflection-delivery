@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "graphql-java/graphql-java"
-description = "I've been leaning on the query traversal system to analyze GraphQL documents, and it's great for read-only inspection but I keep hitting a wall because I can't actually modify a query while walking..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

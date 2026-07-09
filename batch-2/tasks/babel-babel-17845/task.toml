@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "babel/babel"
-description = "I'm poking at Babel's React preset and the automatic JSX dev runtime, and I've hit a wall. When I flip on development mode the transform helpfully stuffs source location data (file name, line, colu..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

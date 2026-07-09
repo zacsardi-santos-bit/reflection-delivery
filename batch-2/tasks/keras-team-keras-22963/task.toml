@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hitting this annoying thing in Keras where I pass a bad axis to an op, like axis 10 on a 2D tensor, and instead of blowing up right where I wrote it, everything looks fine until execution and t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

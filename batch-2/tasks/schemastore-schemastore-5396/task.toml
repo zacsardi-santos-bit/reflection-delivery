@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "SchemaStore/schemastore"
-description = "I keep hitting spurious validation errors on my Bamboo pipeline YAML files. I maintain a bunch of these CI/CD definitions as code and rely on the bamboo-spec JSON schema for editor autocomplete and..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm chasing a nasty bug in the pod CIDR allocation path for dual-stack nodes in the IPAM allocator. When a node registers with both an IPv4 and an IPv6 pod CIDR range, and one of those ranges is al..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

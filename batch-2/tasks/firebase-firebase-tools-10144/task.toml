@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "firebase/firebase-tools"
-description = "I'm adding AI content generation blocking trigger support to the Firebase CLI deploy flow. Right now if a developer writes a cloud function that hooks into AI content generation, either before or a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

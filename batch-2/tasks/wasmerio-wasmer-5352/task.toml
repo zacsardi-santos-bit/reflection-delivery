@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "wasmerio/wasmer"
-description = "I'm messing with cron expressions in the Wasmer config library (the app config bits) and I want to be able to spit out a human-readable description of what a schedule actually means. Like when I've..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

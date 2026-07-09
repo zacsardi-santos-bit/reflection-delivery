@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/datasets"
-description = "I'm working with the HuggingFace datasets library and I want to add native support for loading Apache Iceberg tables. Right now there's just no built-in way to do it, so anyone keeping training dat..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

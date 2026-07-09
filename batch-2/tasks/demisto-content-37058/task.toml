@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm deep in the Cybereason integration over in `@Packs/Cybereason/Integrations/Cybereason/Cybereason.py` and hit two annoying gaps that keep biting me."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

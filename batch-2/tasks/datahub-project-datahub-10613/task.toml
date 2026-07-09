@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "datahub-project/datahub"
-description = "I'm poking at the DataHub Airflow integration plugin, the bit that captures lineage by tracking which datasets each task reads and writes. Right now when the plugin hits a dataset as an inlet or ou..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

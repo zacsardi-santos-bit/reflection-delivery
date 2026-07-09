@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm getting wrong results out of a right-side \"any match\" join when the ON clause has multiple OR conditions and I've turned off the query plan table-swap optimization. With that optimization on (t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

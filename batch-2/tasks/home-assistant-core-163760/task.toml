@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm adding segment-based cleaning to the Roborock vacuum integration in Home Assistant and could use your help. My robot supports multiple floors, each with named room segments, but there's current..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

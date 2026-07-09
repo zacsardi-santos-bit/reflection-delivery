@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building out onboarding help for a companion CLI tool inside our assistant and the current behavior is pretty useless. When someone asks how to install or migrate to the companion tool they jus..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

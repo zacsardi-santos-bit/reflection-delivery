@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I've been going through the PaddlePaddle codebase and keep running into pointers that get used with zero null checks, so when one turns out to be null (caller passed it, a cast fell through, or a m..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

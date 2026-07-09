@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm poking at the redundant dictionary key check rule and it handles plain string keys fine but falls over on f-string keys. You know the pattern it catches, where you write something like `if key ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/onnxruntime"
-description = "I'm trying to speed up my static quantization workflow because right now every run forces me to hand over calibration data and redo the whole calibration pass even when nothing changed, which is pa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

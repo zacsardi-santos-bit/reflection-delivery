@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm poking at the Elgato integration in Home Assistant and the error handling in there is bugging me. Whenever a button press or a switch toggle fails, the error message says \"Elgato Light\" even th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

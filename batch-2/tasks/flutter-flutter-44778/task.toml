@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm poking around the Flutter rendering layer and the fill-viewport sliver bugs me. Right now it's built out of a chain of internal wrappers, basically a layout builder that spins up a padding widg..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm working on the Azure Synapse Pipeline integration in Apache Airflow over in the providers code, and right now there's only a synchronous hook, which means it can't be used with deferrable opera..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

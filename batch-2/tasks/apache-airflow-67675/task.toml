@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm working on the Airflow Helm chart and want to add support for the Kubernetes Gateway API as an alternative to Ingress for exposing the API server. Right now the chart can spit out Ingress resou..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

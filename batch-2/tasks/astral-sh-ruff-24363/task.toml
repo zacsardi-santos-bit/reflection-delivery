@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I've got a lint rule in my linter that flags string literals sitting directly inside exception raise statements, and it also ships an autofix that pulls the string out into a local variable and the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

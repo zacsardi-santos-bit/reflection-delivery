@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dapr/dapr"
-description = "I'm working on the Dapr control plane Helm charts and I keep hitting a gap with pod anti-affinity on the placement and scheduler StatefulSets. Right now the scheduler always renders a soft (\"prefer..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tauri-apps/tauri"
-description = "I'm hitting a weird bug in Tauri's resource bundling where the map-based config that maps a source file to a specific destination path puts the file in the wrong spot. When I map some file that liv..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm hitting a permissions hole in our WASI filesystem layer where truncation slips past read-only enforcement. When the host preopens a directory granting the guest only read access to files inside..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

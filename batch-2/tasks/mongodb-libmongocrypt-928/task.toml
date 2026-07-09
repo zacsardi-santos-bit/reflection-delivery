@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mongodb/libmongocrypt"
-description = "I'm building out encrypted full-text search in a C encryption library and I need the string encoding step that turns a plaintext string into the set of text fragments we use to build encrypted sear..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["c", "swe"]
 metadata = { vendor = "Mercor" }

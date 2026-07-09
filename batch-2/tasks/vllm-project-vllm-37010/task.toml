@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm working on MoE checkpoint loading and hit a wall with padded expert weight buffers. Some distributed inference backends (DeepEP, NIXL EP with models like nemotron_h) need the hidden dimension r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

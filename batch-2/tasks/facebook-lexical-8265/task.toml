@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "facebook/lexical"
-description = "I'm poking at the markdown conversion stuff in lexical-markdown and hit two whitespace bugs that wreck round-trip fidelity, which matters a lot for anything that loads and saves markdown source wit..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "electron/electron"
-description = "So I'm hitting a gap in Electron around how new windows get opened from web content. When a page opens a new window, say someone clicks a link that targets a new tab or window, Electron fires an ev..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

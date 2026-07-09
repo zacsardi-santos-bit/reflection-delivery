@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/peft"
-description = "I've got a base model with a bunch of fine-tuning adapters loaded at once, and saving just one of them is broken. When I pass a single adapter name to save, the checkpoint I get back has way more w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

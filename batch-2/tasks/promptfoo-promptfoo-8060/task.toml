@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm updating the OpenCode SDK provider in promptfoo because the SDK now ships a v2 module with a flatter API shape, everything gets passed directly at the top level instead of being wrapped in nest..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

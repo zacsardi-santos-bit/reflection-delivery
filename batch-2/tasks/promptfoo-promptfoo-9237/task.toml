@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm working through our xAI provider integration and hit a few gaps I need cleaned up. First thing, the new Grok 4.3 family (both `grok-4.3` and `grok-4.3-latest`) isn't flagged as supporting reaso..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

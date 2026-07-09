@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm cleaning up the model export API in Keras and it's bugging me on a couple fronts. The main export function over in the export library has a name that says nothing about what format it actually ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

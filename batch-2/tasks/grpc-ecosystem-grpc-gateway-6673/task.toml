@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "grpc-ecosystem/grpc-gateway"
-description = "I'm working on the OpenAPI v3 generator for gRPC services and it's got a gap I need to close around visibility filtering. Right now it dumps every service, method, field, and enum value from the pr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

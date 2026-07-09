@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langflow-ai/langflow"
-description = "I'm cleaning up the async hygiene in our test suite and keep running into this: a bunch of tests run inside a running event loop, but various spots in the codebase do blocking I/O (file reads and w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm working on Ray's monitoring system and want to fix up the per-component memory metrics the reporter agent emits. Right now the resident set size and unique set size are only reported in megabyt..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

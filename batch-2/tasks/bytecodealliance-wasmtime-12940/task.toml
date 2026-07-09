@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm hacking on the Winch baseline compiler in wasmtime (the single-pass x86_64 backend) and it just doesn't handle reference type instructions, so any module touching function refs or null refs get..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

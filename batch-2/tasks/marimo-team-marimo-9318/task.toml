@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I'm working on the server-side HTML template rendering for exported notebooks and I hit a gap. When a notebook gets exported as a self-contained static page or as a WebAssembly-powered interactive ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

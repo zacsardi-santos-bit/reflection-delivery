@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ls1intum/Artemis"
-description = "I'm working on the modeling exercise participation piece in Artemis and need to add a feedback view so students can dig through their submission history instead of being stuck seeing only their lat..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

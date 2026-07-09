@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "line/armeria"
-description = "I'm digging through our Java HTTP framework and the load balancing strategies (round-robin, weighted round-robin, weighted random, sticky hashing, and gradual weight ramp-up aka slow-start) are all..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "argoproj/argo-cd"
-description = "I'm hitting a precision problem in how Argo CD reports Kubernetes server versions. Right now when it stores and displays a cluster's version it only keeps major and minor, so I get \"1.30\" and the p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

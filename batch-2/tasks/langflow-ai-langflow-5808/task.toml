@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langflow-ai/langflow"
-description = "I'm cleaning up the graph vertex code in our flow execution engine and the base vertex class is doing way too much. All the logic for reading and converting template params (resolving file paths th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

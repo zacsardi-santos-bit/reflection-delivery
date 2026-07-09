@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "polarsource/polar"
-description = "Our org review system uses an AI agent to decide approve vs deny at submission and when payment activity crosses a threshold, and right now the agent has zero memory of past decisions. So if a huma..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

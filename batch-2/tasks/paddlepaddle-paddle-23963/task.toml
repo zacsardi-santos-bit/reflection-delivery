@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I've been leaning on the dygraph-to-static graph compilation stuff in PaddlePaddle and hit a bunch of rough edges I want cleaned up. First off, the method on the program translator for turning the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

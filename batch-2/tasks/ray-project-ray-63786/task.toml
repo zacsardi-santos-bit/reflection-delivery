@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm digging into the runtime environment packaging code and I just realized our zip extraction has zero protection against path traversal, the classic zip slip thing. If someone hands us a runtime ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

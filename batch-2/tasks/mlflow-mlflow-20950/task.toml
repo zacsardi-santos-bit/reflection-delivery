@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm hitting a snag with MLflow's tracing and how it handles LLM call costs. Right now every time a traced LLM span ends, the code always tries to compute costs client-side using an optional cost-tr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

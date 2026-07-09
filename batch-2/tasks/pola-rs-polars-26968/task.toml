@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pola-rs/polars"
-description = "I ran into something annoying with windowed expressions in polars. When I do an `over(...)` and accidentally pass the same column name more than once as a partition key, it just silently accepts it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

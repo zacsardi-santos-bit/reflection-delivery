@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I hit a security hole in the WASI filesystem host code and I want it patched. The setup is a preopened directory where files are read-only, so no write permission is granted at the file level, and ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

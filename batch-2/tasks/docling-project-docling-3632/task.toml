@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm hitting a gap with docling's API-based picture description pipeline. I'm annotating images in PDFs through an external inference endpoint and it generates descriptions fine, but the token usage..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm worried about prompt injection in my AI CLI. Whenever the model calls a tool that reaches outside my control, like fetching a web page, running a shell command, or hitting some external service..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

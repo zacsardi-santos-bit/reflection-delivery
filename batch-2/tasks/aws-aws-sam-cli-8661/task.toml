@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "aws/aws-sam-cli"
-description = "I'm building Lambda container image functions with SAM CLI and I keep hitting a wall where the image build always goes through the SDK path. There's no way to opt into the container runtime's own C..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

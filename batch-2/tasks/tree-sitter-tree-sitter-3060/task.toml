@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tree-sitter/tree-sitter"
-description = "I'm hacking on the tree-sitter test runner and I keep hitting cases where the corpus test format just isn't flexible enough. Right now every test case in a corpus file runs unconditionally, which i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

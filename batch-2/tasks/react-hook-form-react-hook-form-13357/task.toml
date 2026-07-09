@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "react-hook-form/react-hook-form"
-description = "I'm hitting a dirty state tracking bug in my form and I think it's an actual bug, not me holding it wrong. Here's the setup: I've got a form with default values that include an array of objects, an..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

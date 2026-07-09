@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new lint rule to Biome's nursery group that catches a TypeScript anti-pattern I keep running into, where people slap a type assertion on the initial accumulator value of an array re..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

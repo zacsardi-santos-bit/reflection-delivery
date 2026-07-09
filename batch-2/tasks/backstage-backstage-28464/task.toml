@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm working on the Backstage backend caching layer and need to revert a library swap that shouldn't have happened. Someone recently replaced the standard Redis store adapter with an open-source Red..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

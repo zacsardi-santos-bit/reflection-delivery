@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm adding first-class support for Abliteration AI (a service with models trained to strip refusal behaviors) to promptfoo, because right now there's no built-in way to reference these models and f..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm hitting a confusing validation bug in the storage layer around resource names (bucket or volume names, that kind of thing). If I try to create a resource with a name that's too short but also h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

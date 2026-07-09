@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Consensys/teku"
-description = "I'm refactoring the deposit tree snapshot loading in Teku and the current design only takes a single optional file path, which can't express stuff like \"try a checkpoint sync node first, fall back ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

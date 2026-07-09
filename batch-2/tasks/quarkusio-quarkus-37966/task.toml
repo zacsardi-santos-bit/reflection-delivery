@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm working on a Quarkus app that serves both REST and gRPC on the same HTTP port, and I've hit a wall with auth on the gRPC side. I added role-based access restrictions to some gRPC service method..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

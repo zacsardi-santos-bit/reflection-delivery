@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/playwright"
-description = "I'm hitting a gap in Playwright's custom reporter API around worker-scoped fixtures. When one of those worker-scoped fixtures throws during teardown, my reporter's error callback fires but the seco..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

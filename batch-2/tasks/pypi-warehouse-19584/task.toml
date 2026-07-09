@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pypi/warehouse"
-description = "I want to add automated content scanning to our package upload flow. Right now anyone can upload a package with obfuscated or encrypted code that violates our acceptable use policies, and we've got..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm hitting a nasty build caching problem in my Nx workspace where TypeScript's incremental compilation just stops working after a cache hit. Traced it down to the TypeScript plugin not listing the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

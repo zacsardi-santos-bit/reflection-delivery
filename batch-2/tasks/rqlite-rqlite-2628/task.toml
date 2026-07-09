@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rqlite/rqlite"
-description = "I'm cleaning up the snapshot subsystem and want to introduce a proper package for the companion checksum files that live next to our snapshot data files. Right now those checksums get written and r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

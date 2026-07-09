@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm working on the Flutter web build tooling and hit a gap with release builds that use locally-bundled assets instead of CDN-hosted ones. When I flip a release build to bundle assets locally (CDN ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

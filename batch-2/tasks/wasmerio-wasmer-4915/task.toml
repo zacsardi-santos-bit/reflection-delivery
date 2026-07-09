@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "wasmerio/wasmer"
-description = "I'm doing a minor version bump across the whole Wasmer workspace and it's half-finished, so the build is busted right now. Some of the Cargo manifest files already got moved to the next minor relea..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

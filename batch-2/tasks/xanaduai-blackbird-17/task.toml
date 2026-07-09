@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "XanaduAI/blackbird"
-description = "I'm working on the Blackbird quantum programming library and I want to move our internal array representation away from the third-party numerical array type over to plain Python nested lists. Right..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

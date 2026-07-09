@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a wall with the Airflow nav bar and how it handles plugin links. Right now the moment two or more plugins are registered, every one of them gets shoved into a shared \"Plugins\" dropdown ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

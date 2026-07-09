@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm extending our 4-bit integer packing utilities and hitting two related problems. Right now the pack and unpack helpers are hardcoded for signed 8-bit integers only, so passing an unsigned tensor..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

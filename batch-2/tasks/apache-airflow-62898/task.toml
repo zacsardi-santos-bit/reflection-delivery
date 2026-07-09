@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm working in Airflow's AI operator integrations and I need to add a human-in-the-loop approval gate for LLM-generated output. Right now when an operator generates text or a SQL query, the result ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

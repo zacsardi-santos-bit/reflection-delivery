@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "browser-use/browser-use"
-description = "I'm cleaning up the file system module our browser agents use internally, it's got a bunch of API inconsistencies that keep biting me, mostly around save/restore state across sessions being flaky."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

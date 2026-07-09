@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm cleaning up how the SQLite vector store connector works in Semantic Kernel and the connection handling is way more painful than it should be. Right now I have to create, open, and hand a live d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

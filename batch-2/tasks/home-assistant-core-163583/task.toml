@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm deep in the Anthropic integration for Home Assistant and hitting a bunch of related bugs around how the model's thinking (its internal reasoning) gets stored and reused between conversation tur..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

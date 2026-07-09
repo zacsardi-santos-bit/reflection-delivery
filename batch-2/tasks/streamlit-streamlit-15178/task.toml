@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "streamlit/streamlit"
-description = "I'm building out the auth piece in Streamlit and hit a snag with the short-lived provider tokens we mint during OAuth sign-in, the ones that just carry which provider the user picked. Right now we ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

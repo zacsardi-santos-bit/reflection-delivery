@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I've got context files sitting at the root of my git repo but the tool never picks them up because my configured project trust boundary is a subdirectory below the repo root. The upward walk that d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

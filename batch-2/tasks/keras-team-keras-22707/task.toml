@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hitting rough edges with the image padding and cropping ops in Keras, specifically `pad_images` and `crop_images` over in the image utils (the `keras/src/ops/image.py` area plus wherever the ba..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

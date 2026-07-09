@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I want to add a secure RAG trace logger so we can actually see what code snippets our retrieval is pulling and their relevance scores, persisted across sessions to a local file. Right now there's n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

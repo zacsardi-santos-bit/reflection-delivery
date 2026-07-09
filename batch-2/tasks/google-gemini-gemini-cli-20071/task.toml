@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I've been staring at the context window indicator in the CLI footer and the framing feels backwards. Right now it shows something like \"50% context left,\" which is counterintuitive, when the window..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

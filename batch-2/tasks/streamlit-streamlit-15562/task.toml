@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "streamlit/streamlit"
-description = "I'm hitting a really annoying thing running Streamlit under WSL. The auto file-watching just doesn't fire reliably, my edits often don't trigger a reload, and I think it's because the event-based w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

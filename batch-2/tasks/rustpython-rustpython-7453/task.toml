@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "RustPython/RustPython"
-description = "I'm trying to add a class method to Python's built-in complex type that does clean numeric coercion, basically a `from_number` style constructor that takes a single numeric value and hands back a c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

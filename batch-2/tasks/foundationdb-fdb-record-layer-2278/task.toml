@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "FoundationDB/fdb-record-layer"
-description = "I've been chasing a nasty data-corruption bug in our record store's handling of uncommitted versionstamp data during bulk deletes. Here's the deal: when we save records inside a transaction, the sy..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

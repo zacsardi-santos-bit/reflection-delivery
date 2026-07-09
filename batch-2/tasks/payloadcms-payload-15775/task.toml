@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "payloadcms/payload"
-description = "I'm hitting a crash in the auth token building path and it's blocking logins for older users. The setup: we've got an auth-enabled collection, and at some point we added group-type and tab-type fie..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "suitenumerique/docs"
-description = "I'm trying to make our exported HTML actually usable with screen readers. Right now the export spits out generic container elements with custom data attributes instead of real semantic tags, so ass..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

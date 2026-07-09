@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "web-infra-dev/rspack"
-description = "So a chunk of our HTML plugin tests are red right now and it traces back to the pug template loader we depend on. The package we're using, `pug-loader`, is unmaintained and no longer plays nice wit..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

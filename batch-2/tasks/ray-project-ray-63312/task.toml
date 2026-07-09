@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm chasing a nasty startup stall on some of our GPU nodes in the Ray cluster, and it traces back to the GPU profiling manager. Turns out the GPU detection step shells out to a system utility in it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

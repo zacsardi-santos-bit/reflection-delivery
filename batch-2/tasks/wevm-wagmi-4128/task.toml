@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "wevm/wagmi"
-description = "I'm working in this web3 frontend library and there's a gap around the standard wallet \"watch asset\" capability, you know the flow where a dapp asks the user's wallet to start tracking a token so i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

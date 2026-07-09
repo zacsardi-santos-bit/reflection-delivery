@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubeflow/pipelines"
-description = "The sidebar nav buttons are all coming through in the app's primary accent color and it makes the whole sidebar feel way too loud, like every single button (pipeline list, experiments, runs, recurr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

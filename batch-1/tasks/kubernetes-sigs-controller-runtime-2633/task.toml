@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubernetes-sigs/controller-runtime"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

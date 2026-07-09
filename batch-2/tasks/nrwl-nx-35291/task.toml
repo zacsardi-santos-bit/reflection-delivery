@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm hitting a dependency resolution bug in how we figure out npm deps for libraries whose build target uses the generic command runner (nx:run-commands style executor) to invoke tsc. When the build..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

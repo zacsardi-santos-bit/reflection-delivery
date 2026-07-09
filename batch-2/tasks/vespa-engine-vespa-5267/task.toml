@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vespa-engine/vespa"
-description = "I'm hitting a wall importing a TensorFlow neural net into Vespa's ranking expression system. The import breaks whenever the model uses activation functions that involve broadcasting, where a small ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

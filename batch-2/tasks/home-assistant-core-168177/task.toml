@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm working on the vacuum integration and hit a frustrating gap with the clean-area service. When you call it with area IDs that don't have any segment mappings configured, it just silently returns..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

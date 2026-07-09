@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I'm working on the network tab in the dev tools console of our desktop API client, and right now it shows all the HTTP requests from a session in a table but the column headers are dead. You can't ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

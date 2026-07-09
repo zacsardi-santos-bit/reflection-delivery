@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "zaproxy/zaproxy"
-description = "I'm hitting a couple of context scoping bugs in ZAP where the site tree walk decides what's in scope for a scanning context, and two node types get handled wrong. First one is data-driven placehold..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

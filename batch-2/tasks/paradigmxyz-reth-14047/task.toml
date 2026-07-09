@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "paradigmxyz/reth"
-description = "I'm in the engine tree's state caching layer in the Reth codebase and right now all account storage entries get stored together under one shared cache with a flat composite key, which makes per-acc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

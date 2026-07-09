@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pydantic/pydantic-ai"
-description = "I'm hitting a really annoying observability issue in my agent framework. We support tool deferral, where a tool can signal that it needs to run later or that it needs human approval before it proce..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

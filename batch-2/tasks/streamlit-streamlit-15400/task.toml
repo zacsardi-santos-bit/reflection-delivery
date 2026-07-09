@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "streamlit/streamlit"
-description = "I'm trying to fix how our Streamlit server picks its bind address at startup. Right now `@lib/streamlit/web/server/server.py` always binds to the IPv4-only wildcard by default, even on machines tha..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

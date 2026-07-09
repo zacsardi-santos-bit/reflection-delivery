@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I'm poking at the marimo notebook server and there's a gap I want to close around language server context. Right now the page config we embed into every served notebook page doesn't carry any works..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

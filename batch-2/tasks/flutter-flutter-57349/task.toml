@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm poking at Flutter's device targeting and hitting an annoyance: when I run a command without `-d` and I've got multiple devices connected, the tool doesn't help me pick. Right now it'll auto-sel..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "GoogleCloudPlatform/python-docs-samples"
-description = "I'm building out the retail search sample library for Google Cloud and need three new snippet files covering common search patterns we're missing right now, since developers currently have to figur..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

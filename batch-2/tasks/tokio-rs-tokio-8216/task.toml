@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tokio-rs/tokio"
-description = "I'm hitting a panic in the stream map thing that holds a bunch of named streams. The problem is the method that gives back a combined size estimate for everything it contains, it just adds up the i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

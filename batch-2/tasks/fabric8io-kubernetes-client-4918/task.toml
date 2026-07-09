@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "fabric8io/kubernetes-client"
-description = "I'm hitting a frustrating gap in our Kubernetes client library. It resolves service URLs from a few sources, platform-injected env vars, ingress resources, and service annotations, but the ingress-..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

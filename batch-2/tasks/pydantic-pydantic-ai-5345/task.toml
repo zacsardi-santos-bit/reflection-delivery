@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pydantic/pydantic-ai"
-description = "I'm getting pydantic-ai ready for the next major version and we're gonna drop some of the older convenience APIs around our AG-UI protocol integration layer, but before ripping them out I want to w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

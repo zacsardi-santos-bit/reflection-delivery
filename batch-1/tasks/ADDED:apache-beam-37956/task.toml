@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/beam"
-description = "I'm working with Apache Beam's ML inference framework and there's just no built-in handler for Anthropic's Claude models, so every time I want to run text through Claude as a pipeline step I end up..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "swc-project/swc"
-description = "I'm chasing down a nasty correctness bug in the decorator transform. When I put a decorator on a class that extends a base class, and that subclass touches parent class references inside its static..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building out OAuth2 support in our remote agent auth system, and right now it only knows how to do API keys and static HTTP bearer tokens, so anyone whose agent sits behind an OAuth2 service is..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

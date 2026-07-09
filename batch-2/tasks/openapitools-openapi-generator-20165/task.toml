@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "OpenAPITools/openapi-generator"
-description = "I'm hitting a gap in the OpenAPI generator when it comes to webhooks. I've got an OpenAPI 3.1 spec that defines webhooks with inline request body schemas (that's a legit feature of the 3.1 spec), a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

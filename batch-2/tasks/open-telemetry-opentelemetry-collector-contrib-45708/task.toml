@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-telemetry/opentelemetry-collector-contrib"
-description = "I'm working with the load balancing exporter and I want to route metrics by the values of specific attributes instead of by service name or metric name. It already does attribute-based routing for ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

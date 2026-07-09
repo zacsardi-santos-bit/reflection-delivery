@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working on the subagent tooling system and I keep hitting this annoying thing where toggling an agent's enabled/disabled state in the config settings mid-session just doesn't do anything. If an..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

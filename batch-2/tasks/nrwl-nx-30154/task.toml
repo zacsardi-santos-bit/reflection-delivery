@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm keeping the Nx Angular plugin in step with Angular's release cadence, and there's a new release candidate out in the current series that I need us to catch up to. The Angular package keeps a ve..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "duckdb/duckdb"
-description = "I'm poking at DuckDB's async query path, the pending (deferred) query stuff, and hitting a wall. Right now I can only create a pending query from a raw query string, there's no way to also hand ove..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm building out a Symantec Endpoint Security cloud portal (ICDM) integration so our XSOAR platform can auto-ingest endpoint security incidents and enrich threat indicators, right now analysts have..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jdbi/jdbi"
-description = "I'm cleaning up the build layout on our multi-module Maven project and want to fold all the scattered integration and end-to-end tests into one place. Right now they're split across a bunch of sepa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm extending the MLflow assistant's provider system and could use a hand wiring it all up. First thing, I want MLflow's own AI Gateway to show up as a first-class provider option so folks who alre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

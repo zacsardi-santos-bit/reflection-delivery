@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hitting confusing errors with multi-input models and I want to fix the messaging. So I've got models where the inputs get passed as a dictionary with named keys, and if I accidentally hand it a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

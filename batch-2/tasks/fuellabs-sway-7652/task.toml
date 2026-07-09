@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "FuelLabs/sway"
-description = "I'm hitting a bug in the Sway formatter where it messes up the indentation of line comments inside function bodies. If I've got a function in an impl block with line comments sitting between statem..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

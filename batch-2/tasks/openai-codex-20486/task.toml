@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm hitting a wall with the thread-read endpoint when I flip on the option to include conversation turns in the response. For any thread that doesn't yet have a file-based history path (the rollout..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

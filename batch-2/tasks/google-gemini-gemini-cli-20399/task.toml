@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm trying to make our CLI feel less alarming by default. Right now it dumps everything unconditionally, error counts in the footer, keyboard hints to pop open the diagnostics panel, failed tool ou..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

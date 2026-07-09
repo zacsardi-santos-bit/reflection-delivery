@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building out the label-schema feature in the MLflow experiment-tracking UI and I need both the data layer and the input widgets done. Label schemas are the structured definitions that control h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

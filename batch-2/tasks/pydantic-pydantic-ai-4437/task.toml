@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pydantic/pydantic-ai"
-description = "I'm hitting an annoying inconsistency with the Google AI model when I run it in streaming mode. Errors that pop up partway through a stream, like after some content has already been delivered, aren..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

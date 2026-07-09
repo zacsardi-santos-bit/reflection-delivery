@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sveltejs/svelte"
-description = "I'm hitting a nasty reactivity bug in Svelte where a rendering error during a synchronous state update permanently wrecks everything after it. I've got a conditional block that can fail at runtime,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm adding Model Context Protocol (MCP) support to Airflow so our AI agent tasks can talk to externally-hosted tool servers, and right now there's just no idiomatic way to manage those connections ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

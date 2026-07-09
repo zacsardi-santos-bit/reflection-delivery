@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dagster-io/dagster"
-description = "I'm working on the BigQuery IO manager in Dagster and I need to make its pre-write behavior configurable instead of the hardcoded \"drop the whole table every time\" thing it does now. Right now that..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

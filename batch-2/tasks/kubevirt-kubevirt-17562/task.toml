@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubevirt/kubevirt"
-description = "I'm chasing down a cluster of bugs in KubeVirt live migration, mostly around decentralized (non-shared-state) migrations that keep failing or leaving VMs stranded. First one: the connection transpo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I keep hitting a nasty path bug in the file tools. When the model generates a workspace-relative path with an at-sign reference prefix (that convention we use for workspace file refs) and hands it ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

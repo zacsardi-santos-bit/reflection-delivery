@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm hitting an annoying thing with Prefect runners. When a runner pulls a deployment and the code has a Python project definition (like a pyproject), it goes off and tries to autodetect a compatibl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

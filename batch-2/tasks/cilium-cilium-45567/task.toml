@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm chasing a bug in the ingress controller's route translation layer and it's a nasty one. When we deploy behind a load balancer or reverse proxy that terminates TLS and sets a forwarding header t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

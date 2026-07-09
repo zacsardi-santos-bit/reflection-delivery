@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm adding retention utilization metrics to Kafka's remote log management and honestly it's overdue, because right now when tiered storage is on there's no clean way to see how full a partition is ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

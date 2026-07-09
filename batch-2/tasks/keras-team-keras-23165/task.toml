@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hardening the Keras model save and load pipeline against crafted or malicious files and there's a pile of gaps I want closed. Loading an HDF5 weight file that contains link structures needs to ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I'm chasing a codegen bug in the Gleam compiler's JavaScript backend around how pipelines get compiled. When a pipeline expression is used as a statement in a function body, meaning it isn't the fi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

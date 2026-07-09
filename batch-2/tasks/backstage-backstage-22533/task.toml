@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm hitting a nasty bug in the Backstage frontend framework around component lookups. When the frontend plugin API package gets installed more than once (super easy to trigger with transitive deps ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

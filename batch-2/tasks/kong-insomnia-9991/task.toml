@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Kong/insomnia"
-description = "I'm cleaning up how our API linting handles rulesets that extend remote URLs. Right now if someone uploads a ruleset with remote extends entries, those URLs stick around as live references and get ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm hitting a mess with how MLflow's tracing system serializes and exports traces. When a trace gets captured during model serving or LangChain inference, the buffered trace dict comes out in this ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "scalar/scalar"
-description = "I'm building out an API client and I keep hitting a wall with response decoding, right now it only knows JSON, plain text, and binary blobs and I need a plugin system so devs can register their own..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

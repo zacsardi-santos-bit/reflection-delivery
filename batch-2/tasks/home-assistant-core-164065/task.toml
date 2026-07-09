@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm extending the Anthropic integration in Home Assistant and right now the only server-side tool we support is web search. I want to add two more: a code execution tool that runs shell commands, a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

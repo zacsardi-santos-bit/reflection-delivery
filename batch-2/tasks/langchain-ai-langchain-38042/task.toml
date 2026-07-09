@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm hitting a stale-detection bug in our agent framework's structured-output support check, the function that decides whether a given model can do native structured output. Newer Anthropic model ge..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

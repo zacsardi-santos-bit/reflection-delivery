@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "withastro/starlight"
-description = "I'm maintaining the Starlight Tailwind integration package (over in `@packages/tailwind`) and one of the snapshot tests is red. It's the one that checks the full CSS output we produce when Tailwind..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

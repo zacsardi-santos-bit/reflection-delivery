@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jaegertracing/jaeger"
-description = "I'm adding metrics support to the ClickHouse storage backend in Jaeger and right now there's just no metrics reader for ClickHouse at all, so when someone configures Jaeger with ClickHouse and trie..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

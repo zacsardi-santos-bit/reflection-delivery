@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "netlify/cli"
-description = "I'm bumping deps in the netlify/cli repo and one of them is the little library we use to list directory contents recursively (the promise-based readdir thing). New major version changed the API on ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

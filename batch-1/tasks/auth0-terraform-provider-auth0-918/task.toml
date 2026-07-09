@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "auth0/terraform-provider-auth0"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

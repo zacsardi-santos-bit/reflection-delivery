@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "comet-ml/opik"
-description = "I'm poking at the Opik SDK config setup and there's a gap that's been bugging me. The setup flow handles API key, workspace, and server URL just fine, but there's no way to lock in a default projec..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm deep in the session memory system and hit a cluster of bugs that all need fixing together, so bear with me. First off we've got sessions written in the newer line-delimited format and right now..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

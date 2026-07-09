@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dolthub/dolt"
-description = "I'm hitting a nasty correctness bug in the table file pruning logic. When pruning runs to clean up obsolete table files on disk, it doesn't check whether any of those files are currently open by ac..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

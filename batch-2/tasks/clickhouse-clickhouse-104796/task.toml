@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a crash in ClickHouse whenever I use a dictionary \"get or default\" lookup and the key ends up nullable. Easiest repro is concatenating a nullable string column into the lookup key, whic..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

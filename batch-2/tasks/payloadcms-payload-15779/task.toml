@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "payloadcms/payload"
-description = "I'm building a TypeScript language service plugin for Payload CMS to give IDE help around those custom component path strings that show up all over Payload configs. Those strings are a file path pl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

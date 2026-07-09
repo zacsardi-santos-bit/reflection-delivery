@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tailcallhq/tailcall"
-description = "I'm adding response caching to a GraphQL gateway that fires outgoing requests over three protocols (plain HTTP, GraphQL, and gRPC), and right now there's no standard way to compute a unique id for ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

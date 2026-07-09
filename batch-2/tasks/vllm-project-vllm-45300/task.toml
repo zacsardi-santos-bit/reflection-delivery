@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting a frustrating gap with the vllm Rust CLI when I serve models. There are two flags on the `serve` command that just don't do anything: the shutdown timeout and the flag that disables sta..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

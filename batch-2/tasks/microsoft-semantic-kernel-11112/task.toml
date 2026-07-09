@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm cleaning up the Postgres connector in our semantic-kernel project and there's this SQL generation helper that's bugging me. It's the internal class that builds all the SQL commands the connecto..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

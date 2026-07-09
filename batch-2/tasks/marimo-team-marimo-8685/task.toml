@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I've got a bug with how box selections behave on Plotly scatter charts in my notebook. When I draw a box over a chart that has multiple data points sharing the same x-coordinate and I only mean to ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

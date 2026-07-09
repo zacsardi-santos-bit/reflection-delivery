@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prisma/prisma"
-description = "I'm adding a new CLI command that links a local project to a hosted Prisma Postgres database, because right now there's no built-in way to wire a local project up to a cloud-managed db and configur..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

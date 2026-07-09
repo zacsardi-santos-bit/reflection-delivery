@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm trying to fix LLM token cost tracking for requests that route through gateway endpoints. Right now when I spin up a token cost tracker for a gateway-backed model, nothing resolves what the gate..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

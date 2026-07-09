@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I want to rework how Storybook figures out whether a newer version is available. Right now the client makes a live HTTP request at runtime every time Storybook starts, which adds startup latency, n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

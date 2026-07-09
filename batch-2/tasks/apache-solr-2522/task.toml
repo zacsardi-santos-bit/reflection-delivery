@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/solr"
-description = "I'm cleaning up the rate limiting layer in our search platform and the slot-acquisition API has a design smell I keep tripping over. Right now when code tries to grab a rate-limiting slot it always..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

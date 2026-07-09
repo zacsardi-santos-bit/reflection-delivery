@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm working on Ray's C++ core and want a proper result type that can hold either a valid computed value or an error `Status`. Right now functions that might fail lean on output params or separate e..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "scipy/scipy"
-description = "I want to add the AAA (Adaptive Antoulas-Anderson) rational approximation algorithm to SciPy's interpolation module (over in `@scipy/interpolate`). It's a well-known method for building near-optima..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

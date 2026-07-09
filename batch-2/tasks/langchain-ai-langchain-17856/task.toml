@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm building a LangChain partner integration for Groq's inference service since there's no official package yet that lets you hit Groq's API through LangChain's standard chat model interface. Groq'..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

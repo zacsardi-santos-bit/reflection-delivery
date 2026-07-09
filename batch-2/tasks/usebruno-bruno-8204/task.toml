@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I'm deep in the OpenAPI sync feature over in Bruno and hitting a real workflow blocker. Right now when I re-sync a collection against an updated spec, it nukes everything I've customized, the param..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

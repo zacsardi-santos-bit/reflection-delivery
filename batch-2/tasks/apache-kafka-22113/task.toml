@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm poking at Kafka's config management tooling and hit two annoying things I want fixed. First, every time I alter a config for anything (a topic, a broker, a default broker, client metrics, a gro..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

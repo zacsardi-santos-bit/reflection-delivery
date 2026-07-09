@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I hit a security gap in the Home Assistant WebSocket auth flow. We've got this \"local only\" flag on user accounts, the whole point being those users should only be able to log in from inside the lo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

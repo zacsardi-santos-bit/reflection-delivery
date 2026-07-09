@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kestra-io/kestra"
-description = "So I'm digging into the flow update path in our workflow engine and hit a real gap. When I update a flow and only touch the tasks (all the triggers stay byte-for-byte identical between the old revi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

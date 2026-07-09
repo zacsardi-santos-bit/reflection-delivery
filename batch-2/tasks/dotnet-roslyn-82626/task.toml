@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dotnet/roslyn"
-description = "I'm poking at the new union type declaration feature in the C# compiler (the Roslyn source generation / binding layer around union decls) and I've hit a real gap: the compiler happily accepts union..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

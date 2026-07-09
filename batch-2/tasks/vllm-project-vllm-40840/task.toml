@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm chasing a bug in the Ray-based metrics layer in vLLM, the wrappers we use for observability across distributed inference. When I record a labeled metric under two different label values, say di..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

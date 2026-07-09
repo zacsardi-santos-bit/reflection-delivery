@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prisma/prisma-engines"
-description = "I'm hitting a nasty ordering bug in the query engine's SQL generation. When I query a top-level record and ask for its related records sorted by either an aggregate count or a plain scalar field th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

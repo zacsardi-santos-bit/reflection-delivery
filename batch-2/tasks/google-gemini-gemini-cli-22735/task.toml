@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working in the todo list tool and hit a gap: right now a task can be pending, in progress, completed, or cancelled, but there's no way to say a task is blocked. I keep running into cases where ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

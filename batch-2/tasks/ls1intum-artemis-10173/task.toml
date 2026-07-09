@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ls1intum/Artemis"
-description = "I'm working in the Artemis course messaging system on the message pinning feature, and there's a gap I keep hitting: instructors can pin important messages to highlight announcements or deadlines, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

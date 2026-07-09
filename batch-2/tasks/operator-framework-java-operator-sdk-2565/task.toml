@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "operator-framework/java-operator-sdk"
-description = "I'm hitting a nasty reconciliation loop in our Kubernetes operator that uses server-side apply to manage workloads. The problem is Kubernetes stores resource quantities like CPU and memory in its o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

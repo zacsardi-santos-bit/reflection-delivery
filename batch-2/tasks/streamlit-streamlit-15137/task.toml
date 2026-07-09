@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "streamlit/streamlit"
-description = "I'm messing with Streamlit's server startup config over in the code that builds the settings dict for our underlying ASGI server (uvicorn), and right now we're doing something dumb. We always hardc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I'm reworking how our notebook backend tells the frontend (and other downstream consumers) about structural changes, because the current setup is too coarse. Right now when a cell gets added, delet..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

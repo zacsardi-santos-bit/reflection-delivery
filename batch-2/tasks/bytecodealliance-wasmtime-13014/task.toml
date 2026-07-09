@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I've been chasing a nasty correctness and security bug in the Winch baseline compiler around how it generates code for memory access on 64-bit platforms. When it computes a final linear memory addr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

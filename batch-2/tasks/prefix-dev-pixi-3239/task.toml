@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prefix-dev/pixi"
-description = "I'm hitting a weird cascade failure in our Rust project that uses snapshot testing to check error messages when invalid PyPI dependency configs fail to parse. Someone added a guard test recently th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

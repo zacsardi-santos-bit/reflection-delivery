@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm adding Microsoft Edge as a web target device in the Flutter tooling and right now it just never shows up in the list of available web devices, even on Windows where a modern Chromium-based Edge..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

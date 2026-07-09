@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I keep running into stale and sometimes corrupted memory data in my local setup, and there's no clean way to blow it all away from the CLI. Right now if I want a fresh start I have to go poke at th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

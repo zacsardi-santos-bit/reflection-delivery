@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I'm adding a proper header list API to Bruno's scripting layer, both the request object (in pre-request scripts) and the response object (in test scripts). Right now scripts can only touch headers ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

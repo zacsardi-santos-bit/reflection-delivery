@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm hitting a schema generation bug with tool arguments that use factory-based defaults, you know, fields like a list or dict that get created fresh on each call. When I convert one of these tools ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

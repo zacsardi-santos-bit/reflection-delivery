@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oppia/oppia"
-description = "I'm running a blog platform where accounts can be permanently deleted, and when that happens the published posts by those users stick around but the separate author details record (display name plu..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

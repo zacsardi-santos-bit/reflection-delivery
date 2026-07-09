@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I keep hitting a nasty false positive in my eval pipeline around inverted assertions. When I use a \"not-\" variant of an LLM-rubric assertion and the grader itself blows up (network failure during r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

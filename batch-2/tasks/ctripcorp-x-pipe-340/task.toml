@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ctripcorp/x-pipe"
-description = "I've got a keeper manager component that runs a periodic check to see whether keeper instances are sitting in the right replication state, and when they look misaligned it fires off correction comm..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "streamlit/streamlit"
-description = "I keep hitting noise in my logs every time a Streamlit app boots up, it always prints that welcome banner and the app URL to the console and there's no clean way to turn it off right now. In headle..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

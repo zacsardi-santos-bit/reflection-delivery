@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rancher/rancher"
-description = "I'm cleaning up a bunch of related gaps in our SCIM server implementation and could use your help knocking them all out together since they touch overlapping code paths."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

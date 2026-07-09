@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hitting a real headache with multi-output Keras models in the metrics layer. Say I've got a model with named outputs declared, my predictions come back as an ordered list but my dataset hands l..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "stylelint/stylelint"
-description = "I want to add a new stylelint rule that flags deprecated CSS selectors, since right now there's just no built-in way to catch things like outdated HTML element names, obsolete pseudo-classes, or re..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "saleor/saleor"
-description = "I've got product media records that can point to an external image URL but have no locally stored image, and right now nothing actually pulls those down, so they just sit there unprocessed. I want ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

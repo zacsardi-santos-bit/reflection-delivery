@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm in the Linux sandbox subsystem and want to clean up how paths get fed into the argument builder. Right now the builder takes a bunch of separate inputs (allowed paths, forbidden paths, extra in..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

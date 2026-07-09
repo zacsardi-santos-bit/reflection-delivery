@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "getsentry/sentry-javascript"
-description = "I'm building a dedicated Sentry SDK package for Google Cloud serverless functions and want your help wiring it up. Right now there's no idiomatic way for folks on Google Cloud Functions to hook in ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

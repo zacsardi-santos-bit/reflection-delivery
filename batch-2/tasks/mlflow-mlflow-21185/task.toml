@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm hitting a wall using MLflow's LLM judges in our locked-down setup where every outbound call has to go through a corporate proxy, and the LLM provider also wants some custom auth headers beyond ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

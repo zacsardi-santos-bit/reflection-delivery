@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm hitting a bug in our linter's rule that spots redundant duplicate type-checking, you know the pattern where you check whether some object is one type in one \"or\" branch and another type in a se..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

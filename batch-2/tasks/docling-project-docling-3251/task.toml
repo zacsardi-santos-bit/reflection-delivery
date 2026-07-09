@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm hitting a gap in this doc conversion library, the one that reads markdown into a structured document model and can spit it back out as markdown. Some of my source files have these custom block-..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

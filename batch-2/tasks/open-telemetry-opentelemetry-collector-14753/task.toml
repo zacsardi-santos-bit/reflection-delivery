@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-telemetry/opentelemetry-collector"
-description = "I keep hitting a spec conformance problem with the Collector's own self-monitoring telemetry. All the internal metrics we emit use plural unit strings like \"records\", \"spans\", \"datapoints\", \"sample..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

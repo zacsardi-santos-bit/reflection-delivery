@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "appsmithorg/appsmith"
-description = "I'm cleaning up how inline name editing works in the Appsmith design system and IDE entity explorer, and I want your help extracting the duplicated logic into one reusable composable hook. Right no..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

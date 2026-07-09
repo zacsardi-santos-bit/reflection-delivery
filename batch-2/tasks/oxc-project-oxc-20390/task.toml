@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm cleaning up the tool interface in our language server crate and the way we pass document info around is driving me nuts. Right now every diagnostic and formatting method takes a file's location..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

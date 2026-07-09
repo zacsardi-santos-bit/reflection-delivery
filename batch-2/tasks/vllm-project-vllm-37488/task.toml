@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm working on vLLM's V1 GPU model runner and the expert parallel load balancing (EPLB) system just isn't wired up right now, so even when I serve a real mixture-of-experts model the balancing subs..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

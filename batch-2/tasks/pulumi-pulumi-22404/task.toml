@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pulumi/pulumi"
-description = "I hit a nasty bug in the program-based refresh path and the exclude/target filtering is straight up inverted. When I run a refresh and pass exclude flags for certain resources, those excluded ones ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

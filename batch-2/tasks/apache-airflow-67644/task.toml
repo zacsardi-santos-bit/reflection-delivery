@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a real annoyance with the AI operators in Airflow (the ones that run LLM and agent workflows). When I define a structured output type for a task, the operator serializes the result down..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

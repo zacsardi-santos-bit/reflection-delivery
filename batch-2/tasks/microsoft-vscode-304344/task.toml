@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm hitting a nasty gap in our agent host server, the thing that manages sessions against an AI backend. When it restarts it drops all in-memory state for sessions that were active before, but thos..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

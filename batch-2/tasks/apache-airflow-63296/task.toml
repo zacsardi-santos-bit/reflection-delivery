@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hardening Airflow against path traversal and right now there's nothing stopping someone from sticking consecutive dots into a DAG run ID or a task/XCom key. Since these identifiers end up in fi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

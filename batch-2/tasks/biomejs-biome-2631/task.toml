@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new lint rule to our JS analyzer that pushes people toward explicit comparisons when they're checking the length or size of a collection. Right now folks lean on JavaScript's truthi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

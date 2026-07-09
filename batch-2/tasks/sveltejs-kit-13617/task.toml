@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sveltejs/kit"
-description = "I'm refactoring the enhanced image library in this Svelte/Vite project and I need your help. Right now the custom image tag transformation runs as a Svelte preprocessor, and it works fine for turni..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

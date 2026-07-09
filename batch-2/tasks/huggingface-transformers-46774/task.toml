@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/transformers"
-description = "I'm building out a CI automation helper for a big open-source repo and I need a brand new script dropped into the `utils/` directory that posts and updates CI run summaries right on the GitHub PRs...."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm chasing a resource leak in Hudi's metadata table reader. When we read from a metadata index (record location lookups, secondary index entries, that kind of thing) we spin up distributed in-memo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

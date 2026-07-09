@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tursodatabase/libsql"
-description = "I'm hitting a gap with our libsql server that talks to clients over that stream-based HTTP protocol. When a SQLite error comes back, say I insert a row that trips a UNIQUE constraint, the error tha..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

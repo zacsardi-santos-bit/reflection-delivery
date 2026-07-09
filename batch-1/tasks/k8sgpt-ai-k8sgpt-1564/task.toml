@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "k8sgpt-ai/k8sgpt"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

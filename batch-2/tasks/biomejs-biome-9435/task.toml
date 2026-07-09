@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm hitting a false positive with the linter rule that wants me to convert regular imports into type-only imports, and it's biting me hard in Astro files. So the deal is an Astro file has two parts..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

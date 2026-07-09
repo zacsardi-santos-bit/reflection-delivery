@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "webpack/webpack"
-description = "I'm chasing down some failing Pug template loader tests in the webpack test suite and it turns out the whole thing is leaning on that old deprecated `pug-loader` package that's basically abandoned ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

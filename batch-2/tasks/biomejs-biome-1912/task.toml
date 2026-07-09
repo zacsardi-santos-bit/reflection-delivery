@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new lint rule to our JS/TS analyzer that catches barrel files, you know the ones that just re-export a bunch of symbols from other modules instead of defining anything of their own...."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

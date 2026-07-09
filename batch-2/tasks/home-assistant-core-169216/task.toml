@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm adding physical siren support to the UniFi Protect integration for Home Assistant. We already handle alarm panels through the device's public API, but siren hardware is completely missing, ther..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I hit a server crash in ClickHouse coming from the UTF-8 string reversal function (the reverseUTF8 built-in), and our fuzzer is what surfaced it. Turns out if you feed it strings with incomplete mu..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

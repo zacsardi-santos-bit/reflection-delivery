@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "fluent/fluent-bit"
-description = "I'm hitting a data loss bug in the OpenTelemetry input plugin in Fluent Bit. When logs come in over OTLP, the resource and scope metadata from the payload just gets dropped on the floor. OTLP logs ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["c", "swe"]
 metadata = { vendor = "Mercor" }

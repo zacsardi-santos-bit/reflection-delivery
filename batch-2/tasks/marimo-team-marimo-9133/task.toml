@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I'm fixing a security hole in the marimo frontend where a few of our plugin components blindly inject script and link elements using whatever URL shows up in widget config or HTML attributes, no va..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "docling-project/docling"
-description = "I'm working on the LaTeX conversion pipeline and TikZ figures just get dropped right now, no image rendering at all, so a bunch of diagram content is lost on conversion. I want to add support for r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

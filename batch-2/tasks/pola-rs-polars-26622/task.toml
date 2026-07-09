@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pola-rs/polars"
-description = "I'm hitting a type-propagation bug in Polars' SQL interface around array literals. When I write a query that builds an array out of typed elements, the resulting list column doesn't carry the eleme..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

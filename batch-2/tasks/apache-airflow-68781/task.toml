@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a rough edge in the CloudWatch log integration for Airflow. When a task's log stream doesn't exist in CloudWatch, say because the task wrote to stdout instead of remote storage or just ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

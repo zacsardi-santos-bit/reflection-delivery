@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm hacking on Kafka's tiered storage and want to add a way to delay when log segments get copied to remote storage. Right now the moment a segment rolls and its end offset drops below the last sta..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm building a shared filter bar for our UI library and want to write it from scratch, and I keep hitting the same thing where every product team rolls their own one-off filtering against tabular d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

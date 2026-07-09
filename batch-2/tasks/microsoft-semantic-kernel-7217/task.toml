@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm hitting a bunch of stuff with the Azure AI Inference connector in semantic-kernel that's blocking me from building agentic workflows, so I need a few fixes across the chat completion, message f..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

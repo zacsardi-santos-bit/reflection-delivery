@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm working on the OpenLineage integration in Apache Airflow and I want to extend how hook-level SQL lineage gets tracked. Right now we only track asset-level lineage (which tables got read or writ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

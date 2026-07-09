@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a nasty segfault in ClickHouse and I'm pretty sure it's about join nullability settings differing between when a view was created and when I query it. Here's the setup: I've got two bas..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

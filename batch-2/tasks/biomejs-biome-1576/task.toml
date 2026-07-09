@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm moving a project off Prettier and onto Biome using the migration command and I noticed my ignore patterns just vanish. I've got a `.prettierignore` with a pile of glob patterns for build dirs, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

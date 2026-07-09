@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm adding SSRF protections to our CLI tool that fires off outbound HTTP requests based on user-provided or model-generated URLs, and right now there's literally nothing stopping it from hitting in..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

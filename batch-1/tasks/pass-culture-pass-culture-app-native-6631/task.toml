@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pass-culture/pass-culture-app-native"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

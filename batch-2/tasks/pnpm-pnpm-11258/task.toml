@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I want to actually implement the `ping` command in pnpm since right now it's just sitting there as a known-but-not-implemented command that pnpm rejects if you try to run it. This is annoying becau..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

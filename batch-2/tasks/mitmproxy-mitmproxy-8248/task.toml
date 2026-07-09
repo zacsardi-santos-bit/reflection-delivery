@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mitmproxy/mitmproxy"
-description = "I'm seeing a display bug in mitmweb's content viewer where blank lines in HTTP message bodies just disappear. When a request or response body has empty lines in it, they collapse into invisible emp..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

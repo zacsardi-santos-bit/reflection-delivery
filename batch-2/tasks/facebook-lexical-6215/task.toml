@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "facebook/lexical"
-description = "I noticed one of our docs pages has a demo link pointing at a stale feature branch instead of main, so anyone following it sees an old version of the demo rather than what's actually on main right ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

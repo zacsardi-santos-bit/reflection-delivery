@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I want to be able to slap key-value tags onto an eval run straight from the CLI, stuff like the environment name or a CI build identifier, without editing my shared config file every time. Right no..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

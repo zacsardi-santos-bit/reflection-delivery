@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langgraph"
-description = "I'm hitting a nasty time travel bug in my graph workflow, the one with human-in-the-loop interrupts. When I jump back to a past checkpoint and re-run from there, the graph doesn't seem to know it's..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

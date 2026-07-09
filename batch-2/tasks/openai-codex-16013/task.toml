@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm adding support for a new kind of hook that fires right before a user's prompt gets submitted to the AI. These user prompt submit hooks can peek at the input, throw warnings, or block the submis..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

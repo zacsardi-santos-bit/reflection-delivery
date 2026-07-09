@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "facebook/docusaurus"
-description = "I'm cleaning up the git version control strategy in Docusaurus, the bit that reads file metadata like when a file was last updated or first created, and right now it's a shared global singleton whi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

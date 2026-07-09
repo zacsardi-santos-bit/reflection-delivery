@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm cleaning up the Growatt Server integration because it's rolling its own way of controlling decimal places on sensor readings and it bugs me. Right now the sensor description objects carry a cus..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

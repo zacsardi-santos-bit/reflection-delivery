@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I want to add two CI helper scripts so we can actually track flaky end-to-end browser tests over time instead of manually eyeballing a pile of workflow runs. Right now our CI runs these e2e browser..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

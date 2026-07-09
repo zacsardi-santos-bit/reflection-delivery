@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-telemetry/opentelemetry-go"
-description = "I'm running into a cardinality problem with our metrics and I want to fix it at instrument creation time instead of registering views for everything. Right now the only way to filter which attribut..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

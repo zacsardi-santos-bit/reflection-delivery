@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ScrapeGraphAI/Scrapegraph-ai"
-description = "I'm working on ScrapeGraphAI and want to add a lighter-weight document loader as an alternative to our Chromium-based one, since Chromium eats like 300MB per session, needs a full browser install, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

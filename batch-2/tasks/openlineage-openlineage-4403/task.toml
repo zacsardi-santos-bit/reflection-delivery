@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "OpenLineage/OpenLineage"
-description = "I'm reworking how the OpenLineage Python client grabs git metadata for lineage events. Right now it shells out to the git CLI in a subprocess to figure out the repo URL, current commit, branch, and..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

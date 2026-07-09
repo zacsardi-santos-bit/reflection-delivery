@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "grpc/grpc"
-description = "I'm poking at the XDS override host LB policy in gRPC and it's just not doing the right thing when the host you're pinning to isn't READY. Like when a pick comes in asking for a specific override h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["c", "swe"]
 metadata = { vendor = "Mercor" }

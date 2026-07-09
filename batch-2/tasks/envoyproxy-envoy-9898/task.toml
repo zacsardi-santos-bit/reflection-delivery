@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "envoyproxy/envoy"
-description = "I'm cleaning up our UDP test plumbing and fixing the statsd sink, and it's gotten messy. Right now a bunch of test files each roll their own low-level UDP socket management, allocating a socket, fl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

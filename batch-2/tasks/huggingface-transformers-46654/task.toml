@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/transformers"
-description = "I'm hitting a rough edge with the diffusion decoder and how it builds attention masks for static (pre-allocated) caches. Right now the decoder mask creation helper makes me pass a mask sized to the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

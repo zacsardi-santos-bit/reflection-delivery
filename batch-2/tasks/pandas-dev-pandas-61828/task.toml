@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting a wall trying to add a Series to a DataFrame along a specific axis with a fill value for the missing spots, and it just blows up with a NotImplementedError the second I pass `fill_value..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

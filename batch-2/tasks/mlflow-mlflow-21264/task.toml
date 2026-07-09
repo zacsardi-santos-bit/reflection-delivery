@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm poking at the experiment page sidebar nav in MLflow and hit an annoying thing where my time range filter gets nuked when I switch tabs. Like if I set a time window while looking at traces and t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

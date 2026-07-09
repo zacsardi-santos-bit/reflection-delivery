@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm working on the Qualys v2 integration and need to extend how we pull vulnerabilities and ship them off to XSIAM. Right now the code in the integration can only grab vulnerability knowledge base ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

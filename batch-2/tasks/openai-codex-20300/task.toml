@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm poking at the analytics layer in our multi-agent setup and hitting a blind spot. When the orchestrator spawns a subagent in a brand new thread, any analytics events that subagent fires (compact..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

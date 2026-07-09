@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rails/rails"
-description = "I'm working with Active Job and there's just no built-in way to declare typed, persistent state on a job class right now. If I want a job to track a running counter or a flag across retries, or acr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

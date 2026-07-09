@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "chroma-core/chroma"
-description = "I'm building out a sparse vector similarity index in our Rust index layer and right now there's just nothing there for it. The idea is documents come in as sparse weighted vectors, so each doc only..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

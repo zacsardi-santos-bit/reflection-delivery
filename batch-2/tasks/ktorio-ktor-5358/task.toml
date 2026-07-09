@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ktorio/ktor"
-description = "I'm on a Ktor server app using server-side sessions and I've hit two walls I need cleared up. First one is session ID generation. Right now when I configure a session (cookie or header) the only kn..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["kotlin", "swe"]
 metadata = { vendor = "Mercor" }

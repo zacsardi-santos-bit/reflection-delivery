@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I keep hitting an idempotence bug in the JavaScript formatter around switch statements with trailing comments on case clauses. Here's the setup: I've got a switch where several fall-through cases e..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

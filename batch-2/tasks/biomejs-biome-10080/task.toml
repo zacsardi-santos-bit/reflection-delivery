@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm running into a parser bug with Svelte list-rendering blocks whenever the key expression has parentheses in it. So you know how in an each block you can put a key in parens at the end of the ope..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

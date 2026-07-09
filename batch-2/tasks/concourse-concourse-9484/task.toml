@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "concourse/concourse"
-description = "I'm building out admin controls for the Concourse wall broadcast thing. So right now the wall can show a banner message to everybody across the top of the UI, but there's literally no way for an ad..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

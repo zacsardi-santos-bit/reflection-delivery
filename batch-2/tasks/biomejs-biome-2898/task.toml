@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm trying to make our CLI feel more familiar to folks coming from other linters and formatters. Right now automatic corrections get triggered with `apply` and `apply-unsafe` flags, which work fine..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

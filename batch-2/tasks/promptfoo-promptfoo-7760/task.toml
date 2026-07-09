@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm chasing down a bunch of author attribution bugs in how we tag evaluations and it's making a mess in team setups. The core thing I want is a clear resolution hierarchy: if someone's logged into ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

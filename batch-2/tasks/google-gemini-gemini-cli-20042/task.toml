@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm poking at the CLI's table renderer and markdown in cells is rendering as raw syntax, so instead of seeing styled bold text people just get the literal asterisks, italic shows the underscores, a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

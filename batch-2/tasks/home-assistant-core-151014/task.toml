@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm messing with the Schlage lock integration in Home Assistant and I want to manage PIN access codes straight from automations. Right now I can lock and unlock remotely but there's zero way to add..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

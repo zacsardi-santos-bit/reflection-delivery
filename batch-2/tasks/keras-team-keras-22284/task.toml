@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm training a semantic segmentation model and I keep hitting a gap with the sparse categorical crossentropy metric. My dataset has one label value that stands for unlabeled or void regions, stuff ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

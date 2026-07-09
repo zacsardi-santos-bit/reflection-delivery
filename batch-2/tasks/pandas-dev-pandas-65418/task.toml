@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting two annoying bugs when I use label-based indexing (like `.loc`) to drop a list of values into just some of the rows of a brand new column on a DataFrame, and both of them corrupt or cra..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

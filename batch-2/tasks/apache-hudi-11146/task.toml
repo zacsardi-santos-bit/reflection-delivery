@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm cleaning up the metadata index infrastructure in our data lake since everything's still named for \"functional indexes\" even though we want the same plumbing to serve several index types now, in..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

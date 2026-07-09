@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "seek-oss/braid-design-system"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

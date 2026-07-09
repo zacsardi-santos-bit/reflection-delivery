@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "axodotdev/cargo-dist"
-description = "I'm working on our release distribution tool and I want the manifest JSON output to tell downstream consumers whether the release tag was explicitly passed by the user or got inferred automatically..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

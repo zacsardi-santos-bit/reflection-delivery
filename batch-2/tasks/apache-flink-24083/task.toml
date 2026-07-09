@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/flink"
-description = "I'm hitting a nasty correctness bug in Flink's compressed operator state during checkpoint restore. When several state entries share a single compressed stream, the byte positions we record while w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

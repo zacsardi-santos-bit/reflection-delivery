@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/Ghost"
-description = "I'm working on the Transistor podcast embed card renderer in Ghost and right now when one of these cards gets rendered for the web it just spits out a static placeholder, you know a generic icon pl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

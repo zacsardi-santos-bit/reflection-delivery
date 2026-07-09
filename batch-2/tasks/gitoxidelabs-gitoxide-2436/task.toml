@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "GitoxideLabs/gitoxide"
-description = "I'm poking at the refspec prefix logic in our git implementation and hit a real problem with how exact refs get turned into server-side prefixes when we talk to a remote. When I fetch a fully-quali..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

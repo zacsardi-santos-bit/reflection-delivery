@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vercel/vercel"
-description = "I'm working on the Python serverless runtime for Vercel and hitting an annoying gap around identity tokens. The way it works, functions authenticate with platform services by reading an identity to..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

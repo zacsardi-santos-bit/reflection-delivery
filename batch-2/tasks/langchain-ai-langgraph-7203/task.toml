@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langgraph"
-description = "I'm working on making LangGraph play nicer with external observability and tracing tools, and I hit a gap. When a graph runs and emits execution events, the metadata on those events carries handy g..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

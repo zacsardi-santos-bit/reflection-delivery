@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "webpack/webpack"
-description = "I'm working on webpack's HTML tokenizer and I hit a gap around HTML character encodings, the entity/reference stuff you see in attribute values and text nodes. Right now the tokenizer scans HTML fi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

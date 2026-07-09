@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langgraph"
-description = "I'm working on the LangGraph CLI and I want to add a distributed deployment mode. Right now everything runs in one combined container (API, job queuing, execution all together), which means I can't..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

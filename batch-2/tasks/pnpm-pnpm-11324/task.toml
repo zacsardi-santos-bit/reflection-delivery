@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I want to add a short prefix syntax for pulling npm packages from named registries, mostly so I can install from GitHub Packages without setting up a whole scope-to-URL mapping in my project settin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

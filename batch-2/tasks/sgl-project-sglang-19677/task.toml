@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm cleaning up a tensor comparison debug utility and the logging is muddy right now, everything goes out through one \"warning\" channel so a real rank mismatch or a load failure reads the same as a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

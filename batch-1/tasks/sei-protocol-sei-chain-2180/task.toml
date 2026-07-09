@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sei-protocol/sei-chain"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

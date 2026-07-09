@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm working in the LLM module in Ray and I need a validated config model for resource placement bundles because right now there's no formal structure for per-bundle resource requirements, so GPU ca..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

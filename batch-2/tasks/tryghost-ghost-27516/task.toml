@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/Ghost"
-description = "There's a nested-modal escape bug in the Ghost Admin email settings I keep hitting. When you open the email design customization modal and click the button color field to pop open the color picker,..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

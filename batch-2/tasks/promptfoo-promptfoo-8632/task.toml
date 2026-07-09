@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm hitting a pile of bugs in our HTTP fetch caching layer and I want the whole thing cleaned up so the cache behaves correctly, secrets don't leak, and callers stay isolated. Right now requests th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

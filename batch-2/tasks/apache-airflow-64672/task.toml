@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a wall with the Google Cloud Composer provider for Airflow, it always talks to the same fixed REST API endpoint paths no matter what version of Airflow is actually running inside the ta..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

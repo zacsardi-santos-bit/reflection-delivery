@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/superset"
-description = "I'm trying to fix screenshot exports for tall dashboards. Right now when a dashboard is taller than the browser viewport we only capture the visible chunk and everything below the fold gets cut off..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

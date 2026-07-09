@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prowler-cloud/prowler"
-description = "I'm building out the attack paths feature on our cloud security platform, the one that keeps graph data in a graph database, and right now users can only run our predefined queries against a scan. ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

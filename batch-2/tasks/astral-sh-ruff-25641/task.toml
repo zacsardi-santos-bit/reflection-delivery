@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm hitting a formatting bug with our Python formatter that's messing up Quarto cell options. Quarto uses these special comments where a pipe character comes right after the hash with no space, lik..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

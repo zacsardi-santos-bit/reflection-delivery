@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "webpack/webpack"
-description = "I'm hitting a weird webpack bug with CSS modules when I mix export types. I've got two CSS files, one set up to inject its styles into the page (style type) and another set up to export its content..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

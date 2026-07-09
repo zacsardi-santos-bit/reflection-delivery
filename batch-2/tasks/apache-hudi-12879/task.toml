@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm hitting a wall with decimal fields in my Hudi ingestion pipeline. We pull JSON records off a message queue and decimal-typed fields come in as Base64-encoded byte arrays, basically the unscaled..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

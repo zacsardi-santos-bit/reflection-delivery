@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/graphrag"
-description = "I'm building out a vector store library and right now it only does similarity search, which is killing me because there's no way to filter results by document metadata like category, status, or pri..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

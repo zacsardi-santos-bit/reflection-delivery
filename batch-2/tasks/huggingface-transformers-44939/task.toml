@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/transformers"
-description = "I'm cleaning up the modeling structure linter in the transformers repo and it's driving me a bit nuts. Right now it's just a standalone script and the only way to import it is to manually append it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

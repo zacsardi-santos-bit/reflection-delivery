@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vectordotdev/vector"
-description = "I'm adding a native PostgreSQL sink to Vector and I keep hitting the wall that there's just no built-in way to write logs, metrics, or traces straight into a Postgres table. Lots of teams already r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

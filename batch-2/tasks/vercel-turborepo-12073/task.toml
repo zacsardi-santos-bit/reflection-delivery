@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vercel/turborepo"
-description = "I'm chasing a bug in our Rust monorepo build tool, specifically the lockfile pruning code that takes a full monorepo lockfile and spits out a minimal subset lockfile for a given set of workspace pa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

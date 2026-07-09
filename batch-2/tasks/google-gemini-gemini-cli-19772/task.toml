@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up how MCP tool progress shows in the CLI and it's bugging me. Right now when a tool reports progress we just tack text onto the description line, like \"My Tool (Downloading... - 42%)\"..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

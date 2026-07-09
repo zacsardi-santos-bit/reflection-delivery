@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "matter-labs/zksync-era"
-description = "I'm poking at the contract verifier in zksync-era and hit a gap where the zksolc compilation input builder has no idea which compiler version is about to run. Right now the function that constructs..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

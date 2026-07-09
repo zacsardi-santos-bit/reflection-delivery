@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jaegertracing/jaeger"
-description = "I'm cleaning up the Cassandra storage backend for Jaeger and the span writer is annoyingly coupled to an external tracing library for all its core types (spans, trace IDs, processes, tags, logs, re..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

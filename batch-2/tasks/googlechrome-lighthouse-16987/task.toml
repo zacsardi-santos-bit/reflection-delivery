@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "GoogleChrome/lighthouse"
-description = "I'm cleaning up our model context protocol audits (the ones that check MCP support on web pages) and there's a cluster of failures when the feature just isn't there. Right now if the browser doesn'..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "aya-rs/aya"
-description = "I'm cleaning up bloom filter support across aya and hit a few related snags. First off, the user-space membership check currently takes the value as a mutable reference, which is dumb since checkin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

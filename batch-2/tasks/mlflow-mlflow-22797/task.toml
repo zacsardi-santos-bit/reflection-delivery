@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm working with MLflow tracing and I keep hitting a wall where I can't express that a span in one trace is causally related to a span in a totally different trace. Distributed and multi-step syste..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

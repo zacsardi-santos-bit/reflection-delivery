@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm cleaning up the Copilot chat quota notification behavior in VS Code and it's driving me nuts. Right now every time VS Code starts up or someone signs in, if their usage is already past a warnin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

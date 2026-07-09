@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jesseduffield/lazygit"
-description = "I hit a regression in the cherry-pick workflow and it's driving me nuts. Here's the deal: if I cherry-pick a single commit off a source branch's commit list and then switch over to the target branc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

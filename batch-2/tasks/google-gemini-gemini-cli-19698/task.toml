@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I've been playing with the multi-agent stuff and my session history is a mess now. Every time a sub-agent spins up to handle some sub-task in the background it writes its own session file to disk, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

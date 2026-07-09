@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I'm working on the SQL engine integration and hitting a few things I want to fix together. Right now the metadata-fetching stuff on the database engine (getting schemas, tables, columns, primary ke..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

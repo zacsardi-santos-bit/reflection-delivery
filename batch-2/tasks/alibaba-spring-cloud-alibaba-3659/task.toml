@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "alibaba/spring-cloud-alibaba"
-description = "I'm putting together a new AI chat integration module for our Spring Cloud Alibaba project, basically letting Spring Cloud microservices talk to a large-language-model chat service, and I need a pr..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

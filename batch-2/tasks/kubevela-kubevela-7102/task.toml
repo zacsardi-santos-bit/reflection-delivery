@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubevela/kubevela"
-description = "I'm working on the CUE code generator for component definitions (the KubeVela-style toolkit) and it keeps emitting invalid CUE whenever a parameter is an optional collection like a list or a map. R..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

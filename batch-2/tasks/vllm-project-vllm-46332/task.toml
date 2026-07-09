@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm hitting a nasty early-release bug in our KV cache transfer path for disaggregated prefill/decode inference, where the prefill side and decode side can run different numbers of tensor-parallel w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

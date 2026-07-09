@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm cleaning up our container replication service and I want to kill the dual-mode data transfer thing once and for all. Right now the service picks between two transfer modes based on a boolean fl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

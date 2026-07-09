@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm working on the GenAI issue discovery pipeline and there's a handful of gaps I keep hitting when running discovery over a batch of traces. First thing: the AI model comes back with whatever cate..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

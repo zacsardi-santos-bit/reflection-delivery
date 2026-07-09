@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "denoland/deno"
-description = "I'm adding Node.js compat to Deno's std library and I need to get CommonJS modules loading from inside Deno, right now there's just no way to pull in a CJS module and that's the format basically ev..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

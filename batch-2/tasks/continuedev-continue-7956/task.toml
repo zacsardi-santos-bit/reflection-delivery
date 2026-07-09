@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "continuedev/continue"
-description = "I've got two different ways of describing MCP servers floating around and it's driving me nuts. External AI tools (think Claude Desktop style) use a JSON format, and my project uses an internal YAM..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

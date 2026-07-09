@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dagster-io/dagster"
-description = "I'm wiring up a bridge between Soda data quality checks and Dagster and I want a proper library that ships a Dagster component for running Soda scans, because right now anyone using both has to wri..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

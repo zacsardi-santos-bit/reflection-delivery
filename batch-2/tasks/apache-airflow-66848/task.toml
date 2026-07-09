@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm digging into Airflow's partitioned asset scheduling and hit a wall with rollup mappers. Right now a downstream DAG that depends on partitioned assets through a rollup mapper always waits for ev..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

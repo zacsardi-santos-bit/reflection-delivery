@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vitejs/vite"
-description = "I'm hitting a weird Vite glob import bug and could use help closing the gap. My setup has the app root pointed at a subdirectory (think a folder literally called `root`), and I've got some JS files..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

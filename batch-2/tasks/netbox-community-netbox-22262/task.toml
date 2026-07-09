@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "netbox-community/netbox"
-description = "I'm hitting a data-correctness bug in cable filtering. When I filter cables by site or location, any cable that has one or both endpoints connected via a circuit termination just silently disappear..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

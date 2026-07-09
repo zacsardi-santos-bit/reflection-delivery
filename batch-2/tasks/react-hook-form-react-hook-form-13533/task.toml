@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "react-hook-form/react-hook-form"
-description = "I hit a bug in our deep equality helper where an empty array comes back as equal to an empty plain object, which is wrong since those are fundamentally different kinds of values and shouldn't ever ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

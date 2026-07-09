@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm working on the version upgrade/downgrade handlers in Apache Hudi, the ones that migrate a table between the older and newer table format versions. Right now when I flip a table between versions..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

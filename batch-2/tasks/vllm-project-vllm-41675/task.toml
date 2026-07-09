@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vllm-project/vllm"
-description = "I'm working on the ROCm optimized all-reduce path in vLLM and I want to add two config knobs so I stop having to patch source to tune it. Right now the minimum tensor size that flips a tensor onto ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

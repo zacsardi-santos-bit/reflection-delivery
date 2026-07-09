@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm cleaning up the Recon service in our Apache Ozone tree and the key listing endpoint bugs me. Right now every key we return gets wrapped in this heavyweight object that carries the full protobuf..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

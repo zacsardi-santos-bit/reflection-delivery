@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm working on the Biome GraphQL parser and there's a gap I keep hitting: it completely ignores schema definitions, those `schema { ... }` blocks that declare which types back the query, mutation, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

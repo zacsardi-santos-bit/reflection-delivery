@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm working on the charting components in the Supabase Studio dashboard and I want to add a way to synchronize hover interactions across multiple charts at once. Right now each chart manages its ow..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

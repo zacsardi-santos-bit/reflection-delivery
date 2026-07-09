@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm adding text-to-audio (speech synthesis) support to our Semantic Kernel integration and it's the obvious missing piece right now. We already have audio-to-text and text-to-image connectors, but ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

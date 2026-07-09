@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tinygrad/tinygrad"
-description = "I'm hitting a wall trying to write tests for our profiling CLI in the visualization utilities. The problem is structural: right now the tool builds its argparse setup inside the `if __name__ == \"__..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

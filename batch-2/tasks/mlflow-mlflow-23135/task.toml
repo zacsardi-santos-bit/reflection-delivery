@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building a little internal Python library under `dev/pypi/` so our dev scripts stop hand-rolling HTTP calls against the Python package index JSON API. Right now every script that needs version ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

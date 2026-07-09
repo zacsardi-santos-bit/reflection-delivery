@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I'm hitting a bunch of selection correctness bugs with Plotly charts in Marimo and want to clean them up together since they all touch the same selection extraction path. Biggest one: when I draw a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

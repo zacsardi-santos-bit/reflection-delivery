@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prebid/prebid-server-java"
-description = "I'm chasing down some busted TCF privacy metrics in our prebid server and the numbers on our dashboards are all wrong, which makes it impossible to tell how often each privacy enforcement action ac..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

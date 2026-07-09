@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm cleaning up the sketch-based distinct count aggregators in Pinot's star-tree index builder because they're doing way too much work per merge. Right now the CPC sketch aggregator, the Theta sket..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

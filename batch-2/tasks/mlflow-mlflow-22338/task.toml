@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building a TypeScript integration that bridges Claude Code session transcripts into MLflow's tracing system so teams can actually see what happened during an AI coding session, which LLM calls ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

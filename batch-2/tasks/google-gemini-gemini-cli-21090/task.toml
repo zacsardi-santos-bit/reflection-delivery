@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm trying to wire up a bunch of editors that the Gemini CLI just doesn't know about right now, Sublime Text, Lapce, Nova, BBEdit, emacsclient, and micro, and when I set any of these as my preferre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

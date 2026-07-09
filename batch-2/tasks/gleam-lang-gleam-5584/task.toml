@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I'm poking at the Gleam build tool's dependency stuff, specifically the \"check outdated dependencies\" command, and there's this annoying gap where if everything's already up to date the command jus..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

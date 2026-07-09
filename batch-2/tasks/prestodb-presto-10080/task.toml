@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prestodb/presto"
-description = "I'm adding access control to the Raptor connector in Presto because right now there's basically no security layer, anyone can read or write any data without restriction and that's not okay for real..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

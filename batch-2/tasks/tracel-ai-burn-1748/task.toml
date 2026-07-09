@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tracel-ai/burn"
-description = "I'm hitting a build failure trying to run the no-std integration tests in this Rust workspace and it's a version mismatch thing. The no-std compat test package got bumped to depend on the upcoming ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

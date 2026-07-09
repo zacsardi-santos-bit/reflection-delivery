@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cert-manager/cert-manager"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

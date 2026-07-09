@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building an experimental browser automation subagent for our CLI tool and need it wired up from scratch so users can navigate sites, fill forms, click buttons, and pull data without doing it by..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

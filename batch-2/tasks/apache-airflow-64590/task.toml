@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm building out the Airflow dev tooling and the PR inspection paths keep hammering the GitHub API, author contribution history, CI check results, workflow run statuses, all of it goes back to the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

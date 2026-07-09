@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm trying to eval AI agents built on n8n workflows using promptfoo and there's no native way to point at an n8n webhook as a provider, so I'm stuck wiring up the generic webhook provider by hand e..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm extending the QuiverAI provider to handle image vectorization (raster to SVG) alongside the existing text-to-SVG generation, and I want the two modes cleanly separated so each has its own provi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

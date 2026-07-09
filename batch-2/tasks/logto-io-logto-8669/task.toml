@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "logto-io/logto"
-description = "I'm extending our multi-tenant OIDC signing key management to support scheduled key rotation. Right now an admin can stage a new signing key as \"next\" and rotate it immediately (forcing full cache ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

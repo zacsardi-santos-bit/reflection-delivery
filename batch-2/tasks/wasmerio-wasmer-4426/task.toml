@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "wasmerio/wasmer"
-description = "I'm updating our WebAssembly interface library so it stops pinning that ancient version of the wasm parsing dependency and uses the current workspace version instead. Right now the crate's manifest..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

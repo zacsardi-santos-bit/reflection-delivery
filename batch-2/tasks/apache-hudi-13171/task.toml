@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm working on Hudi's file group reading infrastructure and I need a real, engine-independent Avro reader context living in the core library so it works in any JVM environment without pulling in en..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pixijs/pixijs"
-description = "I'm trying to get the test suite up and it's totally dead, every single test errors out before anything even runs. Traced it to the global teardown script pulling in a package that isn't declared a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

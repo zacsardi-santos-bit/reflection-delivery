@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I've got schema parsing and normalization logic for external tool definitions buried inside our big central core crate, and it's annoying because anything that wants to validate or interpret a tool..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

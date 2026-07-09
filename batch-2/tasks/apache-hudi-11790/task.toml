@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hudi"
-description = "I'm cleaning up Hudi's ZooKeeper-based distributed locking and it's driving me a little nuts. Right now if you want ZK locking you have to hand-configure a ZooKeeper path and a lock key even though..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

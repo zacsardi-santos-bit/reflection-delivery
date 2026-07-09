@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm cleaning up the crash handling in the Flutter tool and it's kind of embarrassing right now, when the tool crashes people just get a bare error message with nothing actionable, no idea whether t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

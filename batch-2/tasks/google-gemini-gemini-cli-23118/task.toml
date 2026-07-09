@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm adding telemetry to the auth and onboarding flow in our CLI because right now when someone authenticates for the first time we record nothing, so I can't tell if onboarding even started, whethe..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

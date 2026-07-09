@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "webpack/webpack"
-description = "I'm hitting a bug with webpack's HTML loader where asset source URLs don't get rewritten for some of my elements. It works fine with standard double-quoted attribute values, but the moment I write ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

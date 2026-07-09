@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pnpm/pnpm"
-description = "I'm using pnpm in CI and all our registry auth tokens come in as environment variables, not baked into any `.npmrc` since we don't want secrets landing in source control. Vault and k8s secrets inje..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

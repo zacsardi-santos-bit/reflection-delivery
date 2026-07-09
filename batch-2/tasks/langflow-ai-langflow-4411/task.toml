@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langflow-ai/langflow"
-description = "I keep hitting these ugly error messages from our data-handling components whenever someone messes up their config, and honestly they're painful to read. Two things in particular are bugging me. Fi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

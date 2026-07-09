@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting a bug with set operations on unordered categorical indexes in pandas and it's giving me silently wrong results, so I want to get it fixed. The setup is I've got two categorical indexes ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

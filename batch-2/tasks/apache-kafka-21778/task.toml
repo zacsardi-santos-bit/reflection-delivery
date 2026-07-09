@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm cleaning up the Kafka Streams state management API and the two-step persistence dance is driving me nuts. Right now persisting task state means calling one op to flush the state store data and ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

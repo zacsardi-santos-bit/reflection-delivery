@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-telemetry/opentelemetry-python"
-description = "I'm on the OpenTelemetry Python SDK and want to add per-meter enable/disable control to the metrics subsystem, basically mirroring what tracers already have. Right now it's all or nothing, there's ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

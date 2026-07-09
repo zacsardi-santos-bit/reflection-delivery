@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/verona"
-description = "I'm poking at the verona runtime build config and hit a naming thing that keeps tripping me up. We've got this option that makes our custom memory allocator just hand allocation requests straight t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

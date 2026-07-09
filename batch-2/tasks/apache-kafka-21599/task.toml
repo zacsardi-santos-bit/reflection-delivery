@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm adding headers-aware window state store support to Kafka Streams and right now the time-ordered window store supplier just can't hand back a store variant that carries record headers through th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

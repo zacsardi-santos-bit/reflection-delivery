@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building a policy system for MCP tool execution and hit a wall with how we handle tool annotations. Right now when an MCP tool declares semantic hints (like being read-only) at discovery time, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

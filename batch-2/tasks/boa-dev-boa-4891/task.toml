@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "boa-dev/boa"
-description = "I'm building a custom runtime on top of the boa JavaScript engine and I keep hitting a wall with the event loop. Right now the only way to drain pending jobs is a synchronous, blocking call that ru..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

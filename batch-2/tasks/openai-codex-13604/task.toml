@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm cleaning up the feedback consent flow in our terminal UI and there's a transparency gap I want to close. Right now the consent popup that asks whether to share feedback logs just takes a boolea..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

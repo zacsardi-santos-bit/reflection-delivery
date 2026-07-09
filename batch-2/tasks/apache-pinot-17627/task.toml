@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm adding time-range filtering to segment reload in Apache Pinot. Right now the reload endpoint lets me target all segments, a named set, or segments on a specific server, but there's no way to sa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

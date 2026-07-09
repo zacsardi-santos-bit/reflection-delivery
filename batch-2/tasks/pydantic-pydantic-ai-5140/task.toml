@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pydantic/pydantic-ai"
-description = "I'm building long-running agentic loops with some Anthropic models and I want to hand the model a loop-wide token budget so it can pace itself and wrap up gracefully as the budget runs low. Anthrop..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

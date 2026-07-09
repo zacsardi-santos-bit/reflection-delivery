@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/flink"
-description = "I'm hitting a nasty hang with Flink jobs that read from RabbitMQ. When I try to stop a job with a savepoint (the usual savepoint-and-stop dance for controlled shutdowns and upgrades in prod), it ju..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

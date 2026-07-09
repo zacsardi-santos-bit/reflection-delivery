@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm poking at the macOS environment validation in Flutter's tooling and the CocoaPods handling feels way too harsh. Right now when CocoaPods isn't installed, the validator (over in the CocoaPods va..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

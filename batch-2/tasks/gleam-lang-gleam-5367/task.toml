@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gleam-lang/gleam"
-description = "I keep hitting a nasty case in my Gleam project with a bunch of deps, where two different dependency packages both define a module with the same name and the compiler just doesn't catch it. Either ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

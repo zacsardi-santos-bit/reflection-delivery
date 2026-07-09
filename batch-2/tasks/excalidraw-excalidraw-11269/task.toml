@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "excalidraw/excalidraw"
-description = "I'm hitting a z-order bug in Excalidraw's element ordering normalization. When I've got a mix of elements where some belong just to a top-level group (say group A) and others live in nested subgrou..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

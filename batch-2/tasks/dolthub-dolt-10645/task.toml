@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dolthub/dolt"
-description = "I'm cleaning up the expression evaluation code in Dolt's SQL layer and the comparison operators (equals, greater-than, less-than, and friends) are still dragging around a reference to an internal s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

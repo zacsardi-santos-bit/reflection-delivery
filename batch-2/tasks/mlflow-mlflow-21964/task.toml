@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm building out a content guardrail layer for the MLflow AI Gateway because right now there's no built-in way to intercept traffic and enforce content policies. Teams can't validate that incoming ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

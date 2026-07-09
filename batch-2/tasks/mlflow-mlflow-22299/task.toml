@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm adding Google ADK (Agent Development Kit) integration into MLflow as native scorers, because right now there's no way to run ADK's deterministic evaluators, the ones that check whether an agent..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm cleaning up the Flutter tools build system on the Windows desktop side and there are a few things tangled up. First off, the depfile service that writes those dependency tracking files (the one..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

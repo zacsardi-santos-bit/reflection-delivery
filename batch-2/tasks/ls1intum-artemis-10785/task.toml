@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ls1intum/Artemis"
-description = "I'm hitting a wall with our passkey auth flow whenever someone's got the Bitwarden browser extension installed. When those folks try to register or log in with a passkey, Bitwarden hands back a cre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

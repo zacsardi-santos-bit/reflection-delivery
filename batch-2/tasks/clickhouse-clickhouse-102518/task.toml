@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a server crash in ClickHouse when I try to query a Tuple subcolumn whose name has a dot in it. Here's the setup: I've got a Tuple column with two elements, one is a JSON type with a sho..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

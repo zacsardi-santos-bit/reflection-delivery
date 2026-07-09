@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm adding a third auth method to the CLI and I could use a hand wiring it in. Right now we only support the direct API key flow and Google login, but folks running behind a corporate proxy or a ma..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

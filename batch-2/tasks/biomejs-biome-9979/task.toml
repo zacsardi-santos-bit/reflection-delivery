@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm cleaning up the markdown formatter and fenced code blocks are giving me grief. A few things are off and I want them all fixed so our output matches what mainstream markdown formatters produce, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

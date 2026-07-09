@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prefix-dev/pixi"
-description = "We upgraded our Python env management library and one of its internal modules got renamed in the newer version, so now our integration tests won't even compile because we're still pointing at the o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

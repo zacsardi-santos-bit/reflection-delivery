@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "grafbase/grafbase"
-description = "I'm poking at the Grafbase extension testing framework and the test setup drives me nuts because it's two steps that are trivial to screw up. Right now I create the test runner with a synchronous c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

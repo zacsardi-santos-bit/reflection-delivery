@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm adding a binary archival format for MLflow trace data. Right now trace data only lives as JSON text, but I want a compact binary option based on the OpenTelemetry protocol's standard wire repre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm trying to make the exported HTML eval report actually usable, right now it's super bare and each result cell is just a flat string with no structure, no summary stats up top, and no way to sear..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

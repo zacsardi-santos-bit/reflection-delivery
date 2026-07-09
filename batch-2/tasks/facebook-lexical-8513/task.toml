@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "facebook/lexical"
-description = "I'm cleaning up two things in the Lexical editor codebase and could use a hand. First off, our shared test utilities have a pile of hand-rolled mock classes standing in for native browser stuff lik..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

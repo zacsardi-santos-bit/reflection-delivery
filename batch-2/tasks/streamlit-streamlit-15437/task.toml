@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "streamlit/streamlit"
-description = "I want Streamlit to nudge people toward the official agent skills when they haven't installed them yet. The idea is when someone runs an app interactively, the terminal prints a short recommendatio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

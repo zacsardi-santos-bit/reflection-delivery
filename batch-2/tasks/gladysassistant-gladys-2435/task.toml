@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "GladysAssistant/Gladys"
-description = "I'm deep in the Zigbee2MQTT integration and hit a few gaps I need sorted. First up, adapters: I want to add a new protocol type alongside the existing ones because a bunch of popular USB dongles th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

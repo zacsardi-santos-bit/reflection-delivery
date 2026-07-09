@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Kong/insomnia"
-description = "I'm working on curl import in Insomnia and hit an inconsistency I want fixed. When someone imports a curl command, the request we build doesn't carry our identifying header, the User-Agent style on..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

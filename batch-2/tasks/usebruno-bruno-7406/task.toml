@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I'm working on the link-aware bits of Bruno's code editor and I keep hitting a bug where URLs with nested parens get chopped off when they're rendered as clickable links. Think of the long query UR..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm working on a Python linter and I hit a gap with the naming convention rules, they just don't apply to variables bound inside match/case statements. So when I capture a value into a name in a pa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

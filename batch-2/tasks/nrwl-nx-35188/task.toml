@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm hitting a TOML formatting problem with our Nx setup for a monorepo that's got Rust packages in it. When Nx runs the release versioning process and rewrites Cargo.toml files, everything comes ou..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

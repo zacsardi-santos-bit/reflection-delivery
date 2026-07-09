@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pola-rs/polars"
-description = "I'm hitting a wall writing Polars DataFrames to Parquet when I hand it a custom Arrow schema that mirrors my Iceberg table definition. The schema has fixed-size binary fields (Iceberg's fixed-lengt..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

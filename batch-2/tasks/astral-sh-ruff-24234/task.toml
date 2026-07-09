@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "So we've got this lint rule that flags empty conditional statements, the kind where the condition itself has side effects but the body does nothing, and it offers an autofix that rips out the condi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm hitting a nasty bug in our workflow orchestration system, specifically the bulk task run event recorder. Right now when multiple events collide on the same logical task it just blows up with a ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

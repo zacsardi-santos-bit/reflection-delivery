@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "LedgerHQ/ledger-live"
-description = "I'm cleaning up the transport layer in Ledger Live Desktop's internal process, the stuff that talks to hardware wallets over USB/HID. Right now the code that sits between the internal process and t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

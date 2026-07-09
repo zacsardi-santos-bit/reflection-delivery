@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm adding rack awareness to the Kafka producer's built-in partitioner and could use a hand wiring it through. Right now when a producer sends records the partitioner picks partitions with no idea ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

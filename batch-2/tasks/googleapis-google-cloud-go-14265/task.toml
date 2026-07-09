@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "googleapis/google-cloud-go"
-description = "I'm working on the HTTP transport layer for one of our Google Cloud client libraries and I've got a gap I want you to close. We already do distributed tracing for outgoing requests, but there's no ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

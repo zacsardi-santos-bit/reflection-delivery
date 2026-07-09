@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tinygrad/tinygrad"
-description = "I'm poking at the operation graph optimizer and hitting a spot where conditional selection nodes don't get eliminated when I'd expect them to. Right now the optimizer already handles the simple pat..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gruntwork-io/cloud-nuke"
-description = "I'm hitting a gap in cloud-nuke where tag-based inclusion filters just silently do nothing for a bunch of AWS resource types. Like when I set up a config that says only include resources tagged wit..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

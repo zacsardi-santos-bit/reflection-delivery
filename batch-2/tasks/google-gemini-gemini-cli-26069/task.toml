@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I keep hitting a crash when someone passes the model flag twice on the command line. The arg parser hands back an array of values when a flag shows up more than once, but our model resolution and m..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

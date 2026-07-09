@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "swc-project/swc"
-description = "I'm hitting a parser bug in the SWC Flow type support. Flow lets you annotate that something renders a specific component type using a rendering annotation keyword followed directly by a type refer..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

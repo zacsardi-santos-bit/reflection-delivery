@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new lint rule to our JS/TS analyzer that enforces putting lifecycle hooks before test cases in the same block. The idea is readability: when someone opens a test file, hooks that do..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

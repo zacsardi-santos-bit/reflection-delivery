@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm on the Keras PyTorch backend for training and I'm stuck when it comes to deployment. I need to ship trained models into environments that only have PyTorch available, so what I really want is t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

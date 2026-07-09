@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm poking at the Pulley interpreter in the Wasmtime tree and hit a spot where the VM constructor just can't fail, it either works or it panics, and that's no good because spinning up the interpret..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

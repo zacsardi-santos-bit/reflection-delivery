@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "argoproj/argo-cd"
-description = "I'm hitting a bug in Argo CD's repo server around how Helm app details get populated for multi-source apps. You know the pattern where value files live in a separate external repo and get reference..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

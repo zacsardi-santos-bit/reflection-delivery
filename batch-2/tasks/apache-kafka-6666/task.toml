@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I've been chasing a bug in the consumer group coordinator around how static group members get treated during rebalances, over in the group state handling code where rebalance completion lives. When..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm cleaning up the MLflow tracing module and hit a few things I want to fix together. First, the span classes are stuck in an internal types subpackage inside the tracing module, but they really b..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

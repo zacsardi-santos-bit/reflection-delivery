@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm working on our diagnostics tool and the output when linting or checking a big codebase is just a wall of per-issue noise that's impossible to scan. We've already got a detailed human-readable r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

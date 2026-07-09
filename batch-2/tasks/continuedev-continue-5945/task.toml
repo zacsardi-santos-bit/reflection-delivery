@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "continuedev/continue"
-description = "I'm cleaning up our code assistant tool that creates and manages config rule files, and right now the logic for turning rule names into safe filenames, building the rule file path, and generating m..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

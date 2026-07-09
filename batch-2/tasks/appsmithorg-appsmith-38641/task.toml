@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "appsmithorg/appsmith"
-description = "I'm pulling our IDE sidebar nav button out of the application layer and into the shared design system package so other parts of the codebase (and other packages) can use it without dragging in app-..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

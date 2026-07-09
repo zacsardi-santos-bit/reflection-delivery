@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm digging into our file discovery and ignore-pattern code and there's a cluster of related gaps I want to fix together. The core issue is our ignore files (both the version-control ones and the p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

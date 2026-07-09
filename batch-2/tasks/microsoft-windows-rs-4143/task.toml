@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/windows-rs"
-description = "I'm hacking on the RDL interface definition language over in windows-rs and want to add proper property and event shorthands inside interface bodies. Right now if I want a property I have to write ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

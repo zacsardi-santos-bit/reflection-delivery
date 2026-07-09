@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/fluentui-react-native"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

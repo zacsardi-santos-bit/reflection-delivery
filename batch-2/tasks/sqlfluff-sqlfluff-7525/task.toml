@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sqlfluff/sqlfluff"
-description = "I'm hitting parse errors with sqlfluff on our T-SQL scripts and it's the RESTORE DATABASE statements that are blowing up. These are super common in our SQL Server admin scripts, all the backup/rest..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

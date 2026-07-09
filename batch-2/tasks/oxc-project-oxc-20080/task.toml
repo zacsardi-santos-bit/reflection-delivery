@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm hitting a nasty perf issue in the language server that does code action suggestions on top of our linter. Right now whenever a code action request comes in for a file and we've got nothing cach..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

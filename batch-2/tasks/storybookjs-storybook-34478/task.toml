@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm cleaning up how Storybook's manager API handles clearing test statuses. Right now when someone hits the clear-all button in the sidebar, the code reaches straight into internal status stores an..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

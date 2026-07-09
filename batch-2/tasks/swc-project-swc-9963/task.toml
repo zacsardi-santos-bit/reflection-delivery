@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "swc-project/swc"
-description = "I'm pulling an external string interning library in-tree as a new internal crate and I want it to live at `@crates/hstr` and be wired into the workspace so we can iterate on it alongside everything..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I keep hitting a wall with the secure model loading utils in PaddlePaddle. When I save a model bundled with config objects, plain Python classes or structured data container configs like training a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

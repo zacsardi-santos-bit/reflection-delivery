@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm poking at LangChain's runnable config normalization in `@libs/core/langchain_core/runnables/config.py` and hit an inconsistency. When a config gets normalized through `ensure_config`, the model..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

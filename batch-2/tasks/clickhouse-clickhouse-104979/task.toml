@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I'm hitting a crash whenever I filter the detached tables system view by UUID. Setup is simple: I've got an Atomic-engine database, I create a table in it, then detach it, and then I query the syst..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

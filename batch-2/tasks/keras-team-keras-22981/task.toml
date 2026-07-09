@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm hitting this annoying thing where a bunch of tensor ops in our ops module just don't check the axis param against how many dims the tensor actually has. Like if I pass axis 10 on a 2D tensor, i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

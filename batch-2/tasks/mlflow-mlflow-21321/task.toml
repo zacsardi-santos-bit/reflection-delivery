@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm poking at the conversation simulator in MLflow's GenAI module and the way it attaches simulation metadata to traces is bugging me. Right now it wraps each call to the user's prediction function..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

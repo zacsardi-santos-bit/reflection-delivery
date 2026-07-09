@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rails/rails"
-description = "I'm hitting a weird numericality validation bug in ActiveModel around equality checks on decimal columns that have a defined precision. Say I've got a monetary column set up to store 2 decimal plac..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

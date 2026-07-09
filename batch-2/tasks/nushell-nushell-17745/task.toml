@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nushell/nushell"
-description = "I want to clean up two rough spots in the nushell test infra. First one is containment assertions. Right now when a test wants to check that some output contains an expected substring or element, w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

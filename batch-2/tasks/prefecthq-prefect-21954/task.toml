@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I want to add column resizing to the deployments data table because right now the columns are locked at fixed widths and there's no way for anyone to adjust them. If you've got deployments with lon..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

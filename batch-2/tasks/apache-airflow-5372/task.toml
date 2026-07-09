@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm building incremental Airflow pipelines where each task needs to know about its own prior runs so it can process only the data that's landed since it last succeeded. Right now there's no clean w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

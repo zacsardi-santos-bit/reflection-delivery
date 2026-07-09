@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dependabot/dependabot-core"
-description = "I'm digging into the Python dependency graphing in Dependabot and hitting a gap with Poetry projects that don't commit a lockfile. Right now when there's no lockfile the grapher just returns packag..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["ruby", "swe"]
 metadata = { vendor = "Mercor" }

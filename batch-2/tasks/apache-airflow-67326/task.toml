@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hacking on our CI dependency bot, the thing that auto-bumps important package versions, and right now it's got one global cooldown for everything: if a version dropped in the last four days (96..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

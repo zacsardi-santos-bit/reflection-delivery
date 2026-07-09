@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "withastro/starlight"
-description = "I'm working on the Starlight Tailwind integration and the CSS we generate for dark mode utilities has drifted from what the current Tailwind CSS library actually emits, so our expected output is st..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

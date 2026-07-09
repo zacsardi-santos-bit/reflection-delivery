@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pola-rs/polars"
-description = "I'm hitting a correctness bug in our Parquet scan path where filters on floating-point columns can silently drop rows that contain NaN. The engine tries to skip whole row groups that can't satisfy ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

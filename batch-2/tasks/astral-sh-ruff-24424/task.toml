@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm digging into the file permissions lint check and there's two gaps I need to close. First off the check is supposed to get stricter in preview mode but right now toggling preview does nothing to..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rancher/rancher"
-description = "I'm deep in the RBAC aggregation code in Rancher and hit a labeling design problem I need help fixing. Right now both the management-plane controllers and the downstream user-cluster controllers st..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

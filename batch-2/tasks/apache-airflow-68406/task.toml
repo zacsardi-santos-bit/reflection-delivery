@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm working on the Airflow Helm chart and I need to add support for the Kubernetes Gateway API networking standard for the API server component. Right now the chart only handles the traditional Ing..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

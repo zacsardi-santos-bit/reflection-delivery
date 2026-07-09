@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "We're breaking up the old all-in-one NgRx generator for Angular into two focused ones, a root store setup generator and a feature state generator, and I need a migration that runs during the versio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "argoproj/argo-cd"
-description = "I'm hitting a dumb reliability issue in Argo CD around resolving a cluster by its friendly name. Right now whenever an app tries to resolve its destination cluster by name, the code checks whether ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

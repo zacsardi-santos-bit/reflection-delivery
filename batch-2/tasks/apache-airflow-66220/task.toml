@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm working on the Elasticsearch provider in Apache Airflow and I want to add Polars DataFrame support for Elasticsearch SQL queries. Right now if you try to pull query results as a Polars DataFram..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

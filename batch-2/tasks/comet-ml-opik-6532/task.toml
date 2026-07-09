@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "comet-ml/opik"
-description = "I'm working on the Opik Python SDK and need to add a proper way to record pass/fail assertions coming out of automated test suites. Right now everything in the eval pipeline gets shoved through the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

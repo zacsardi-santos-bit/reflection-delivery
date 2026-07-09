@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/transformers"
-description = "I'm trying to run Falcon-Mamba-7B through Transformers and there's just no support for it yet, which is blocking me. It's one of those Mamba state space models from TII (non-attention, so it's much..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

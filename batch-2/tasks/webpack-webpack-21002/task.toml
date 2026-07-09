@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "webpack/webpack"
-description = "I'm hitting a gap with webpack's HTML entry point stuff plus the experimental CSS support. When I write an HTML file as an entry and one of its script tags points to a JS file that imports CSS, web..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

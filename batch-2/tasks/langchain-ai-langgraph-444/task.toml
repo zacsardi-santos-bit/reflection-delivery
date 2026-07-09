@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langgraph"
-description = "I'm working with LangGraph's checkpoint system and I keep hitting a wall where I can only pull back saved checkpoints by their exact config (thread ID plus timestamp), and there's just no way to se..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

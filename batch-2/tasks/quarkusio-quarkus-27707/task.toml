@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm using server-sent events with a broadcaster that holds a set of registered sinks plus some close callbacks, and I've hit a couple of problems around client disconnects. The big one is that when..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

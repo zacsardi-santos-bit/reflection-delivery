@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Kong/insomnia"
-description = "I'm dealing with the Konnect integration in Insomnia and I've got a leak I need to plug. We support environment variable template syntax all over the app, so users end up sticking those placeholder..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

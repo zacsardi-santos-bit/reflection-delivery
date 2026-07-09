@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm building out the GraphQL API for the Supabase docs site and right now it only does schema introspection, there's no way to actually search docs content, so any internal tool or dev hitting the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

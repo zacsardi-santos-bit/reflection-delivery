@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "argoproj/argo-cd"
-description = "I'm hitting a real annoyance where cluster operations in Argo CD blow up when the main system secret doesn't have its crypto key field populated. Creating/registering a cluster, listing clusters, w..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

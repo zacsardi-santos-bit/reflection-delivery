@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "facebook/docusaurus"
-description = "I'm cleaning up our Docusaurus markdown utility package and I've got two things tangled together that I want sorted out. First, the functions that deal with custom heading IDs (the parsing, the wri..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubernetes/kubernetes"
-description = "I'm poking at kubeadm and want to change where we get the CRI socket (container runtime socket) from when we pull node registration state. Right now we read it off a node annotation in the API, whi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

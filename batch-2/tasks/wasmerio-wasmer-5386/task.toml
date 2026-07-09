@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "wasmerio/wasmer"
-description = "I'm poking around the journal system in the Wasmer runtime, the thing that records events for checkpoint and snapshot purposes so persisted state can be rebuilt later. There's a journal entry varia..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

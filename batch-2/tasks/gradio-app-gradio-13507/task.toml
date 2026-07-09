@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gradio-app/gradio"
-description = "I keep getting bitten by the Gradio HTML component silently swallowing script tags. I was trying to load an external JS library by dropping a `<script>` tag into the HTML content I pass into the co..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

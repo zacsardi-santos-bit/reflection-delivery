@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/superset"
-description = "I'm optimizing the Big Number with Trendline chart plugin and its aggregation flow is wasteful. Right now every time an aggregation method is set it fires two queries at the server, one for the tre..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

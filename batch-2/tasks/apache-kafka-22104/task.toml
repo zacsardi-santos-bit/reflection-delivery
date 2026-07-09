@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/kafka"
-description = "I'm working on the Kafka config CLI and I want to fix two related things in how it applies config changes. Right now when I alter a config property on a topic, a specific broker, or the broker defa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm building out the Prefect server and I keep hitting a gap around worker cleanup. When flow runs time out or get cancelled there's cleanup work that has to happen on the worker side, but right no..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tracel-ai/burn"
-description = "I'm hitting a nasty correctness bug in the deep learning framework we support that handles multiple integer element types for tensors. When I do a bitwise left shift on an integer tensor, the resul..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

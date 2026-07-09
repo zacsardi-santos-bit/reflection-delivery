@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "argoproj/argo-cd"
-description = "I'm hitting a nasty issue in Argo CD where a bunch of cluster management operations blow up whenever the main ArgoCD control plane secret is missing its encryption key. This happens during startup ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

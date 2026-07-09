@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting a wall with axis-based reductions on 2D nullable arrays, both the integer and float kinds (the sort that show up from internal DataFrame ops). When I try to find the minimum or maximum ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

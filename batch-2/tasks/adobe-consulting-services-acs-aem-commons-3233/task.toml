@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Adobe-Consulting-Services/acs-aem-commons"
-description = "So I've been poking at the annotation processor in our AEM Commons project, the one that auto-generates the OSGi component registration boilerplate for our dialog-provider classes, and it's throwin..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

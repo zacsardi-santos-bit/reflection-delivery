@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "awslabs/mountpoint-s3"
-description = "I'm cleaning up the error reporting on our S3 filesystem mount and it's being way too eager about failing at open time instead of at read/write time. Right now if a file is already being written to..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

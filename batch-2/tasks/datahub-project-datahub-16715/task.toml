@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "datahub-project/datahub"
-description = "I work at a company that uses single sign-on for DataHub, so I can't do username/password auth or generate a personal access token myself. Right now the CLI config command only supports those two p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

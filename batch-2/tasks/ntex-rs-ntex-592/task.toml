@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ntex-rs/ntex"
-description = "I'm bumping the ntex project to the next major version of the `rand` crate and it's totally broken the build right now because `rand` changed a couple of things in this release. The thread-local rn..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

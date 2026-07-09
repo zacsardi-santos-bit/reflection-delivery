@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "browser-use/browser-use"
-description = "I'm hitting a nasty reliability bug running browser automation agents against remote cloud browsers. The WebSocket stays alive at the TCP level (keepalive fine) but the browser silently stops reply..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

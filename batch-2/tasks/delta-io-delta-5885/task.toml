@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "delta-io/delta"
-description = "I'm working in the Delta Lake kernel and need to add two spatial data types to the kernel's type system, geometry for planar/cartesian data and geography for geodetic/spherical data. Right now ther..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

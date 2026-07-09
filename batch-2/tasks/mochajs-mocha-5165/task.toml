@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mochajs/mocha"
-description = "I'm bumping the arg parsing library that mocha's CLI leans on to a new major version and it's breaking everything. The old code pulls the library in through a subpath import and calls a state-reset..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

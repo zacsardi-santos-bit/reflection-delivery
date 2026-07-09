@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I keep hitting these false positive \"undeclared variable\" lint errors in my Svelte components and it's driving me nuts. The pattern is always the same: I define a reusable snippet block whose param..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

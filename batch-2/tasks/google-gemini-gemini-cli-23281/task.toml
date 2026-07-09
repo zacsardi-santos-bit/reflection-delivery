@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up the telemetry tracing in our CLI tool and hit a couple of rough edges. Right now when a traced operation returns a streaming result (an async iterable), the span doesn't close on it..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

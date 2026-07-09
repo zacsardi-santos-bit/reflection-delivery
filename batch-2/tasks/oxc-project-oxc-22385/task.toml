@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "oxc-project/oxc"
-description = "I'm hitting some wrong diagnostics out of the unused variable lint rule when it deals with rest parameters (the spread-style `...args` function params) in TypeScript, and I'm pretty sure there are ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

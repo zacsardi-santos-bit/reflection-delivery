@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working on our command sandboxing layer and hit a real gap. Right now the policy only does an allowlist, so I can grant access to paths beyond the workspace, but I've got no way to explicitly d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

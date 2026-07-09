@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "fabric8io-images/run-java-sh"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["shell", "swe"]
 metadata = { vendor = "Mercor" }

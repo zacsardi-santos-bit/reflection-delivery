@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "brave/brave-core"
-description = "I'm chasing a badge bug in the Brave Rewards browser extension. When someone visits a verified publisher's site and there are pending reward notifications, the badge on the extension icon does the ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

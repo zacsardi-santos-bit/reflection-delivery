@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tauri-apps/tauri"
-description = "I'm chasing down a bug in Tauri's ACL resolution where scopes from multiple capabilities for the same command get incorrectly merged. Say two capability files both grant the same command but with d..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/ozone"
-description = "I'm working on our distributed block storage and hit a gap in the background block deletion service. We keep a checksum tree file per container that tracks integrity info, and it has a field for re..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

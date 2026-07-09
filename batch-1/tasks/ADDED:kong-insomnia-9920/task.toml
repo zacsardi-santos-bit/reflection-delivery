@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Kong/insomnia"
-description = "I'm extending Insomnia's OpenAPI linting so custom Spectral rulesets work everywhere, not just git-connected projects. Right now cloud-synced and local projects can't apply custom validation rules ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

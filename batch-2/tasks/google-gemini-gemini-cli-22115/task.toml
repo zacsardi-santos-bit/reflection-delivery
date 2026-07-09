@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm cleaning up how runtime deps get passed around in our agent CLI and it's kind of a mess right now. Every component (the tool scheduler, the safety checker, the various prompt builders) reaches ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

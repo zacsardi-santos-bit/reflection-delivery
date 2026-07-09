@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm hitting a resolver bug in our CLI tool that bundles a search binary and figures out its path at runtime. The current logic in the resolver handles a couple of deployment layouts but it whiffs o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

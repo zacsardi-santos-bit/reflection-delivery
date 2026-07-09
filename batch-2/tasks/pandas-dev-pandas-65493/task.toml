@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pandas-dev/pandas"
-description = "I'm hitting a bunch of complex-dtype problems in pandas and want to get proper support wired into both the arithmetic system and the extension array layer. The core bug is that when I do arithmetic..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

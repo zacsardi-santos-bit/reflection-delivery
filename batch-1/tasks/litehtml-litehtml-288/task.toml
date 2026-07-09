@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "litehtml/litehtml"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

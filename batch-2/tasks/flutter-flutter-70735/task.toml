@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm cleaning up the CocoaPods integration in the Flutter build system, over in `@packages/flutter_tools/lib/src/macos/cocoapods.dart` and the related iOS/macOS plugin build glue. Right now the pod ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

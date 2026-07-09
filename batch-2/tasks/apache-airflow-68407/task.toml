@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm building out an AI agent operator in Airflow and I want to add a \"code mode\" so the model can write one block of code that calls all the tools it needs (loops, conditionals, parallel calls) in ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

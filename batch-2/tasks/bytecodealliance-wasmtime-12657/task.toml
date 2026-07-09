@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bytecodealliance/wasmtime"
-description = "I'm hacking on the component bindgen in wasmtime and hit two things that block valid binding configs. First problem is host resource drop handlers. The generated glue for a resource's drop just ret..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

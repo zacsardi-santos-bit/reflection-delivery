@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "babel/babel"
-description = "I'm hacking on the F#-style pipeline operator in our JS parser and the await handling in pipeline expressions has a bunch of edge cases that are either unhandled or wrongly accepted, so I want help..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm trying to make our outgoing request timeout configurable at runtime instead of the fixed value we've got baked in everywhere. Right now every outgoing HTTP request, including the ones that go t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

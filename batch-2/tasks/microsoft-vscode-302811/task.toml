@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm working on the release notes renderer in VS Code, over in `@src/vs/workbench/contrib/update/browser/releaseNotesEditor.ts` (wherever the markdown-to-rendered-content path lives), and I want to ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

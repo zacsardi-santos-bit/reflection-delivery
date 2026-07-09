@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/semantic-kernel"
-description = "I'm on the Semantic Kernel Python SDK and we've got connectors for OpenAI, Azure OpenAI, and a bunch of others, but there's nothing for Mistral AI and I want to use their models for chat completion..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

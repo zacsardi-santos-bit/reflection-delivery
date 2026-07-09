@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm cleaning up the Claude Code session management layer in our VS Code extension and the API's gotten way too chatty. Right now when you construct a session or call into it you have to hand over a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

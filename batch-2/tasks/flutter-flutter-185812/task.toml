@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "flutter/flutter"
-description = "I'm hitting a crash in the Flutter tool's interactive terminal mode. When I press the platform toggle shortcut (the 'o' or 'O' key that flips the platform rendering mode) while my device's runtime ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["dart", "swe"]
 metadata = { vendor = "Mercor" }

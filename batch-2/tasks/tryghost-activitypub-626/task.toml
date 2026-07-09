@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "TryGhost/ActivityPub"
-description = "I'm building an ActivityPub social app and hit a gap in the follower/following endpoints. When I fetch the list of accounts someone follows, or the list of their followers, each entry comes back wi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm chasing a file descriptor leak in the Airflow triggerer service and it's biting us in prod. The triggerer runs these long-lived async triggers, each with an associated local log file, and when ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

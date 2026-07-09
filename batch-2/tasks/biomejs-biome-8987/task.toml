@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm working on the HTML accessibility linter and want to add a new lint rule that checks whether anchor elements are actually being used for navigation. Right now nothing flags anchors that don't h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "twosigma/beakerx"
-description = "I'm working with the BeakerX SQL kernel and I want to stop hardcoding credentials in my database connection strings. Right now the magic commands for setting a default data source or a named data s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm hitting a gap in the app server's thread API where thread objects don't tell you whether they're ephemeral or backed by a saved rollout on disk. Right now the only way to guess is to check whet..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

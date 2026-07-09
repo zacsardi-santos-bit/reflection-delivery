@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pydata/xarray"
-description = "I'm hitting a rough edge writing chunked arrays out to Zarr with xarray. When my in-memory dask chunks don't line up with the encoding chunk sizes I want in the store, xarray either errors out or, ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

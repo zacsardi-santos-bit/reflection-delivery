@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm wiring Biome into our CI two different ways and hitting friction with how it emits diagnostics today. Right now if Biome detects it's running under GitHub Actions (via an env var) the default t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

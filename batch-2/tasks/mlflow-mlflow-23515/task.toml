@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "I'm adding a registry for remote AI tool servers (think MCP servers) into MLflow's database-backed tracking store since there's no data layer for this yet. I need full CRUD so servers, their versio..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

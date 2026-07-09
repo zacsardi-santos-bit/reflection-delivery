@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pydantic/pydantic-ai"
-description = "I'm hitting a confusing failure with the agent's tool prep callbacks, the ones that let me filter or modify the tool list before each model request. If my prepare callback accidentally returns noth..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

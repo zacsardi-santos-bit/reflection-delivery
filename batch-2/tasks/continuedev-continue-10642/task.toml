@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "continuedev/continue"
-description = "I'm updating an adapter that wraps a third-party AI streaming SDK so it speaks the OpenAI streaming format, and the SDK just shipped a new version that renamed and reshaped a bunch of its streaming..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

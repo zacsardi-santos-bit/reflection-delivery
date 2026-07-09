@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "spatie/laravel-permission"
-description = "I'm hitting an ergonomics wall with this Laravel permissions package. Right now I can only manage roles from the user's side, like calling a method on a user model to give it a role, but there's no..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["php", "swe"]
 metadata = { vendor = "Mercor" }

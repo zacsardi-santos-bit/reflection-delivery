@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm working on the memories backend and its error reporting for missing paths is bugging me. Right now if you ask it to list or search memories at a path that doesn't exist on disk, it just hands b..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

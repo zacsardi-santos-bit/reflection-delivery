@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openvinotoolkit/openvino"
-description = "I'm building out the new frontend pipeline for our model conversion tool and I want to add a model analysis mode so tooling can inspect a model's structure before running a full conversion. Right n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

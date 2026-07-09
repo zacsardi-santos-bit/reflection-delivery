@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubevirt/kubevirt"
-description = "I'm working on the VM controller in a Kubernetes virt platform and there's an observability gap I want to close. When you look at a running VMI right now there's no way to tell which generation of ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

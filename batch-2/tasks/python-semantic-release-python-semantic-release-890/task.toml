@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "python-semantic-release/python-semantic-release"
-description = "I'm cleaning up our changelog generation and the hosting service integrations and hit a cluster of related gaps I want fixed together."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

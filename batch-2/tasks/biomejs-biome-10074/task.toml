@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm using Biome's import organizer on a project that leans hard on side-effect imports, polyfills, CSS files, various init modules that don't export or bind anything, and I've got no way right now ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

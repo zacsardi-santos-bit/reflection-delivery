@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "promptfoo/promptfoo"
-description = "I'm dealing with a bug in our default Codex provider cache, the thing that keeps provider instances alive so we're not recreating them on every call. Problem is it doesn't isolate by credential at ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

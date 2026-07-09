@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "qdrant/qdrant"
-description = "I'm digging into the dedup logic in our vector DB's segment holder and it's got a real correctness bug around records that are in a pending / deferred state (inserted but the index entry isn't acce..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

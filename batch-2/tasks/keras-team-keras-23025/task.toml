@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm poking at the distribution classes in our distributed training library and hitting a couple gaps I want you to close up. First, there's no clean way to ask a distribution object how many model ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

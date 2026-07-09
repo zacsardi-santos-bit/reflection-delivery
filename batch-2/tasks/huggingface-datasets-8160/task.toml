@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "huggingface/datasets"
-description = "I work with IoT and sensor datasets stored in a time-series file format (think measurements keyed by device identity over time), and I want to load them straight through our standard datasets loadi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

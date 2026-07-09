@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building stuff on top of our agent session abstraction and I keep hitting the same wall in unit tests: there's no in-process way to fake an agent, so I'm either spinning up a real backend or ha..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

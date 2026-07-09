@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "tinygrad/tinygrad"
-description = "I keep hitting a wall trying to use masked element selection and non-zero index lookup inside a JIT-compiled function. Both blow up at compile time because their output shapes are dynamic, they dep..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

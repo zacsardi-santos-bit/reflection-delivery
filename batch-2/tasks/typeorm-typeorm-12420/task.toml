@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "typeorm/typeorm"
-description = "I'm hitting a wall with the JSON containment find operator in TypeORM (the JsonContains one) when I use it against JSONB columns that actually store arrays instead of plain objects. Works great for..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

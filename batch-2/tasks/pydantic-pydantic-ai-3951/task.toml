@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pydantic/pydantic-ai"
-description = "I'm on the OpenAI Responses API model and the token pre-counting thing just isn't there. I set up usage limits with an input token ceiling plus the option to count tokens before each request, and n..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

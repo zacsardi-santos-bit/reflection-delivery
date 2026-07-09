@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "clerk/javascript"
-description = "I'm poking at the UI package's appearance customization system and hit two things that need fixing. First off, the default appearance config is defined as a private module-level constant and never ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

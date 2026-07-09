@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I want to add a new Biome lint rule that catches embedded frame elements (iframes) that don't have a proper sandbox restriction, since untrusted content loaded in a frame with no sandbox can run sc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

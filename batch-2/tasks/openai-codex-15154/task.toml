@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm hitting a small but annoying rendering bug in the image generation flow. When the AI generates an image and saves it to disk, the chat history shows a \"Saved to:\" entry, but right now that line..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

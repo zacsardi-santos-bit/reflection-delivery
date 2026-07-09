@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "expo/expo"
-description = "I'm adding router-aware interactivity tracking to our Expo observability package and could use your help wiring it up. Right now when a screen gets marked interactive there's no notion of which rou..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

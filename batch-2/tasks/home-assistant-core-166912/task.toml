@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm building out the Home Assistant integration for Fresh-r ventilation devices and I want to add diagnostics support because right now if something breaks there's no clean way to grab a snapshot o..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

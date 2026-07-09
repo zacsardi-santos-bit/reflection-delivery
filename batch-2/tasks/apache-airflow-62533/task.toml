@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a display bug in the Task Instances list view in the Airflow web UI. The DAG ID, Task ID, and Run ID columns are showing raw HTML markup as literal text instead of rendering as clickabl..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

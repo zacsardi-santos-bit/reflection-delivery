@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PennyLaneAI/pennylane"
-description = "So I've been importing wavefunctions into PennyLane from external quantum chemistry solvers, the selected-CI and DMRG kind that hand you back a state as a list of electronic configurations (determi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

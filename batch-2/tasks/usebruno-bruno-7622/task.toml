@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "usebruno/bruno"
-description = "I need to add proper Swagger 2.0 import support to Bruno. Right now we handle OpenAPI 3.x fine but when I feed it an older Swagger 2.0 spec the import either errors out or gives me a garbage collec..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

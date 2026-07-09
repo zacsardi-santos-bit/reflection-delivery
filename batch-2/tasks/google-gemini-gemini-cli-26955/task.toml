@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm working on the shell tool in our CLI and the live output display gets hammered when a command spits out a lot of text fast. Right now every single chunk we get is forwarded to the UI immediatel..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

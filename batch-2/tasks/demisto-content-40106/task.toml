@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm building out an XSOAR integration for the European Union Vulnerability Database (the EUVD, which is the thing ENISA over in EU cybersecurity land maintains) because right now our security team ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

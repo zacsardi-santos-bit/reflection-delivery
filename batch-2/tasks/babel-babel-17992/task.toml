@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "babel/babel"
-description = "I'm running into a Babel source map bug when I transform bundled JS that already ships with its own external source map. That input map tracks certain variable names in its names table, but when I ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

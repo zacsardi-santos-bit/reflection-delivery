@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gatsbyjs/gatsby"
-description = "I'm chasing down a crash in Gatsby's dev server error overlay, that runtime error panel we show developers during local development so they can see what blew up. Problem is it dies completely when ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm working on the ProxmoxVE integration in Home Assistant and I need to add API token auth alongside the existing username/password. Right now the config flow crams all the connection params and c..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

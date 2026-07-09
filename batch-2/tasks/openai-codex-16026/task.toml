@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm poking at the Codex TUI and hitting an annoying sync bug where the terminal title and status line don't refresh right when I change things. If I switch the active model, the terminal title keep..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

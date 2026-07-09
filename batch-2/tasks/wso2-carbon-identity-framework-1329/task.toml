@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "wso2/carbon-identity-framework"
-description = "I'm building out an adaptive authentication framework where JavaScript scripts drive the auth flow, and right now the scripts can pick which authentication steps to run based on context but they've..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

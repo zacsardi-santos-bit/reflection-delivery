@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "marimo-team/marimo"
-description = "I'm refactoring the WebSocket reconnection and health-check infrastructure in the marimo frontend and there's some layer coupling that's been bugging me. Right now the close-event classifier needs ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

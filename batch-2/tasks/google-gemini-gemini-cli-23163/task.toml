@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm building out the admin controls for our CLI tool and hit a gap. Right now admins can define an allowlist of permitted MCP servers that filters out anything a user configured that isn't on the l..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "qdrant/qdrant"
-description = "I'm reworking how snapshot storage gets configured in qdrant and the current setup is bugging me. Right now there's just a single optional cloud credentials field hanging off the storage config str..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

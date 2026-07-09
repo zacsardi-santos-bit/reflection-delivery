@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "DataDog/dd-trace-dotnet"
-description = "I'm poking at the CI Visibility instrumentation in dd-trace-dotnet and there's a gap I want to close: when a test session gets traced and shipped to Datadog, the span metrics don't say anything abo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

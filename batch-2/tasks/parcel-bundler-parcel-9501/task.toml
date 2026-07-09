@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "parcel-bundler/parcel"
-description = "I keep hitting a bunch of rough edges in how our bundler's macro system reports failures, specifically the difference between a macro module failing to load versus a macro failing while it executes..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

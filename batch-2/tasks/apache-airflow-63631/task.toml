@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a wall with the DAG calendar API for partitioned DAGs, the ones on the newer AIP-76 model where each run gets a partition date instead of a logical date, so the logical date field is ju..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

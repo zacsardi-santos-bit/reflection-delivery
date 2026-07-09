@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PrefectHQ/prefect"
-description = "I'm working on the Prefect Kubernetes integration and want better visibility into pod failures and infra state. Right now when a pod running a flow run hits problems (bad image name, OOM kill, repe..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

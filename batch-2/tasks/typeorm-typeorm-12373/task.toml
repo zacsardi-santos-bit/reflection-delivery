@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "typeorm/typeorm"
-description = "I'm running the TypeORM migration codemod to move us onto the new API and it's silently skipping a bunch of patterns we actually use, so the output looks clean but leaves broken code that only blow..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "uutils/coreutils"
-description = "I'm trying to bump our random number generation crate to its new major version and it's breaking the build everywhere because of a pile of API renames. The thread-local RNG accessor got renamed (th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

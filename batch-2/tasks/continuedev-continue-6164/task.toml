@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "continuedev/continue"
-description = "I'm working on a networking library that fires off outbound HTTP/HTTPS requests and I've got two related things I want cleaned up."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

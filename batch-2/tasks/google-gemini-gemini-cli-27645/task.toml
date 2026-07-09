@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm chasing down some model routing and stats display bugs in our CLI tool and they're all tangled together so I want to fix them in one pass. The core issue is the routing that kicks in when a new..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

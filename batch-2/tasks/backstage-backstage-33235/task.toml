@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "backstage/backstage"
-description = "I'm working on the MCP actions backend plugin and there's two gaps I keep hitting. Right now every registered action shows up as a flat list of tools at one endpoint using just the bare action name..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

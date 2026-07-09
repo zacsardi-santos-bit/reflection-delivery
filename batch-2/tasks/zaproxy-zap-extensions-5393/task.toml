@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "zaproxy/zap-extensions"
-description = "I'm poking at the automation add-on for ZAP (Zed Attack Proxy) and the API view that returns plan progress is giving back data in a shape that's basically unusable. The start and finish timestamps ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

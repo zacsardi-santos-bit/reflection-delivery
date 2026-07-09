@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "pulumi/pulumi"
-description = "I'm adding lifecycle hook support to the PCL binder and want to get the semantics right. The idea is you declare named hook blocks in a PCL program, each describing a command to run at some point i..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

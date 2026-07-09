@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ray-project/ray"
-description = "I'm working on the Ray Serve HAProxy integration and I need to add a metrics collection layer for the ingress request router, because right now when the proxy routes a request we've got zero visibi..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

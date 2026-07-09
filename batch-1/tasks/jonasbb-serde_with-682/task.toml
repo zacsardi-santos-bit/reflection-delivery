@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jonasbb/serde_with"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

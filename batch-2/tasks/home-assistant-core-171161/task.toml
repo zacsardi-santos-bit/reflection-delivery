@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm cleaning up the setup flow for the Arcam FMJ integration in Home Assistant and there are two connection-error handling problems that make config a pain. First, for devices we auto-discover on t..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

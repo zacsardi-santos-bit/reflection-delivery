@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm hitting a couple of indentation bugs in our JS/TS formatter and I could use a fix. First one: when I write a deeply nested conditional expression (a ternary inside the branch of another ternary..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

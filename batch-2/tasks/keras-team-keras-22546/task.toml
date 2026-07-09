@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "keras-team/keras"
-description = "I'm working in Keras's numpy-compatible ops layer and there's just no way to find unique elements of an array, which is annoying because I can't use it inside the symbolic tensor graph with proper ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

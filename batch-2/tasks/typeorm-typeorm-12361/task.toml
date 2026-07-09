@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "typeorm/typeorm"
-description = "I'm adding a new v1 codemod transform to our TypeORM codemod package for a breaking change that keeps biting people, the file-based query logger (the file logger you import from TypeORM) now resolv..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

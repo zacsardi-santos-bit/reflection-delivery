@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "open-wc/open-wc"
-description = "I'm dealing with a DOM testing library that has a snapshot comparison assertion, and right now all the snapshot tests in the web test runner suite are skipped with a \"TODO: skipped until web test r..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

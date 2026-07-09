@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/hadoop"
-description = "I'm cleaning up Hadoop's vectored read API, the one that lets apps submit a bunch of non-contiguous file byte ranges for async parallel reading in one call. Right now it's inconsistent and it drive..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

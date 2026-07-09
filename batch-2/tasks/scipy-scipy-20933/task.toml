@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "scipy/scipy"
-description = "I've been hitting a cluster of SciPy bugs and want them all fixed together. The big one is ODE integration stepping past the interval. When I solve an ODE where my right-hand side is only valid bet..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "qdrant/qdrant"
-description = "I'm cleaning up error handling in the field index filtering layer and hitting a wall. Right now when you ask a field index for the points matching a filter condition, the filter method can only han..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

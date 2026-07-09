@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prebid/prebid-server-java"
-description = "I'm cleaning up how we handle impression-level first-party data during an auction in the prebid server and the current approach is bugging me. Right now the auction code has inline logic that strip..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

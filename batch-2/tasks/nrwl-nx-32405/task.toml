@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm hacking on our TypeScript plugin for the monorepo build system and hit two related snags around output tracking. First one: when a TS library project doesn't set an explicit output directory (`..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

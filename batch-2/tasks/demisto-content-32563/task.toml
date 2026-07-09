@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "demisto/content"
-description = "I'm updating our Trend Micro Vision One V3 integration and the underlying API client library did a big reorg on me, so everything's broken. The client methods got grouped into namespaced sub-client..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

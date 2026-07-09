@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "payloadcms/payload"
-description = "I'm working on the Payload MCP plugin and it's missing a bunch of operations my AI assistant workflows actually need. Right now it only covers the core document lifecycle (create, read, update, del..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

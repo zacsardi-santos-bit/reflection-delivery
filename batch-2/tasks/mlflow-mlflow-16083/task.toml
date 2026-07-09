@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "mlflow/mlflow"
-description = "Hitting a few separate bugs in MLflow that I need cleaned up in one pass. First one is the OpenAI autologging path: some versions of the OpenAI client hand back a \"not-given\" sentinel for the tools..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

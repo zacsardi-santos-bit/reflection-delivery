@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ClickHouse/ClickHouse"
-description = "I keep hitting a nasty bug in ClickHouse around INSERTs that read client-provided data through the special one-shot streaming table function (the input() thing that pulls rows from the client). If ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

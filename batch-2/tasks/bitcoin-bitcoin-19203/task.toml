@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "bitcoin/bitcoin"
-description = "I want to make the SOCKS5 proxy handshake in Bitcoin Core actually fuzzable. Right now the handshake logic in the networking layer is glued directly to live socket operations so there's no way to f..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["cpp", "swe"]
 metadata = { vendor = "Mercor" }

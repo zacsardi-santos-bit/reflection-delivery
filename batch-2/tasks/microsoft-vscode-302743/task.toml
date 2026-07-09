@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "microsoft/vscode"
-description = "I'm adding fork support to the contributed chat sessions extension API in VS Code and right now there's no reliable way for an extension-contributed session provider to advertise or actually handle..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

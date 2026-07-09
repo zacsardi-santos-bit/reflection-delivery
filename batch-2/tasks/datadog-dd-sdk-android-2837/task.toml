@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "DataDog/dd-sdk-android"
-description = "I'm in the RUM SDK and need to move how we attach context metadata onto uploads. Right now the upload URL only adds a `tags` query param when there's retry info to report, and the actual context at..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["kotlin", "swe"]
 metadata = { vendor = "Mercor" }

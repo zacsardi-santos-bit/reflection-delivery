@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vitejs/vite"
-description = "I'm messing with the glob-import playground in the Vite repo and I want to move everything into a subdirectory so I can test what happens when the project root isn't the same directory as the works..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

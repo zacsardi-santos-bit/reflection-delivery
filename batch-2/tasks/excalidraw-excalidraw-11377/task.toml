@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "excalidraw/excalidraw"
-description = "I'm chasing down two bugs in Excalidraw that are kind of related around animation and collab cleanup, and I want both fixed properly."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

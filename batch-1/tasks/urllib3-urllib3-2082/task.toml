@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "urllib3/urllib3"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

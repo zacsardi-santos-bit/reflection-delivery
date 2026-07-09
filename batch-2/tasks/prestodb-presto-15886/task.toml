@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prestodb/presto"
-description = "I'm working on Presto's file-based security access control and I need to add schema-level ownership rules. Right now when someone tries to create, drop, or rename a schema the system only checks wh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cilium/cilium"
-description = "I'm working on the Azure IPAM bits in Cilium and I want to move subnet tracking off individual IP addresses and up to the network interface level. Right now every IP config inside a NIC carries its..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

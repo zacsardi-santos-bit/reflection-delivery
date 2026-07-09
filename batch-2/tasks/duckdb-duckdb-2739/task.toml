@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "duckdb/duckdb"
-description = "I'm hacking on DuckDB and I want a built-in table function, no args needed, that spits out sample data covering every data type we support. The idea is one column per type and exactly three rows: f..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

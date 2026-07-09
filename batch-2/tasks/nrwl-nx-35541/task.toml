@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "We're about to flip on a strict exports map for the devkit package, which kills all the deep import paths people have been using where they reach straight into internal source dirs inside the packa..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

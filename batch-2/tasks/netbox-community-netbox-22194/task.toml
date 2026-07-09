@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "netbox-community/netbox"
-description = "I'm poking at the interface bulk rename feature in NetBox and I want it to handle renaming more than one field at a time. Right now the interface bulk rename only targets a single implicit field, s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

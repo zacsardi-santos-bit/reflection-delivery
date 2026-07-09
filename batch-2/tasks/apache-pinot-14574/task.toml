@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm adding a concurrency throttler for multi-stage queries in our distributed Pinot cluster because right now nothing stops an unlimited number of these queries running at once, and under load that..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

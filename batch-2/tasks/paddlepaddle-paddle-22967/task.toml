@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "PaddlePaddle/Paddle"
-description = "I'm hacking on the dynamic-to-static graph converter in PaddlePaddle and hitting a wall with if conditions that mix tensor checks and plain Python comparisons through logical operators. Simple tens..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

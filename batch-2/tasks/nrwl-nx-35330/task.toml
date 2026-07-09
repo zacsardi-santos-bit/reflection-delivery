@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm migrating an Nx workspace from the legacy ESLint config format to the new flat config format with the built-in conversion tool, and I keep hitting a bunch of correctness bugs in the output that..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

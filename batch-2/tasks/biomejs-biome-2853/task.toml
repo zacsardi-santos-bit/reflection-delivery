@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm working on the JavaScript side of our analyzer and I want to add a new lint rule that catches yoda-style comparisons, you know the ones where a constant sits on the LEFT of the operator and the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

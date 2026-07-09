@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "appsmithorg/appsmith"
-description = "I'm hitting a nasty bug in the REST API plugin where the JSON body I configure for a request gets modified before it actually goes out to the upstream server. Like if I set a body with a specific k..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

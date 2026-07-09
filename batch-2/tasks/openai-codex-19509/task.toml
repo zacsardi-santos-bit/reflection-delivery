@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm trying to get some visibility into MCP tool calls in our Rust codex-rs setup. Here's the deal: when an MCP tool call finishes it can hand back structured metadata alongside the actual result, a..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

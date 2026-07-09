@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "openai/codex"
-description = "I'm cleaning up the architectural boundary between our TUI layer and the core library in this Rust project, and right now the TUI crate reaches straight into core for a bunch of stuff, config struc..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

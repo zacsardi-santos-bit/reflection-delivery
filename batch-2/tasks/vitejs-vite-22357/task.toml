@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "vitejs/vite"
-description = "I'm hacking on Vite's optimizer and hit a snag with plugins that were originally written for esbuild's plugin API. We convert those over to run inside Vite's own plugin pipeline, and a bunch of the..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

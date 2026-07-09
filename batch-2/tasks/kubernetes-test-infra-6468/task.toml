@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "kubernetes/test-infra"
-description = "I'm hitting a config health check failure on our CRI-containerd node e2e CI jobs. We've got the usual family living in the central job config, a regular variant plus serial and flaky ones, and a wh..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

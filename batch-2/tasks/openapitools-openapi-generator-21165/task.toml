@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "OpenAPITools/openapi-generator"
-description = "I'm poking at the Kotlin Misk server code generator and there's a handful of config knobs I keep wishing existed. First one, I want a configurable path prefix that gets prepended to all the generat..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

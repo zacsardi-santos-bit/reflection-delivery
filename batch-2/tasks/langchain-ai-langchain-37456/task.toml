@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langchain"
-description = "I'm hitting a wall with the message conversion utility in LangChain core, specifically the `_convert_to_message` path in `@libs/core/langchain_core/messages/utils.py`. When messages get serialized ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sgl-project/sglang"
-description = "I'm cleaning up the debug comparator utilities where we tag tensor axes with dimension names (token dim, batch, hidden state, that kind of thing) so we can track what each axis actually represents...."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

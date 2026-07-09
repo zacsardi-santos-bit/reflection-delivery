@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm building out an auto-limit feature for the SQL editor in our studio app and I keep worrying that someone's gonna run a broad SELECT against a multi-million row table and either grind everything..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

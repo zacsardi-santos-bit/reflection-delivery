@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "duckdb/duckdb"
-description = "Our CI test runner's failure output is rough to read and I want to clean it up so it's actually actionable. Right now when a batch of tests fails it just references the batch by a number (like \"fai..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

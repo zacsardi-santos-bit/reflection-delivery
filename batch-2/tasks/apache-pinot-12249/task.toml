@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/pinot"
-description = "I'm working on the Kafka stream ingestion plugin in Apache Pinot and hitting a real pain point with SSL. Right now when we connect to a Kafka cluster that requires SSL/TLS auth, operators have to h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

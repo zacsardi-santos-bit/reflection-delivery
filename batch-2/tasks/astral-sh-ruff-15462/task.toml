@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "astral-sh/ruff"
-description = "I'm hitting a bug in the FastAPI linter rule that flags handler parameters written without the recommended annotated type form, the autofix works fine most of the time but it breaks when the depend..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

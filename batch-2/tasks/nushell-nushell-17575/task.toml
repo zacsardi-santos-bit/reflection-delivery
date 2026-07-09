@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nushell/nushell"
-description = "I'm hitting a weird bug in how nushell's describe command reports column types when a table has mixed value types across rows. When some rows in a column hold a simple value and others hold a more ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

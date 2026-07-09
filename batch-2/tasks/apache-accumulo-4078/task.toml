@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/accumulo"
-description = "We run a bunch of Accumulo clusters and I've got two monitoring gaps I need closed. First one: when a tablet server, scan server, or compactor is sitting in a resource group that isn't getting any ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

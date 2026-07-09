@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "Eventual-Inc/Daft"
-description = "I'm messing with Daft's subscriber system and want a way to dump query lifecycle events straight to disk so I can dig through them after a run. Right now there's no built-in subscriber that persist..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

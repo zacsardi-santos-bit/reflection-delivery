@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "jdx/mise"
-description = "We upgraded our KDL document language version and it changed how boolean literals get written, they now want a hash prefix so `#true` and `#false` instead of the old bare `true`/`false` keywords. P..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

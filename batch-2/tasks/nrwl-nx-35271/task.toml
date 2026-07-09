@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nrwl/nx"
-description = "I'm hitting a lockfile parsing bug with a monorepo that upgraded to a newer major version of a popular JS package manager (think pnpm-style). When its version-management feature is turned on, the l..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

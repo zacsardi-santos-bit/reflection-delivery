@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dolthub/dolt"
-description = "I've got a Dolt cluster running with one node as primary and the rest as standbys, and I'm hitting a noise problem during replication. When the primary pushes data to a standby through the remote A..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cosmos/cosmos-sdk"
-description = "I'm running into a nasty bug in the governance module's end-of-block proposal processing. After a chain upgrade removes a previously registered message type, any proposals that contained that type ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

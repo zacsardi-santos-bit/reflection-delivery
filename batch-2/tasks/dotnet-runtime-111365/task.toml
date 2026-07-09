@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "dotnet/runtime"
-description = "We're dropping LoongArch64 on Linux from our officially supported platforms, so I need the build and docs cleaned up so nothing references that arch anymore. Right now the CI/CD pipeline platform m..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

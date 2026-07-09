@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "sveltejs/svelte"
-description = "I'm upgrading testing deps in the Svelte repo and a bunch of tests broke after the bump. Two separate things going on and I need both fixed so the suite goes green with the new versions."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

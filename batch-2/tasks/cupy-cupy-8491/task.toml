@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "cupy/cupy"
-description = "I'm working on the CuPy CI infra and need to bump our test matrix to newer Python interpreters and numeric library versions across every supported GPU environment. We keep a central version matrix ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

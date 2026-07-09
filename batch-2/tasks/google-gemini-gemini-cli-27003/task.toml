@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I'm using the Gemini CLI's auto-edit approval mode so file modifications get approved automatically without me confirming each one, and it works fine for the normal file editing tools, but I keep h..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

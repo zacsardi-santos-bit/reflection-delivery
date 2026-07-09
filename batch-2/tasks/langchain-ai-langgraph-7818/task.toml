@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "langchain-ai/langgraph"
-description = "I'm building out the streaming layer for the LangGraph Python SDK and right now there's just nothing there for opening a persistent connection to a thread and pulling real-time events off the new e..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

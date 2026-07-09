@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "nats-io/nats-server"
-description = "I'm hitting a nasty bug in the file-based message store where one transient data corruption event permanently kills all further writes to a stream. What happens is when the store rebuilds its per-s..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

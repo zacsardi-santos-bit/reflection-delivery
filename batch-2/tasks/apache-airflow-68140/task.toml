@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm poking at the Bedrock AgentCore Runtime delete operator in the Amazon provider for Airflow, and right now it just fires the delete request and returns immediately, no way to know when the runti..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm working on Apache Airflow and we've got this central metrics registry that's supposed to document every metric we emit (scheduler heartbeats, pool slots, task durations, all that stuff), but th..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

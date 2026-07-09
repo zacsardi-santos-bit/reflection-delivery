@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "FoundationDB/fdb-record-layer"
-description = ""
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

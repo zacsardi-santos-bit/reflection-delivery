@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm working on the naming convention lint rule and I keep hitting a wall trying to configure it to allow non-ASCII characters in identifiers. Right now if I add an option to permit non-ASCII names ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

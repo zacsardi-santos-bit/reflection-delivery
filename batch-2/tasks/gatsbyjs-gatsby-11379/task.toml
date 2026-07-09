@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "gatsbyjs/gatsby"
-description = "I'm working on the Gatsby Google Tag Manager plugin (`gatsby-plugin-google-tagmanager`) and I need it to support setting up a default data layer before the GTM script loads. Right now the plugin lo..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

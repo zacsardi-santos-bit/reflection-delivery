@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "storybookjs/storybook"
-description = "I'm working on the Storybook review addon and I hit a gap where a cached review goes stale silently. When an agent generates a review it gets cached on the dev server and replayed to every browser ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

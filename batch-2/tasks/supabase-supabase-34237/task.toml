@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "supabase/supabase"
-description = "I'm building out a database metadata library and I keep hitting problems in the table data viewer when it fetches rows, so I want a dedicated SQL generation module that safely handles all the weird..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

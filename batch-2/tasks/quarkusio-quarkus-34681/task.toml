@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "quarkusio/quarkus"
-description = "I'm hitting a test ordering problem in the Quarkus test framework and could use a hand. The way our setup works, each Quarkus application profile gets its own classloader, so tests with different p..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["java", "swe"]
 metadata = { vendor = "Mercor" }

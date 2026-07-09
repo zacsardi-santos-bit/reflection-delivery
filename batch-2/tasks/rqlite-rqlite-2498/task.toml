@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rqlite/rqlite"
-description = "I'm adding data integrity checks to the incremental snapshotting path in rqlite. Right now when we do an incremental snapshot we collect the WAL (Write-Ahead Log) files and move them into the snaps..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["go", "swe"]
 metadata = { vendor = "Mercor" }

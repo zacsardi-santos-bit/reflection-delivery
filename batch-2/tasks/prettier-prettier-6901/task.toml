@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "prettier/prettier"
-description = "I'm hitting a weird inconsistency with how Prettier wraps complex TypeScript types inside generic angle brackets. When I've got a type parameter that's a union type and the line runs past my config..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["javascript", "swe"]
 metadata = { vendor = "Mercor" }

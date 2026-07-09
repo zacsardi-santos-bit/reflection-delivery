@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I want to add a Home Assistant integration that streams entity state changes to a cloud-hosted time-series analytics and query service (think Azure Data Explorer style). Right now there's no built-..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

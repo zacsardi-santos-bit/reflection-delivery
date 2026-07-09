@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "ppy/osu"
-description = "I'm hitting a nasty stutter with storyboards during gameplay and I think I know why. When I dim the background all the way up so the storyboard goes fully invisible, the engine stops sending it upd..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["csharp", "swe"]
 metadata = { vendor = "Mercor" }

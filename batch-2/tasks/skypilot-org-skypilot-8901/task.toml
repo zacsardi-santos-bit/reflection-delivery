@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "skypilot-org/skypilot"
-description = "I'm cleaning up GPU resource matching on our Slurm backend and it's a mess right now. Slurm reports GPUs as raw GRES strings that are all over the place, some carry vendor prefixes, some use unders..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "google-gemini/gemini-cli"
-description = "I want to make plan mode available by default instead of hiding it behind an experimental opt-in. Right now if someone tries to use plan mode through the command-line flag, it just gets silently ig..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["typescript", "swe"]
 metadata = { vendor = "Mercor" }

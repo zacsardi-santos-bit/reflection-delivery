@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "biomejs/biome"
-description = "I'm cleaning up Biome's ESLint migration tool and hitting a bunch of rules that just get dropped or lose their options when I convert a config over. Basically if someone's got jest, vitest, jsx-a11..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

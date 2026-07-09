@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "home-assistant/core"
-description = "I'm hacking on the WaterFurnace geothermal heat pump integration for Home Assistant and right now it only surfaces sensor data (temperatures, power usage, fan speed, that kind of read-only stuff), ..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }

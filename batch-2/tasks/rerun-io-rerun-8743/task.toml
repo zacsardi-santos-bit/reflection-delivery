@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "rerun-io/rerun"
-description = "I'm bumping the GPU rendering library that the renderer crate depends on to its newest major release and there's a pile of breaking changes I need to work through so the crate compiles clean and al..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["rust", "swe"]
 metadata = { vendor = "Mercor" }

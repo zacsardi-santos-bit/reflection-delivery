@@ -4,7 +4,6 @@ source_type = "pr"
 
 [task]
 name = "apache/airflow"
-description = "I'm hitting a frustrating bug with the Airflow Google Ads integration. When I set up a Google Ads connection through the Airflow web UI's connection form, I fill in the developer token, refresh tok..."
 authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
 keywords = ["python", "swe"]
 metadata = { vendor = "Mercor" }
