@@ -1,50 +1,42 @@
-schema_version = "1.1"
+schema_version = "1.3"
+source = "https://github.com/kubernetes-sigs/aws-load-balancer-controller/pull/3800"
+source_type = "pr"
 
 [task]
-name = "offline/kubernetes-sigs-aws-load-balancer-controller-3800"
+name = "kubernetes-sigs/aws-load-balancer-controller"
 description = ""
-authors = []
-keywords = []
-
-[metadata]
-pass_at_k_opus_4_8 = "0/8"
-pass_at_k_gpt_5_5 = "pending"  # no Codex/GPT-5.5 pass@8 run yet
-difficulty_explanation = "Hard: Claude Opus 4.8 solved 0/8 attempts (pass@8=0.0); debugging; golden touches 11 file(s)/~371 LoC; 521 FAIL_TO_PASS test(s). [auto-derived from Opus-4.8 pass@8 eval + patch stats; pending human review]"
-objective_labels = ["Fix", "Implement"]
-artifact_type_labels = ["Codebase", "Text or log file"]
-labels_provenance = "auto-derived; pending human review"
-
-source = "https://github.com/kubernetes-sigs/aws-load-balancer-controller/pull/3800"
-
-version = "1.0"
-author_name = "swe-bench-extended"
-author_email = "unknown"
-difficulty = "hard"
-category = "Software Engineering"
-subcategory = "Web, API, and networking software"
-tags = [ "go", "debugging", "swe-bench-extended",]
-expert_time_estimate = 7200
-junior_time_estimate = 21600
-
-[verifier]
-timeout_sec = 3000.0
-
-[agent]
-timeout_sec = 3000.0
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["go", "swe"]
+metadata = { vendor = "Mercor" }
 
 [environment]
-docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-1:kubernetes-sigs-aws-load-balancer-controller-3800"
-network_mode = "no-network"
-build_timeout_sec = 1800.0
+os = "linux"
 cpus = 2
 memory_mb = 4096
 storage_mb = 10240
+build_timeout_sec = 1800
 gpus = 0
-allow_internet = false
-mcp_servers = []
+gpu_types = []
+workdir = "/workspace"
+network_mode = "network"
+allowed_hosts = []
+allow_internet = true
 
-[verifier.env]
+[agent]
+timeout_sec = 3000
 
-[environment.env]
+[verifier]
+timeout_sec = 3000
 
-[solution.env]
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8 = 0)"
+pass_at_k_opus_4_8 = "0/8"
+category = "Software Engineering"
+subcategory = "Web, API, and networking software"
+objective_labels = ["Fix", "Implement"]
+artifact_type_labels = ["Codebase", "Text or log file"]
+expert_time_estimate = 7200
+junior_time_estimate = 21600
